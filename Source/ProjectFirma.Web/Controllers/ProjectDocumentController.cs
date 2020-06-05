@@ -31,8 +31,7 @@ namespace ProjectFirma.Web.Controllers
             
             viewModel.UpdateModel(project, CurrentPerson);
             
-            // todo: multi-file upload
-            //SetMessageForDisplay($"Successfully created new document \"{viewModel.DisplayName}\" for {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.ProjectName}\".");
+            SetMessageForDisplay($"Successfully created {viewModel.Files.Count} new document(s) for {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.ProjectName}\".");
 
             return new ModalDialogFormJsonResult();
         }

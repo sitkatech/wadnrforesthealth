@@ -70,6 +70,22 @@
                         }
                     });
                 });
+
+                var highlightEvents = ['dragenter', 'dragover'];
+                highlightEvents.forEach(eventName => {
+                    element.bind(eventName, highlight);
+                });
+                var unhighlightEvents = ['dragleave', 'drop'];
+                unhighlightEvents.forEach(eventName => {
+                    element.bind(eventName, unhighlight);
+                });
+
+                function highlight(e) {
+                    element.addClass('highlight');
+                }
+                function unhighlight(e) {
+                    element.removeClass('highlight');
+                }
             }
         };
     }]);

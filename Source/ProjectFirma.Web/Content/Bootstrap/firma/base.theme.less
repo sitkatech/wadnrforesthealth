@@ -55,6 +55,8 @@
 @firma-active-arrow-color: #337ab7;
 @firma-inactive-arrow-color: #ddd;
 
+@firma-light-border-color: #00000017;
+
 @z-index-arrow: 900;
 
 @disabled-color: LightGray;
@@ -1888,5 +1890,35 @@ nav#wizardNav ul {
                 z-index: 1000;
             }
         }
+    }
+}
+
+// multi-file upload
+#AddDocumentsAngularApp {
+
+    .multiple-file-upload {
+        width: 100%;
+        border: 1px dashed @firma-buttonBackground-color;
+        border-radius: 5px;
+        padding: 50px;
+        text-align: center;
+        transition: .1s all;
+        cursor: pointer;
+        margin: 10px 0;
+        background: @firma-background-color;
+        // the highlight class is added by the directive. See ProjectFirmaApp.js
+        &.highlight {
+            border: 1px dashed @firma-buttonBackground-color;
+            box-shadow: inset 0px 0px 4px 1px @firma-buttonBackground-color;
+        }
+
+        &:hover {
+            box-shadow: inset 0px 0px 2px 1px @firma-buttonBackground-color;
+        }
+    }
+
+    .file-inputs {
+        border-top: 1px solid @firma-light-border-color;
+        padding-bottom: 5px;
     }
 }

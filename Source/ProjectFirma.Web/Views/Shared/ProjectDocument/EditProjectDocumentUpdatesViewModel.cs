@@ -25,12 +25,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         {
             var validationResults = new List<ValidationResult>();
 
-            // todo: multi-file
-            //if (HttpRequestStorage.DatabaseEntities.ProjectDocumentUpdates.Where(x => x.ProjectUpdateBatchID == ParentID && x.ProjectDocumentUpdateID != DocumentID)
-            //    .Any(x => x.DisplayName.ToLower() == DisplayName.ToLower()))
-            //{
-            //    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, string>($"The Display Name must be unique for each Document attached to a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update", m => m.DisplayName));
-            //}
+            if (HttpRequestStorage.DatabaseEntities.ProjectDocumentUpdates.Where(x => x.ProjectUpdateBatchID == ParentID && x.ProjectDocumentUpdateID != DocumentID)
+                .Any(x => x.DisplayName.ToLower() == DisplayName.ToLower()))
+            {
+                validationResults.Add(new SitkaValidationResult<EditProjectDocumentUpdatesViewModel, string>($"The Display Name must be unique for each Document attached to a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update", m => m.DisplayName));
+            }
 
             return validationResults;
         }

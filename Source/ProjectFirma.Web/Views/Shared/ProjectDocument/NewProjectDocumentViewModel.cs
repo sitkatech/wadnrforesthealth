@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.Models.Attributes;
 using LtInfo.Common.Mvc;
 using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
@@ -13,8 +14,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
 {
     public class NewProjectDocumentViewModel: IValidatableObject
     {
-        [Required]
-        [DisplayName("File")]
+        [RequiredMultiFile]
+        [DisplayName("File(s)")]
         [SitkaFileExtensions("pdf|zip|doc|docx|xls|xlsx")]
         public List<HttpPostedFileBase> Files { get; set; }
 
@@ -69,18 +70,52 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         {
             var validationResults = new List<ValidationResult>();
 
+            if (Files[0] == null)
+            {
+                validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<HttpPostedFileBase>>($"You must select at least one file to upload.", m => m.Files));
+            }
 
-            // todo: need to do the string length validations here instead of as attribute on 
-            // [StringLength(Models.ProjectDocument.FieldLengths.Description, ErrorMessage = "1000 character maximum.")]
-            // [StringLength(Models.ProjectDocument.FieldLengths.DisplayName, ErrorMessage = "200 character maximum")]
+            if (DisplayNames.Distinct().Count() < DisplayNames.Count())
+            {
+                validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<string>>($"Cannot submit multiple files with the same Display Name for a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Document", m => m.DisplayNames));
+            }
 
-            //FileResource.ValidateFileSize(File, validationResults, "File");
+            for (int key = 0; key < Files.Count; key++)
+            {
+                if (DisplayNames[key].IsNullOrWhiteSpace())
+                {
+                    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<string>>($"Display Name is a required field.", m => m.DisplayNames));
+                }
 
-            //if (HttpRequestStorage.DatabaseEntities.ProjectDocuments.Where(x => x.ProjectID == ParentID)
-            //    .Any(x => x.DisplayName.ToLower() == DisplayName.ToLower()))
-            //{
-            //    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, string>($"The Display Name must be unique for each Document attached to a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", m=>m.DisplayName));
-            //}
+
+                if (Descriptions[key].Length > Models.ProjectDocument.FieldLengths.Description)
+                {
+                    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<string>>($"Display Name \"{Descriptions[key]}\" is longer than the allowed {Models.ProjectDocument.FieldLengths.Description} character maximum.", m => m.Descriptions));
+                }
+
+                if (DisplayNames[key].Length > Models.ProjectDocument.FieldLengths.DisplayName)
+                {
+                    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<string>>($"Display Name \"{DisplayNames[key]}\" is longer than the allowed {Models.ProjectDocument.FieldLengths.DisplayName} character maximum.", m => m.DisplayNames));
+                }
+
+                FileResource.ValidateFileSize(Files[key], validationResults, "Files");
+
+                var displayNameToLower = DisplayNames[key].ToLower();
+
+                if (HttpRequestStorage.DatabaseEntities.ProjectDocuments.Where(x => x.ProjectID == ParentID)
+                    .Any(x => x.DisplayName.ToLower() == displayNameToLower))
+                {
+                    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<string>>($"There is already a document with the Display Name \"{DisplayNames[key]}\" attached to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}. Display Name must be unique for each Document attached to a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", m => m.DisplayNames));
+                }
+            }
+
+            // because we cannot return any files back with the model, we have to clear the model
+            if (validationResults.Any())
+            {
+                DisplayNames = null;
+                Descriptions = null;
+                Files = null;
+            }
 
             return validationResults;
         }
