@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using LtInfo.Common;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.Shared.Grant
 {
     public class GrantDetailsFileDetailsViewData
     {

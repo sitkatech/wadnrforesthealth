@@ -3,7 +3,7 @@
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views
 
-@inherits ProjectFirma.Web.Views.Grant.GrantDetailsFileDetails
+@inherits ProjectFirma.Web.Views.Shared.Grant.GrantDetailsFileDetails
 
 <div class="pull-right">
     @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add File(s)", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.AddDocumentUrl, "Upload New File(s)", new List<string>{"btn", "btn-firma", "btn-sm"}, ViewDataTyped.CanEditDocuments)

@@ -980,8 +980,8 @@
     <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
-    <Compile Include="Views\Grant\GrantDetailsFileDetailsViewData.cs" />
-    <Compile Include="Views\Grant\GrantDetailsFileDetails.cs" />
+    <Compile Include="Views\Shared\Grant\GrantDetailsFileDetailsViewData.cs" />
+    <Compile Include="Views\Shared\Grant\GrantDetailsFileDetails.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
@@ -1559,7 +1559,7 @@
     <Content Include="Views\GrantAllocationAward\EditContractorInvoice.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardContractorInvoiceItem.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
-    <Content Include="Views\Grant\GrantDetailsFileDetails.cshtml" />
+    <Content Include="Views\Shared\Grant\GrantDetailsFileDetails.cshtml" />
     <Content Include="Views\Grant\NewGrantFile.cshtml" />
     <Content Include="Views\GrantAllocation\NewGrantAllocationFile.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
@@ -4098,7 +4098,6 @@
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Help\" />
     <Folder Include="Views\ProjectGeospatialArea\" />
-    <Folder Include="Views\Shared\Grant\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

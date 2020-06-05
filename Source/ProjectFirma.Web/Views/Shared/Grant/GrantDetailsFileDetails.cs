@@ -2,7 +2,7 @@
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.Shared.Grant
 {
     public abstract class GrantDetailsFileDetails : TypedWebPartialViewPage<GrantDetailsFileDetailsViewData>
     {

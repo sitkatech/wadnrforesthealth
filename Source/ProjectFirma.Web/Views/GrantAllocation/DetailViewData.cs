@@ -29,6 +29,7 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.Grant;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
