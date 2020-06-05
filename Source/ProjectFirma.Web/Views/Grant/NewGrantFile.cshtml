@@ -1,0 +1,76 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.HtmlHelperExtensions
+@using Newtonsoft.Json.Linq
+@using LtInfo.Common.Mvc
+@inherits ProjectFirma.Web.Views.Grant.NewGrantFile
+
+<script type="text/javascript" src="@Url.Content("~/Views/Grant/GrantFilesController.js")"></script>
+<script type="text/javascript">
+    // <![CDATA[
+    angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
+    {
+        return {
+            AngularModel: @Html.Raw(JObject.FromObject(Model)),
+            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
+        };
+    });
+    jQuery(document).ready(function ()
+    {
+        angular.bootstrap(jQuery("#AddGrantAngularApp"), ["ProjectFirmaApp"]);
+        jQuery(".modal").on("hidden.bs.modal",
+            function() {
+                jQuery(".bootstrap-select.open").removeClass("open");
+            });
+    });
+    // ]]>
+</script>
+
+
+@Html.ValidationSummary()
+<div id="AddGrantAngularApp" ng-controller="GrantFilesController">
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="multiple-file-upload-wrapper">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        @Html.ValidationSummary()
+                        @Html.LabelWithSugarFor(m => m.GrantFileResourceDatas)
+                        <input type="file" ng-file-model="files" multiple name="@Html.NameFor(x => x.GrantFileResourceDatas)" class="multiple-file-upload" id="@Html.IdFor(x => x.GrantFileResourceDatas)" />
+                        <p class="help-block">Drag and drop or click on the box above to upload files. <br />Allowed Extensions: @Model.GetFileExtensions(x => x.GrantFileResourceDatas)</p>
+                        @Html.ValidationMessageFor(m => m.GrantFileResourceDatas)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-horizontal file-inputs" ng-repeat="(key, file) in files">
+                            <p class="help-block" style="margin-bottom: 0;"> @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file") {{file.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.GrantID)
+    }
+</div>

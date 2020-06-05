@@ -149,8 +149,35 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<NewGrant, NewGrantViewData, NewGrantViewModel>(viewData, viewModel);
         }
 
-        //DeleteGrantFile
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey)
+        {
+            var viewModel = new NewGrantFileViewModel(grantPrimaryKey.EntityObject);
+            return ViewNewGrantFiles(viewModel);
+        }
 
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey, NewGrantFileViewModel viewModel)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewNewGrantFiles(new NewGrantFileViewModel());
+            }
+
+            viewModel.UpdateModel(grant, CurrentPerson);
+            SetMessageForDisplay($"Successfully created {viewModel.GrantFileResourceDatas.Count} new files(s) for {FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewNewGrantFiles(NewGrantFileViewModel viewModel)
+        {
+            var viewData = new NewGrantFileViewData();
+            return RazorPartialView<NewGrantFile, NewGrantFileViewData, NewGrantFileViewModel>(viewData, viewModel);
+        }
 
         [HttpGet]
         [GrantDeleteFileAsAdminFeature]

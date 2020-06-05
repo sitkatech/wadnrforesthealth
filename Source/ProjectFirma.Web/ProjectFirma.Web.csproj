@@ -888,8 +888,11 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\Grant\NewGrantFile.cs" />
     <Compile Include="Views\Grant\NewGrant.cs" />
+    <Compile Include="Views\Grant\NewGrantFileViewData.cs" />
     <Compile Include="Views\Grant\NewGrantViewData.cs" />
+    <Compile Include="Views\Grant\NewGrantFileViewModel.cs" />
     <Compile Include="Views\Grant\NewGrantViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
@@ -1553,6 +1556,7 @@
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardContractorInvoiceItem.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
     <Content Include="Views\Grant\GrantDetailsFileDetails.cshtml" />
+    <Content Include="Views\Grant\NewGrantFile.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
