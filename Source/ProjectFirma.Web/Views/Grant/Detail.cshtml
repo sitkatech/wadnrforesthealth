@@ -26,6 +26,7 @@
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.Shared
 @using ProjectFirma.Web.Views.Shared.TextControls
 @inherits ProjectFirma.Web.Views.Grant.Detail
@@ -64,9 +65,9 @@
 </div>
 
 
-<div class="col-sm-12 col-md-9 col-lg-10">
+<div class="col-sm-12">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
@@ -77,116 +78,108 @@
                 <div class="panel-body">
                     <div class="basicsLayout">
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantName)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="Name">@ViewDataTyped.Grant.GrantName</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.Organization)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantType)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.CFDA)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="Type">@ViewDataTyped.Grant.CFDANumber</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="TotalAwardAmount">@ViewDataTyped.Grant.AwardedFunds.ToStringCurrency()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-8">
                                 <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
                             </div>
-                            <div class="col-sm-9">
-                                <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Grant File")
-                            </div>
                             <div class="col-sm-8">
-                                <span>
-                                    @if (ViewDataTyped.ShowDownload)
-                                    {
-                                        <a href="@ViewDataTyped.Grant.GrantFileResource.FileResourceUrl">
-                                            @ViewDataTyped.Grant.GrantFileResource.OriginalCompleteFileName
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <span>No documents uploaded yet.</span>
-                                    }
-                                </span>
+                                <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>Files</h3>
+                </div>
+                <div class="panel-body">
+                    @{ GrantDetailsFileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
+                </div>
+            </div>
+            
         </div>
     </div>
 

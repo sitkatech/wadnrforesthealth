@@ -565,6 +565,7 @@
     <Compile Include="Models\GrantAllocationAwardTravelLineItem.cs" />
     <Compile Include="Models\GrantAllocationAwardTravelLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationChangeLog.cs" />
+    <Compile Include="Models\GrantFileResource.cs" />
     <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
@@ -615,6 +616,8 @@
     <Compile Include="Security\GrantAllocationAwardTravelLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardSuppliesLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardViewFeature.cs" />
+    <Compile Include="Security\GrantAllocationDeleteFileAsAdminFeature.cs" />
+    <Compile Include="Security\GrantDeleteFileAsAdminFeature.cs" />
     <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />
     <Compile Include="Models\CurrentBiennium.cs" />
@@ -970,6 +973,8 @@
     <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
+    <Compile Include="Views\Grant\GrantDetailsFileDetailsViewData.cs" />
+    <Compile Include="Views\Grant\GrantDetailsFileDetails.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
@@ -1547,6 +1552,7 @@
     <Content Include="Views\GrantAllocationAward\EditContractorInvoice.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardContractorInvoiceItem.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
+    <Content Include="Views\Grant\GrantDetailsFileDetails.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
