@@ -26,12 +26,12 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNew(viewModel);
+                return ViewNew(new NewProjectDocumentViewModel());
             }
             
             viewModel.UpdateModel(project, CurrentPerson);
-
-            SetMessageForDisplay($"Successfully created new document \"{viewModel.DisplayName}\" for {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.ProjectName}\".");
+            
+            SetMessageForDisplay($"Successfully created {viewModel.Files.Count} new document(s) for {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.ProjectName}\".");
 
             return new ModalDialogFormJsonResult();
         }
