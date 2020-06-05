@@ -14,7 +14,6 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[DNRUplandRegionID] [int] NULL,
 	[DivisionID] [int] NULL,
 	[GrantManagerID] [int] NULL,
-	[GrantAllocationFileResourceID] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
@@ -41,11 +40,6 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[FederalFundCode] ([FederalFundCodeID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_FederalFundCode_FederalFundCodeID]
-GO
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID] FOREIGN KEY([GrantAllocationFileResourceID])
-REFERENCES [dbo].[FileResource] ([FileResourceID])
-GO
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Grant_GrantID] FOREIGN KEY([GrantID])
 REFERENCES [dbo].[Grant] ([GrantID])

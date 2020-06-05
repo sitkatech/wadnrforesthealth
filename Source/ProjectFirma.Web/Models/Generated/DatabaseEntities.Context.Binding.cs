@@ -63,11 +63,13 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual DbSet<GrantAllocationExpenditureJsonStage> GrantAllocationExpenditureJsonStages { get; set; }
         public virtual DbSet<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
+        public virtual DbSet<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual DbSet<GrantModificationPurpose> GrantModificationPurposes { get; set; }
@@ -349,6 +351,9 @@ namespace ProjectFirma.Web.Models
                 case "GrantAllocationExpenditure":
                     return GrantAllocationExpenditures.GetGrantAllocationExpenditure(primaryKey);
 
+                case "GrantAllocationFileResource":
+                    return GrantAllocationFileResources.GetGrantAllocationFileResource(primaryKey);
+
                 case "GrantAllocationNoteInternal":
                     return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
 
@@ -363,6 +368,9 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);
+
+                case "GrantFileResource":
+                    return GrantFileResources.GetGrantFileResource(primaryKey);
 
                 case "GrantModificationGrantModificationPurpose":
                     return GrantModificationGrantModificationPurposes.GetGrantModificationGrantModificationPurpose(primaryKey);

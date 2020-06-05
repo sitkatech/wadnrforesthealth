@@ -287,7 +287,6 @@
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -305,7 +304,6 @@
           <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
-          <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -504,6 +502,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationFileResource">
+        <MappingFragment StoreEntitySet="GrantAllocationFileResource">
+          <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNote">
         <MappingFragment StoreEntitySet="GrantAllocationNote">
@@ -546,6 +553,15 @@
           <ScalarProperty Name="GrantAllocationProgramManagerID" ColumnName="GrantAllocationProgramManagerID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantFileResource">
+        <MappingFragment StoreEntitySet="GrantFileResource">
+          <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -38,10 +38,12 @@
     <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditureJsonStage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
@@ -258,10 +260,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
     </AssociationSet>
-    <AssociationSet Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
-      <End Role="GrantFileResource" EntitySet="FileResource" />
-      <End Role="GrantsWhereYouAreTheGrantFileResource" EntitySet="Grant" />
-    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
       <End Role="Grants" EntitySet="Grant" />
@@ -281,10 +279,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
-      <End Role="GrantAllocationFileResource" EntitySet="FileResource" />
-      <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -358,6 +352,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationExpenditures" EntitySet="GrantAllocationExpenditure" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationNotes" EntitySet="GrantAllocationNote" />
@@ -401,6 +403,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantFileResources" EntitySet="GrantFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantFileResource_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantFileResource_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantFileResources" EntitySet="GrantFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
       <End Role="GrantModificationFileResource" EntitySet="FileResource" />
@@ -1277,7 +1287,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="ShortName" Type="varchar" MaxLength="64" />
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="GrantFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -1294,7 +1303,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="DNRUplandRegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
-    <Property Name="GrantAllocationFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationAward">
     <Key>
@@ -1481,6 +1489,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="VendorName" Type="varchar(max)" />
     <Property Name="ExpendAccrued" Type="money" />
   </EntityType>
+  <EntityType Name="GrantAllocationFileResource">
+    <Key>
+      <PropertyRef Name="GrantAllocationFileResourceID" />
+    </Key>
+    <Property Name="GrantAllocationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
       <PropertyRef Name="GrantAllocationNoteID" />
@@ -1521,6 +1537,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationProgramManagerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GrantFileResource">
+    <Key>
+      <PropertyRef Name="GrantFileResourceID" />
+    </Key>
+    <Property Name="GrantFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantModification">
     <Key>
@@ -2940,18 +2964,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
-    <End Role="GrantFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="GrantsWhereYouAreTheGrantFileResource" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantsWhereYouAreTheGrantFileResource">
-        <PropertyRef Name="GrantFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Grant_GrantStatus_GrantStatusID">
     <End Role="GrantStatus" Type="ProjectFirma.Web.Models.Store.GrantStatus" Multiplicity="1" />
     <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
@@ -3009,18 +3021,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="FederalFundCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
-    <End Role="GrantAllocationFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource">
-        <PropertyRef Name="GrantAllocationFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3240,6 +3240,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocationFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
+    <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.Store.GrantAllocationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantAllocationFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.Store.GrantAllocationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationFileResources">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="GrantAllocationNotes" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
@@ -3369,6 +3393,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocationProgramManagers">
         <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
+    <End Role="GrantFileResources" Type="ProjectFirma.Web.Models.Store.GrantFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantFileResource_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="GrantFileResources" Type="ProjectFirma.Web.Models.Store.GrantFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantFileResources">
+        <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

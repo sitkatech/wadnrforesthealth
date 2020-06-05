@@ -187,6 +187,9 @@
     <Compile Include="Models\Generated\GrantAllocationExpenditureJsonStage.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationExpenditureJsonStagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationExpenditurePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationFileResource.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationFileResource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNote.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNote.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationNoteInternal.Binding.cs" />
@@ -200,6 +203,9 @@
     <Compile Include="Models\Generated\GrantAllocationProgramManager.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationProgramManager.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationProgramManagerPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantFileResource.Binding.cs" />
+    <Compile Include="Models\Generated\GrantFileResource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantModification.Binding.cs" />
     <Compile Include="Models\Generated\GrantModification.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantModificationGrantModificationPurpose.Binding.cs" />
@@ -879,6 +885,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\Grant\NewGrant.cs" />
+    <Compile Include="Views\Grant\NewGrantViewData.cs" />
+    <Compile Include="Views\Grant\NewGrantViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
@@ -1026,6 +1035,7 @@
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
+    <Content Include="Views\Grant\GrantFilesController.js" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\FocusArea\Index.cshtml" />
@@ -1536,6 +1546,7 @@
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardLandownerCostShareLineItem.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditContractorInvoice.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardContractorInvoiceItem.cshtml" />
+    <Content Include="Views\Grant\NewGrant.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
