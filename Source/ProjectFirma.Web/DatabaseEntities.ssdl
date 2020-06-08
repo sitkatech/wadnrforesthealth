@@ -1288,6 +1288,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
     <Property Name="GisUploadAttemptCreatePersonID" Type="int" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ImportTableName" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
@@ -5308,6 +5309,17 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   </Association>
   <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="fGetColumnNamesForTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="psTableName" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="PrimaryKey" Type="int" Nullable="false" />
+          <Property Name="ColumnName" Type="varchar" Nullable="false" MaxLength="500" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
   </Function>
   <Function Name="fGetCurrentFiscalYearBiennium" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fGetFiscalYearBienniumForDate" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

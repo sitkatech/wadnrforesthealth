@@ -7,6 +7,7 @@ CREATE TABLE [dbo].[GisUploadAttempt](
 	[GisUploadSourceOrganizationID] [int] NOT NULL,
 	[GisUploadAttemptCreatePersonID] [int] NOT NULL,
 	[GisUploadAttemptCreateDate] [datetime] NOT NULL,
+	[ImportTableName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_GisUploadAttempt_GisUploadAttemptID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadAttemptID] ASC

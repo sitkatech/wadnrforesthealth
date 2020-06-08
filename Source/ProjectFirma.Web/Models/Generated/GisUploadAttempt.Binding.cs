@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web;
+using CodeFirstStoreFunctions;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -30,12 +31,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadAttempt(int gisUploadAttemptID, int gisUploadSourceOrganizationID, int gisUploadAttemptCreatePersonID, DateTime gisUploadAttemptCreateDate) : this()
+        public GisUploadAttempt(int gisUploadAttemptID, int gisUploadSourceOrganizationID, int gisUploadAttemptCreatePersonID, DateTime gisUploadAttemptCreateDate, string importTableName) : this()
         {
             this.GisUploadAttemptID = gisUploadAttemptID;
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadAttemptCreatePersonID = gisUploadAttemptCreatePersonID;
             this.GisUploadAttemptCreateDate = gisUploadAttemptCreateDate;
+            this.ImportTableName = importTableName;
         }
 
         /// <summary>
@@ -122,6 +124,7 @@ namespace ProjectFirma.Web.Models
         public int GisUploadSourceOrganizationID { get; set; }
         public int GisUploadAttemptCreatePersonID { get; set; }
         public DateTime GisUploadAttemptCreateDate { get; set; }
+        public string ImportTableName { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadAttemptID; } set { GisUploadAttemptID = value; } }
 
@@ -130,7 +133,7 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-
+            public const int ImportTableName = 100;
         }
     }
 }

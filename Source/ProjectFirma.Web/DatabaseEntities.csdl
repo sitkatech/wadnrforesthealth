@@ -1013,11 +1013,18 @@
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
+    <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
+      <Parameter Name="psTableName" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
       <Parameter Name="string" Type="String" />
       <Parameter Name="delimiter" Type="String" />
     </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="fGetColumnNamesForTable_Result">
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+  </ComplexType>
   <ComplexType Name="fnSplitString_Result">
     <Property Name="splitdata" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </ComplexType>
@@ -1338,6 +1345,7 @@
     <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" />
     <Property Name="GisUploadAttemptCreatePersonID" Type="Int32" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="DateTime" Nullable="false" />
+    <Property Name="ImportTableName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadAttempts" ToRole="GisUploadSourceOrganization" />
     <NavigationProperty Name="GisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" ToRole="GisUploadAttemptCreatePerson" />
   </EntityType>

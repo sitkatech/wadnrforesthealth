@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common;
@@ -6,6 +9,7 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.UnitTestCommon;
 using ProjectFirma.Web.Views.GisProjectBulkUpdate;
 using ProjectFirma.Web.Views.ProjectCreate;
 
@@ -106,13 +110,44 @@ namespace ProjectFirma.Web.Controllers
 
             var httpPostedFileBase = viewModel.FileResourceData;
             var fileEnding = ".gdb.zip";
+            var importTableName = string.Empty;
             using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 httpPostedFileBase.SaveAs(gdbFile.FullName);
-                GisUploadAttemptStaging.ImportIntoSqlTempTable(gdbFile, gisUploadAttempt);
+                GisUploadAttemptStaging.ImportIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
             }
-            return ViewUploadGisFile(viewModel, gisUploadAttempt);
+
+            gisUploadAttempt.ImportTableName = importTableName;
+            var columns = GetListOfColumnNamesFromImportedGisData(importTableName);
+            var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(importTableName).ToList();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private List<string> GetListOfColumnNamesFromImportedGisData(string importedTableName)
+        {
+            List<string> listOfColumnNames;
+            var  sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            using (var command = new SqlCommand($"SELECT ColumnName from dbo.fGetColumnNamesForTable('{importedTableName}')"))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    using (var dt = ProjectFirmaSqlDatabase.ExecuteSqlCommand(command).Tables[0])
+                    {
+                        listOfColumnNames =
+                            dt.Rows.Cast<DataRow>()
+                                .Select(x => x["ColumnName"].ToString())
+                                .ToList();
+                    }
+                }
+            }
+
+            return listOfColumnNames;
         }
 
     }

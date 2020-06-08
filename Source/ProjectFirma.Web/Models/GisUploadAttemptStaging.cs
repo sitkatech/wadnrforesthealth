@@ -12,17 +12,17 @@ namespace ProjectFirma.Web.Models
     {
       
 
-        public static List<string> ImportIntoSqlTempTable(FileInfo gdbFile, GisUploadAttempt gisUploadAttempt)
+        public static List<string> ImportIntoSqlTempTable(FileInfo gdbFile, GisUploadAttempt gisUploadAttempt, out string importTableName)
         {
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
 
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut);
+            var destinationTableName = $"gisImport{gisUploadAttempt.GisUploadAttemptID}";   
             ogr2OgrCommandLineRunner.ImportFileGdbToSql(gdbFile, false,
-                $"gisImport{gisUploadAttempt.GisUploadAttemptID}");
-
-
+                destinationTableName);
+            importTableName = destinationTableName;
             return featureClassNames;
         }
     }

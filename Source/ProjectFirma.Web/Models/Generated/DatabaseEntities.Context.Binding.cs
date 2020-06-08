@@ -11,6 +11,7 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using CodeFirstStoreFunctions;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -168,6 +169,37 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
+        public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
+        public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }
+
+        [DbFunction("DatabaseEntities", "fGetColumnNamesForTable")]
+        public virtual IQueryable<fGetColumnNamesForTable_Result> GetfGetColumnNamesForTables(string psTableNameParameter)
+        {
+            
+            var psTableName = new System.Data.Entity.Core.Objects.ObjectParameter("psTableName", typeof(string))
+            {
+                Value = psTableNameParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetColumnNamesForTable_Result>("DatabaseEntities.fGetColumnNamesForTable(@psTableName)",psTableName);
+        }
+
+        [DbFunction("DatabaseEntities", "fnSplitString")]
+        public virtual IQueryable<fnSplitString_Result> GetfnSplitStrings(string stringParameter, string delimiterParameter)
+        {
+            
+            var string = new System.Data.Entity.Core.Objects.ObjectParameter("string", typeof(string))
+            {
+                Value = stringParameter
+            };
+
+            var delimiter = new System.Data.Entity.Core.Objects.ObjectParameter("delimiter", typeof(string))
+            {
+                Value = delimiterParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fnSplitString_Result>("DatabaseEntities.fnSplitString(@string, @delimiter)",string, delimiter);
+        }
 
         public object LoadType(Type type, int primaryKey)
         {
