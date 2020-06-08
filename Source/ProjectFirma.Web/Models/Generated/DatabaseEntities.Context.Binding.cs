@@ -185,12 +185,12 @@ namespace ProjectFirma.Web.Models
         }
 
         [DbFunction("DatabaseEntities", "fnSplitString")]
-        public virtual IQueryable<fnSplitString_Result> GetfnSplitStrings(string stringParameter, string delimiterParameter)
+        public virtual IQueryable<fnSplitString_Result> GetfnSplitStrings(string stringToSplitParameter, string delimiterParameter)
         {
             
-            var string = new System.Data.Entity.Core.Objects.ObjectParameter("string", typeof(string))
+            var stringToSplit = new System.Data.Entity.Core.Objects.ObjectParameter("stringToSplit", typeof(string))
             {
-                Value = stringParameter
+                Value = stringToSplitParameter
             };
 
             var delimiter = new System.Data.Entity.Core.Objects.ObjectParameter("delimiter", typeof(string))
@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Models
                 Value = delimiterParameter
             };
             return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
-                  .CreateQuery<fnSplitString_Result>("DatabaseEntities.fnSplitString(@string, @delimiter)",string, delimiter);
+                  .CreateQuery<fnSplitString_Result>("DatabaseEntities.fnSplitString(@stringToSplit, @delimiter)",stringToSplit, delimiter);
         }
 
         public object LoadType(Type type, int primaryKey)

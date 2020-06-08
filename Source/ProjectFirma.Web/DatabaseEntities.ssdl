@@ -5327,7 +5327,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   </Function>
   <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="string" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="stringToSplit" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="delimiter" Type="char" Mode="In" />
     <ReturnType>
       <CollectionType>
