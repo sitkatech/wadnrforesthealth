@@ -120,6 +120,7 @@ namespace ProjectFirma.Web.Controllers
 
             gisUploadAttempt.ImportTableName = importTableName;
             var columns = GetListOfColumnNamesFromImportedGisData(importTableName);
+            var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(importTableName).ToList();
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
             return new ModalDialogFormJsonResult();
