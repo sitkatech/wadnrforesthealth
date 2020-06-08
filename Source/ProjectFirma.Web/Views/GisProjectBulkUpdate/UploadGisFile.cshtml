@@ -42,6 +42,9 @@ Source code is available upon request via <support@sitkatech.com>.
         // ]]>
     </script>
 }
+
+@Html.ValidationSummary()
+
 <p>
     After you upload your file you will be able to preview and verify the uploaded data. 
 </p>
@@ -80,14 +83,22 @@ Source code is available upon request via <support@sitkatech.com>.
 <hr />
     <div class="pull-right">
         <button id="uploadNoAdvance" class="btn btn-xs btn-firma" value="false" name="@Html.NameFor(x => x.AutoAdvance)">Upload</button>
-        <button type="submit" id="uploadWithAdvance" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Upload &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
+        <button  id="uploadWithAdvance" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Upload &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
     </div>
 
 
 
     <script type="text/javascript">
 
-    function uploadGisFile() {
+        function uploadGisFileAndRefreshCurrentPage() {
+            uploadGisFile(true);
+        }
+
+        function uploadGisFileAndAdvanceCurrentPage() {
+            uploadGisFile(false);
+        }
+
+    function uploadGisFile(refresh) {
         var form = jQuery("#uploadGisForm");
         if (form.valid()) {
             var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
@@ -102,11 +113,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 success: function (result, textStatus, jqXhr) {
                     jQuery(".progress").hide();
                     // Piggy back off the centralized login required detection in Ajax handling in SitkaAjax
-                    SitkaAjax.handleLoginRedirect(result, textStatus, jqXhr, function () {
-                            gisUploadResults.html(result);
-                            saveButton.prop("disabled", false);
-                        }
-                    );
+                    location.reload();
                 },
                 error: function (xhr, statusText) {
                     // Piggy back off the centralized error Ajax handling in SitkaAjax
@@ -125,7 +132,8 @@ Source code is available upon request via <support@sitkatech.com>.
     jQuery(document)
         .ready(function() {
             // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
-            jQuery("#uploadNoAdvance").click(uploadGisFile);
+            jQuery("#uploadNoAdvance").click(uploadGisFileAndRefreshCurrentPage);
+            jQuery("#uploadWithAdvance").click(uploadGisFileAndAdvanceCurrentPage);
 
 
         });

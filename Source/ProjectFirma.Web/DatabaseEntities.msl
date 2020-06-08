@@ -278,6 +278,7 @@
           <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
           <ScalarProperty Name="GisUploadAttemptCreatePersonID" ColumnName="GisUploadAttemptCreatePersonID" />
           <ScalarProperty Name="GisUploadAttemptCreateDate" ColumnName="GisUploadAttemptCreateDate" />
+          <ScalarProperty Name="ImportTableName" ColumnName="ImportTableName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1759,6 +1760,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetColumnNamesForTable" FunctionImportName="fGetColumnNamesForTable">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetColumnNamesForTable_Result">
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fnSplitString" FunctionImportName="fnSplitString">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fnSplitString_Result">
