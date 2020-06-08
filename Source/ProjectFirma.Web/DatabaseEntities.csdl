@@ -1017,7 +1017,7 @@
       <Parameter Name="psTableName" Type="String" />
     </FunctionImport>
     <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
-      <Parameter Name="string" Type="String" />
+      <Parameter Name="stringToSplit" Type="String" />
       <Parameter Name="delimiter" Type="String" />
     </FunctionImport>
   </EntityContainer>
