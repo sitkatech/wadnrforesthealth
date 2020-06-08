@@ -44,7 +44,11 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             ObjectNamePlural = $"GIS Records";
             SaveFiltersInCookie = false;
 
-            var columnsOrdered = columns.Where(x => x.PrimaryKey != 1).Where(x =>! string.Equals(x.ColumnName, "Shape", StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.ColumnName).ToList();
+            var columnsOrdered = columns.Where(x => x.PrimaryKey != 1).Where(x =>! string.Equals(x.ColumnName, "Shape", StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.PrimaryKey).ToList();
+
+
+            Add("ID", x => x.ID.ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Is Valid", x => x.Feature.STIsValid().ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
             foreach (var fGetColumnNamesForTableResult in columnsOrdered)
             {
