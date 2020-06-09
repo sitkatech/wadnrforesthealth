@@ -48,7 +48,10 @@ namespace ProjectFirma.Web
             }
             var signedXml = new SignedXml(_xmlDoc);
             signedXml.LoadXml((XmlElement)nodeList[0]);
-            return ValidateSignatureReference(signedXml) && signedXml.CheckSignature(_certificate, true) && !IsExpired();
+            bool validateSignatureReference = ValidateSignatureReference(signedXml);
+            bool checkSignature = signedXml.CheckSignature(_certificate, true);
+            bool isExpired = !IsExpired();
+            return validateSignatureReference && checkSignature && isExpired;
         }
 
         //an XML signature can "cover" not the whole document, but only a part of it
