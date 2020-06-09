@@ -148,6 +148,7 @@
           <ScalarProperty Name="CustomPageVanityUrl" ColumnName="CustomPageVanityUrl" />
           <ScalarProperty Name="CustomPageDisplayTypeID" ColumnName="CustomPageDisplayTypeID" />
           <ScalarProperty Name="CustomPageContent" ColumnName="CustomPageContent" />
+          <ScalarProperty Name="CustomPageNavigationSectionID" ColumnName="CustomPageNavigationSectionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

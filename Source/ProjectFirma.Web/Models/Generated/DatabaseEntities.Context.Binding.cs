@@ -274,6 +274,11 @@ namespace ProjectFirma.Web.Models
                 case "CustomPageImage":
                     return CustomPageImages.GetCustomPageImage(primaryKey);
 
+                case "CustomPageNavigationSection":
+                    var customPageNavigationSection = CustomPageNavigationSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(customPageNavigationSection, "CustomPageNavigationSection", primaryKey);
+                    return customPageNavigationSection;
+
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
 

@@ -1171,6 +1171,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="CustomPageVanityUrl" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="CustomPageDisplayTypeID" Type="int" Nullable="false" />
     <Property Name="CustomPageContent" Type="varchar(max)" />
+    <Property Name="CustomPageNavigationSectionID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomPageImage">
     <Key>

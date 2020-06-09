@@ -31,19 +31,20 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public CustomPage(int customPageID, string customPageDisplayName, string customPageVanityUrl, int customPageDisplayTypeID, string customPageContent) : this()
+        public CustomPage(int customPageID, string customPageDisplayName, string customPageVanityUrl, int customPageDisplayTypeID, string customPageContent, int customPageNavigationSectionID) : this()
         {
             this.CustomPageID = customPageID;
             this.CustomPageDisplayName = customPageDisplayName;
             this.CustomPageVanityUrl = customPageVanityUrl;
             this.CustomPageDisplayTypeID = customPageDisplayTypeID;
             this.CustomPageContent = customPageContent;
+            this.CustomPageNavigationSectionID = customPageNavigationSectionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public CustomPage(string customPageDisplayName, string customPageVanityUrl, int customPageDisplayTypeID) : this()
+        public CustomPage(string customPageDisplayName, string customPageVanityUrl, int customPageDisplayTypeID, int customPageNavigationSectionID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.CustomPageID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -51,26 +52,28 @@ namespace ProjectFirma.Web.Models
             this.CustomPageDisplayName = customPageDisplayName;
             this.CustomPageVanityUrl = customPageVanityUrl;
             this.CustomPageDisplayTypeID = customPageDisplayTypeID;
+            this.CustomPageNavigationSectionID = customPageNavigationSectionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public CustomPage(string customPageDisplayName, string customPageVanityUrl, CustomPageDisplayType customPageDisplayType) : this()
+        public CustomPage(string customPageDisplayName, string customPageVanityUrl, CustomPageDisplayType customPageDisplayType, CustomPageNavigationSection customPageNavigationSection) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.CustomPageID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.CustomPageDisplayName = customPageDisplayName;
             this.CustomPageVanityUrl = customPageVanityUrl;
             this.CustomPageDisplayTypeID = customPageDisplayType.CustomPageDisplayTypeID;
+            this.CustomPageNavigationSectionID = customPageNavigationSection.CustomPageNavigationSectionID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static CustomPage CreateNewBlank(CustomPageDisplayType customPageDisplayType)
+        public static CustomPage CreateNewBlank(CustomPageDisplayType customPageDisplayType, CustomPageNavigationSection customPageNavigationSection)
         {
-            return new CustomPage(default(string), default(string), customPageDisplayType);
+            return new CustomPage(default(string), default(string), customPageDisplayType, customPageNavigationSection);
         }
 
         /// <summary>
@@ -142,11 +145,13 @@ namespace ProjectFirma.Web.Models
             get { return CustomPageContent == null ? null : new HtmlString(CustomPageContent); }
             set { CustomPageContent = value?.ToString(); }
         }
+        public int CustomPageNavigationSectionID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return CustomPageID; } set { CustomPageID = value; } }
 
         public virtual ICollection<CustomPageImage> CustomPageImages { get; set; }
         public CustomPageDisplayType CustomPageDisplayType { get { return CustomPageDisplayType.AllLookupDictionary[CustomPageDisplayTypeID]; } }
+        public CustomPageNavigationSection CustomPageNavigationSection { get { return CustomPageNavigationSection.AllLookupDictionary[CustomPageNavigationSectionID]; } }
 
         public static class FieldLengths
         {
