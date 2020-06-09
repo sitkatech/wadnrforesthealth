@@ -4,11 +4,16 @@ using System.Data;
 using System.Data.Entity.Spatial;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.IO;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
+using LtInfo.Common.GdalOgr;
 using LtInfo.Common.MvcResults;
 using Microsoft.SqlServer.Types;
 using ProjectFirma.Web.Common;
@@ -135,6 +140,7 @@ namespace ProjectFirma.Web.Controllers
             return UploadGisFilePostImpl(gisUploadAttemptID, viewModel);
         }
 
+
         private ActionResult UploadGisFilePostImpl(int gisUploadAttemptID, UploadGisFileViewModel viewModel)
         {
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
@@ -146,19 +152,56 @@ namespace ProjectFirma.Web.Controllers
             var httpPostedFileBase = viewModel.FileResourceData;
             var fileEnding = ".gdb.zip";
             var importTableName = string.Empty;
+            var shapeFileSuccessfullyExtractedToDisk = false;
+
+            var shapeFilePath = GisUploadAttemptStaging.UnzipAndSaveFileToDiskIfShapefile(httpPostedFileBase, gisUploadAttempt, ref shapeFileSuccessfullyExtractedToDisk);
+
+            if (shapeFileSuccessfullyExtractedToDisk)
+            {
+                importTableName = ImportExtractedShapefileToSql(shapeFilePath, gisUploadAttempt, importTableName);
+            }
+
+            else
+            {
+                importTableName = ImportGdbToSql(fileEnding, httpPostedFileBase, gisUploadAttempt);
+            }
+            gisUploadAttempt.ImportTableName = importTableName;
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            return new ModalDialogFormJsonResult();
+        }
+
+        private string ImportGdbToSql(string fileEnding, HttpPostedFileBase httpPostedFileBase,
+            GisUploadAttempt gisUploadAttempt)
+        {
+            string importTableName;
             using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 httpPostedFileBase.SaveAs(gdbFile.FullName);
-                GisUploadAttemptStaging.ImportIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
+                GisUploadAttemptStaging.ImportGdbIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
+                SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
             }
 
-            gisUploadAttempt.ImportTableName = importTableName;
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
-            return new ModalDialogFormJsonResult();
+            return importTableName;
         }
 
+        private string ImportExtractedShapefileToSql(string shapeFilePath, GisUploadAttempt gisUploadAttempt,
+            string importTableName)
+        {
+            try
+            {
+                GisUploadAttemptStaging.ImportShapefileIntoSqlTempTable(shapeFilePath, gisUploadAttempt, out importTableName);
+                SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
+            }
+            catch (Ogr2OgrCommandLineException e)
+            {
+                SetErrorForDisplay(e.Message);
+            }
+
+            return importTableName;
+        }
+
+        
         private List<GisRecord> GetGisRecordsFromGisUploadAttempt(int gisUploadAttemptID)
         {
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
@@ -168,12 +211,12 @@ namespace ProjectFirma.Web.Controllers
             var idColumn = realColumns.Where(x => x.PrimaryKey == 1).Single();
             var dataColumns = realColumns.Where(x =>
                     x.PrimaryKey != 1 &&
-                    !string.Equals(x.ColumnName, "Shape", StringComparison.InvariantCultureIgnoreCase))
+                    !string.Equals(x.ColumnName, GisUploadAttemptStaging.GeomName, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
 
             var dictionary = new Dictionary<int, List<GisColumnName>>();
             var listOfIds = GetColumnValuesForGisImport(importTableName, idColumn.ColumnName, idColumn.ColumnName, 1);
-            var listOfFeatures = GetFeaturesForGisImport(importTableName, idColumn.ColumnName, "Shape");
+            var listOfFeatures = GetFeaturesForGisImport(importTableName, idColumn.ColumnName, GisUploadAttemptStaging.GeomName);
             foreach (var gisColumnName in listOfIds)
             {
                 var parsedIntID = int.Parse(gisColumnName.ID);
