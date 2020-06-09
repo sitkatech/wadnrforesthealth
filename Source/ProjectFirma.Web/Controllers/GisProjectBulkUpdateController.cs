@@ -141,28 +141,6 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        public string GetGisFileRootDirectory()
-        {
-            return FirmaWebConfiguration.ShapeFileRootDirectory;
-        }
-
-        public string GisUploadAttemptDirectory(GisUploadAttempt gisUploadAttempt)
-        {
-            return Path.Combine(GetGisFileRootDirectory(), gisUploadAttempt.GisUploadAttemptID.ToString());
-        }
-
-        protected void SetupDirectory(GisUploadAttempt gisUploadAttempt)
-        {
-            if (!System.IO.Directory.Exists(GetGisFileRootDirectory()))
-                System.IO.Directory.CreateDirectory(GetGisFileRootDirectory());
-            if (!System.IO.Directory.Exists(GisUploadAttemptDirectory( gisUploadAttempt)))
-                System.IO.Directory.CreateDirectory(GisUploadAttemptDirectory(gisUploadAttempt));
-            var fileInfos = new DirectoryInfo(GisUploadAttemptDirectory(gisUploadAttempt)).GetFiles().ToList();
-            fileInfos.ForEach(f => f.Delete());
-        }
-
-        public static List<string> ValidExtensions = new List<string> { ".shx", ".dbf", ".shp", ".prj" };
-
         private ActionResult UploadGisFilePostImpl(int gisUploadAttemptID, UploadGisFileViewModel viewModel)
         {
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
@@ -174,98 +152,56 @@ namespace ProjectFirma.Web.Controllers
             var httpPostedFileBase = viewModel.FileResourceData;
             var fileEnding = ".gdb.zip";
             var importTableName = string.Empty;
-            string shapeFilePath = null;
             var shapeFileSuccessfullyExtractedToDisk = false;
 
-            ZipFile zipFile = null; 
+            var shapeFilePath = GisUploadAttemptStaging.UnzipAndSaveFileToDiskIfShapefile(httpPostedFileBase, gisUploadAttempt, ref shapeFileSuccessfullyExtractedToDisk);
 
-            var zipFailure = false;
-            try
-            {
-                zipFile = new ZipFile(httpPostedFileBase.InputStream);
-            }
-            catch (Exception)
-            {
-                zipFailure = true;
-            }
-
-
-            if (!zipFailure && zipFile != null)
-            {
-                SetupDirectory(gisUploadAttempt);
-                var extensionsFound = new List<string>();
-                var shapeFilePathCreated = false;
-                foreach (ZipEntry zipEntry in zipFile)
-                {
-                    if (!zipEntry.IsFile)
-                        continue;
-
-                    var extension = Path.GetExtension(zipEntry.Name);
-
-                    if (ValidExtensions.Any(e => e == extension))
-                    {
-                        if (extensionsFound.All(e => e != extension))
-                            extensionsFound.Add(extension);
-
-                        var shapefileNameWithExtension = Path.GetFileName(zipEntry.Name);
-                        if (shapefileNameWithExtension == null)
-                            continue;
-
-                        // this file is a "keeper", extract it and write it to disk
-
-                        var fullFilePath = Path.Combine(GisUploadAttemptDirectory(gisUploadAttempt),
-                            shapefileNameWithExtension);
-                        if (extension.Equals(".shp"))
-                        {
-                            shapeFilePath = fullFilePath;
-                            shapeFilePathCreated = true;
-                        }
-
-                        var buffer = new byte[4096]; // 4K is optimum
-                        var zipStream = zipFile.GetInputStream(zipEntry);
-
-                        // unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size of the file, but does not waste memory
-                        using (var streamWriter = System.IO.File.Create(fullFilePath))
-                        {
-                            StreamUtils.Copy(zipStream, streamWriter, buffer);
-                        }
-                    }
-                }
-                shapeFileSuccessfullyExtractedToDisk = extensionsFound.Count == ValidExtensions.Count && shapeFilePathCreated;
-            }
-
-            var errorMessage = "";
             if (shapeFileSuccessfullyExtractedToDisk)
             {
-                
-                try
-                {
-                    GisUploadAttemptStaging.ImportShapefileIntoSqlTempTable(shapeFilePath, gisUploadAttempt, out importTableName);
-                }
-                catch (Ogr2OgrCommandLineException e)
-                {
-                    errorMessage = e.Message;
-                    SetErrorForDisplay(errorMessage);
-                }
+                importTableName = ImportExtractedShapefileToSql(shapeFilePath, gisUploadAttempt, importTableName);
             }
 
             else
             {
-                using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
-                {
-                    var gdbFile = disposableTempFile.FileInfo;
-                    httpPostedFileBase.SaveAs(gdbFile.FullName);
-                    GisUploadAttemptStaging.ImportGdbIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
-                }
+                importTableName = ImportGdbToSql(fileEnding, httpPostedFileBase, gisUploadAttempt);
             }
-          
-
             gisUploadAttempt.ImportTableName = importTableName;
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
             return new ModalDialogFormJsonResult();
         }
 
+        private string ImportGdbToSql(string fileEnding, HttpPostedFileBase httpPostedFileBase,
+            GisUploadAttempt gisUploadAttempt)
+        {
+            string importTableName;
+            using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
+            {
+                var gdbFile = disposableTempFile.FileInfo;
+                httpPostedFileBase.SaveAs(gdbFile.FullName);
+                GisUploadAttemptStaging.ImportGdbIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
+                SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
+            }
+
+            return importTableName;
+        }
+
+        private string ImportExtractedShapefileToSql(string shapeFilePath, GisUploadAttempt gisUploadAttempt,
+            string importTableName)
+        {
+            try
+            {
+                GisUploadAttemptStaging.ImportShapefileIntoSqlTempTable(shapeFilePath, gisUploadAttempt, out importTableName);
+                SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
+            }
+            catch (Ogr2OgrCommandLineException e)
+            {
+                SetErrorForDisplay(e.Message);
+            }
+
+            return importTableName;
+        }
+
+        
         private List<GisRecord> GetGisRecordsFromGisUploadAttempt(int gisUploadAttemptID)
         {
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
@@ -275,12 +211,12 @@ namespace ProjectFirma.Web.Controllers
             var idColumn = realColumns.Where(x => x.PrimaryKey == 1).Single();
             var dataColumns = realColumns.Where(x =>
                     x.PrimaryKey != 1 &&
-                    !string.Equals(x.ColumnName, "Shape", StringComparison.InvariantCultureIgnoreCase))
+                    !string.Equals(x.ColumnName, GisUploadAttemptStaging.GeomName, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
 
             var dictionary = new Dictionary<int, List<GisColumnName>>();
             var listOfIds = GetColumnValuesForGisImport(importTableName, idColumn.ColumnName, idColumn.ColumnName, 1);
-            var listOfFeatures = GetFeaturesForGisImport(importTableName, idColumn.ColumnName, "Shape");
+            var listOfFeatures = GetFeaturesForGisImport(importTableName, idColumn.ColumnName, GisUploadAttemptStaging.GeomName);
             foreach (var gisColumnName in listOfIds)
             {
                 var parsedIntID = int.Parse(gisColumnName.ID);
