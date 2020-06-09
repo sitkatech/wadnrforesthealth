@@ -4,11 +4,16 @@ using System.Data;
 using System.Data.Entity.Spatial;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.IO;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
+using LtInfo.Common.GdalOgr;
 using LtInfo.Common.MvcResults;
 using Microsoft.SqlServer.Types;
 using ProjectFirma.Web.Common;
@@ -135,6 +140,29 @@ namespace ProjectFirma.Web.Controllers
             return UploadGisFilePostImpl(gisUploadAttemptID, viewModel);
         }
 
+
+        public string GetGisFileRootDirectory()
+        {
+            return FirmaWebConfiguration.ShapeFileRootDirectory;
+        }
+
+        public string GisUploadAttemptDirectory(GisUploadAttempt gisUploadAttempt)
+        {
+            return Path.Combine(GetGisFileRootDirectory(), gisUploadAttempt.GisUploadAttemptID.ToString());
+        }
+
+        protected void SetupDirectory(GisUploadAttempt gisUploadAttempt)
+        {
+            if (!System.IO.Directory.Exists(GetGisFileRootDirectory()))
+                System.IO.Directory.CreateDirectory(GetGisFileRootDirectory());
+            if (!System.IO.Directory.Exists(GisUploadAttemptDirectory( gisUploadAttempt)))
+                System.IO.Directory.CreateDirectory(GisUploadAttemptDirectory(gisUploadAttempt));
+            var fileInfos = new DirectoryInfo(GisUploadAttemptDirectory(gisUploadAttempt)).GetFiles().ToList();
+            fileInfos.ForEach(f => f.Delete());
+        }
+
+        public static List<string> ValidExtensions = new List<string> { ".shx", ".dbf", ".shp", ".prj" };
+
         private ActionResult UploadGisFilePostImpl(int gisUploadAttemptID, UploadGisFileViewModel viewModel)
         {
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
@@ -146,12 +174,91 @@ namespace ProjectFirma.Web.Controllers
             var httpPostedFileBase = viewModel.FileResourceData;
             var fileEnding = ".gdb.zip";
             var importTableName = string.Empty;
-            using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
+            string shapeFilePath = null;
+            var shapeFileSuccessfullyExtractedToDisk = false;
+
+            ZipFile zipFile = null; 
+
+            var zipFailure = false;
+            try
             {
-                var gdbFile = disposableTempFile.FileInfo;
-                httpPostedFileBase.SaveAs(gdbFile.FullName);
-                GisUploadAttemptStaging.ImportIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
+                zipFile = new ZipFile(httpPostedFileBase.InputStream);
             }
+            catch (Exception)
+            {
+                zipFailure = true;
+            }
+
+
+            if (!zipFailure && zipFile != null)
+            {
+                SetupDirectory(gisUploadAttempt);
+                var extensionsFound = new List<string>();
+                var shapeFilePathCreated = false;
+                foreach (ZipEntry zipEntry in zipFile)
+                {
+                    if (!zipEntry.IsFile)
+                        continue;
+
+                    var extension = Path.GetExtension(zipEntry.Name);
+
+                    if (ValidExtensions.Any(e => e == extension))
+                    {
+                        if (extensionsFound.All(e => e != extension))
+                            extensionsFound.Add(extension);
+
+                        var shapefileNameWithExtension = Path.GetFileName(zipEntry.Name);
+                        if (shapefileNameWithExtension == null)
+                            continue;
+
+                        // this file is a "keeper", extract it and write it to disk
+
+                        var fullFilePath = Path.Combine(GisUploadAttemptDirectory(gisUploadAttempt),
+                            shapefileNameWithExtension);
+                        if (extension.Equals(".shp"))
+                        {
+                            shapeFilePath = fullFilePath;
+                            shapeFilePathCreated = true;
+                        }
+
+                        var buffer = new byte[4096]; // 4K is optimum
+                        var zipStream = zipFile.GetInputStream(zipEntry);
+
+                        // unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size of the file, but does not waste memory
+                        using (var streamWriter = System.IO.File.Create(fullFilePath))
+                        {
+                            StreamUtils.Copy(zipStream, streamWriter, buffer);
+                        }
+                    }
+                }
+                shapeFileSuccessfullyExtractedToDisk = extensionsFound.Count == ValidExtensions.Count && shapeFilePathCreated;
+            }
+
+            var errorMessage = "";
+            if (shapeFileSuccessfullyExtractedToDisk)
+            {
+                
+                try
+                {
+                    GisUploadAttemptStaging.ImportShapefileIntoSqlTempTable(shapeFilePath, gisUploadAttempt, out importTableName);
+                }
+                catch (Ogr2OgrCommandLineException e)
+                {
+                    errorMessage = e.Message;
+                    SetErrorForDisplay(errorMessage);
+                }
+            }
+
+            else
+            {
+                using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
+                {
+                    var gdbFile = disposableTempFile.FileInfo;
+                    httpPostedFileBase.SaveAs(gdbFile.FullName);
+                    GisUploadAttemptStaging.ImportGdbIntoSqlTempTable(gdbFile, gisUploadAttempt, out importTableName);
+                }
+            }
+          
 
             gisUploadAttempt.ImportTableName = importTableName;
             HttpRequestStorage.DatabaseEntities.SaveChanges();

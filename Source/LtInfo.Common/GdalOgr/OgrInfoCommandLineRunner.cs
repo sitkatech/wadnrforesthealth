@@ -40,6 +40,19 @@ namespace LtInfo.Common.GdalOgr
             return featureClassesFromFileGdb.Select(x => x.Split(' ').Skip(1).First()).ToList();
         }
 
+
+        public static List<string> GetFeatureClassNamesFromShapefile(FileInfo ogrInfoFileInfo, string shapeFilePath, double totalMilliseconds)
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var gdalDataDirectory = new DirectoryInfo(Path.Combine(ogrInfoFileInfo.DirectoryName, "gdal-data"));
+            var commandLineArguments = BuildOgrInfoCommandLineArgumentsToListFeatureClasses(shapeFilePath, gdalDataDirectory);
+            var processUtilityResult = ProcessUtility.ShellAndWaitImpl(ogrInfoFileInfo.DirectoryName, ogrInfoFileInfo.FullName, commandLineArguments, true, Convert.ToInt32(totalMilliseconds));
+
+            List<string> featureClassesFromFileGdb = processUtilityResult.StdOut.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            Check.Ensure(featureClassesFromFileGdb.Any(), "No feature classes found in Shapefile!");
+            return featureClassesFromFileGdb.Select(x => x.Split(' ').Skip(1).First()).ToList();
+        }
+
         public static Tuple<double, double, double, double> GetExtentFromGeoJson(FileInfo ogrInfoFileInfo, string geoJson, double totalMilliseconds)
         {
             using (var geoJsonFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".json"))
@@ -59,6 +72,22 @@ namespace LtInfo.Common.GdalOgr
                 var extentTokens = lines.First(x => x.StartsWith("Extent:")).Split(new[] {' ', '(', ')', ','}, StringSplitOptions.RemoveEmptyEntries).ToList();
                 return new Tuple<double, double, double, double>(double.Parse(extentTokens[1]), double.Parse(extentTokens[2]), double.Parse(extentTokens[4]), double.Parse(extentTokens[5]));
             }
+        }
+
+
+        private static List<string> BuildOgrInfoCommandLineArgumentsToListFeatureClasses(string sourceShapeFilePath, DirectoryInfo gdalDataDirectoryInfo)
+        {
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-ro",
+                "-so",
+                "-q",
+                sourceShapeFilePath
+            };
+            return commandLineArguments;
         }
 
         public static List<string> BuildOgrInfoCommandLineArgumentsToListFeatureClasses(FileInfo inputGdbFile, DirectoryInfo gdalDataDirectoryInfo)

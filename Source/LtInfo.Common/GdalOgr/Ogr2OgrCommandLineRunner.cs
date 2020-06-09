@@ -90,6 +90,38 @@ namespace LtInfo.Common.GdalOgr
             return processUtilityResult.StdOut;
         }
 
+        public string ImportPolyFromShapefile(string shapeFilePath, bool explodeCollections, string destinationTableName)
+        {
+            Check.Require(shapeFilePath.ToLower().EndsWith(".shp"), $"Input filename for shp input must end with .shp. Filename passed is {shapeFilePath}");
+            var commandLineArguments = BuildOgr2OgrCommandLineArgumentsForShapefileToSqlImport(shapeFilePath, _gdalDataPath, destinationTableName, _coordinateSystemId);
+            var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
+            return processUtilityResult.StdOut;
+        }
+
+        private static List<string> BuildOgr2OgrCommandLineArgumentsForShapefileToSqlImport(string sourceShapeFilePath, DirectoryInfo gdalDataDirectoryInfo, string destinationTableName, int coordinateSystemID)
+        {
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-overwrite",
+                "-t_srs",
+                GetMapProjection(coordinateSystemID),
+                "-lco",
+                "precision=NO",
+                "-lco",
+                "GEOM_NAME=Shape",
+                "-f",
+                "MSSQLSpatial",
+                "MSSQL:server=(local);database=WADNRForestHealthDB;trusted_connection=yes",
+                sourceShapeFilePath,
+                "-nln",
+                destinationTableName
+            };
+            return commandLineArguments;
+        }
+
         public void ImportGeoJsonToMsSql(string geoJson, string connectionString, string destinationTableName, string sourceColumnName, string destinationColumnName, string extraColumns)
         {
             var databaseConnectionString = $"MSSQL:{connectionString}";
