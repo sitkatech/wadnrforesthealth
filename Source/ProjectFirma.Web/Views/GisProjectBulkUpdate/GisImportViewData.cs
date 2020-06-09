@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public string CurrentSectionDisplayName { get; }
         public List<ProjectCreateSection> ProjectCreateSections { get; }
         public string InitialUploadUrl { get; }
+        public string GisMetadataUrl { get; }
         public string GeospatialValidationUrl { get; }
         public string ProvideFeedbackUrl { get; }
         public string SubmitUrl { get; }
@@ -77,6 +78,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 
             GeospatialValidationUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(gisUploadAttempt.GisUploadAttemptID));
             InitialUploadUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.UploadGisFile(gisUploadAttempt.GisUploadAttemptID));
+            GisMetadataUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.GisMetadata(gisUploadAttempt.GisUploadAttemptID));
             
             ApproveUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Approve(gisUploadAttempt.GisUploadAttemptID));
             WithdrawUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Withdraw(gisUploadAttempt.GisUploadAttemptID));

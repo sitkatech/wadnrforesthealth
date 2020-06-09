@@ -113,7 +113,13 @@ Source code is available upon request via <support@sitkatech.com>.
                 success: function (result, textStatus, jqXhr) {
                     jQuery(".progress").hide();
                     // Piggy back off the centralized login required detection in Ajax handling in SitkaAjax
-                    location.reload();
+                    if (refresh) {
+                        location.reload();
+                    }
+                    else
+                    {
+                        window.location.href = "@ViewDataTyped.GisMetadataUrl";
+                    }
                 },
                 error: function (xhr, statusText) {
                     // Piggy back off the centralized error Ajax handling in SitkaAjax
