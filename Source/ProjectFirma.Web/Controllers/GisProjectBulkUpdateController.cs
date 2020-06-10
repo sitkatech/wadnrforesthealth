@@ -68,11 +68,11 @@ namespace ProjectFirma.Web.Controllers
 
 
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ActionResult InstructionsGisImport(int gisUploadAttemptID)
+        public ActionResult InstructionsGisImport(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.GisUploadAttemptInstructions);
             var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
-                var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
                 var gisImportSectionStatus = GetGisImportSectionStatus(gisUploadAttempt);
                 var viewData = new InstructionsGisImportViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, firmaPage, false);
 
@@ -84,10 +84,10 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ActionResult UploadGisFile(int gisUploadAttemptID)
+        public ActionResult UploadGisFile(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var uploadGisFileViewModel = new UploadGisFileViewModel();
-            var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
 
             return ViewUploadGisFile(uploadGisFileViewModel, gisUploadAttempt);
         }
@@ -95,9 +95,9 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ActionResult GisMetadata(int gisUploadAttemptID)
+        public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
-            var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
             return ViewUploadGisMetadata(gisUploadAttempt);
         }
 
@@ -112,9 +112,10 @@ namespace ProjectFirma.Web.Controllers
 
 
         [ProjectsViewFullListFeature]
-        public GridJsonNetJObjectResult<GisFeature> GisRecordGridJsonData(int gisUploadAttemptID)
+        public GridJsonNetJObjectResult<GisFeature> GisRecordGridJsonData(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
-            var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
+            var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
             var realColumns = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.ToList();
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
@@ -138,8 +139,10 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult UploadGisFile(int gisUploadAttemptID, UploadGisFileViewModel viewModel)
+        public ActionResult UploadGisFile(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, UploadGisFileViewModel viewModel)
         {
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
+            var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
             return UploadGisFilePostImpl(gisUploadAttemptID, viewModel);
         }
 
