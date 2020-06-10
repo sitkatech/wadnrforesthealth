@@ -7,6 +7,8 @@ into #accountsToCreate
 union select '${db-batch-user}', 'U'
 union select '${db-geoserver-user}', 'U'
 union select '${db-geoserver-docker-user}', 'S'
+union select 'Sitka\Hawk Moth QA Support', 'G'
+union select 'Sitka\Hawk Moth QA Tester', 'G'
 
 -- Clear out any existing logins
 print 'Clearing out any existing logins'
@@ -28,6 +30,8 @@ from
     union select '${local-db-geoserver-docker-user}', 'S'
     union select '${qa-db-geoserver-docker-user}', 'S'
     union select '${prod-db-geoserver-docker-user}', 'S'
+    union select 'Sitka\Hawk Moth QA Support', 'G'
+    union select 'Sitka\Hawk Moth QA Tester', 'G'
 ) a left join #accountsToCreate ac on a.AccountName = ac.AccountName
 where ac.AccountName is null
 
