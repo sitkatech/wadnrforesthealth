@@ -3,6 +3,7 @@ AggregatedCounter	Id
 AuditLog	ProjectID					
 AuditLog	RecordID					
 Counter	Id					
+GisFeature	IsValid					
 Hash	Id					
 Job	Id					
 Job	StateId					
