@@ -17,34 +17,30 @@ namespace ProjectFirma.Web.Models
 
         public static List<string> ValidExtensions = new List<string> { ".shx", ".dbf", ".shp", ".prj" };
 
+        public const string GISImportTableName = "gisimport";
+
         public const string GeomName = "Shape";
         public const string FIDName = "GisImportFeatureID";
-        public static List<string> ImportGdbIntoSqlTempTable(FileInfo gdbFile, GisUploadAttempt gisUploadAttempt, out string importTableName)
+        public static List<string> ImportGdbIntoSqlTempTable(FileInfo gdbFile)
         {
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
-
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut);
-            var destinationTableName = $"gisImport{gisUploadAttempt.GisUploadAttemptID}";   
             ogr2OgrCommandLineRunner.ImportFileGdbToSql(gdbFile, false,
-                destinationTableName, GeomName, FIDName);
-            importTableName = destinationTableName;
+                GISImportTableName, GeomName, FIDName);
             return featureClassNames;
         }
 
 
-        public static List<string> ImportShapefileIntoSqlTempTable(string shapeFilePath, GisUploadAttempt gisUploadAttempt, out string importTableName)
+        public static List<string> ImportShapefileIntoSqlTempTable(string shapeFilePath)
         {
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
-
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromShapefile(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), shapeFilePath, Ogr2OgrCommandLineRunner.DefaultTimeOut);
-            var destinationTableName = $"gisImport{gisUploadAttempt.GisUploadAttemptID}";
             ogr2OgrCommandLineRunner.ImportPolyFromShapefile(shapeFilePath, false,
-                destinationTableName, GeomName, FIDName);
-            importTableName = destinationTableName;
+                GISImportTableName, GeomName, FIDName);
             return featureClassNames;
         }
 
