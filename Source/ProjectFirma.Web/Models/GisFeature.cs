@@ -2,6 +2,7 @@
 using System.Web;
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
+using LtInfo.Common.DbSpatial;
 using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -29,7 +30,8 @@ namespace ProjectFirma.Web.Models
 
         public Feature MakeFeatureWithRelevantProperties()
         {
-            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(GisFeatureGeometry);
+            var sqlGeom = GisFeatureGeometry.ToSqlGeometry().MakeValid();
+            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(sqlGeom.ToDbGeometryWithCoordinateSystem());
             feature.Properties.Add("GisFeature", GetDisplayNameAsUrl().ToString());
             return feature;
         }

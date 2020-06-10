@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             var columnsOrdered = columns.Where(x => x.SortOrder != 1).Where(x =>! string.Equals(x.GisMetadataAttribute.GisMetadataAttributeName, "Shape", StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.SortOrder).ToList();
 
 
-            Add("ID", x => x.GisFeatureID.ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GisFeatureID.ToString()), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Is Valid", x => (x.IsValid ?? false).ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
             foreach (var fGetColumnNamesForTableResult in columnsOrdered)
