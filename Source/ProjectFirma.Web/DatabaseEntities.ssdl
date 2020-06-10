@@ -5490,7 +5490,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
   </Function>
   <Function Name="procImportGisTableToGisFeature" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="tableNameToImportFrom" Type="varchar" Mode="In" />
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

@@ -37,7 +37,7 @@ using ProjectFirma.Web.Views.Grant;
 
 namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {
-    public class GisRecordGridSpec : GridSpec<GisFeature>
+    public class GisRecordGridSpec : GridSpec<Models.GisFeature>
     {
 
         public GisRecordGridSpec(Models.Person currentPerson, List<GisUploadAttemptGisMetadataAttribute> columns)
