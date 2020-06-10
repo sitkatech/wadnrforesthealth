@@ -193,6 +193,11 @@ namespace ProjectFirma.Web.Common
             return HttpRequestStorage.DatabaseEntities.CustomPages.ToList();
         }
 
+        public static List<CustomPage> GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum customPageNavigationSectionEnumValue)
+        {
+            return HttpRequestStorage.DatabaseEntities.CustomPages.Where(x => x.CustomPageNavigationSectionID == (int)customPageNavigationSectionEnumValue).ToList();
+        }
+
         public static ProjectUpdateConfiguration GetProjectUpdateConfiguration()
         {
             return HttpRequestStorage.DatabaseEntities.ProjectUpdateConfigurations.Single();

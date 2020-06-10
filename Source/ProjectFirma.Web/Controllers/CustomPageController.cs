@@ -50,6 +50,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<DisplayPageContent, DisplayPageContentViewData>(viewData);
         }
 
+
         [FirmaPageViewListFeature]
         public ViewResult Index()
         {
