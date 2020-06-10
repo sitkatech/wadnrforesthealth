@@ -21,12 +21,14 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
+using Microsoft.SqlServer.Types;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -35,24 +37,24 @@ using ProjectFirma.Web.Views.Grant;
 
 namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {
-    public class GisRecordGridSpec : GridSpec<GisProjectBulkUpdateController.GisRecord>
+    public class GisRecordGridSpec : GridSpec<GisFeature>
     {
 
-        public GisRecordGridSpec(Models.Person currentPerson, List<fGetColumnNamesForTable_Result> columns)
+        public GisRecordGridSpec(Models.Person currentPerson, List<GisUploadAttemptGisMetadataAttribute> columns)
         {
             ObjectNameSingular = $"GIS Record";
             ObjectNamePlural = $"GIS Records";
             SaveFiltersInCookie = false;
 
-            var columnsOrdered = columns.Where(x => x.PrimaryKey != 1).Where(x =>! string.Equals(x.ColumnName, "Shape", StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.PrimaryKey).ToList();
+            var columnsOrdered = columns.Where(x => x.SortOrder != 1).Where(x =>! string.Equals(x.GisMetadataAttribute.GisMetadataAttributeName, "Shape", StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.SortOrder).ToList();
 
 
-            Add("ID", x => x.ID.ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Is Valid", x => x.Feature.STIsValid().ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("ID", x => x.GisFeatureID.ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Is Valid", x => (x.IsValid ?? false).ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
             foreach (var fGetColumnNamesForTableResult in columnsOrdered)
             {
-                Add(fGetColumnNamesForTableResult.ColumnName, x => x.GisColumnNames.Single(y => string.Equals(y.ColumnnName, fGetColumnNamesForTableResult.ColumnName,StringComparison.InvariantCultureIgnoreCase)).ColumnValue, 90, DhtmlxGridColumnFilterType.Text);
+                Add(fGetColumnNamesForTableResult.GisMetadataAttribute.GisMetadataAttributeName, x => x.GisFeatureMetadataAttributes.Single(y => y.GisMetadataAttributeID == fGetColumnNamesForTableResult.GisMetadataAttributeID).GisFeatureMetadataAttributeValue, 90, DhtmlxGridColumnFilterType.Text);
             }
 
         }

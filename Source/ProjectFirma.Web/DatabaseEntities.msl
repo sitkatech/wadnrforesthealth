@@ -272,6 +272,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisFeature">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeature">
+        <MappingFragment StoreEntitySet="GisFeature">
+          <ScalarProperty Name="GisFeatureID" ColumnName="GisFeatureID" />
+          <ScalarProperty Name="GisUploadAttemptID" ColumnName="GisUploadAttemptID" />
+          <ScalarProperty Name="GisFeatureGeometry" ColumnName="GisFeatureGeometry" />
+          <ScalarProperty Name="GisImportFeatureKey" ColumnName="GisImportFeatureKey" />
+          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GisFeatureMetadataAttribute">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeatureMetadataAttribute">
+        <MappingFragment StoreEntitySet="GisFeatureMetadataAttribute">
+          <ScalarProperty Name="GisFeatureMetadataAttributeID" ColumnName="GisFeatureMetadataAttributeID" />
+          <ScalarProperty Name="GisFeatureID" ColumnName="GisFeatureID" />
+          <ScalarProperty Name="GisMetadataAttributeID" ColumnName="GisMetadataAttributeID" />
+          <ScalarProperty Name="GisFeatureMetadataAttributeValue" ColumnName="GisFeatureMetadataAttributeValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GisMetadataAttribute">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisMetadataAttribute">
+        <MappingFragment StoreEntitySet="GisMetadataAttribute">
+          <ScalarProperty Name="GisMetadataAttributeID" ColumnName="GisMetadataAttributeID" />
+          <ScalarProperty Name="GisMetadataAttributeName" ColumnName="GisMetadataAttributeName" />
+          <ScalarProperty Name="GisMetadataAttributeType" ColumnName="GisMetadataAttributeType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisUploadAttempt">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttempt">
         <MappingFragment StoreEntitySet="GisUploadAttempt">
@@ -280,6 +310,16 @@
           <ScalarProperty Name="GisUploadAttemptCreatePersonID" ColumnName="GisUploadAttemptCreatePersonID" />
           <ScalarProperty Name="GisUploadAttemptCreateDate" ColumnName="GisUploadAttemptCreateDate" />
           <ScalarProperty Name="ImportTableName" ColumnName="ImportTableName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GisUploadAttemptGisMetadataAttribute">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttemptGisMetadataAttribute">
+        <MappingFragment StoreEntitySet="GisUploadAttemptGisMetadataAttribute">
+          <ScalarProperty Name="GisUploadAttemptGisMetadataAttributeID" ColumnName="GisUploadAttemptGisMetadataAttributeID" />
+          <ScalarProperty Name="GisUploadAttemptID" ColumnName="GisUploadAttemptID" />
+          <ScalarProperty Name="GisMetadataAttributeID" ColumnName="GisMetadataAttributeID" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

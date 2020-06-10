@@ -26,7 +26,11 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
+    <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.GisFeature" />
+    <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisFeatureMetadataAttribute" />
+    <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisMetadataAttribute" />
     <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.GisUploadAttempt" />
+    <EntitySet Name="GisUploadAttemptGisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisUploadAttemptGisMetadataAttribute" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.GisUploadSourceOrganization" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
@@ -325,6 +329,22 @@
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
+      <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="GisFeatures" EntitySet="GisFeature" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID" Association="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID">
+      <End Role="GisFeature" EntitySet="GisFeature" />
+      <End Role="GisFeatureMetadataAttributes" EntitySet="GisFeatureMetadataAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" Association="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+      <End Role="GisMetadataAttribute" EntitySet="GisMetadataAttribute" />
+      <End Role="GisFeatureMetadataAttributes" EntitySet="GisFeatureMetadataAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" Association="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+      <End Role="GisMetadataAttribute" EntitySet="GisMetadataAttribute" />
+      <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
+    </AssociationSet>
     <AssociationSet Name="FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisUploadAttempts" EntitySet="GisUploadAttempt" />
@@ -332,6 +352,10 @@
     <AssociationSet Name="FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID">
       <End Role="GisUploadAttemptCreatePerson" EntitySet="Person" />
       <End Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" EntitySet="GisUploadAttempt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID">
+      <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -1338,6 +1362,39 @@
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
   </EntityType>
+  <EntityType Name="GisFeature">
+    <Key>
+      <PropertyRef Name="GisFeatureID" />
+    </Key>
+    <Property Name="GisFeatureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadAttemptID" Type="Int32" Nullable="false" />
+    <Property Name="GisFeatureGeometry" Type="Geometry" Nullable="false" />
+    <Property Name="GisImportFeatureKey" Type="Int32" Nullable="false" />
+    <Property Name="IsValid" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="GisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" FromRole="GisFeatures" ToRole="GisUploadAttempt" />
+    <NavigationProperty Name="GisFeatureMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID" FromRole="GisFeature" ToRole="GisFeatureMetadataAttributes" />
+  </EntityType>
+  <EntityType Name="GisFeatureMetadataAttribute">
+    <Key>
+      <PropertyRef Name="GisFeatureMetadataAttributeID" />
+    </Key>
+    <Property Name="GisFeatureMetadataAttributeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisFeatureID" Type="Int32" Nullable="false" />
+    <Property Name="GisMetadataAttributeID" Type="Int32" Nullable="false" />
+    <Property Name="GisFeatureMetadataAttributeValue" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisFeature" Relationship="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID" FromRole="GisFeatureMetadataAttributes" ToRole="GisFeature" />
+    <NavigationProperty Name="GisMetadataAttribute" Relationship="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" FromRole="GisFeatureMetadataAttributes" ToRole="GisMetadataAttribute" />
+  </EntityType>
+  <EntityType Name="GisMetadataAttribute">
+    <Key>
+      <PropertyRef Name="GisMetadataAttributeID" />
+    </Key>
+    <Property Name="GisMetadataAttributeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisMetadataAttributeName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="GisMetadataAttributeType" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisFeatureMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" FromRole="GisMetadataAttribute" ToRole="GisFeatureMetadataAttributes" />
+    <NavigationProperty Name="GisUploadAttemptGisMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" FromRole="GisMetadataAttribute" ToRole="GisUploadAttemptGisMetadataAttributes" />
+  </EntityType>
   <EntityType Name="GisUploadAttempt">
     <Key>
       <PropertyRef Name="GisUploadAttemptID" />
@@ -1347,8 +1404,21 @@
     <Property Name="GisUploadAttemptCreatePersonID" Type="Int32" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="DateTime" Nullable="false" />
     <Property Name="ImportTableName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisFeatures" Relationship="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttempt" ToRole="GisFeatures" />
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadAttempts" ToRole="GisUploadSourceOrganization" />
     <NavigationProperty Name="GisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" ToRole="GisUploadAttemptCreatePerson" />
+    <NavigationProperty Name="GisUploadAttemptGisMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttempt" ToRole="GisUploadAttemptGisMetadataAttributes" />
+  </EntityType>
+  <EntityType Name="GisUploadAttemptGisMetadataAttribute">
+    <Key>
+      <PropertyRef Name="GisUploadAttemptGisMetadataAttributeID" />
+    </Key>
+    <Property Name="GisUploadAttemptGisMetadataAttributeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadAttemptID" Type="Int32" Nullable="false" />
+    <Property Name="GisMetadataAttributeID" Type="Int32" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GisMetadataAttribute" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" FromRole="GisUploadAttemptGisMetadataAttributes" ToRole="GisMetadataAttribute" />
+    <NavigationProperty Name="GisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttemptGisMetadataAttributes" ToRole="GisUploadAttempt" />
   </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
@@ -3643,6 +3713,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
+    <End Role="GisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="1" />
+    <End Role="GisFeatures" Type="ProjectFirma.Web.Models.GisFeature" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="GisFeatures">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID">
+    <End Role="GisFeature" Type="ProjectFirma.Web.Models.GisFeature" Multiplicity="1" />
+    <End Role="GisFeatureMetadataAttributes" Type="ProjectFirma.Web.Models.GisFeatureMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisFeature">
+        <PropertyRef Name="GisFeatureID" />
+      </Principal>
+      <Dependent Role="GisFeatureMetadataAttributes">
+        <PropertyRef Name="GisFeatureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+    <End Role="GisMetadataAttribute" Type="ProjectFirma.Web.Models.GisMetadataAttribute" Multiplicity="1" />
+    <End Role="GisFeatureMetadataAttributes" Type="ProjectFirma.Web.Models.GisFeatureMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisMetadataAttribute">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Principal>
+      <Dependent Role="GisFeatureMetadataAttributes">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+    <End Role="GisMetadataAttribute" Type="ProjectFirma.Web.Models.GisMetadataAttribute" Multiplicity="1" />
+    <End Role="GisUploadAttemptGisMetadataAttributes" Type="ProjectFirma.Web.Models.GisUploadAttemptGisMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisMetadataAttribute">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Principal>
+      <Dependent Role="GisUploadAttemptGisMetadataAttributes">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
     <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.GisUploadSourceOrganization" Multiplicity="1" />
     <End Role="GisUploadAttempts" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="*" />
@@ -3664,6 +3782,18 @@
       </Principal>
       <Dependent Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson">
         <PropertyRef Name="GisUploadAttemptCreatePersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID">
+    <End Role="GisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="1" />
+    <End Role="GisUploadAttemptGisMetadataAttributes" Type="ProjectFirma.Web.Models.GisUploadAttemptGisMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="GisUploadAttemptGisMetadataAttributes">
+        <PropertyRef Name="GisUploadAttemptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
