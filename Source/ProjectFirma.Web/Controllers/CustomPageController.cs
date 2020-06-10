@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel);
             }
-            var customPage = new CustomPage(string.Empty, string.Empty, CustomPageDisplayType.Disabled);
+            var customPage = new CustomPage(string.Empty, string.Empty, CustomPageDisplayType.Disabled, CustomPageNavigationSection.About);
             viewModel.UpdateModel(customPage, CurrentPerson);
             HttpRequestStorage.DatabaseEntities.CustomPages.Add(customPage);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -169,8 +169,11 @@ namespace ProjectFirma.Web.Controllers
             var customPageTypesAsSelectListItems = CustomPageDisplayType.All.OrderBy(x => x.CustomPageDisplayTypeDisplayName)
                 .ToSelectListWithEmptyFirstRow(x => x.CustomPageDisplayTypeID.ToString(CultureInfo.InvariantCulture),
                     x => x.CustomPageDisplayTypeDisplayName);
+            var customPageNavigationSections = CustomPageNavigationSection.All.ToSelectListWithEmptyFirstRow(
+                x => x.CustomPageNavigationSectionID.ToString(CultureInfo.InvariantCulture),
+                y => y.CustomPageNavigationSectionName);
                       
-            var viewData = new EditViewData(customPageTypesAsSelectListItems);
+            var viewData = new EditViewData(customPageTypesAsSelectListItems, customPageNavigationSections);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 

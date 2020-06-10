@@ -56,7 +56,9 @@ namespace ProjectFirma.Web.Views.CustomPage
             Add("Page Name", a => a.CustomPageDisplayType != CustomPageDisplayType.Disabled ? UrlTemplate.MakeHrefString(a.AboutPageUrl, a.CustomPageDisplayName) : new HtmlString($"{a.CustomPageDisplayName}"), 180, DhtmlxGridColumnFilterType.Text);
             Add("Has Content", a => a.HasPageContent.ToYesNo(), 85, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CustomPageDisplayType.ToGridHeaderString(), a => a.CustomPageDisplayType.CustomPageDisplayTypeDisplayName, 110, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Navigation Section", a => a.CustomPageNavigationSection.CustomPageNavigationSectionName, 110, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("CustomPageID", a => a.CustomPageID, 0);
+
         }
     }
 }

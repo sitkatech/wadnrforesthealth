@@ -48,6 +48,10 @@ namespace ProjectFirma.Web.Views.CustomPage
         [Required]
         public int? CustomPageDisplayTypeID { get; set; }
 
+        [DisplayName("Navigation Section")]
+        [Required]
+        public int CustomPageNavigationSectionID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -60,14 +64,16 @@ namespace ProjectFirma.Web.Views.CustomPage
             CustomPageID = customPage.CustomPageID;
             CustomPageDisplayName = customPage.CustomPageDisplayName;
             CustomPageVanityUrl = customPage.CustomPageVanityUrl;
-            CustomPageDisplayTypeID = customPage.CustomPageDisplayTypeID;            
+            CustomPageDisplayTypeID = customPage.CustomPageDisplayTypeID;
+            CustomPageNavigationSectionID = customPage.CustomPageNavigationSectionID;
         }
 
         public void UpdateModel(Models.CustomPage customPage, Person currentPerson)
         {
             customPage.CustomPageDisplayName = CustomPageDisplayName;
             customPage.CustomPageVanityUrl = CustomPageVanityUrl;
-            customPage.CustomPageDisplayTypeID = CustomPageDisplayTypeID.Value;           
+            customPage.CustomPageDisplayTypeID = CustomPageDisplayTypeID.Value;
+            customPage.CustomPageNavigationSectionID = CustomPageNavigationSectionID;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -77,7 +83,7 @@ namespace ProjectFirma.Web.Views.CustomPage
             var existingCustomPages = MultiTenantHelpers.GetCustomPages();
             if (!CustomPageModelExtensions.IsDisplayNameUnique(existingCustomPages, CustomPageDisplayName, CustomPageID))
             {
-                validationResults.Add(new SitkaValidationResult<EditViewModel, string>("About Page with the provided Display Name already exists.", x => x.CustomPageDisplayName));
+                validationResults.Add(new SitkaValidationResult<EditViewModel, string>("Custom Page with the provided Display Name already exists.", x => x.CustomPageDisplayName));
             }
            
             if (!string.IsNullOrWhiteSpace(CustomPageVanityUrl))
@@ -88,7 +94,7 @@ namespace ProjectFirma.Web.Views.CustomPage
                 }
                 else if (!CustomPageModelExtensions.IsVanityUrlUnique(existingCustomPages, CustomPageVanityUrl, CustomPageID))
                 {
-                    validationResults.Add(new SitkaValidationResult<EditViewModel, string>("An About Page with the provided Vanity Url already exists.", x => x.CustomPageVanityUrl));
+                    validationResults.Add(new SitkaValidationResult<EditViewModel, string>("A Custom Page with the provided Vanity Url already exists.", x => x.CustomPageVanityUrl));
                 }
             }
 
