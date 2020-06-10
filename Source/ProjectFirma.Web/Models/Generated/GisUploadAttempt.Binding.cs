@@ -25,7 +25,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GisUploadAttempt()
         {
-
+            this.GisFeatures = new HashSet<GisFeature>();
+            this.GisUploadAttemptGisMetadataAttributes = new HashSet<GisUploadAttemptGisMetadataAttribute>();
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any();
         }
 
         /// <summary>
@@ -93,13 +94,22 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(GisFeatures.Any())
+            {
+                dependentObjects.Add(typeof(GisFeature).Name);
+            }
+
+            if(GisUploadAttemptGisMetadataAttributes.Any())
+            {
+                dependentObjects.Add(typeof(GisUploadAttemptGisMetadataAttribute).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name};
 
 
         /// <summary>
@@ -115,8 +125,24 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GisFeatures.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GisUploadAttemptGisMetadataAttributes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -128,6 +154,8 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GisUploadAttemptID; } set { GisUploadAttemptID = value; } }
 
+        public virtual ICollection<GisFeature> GisFeatures { get; set; }
+        public virtual ICollection<GisUploadAttemptGisMetadataAttribute> GisUploadAttemptGisMetadataAttributes { get; set; }
         public virtual GisUploadSourceOrganization GisUploadSourceOrganization { get; set; }
         public virtual Person GisUploadAttemptCreatePerson { get; set; }
 

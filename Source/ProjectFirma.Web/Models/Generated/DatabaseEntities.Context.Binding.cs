@@ -54,6 +54,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
+        public virtual DbSet<GisFeatureMetadataAttribute> GisFeatureMetadataAttributes { get; set; }
+        public virtual DbSet<GisFeature> GisFeatures { get; set; }
+        public virtual DbSet<GisMetadataAttribute> GisMetadataAttributes { get; set; }
+        public virtual DbSet<GisUploadAttemptGisMetadataAttribute> GisUploadAttemptGisMetadataAttributes { get; set; }
         public virtual DbSet<GisUploadAttempt> GisUploadAttempts { get; set; }
         public virtual DbSet<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
@@ -339,6 +343,18 @@ namespace ProjectFirma.Web.Models
                     var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
+
+                case "GisFeatureMetadataAttribute":
+                    return GisFeatureMetadataAttributes.GetGisFeatureMetadataAttribute(primaryKey);
+
+                case "GisFeature":
+                    return GisFeatures.GetGisFeature(primaryKey);
+
+                case "GisMetadataAttribute":
+                    return GisMetadataAttributes.GetGisMetadataAttribute(primaryKey);
+
+                case "GisUploadAttemptGisMetadataAttribute":
+                    return GisUploadAttemptGisMetadataAttributes.GetGisUploadAttemptGisMetadataAttribute(primaryKey);
 
                 case "GisUploadAttempt":
                     return GisUploadAttempts.GetGisUploadAttempt(primaryKey);
