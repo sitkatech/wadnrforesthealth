@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Views
         {
             var aboutMenu = new LtInfoMenuItem("About");
 
-            MultiTenantHelpers.GetCustomPages().ForEach(x =>
+            MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.About).ForEach(x =>
             {
                 var isVisible = x.CustomPageDisplayType == CustomPageDisplayType.Public ||
                                 (!currentPerson.IsAnonymousUser &&
@@ -132,6 +132,7 @@ namespace ProjectFirma.Web.Views
             });
             return aboutMenu;
         }
+
 
         /// <summary>
         /// Financials Top-Level menu
@@ -148,6 +149,18 @@ namespace ProjectFirma.Web.Views
             financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InvoiceController>(c => c.Index()), currentPerson,
                 $"Full { Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} List", "Group3"));
 
+            MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.Financials).ForEach(x =>
+            {
+                var isVisible = x.CustomPageDisplayType == CustomPageDisplayType.Public ||
+                                (!currentPerson.IsAnonymousUser &&
+                                 x.CustomPageDisplayType == CustomPageDisplayType.Protected);
+                if (isVisible)
+                {
+                    financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CustomPageController>(c => c.About(x.CustomPageVanityUrl)), currentPerson, x.CustomPageDisplayName, "Group4"));
+                }
+
+            });
+
             return financialsMenu;
         }
 
@@ -163,6 +176,18 @@ namespace ProjectFirma.Web.Views
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectStewardOrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.ProjectStewardOrganizationDisplayName.GetFieldDefinitionLabelPluralized()}", "Group3"));
             }
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", "Group3"));
+
+            MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.ProgramInfo).ForEach(x =>
+            {
+                var isVisible = x.CustomPageDisplayType == CustomPageDisplayType.Public ||
+                                (!currentPerson.IsAnonymousUser &&
+                                 x.CustomPageDisplayType == CustomPageDisplayType.Protected);
+                if (isVisible)
+                {
+                    programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CustomPageController>(c => c.About(x.CustomPageVanityUrl)), currentPerson, x.CustomPageDisplayName, "Group4"));
+                }
+
+            });
 
             return programInfoMenu;
         }
@@ -199,7 +224,7 @@ namespace ProjectFirma.Web.Views
             // Group 3 - Content Editing stuff
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FirmaPageController>(c => c.Index()), currentPerson, "Custom Page Content", "Group3"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FieldDefinitionController>(c => c.Index()), currentPerson, "Custom Labels & Definitions", "Group3"));
-            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CustomPageController>(c => c.Index()), currentPerson, "Custom About Pages", "Group3"));
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CustomPageController>(c => c.Index()), currentPerson, "Custom Pages", "Group3"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectCustomAttributeTypeController>(c => c.Manage()), currentPerson, "Custom Attributes", "Group3"));
 
             // Group 4 - Other
@@ -240,6 +265,20 @@ namespace ProjectFirma.Web.Views
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Pending()), currentPerson, $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", "Group3"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantAllocationAwardLandownerCostShareLineItemController>(tac => tac.Index()),currentPerson, "Treatments", "Group4"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InteractionEventController>(iec => iec.Index()), currentPerson, $"Full {Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()} List", "Group5"));
+
+            MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.Projects).ForEach(x =>
+            {
+                var isVisible = x.CustomPageDisplayType == CustomPageDisplayType.Public ||
+                                (!currentPerson.IsAnonymousUser &&
+                                 x.CustomPageDisplayType == CustomPageDisplayType.Protected);
+                if (isVisible)
+                {
+                    projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CustomPageController>(c => c.About(x.CustomPageVanityUrl)), currentPerson, x.CustomPageDisplayName, "Group6"));
+                }
+
+            });
+
+
             return projectsMenu;
         }
 

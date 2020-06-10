@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[CustomPage](
 	[CustomPageVanityUrl] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[CustomPageDisplayTypeID] [int] NOT NULL,
 	[CustomPageContent] [dbo].[html] NULL,
+	[CustomPageNavigationSectionID] [int] NOT NULL,
  CONSTRAINT [PK_CustomPage_CustomPageID] PRIMARY KEY CLUSTERED 
 (
 	[CustomPageID] ASC
@@ -19,3 +20,8 @@ ALTER TABLE [dbo].[CustomPage]  WITH CHECK ADD  CONSTRAINT [FK_CustomPage_Custom
 REFERENCES [dbo].[CustomPageDisplayType] ([CustomPageDisplayTypeID])
 GO
 ALTER TABLE [dbo].[CustomPage] CHECK CONSTRAINT [FK_CustomPage_CustomPageDisplayType_CustomPageDisplayTypeID]
+GO
+ALTER TABLE [dbo].[CustomPage]  WITH CHECK ADD  CONSTRAINT [FK_CustomPage_CustomPageNavigationSection_CustomPageNavigationSectionID] FOREIGN KEY([CustomPageNavigationSectionID])
+REFERENCES [dbo].[CustomPageNavigationSection] ([CustomPageNavigationSectionID])
+GO
+ALTER TABLE [dbo].[CustomPage] CHECK CONSTRAINT [FK_CustomPage_CustomPageNavigationSection_CustomPageNavigationSectionID]

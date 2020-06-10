@@ -27,10 +27,12 @@ namespace ProjectFirma.Web.Views.CustomPage
     public class EditViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> CustomPageDisplayTypes { get; }
+        public IEnumerable<SelectListItem> CustomPageNavigationSections { get; }
 
-        public EditViewData(IEnumerable<SelectListItem> customPageDisplayTypes)
+        public EditViewData(IEnumerable<SelectListItem> customPageDisplayTypes, IEnumerable<SelectListItem> customPageNavigationSections)
         {
-            CustomPageDisplayTypes = customPageDisplayTypes;           
+            CustomPageDisplayTypes = customPageDisplayTypes;
+            CustomPageNavigationSections = customPageNavigationSections;
         }
     }
 }

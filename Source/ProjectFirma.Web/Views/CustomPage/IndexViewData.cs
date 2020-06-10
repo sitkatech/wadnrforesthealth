@@ -37,12 +37,12 @@ namespace ProjectFirma.Web.Views.CustomPage
 
         public IndexViewData(Person currentPerson) : base(currentPerson, null)
         {
-            PageTitle = "Manage Custom About Pages";
+            PageTitle = "Manage Custom Pages";
 
             GridSpec = new CustomPageGridSpec(new FirmaPageViewListFeature().HasPermissionByPerson(currentPerson))
             {
-                ObjectNameSingular = "About Page",
-                ObjectNamePlural = "About Pages",
+                ObjectNameSingular = "Custom Page",
+                ObjectNamePlural = "Custom Pages",
                 SaveFiltersInCookie = true
             };
 
@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.CustomPage
             if (hasCustomPageManagePermissions)
             {
                 var contentUrl = SitkaRoute<CustomPageController>.BuildUrlFromExpression(t => t.New());
-                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new About Page");
+                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new Custom Page");
             }
             GridName = "customPagesGrid";
             GridDataUrl = SitkaRoute<CustomPageController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());

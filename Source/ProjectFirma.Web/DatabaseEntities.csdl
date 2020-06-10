@@ -1210,6 +1210,7 @@
     <Property Name="CustomPageVanityUrl" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="CustomPageDisplayTypeID" Type="Int32" Nullable="false" />
     <Property Name="CustomPageContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="CustomPageNavigationSectionID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CustomPageImages" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID" FromRole="CustomPage" ToRole="CustomPageImages" />
   </EntityType>
   <EntityType Name="CustomPageImage">
