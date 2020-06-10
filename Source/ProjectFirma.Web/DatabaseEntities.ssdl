@@ -26,7 +26,11 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.Store.GisFeature" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttempt" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisUploadAttemptGisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttemptGisMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
@@ -262,6 +266,18 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
     </AssociationSet>
+    <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
+      <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="GisFeatures" EntitySet="GisFeature" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID" Association="ProjectFirma.Web.Models.Store.FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID">
+      <End Role="GisFeature" EntitySet="GisFeature" />
+      <End Role="GisFeatureMetadataAttributes" EntitySet="GisFeatureMetadataAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" Association="ProjectFirma.Web.Models.Store.FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+      <End Role="GisMetadataAttribute" EntitySet="GisMetadataAttribute" />
+      <End Role="GisFeatureMetadataAttributes" EntitySet="GisFeatureMetadataAttribute" />
+    </AssociationSet>
     <AssociationSet Name="FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisUploadAttempts" EntitySet="GisUploadAttempt" />
@@ -269,6 +285,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID">
       <End Role="GisUploadAttemptCreatePerson" EntitySet="Person" />
       <End Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" EntitySet="GisUploadAttempt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+      <End Role="GisMetadataAttribute" EntitySet="GisMetadataAttribute" />
+      <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID">
+      <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -1280,6 +1304,33 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="GisFeature">
+    <Key>
+      <PropertyRef Name="GisFeatureID" />
+    </Key>
+    <Property Name="GisFeatureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadAttemptID" Type="int" Nullable="false" />
+    <Property Name="GisFeatureGeometry" Type="geometry" Nullable="false" />
+    <Property Name="GisImportFeatureKey" Type="int" Nullable="false" />
+    <Property Name="IsValid" Type="bit" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="GisFeatureMetadataAttribute">
+    <Key>
+      <PropertyRef Name="GisFeatureMetadataAttributeID" />
+    </Key>
+    <Property Name="GisFeatureMetadataAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisFeatureID" Type="int" Nullable="false" />
+    <Property Name="GisMetadataAttributeID" Type="int" Nullable="false" />
+    <Property Name="GisFeatureMetadataAttributeValue" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="GisMetadataAttribute">
+    <Key>
+      <PropertyRef Name="GisMetadataAttributeID" />
+    </Key>
+    <Property Name="GisMetadataAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisMetadataAttributeName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="GisMetadataAttributeType" Type="varchar" MaxLength="100" />
+  </EntityType>
   <EntityType Name="GisUploadAttempt">
     <Key>
       <PropertyRef Name="GisUploadAttemptID" />
@@ -1289,6 +1340,15 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GisUploadAttemptCreatePersonID" Type="int" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="datetime" Nullable="false" />
     <Property Name="ImportTableName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="GisUploadAttemptGisMetadataAttribute">
+    <Key>
+      <PropertyRef Name="GisUploadAttemptGisMetadataAttributeID" />
+    </Key>
+    <Property Name="GisUploadAttemptGisMetadataAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadAttemptID" Type="int" Nullable="false" />
+    <Property Name="GisMetadataAttributeID" Type="int" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
@@ -2991,6 +3051,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
+    <End Role="GisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="1" />
+    <End Role="GisFeatures" Type="ProjectFirma.Web.Models.Store.GisFeature" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="GisFeatures">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID">
+    <End Role="GisFeature" Type="ProjectFirma.Web.Models.Store.GisFeature" Multiplicity="1" />
+    <End Role="GisFeatureMetadataAttributes" Type="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisFeature">
+        <PropertyRef Name="GisFeatureID" />
+      </Principal>
+      <Dependent Role="GisFeatureMetadataAttributes">
+        <PropertyRef Name="GisFeatureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisFeatureMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+    <End Role="GisMetadataAttribute" Type="ProjectFirma.Web.Models.Store.GisMetadataAttribute" Multiplicity="1" />
+    <End Role="GisFeatureMetadataAttributes" Type="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisMetadataAttribute">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Principal>
+      <Dependent Role="GisFeatureMetadataAttributes">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
     <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="1" />
     <End Role="GisUploadAttempts" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="*" />
@@ -3012,6 +3108,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson">
         <PropertyRef Name="GisUploadAttemptCreatePersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID">
+    <End Role="GisMetadataAttribute" Type="ProjectFirma.Web.Models.Store.GisMetadataAttribute" Multiplicity="1" />
+    <End Role="GisUploadAttemptGisMetadataAttributes" Type="ProjectFirma.Web.Models.Store.GisUploadAttemptGisMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisMetadataAttribute">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Principal>
+      <Dependent Role="GisUploadAttemptGisMetadataAttributes">
+        <PropertyRef Name="GisMetadataAttributeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID">
+    <End Role="GisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="1" />
+    <End Role="GisUploadAttemptGisMetadataAttributes" Type="ProjectFirma.Web.Models.Store.GisUploadAttemptGisMetadataAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="GisUploadAttemptGisMetadataAttributes">
+        <PropertyRef Name="GisUploadAttemptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5368,6 +5488,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   </Function>
   <Function Name="pProjectCodeImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="procImportGisTableToGisFeature" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tableNameToImportFrom" Type="varchar" Mode="In" />
+    <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

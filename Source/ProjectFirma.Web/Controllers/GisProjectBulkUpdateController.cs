@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -103,7 +104,7 @@ namespace ProjectFirma.Web.Controllers
         private ViewResult ViewUploadGisMetadata(GisUploadAttempt gisUploadAttempt)
         {
             var gisImportSectionStatus = GetGisImportSectionStatus(gisUploadAttempt);
-            var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(gisUploadAttempt.ImportTableName).ToList();
+            var realColumns = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.ToList();
             var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
             var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec);
             return RazorView<GisMetadata, GisMetadataViewData>(viewData);
@@ -111,13 +112,15 @@ namespace ProjectFirma.Web.Controllers
 
 
         [ProjectsViewFullListFeature]
-        public GridJsonNetJObjectResult<GisRecord> GisRecordGridJsonData(int gisUploadAttemptID)
+        public GridJsonNetJObjectResult<GisFeature> GisRecordGridJsonData(int gisUploadAttemptID)
         {
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
-            var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(gisUploadAttempt.ImportTableName).ToList();
-            var gisRecords = GetGisRecordsFromGisUploadAttempt(gisUploadAttemptID);
+            var realColumns = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.ToList();
+            var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
+                .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
+
             var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GisRecord>(gisRecords, gridSpec);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GisFeature>(gisFeatureList, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
@@ -167,7 +170,64 @@ namespace ProjectFirma.Web.Controllers
             }
             gisUploadAttempt.ImportTableName = importTableName;
             HttpRequestStorage.DatabaseEntities.SaveChanges();
+            SaveGisUploadToNormalizedFields(importTableName, gisUploadAttempt);
             return new ModalDialogFormJsonResult();
+        }
+
+        private void SaveGisUploadToNormalizedFields(string importTableName, GisUploadAttempt gisUploadAttempt)
+        {
+            if (!string.IsNullOrEmpty(gisUploadAttempt.ImportTableName))
+            {
+                var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(importTableName).ToList();
+                var dataColumns = realColumns.Where(x =>
+                        x.PrimaryKey != 1 &&
+                        !string.Equals(x.ColumnName, GisUploadAttemptStaging.GeomName, StringComparison.InvariantCultureIgnoreCase))
+                    .ToList();
+                var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
+                foreach (var fGetColumnNamesForTableResult in dataColumns)
+                {
+                    var existingGisMetdataAttribute = gisMetdataAttributes.SingleOrDefault(x =>
+                        string.Equals(x.GisMetadataAttributeName, fGetColumnNamesForTableResult.ColumnName,
+                            StringComparison.InvariantCulture));
+                    if (existingGisMetdataAttribute == null)
+                    {
+                        HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Add(
+                            new GisMetadataAttribute(fGetColumnNamesForTableResult.ColumnName));
+                        HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    }
+
+                    existingGisMetdataAttribute = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList().Single(x =>
+                        string.Equals(x.GisMetadataAttributeName, fGetColumnNamesForTableResult.ColumnName,
+                            StringComparison.InvariantCulture));
+
+                    HttpRequestStorage.DatabaseEntities.GisUploadAttemptGisMetadataAttributes.Add(
+                        new GisUploadAttemptGisMetadataAttribute(gisUploadAttempt, existingGisMetdataAttribute,
+                            fGetColumnNamesForTableResult.PrimaryKey));
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                }
+            }
+
+            var gisRecords = GetGisRecordsFromGisUploadAttempt(gisUploadAttempt.GisUploadAttemptID);
+            var listOfPossibleAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
+
+
+            var attributeDictionary = listOfPossibleAttributes.ToDictionary(x => x.GisMetadataAttributeName, y => y);
+
+            foreach (var gisRecord in gisRecords)
+            {
+
+                var gisFeature = gisRecord.GisFeature;
+                var columnValuesFromGisRecord = gisRecord.GisColumnNames;
+                foreach (var gisColumn in columnValuesFromGisRecord)
+                {
+                    var existingGisMetdataAttribute = attributeDictionary[gisColumn.ColumnName];
+                    var gisFeatureMetadataAttribute = new GisFeatureMetadataAttribute(gisFeature, existingGisMetdataAttribute);
+                    gisFeatureMetadataAttribute.GisFeatureMetadataAttributeValue = gisColumn.ColumnValue;
+                    HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Add(gisFeatureMetadataAttribute);
+                }
+            }
+
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
         private string ImportGdbToSql(string fileEnding, HttpPostedFileBase httpPostedFileBase,
@@ -207,7 +267,6 @@ namespace ProjectFirma.Web.Controllers
             var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
             var importTableName = gisUploadAttempt.ImportTableName;
             var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(importTableName).ToList();
-
             var idColumn = realColumns.Where(x => x.PrimaryKey == 1).Single();
             var dataColumns = realColumns.Where(x =>
                     x.PrimaryKey != 1 &&
@@ -215,8 +274,11 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             var dictionary = new Dictionary<int, List<GisColumnName>>();
-            var listOfIds = GetColumnValuesForGisImport(importTableName, idColumn.ColumnName, idColumn.ColumnName, 1);
-            var listOfFeatures = GetFeaturesForGisImport(importTableName, idColumn.ColumnName, GisUploadAttemptStaging.GeomName);
+            var listOfIds = GetIDColumnValuesForGisImport(importTableName, GisUploadAttemptStaging.FIDName, GisUploadAttemptStaging.FIDName, 1);
+            ExecProcImportGisTableToGisFeature(importTableName, gisUploadAttemptID);
+            var gisUploadAttemptRefreshed = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+            var listOfFeatures = gisUploadAttemptRefreshed.GisFeatures.ToList();
+            DropGeomColumnFromImportTable(importTableName, GisUploadAttemptStaging.GeomName);
             foreach (var gisColumnName in listOfIds)
             {
                 var parsedIntID = int.Parse(gisColumnName.ID);
@@ -240,8 +302,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 var gisRecordID = int.Parse(gisRecord.GisColumnNames.First().ID);
                 gisRecord.ID = gisRecordID;
-                var featureRecord = listOfFeatures.Single(x => int.Parse(x.ID) == gisRecordID);
-                gisRecord.Feature = featureRecord.Feature;
+                var featureRecord = listOfFeatures.Single(x => x.GisImportFeatureKey == gisRecordID);
+                gisRecord.GisFeature = featureRecord;
             }
 
             return gisRecordList;
@@ -252,7 +314,7 @@ namespace ProjectFirma.Web.Controllers
         {
             List<GisColumnName> listOfColumnNames;
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
-            var sqlQuery = $"SELECT {idColumnName}, {dataColumName}  from dbo.{importedTableName}";
+            var sqlQuery = $"SELECT * from dbo.{importedTableName}";
             using (var command = new SqlCommand(sqlQuery))
             {
                 var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
@@ -264,6 +326,30 @@ namespace ProjectFirma.Web.Controllers
                         listOfColumnNames =
                             dt.Rows.Cast<DataRow>()
                                 .Select(x => new GisColumnName(x[idColumnName].ToString(), x[dataColumName].ToString(), dataColumName, sortOrder))   
+                                .ToList();
+                    }
+                }
+            }
+
+            return listOfColumnNames;
+        }
+
+        private List<GisColumnName> GetIDColumnValuesForGisImport(string importedTableName, string idColumnName, string dataColumName, int sortOrder)
+        {
+            List<GisColumnName> listOfColumnNames;
+            var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            var sqlQuery = $"SELECT {idColumnName}, {dataColumName} from dbo.{importedTableName}";
+            using (var command = new SqlCommand(sqlQuery))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    using (var dt = ProjectFirmaSqlDatabase.ExecuteSqlCommand(command).Tables[0])
+                    {
+                        listOfColumnNames =
+                            dt.Rows.Cast<DataRow>()
+                                .Select(x => new GisColumnName(x[idColumnName].ToString(), x[dataColumName].ToString(), dataColumName, sortOrder))
                                 .ToList();
                     }
                 }
@@ -296,13 +382,58 @@ namespace ProjectFirma.Web.Controllers
             return listOfColumnNames;
         }
 
+        private void DropGeomColumnFromImportTable(string importedTableName, string dataColumName)
+        {
+            var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            var sqlQueryOne = $"DROP INDEX [ogr_dbo_{importedTableName}_{dataColumName}_sidx] ON [dbo].[{importedTableName}]";
+            using (var command = new SqlCommand(sqlQueryOne))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+                   
+                }
+            }
+
+
+            var sqlQueryTwo = $"ALTER TABLE dbo.{importedTableName} DROP COLUMN {dataColumName}";
+            using (var command = new SqlCommand(sqlQueryTwo))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+
+                }
+            }
+        }
+
+        private void ExecProcImportGisTableToGisFeature(string importedTableName, int gisUploadAttemptID)
+        {
+            var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            var sqlQueryOne = $"exec dbo.procImportGisTableToGisFeature @tableNameToImportFrom = '{importedTableName}' , @piGisUploadAttemptID = {gisUploadAttemptID}";
+            using (var command = new SqlCommand(sqlQueryOne))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+                }
+            }
+        }
 
 
         public class GisRecord
         {
             public List<GisColumnName> GisColumnNames { get; set; }
 
-            public SqlGeometry Feature { get; set; }
+            public  GisFeature GisFeature { get; set; }
+
+            public DbGeometry DbGeometry { get; set; }
 
             public int ID { get; set; }
 
@@ -317,16 +448,16 @@ namespace ProjectFirma.Web.Controllers
             public string ID { get; set; }
             public string ColumnValue { get; set; }
 
-            public string ColumnnName { get; set; }
+            public string ColumnName { get; set; }
 
             public int SortOrder { get; set; }
 
 
-            public GisColumnName(string idValue, string columnValue, string columnnName, int sortOrder)
+            public GisColumnName(string idValue, string columnValue, string columnName, int sortOrder)
             {
                 ID = idValue;
                 ColumnValue = columnValue;
-                ColumnnName = columnnName;
+                ColumnName = columnName;
                 SortOrder = sortOrder;
             }
 
@@ -336,18 +467,17 @@ namespace ProjectFirma.Web.Controllers
         public class GisShape
         {
             public string ID { get; set; }
-            public SqlGeometry Feature { get; set; }
+
+            public byte[] SqlGeometryAsByteArray { get; set; }
 
             public string ColumnnName { get; set; }
 
 
             public GisShape(string idValue, byte[] featureAsWellKnownText, string columnnName)
             {
-                //var buffer = featureAsWellKnownText.ToList().Select(x => x.Value).ToArray();
-                var sqlBytes = new SqlBytes(featureAsWellKnownText);
-                var feature = SqlGeometry.Deserialize(sqlBytes);
+
                 ID = idValue;
-                Feature = feature;
+                SqlGeometryAsByteArray = featureAsWellKnownText;
                 ColumnnName = columnnName;
             }
 
