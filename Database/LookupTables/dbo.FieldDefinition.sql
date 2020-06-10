@@ -99,7 +99,7 @@ VALUES
 (276, N'FocusArea', 'Focus Area', 'Placeholder definition for Focus Area'),
 (277, N'Grant', 'Grant', 'Placeholder definition for Grant'),
 (278, N'GrantAllocation', 'Grant Allocation', 'Placeholder definition for Grant Allocation.'),
-(279, N'CostType', 'CostType', 'Placeholder definition for CostType.'),
+(279, N'CostType', 'Cost Type', 'Placeholder definition for Cost Type.'),
 (280, N'ProjectCode', 'Project Code', 'Placeholder definition for Project Code.'),
 (281, N'GrantAllocationProjectCode', 'Grant Allocation Project Code', 'Placeholder definition for Grant Allocation Project Code.'),
 (282, N'ProgramIndex', 'Program Index', 'Placeholder definition for Program Index.'),
