@@ -100,6 +100,11 @@ namespace LtInfo.Common.DbSpatial
             return DbGeometry.FromBinary(sqlGeometry.STAsBinary().Buffer);
         }
 
+        public static DbGeometry ToDbGeometryWithCoordinateSystem(this SqlGeometry sqlGeometry)
+        {
+            return DbGeometry.FromBinary(sqlGeometry.STAsBinary().Buffer, sqlGeometry.STSrid.Value);
+        }
+
         public static SqlGeometry ToSqlGeometry(this DbGeometry dbGeometry)
         {
             return SqlGeometry.STGeomFromWKB(new SqlBytes(dbGeometry.AsBinary()), dbGeometry.CoordinateSystemId);
