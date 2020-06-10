@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Controllers
         [Route("About/{vanityUrl}")]
         public ActionResult About(string vanityUrl)
         {
-            var customPage = MultiTenantHelpers.GetCustomPages()
+            var customPage = MultiTenantHelpers.GetAllCustomPages()
                 .SingleOrDefault(x => x.CustomPageVanityUrl == vanityUrl);
             new CustomPageViewFeature().DemandPermission(CurrentPerson, customPage);
             var hasPermission = new CustomPageManageFeature().HasPermission(CurrentPerson, customPage).HasPermission;

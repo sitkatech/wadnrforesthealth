@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Views
         {
             var aboutMenu = new LtInfoMenuItem("About");
 
-            MultiTenantHelpers.GetCustomPages().ForEach(x =>
+            MultiTenantHelpers.GetAllCustomPages().ForEach(x =>
             {
                 var isVisible = x.CustomPageDisplayType == CustomPageDisplayType.Public ||
                                 (!currentPerson.IsAnonymousUser &&

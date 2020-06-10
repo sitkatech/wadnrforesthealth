@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Views.CustomPage
         {
             var validationResults = new List<ValidationResult>();
 
-            var existingCustomPages = MultiTenantHelpers.GetCustomPages();
+            var existingCustomPages = MultiTenantHelpers.GetAllCustomPages();
             if (!CustomPageModelExtensions.IsDisplayNameUnique(existingCustomPages, CustomPageDisplayName, CustomPageID))
             {
                 validationResults.Add(new SitkaValidationResult<EditViewModel, string>("Custom Page with the provided Display Name already exists.", x => x.CustomPageDisplayName));

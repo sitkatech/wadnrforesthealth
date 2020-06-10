@@ -188,7 +188,7 @@ namespace ProjectFirma.Web.Common
             return HttpRequestStorage.DatabaseEntities.ClassificationSystems.ToList();
         }
 
-        public static List<CustomPage> GetCustomPages()
+        public static List<CustomPage> GetAllCustomPages()
         {
             return HttpRequestStorage.DatabaseEntities.CustomPages.ToList();
         }
