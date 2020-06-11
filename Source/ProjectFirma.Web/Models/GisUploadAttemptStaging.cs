@@ -23,24 +23,26 @@ namespace ProjectFirma.Web.Models
         public const string FIDName = "GisImportFeatureID";
         public static List<string> ImportGdbIntoSqlTempTable(FileInfo gdbFile)
         {
+            var connectionString = FirmaWebConfiguration.DatabaseConnectionString;
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut);
             ogr2OgrCommandLineRunner.ImportFileGdbToSql(gdbFile, false,
-                GISImportTableName, GeomName, FIDName);
+                GISImportTableName, GeomName, FIDName, connectionString);
             return featureClassNames;
         }
 
 
         public static List<string> ImportShapefileIntoSqlTempTable(string shapeFilePath)
         {
+            var connectionString = FirmaWebConfiguration.DatabaseConnectionString;
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromShapefile(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), shapeFilePath, Ogr2OgrCommandLineRunner.DefaultTimeOut);
             ogr2OgrCommandLineRunner.ImportPolyFromShapefile(shapeFilePath, false,
-                GISImportTableName, GeomName, FIDName);
+                GISImportTableName, GeomName, FIDName, connectionString);
             return featureClassNames;
         }
 
