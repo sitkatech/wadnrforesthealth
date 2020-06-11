@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         public static List<string> ImportGdbIntoSqlTempTable(FileInfo gdbFile)
         {
             var connectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            connectionString = connectionString.Replace("Trusted_Connection=True", "trusted_connection=yes");
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
@@ -37,6 +38,7 @@ namespace ProjectFirma.Web.Models
         public static List<string> ImportShapefileIntoSqlTempTable(string shapeFilePath)
         {
             var connectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            connectionString = connectionString.Replace("Trusted_Connection=True", "trusted_connection=yes");
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
