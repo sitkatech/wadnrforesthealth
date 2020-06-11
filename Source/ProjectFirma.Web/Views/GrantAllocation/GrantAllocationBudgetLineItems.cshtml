@@ -27,6 +27,26 @@
 @using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.GrantAllocationBudgetLineItems
 
+<script>
+    jQuery(function () {
+        jQuery('.ajax-field').on('change', function (evt) {
+            evt.preventDefault();
+            var formData = {
+                GrantAllocationID: 245,
+                LineItemAmount: 5.00,
+            LineItemNote : "This is a note",
+            GrantAllocationBudgetLineItemID : 1,
+            CostTypeID : 3}
+
+            jQuery.post('@ViewDataTyped.FormPostUrl', formData, function () {
+                alert('Posted using jQuery');
+            });
+        });
+    });
+</script>
+
+
+
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panelFirma">
@@ -36,7 +56,34 @@
                 </h3>
             </div>
             <div class="panel-body">
-                @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationBudgetLineItemGridSpec, ViewDataTyped.GrantAllocationBudgetLineItemGridName, ViewDataTyped.GrantAllocationBudgetLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                <form id="budgetLineItemForm">
+                    <button id="submit">Test</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    @FieldDefinition.CostType.GetFieldDefinitionLabel()
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Note
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var costType in ViewDataTyped.CostTypes)
+                            {
+                                <tr>
+                                    <th scope="row">@costType.CostTypeDisplayName</th>
+                                    <td><input class="ajax-field" type="number" step=".01" /></td>
+                                    <td><input type="text" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>

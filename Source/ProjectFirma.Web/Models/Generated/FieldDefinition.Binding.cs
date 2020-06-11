@@ -1819,7 +1819,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionCostType : FieldDefinition
     {
         private FieldDefinitionCostType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionCostType Instance = new FieldDefinitionCostType(279, @"CostType", @"CostType", @"Placeholder definition for CostType.");
+        public static readonly FieldDefinitionCostType Instance = new FieldDefinitionCostType(279, @"CostType", @"Cost Type", @"Placeholder definition for Cost Type.");
     }
 
     public partial class FieldDefinitionProjectCode : FieldDefinition

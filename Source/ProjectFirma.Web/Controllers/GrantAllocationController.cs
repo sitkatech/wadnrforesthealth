@@ -303,6 +303,21 @@ namespace ProjectFirma.Web.Controllers
         #region "Grant Allocation Budget Line Item"
         [HttpGet]
         [GrantAllocationBudgetLineItemEditAsAdminFeature]
+        public JsonResult EditGrantAllocationBudgetLineItemAjax(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey)
+        {
+            return new JsonResult();
+        }
+
+        [HttpPost]
+        [GrantAllocationBudgetLineItemEditAsAdminFeature]
+        public JsonResult EditGrantAllocationBudgetLineItemAjax(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey, GrantAllocationBudgetLineItemAjaxModel grantAllocationBudgetLineItemAjaxModel)
+        {
+            return new JsonResult();
+        }
+
+
+        [HttpGet]
+        [GrantAllocationBudgetLineItemEditAsAdminFeature]
         public PartialViewResult EditGrantAllocationBudgetLineItem(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey)
         {
             var grantAllocationBudgetLineItem = grantAllocationBudgetLineItemPrimaryKey.EntityObject;

@@ -19,10 +19,14 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
@@ -33,19 +37,42 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class GrantAllocationBudgetLineItemsViewData : FirmaUserControlViewData
     {
-
-        public string GrantAllocationBudgetLineItemGridDataUrl { get; }
-        public GrantAllocationBudgetLineItemGridSpec GrantAllocationBudgetLineItemGridSpec { get; }
-
-        public readonly string GrantAllocationBudgetLineItemGridName = "grantAllocationBudgetLineItemGrid";
-
+        public List<CostType> CostTypes { get; }
+        public string FormPostUrl { get; }
 
         public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.GrantAllocation grantAllocationBeingEdited)
         {
+            CostTypes = CostType.GetLineItemCostTypes();
+            FormPostUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x =>
+                x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
 
-            GrantAllocationBudgetLineItemGridSpec = new GrantAllocationBudgetLineItemGridSpec(currentPerson, grantAllocationBeingEdited);
-            GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationBudgetLineItemGridJsonData(grantAllocationBeingEdited));
-            
+        }
+
+    }
+
+    public class GrantAllocationBudgetLineItemAjaxModel
+    {
+        public int GrantAllocationID { get; set; }
+
+        public int GrantAllocationBudgetLineItemID { get; set; }
+
+        [Required]
+        [DisplayName("Budget Line Item Amount")]
+        [ValidateMoneyInRangeForSqlServer]
+        public Money LineItemAmount { get; set; }
+
+        [DisplayName("Note")]
+        public string LineItemNote { get; set; }
+
+        [Required]
+        [DisplayName("Cost Type")]
+        public int CostTypeID { get; set; }
+
+        /// <summary>
+        /// Needed by the ModelBinder
+        /// </summary>
+        public GrantAllocationBudgetLineItemAjaxModel()
+        {
         }
 
     }
