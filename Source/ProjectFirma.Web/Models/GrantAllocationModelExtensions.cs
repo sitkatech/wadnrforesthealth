@@ -102,5 +102,13 @@ namespace ProjectFirma.Web.Models
             return string.Join(", ", programIndexProjectCodePairs);
         }
 
+        public static List<GrantAllocationBudgetLineItem> GetOrCreateBudgetLineItemsForEachCostType(this GrantAllocation grantAllocation)
+        {
+            var grantAllocationBudgetLineItems = new List<GrantAllocationBudgetLineItem>();
+
+
+            return grantAllocationBudgetLineItems;
+        }
+
     }
 }

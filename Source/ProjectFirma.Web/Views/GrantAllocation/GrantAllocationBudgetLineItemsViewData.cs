@@ -39,13 +39,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public List<CostType> CostTypes { get; }
         public string FormPostUrl { get; }
+        public int GrantAllocationID { get; }
+        public List<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; }
 
-        public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.GrantAllocation grantAllocationBeingEdited)
+        public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.GrantAllocation grantAllocationBeingEdited, List<GrantAllocationBudgetLineItem> grantAllocationBudgetLineItems)
         {
             CostTypes = CostType.GetLineItemCostTypes();
             FormPostUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x =>
                 x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
-
+            GrantAllocationID = grantAllocationBeingEdited.GrantAllocationID;
+            GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems;
         }
 
     }

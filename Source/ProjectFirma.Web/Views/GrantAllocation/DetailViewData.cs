@@ -101,7 +101,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
             GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(grantAllocation));
 
-            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation);
+
+
+            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation, grantAllocation.GetOrCreateBudgetLineItemsForEachCostType());
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
 
 
