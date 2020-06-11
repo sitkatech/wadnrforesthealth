@@ -158,7 +158,6 @@ namespace ProjectFirma.Web.Controllers
             DropGisImportTable();
 
             var httpPostedFileBase = viewModel.FileResourceData;
-            var fileEnding = ".gdb.zip";
             var shapeFileSuccessfullyExtractedToDisk = false;
             var shapeFilePath = GisUploadAttemptStaging.UnzipAndSaveFileToDiskIfShapefile(httpPostedFileBase, gisUploadAttempt, ref shapeFileSuccessfullyExtractedToDisk);
             var importWasSuccesful = false;
@@ -170,7 +169,8 @@ namespace ProjectFirma.Web.Controllers
 
             else
             {
-                importWasSuccesful = ImportGdbToSql(fileEnding, httpPostedFileBase);
+                var filePath = GisUploadAttemptStaging.SaveFileToDiskIfGdb(httpPostedFileBase, gisUploadAttempt);
+                importWasSuccesful = ImportGdbToSql(filePath);
             }
 
             if (importWasSuccesful)
@@ -222,19 +222,11 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
-        private bool ImportGdbToSql(string fileEnding, HttpPostedFileBase httpPostedFileBase)
+        private bool ImportGdbToSql(string filePath)
         {
-            var importWasSuccessful = false;
-            using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
-            {
-                var gdbFile = disposableTempFile.FileInfo;
-                httpPostedFileBase.SaveAs(gdbFile.FullName);
-                GisUploadAttemptStaging.ImportGdbIntoSqlTempTable(gdbFile);
-                importWasSuccessful = true;
-                SetMessageForDisplay("The GIS file was imported. Please review the shape of the data");
-            }
-
-            return importWasSuccessful;
+            var fileInfo = new FileInfo(filePath);
+            GisUploadAttemptStaging.ImportGdbIntoSqlTempTable(fileInfo);
+            return true;
         }
 
         private bool ImportExtractedShapefileToSql(string shapeFilePath)

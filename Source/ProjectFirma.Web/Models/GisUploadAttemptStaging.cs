@@ -69,6 +69,20 @@ namespace ProjectFirma.Web.Models
             fileInfos.ForEach(f => f.Delete());
         }
 
+
+        public static string SaveFileToDiskIfGdb(HttpPostedFileBase httpPostedFileBase,
+            GisUploadAttempt gisUploadAttempt)
+        {
+            GisUploadAttemptStaging.SetupDirectory(gisUploadAttempt);
+            var fileEnding = Path.GetFileName(httpPostedFileBase.FileName) ;
+
+            var fullFilePath = Path.Combine(GisUploadAttemptStaging.GisUploadAttemptDirectory(gisUploadAttempt),
+                fileEnding);
+            httpPostedFileBase.SaveAs(fullFilePath);
+
+            return fullFilePath;
+        }
+
         public static string UnzipAndSaveFileToDiskIfShapefile(HttpPostedFileBase httpPostedFileBase,
             GisUploadAttempt gisUploadAttempt, ref bool shapeFileSuccessfullyExtractedToDisk)
         {
