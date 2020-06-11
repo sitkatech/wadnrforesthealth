@@ -269,7 +269,7 @@ namespace ProjectFirma.Web.Controllers
 
             foreach (var fGetColumnNamesForTableResult in dataColumns)
             {
-                var columnValues = GetColumnValuesForGisImport(fGetColumnNamesForTableResult.ColumnName, fGetColumnNamesForTableResult.PrimaryKey);
+                var columnValues = GetColumnValuesForGisImport(fGetColumnNamesForTableResult.ColumnName, fGetColumnNamesForTableResult.PrimaryKey, idColumn.ColumnName);
                 foreach (var gisColumnName in columnValues)
                 {
                     var parsedIntID = int.Parse(gisColumnName.ID);
@@ -291,7 +291,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private List<GisColumnName> GetColumnValuesForGisImport( string dataColumName, int sortOrder)
+        private List<GisColumnName> GetColumnValuesForGisImport( string dataColumName, int sortOrder, string idColumnName)
         {
             List<GisColumnName> listOfColumnNames;
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
@@ -306,7 +306,7 @@ namespace ProjectFirma.Web.Controllers
                     {
                         listOfColumnNames =
                             dt.Rows.Cast<DataRow>()
-                                .Select(x => new GisColumnName(x[GisUploadAttemptStaging.FIDName].ToString(), x[dataColumName].ToString(), dataColumName, sortOrder))   
+                                .Select(x => new GisColumnName(x[idColumnName].ToString(), x[dataColumName].ToString(), dataColumName, sortOrder))   
                                 .ToList();
                     }
                 }
