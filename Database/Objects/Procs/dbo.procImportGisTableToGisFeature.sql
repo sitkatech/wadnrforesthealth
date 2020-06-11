@@ -6,14 +6,20 @@ create procedure dbo.procImportGisTableToGisFeature
     @piGisUploadAttemptID int
 )
 as
- 
-insert into dbo.GisFeature (GisUploadAttemptID, GisFeatureGeometry, GisImportFeatureKey) 
-select @piGisUploadAttemptID, Shape, GisImportFeatureID from dbo.gisimport
- 
-go  
+
+DECLARE @SQL nvarchar(1000)
+--DECLARE @IdColumnName nvarchar(1000)
+
+--set @IdColumnName = (select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = 'gisimport' and ORDINAL_POSITION = 1 )
+
+SET @SQL = 'insert into dbo.GisFeature (GisUploadAttemptID, GisFeatureGeometry, GisImportFeatureKey) select ' + cast(@piGisUploadAttemptID as varchar) + ', Shape, '+ (select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = 'gisimport' and ORDINAL_POSITION = 1 )+ ' from dbo.gisimport' 
+
+EXEC (@SQL)
+  
+
 
 /*
 
-exec dbo.procImportGisTableToGisFeature @piGisUploadAttemptID = 1
+exec dbo.procImportGisTableToGisFeature @tableNameToImportFrom = 'gisimport1' , @piGisUploadAttemptID = 1
 
 */
