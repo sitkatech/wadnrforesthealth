@@ -358,7 +358,8 @@ namespace ProjectFirma.Web.Controllers
         private void DropGeomColumnFromImportTable( string dataColumName)
         {
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
-            var sqlQueryOne = $"DROP INDEX [ogr_dbo_{GisUploadAttemptStaging.GISImportTableName}_{dataColumName}_sidx] ON [dbo].[{GisUploadAttemptStaging.GISImportTableName}]";
+            var indexName = $"ogr_dbo_{GisUploadAttemptStaging.GISImportTableName}_{dataColumName}_sidx";
+            var sqlQueryOne = $"if exists(SELECT 1 FROM sys.indexes WHERE name='{indexName}' AND object_id = OBJECT_ID('dbo.{GisUploadAttemptStaging.GISImportTableName}')) begin DROP INDEX [{indexName}] ON [dbo].[{GisUploadAttemptStaging.GISImportTableName}] end ";
             using (var command = new SqlCommand(sqlQueryOne))
             {
                 var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
