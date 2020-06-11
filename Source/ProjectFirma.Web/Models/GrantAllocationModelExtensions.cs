@@ -105,7 +105,25 @@ namespace ProjectFirma.Web.Models
         public static List<GrantAllocationBudgetLineItem> GetOrCreateBudgetLineItemsForEachCostType(this GrantAllocation grantAllocation)
         {
             var grantAllocationBudgetLineItems = new List<GrantAllocationBudgetLineItem>();
+            var shouldSaveChanges = false;
+            foreach (var costType in CostType.GetLineItemCostTypes())
+            {
+                var lineItemByCostType = grantAllocation.GrantAllocationBudgetLineItems.SingleOrDefault(bli => bli.CostTypeID == costType.CostTypeID);
+                if (lineItemByCostType == null)
+                {
+                    var tempLineItem = new GrantAllocationBudgetLineItem(grantAllocation.GrantAllocationID, costType.CostTypeID, 0);
+                    lineItemByCostType = HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.Add(tempLineItem);
+                    
+                    shouldSaveChanges = true;
+                }
+                grantAllocationBudgetLineItems.Add(lineItemByCostType);
+            }
 
+            if (shouldSaveChanges)
+            {
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+            }
+            
 
             return grantAllocationBudgetLineItems;
         }
