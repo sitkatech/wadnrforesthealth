@@ -316,7 +316,7 @@ namespace LtInfo.Common.GdalOgr
                 explodeCollections ? "-explodecollections" : null,
                 "-f",
                 "MSSQLSpatial",
-                "MSSQL:server=(local);database=WADNRForestHealthDB;trusted_connection=yes",
+                databaseConnectionString,
                 inputGdbFile.FullName,
                 "-nln",
                 $"\"{destinationTableName}\""
