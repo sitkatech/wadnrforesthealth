@@ -27,21 +27,36 @@
 @using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.GrantAllocationBudgetLineItems
 
-<script>
+    <script>
     jQuery(function () {
         jQuery('.ajax-amount-field').on('change', function (event) {
             event.preventDefault();
 
             var amount = event.target.value;
             var closestRow = jQuery(event.target).closest("tr");
-            var lineItemID = closestRow.find(".budgetLineItemID")[0].value; 
-            var costTypeID = closestRow.find(".costTypeID")[0].value;
             var lineItemNote = closestRow.find(".ajax-note-field")[0].value;
 
+            submitLineItemData(amount, lineItemNote, closestRow);
+        });
+
+        jQuery('.ajax-note-field').on('change', function (event) {
+            event.preventDefault();
+
+            var lineItemNote = event.target.value;
+            var closestRow = jQuery(event.target).closest("tr");
+            var amount = closestRow.find(".ajax-amount-field")[0].value;
+
+            submitLineItemData(amount, lineItemNote, closestRow);
+        });
+
+        function submitLineItemData(amount, note, closestRow) {
+
+            var lineItemID = closestRow.find(".budgetLineItemID")[0].value;
+            var costTypeID = closestRow.find(".costTypeID")[0].value;
             var formData = {
                 GrantAllocationID: @ViewDataTyped.GrantAllocationID,
                 LineItemAmount: amount,
-                LineItemNote: lineItemNote,
+                LineItemNote: note,
                 GrantAllocationBudgetLineItemID: lineItemID,
                 CostTypeID: costTypeID
             }
@@ -49,9 +64,10 @@
             jQuery.post('@ViewDataTyped.FormPostUrl', formData, function () {
                 alert('Posted using jQuery');
             });
-        });
+        }
+
     });
-</script>
+    </script>
 
 
 
