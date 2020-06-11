@@ -33,8 +33,8 @@
             event.preventDefault();
 
             var amount = event.target.value;
-            var lineItemID = 1;
             var closestRow = jQuery(event.target).closest("tr");
+            var lineItemID = closestRow.find(".budgetLineItemID")[0].value; 
             var costTypeID = closestRow.find(".costTypeID")[0].value;
             var lineItemNote = closestRow.find(".ajax-note-field")[0].value;
 
@@ -80,15 +80,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var costType in ViewDataTyped.CostTypes)
+                            @foreach (var budgetLineItem in ViewDataTyped.GrantAllocationBudgetLineItems)
                             {
                                 <tr>
                                     <th scope="row">
-                                        @costType.CostTypeDisplayName
-                                        <input type="hidden" id="costTypeID_@costType.CostTypeID" class="costTypeID" value="@costType.CostTypeID" />
+                                        @budgetLineItem.CostType.CostTypeDisplayName
+                                        <input type="hidden" id="costTypeID_@budgetLineItem.CostTypeID" class="costTypeID" value="@budgetLineItem.CostTypeID" />
+                                        <input type="hidden" id="budgetLineItemID_@budgetLineItem.CostTypeID" class="budgetLineItemID" value="@budgetLineItem.GrantAllocationBudgetLineItemID" />
                                     </th>
-                                    <td><input class="ajax-amount-field" type="number" step=".01" /></td>
-                                    <td><input class="ajax-note-field" type="text" /></td>
+                                    <td><input class="ajax-amount-field" type="number" step=".01" value="@budgetLineItem.GrantAllocationBudgetLineItemAmount"/></td>
+                                    <td><input class="ajax-note-field" type="text" value="@budgetLineItem.GrantAllocationBudgetLineItemNote"/></td>
                                 </tr>
                             }
                         </tbody>

@@ -23,6 +23,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
@@ -312,7 +314,20 @@ namespace ProjectFirma.Web.Controllers
         [GrantAllocationBudgetLineItemEditAsAdminFeature]
         public JsonResult EditGrantAllocationBudgetLineItemAjax(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey, GrantAllocationBudgetLineItemAjaxModel grantAllocationBudgetLineItemAjaxModel)
         {
-            return new JsonResult();
+            var lineItem = HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.SingleOrDefault(x =>
+                x.GrantAllocationBudgetLineItemID ==
+                grantAllocationBudgetLineItemAjaxModel.GrantAllocationBudgetLineItemID);
+            if (lineItem == null)
+            {
+                return Json("Couldn't find budget line item");
+            }
+
+            lineItem.GrantAllocationBudgetLineItemAmount = grantAllocationBudgetLineItemAjaxModel.LineItemAmount;
+            lineItem.GrantAllocationBudgetLineItemNote = grantAllocationBudgetLineItemAjaxModel.LineItemNote;
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            return Json("Saved budget line item");
         }
 
 
