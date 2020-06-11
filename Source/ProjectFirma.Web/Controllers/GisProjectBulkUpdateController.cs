@@ -189,7 +189,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 var realColumns = HttpRequestStorage.DatabaseEntities.GetfGetColumnNamesForTables(GisUploadAttemptStaging.GISImportTableName).ToList();
                 var dataColumns = realColumns.Where(x =>
-                        !string.Equals(x.ColumnName, GisUploadAttemptStaging.FIDName, StringComparison.InvariantCultureIgnoreCase) &&
+                        x.PrimaryKey != 1 &&
                         !string.Equals(x.ColumnName, GisUploadAttemptStaging.GeomName, StringComparison.InvariantCultureIgnoreCase))
                     .ToList();
                 var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
@@ -262,9 +262,9 @@ namespace ProjectFirma.Web.Controllers
                     x.PrimaryKey != 1 &&
                     !string.Equals(x.ColumnName, GisUploadAttemptStaging.GeomName, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
-
+            var idColumn = realColumns.Single(x => x.PrimaryKey == 1);
             var dictionary = new Dictionary<int, List<GisColumnName>>();
-            var listOfIds = GetIDColumnValuesForGisImport();
+            var listOfIds = GetIDColumnValuesForGisImport(idColumn.ColumnName);
             ExecProcImportGisTableToGisFeature( gisUploadAttemptID);
             var gisUploadAttemptRefreshed = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
             var listOfFeatures = gisUploadAttemptRefreshed.GisFeatures.ToList();
@@ -323,11 +323,11 @@ namespace ProjectFirma.Web.Controllers
             return listOfColumnNames;
         }
 
-        private List<GisColumnName> GetIDColumnValuesForGisImport()
+        private List<GisColumnName> GetIDColumnValuesForGisImport(string idColumnName)
         {
             List<GisColumnName> listOfColumnNames;
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
-            var sqlQuery = $"SELECT {GisUploadAttemptStaging.FIDName} from dbo.{GisUploadAttemptStaging.GISImportTableName}";
+            var sqlQuery = $"SELECT {idColumnName} from dbo.{GisUploadAttemptStaging.GISImportTableName}";
             using (var command = new SqlCommand(sqlQuery))
             {
                 var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
@@ -338,31 +338,7 @@ namespace ProjectFirma.Web.Controllers
                     {
                         listOfColumnNames =
                             dt.Rows.Cast<DataRow>()
-                                .Select(x => new GisColumnName(x[GisUploadAttemptStaging.FIDName].ToString(), x[GisUploadAttemptStaging.FIDName].ToString(), GisUploadAttemptStaging.FIDName, 1))
-                                .ToList();
-                    }
-                }
-            }
-
-            return listOfColumnNames;
-        }
-
-        private List<GisShape> GetFeaturesForGisImport(string importedTableName, string idColumnName, string dataColumName)
-        {
-            List<GisShape> listOfColumnNames;
-            var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
-            var sqlQuery = $"SELECT {idColumnName}, {dataColumName}.Serialize() as {dataColumName}  from dbo.{importedTableName}";
-            using (var command = new SqlCommand(sqlQuery))
-            {
-                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
-                using (var conn = sqlConnection)
-                {
-                    command.Connection = conn;
-                    using (var dt = ProjectFirmaSqlDatabase.ExecuteSqlCommand(command).Tables[0])
-                    {
-                        listOfColumnNames =
-                            dt.Rows.Cast<DataRow>()
-                                .Select(x => new GisShape(x[idColumnName].ToString(), (byte[]) x[dataColumName], dataColumName))
+                                .Select(x => new GisColumnName(x[idColumnName].ToString(), x[idColumnName].ToString(), idColumnName, 1))
                                 .ToList();
                     }
                 }
