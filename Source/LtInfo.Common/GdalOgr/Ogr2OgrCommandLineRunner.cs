@@ -79,21 +79,22 @@ namespace LtInfo.Common.GdalOgr
             return processUtilityResult.StdOut;
         }
 
-        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName)
+        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString)
         {
             Check.Require(inputGdbFile.FullName.ToLower().EndsWith(".gdb.zip"),
                 $"Input filename for GDB input must end with .gdb.zip. Filename passed is {inputGdbFile.FullName}");
             Check.RequireFileExists(inputGdbFile, "Can't find input File GDB for import with ogr2ogr");
 
-            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName, geomName, idName);
+            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName, geomName, idName, connectionString);
             var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
             return processUtilityResult.StdOut;
         }
 
-        public string ImportPolyFromShapefile(string shapeFilePath, bool explodeCollections, string destinationTableName, string geomName, string idName)
+        public string ImportPolyFromShapefile(string shapeFilePath, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString)
         {
             Check.Require(shapeFilePath.ToLower().EndsWith(".shp"), $"Input filename for shp input must end with .shp. Filename passed is {shapeFilePath}");
-            var commandLineArguments = BuildOgr2OgrCommandLineArgumentsForShapefileToSqlImport(shapeFilePath, _gdalDataPath, destinationTableName, _coordinateSystemId, geomName, idName);
+            
+            var commandLineArguments = BuildOgr2OgrCommandLineArgumentsForShapefileToSqlImport(shapeFilePath, _gdalDataPath, destinationTableName, _coordinateSystemId, geomName, idName, connectionString);
             var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
             return processUtilityResult.StdOut;
         }
@@ -103,8 +104,10 @@ namespace LtInfo.Common.GdalOgr
             , string destinationTableName
             , int coordinateSystemID
             , string geomName
-            , string fIDName)
+            , string fIDName
+             ,   string connectionString)
         {
+            var databaseConnectionString = $"MSSQL:{connectionString}";
             var commandLineArguments = new List<string>
             {
                 "--config",
@@ -121,7 +124,7 @@ namespace LtInfo.Common.GdalOgr
                 $"FID={fIDName}",
                 "-f",
                 "MSSQLSpatial",
-                "MSSQL:server=(local);database=WADNRForestHealthDB;trusted_connection=yes",
+                databaseConnectionString,
                 sourceShapeFilePath,
                 "-nln",
                 destinationTableName
@@ -292,8 +295,10 @@ namespace LtInfo.Common.GdalOgr
             , bool explodeCollections
             , string destinationTableName
             , string geomName
-            , string fIDName)
+            , string fIDName
+            , string connectionString)
         {
+            var databaseConnectionString = $"MSSQL:{connectionString}";
             var commandLineArguments = new List<string>
             {
                 "--config",
@@ -311,7 +316,7 @@ namespace LtInfo.Common.GdalOgr
                 explodeCollections ? "-explodecollections" : null,
                 "-f",
                 "MSSQLSpatial",
-                "MSSQL:server=(local);database=WADNRForestHealthDB;trusted_connection=yes",
+                databaseConnectionString,
                 inputGdbFile.FullName,
                 "-nln",
                 $"\"{destinationTableName}\""

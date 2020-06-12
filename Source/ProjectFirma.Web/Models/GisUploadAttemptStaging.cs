@@ -23,24 +23,28 @@ namespace ProjectFirma.Web.Models
         public const string FIDName = "GisImportFeatureID";
         public static List<string> ImportGdbIntoSqlTempTable(FileInfo gdbFile)
         {
+            var connectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            connectionString = connectionString.Replace("Trusted_Connection=True", "trusted_connection=yes");
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut);
             ogr2OgrCommandLineRunner.ImportFileGdbToSql(gdbFile, false,
-                GISImportTableName, GeomName, FIDName);
+                GISImportTableName, GeomName, FIDName, connectionString);
             return featureClassNames;
         }
 
 
         public static List<string> ImportShapefileIntoSqlTempTable(string shapeFilePath)
         {
+            var connectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            connectionString = connectionString.Replace("Trusted_Connection=True", "trusted_connection=yes");
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromShapefile(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), shapeFilePath, Ogr2OgrCommandLineRunner.DefaultTimeOut);
             ogr2OgrCommandLineRunner.ImportPolyFromShapefile(shapeFilePath, false,
-                GISImportTableName, GeomName, FIDName);
+                GISImportTableName, GeomName, FIDName, connectionString);
             return featureClassNames;
         }
 
@@ -63,6 +67,20 @@ namespace ProjectFirma.Web.Models
                 System.IO.Directory.CreateDirectory(GisUploadAttemptDirectory(gisUploadAttempt));
             var fileInfos = new DirectoryInfo(GisUploadAttemptDirectory(gisUploadAttempt)).GetFiles().ToList();
             fileInfos.ForEach(f => f.Delete());
+        }
+
+
+        public static string SaveFileToDiskIfGdb(HttpPostedFileBase httpPostedFileBase,
+            GisUploadAttempt gisUploadAttempt)
+        {
+            GisUploadAttemptStaging.SetupDirectory(gisUploadAttempt);
+            var fileEnding = Path.GetFileName(httpPostedFileBase.FileName) ;
+
+            var fullFilePath = Path.Combine(GisUploadAttemptStaging.GisUploadAttemptDirectory(gisUploadAttempt),
+                fileEnding);
+            httpPostedFileBase.SaveAs(fullFilePath);
+
+            return fullFilePath;
         }
 
         public static string UnzipAndSaveFileToDiskIfShapefile(HttpPostedFileBase httpPostedFileBase,
