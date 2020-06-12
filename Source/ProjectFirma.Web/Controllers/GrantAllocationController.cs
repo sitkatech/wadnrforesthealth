@@ -315,11 +315,13 @@ namespace ProjectFirma.Web.Controllers
         public JsonResult EditGrantAllocationBudgetLineItemAjax(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey, GrantAllocationBudgetLineItemAjaxModel grantAllocationBudgetLineItemAjaxModel)
         {
             var lineItem = HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.SingleOrDefault(x =>
-                x.GrantAllocationBudgetLineItemID ==
-                grantAllocationBudgetLineItemAjaxModel.GrantAllocationBudgetLineItemID);
+                x.GrantAllocationBudgetLineItemID == grantAllocationBudgetLineItemAjaxModel.GrantAllocationBudgetLineItemID);
+
+            var costType = CostType.All.Single(x => x.CostTypeID == grantAllocationBudgetLineItemAjaxModel.CostTypeID);
+
             if (lineItem == null)
             {
-                return Json("Couldn't find budget line item");
+                return Json($"There was an issue saving the budget line item for the cost type, {costType.CostTypeDisplayName}.");
             }
 
             lineItem.GrantAllocationBudgetLineItemAmount = grantAllocationBudgetLineItemAjaxModel.LineItemAmount;
@@ -327,7 +329,7 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            return Json("Saved budget line item");
+            return Json($"Saved budget line item for the cost type, {costType.CostTypeDisplayName}.");
         }
 
 
