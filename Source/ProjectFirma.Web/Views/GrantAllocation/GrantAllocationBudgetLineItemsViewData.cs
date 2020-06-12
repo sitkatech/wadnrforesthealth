@@ -41,14 +41,21 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string FormPostUrl { get; }
         public int GrantAllocationID { get; }
         public List<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; }
+        public bool PersonHasPermissionToEditBudgetLineItems { get; }
 
         public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.GrantAllocation grantAllocationBeingEdited, List<GrantAllocationBudgetLineItem> grantAllocationBudgetLineItems)
         {
             CostTypes = CostType.GetLineItemCostTypes();
-            FormPostUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x =>
-                x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
             GrantAllocationID = grantAllocationBeingEdited.GrantAllocationID;
             GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems;
+
+            PersonHasPermissionToEditBudgetLineItems = new GrantAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            //This will prevent the JS from posting back if the user doesn't have permission to edit the budget line items
+            if (PersonHasPermissionToEditBudgetLineItems)
+            {
+                FormPostUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x =>
+                    x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
+            }
         }
 
     }

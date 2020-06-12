@@ -113,8 +113,8 @@
                                     <input type="hidden" id="costTypeID_@budgetLineItem.CostTypeID" class="costTypeID" value="@budgetLineItem.CostTypeID"/>
                                     <input type="hidden" id="budgetLineItemID_@budgetLineItem.CostTypeID" class="budgetLineItemID" value="@budgetLineItem.GrantAllocationBudgetLineItemID"/>
                                 </th>
-                                <td><input class="ajax-amount-field" type="text" value="@budgetLineItem.GrantAllocationBudgetLineItemAmount.ToStringCurrency()"/></td>
-                                <td><input class="ajax-note-field" type="text" value="@budgetLineItem.GrantAllocationBudgetLineItemNote"/></td>
+                                <td><input @(ViewDataTyped.PersonHasPermissionToEditBudgetLineItems ? string.Empty : "readonly=\"readonly\"") class="ajax-amount-field" type="text" value="@budgetLineItem.GrantAllocationBudgetLineItemAmount.ToStringCurrency()"/></td>
+                                <td><input @(ViewDataTyped.PersonHasPermissionToEditBudgetLineItems ? string.Empty : "readonly=\"readonly\"") class="ajax-note-field" type="text" value="@budgetLineItem.GrantAllocationBudgetLineItemNote"/></td>
                             </tr>
                         }
                         </tbody>

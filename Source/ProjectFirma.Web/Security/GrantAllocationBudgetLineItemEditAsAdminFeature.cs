@@ -8,4 +8,5 @@ namespace ProjectFirma.Web.Security
     {
         public GrantAllocationBudgetLineItemEditAsAdminFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin }) { }
     }
+
 }
