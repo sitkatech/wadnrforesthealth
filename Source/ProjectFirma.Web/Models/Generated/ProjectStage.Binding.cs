@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectStageImplementation Implementation = ProjectStageImplementation.Instance;
         public static readonly ProjectStageCompleted Completed = ProjectStageCompleted.Instance;
         public static readonly ProjectStageCancelled Cancelled = ProjectStageCancelled.Instance;
-        public static readonly ProjectStageDeferred Deferred = ProjectStageDeferred.Instance;
         public static readonly ProjectStagePostImplementation PostImplementation = ProjectStagePostImplementation.Instance;
 
         public static readonly List<ProjectStage> All;
@@ -35,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectStage()
         {
-            All = new List<ProjectStage> { Application, Planned, Implementation, Completed, Cancelled, Deferred, PostImplementation };
+            All = new List<ProjectStage> { Application, Planned, Implementation, Completed, Cancelled, PostImplementation };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectStage>(All.ToDictionary(x => x.ProjectStageID));
         }
 
@@ -115,8 +114,6 @@ namespace ProjectFirma.Web.Models
                     return Cancelled;
                 case ProjectStageEnum.Completed:
                     return Completed;
-                case ProjectStageEnum.Deferred:
-                    return Deferred;
                 case ProjectStageEnum.Implementation:
                     return Implementation;
                 case ProjectStageEnum.Planned:
@@ -136,7 +133,6 @@ namespace ProjectFirma.Web.Models
         Implementation = 3,
         Completed = 4,
         Cancelled = 5,
-        Deferred = 6,
         PostImplementation = 8
     }
 
@@ -168,12 +164,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectStageCancelled(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
         public static readonly ProjectStageCancelled Instance = new ProjectStageCancelled(5, @"Cancelled", @"Cancelled", 25, @"#D6D6D6");
-    }
-
-    public partial class ProjectStageDeferred : ProjectStage
-    {
-        private ProjectStageDeferred(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
-        public static readonly ProjectStageDeferred Instance = new ProjectStageDeferred(6, @"Deferred", @"Deferred", 10, @"#FFE6CC");
     }
 
     public partial class ProjectStagePostImplementation : ProjectStage

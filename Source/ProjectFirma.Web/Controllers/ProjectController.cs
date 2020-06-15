@@ -337,10 +337,10 @@ namespace ProjectFirma.Web.Controllers
 
                 activeProjectStages.Add(project.ProjectStage);
             }
-            else if (project.ProjectStage == ProjectStage.Deferred)
-            {
-                activeProjectStages.Add(project.ProjectStage);
-            }
+            //else if (project.ProjectStage == ProjectStage.Deferred)
+            //{
+            //    activeProjectStages.Add(project.ProjectStage);
+            //}
 
             activeProjectStages = activeProjectStages.OrderBy(p => p.SortOrder).ToList();
             return activeProjectStages;

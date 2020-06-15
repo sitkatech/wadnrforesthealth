@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(PlannedDateIsRequired);
             }
-            if (projectUpdate.GetImplementationStartYear() == null && projectUpdate.ProjectStage != ProjectStage.Cancelled && projectUpdate.ProjectStage != ProjectStage.Deferred )
+            if (projectUpdate.GetImplementationStartYear() == null && projectUpdate.ProjectStage != ProjectStage.Cancelled)
             {
                 _warningMessages.Add(ImplementationStartYearIsRequired);
             }

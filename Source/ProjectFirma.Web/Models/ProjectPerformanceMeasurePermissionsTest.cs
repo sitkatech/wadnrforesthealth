@@ -53,34 +53,34 @@ namespace ProjectFirma.Web.Models
 
             // Deferred Project
             // ----------------
-            {
-                // Deferred Project
-                var deferredProject = TestFramework.TestProject.Create();
-                deferredProject.ProjectStageID = ProjectStage.Deferred.ProjectStageID;
+            //{
+            //    // Deferred Project
+            //    var deferredProject = TestFramework.TestProject.Create();
+            //    deferredProject.ProjectStageID = ProjectStage.Deferred.ProjectStageID;
 
-                // - View PMs -
-                TestExpectedUserPermission(userAnonymous, viewPerformanceMeasureFeature, false);
-                TestExpectedUserPermission(userNormal, viewPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userAdmin, viewPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userSitkaAdmin, viewPerformanceMeasureFeature, true);
+            //    // - View PMs -
+            //    TestExpectedUserPermission(userAnonymous, viewPerformanceMeasureFeature, false);
+            //    TestExpectedUserPermission(userNormal, viewPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userAdmin, viewPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userSitkaAdmin, viewPerformanceMeasureFeature, true);
 
-                // - Edit PMs -
-                TestExpectedUserPermission(userAnonymous, deferredProject, editPerformanceMeasureFeature, false);
-                TestExpectedUserPermission(userNormal, deferredProject, editPerformanceMeasureFeature, false);
-                TestExpectedUserPermission(userAdmin, deferredProject, editPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userSitkaAdmin, deferredProject, editPerformanceMeasureFeature, true);
+            //    // - Edit PMs -
+            //    TestExpectedUserPermission(userAnonymous, deferredProject, editPerformanceMeasureFeature, false);
+            //    TestExpectedUserPermission(userNormal, deferredProject, editPerformanceMeasureFeature, false);
+            //    TestExpectedUserPermission(userAdmin, deferredProject, editPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userSitkaAdmin, deferredProject, editPerformanceMeasureFeature, true);
 
-                TestExpectedUserPermissionWithUserInLeadImplementingOrg(userNormal, deferredProject, editPerformanceMeasureFeature, testOrganizationForProject, true);
-                TestExpectedUserPermissionWithUserAsPrimaryContactForImplementingOrg(userNormal,
-                    deferredProject,
-                    editPerformanceMeasureFeature,
-                    testOrganizationJustForUser,
-                    testOrganizationForProject,
-                    true);
+            //    TestExpectedUserPermissionWithUserInLeadImplementingOrg(userNormal, deferredProject, editPerformanceMeasureFeature, testOrganizationForProject, true);
+            //    TestExpectedUserPermissionWithUserAsPrimaryContactForImplementingOrg(userNormal,
+            //        deferredProject,
+            //        editPerformanceMeasureFeature,
+            //        testOrganizationJustForUser,
+            //        testOrganizationForProject,
+            //        true);
                 
-                TestExpectedUserPermission(userAdmin, deferredProject, editPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userSitkaAdmin, deferredProject, editPerformanceMeasureFeature, true);
-            }
+            //    TestExpectedUserPermission(userAdmin, deferredProject, editPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userSitkaAdmin, deferredProject, editPerformanceMeasureFeature, true);
+            //}
 
             // Planning/Design Project
             // -----------------------

@@ -158,7 +158,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 }
             }
             
-            if (PlannedDate == null && ProjectStageID != ProjectStage.Cancelled.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
+            if (PlannedDate == null && ProjectStageID != ProjectStage.Cancelled.ProjectStageID)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Implementation year is required when the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} stage is not Deferred or Terminated",

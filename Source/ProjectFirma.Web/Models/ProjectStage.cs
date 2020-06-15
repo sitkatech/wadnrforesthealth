@@ -44,7 +44,6 @@ namespace ProjectFirma.Web.Models
             new List<ProjectStage>
             {
                 Application,
-                Deferred,
                 Planned
             });
     }
@@ -244,43 +243,7 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectStageDeferred
-    {
-        public override bool IsOnCompletedList()
-        {
-            return false;
-        }
 
-        public override bool IsDeletable()
-        {
-            return true;
-        }
-
-        public override bool RequiresReportedExpenditures()
-        {
-            return false;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return false;
-        }
-
-        public override bool IsStagedIncludedInTransporationCostCalculations()
-        {
-            return true;
-        }
-
-        public override bool ShouldShowOnMap()
-        {
-            return false;
-        }
-
-        public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
-        {
-            return new[] { Deferred };
-        }
-    }
 
     public partial class ProjectStagePostImplementation
     {
