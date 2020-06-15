@@ -243,43 +243,4 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-
-
-    public partial class ProjectStagePostImplementation
-    {
-        public override bool IsOnCompletedList()
-        {
-            return true;
-        }
-
-        public override bool IsDeletable()
-        {
-            return false;
-        }
-
-        public override bool RequiresReportedExpenditures()
-        {
-            return true;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return false;
-        }
-
-        public override bool IsStagedIncludedInTransporationCostCalculations()
-        {
-            return false;
-        }
-
-        public override bool ShouldShowOnMap()
-        {
-            return true;
-        }
-
-        public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
-        {
-            return All.Except(new List<ProjectStage> { Application, Planned, Implementation });
-        }
-    }
 }

@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedImplementationOrFurtherProjects()
         {
-            return Projects.Where(p => p.ProjectStage == ProjectStage.Completed || p.ProjectStage == ProjectStage.Implementation || p.ProjectStage == ProjectStage.PostImplementation).ToList();
+            return Projects.Where(p => p.ProjectStage == ProjectStage.Completed || p.ProjectStage == ProjectStage.Implementation).ToList();
         }
 
         public decimal? SumOfProjectEstimatedTotalCost

@@ -35,14 +35,14 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void IsCompletedOrTerminatedTest()
         {
-            Assert.That(ProjectStage.All.Where(x => x.IsOnCompletedList()), Is.EquivalentTo(new ProjectStage[] {ProjectStage.Completed, ProjectStage.PostImplementation}));
+            Assert.That(ProjectStage.All.Where(x => x.IsOnCompletedList()), Is.EquivalentTo(new ProjectStage[] {ProjectStage.Completed}));
         }
         
         [Test]
         public void RequiresReportedExpendituresTest()
         {
             Assert.That(ProjectStage.All.Where(x => x.RequiresReportedExpenditures()),
-                Is.EquivalentTo(new ProjectStage[] {ProjectStage.Implementation, ProjectStage.Planned, ProjectStage.PostImplementation}));
+                Is.EquivalentTo(new ProjectStage[] {ProjectStage.Implementation, ProjectStage.Planned}));
         }
 
         [Test]

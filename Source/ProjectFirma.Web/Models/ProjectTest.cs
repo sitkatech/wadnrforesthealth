@@ -77,8 +77,10 @@ namespace ProjectFirma.Web.Models
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
             project.ProjectStageID = ProjectStage.Implementation.ProjectStageID;
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
-            project.ProjectStageID = ProjectStage.PostImplementation.ProjectStageID;
-            Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
+
+            //project.ProjectStageID = ProjectStage.PostImplementation.ProjectStageID;
+            //Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
+
             project.ProjectStageID = ProjectStage.Completed.ProjectStageID;
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(false));
 

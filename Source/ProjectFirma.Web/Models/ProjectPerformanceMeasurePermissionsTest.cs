@@ -143,35 +143,35 @@ namespace ProjectFirma.Web.Models
                 TestExpectedUserPermission(userSitkaAdmin, implementationProject, editPerformanceMeasureFeature, true);
             }
 
-            // Post-Implementation Project
-            // -----------------------
-            {
-                // Post-Implementation Project
-                var postImplementationProject = TestFramework.TestProject.Create();
-                postImplementationProject.ProjectStageID = ProjectStage.PostImplementation.ProjectStageID;
+            //// Post-Implementation Project
+            //// -----------------------
+            //{
+            //    // Post-Implementation Project
+            //    var postImplementationProject = TestFramework.TestProject.Create();
+            //    postImplementationProject.ProjectStageID = ProjectStage.PostImplementation.ProjectStageID;
 
-                // - View PMs -
-                TestExpectedUserPermission(userAnonymous, viewPerformanceMeasureFeature, false);
-                TestExpectedUserPermission(userNormal, viewPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userAdmin, viewPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userSitkaAdmin, viewPerformanceMeasureFeature, true);
+            //    // - View PMs -
+            //    TestExpectedUserPermission(userAnonymous, viewPerformanceMeasureFeature, false);
+            //    TestExpectedUserPermission(userNormal, viewPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userAdmin, viewPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userSitkaAdmin, viewPerformanceMeasureFeature, true);
 
-                // - Edit PMs -
-                TestExpectedUserPermission(userAnonymous, postImplementationProject, editPerformanceMeasureFeature, false);
-                TestExpectedUserPermission(userNormal, postImplementationProject, editPerformanceMeasureFeature, false);
-                TestExpectedUserPermission(userAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userSitkaAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
+            //    // - Edit PMs -
+            //    TestExpectedUserPermission(userAnonymous, postImplementationProject, editPerformanceMeasureFeature, false);
+            //    TestExpectedUserPermission(userNormal, postImplementationProject, editPerformanceMeasureFeature, false);
+            //    TestExpectedUserPermission(userAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userSitkaAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
 
-                TestExpectedUserPermissionWithUserInLeadImplementingOrg(userNormal, postImplementationProject, editPerformanceMeasureFeature, testOrganizationForProject, false);
-                TestExpectedUserPermissionWithUserAsPrimaryContactForImplementingOrg(userNormal,
-                    postImplementationProject,
-                    editPerformanceMeasureFeature,
-                    testOrganizationJustForUser,
-                    testOrganizationForProject,
-                    false);
-                TestExpectedUserPermission(userAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
-                TestExpectedUserPermission(userSitkaAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
-            }
+            //    TestExpectedUserPermissionWithUserInLeadImplementingOrg(userNormal, postImplementationProject, editPerformanceMeasureFeature, testOrganizationForProject, false);
+            //    TestExpectedUserPermissionWithUserAsPrimaryContactForImplementingOrg(userNormal,
+            //        postImplementationProject,
+            //        editPerformanceMeasureFeature,
+            //        testOrganizationJustForUser,
+            //        testOrganizationForProject,
+            //        false);
+            //    TestExpectedUserPermission(userAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
+            //    TestExpectedUserPermission(userSitkaAdmin, postImplementationProject, editPerformanceMeasureFeature, true);
+            //}
 
             // Completed Project
             // -----------------------

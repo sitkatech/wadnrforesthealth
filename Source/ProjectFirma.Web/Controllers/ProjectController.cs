@@ -327,13 +327,13 @@ namespace ProjectFirma.Web.Controllers
 
         private static List<ProjectStage> GetActiveProjectStages(Project project)
         {
-            var activeProjectStages = new List<ProjectStage> {ProjectStage.Application, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed, ProjectStage.PostImplementation};
+            var activeProjectStages = new List<ProjectStage> {ProjectStage.Application, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
 
             if (project.ProjectStage == ProjectStage.Cancelled)
             {
                 activeProjectStages.Remove(ProjectStage.Implementation);
                 activeProjectStages.Remove(ProjectStage.Completed);
-                activeProjectStages.Remove(ProjectStage.PostImplementation);
+                //activeProjectStages.Remove(ProjectStage.PostImplementation);
 
                 activeProjectStages.Add(project.ProjectStage);
             }

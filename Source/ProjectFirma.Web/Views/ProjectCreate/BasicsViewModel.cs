@@ -179,8 +179,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             }
 
 
-            if ((ProjectStageID == ProjectStage.Completed.ProjectStageID ||
-                ProjectStageID == ProjectStage.PostImplementation.ProjectStageID) && CompletionDate?.Year > currentYear)
+            if ((ProjectStageID == ProjectStage.Completed.ProjectStageID) && CompletionDate?.Year > currentYear)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.CompletionDateMustBePastOrPresentForCompletedProjects, m => m.CompletionDate);
             }

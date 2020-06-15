@@ -119,11 +119,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 }
             }
 
-            var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
-            if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now)
+            var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;
+            if (isCompleted && CompletionDate > DateTime.Now)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
-                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the Completion Year needs to be less than or equal to the current year",
+                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Year needs to be less than or equal to the current year",
                     m => m.CompletionDate);
             }
         }

@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectStageImplementation Implementation = ProjectStageImplementation.Instance;
         public static readonly ProjectStageCompleted Completed = ProjectStageCompleted.Instance;
         public static readonly ProjectStageCancelled Cancelled = ProjectStageCancelled.Instance;
-        public static readonly ProjectStagePostImplementation PostImplementation = ProjectStagePostImplementation.Instance;
 
         public static readonly List<ProjectStage> All;
         public static readonly ReadOnlyDictionary<int, ProjectStage> AllLookupDictionary;
@@ -34,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectStage()
         {
-            All = new List<ProjectStage> { Application, Planned, Implementation, Completed, Cancelled, PostImplementation };
+            All = new List<ProjectStage> { Application, Planned, Implementation, Completed, Cancelled };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectStage>(All.ToDictionary(x => x.ProjectStageID));
         }
 
@@ -118,8 +117,6 @@ namespace ProjectFirma.Web.Models
                     return Implementation;
                 case ProjectStageEnum.Planned:
                     return Planned;
-                case ProjectStageEnum.PostImplementation:
-                    return PostImplementation;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -132,8 +129,7 @@ namespace ProjectFirma.Web.Models
         Planned = 2,
         Implementation = 3,
         Completed = 4,
-        Cancelled = 5,
-        PostImplementation = 8
+        Cancelled = 5
     }
 
     public partial class ProjectStageApplication : ProjectStage
@@ -164,11 +160,5 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectStageCancelled(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
         public static readonly ProjectStageCancelled Instance = new ProjectStageCancelled(5, @"Cancelled", @"Cancelled", 25, @"#D6D6D6");
-    }
-
-    public partial class ProjectStagePostImplementation : ProjectStage
-    {
-        private ProjectStagePostImplementation(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
-        public static readonly ProjectStagePostImplementation Instance = new ProjectStagePostImplementation(8, @"PostImplementation", @"Post-Implementation", 40, @"#0047B2");
     }
 }
