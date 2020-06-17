@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCustomAttributeDataTypeDateTime DateTime = ProjectCustomAttributeDataTypeDateTime.Instance;
         public static readonly ProjectCustomAttributeDataTypePickFromList PickFromList = ProjectCustomAttributeDataTypePickFromList.Instance;
         public static readonly ProjectCustomAttributeDataTypeMultiSelect MultiSelect = ProjectCustomAttributeDataTypeMultiSelect.Instance;
+        public static readonly ProjectCustomAttributeDataTypeBoolean Boolean = ProjectCustomAttributeDataTypeBoolean.Instance;
 
         public static readonly List<ProjectCustomAttributeDataType> All;
         public static readonly ReadOnlyDictionary<int, ProjectCustomAttributeDataType> AllLookupDictionary;
@@ -34,7 +35,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCustomAttributeDataType()
         {
-            All = new List<ProjectCustomAttributeDataType> { String, Integer, Decimal, DateTime, PickFromList, MultiSelect };
+            All = new List<ProjectCustomAttributeDataType> { String, Integer, Decimal, DateTime, PickFromList, MultiSelect, Boolean };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCustomAttributeDataType>(All.ToDictionary(x => x.ProjectCustomAttributeDataTypeID));
         }
 
@@ -104,6 +105,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
+                case ProjectCustomAttributeDataTypeEnum.Boolean:
+                    return Boolean;
                 case ProjectCustomAttributeDataTypeEnum.DateTime:
                     return DateTime;
                 case ProjectCustomAttributeDataTypeEnum.Decimal:
@@ -129,7 +132,8 @@ namespace ProjectFirma.Web.Models
         Decimal = 3,
         DateTime = 4,
         PickFromList = 5,
-        MultiSelect = 6
+        MultiSelect = 6,
+        Boolean = 7
     }
 
     public partial class ProjectCustomAttributeDataTypeString : ProjectCustomAttributeDataType
@@ -166,5 +170,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCustomAttributeDataTypeMultiSelect(int projectCustomAttributeDataTypeID, string projectCustomAttributeDataTypeName, string projectCustomAttributeDataTypeDisplayName) : base(projectCustomAttributeDataTypeID, projectCustomAttributeDataTypeName, projectCustomAttributeDataTypeDisplayName) {}
         public static readonly ProjectCustomAttributeDataTypeMultiSelect Instance = new ProjectCustomAttributeDataTypeMultiSelect(6, @"MultiSelect", @"Select Many from List");
+    }
+
+    public partial class ProjectCustomAttributeDataTypeBoolean : ProjectCustomAttributeDataType
+    {
+        private ProjectCustomAttributeDataTypeBoolean(int projectCustomAttributeDataTypeID, string projectCustomAttributeDataTypeName, string projectCustomAttributeDataTypeDisplayName) : base(projectCustomAttributeDataTypeID, projectCustomAttributeDataTypeName, projectCustomAttributeDataTypeDisplayName) {}
+        public static readonly ProjectCustomAttributeDataTypeBoolean Instance = new ProjectCustomAttributeDataTypeBoolean(7, @"Boolean", @"True/False");
     }
 }

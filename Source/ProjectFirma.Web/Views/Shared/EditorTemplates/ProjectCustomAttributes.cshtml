@@ -6,6 +6,27 @@
 
 @model ProjectCustomAttributes
 
+@functions
+{
+    private string GetSelectedValueForBooleanDropdown(ProjectCustomAttributeSimple attributeSimple, bool boolean)
+    {
+    // If true option and the value is true, Selected
+        if (attributeSimple != null && attributeSimple.ProjectCustomAttributeValues.Any() && attributeSimple.ProjectCustomAttributeValues[0].ToLower() == "true" && boolean)
+        {
+            return "selected";
+        }
+
+    // If false option and the value is false, Selected
+        if (attributeSimple != null && attributeSimple.ProjectCustomAttributeValues.Any() && attributeSimple.ProjectCustomAttributeValues[0].ToLower() == "false" && !boolean)
+        {
+            return "selected";
+        }
+
+    // Otherwise, nothing
+        return string.Empty;
+    }
+}
+
 @{
     var projectCustomAttributeTypes = ViewData.ContainsKey("ProjectCustomAttributes") && ViewData["ProjectCustomAttributes"] is IEnumerable<ProjectCustomAttributeType>
         ? ((IEnumerable<ProjectCustomAttributeType>)ViewData["ProjectCustomAttributes"]).ToList()
@@ -129,6 +150,13 @@
                                 @Html.ValidationMessageFor(m => m.Attributes[indexOfAttributeSimple.Value].ProjectCustomAttributeValues[valueIndex])
                             }
                         }
+                        break;
+                    case ProjectCustomAttributeDataTypeEnum.Boolean:
+                        <select class="form-control" style="width: auto;" name="@(Html.NameFor(m => m.Attributes[0].ProjectCustomAttributeValues).ToString().Replace("0", indexOfAttribute.ToString()))">
+                            <option value="">Select an Option</option>
+                            <option value="True" @GetSelectedValueForBooleanDropdown(attributeSimple, true)>True</option>
+                            <option value="False" @GetSelectedValueForBooleanDropdown(attributeSimple, false)>False</option>
+                        </select>
                         break;
                     default:
                         throw new InvalidEnumArgumentException(string.Format("Enum value {0} is not supported by this view.", attribute.ProjectCustomAttributeDataType.ToEnum.ToString()));
