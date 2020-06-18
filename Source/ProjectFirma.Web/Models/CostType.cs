@@ -9,7 +9,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<CostType> GetLineItemCostTypes()
         {
-            return All.Where(ct => ct.IsValidInvoiceLineItemCostType).ToList();
+            return All.Where(ct => ct.IsValidInvoiceLineItemCostType).OrderBy(x => x.SortOrder).ToList();
         }
     }
 }
