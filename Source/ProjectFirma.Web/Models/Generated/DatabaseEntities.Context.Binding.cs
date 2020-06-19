@@ -170,6 +170,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
+        public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
@@ -871,6 +872,9 @@ namespace ProjectFirma.Web.Models
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);
+
+                case "Treatment":
+                    return Treatments.GetTreatment(primaryKey);
 
                 case "TreatmentType":
                     var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

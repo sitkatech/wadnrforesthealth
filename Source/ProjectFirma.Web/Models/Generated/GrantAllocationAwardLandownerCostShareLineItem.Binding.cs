@@ -25,34 +25,18 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantAllocationAwardLandownerCostShareLineItem()
         {
-
+            this.Treatments = new HashSet<Treatment>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAwardLandownerCostShareLineItem(int grantAllocationAwardLandownerCostShareLineItemID, int? grantAllocationAwardID, int projectID, int landownerCostShareLineItemStatusID, DateTime? grantAllocationAwardLandownerCostShareLineItemStartDate, DateTime? grantAllocationAwardLandownerCostShareLineItemEndDate, decimal grantAllocationAwardLandownerCostShareLineItemFootprintAcres, decimal grantAllocationAwardLandownerCostShareLineItemChippingAcres, decimal grantAllocationAwardLandownerCostShareLineItemPruningAcres, decimal grantAllocationAwardLandownerCostShareLineItemThinningAcres, decimal grantAllocationAwardLandownerCostShareLineItemMasticationAcres, decimal grantAllocationAwardLandownerCostShareLineItemGrazingAcres, decimal grantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres, decimal grantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres, decimal grantAllocationAwardLandownerCostShareLineItemHandPileAcres, decimal grantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres, decimal grantAllocationAwardLandownerCostShareLineItemSlashAcres, string grantAllocationAwardLandownerCostShareLineItemNotes, decimal grantAllocationAwardLandownerCostShareLineItemAllocatedAmount, decimal grantAllocationAwardLandownerCostShareLineItemTotalCost) : this()
+        public GrantAllocationAwardLandownerCostShareLineItem(int grantAllocationAwardLandownerCostShareLineItemID, int? grantAllocationAwardID, int projectID, int landownerCostShareLineItemStatusID, string grantAllocationAwardLandownerCostShareLineItemNotes, decimal grantAllocationAwardLandownerCostShareLineItemAllocatedAmount, decimal grantAllocationAwardLandownerCostShareLineItemTotalCost) : this()
         {
             this.GrantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItemID;
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.ProjectID = projectID;
             this.LandownerCostShareLineItemStatusID = landownerCostShareLineItemStatusID;
-            this.GrantAllocationAwardLandownerCostShareLineItemStartDate = grantAllocationAwardLandownerCostShareLineItemStartDate;
-            this.GrantAllocationAwardLandownerCostShareLineItemEndDate = grantAllocationAwardLandownerCostShareLineItemEndDate;
-            this.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres = grantAllocationAwardLandownerCostShareLineItemFootprintAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemChippingAcres = grantAllocationAwardLandownerCostShareLineItemChippingAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemPruningAcres = grantAllocationAwardLandownerCostShareLineItemPruningAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemThinningAcres = grantAllocationAwardLandownerCostShareLineItemThinningAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres = grantAllocationAwardLandownerCostShareLineItemMasticationAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres = grantAllocationAwardLandownerCostShareLineItemGrazingAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres = grantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres = grantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres = grantAllocationAwardLandownerCostShareLineItemHandPileAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres = grantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres = grantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres = grantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres = grantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemSlashAcres = grantAllocationAwardLandownerCostShareLineItemSlashAcres;
             this.GrantAllocationAwardLandownerCostShareLineItemNotes = grantAllocationAwardLandownerCostShareLineItemNotes;
             this.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount = grantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
             this.GrantAllocationAwardLandownerCostShareLineItemTotalCost = grantAllocationAwardLandownerCostShareLineItemTotalCost;
@@ -61,27 +45,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAwardLandownerCostShareLineItem(int projectID, int landownerCostShareLineItemStatusID, decimal grantAllocationAwardLandownerCostShareLineItemFootprintAcres, decimal grantAllocationAwardLandownerCostShareLineItemChippingAcres, decimal grantAllocationAwardLandownerCostShareLineItemPruningAcres, decimal grantAllocationAwardLandownerCostShareLineItemThinningAcres, decimal grantAllocationAwardLandownerCostShareLineItemMasticationAcres, decimal grantAllocationAwardLandownerCostShareLineItemGrazingAcres, decimal grantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres, decimal grantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres, decimal grantAllocationAwardLandownerCostShareLineItemHandPileAcres, decimal grantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres, decimal grantAllocationAwardLandownerCostShareLineItemSlashAcres, decimal grantAllocationAwardLandownerCostShareLineItemAllocatedAmount, decimal grantAllocationAwardLandownerCostShareLineItemTotalCost) : this()
+        public GrantAllocationAwardLandownerCostShareLineItem(int projectID, int landownerCostShareLineItemStatusID, decimal grantAllocationAwardLandownerCostShareLineItemAllocatedAmount, decimal grantAllocationAwardLandownerCostShareLineItemTotalCost) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardLandownerCostShareLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
             this.LandownerCostShareLineItemStatusID = landownerCostShareLineItemStatusID;
-            this.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres = grantAllocationAwardLandownerCostShareLineItemFootprintAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemChippingAcres = grantAllocationAwardLandownerCostShareLineItemChippingAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemPruningAcres = grantAllocationAwardLandownerCostShareLineItemPruningAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemThinningAcres = grantAllocationAwardLandownerCostShareLineItemThinningAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres = grantAllocationAwardLandownerCostShareLineItemMasticationAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres = grantAllocationAwardLandownerCostShareLineItemGrazingAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres = grantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres = grantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres = grantAllocationAwardLandownerCostShareLineItemHandPileAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres = grantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres = grantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres = grantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres = grantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemSlashAcres = grantAllocationAwardLandownerCostShareLineItemSlashAcres;
             this.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount = grantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
             this.GrantAllocationAwardLandownerCostShareLineItemTotalCost = grantAllocationAwardLandownerCostShareLineItemTotalCost;
         }
@@ -89,7 +59,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationAwardLandownerCostShareLineItem(Project project, LandownerCostShareLineItemStatus landownerCostShareLineItemStatus, decimal grantAllocationAwardLandownerCostShareLineItemFootprintAcres, decimal grantAllocationAwardLandownerCostShareLineItemChippingAcres, decimal grantAllocationAwardLandownerCostShareLineItemPruningAcres, decimal grantAllocationAwardLandownerCostShareLineItemThinningAcres, decimal grantAllocationAwardLandownerCostShareLineItemMasticationAcres, decimal grantAllocationAwardLandownerCostShareLineItemGrazingAcres, decimal grantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres, decimal grantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres, decimal grantAllocationAwardLandownerCostShareLineItemHandPileAcres, decimal grantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres, decimal grantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres, decimal grantAllocationAwardLandownerCostShareLineItemSlashAcres, decimal grantAllocationAwardLandownerCostShareLineItemAllocatedAmount, decimal grantAllocationAwardLandownerCostShareLineItemTotalCost) : this()
+        public GrantAllocationAwardLandownerCostShareLineItem(Project project, LandownerCostShareLineItemStatus landownerCostShareLineItemStatus, decimal grantAllocationAwardLandownerCostShareLineItemAllocatedAmount, decimal grantAllocationAwardLandownerCostShareLineItemTotalCost) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardLandownerCostShareLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -97,20 +67,6 @@ namespace ProjectFirma.Web.Models
             this.Project = project;
             project.GrantAllocationAwardLandownerCostShareLineItems.Add(this);
             this.LandownerCostShareLineItemStatusID = landownerCostShareLineItemStatus.LandownerCostShareLineItemStatusID;
-            this.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres = grantAllocationAwardLandownerCostShareLineItemFootprintAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemChippingAcres = grantAllocationAwardLandownerCostShareLineItemChippingAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemPruningAcres = grantAllocationAwardLandownerCostShareLineItemPruningAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemThinningAcres = grantAllocationAwardLandownerCostShareLineItemThinningAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres = grantAllocationAwardLandownerCostShareLineItemMasticationAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres = grantAllocationAwardLandownerCostShareLineItemGrazingAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres = grantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres = grantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres = grantAllocationAwardLandownerCostShareLineItemHandPileAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres = grantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres = grantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres = grantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres = grantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres;
-            this.GrantAllocationAwardLandownerCostShareLineItemSlashAcres = grantAllocationAwardLandownerCostShareLineItemSlashAcres;
             this.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount = grantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
             this.GrantAllocationAwardLandownerCostShareLineItemTotalCost = grantAllocationAwardLandownerCostShareLineItemTotalCost;
         }
@@ -120,7 +76,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantAllocationAwardLandownerCostShareLineItem CreateNewBlank(Project project, LandownerCostShareLineItemStatus landownerCostShareLineItemStatus)
         {
-            return new GrantAllocationAwardLandownerCostShareLineItem(project, landownerCostShareLineItemStatus, default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal));
+            return new GrantAllocationAwardLandownerCostShareLineItem(project, landownerCostShareLineItemStatus, default(decimal), default(decimal));
         }
 
         /// <summary>
@@ -129,7 +85,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return Treatments.Any();
         }
 
         /// <summary>
@@ -139,13 +95,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(Treatments.Any())
+            {
+                dependentObjects.Add(typeof(Treatment).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAwardLandownerCostShareLineItem).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -161,8 +121,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in Treatments.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -170,28 +141,13 @@ namespace ProjectFirma.Web.Models
         public int? GrantAllocationAwardID { get; set; }
         public int ProjectID { get; set; }
         public int LandownerCostShareLineItemStatusID { get; set; }
-        public DateTime? GrantAllocationAwardLandownerCostShareLineItemStartDate { get; set; }
-        public DateTime? GrantAllocationAwardLandownerCostShareLineItemEndDate { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemFootprintAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemChippingAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemPruningAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemThinningAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemMasticationAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemGrazingAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemHandPileAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres { get; set; }
-        public decimal GrantAllocationAwardLandownerCostShareLineItemSlashAcres { get; set; }
         public string GrantAllocationAwardLandownerCostShareLineItemNotes { get; set; }
         public decimal GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount { get; set; }
         public decimal GrantAllocationAwardLandownerCostShareLineItemTotalCost { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardLandownerCostShareLineItemID; } set { GrantAllocationAwardLandownerCostShareLineItemID = value; } }
 
+        public virtual ICollection<Treatment> Treatments { get; set; }
         public virtual GrantAllocationAward GrantAllocationAward { get; set; }
         public virtual Project Project { get; set; }
         public LandownerCostShareLineItemStatus LandownerCostShareLineItemStatus { get { return LandownerCostShareLineItemStatus.AllLookupDictionary[LandownerCostShareLineItemStatusID]; } }

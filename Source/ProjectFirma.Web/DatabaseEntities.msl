@@ -412,22 +412,6 @@
           <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="LandownerCostShareLineItemStatusID" ColumnName="LandownerCostShareLineItemStatusID" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" ColumnName="GrantAllocationAwardLandownerCostShareLineItemStartDate" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemEndDate" ColumnName="GrantAllocationAwardLandownerCostShareLineItemEndDate" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" />
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemNotes" ColumnName="GrantAllocationAwardLandownerCostShareLineItemNotes" />
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" ColumnName="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" />
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" ColumnName="GrantAllocationAwardLandownerCostShareLineItemTotalCost" />
@@ -1745,6 +1729,33 @@
           <ScalarProperty Name="VideoDescription" ColumnName="VideoDescription" />
           <ScalarProperty Name="VideoUploadDate" ColumnName="VideoUploadDate" />
           <ScalarProperty Name="VideoURL" ColumnName="VideoURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatment">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Treatment">
+        <MappingFragment StoreEntitySet="Treatment">
+          <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="TreatmentFeature" ColumnName="TreatmentFeature" />
+          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemID" ColumnName="GrantAllocationAwardLandownerCostShareLineItemID" />
+          <ScalarProperty Name="TreatmentStartDate" ColumnName="TreatmentStartDate" />
+          <ScalarProperty Name="TreatmentEndDate" ColumnName="TreatmentEndDate" />
+          <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
+          <ScalarProperty Name="TreatmentChippingAcres" ColumnName="TreatmentChippingAcres" />
+          <ScalarProperty Name="TreatmentPruningAcres" ColumnName="TreatmentPruningAcres" />
+          <ScalarProperty Name="TreatmentThinningAcres" ColumnName="TreatmentThinningAcres" />
+          <ScalarProperty Name="TreatmentMasticationAcres" ColumnName="TreatmentMasticationAcres" />
+          <ScalarProperty Name="TreatmentGrazingAcres" ColumnName="TreatmentGrazingAcres" />
+          <ScalarProperty Name="TreatmentLopAndScatterAcres" ColumnName="TreatmentLopAndScatterAcres" />
+          <ScalarProperty Name="TreatmentBiomassRemovalAcres" ColumnName="TreatmentBiomassRemovalAcres" />
+          <ScalarProperty Name="TreatmentHandPileAcres" ColumnName="TreatmentHandPileAcres" />
+          <ScalarProperty Name="TreatmentBroadcastBurnAcres" ColumnName="TreatmentBroadcastBurnAcres" />
+          <ScalarProperty Name="TreatmentHandPileBurnAcres" ColumnName="TreatmentHandPileBurnAcres" />
+          <ScalarProperty Name="TreatmentMachinePileBurnAcres" ColumnName="TreatmentMachinePileBurnAcres" />
+          <ScalarProperty Name="TreatmentOtherTreatmentAcres" ColumnName="TreatmentOtherTreatmentAcres" />
+          <ScalarProperty Name="TreatmentSlashAcres" ColumnName="TreatmentSlashAcres" />
+          <ScalarProperty Name="TreatmentNotes" ColumnName="TreatmentNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

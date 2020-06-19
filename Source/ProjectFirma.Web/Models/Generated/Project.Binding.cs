@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectTags = new HashSet<ProjectTag>();
             this.ProjectUpdateBatches = new HashSet<ProjectUpdateBatch>();
+            this.Treatments = new HashSet<Treatment>();
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any();
+            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -260,13 +261,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(ProjectUpdateBatch).Name);
             }
+
+            if(Treatments.Any())
+            {
+                dependentObjects.Add(typeof(Treatment).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -405,6 +411,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in Treatments.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -462,6 +473,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
         public virtual ICollection<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
+        public virtual ICollection<Treatment> Treatments { get; set; }
         public virtual ProjectType ProjectType { get; set; }
         public ProjectStage ProjectStage { get { return ProjectStage.AllLookupDictionary[ProjectStageID]; } }
         public ProjectLocationSimpleType ProjectLocationSimpleType { get { return ProjectLocationSimpleType.AllLookupDictionary[ProjectLocationSimpleTypeID]; } }
