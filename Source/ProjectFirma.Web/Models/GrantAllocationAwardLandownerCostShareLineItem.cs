@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ProjectFirma.Web.Models
 {
@@ -25,5 +26,8 @@ namespace ProjectFirma.Web.Models
         {
             return this.LandownerCostShareLineItemStatus.LandownerCostShareLineItemStatusDisplayName;
         }
+
+        public Treatment Treatment => Treatments.SingleOrDefault();
+
     }
 }

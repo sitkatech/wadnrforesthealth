@@ -142,6 +142,7 @@
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.tmpAgreementContact" />
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
+    <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Treatment" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
@@ -476,6 +477,10 @@
     <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
+      <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+      <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -920,6 +925,10 @@
     <AssociationSet Name="FK_ProjectUpdateBatch_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectUpdateBatches" EntitySet="ProjectUpdateBatch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
@@ -1543,27 +1552,12 @@
     <Property Name="GrantAllocationAwardID" Type="Int32" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="LandownerCostShareLineItemStatusID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" Type="DateTime" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemEndDate" Type="DateTime" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardLandownerCostShareLineItems" ToRole="GrantAllocationAward" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" FromRole="GrantAllocationAwardLandownerCostShareLineItems" ToRole="Project" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="GrantAllocationAwardLandownerCostShareLineItem" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="GrantAllocationAwardPersonnelAndBenefitsLineItem">
     <Key>
@@ -2390,6 +2384,7 @@
     <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="Project" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Project" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -3101,6 +3096,34 @@
     <Property Name="VideoDescription" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="VideoUploadDate" Type="DateTime" Nullable="false" />
     <Property Name="VideoURL" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Treatment">
+    <Key>
+      <PropertyRef Name="TreatmentID" />
+    </Key>
+    <Property Name="TreatmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentFeature" Type="Geometry" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="Int32" />
+    <Property Name="TreatmentStartDate" Type="DateTime" />
+    <Property Name="TreatmentEndDate" Type="DateTime" />
+    <Property Name="TreatmentFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentChippingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentPruningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentThinningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentMasticationAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentGrazingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentHandPileAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentSlashAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -4154,6 +4177,18 @@
       </Principal>
       <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
+    <End Role="GrantAllocationAwardLandownerCostShareLineItem" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAwardLandownerCostShareLineItem">
+        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5485,6 +5520,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectUpdateBatches">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="Treatments">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

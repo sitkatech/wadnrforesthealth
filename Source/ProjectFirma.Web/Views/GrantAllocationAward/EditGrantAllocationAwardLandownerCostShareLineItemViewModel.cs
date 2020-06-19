@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -119,26 +120,28 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             GrantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID;
             GrantAllocationAwardID = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardID;
-            StartDate = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemStartDate ?? DateTime.Today;
-            EndDate = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemEndDate ?? DateTime.Today;
+            var treatment = grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault();
+           
+            StartDate = treatment.TreatmentStartDate ?? DateTime.Today;
+            EndDate = treatment.TreatmentEndDate ?? DateTime.Today;
 
-            ProjectID = grantAllocationAwardLandownerCostShareLineItem.ProjectID;
+            ProjectID = treatment.ProjectID;
             StatusID = grantAllocationAwardLandownerCostShareLineItem.LandownerCostShareLineItemStatusID;
 
-            FootprintAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres.ToDecimalFormatted();
-            SlashAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemSlashAcres.ToDecimalFormatted();
-            ChippingAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemChippingAcres.ToDecimalFormatted();
-            PruningAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemPruningAcres.ToDecimalFormatted();
-            ThinningAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemThinningAcres.ToDecimalFormatted();
-            MasticationAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres.ToDecimalFormatted();
-            GrazingAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres.ToDecimalFormatted();
-            LopAndScatterAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres.ToDecimalFormatted();
-            BiomassRemovalAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres.ToDecimalFormatted();
-            HandPileAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres.ToDecimalFormatted();
-            BroadcastBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres.ToDecimalFormatted();
-            HandPileBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres.ToDecimalFormatted();
-            MachinePileBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres.ToDecimalFormatted();
-            OtherTreatmentAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres.ToDecimalFormatted();
+            FootprintAcres = (treatment?.TreatmentFootprintAcres ?? 0 ).ToDecimalFormatted();
+            SlashAcres = (treatment?.TreatmentSlashAcres ?? 0).ToDecimalFormatted();
+            ChippingAcres = (treatment?.TreatmentChippingAcres ?? 0).ToDecimalFormatted();
+            PruningAcres = (treatment?.TreatmentPruningAcres ?? 0).ToDecimalFormatted();
+            ThinningAcres = (treatment?.TreatmentThinningAcres ?? 0).ToDecimalFormatted();
+            MasticationAcres = (treatment?.TreatmentMasticationAcres ?? 0).ToDecimalFormatted();
+            GrazingAcres = (treatment?.TreatmentGrazingAcres ?? 0).ToDecimalFormatted();
+            LopAndScatterAcres = (treatment?.TreatmentLopAndScatterAcres ?? 0).ToDecimalFormatted();
+            BiomassRemovalAcres = (treatment?.TreatmentBiomassRemovalAcres ?? 0).ToDecimalFormatted();
+            HandPileAcres = (treatment?.TreatmentHandPileAcres ?? 0).ToDecimalFormatted();
+            BroadcastBurnAcres = (treatment?.TreatmentBroadcastBurnAcres ?? 0).ToDecimalFormatted();
+            HandPileBurnAcres = (treatment?.TreatmentHandPileBurnAcres ?? 0).ToDecimalFormatted();
+            MachinePileBurnAcres = (treatment?.TreatmentMachinePileBurnAcres ?? 0).ToDecimalFormatted();
+            OtherTreatmentAcres = (treatment?.TreatmentOtherTreatmentAcres ?? 0).ToDecimalFormatted();
 
             TotalCost = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemTotalCost;
             AllocatedAmount = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
@@ -164,23 +167,38 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             grantAllocationAwardLandownerCostShareLineItem.ProjectID = ProjectID;
             grantAllocationAwardLandownerCostShareLineItem.LandownerCostShareLineItemStatusID = StatusID;
 
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemStartDate = StartDate;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemEndDate = EndDate;
+            var treatment = grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault();
+            if (treatment == null)
+            {
+                treatment = new Treatment(grantAllocationAwardLandownerCostShareLineItem.Project.ProjectID, FootprintAcres,ChippingAcres, PruningAcres, ThinningAcres, MasticationAcres,GrazingAcres
+                ,LopAndScatterAcres,BiomassRemovalAcres,HandPileAcres,BroadcastBurnAcres
+                , HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres);
 
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres = FootprintAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemChippingAcres = ChippingAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemPruningAcres = PruningAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemThinningAcres = ThinningAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres = MasticationAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres = GrazingAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres = LopAndScatterAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres = BiomassRemovalAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres = HandPileAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres = BroadcastBurnAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres = HandPileBurnAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres = MachinePileBurnAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres = OtherTreatmentAcres;
-            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemSlashAcres = SlashAcres;
+                treatment.GrantAllocationAwardLandownerCostShareLineItemID =
+                    grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID;
+                treatment.GrantAllocationAwardLandownerCostShareLineItem =
+                    grantAllocationAwardLandownerCostShareLineItem;
+                treatment.Project = grantAllocationAwardLandownerCostShareLineItem.Project;
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.Add(treatment);
+            }
+
+            treatment.TreatmentStartDate = StartDate;
+            treatment.TreatmentEndDate = EndDate;
+
+            treatment.TreatmentFootprintAcres = FootprintAcres;
+            treatment.TreatmentChippingAcres = ChippingAcres;
+            treatment.TreatmentPruningAcres = PruningAcres;
+            treatment.TreatmentThinningAcres = ThinningAcres;
+            treatment.TreatmentMasticationAcres = MasticationAcres;
+            treatment.TreatmentGrazingAcres = GrazingAcres;
+            treatment.TreatmentLopAndScatterAcres = LopAndScatterAcres;
+            treatment.TreatmentBiomassRemovalAcres = BiomassRemovalAcres;
+            treatment.TreatmentHandPileAcres = HandPileAcres;
+            treatment.TreatmentBroadcastBurnAcres = BroadcastBurnAcres;
+            treatment.TreatmentHandPileBurnAcres = HandPileBurnAcres;
+            treatment.TreatmentMachinePileBurnAcres = MachinePileBurnAcres;
+            treatment.TreatmentOtherTreatmentAcres = OtherTreatmentAcres;
+            treatment.TreatmentSlashAcres = SlashAcres;
 
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount = AllocatedAmount;
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemTotalCost = TotalCost;
