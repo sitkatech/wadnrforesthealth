@@ -843,6 +843,7 @@
     <Compile Include="Views\GisProjectBulkUpdate\UploadGisFile.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\GisMetadataViewData.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\UploadGisFileViewData.cs" />
+    <Compile Include="Views\GisProjectBulkUpdate\GisMetadataViewModel.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\UploadGisFileViewModel.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\InstructionsGisImport.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\InstructionsGisImportViewData.cs" />
