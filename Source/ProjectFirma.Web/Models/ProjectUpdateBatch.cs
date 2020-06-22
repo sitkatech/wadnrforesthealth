@@ -161,6 +161,10 @@ namespace ProjectFirma.Web.Models
         {
             var projectUpdateBatch = new ProjectUpdateBatch(project, DateTime.Now, currentPerson, ProjectUpdateState.Created, false);
 
+            //move optional fields to the project update batch
+            projectUpdateBatch.NoRegionsExplanation = project.NoRegionsExplanation;
+            projectUpdateBatch.NoPriorityLandscapesExplanation = project.NoPriorityLandscapesExplanation;
+
             // create a project update history record
             CreateNewTransitionRecord(projectUpdateBatch, ProjectUpdateState.Created, currentPerson, DateTime.Now);
             return projectUpdateBatch;

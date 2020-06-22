@@ -25,13 +25,13 @@ angular.module("ProjectFirmaApp")
                                 wildcard: "%QUERY"
                             }
                         }),
-                        display: "DNRUplandRegionName",
+                        display: "RegionName",
                         limit: Number.MAX_VALUE
                     });
 
                 finder.bind("typeahead:select",
                     function (event, suggestion) {
-                        $scope.toggleRegion(suggestion.DNRUplandRegionID, suggestion.DNRUplandRegionName, function() {
+                        $scope.toggleRegion(suggestion.RegionID, suggestion.RegionName, function() {
                             $scope.$apply();
                         });
                     });

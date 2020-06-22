@@ -43,6 +43,8 @@ namespace ProjectFirma.Web.Models
                     allProjectRegions.Add(projectRegion);
                 });
             }
+
+            project.NoRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
         }
     }
 }
