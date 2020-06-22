@@ -39,7 +39,76 @@
 </div>
 
 
+<form method="POST" id="createProjectsForm" action="@ViewDataTyped.GisMetadataPostUrl" enctype="multipart/form-data">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectIdentifierColumnID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectIdentifierColumnID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectIdentifierColumnID)
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
 <div class="pull-right">
-    <a class="btn btn-xs btn-firma" href="@ViewDataTyped.GisMetadataUrl">Continue <span class='glyphicon glyphicon-chevron-right'></span></a>
+    @*<a class="btn btn-xs btn-firma" href="@ViewDataTyped.GisMetadataUrl">Continue <span class='glyphicon glyphicon-chevron-right'></span></a>*@
+    <button id="uploadAdvance" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Create Projects</button>
 </div>
 
+<div id="gisMetadataSaving" style="min-height:100px"></div>
+
+<script type="text/javascript">
+
+        function uploadGisFileAndRefreshCurrentPage() {
+            uploadGisFile(true);
+        }
+
+    function createProjectsAndAdvanceCurrentPage() {
+            uploadGisFile(true);
+        }
+
+    function uploadGisFile(refresh) {
+        var form = jQuery("#createProjectsForm");
+        if (form.valid()) {
+            var gisUploadResults = jQuery("#gisMetadataSaving");
+            form.ajaxForm({
+                url: this.action,
+                type: this.method,
+                beforeSubmit: function ()
+                {
+                    gisUploadResults.html("<div style='padding-top: 50%'><div class='progress'><div class='progress-bar progress-bar-info progress-bar-striped active' role='progressbar' style='width:100%'>Creating Projects</div></div></div>");
+                },
+                success: function (result, textStatus, jqXhr) {
+                    jQuery(".progress").hide();
+                    // Piggy back off the centralized login required detection in Ajax handling in SitkaAjax
+                    if (refresh) {
+                        location.reload();
+                    }
+                    else
+                    {
+                        window.location.href = "@ViewDataTyped.GisMetadataUrl";
+                    }
+                },
+                error: function (xhr, statusText) {
+                    // Piggy back off the centralized error Ajax handling in SitkaAjax
+                    //SitkaAjax.errorHandler(xhr, statusText);
+                    jQuery(".progress").hide();
+                    gisUploadResults.html("<div class='alert alert-danger' style='position: fixed; top: 50%; width:500px'>There was a problem creating the Projects</div>");
+                }
+            });
+            form.submit();
+        }
+    }
+
+
+
+    jQuery(document)
+        .ready(function() {
+            jQuery("#uploadAdvance").click(createProjectsAndAdvanceCurrentPage);
+        });
+</script>

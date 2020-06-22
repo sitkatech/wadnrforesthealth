@@ -34,18 +34,24 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 
         public readonly string GridName;
         public readonly string GridDataUrl;
+        public readonly string GisMetadataPostUrl;
 
         public GisRecordGridSpec GisRecordGridSpec { get; set; }
+        public IEnumerable<SelectListItem> GisMetadataAttributes { get; }
 
         public GisMetadataViewData(Person currentPerson,
             GisUploadAttempt gisUploadAttempt
             , GisImportSectionStatus gisImportSectionStatus
-            , GisRecordGridSpec gisRecordGridSpec)
+            , GisRecordGridSpec gisRecordGridSpec
+            , IEnumerable<Models.GisMetadataAttribute> gisMetadataAttributes
+            , string gisMetadataPostUrl)
             : base(currentPerson, gisUploadAttempt, GisUploadAttemptWorkflowSection.ValidateMetadata.GisUploadAttemptWorkflowSectionDisplayName, gisImportSectionStatus)
         {
             GisRecordGridSpec = gisRecordGridSpec;
             GridDataUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(tc => tc.GisRecordGridJsonData(gisUploadAttempt.GisUploadAttemptID));
             GridName = "GisRecordGrid";
+            GisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            GisMetadataPostUrl = gisMetadataPostUrl;
         }
 
 

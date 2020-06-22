@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {
-    public abstract class GisMetadata : LtInfo.Common.Mvc.TypedWebViewPage<GisMetadataViewData>
+    public abstract class GisMetadata : LtInfo.Common.Mvc.TypedWebViewPage<GisMetadataViewData, GisMetadataViewModel>
     {
     }
 }

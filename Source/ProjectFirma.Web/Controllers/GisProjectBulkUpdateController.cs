@@ -98,16 +98,23 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
-            return ViewUploadGisMetadata(gisUploadAttempt);
+            var viewModel = new GisMetadataViewModel();
+            return ViewUploadGisMetadata(gisUploadAttempt, viewModel);
         }
 
-        private ViewResult ViewUploadGisMetadata(GisUploadAttempt gisUploadAttempt)
+        private ViewResult ViewUploadGisMetadata(GisUploadAttempt gisUploadAttempt, GisMetadataViewModel gisMetadataViewModel)
         {
             var gisImportSectionStatus = GetGisImportSectionStatus(gisUploadAttempt);
             var realColumns = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.ToList();
             var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
-            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec);
-            return RazorView<GisMetadata, GisMetadataViewData>(viewData);
+            
+            var gisMetadataPostUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.GisMetadata(gisUploadAttempt.GisUploadAttemptID, null));
+            var gisMetadataAttributeIDs = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
+            var metadataAttributes =
+                HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
+                    gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
+            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes, gisMetadataPostUrl);
+            return RazorView<GisMetadata, GisMetadataViewData, GisMetadataViewModel>(viewData, gisMetadataViewModel);
         }
 
 
@@ -123,6 +130,17 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GisFeature>(gisFeatureList, gridSpec);
             return gridJsonNetJObjectResult;
+        }
+
+        [HttpPost]
+        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
+        {
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
+            var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
+            var gisMetadataAttribute = viewModel.ProjectIdentifierColumnID;
+            return new ModalDialogFormJsonResult();
         }
 
 
