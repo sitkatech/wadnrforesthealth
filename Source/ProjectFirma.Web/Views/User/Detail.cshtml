@@ -63,7 +63,7 @@
     }
 }
 
-@if (ViewDataTyped.UserHasEditBasicsPermission)
+@if (ViewDataTyped.UserCanViewAndCreateNewContacts)
 {
     <div>
         <a class="btn backButton" href="@ViewDataTyped.Index">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Users</a>

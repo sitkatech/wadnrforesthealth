@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.User
 
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());
-            UserCanAddContact = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+            UserCanAddContact = new ContactCreateAndViewFeature().HasPermissionByPerson(currentPerson);
         }
 
         public string AddContactUrl { get; set; }

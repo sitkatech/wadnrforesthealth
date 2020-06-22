@@ -42,14 +42,14 @@ namespace ProjectFirma.Web.Controllers
 {
     public class UserController : FirmaBaseController
     {
-        [ContactManageFeature]
+        [ContactCreateAndViewFeature]
         public ViewResult Index()
         {
             var viewData = new IndexViewData(CurrentPerson);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [ContactManageFeature]
+        [ContactCreateAndViewFeature]
         public GridJsonNetJObjectResult<Person> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
@@ -307,7 +307,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [ContactManageFeature]
+        [ContactCreateAndViewFeature]
         public PartialViewResult AddContact()
         {
             var viewModel = new EditContactViewModel();
@@ -315,7 +315,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ContactManageFeature]
+        [ContactCreateAndViewFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult AddContact(EditContactViewModel viewModel)
         {
