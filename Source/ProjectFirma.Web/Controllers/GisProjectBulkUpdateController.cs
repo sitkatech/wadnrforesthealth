@@ -166,11 +166,14 @@ namespace ProjectFirma.Web.Controllers
                     , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
                     , ProjectApprovalStatus.Approved.ProjectApprovalStatusID
                     , Project.CreateNewFhtProjectNumber());
+                project.CompletionDate = DateTime.Now;
                 projectList.Add(project);
+                HttpRequestStorage.DatabaseEntities.Projects.Add(project);
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
             }
 
-            HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            //HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            //HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             return new ModalDialogFormJsonResult();
         }
