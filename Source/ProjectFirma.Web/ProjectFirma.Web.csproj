@@ -635,6 +635,7 @@
     <Compile Include="ScheduledJobs\VendorImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
+    <Compile Include="Security\ContactCreateAndViewFeature.cs" />
     <Compile Include="Security\GisFeatureViewFeature.cs" />
     <Compile Include="Security\GisUploadAttemptCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardContractorInvoiceCreateFeature.cs" />
