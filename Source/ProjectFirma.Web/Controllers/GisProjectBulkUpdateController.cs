@@ -139,7 +139,39 @@ namespace ProjectFirma.Web.Controllers
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
             var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
-            var gisMetadataAttribute = viewModel.ProjectIdentifierColumnID;
+            var gisMetadataAttributeID = viewModel.ProjectIdentifierColumnID;
+
+            var gisMetadataAttribute =
+                gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
+                    x.GisMetadataAttributeID == gisMetadataAttributeID).GisMetadataAttribute;
+
+            var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID);
+
+            var gisValues =
+                gisMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
+            var distinctGisValues = gisValues.Select(x => x.GisFeatureMetadataAttributeValue).Distinct();
+
+            var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x =>
+                string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
+
+            var projectList = new List<Project>();
+
+            foreach (var distinctGisValue in distinctGisValues)
+            {
+                var project = new Project(otherProjectType.ProjectTypeID
+                    , ProjectStage.Completed.ProjectStageID
+                    , distinctGisValue
+                    , "fake description"
+                    , false
+                    , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
+                    , ProjectApprovalStatus.Approved.ProjectApprovalStatusID
+                    , Project.CreateNewFhtProjectNumber());
+                projectList.Add(project);
+            }
+
+            HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
             return new ModalDialogFormJsonResult();
         }
 
