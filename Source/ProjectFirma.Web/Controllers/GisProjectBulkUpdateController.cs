@@ -139,17 +139,27 @@ namespace ProjectFirma.Web.Controllers
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
             var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
-            var gisMetadataAttributeID = viewModel.ProjectIdentifierColumnID;
+            var projectIdentifierMetadataAttributeID = viewModel.ProjectIdentifierMetadataAttributeID;
+            var completionDateMetadataAttributeID = viewModel.CompletionDateMetadataAttributeID;
+            var startDateMetadataAttributeID = viewModel.StartDateMetadataAttributeID;
 
-            var gisMetadataAttribute =
+            var projectIdentifierMetadataAttribute =
                 gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
-                    x.GisMetadataAttributeID == gisMetadataAttributeID).GisMetadataAttribute;
+                    x.GisMetadataAttributeID == projectIdentifierMetadataAttributeID).GisMetadataAttribute;
 
             var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID);
 
+            var completionDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                gisFeatureIDs.Contains(x.GisFeatureID) &&
+                x.GisMetadataAttributeID == completionDateMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+
+            var startDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                gisFeatureIDs.Contains(x.GisFeatureID) &&
+                x.GisMetadataAttributeID == startDateMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+
             var gisValues =
-                gisMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctGisValues = gisValues.Select(x => x.GisFeatureMetadataAttributeValue).Distinct();
+                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
+            var distinctGisValues = gisValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x =>
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
@@ -158,6 +168,27 @@ namespace ProjectFirma.Web.Controllers
 
             foreach (var distinctGisValue in distinctGisValues)
             {
+
+                var gisFeaturesIdListWithProjectIdentifier =
+                    projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                        string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
+                            StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                var completionDateAttributes =  gisFeaturesIdListWithProjectIdentifier.Where(x => completionDateDictionary.ContainsKey(x))
+                    .SelectMany(x => completionDateDictionary[x]).ToList();
+
+                var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
+                    .SelectMany(x => startDateDictionary[x]).ToList();
+
+
+                
+
+                var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+                var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+
+                var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
+                var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
+
+
                 var project = new Project(otherProjectType.ProjectTypeID
                     , ProjectStage.Completed.ProjectStageID
                     , distinctGisValue
@@ -166,14 +197,12 @@ namespace ProjectFirma.Web.Controllers
                     , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
                     , ProjectApprovalStatus.Approved.ProjectApprovalStatusID
                     , Project.CreateNewFhtProjectNumber());
-                project.CompletionDate = DateTime.Now;
+                project.CompletionDate = completionDate;
+                project.PlannedDate = startDate;
                 projectList.Add(project);
                 HttpRequestStorage.DatabaseEntities.Projects.Add(project);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
             }
-
-            //HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
-            //HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             return new ModalDialogFormJsonResult();
         }

@@ -37,7 +37,15 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 
         [Required]
         [DisplayName("Project Identifier Column")]
-        public int ProjectIdentifierColumnID { get; set; }
+        public int ProjectIdentifierMetadataAttributeID { get; set; }
+
+
+        [DisplayName("Completion Date Column")]
+        public int? CompletionDateMetadataAttributeID { get; set; }
+
+
+        [DisplayName("Start Date Column")]
+        public int? StartDateMetadataAttributeID { get; set; }
 
 
 
