@@ -91,9 +91,9 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectNotificationGridName { get; }
         public string ProjectNotificationGridDataUrl { get; }
 
-        public LandownerCostShareLineItemProjectDetailGridSpec LandownerCostShareLineItemProjectDetailGridSpec { get; }
-        public string LandownerCostShareLineItemGridName { get; }
-        public string LandownerCostShareLineItemGridDataUrl { get; }
+        public TreatmentGridSpec TreatmentGridSpec { get; }
+        public string TreatmentGrid { get; }
+        public string TreatmentGridDataUrl { get; }
 
         public string EditProjectPriorityLandscapeFormID { get; }
         public string EditProjectRegionFormID { get; }
@@ -147,8 +147,8 @@ namespace ProjectFirma.Web.Views.Project
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData,
             List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            LandownerCostShareLineItemProjectDetailGridSpec landownerCostShareLineItemProjectDetailGridSpec,
-            string landownerCostShareLineItemGridDataUrl, string editProjectRegionUrl, string editProjectPriorityLandscapeUrl,
+            TreatmentGridSpec treatmentGridSpec,
+            string treatmentGridDataUrl, string editProjectRegionUrl, string editProjectPriorityLandscapeUrl,
             InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl)
             : base(currentPerson, project)
         {
@@ -362,9 +362,9 @@ namespace ProjectFirma.Web.Views.Project
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
 
-            LandownerCostShareLineItemProjectDetailGridSpec = landownerCostShareLineItemProjectDetailGridSpec;
-            LandownerCostShareLineItemGridName = "landownerCostShareLineItemGrid";
-            LandownerCostShareLineItemGridDataUrl = landownerCostShareLineItemGridDataUrl;
+            TreatmentGridSpec = treatmentGridSpec;
+            TreatmentGrid = "treatmentGrid";
+            TreatmentGridDataUrl = treatmentGridDataUrl;
 
             ProjectInteractionEventsGridSpec = projectInteractionEventsGridSpec;
             ProjectInteractionEventsGridName = "projectInteractionEventsGrid";

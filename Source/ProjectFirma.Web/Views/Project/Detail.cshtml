@@ -358,77 +358,6 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        @*<div class="row">
-                    <div class="col-sm-6">
-                        <h4>Contractor Time</h4>
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        @if (ViewDataTyped.UserHasEditProjectPermissions)
-                        {<a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditContractorTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>}
-                    </div>
-                </div>
-                @if (ViewDataTyped.Project.ContractorTimeActivities.Any())
-                {
-                    var contractorTimeActivities = ViewDataTyped.Project.ContractorTimeActivities.GroupBy(x => x.GrantAllocation).OrderBy(x => x.Key.DisplayName).ToList();
-                    <div class="row">
-                        <div class="col-sm-2"><strong>Staff Time Hours:</strong></div>
-                        <div class="col-sm-2 text-right">
-                            <span>
-                                @ViewDataTyped.Project.GetTotalStaffTimeHours()
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2"><strong>Total Cost:</strong></div>
-                        <div class="col-sm-2 text-right">
-                            <span>
-                                @ViewDataTyped.Project.GetTotalStaffTimeAmount().ToStringCurrency()
-                            </span>
-                        </div>
-                    </div>
-                    <br />
-                    <table class="table table-striped table-condensed table-hover">
-                        @foreach (var grantAllocation in contractorTimeActivities)
-                        {
-                            <tr>
-                                <th colspan="7">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel(): @grantAllocation.Key.DisplayNameAsUrl</th>
-                            </tr>
-                            <tr>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th class="text-right">Hours</th>
-                                <th class="text-right">Acreage</th>
-                                <th class="text-right">Rate</th>
-                                <th class="text-right">Total Amount</th>
-                            </tr>
-                            foreach (var contractorTimeActivity in grantAllocation.OrderBy(x => x.ContractorTimeActivityStartDate))
-                            {
-                                <tr>
-                                    <td>@contractorTimeActivity.ContractorTimeActivityStartDate.ToShortDateString()</td>
-                                    <td>
-                                        @if (contractorTimeActivity.ContractorTimeActivityEndDate != null)
-                                        {
-                                            <text>@contractorTimeActivity.ContractorTimeActivityEndDate.Value.ToShortDateString()</text>
-                                        }
-                                        else
-                                        {
-                                            <p class="systemText">N/A</p>
-                                        }
-                                    </td>
-                                    <td class="text-right">@contractorTimeActivity.ContractorTimeActivityAcreage</td>
-                                    <td class="text-right">@contractorTimeActivity.ContractorTimeActivityHours</td>
-                                    <td class="text-right">@contractorTimeActivity.ContractorTimeActivityRate.ToStringCurrency()</td>
-                                    <td class="text-right">@contractorTimeActivity.TotalAmount.ToStringCurrency()</td>
-                                </tr>
-                            }
-                        }
-                    </table>
-                }
-                else
-                {
-                    <p class="systemText">No Contractor Time identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
-                }
-                <hr />*@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h4>Treatments</h4>
@@ -437,15 +366,15 @@
 
                         <br />
 
-                        @if (ViewDataTyped.Project.GrantAllocationAwardLandownerCostShareLineItems.Any())
+                        @if (ViewDataTyped.Project.Treatments.Any())
                         {
                             <div class="panel-body">
-                                @Html.DhtmlxGrid(ViewDataTyped.LandownerCostShareLineItemProjectDetailGridSpec, ViewDataTyped.LandownerCostShareLineItemGridName, ViewDataTyped.LandownerCostShareLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         }
                         else
                         {
-                            <p class="systemText">No @FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel() Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                            <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
                     </div>
                 </div>
