@@ -93,6 +93,11 @@ namespace ProjectFirma.Web.Controllers
 
                     ProcessLogin(firstName, lastName, email, roleGroups, sawAuthenticator);
                 }
+                else
+                {
+                    SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, SAML Response is invalid.");
+                    SetErrorForDisplay($"There was an error trying to log into your account. Please try again in a couple minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
+                }
                 return new RedirectResult(HomeUrl);
             }
             catch (Exception ex)

@@ -49,9 +49,17 @@ namespace ProjectFirma.Web
             var signedXml = new SignedXml(_xmlDoc);
             signedXml.LoadXml((XmlElement)nodeList[0]);
             bool validateSignatureReference = ValidateSignatureReference(signedXml);
+            if (!validateSignatureReference)
+            {
+                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, could not validate SignatureReference.");
+            }
             bool checkSignature = signedXml.CheckSignature(_certificate, true);
-            bool isExpired = !IsExpired();
-            return validateSignatureReference && checkSignature && isExpired;
+            if (!checkSignature)
+            {
+                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, xml signature is invalid.");
+            }
+            bool isNotExpired = !IsExpired();
+            return validateSignatureReference && checkSignature && isNotExpired;
         }
 
         //an XML signature can "cover" not the whole document, but only a part of it
