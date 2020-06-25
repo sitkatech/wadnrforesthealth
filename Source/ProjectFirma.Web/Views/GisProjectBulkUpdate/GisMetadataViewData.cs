@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public readonly string GridName;
         public readonly string GridDataUrl;
         public readonly string GisMetadataPostUrl;
+        public readonly string ProjectIndexUrl;
 
         public GisRecordGridSpec GisRecordGridSpec { get; set; }
         public IEnumerable<SelectListItem> GisMetadataAttributes { get; }
@@ -44,7 +45,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             , GisImportSectionStatus gisImportSectionStatus
             , GisRecordGridSpec gisRecordGridSpec
             , IEnumerable<Models.GisMetadataAttribute> gisMetadataAttributes
-            , string gisMetadataPostUrl)
+            , string gisMetadataPostUrl
+            , string projectIndexUrl)
             : base(currentPerson, gisUploadAttempt, GisUploadAttemptWorkflowSection.ValidateMetadata.GisUploadAttemptWorkflowSectionDisplayName, gisImportSectionStatus)
         {
             GisRecordGridSpec = gisRecordGridSpec;
@@ -52,6 +54,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             GridName = "GisRecordGrid";
             GisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             GisMetadataPostUrl = gisMetadataPostUrl;
+            ProjectIndexUrl = projectIndexUrl;
         }
 
 
