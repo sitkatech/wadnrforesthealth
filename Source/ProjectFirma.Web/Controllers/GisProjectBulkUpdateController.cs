@@ -109,11 +109,12 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
             
             var gisMetadataPostUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.GisMetadata(gisUploadAttempt.GisUploadAttemptID, null));
+            var projectIndexUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Index());
             var gisMetadataAttributeIDs = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
             var metadataAttributes =
                 HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
                     gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
-            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes, gisMetadataPostUrl);
+            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes, gisMetadataPostUrl, projectIndexUrl);
             return RazorView<GisMetadata, GisMetadataViewData, GisMetadataViewModel>(viewData, gisMetadataViewModel);
         }
 
@@ -179,7 +180,6 @@ namespace ProjectFirma.Web.Controllers
                 var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
                     .SelectMany(x => startDateDictionary[x]).ToList();
 
-
                 
 
                 var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
@@ -203,6 +203,8 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.Projects.Add(project);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
             }
+
+            ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID, projectIdentifierMetadataAttributeID);
 
             return new ModalDialogFormJsonResult();
         }
@@ -471,6 +473,21 @@ namespace ProjectFirma.Web.Controllers
         {
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
             var sqlQueryOne = $"exec dbo.procImportGisTableToGisFeature @piGisUploadAttemptID = {gisUploadAttemptID}";
+            using (var command = new SqlCommand(sqlQueryOne))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+                }
+            }
+        }
+
+        private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID, int projectIdentifierMetadataAttributeID)
+        {
+            var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            var sqlQueryOne = $"exec dbo.procImportTreatmentsFromGisUploadAttempt @piGisUploadAttemptID = {gisUploadAttemptID}, @projectIdentifierGisMetadataAttributeID = {projectIdentifierMetadataAttributeID}";
             using (var command = new SqlCommand(sqlQueryOne))
             {
                 var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);

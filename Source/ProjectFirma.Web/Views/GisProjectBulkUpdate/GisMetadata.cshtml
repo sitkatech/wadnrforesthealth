@@ -107,11 +107,11 @@
                     jQuery(".progress").hide();
                     // Piggy back off the centralized login required detection in Ajax handling in SitkaAjax
                     if (refresh) {
-                        location.reload();
+                        window.location.href = "@ViewDataTyped.ProjectIndexUrl";
                     }
                     else
                     {
-                        window.location.href = "@ViewDataTyped.GisMetadataUrl";
+                        window.location.href = "@ViewDataTyped.ProjectIndexUrl";
                     }
                 },
                 error: function (xhr, statusText) {

@@ -215,8 +215,8 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
 
-            var landownerCostShareLineItemProjectDetailGridSpec = new LandownerCostShareLineItemProjectDetailGridSpec(CurrentPerson);
-            var landownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.LandownerCostShareLineItemProjectDetailGridJsonData(project));
+            var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson);
+            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
 
             var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, project);
             var projectInteractionEventsGridDataUrl =
@@ -262,7 +262,7 @@ namespace ProjectFirma.Web.Controllers
                 projectOrganizationsDetailViewData,
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID, projectPeopleDetailViewData,
-                landownerCostShareLineItemProjectDetailGridSpec, landownerCostShareLineItemGridDataUrl, editProjectRegionUrl, editProjectPriorityLandscapeUrl,
+                treatmentGridSpec, treatmentGridDataUrl, editProjectRegionUrl, editProjectPriorityLandscapeUrl,
                 projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
             return RazorView<Detail, DetailViewData>(viewData);
         }
