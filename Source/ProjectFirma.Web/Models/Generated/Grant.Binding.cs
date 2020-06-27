@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Grant()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantFileResources = new HashSet<GrantFileResource>();
             this.GrantModifications = new HashSet<GrantModification>();
             this.GrantNotes = new HashSet<GrantNote>();
@@ -35,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
@@ -43,7 +42,6 @@ namespace ProjectFirma.Web.Models
             this.EndDate = endDate;
             this.ConditionsAndRequirements = conditionsAndRequirements;
             this.ComplianceNotes = complianceNotes;
-            this.AwardedFunds = awardedFunds;
             this.CFDANumber = cFDANumber;
             this.GrantName = grantName;
             this.GrantTypeID = grantTypeID;
@@ -95,7 +93,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || GrantFileResources.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
+            return GrantFileResources.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
         }
 
         /// <summary>
@@ -105,11 +103,6 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(GrantAllocations.Any())
-            {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
-            }
-
             if(GrantFileResources.Any())
             {
                 dependentObjects.Add(typeof(GrantFileResource).Name);
@@ -135,7 +128,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantFileResource).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantFileResource).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
 
 
         /// <summary>
@@ -159,11 +152,6 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
-
-            foreach(var x in GrantAllocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
 
             foreach(var x in GrantFileResources.ToList())
             {
@@ -193,7 +181,6 @@ namespace ProjectFirma.Web.Models
         public DateTime? EndDate { get; set; }
         public string ConditionsAndRequirements { get; set; }
         public string ComplianceNotes { get; set; }
-        public decimal? AwardedFunds { get; set; }
         public string CFDANumber { get; set; }
         public string GrantName { get; set; }
         public int? GrantTypeID { get; set; }
@@ -203,7 +190,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantFileResource> GrantFileResources { get; set; }
         public virtual ICollection<GrantModification> GrantModifications { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }

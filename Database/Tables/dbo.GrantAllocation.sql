@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[GrantAllocation](
 	[GrantAllocationID] [int] IDENTITY(1,1) NOT NULL,
-	[GrantID] [int] NOT NULL,
 	[GrantAllocationName] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,
@@ -14,14 +13,10 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[DNRUplandRegionID] [int] NULL,
 	[DivisionID] [int] NULL,
 	[GrantManagerID] [int] NULL,
+	[GrantModificationID] [int] NOT NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_GrantAllocation_GrantAllocationID_GrantID] UNIQUE NONCLUSTERED 
-(
-	[GrantAllocationID] ASC,
-	[GrantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -41,10 +36,10 @@ REFERENCES [dbo].[FederalFundCode] ([FederalFundCodeID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_FederalFundCode_FederalFundCodeID]
 GO
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Grant_GrantID] FOREIGN KEY([GrantID])
-REFERENCES [dbo].[Grant] ([GrantID])
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_GrantModification_GrantModificationID] FOREIGN KEY([GrantModificationID])
+REFERENCES [dbo].[GrantModification] ([GrantModificationID])
 GO
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Grant_GrantID]
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_GrantModification_GrantModificationID]
 GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])
