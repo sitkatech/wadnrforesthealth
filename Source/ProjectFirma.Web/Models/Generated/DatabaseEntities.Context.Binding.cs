@@ -173,6 +173,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
+        public virtual DbSet<vGeoServerProjectTreatmentArea> vGeoServerProjectTreatmentAreas { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
         public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }

@@ -1796,6 +1796,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vGeoServerProjectTreatmentArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerProjectTreatmentArea">
+        <MappingFragment StoreEntitySet="vGeoServerProjectTreatmentArea">
+          <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="FhtProjectNumber" ColumnName="FhtProjectNumber" />
+          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
+          <ScalarProperty Name="TreatmentFeature" ColumnName="TreatmentFeature" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vSocrataDataMartRawJsonImportIndex">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex">
         <MappingFragment StoreEntitySet="vSocrataDataMartRawJsonImportIndex">

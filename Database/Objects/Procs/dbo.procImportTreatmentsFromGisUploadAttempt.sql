@@ -33,7 +33,7 @@ INSERT INTO [dbo].[Treatment]
 
 
 
-select p.ProjectID, x.GisFeatureGeometry, null, null, null, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,null from dbo.Project p
+select p.ProjectID, x.GisFeatureGeometry.MakeValid(), null, null, null, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,null from dbo.Project p
 join (
 select gf.GisFeatureGeometry, gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf
 join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
@@ -44,6 +44,6 @@ and gf.GisUploadAttemptID = @piGisUploadAttemptID) x on x.GisFeatureMetadataAttr
 
 /*
 
-exec dbo.procImportTreatmentsFromGisUploadAttempt @piGisUploadAttemptID = 1, @projectIdentifierGisMetadataAttributeID = -1
+exec dbo.procImportTreatmentsFromGisUploadAttempt @piGisUploadAttemptID = 1, @projectIdentifierGisMetadataAttributeID = 39
 
 */
