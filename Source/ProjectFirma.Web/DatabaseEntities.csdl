@@ -145,6 +145,7 @@
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Treatment" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
+    <EntitySet Name="vGeoServerProjectTreatmentArea" EntityType="ProjectFirma.Web.Models.vGeoServerProjectTreatmentArea" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
@@ -3163,6 +3164,22 @@
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
+  </EntityType>
+  <EntityType Name="vGeoServerProjectTreatmentArea">
+    <Key>
+      <PropertyRef Name="TreatmentID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="ProjectID" />
+      <PropertyRef Name="ProjectName" />
+      <PropertyRef Name="FhtProjectNumber" />
+    </Key>
+    <Property Name="TreatmentID" Type="Int32" Nullable="false" />
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
+    <Property Name="FhtProjectNumber" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Ogr_Geometry" Type="Geometry" />
+    <Property Name="TreatmentFeature" Type="Geometry" />
   </EntityType>
   <EntityType Name="vSocrataDataMartRawJsonImportIndex">
     <Key>

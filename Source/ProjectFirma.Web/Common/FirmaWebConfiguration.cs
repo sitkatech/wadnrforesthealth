@@ -90,5 +90,10 @@ namespace ProjectFirma.Web.Common
         {
             return "WADNRForestHealth:ProjectLocationDetailed";//todo: move layer name to web config
         }
+
+        public static string GetAllProjectTreatmentAreasWmsLayerName()
+        {
+            return "WADNRForestHealth:ProjectTreatmentArea";//todo: move layer name to web config
+        }
     }
 }

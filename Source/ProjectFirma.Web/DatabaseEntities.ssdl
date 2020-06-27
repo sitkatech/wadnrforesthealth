@@ -153,6 +153,17 @@
 [vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry]
 FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vGeoServerProjectTreatmentArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerProjectTreatmentArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerProjectTreatmentArea">
+      <DefiningQuery>SELECT 
+[vGeoServerProjectTreatmentArea].[TreatmentID] AS [TreatmentID], 
+[vGeoServerProjectTreatmentArea].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerProjectTreatmentArea].[ProjectID] AS [ProjectID], 
+[vGeoServerProjectTreatmentArea].[ProjectName] AS [ProjectName], 
+[vGeoServerProjectTreatmentArea].[FhtProjectNumber] AS [FhtProjectNumber], 
+[vGeoServerProjectTreatmentArea].[Ogr_Geometry] AS [Ogr_Geometry], 
+[vGeoServerProjectTreatmentArea].[TreatmentFeature] AS [TreatmentFeature]
+FROM [dbo].[vGeoServerProjectTreatmentArea] AS [vGeoServerProjectTreatmentArea]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
       <DefiningQuery>SELECT 
 [vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportID] AS [SocrataDataMartRawJsonImportID], 
@@ -2748,6 +2759,25 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationD
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationSimple' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatmentArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerProjectTreatmentArea">
+    <Key>
+      <PropertyRef Name="TreatmentID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="ProjectID" />
+      <PropertyRef Name="ProjectName" />
+      <PropertyRef Name="FhtProjectNumber" />
+    </Key>
+    <Property Name="TreatmentID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
+    <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Ogr_Geometry" Type="geometry" />
+    <Property Name="TreatmentFeature" Type="geometry" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->

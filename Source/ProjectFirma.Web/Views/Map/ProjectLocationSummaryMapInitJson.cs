@@ -60,6 +60,8 @@ namespace ProjectFirma.Web.Views.Map
             }
 
 
+
+
             if (project is Models.Project projectAsProject)
             {
                 var interactionEventsFeatureCollection = projectAsProject.InteractionEventProjects.Select(x => x.InteractionEvent).ToGeoJsonFeatureCollection();
@@ -69,6 +71,15 @@ namespace ProjectFirma.Web.Views.Map
                     var layerName = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} Locations";
 
                     Layers.Add(new LayerGeoJson(layerName, interactionEventsFeatureCollection, "yellow", 1,
+                        LayerInitialVisibility.Show));
+                }
+
+
+                var treatmentsFeatureCollection = projectAsProject.Treatments.ToGeoJsonFeatureCollection();
+                if (treatmentsFeatureCollection != null)
+                {
+                    var layerName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Treatment Areas";
+                    Layers.Add(new LayerGeoJson(layerName, treatmentsFeatureCollection, "green", 1,
                         LayerInitialVisibility.Show));
                 }
 
