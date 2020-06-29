@@ -25,6 +25,14 @@ namespace ProjectFirma.Web.UnitTestCommon
                 return HttpRequestStorage.DatabaseEntities.GrantStatuses.First();
             }
 
+            public static Grant Create(Organization organization)
+            {
+                var grantStatus = GetDefaultGrantStatus();
+                var testGrantName = GetTestGrantName(organization, GetTestGrantName(organization, "Test Grant Name"));
+                var grant = new Grant(testGrantName, grantStatus, organization);
+                return grant;
+            }
+
             public static Grant Create(Organization organization, string grantName)
             {
                 var grantStatus = GetDefaultGrantStatus();

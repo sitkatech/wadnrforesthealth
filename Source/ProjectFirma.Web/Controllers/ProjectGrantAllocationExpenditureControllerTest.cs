@@ -63,8 +63,9 @@ namespace ProjectFirma.Web.Controllers
             var project = TestFramework.TestProject.Create();
 
             var org1 = TestFramework.TestOrganization.Create();
-            var grant = TestFramework.TestGrant.Create(org1, "test grant 1");
-            var grantAllocation = TestFramework.TestGrantAllocation.Create(grant, "test grant allocation 1");
+
+            var grantModification = TestFramework.TestGrantModification.Create(org1);
+            var grantAllocation = TestFramework.TestGrantAllocation.Create(grantModification, "test grant allocation 1");
 
             TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2010, 100.00m);
             TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2011, 100.00m);
@@ -73,8 +74,9 @@ namespace ProjectFirma.Web.Controllers
 
             var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectGrantAllocationExpenditures);
+            var filterValues = new List<string> {org1.DisplayName};
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> {org1.DisplayName}, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
+                filterValues, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
 
             Assert.That(fullOrganizationTypeAndYearDictionary.Sum(x => x.Value.Sum(y => y.Value)), Is.EqualTo(400.00m));
         }

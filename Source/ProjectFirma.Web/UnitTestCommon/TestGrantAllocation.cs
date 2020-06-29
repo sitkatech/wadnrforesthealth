@@ -13,31 +13,32 @@ namespace ProjectFirma.Web.UnitTestCommon
         {
             public static GrantAllocation Create()
             {
-                var grant = TestGrant.Create();
-                var grantAllocation = GrantAllocation.CreateNewBlank(grant);
+                var grantModification = TestGrantModification.Create();
+                var org = TestOrganization.Create();
+                var grantAllocation = TestGrantAllocation.Create(grantModification, GetTestGrantAllocationName(org, "Test Grant Allocation"));
                 //GrantAllocation.IsActive = true;
                 return grantAllocation;
             }
 
-            public static GrantAllocation Create(Grant grant, string grantAllocationName)
+            public static GrantAllocation Create(GrantModification grantModification, string grantAllocationName)
             {
-                var grantAllocation = new GrantAllocation(grant);
+                var grantAllocation = new GrantAllocation(grantModification);
                 grantAllocation.GrantAllocationName = grantAllocationName;
                 return grantAllocation;
             }
 
             public static GrantAllocation CreateWithoutChangingName(string grantAllocationName)
             {
-                var grant = TestGrant.Create();
-                var grantAllocation = new GrantAllocation(grant);
+                var grantModification = TestGrantModification.Create();
+                var grantAllocation = new GrantAllocation(grantModification);
                 grantAllocation.GrantAllocationName = grantAllocationName;
                 return grantAllocation;
             }
 
             public static GrantAllocation CreateWithoutChangingName(string grantAllocationName, Organization organization)
             {
-                var grant = TestGrant.Create();
-                var grantAllocation = new GrantAllocation(grant);
+                var grantModification = TestGrantModification.Create();
+                var grantAllocation = new GrantAllocation(grantModification);
                 grantAllocation.GrantAllocationName = grantAllocationName;
                 grantAllocation.Organization = organization;
                 grantAllocation.OrganizationID = organization.OrganizationID;
@@ -51,9 +52,9 @@ namespace ProjectFirma.Web.UnitTestCommon
 
             public static GrantAllocation Create(DatabaseEntities dbContext)
             {
-                var grant = TestFramework.TestGrant.Insert(dbContext);
+                var grantModification = TestFramework.TestGrantModification.Insert(dbContext);
                 string testGrantAllocationName = TestFramework.MakeTestName("Test Grant Allocation Name");
-                var grantAllocation = new GrantAllocation(grant);
+                var grantAllocation = new GrantAllocation(grantModification);
                 grantAllocation.GrantAllocationName = testGrantAllocationName;
 
                 dbContext.GrantAllocations.Add(grantAllocation);

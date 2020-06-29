@@ -48,6 +48,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
         public int GrantID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModification)]
+        public int GrantModificationID { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndexProjectCode)]
         public List<ProgramIndexProjectCodeJson> ProgramIndexProjectCodeJsons { get; set; }
 
@@ -100,7 +103,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
-            GrantID = grantAllocation.GrantID;
+            GrantID = grantAllocation.GrantModification.GrantID;
+            GrantModificationID = grantAllocation.GrantModificationID;
 
             ProgramIndexProjectCodeJsons =
                 ProgramIndexProjectCodeJson
@@ -183,7 +187,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
-            grantAllocation.GrantID = GrantID;
+            //grantAllocation.GrantID = GrantID;
             
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;

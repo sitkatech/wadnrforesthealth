@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantTypeID = grant.GrantTypeID;
             GrantNumber = grant.GrantNumber;
             CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.AwardedFunds;
+            TotalAwardAmount = grant.GetTotalAwardAmount();
             GrantStartDate = grant.StartDate;
             GrantEndDate = grant.EndDate;
             
@@ -103,7 +103,7 @@ namespace ProjectFirma.Web.Views.Grant
             grant.GrantTypeID = GrantTypeID;
             grant.GrantNumber = GrantNumber;
             grant.CFDANumber = CFDANumber;
-            grant.AwardedFunds = TotalAwardAmount;
+            //grant.AwardedFunds = TotalAwardAmount;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
 

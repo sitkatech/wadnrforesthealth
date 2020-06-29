@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             }
 
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.Grant.GrantNumber, 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.GrantModification.Grant.GrantNumber, 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardAmount.ToGridHeaderString(), x => x.GrantAllocationAwardAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);

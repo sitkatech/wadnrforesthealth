@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static InvoiceLineItem Create(DatabaseEntities dbContext, CostType costType)
             {
                 var invoice = TestInvoice.Create();
-                var grantAllocation = TestGrantAllocation.Create();
+                var grantAllocation = TestGrantAllocation.CreateWithoutChangingName("Test Grant Allocation");
                 
                 var testInvoiceLineItem = new InvoiceLineItem(invoice, grantAllocation, costType, 1m); //InvoiceLineItem.CreateNewBlank(invoice, grantAllocation, costType);
 

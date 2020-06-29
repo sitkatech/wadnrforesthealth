@@ -296,7 +296,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
             var grant = grantPrimaryKey.EntityObject;
-            var grantAllocations = grant.GrantAllocations.ToList();
+            var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -310,7 +310,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
         {
             var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.Grant.GrantNumber == "").ToList();
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantModification.Grant.GrantNumber == "").ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
