@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -123,7 +122,6 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult New(NewGrantViewModel viewModel)
         {
-            
             if (!ModelState.IsValid)
             {
                 return ViewNew(viewModel, EditGrantType.NewGrant);
@@ -211,7 +209,6 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
-
 
         [GrantsViewFeature]
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
