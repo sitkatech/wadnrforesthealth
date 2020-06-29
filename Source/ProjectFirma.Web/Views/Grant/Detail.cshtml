@@ -140,7 +140,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
                             </div>
                             <div class="col-sm-8">
-                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.AwardedFunds.ToStringCurrency()</span>
+                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
                             </div>
                         </div>
                         <div class="row">
