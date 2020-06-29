@@ -340,7 +340,6 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="ConditionsAndRequirements" ColumnName="ConditionsAndRequirements" />
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
-          <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
           <ScalarProperty Name="CFDANumber" ColumnName="CFDANumber" />
           <ScalarProperty Name="GrantName" ColumnName="GrantName" />
           <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
@@ -354,7 +353,6 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocation">
         <MappingFragment StoreEntitySet="GrantAllocation">
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="GrantAllocationName" ColumnName="GrantAllocationName" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
@@ -364,6 +362,7 @@
           <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

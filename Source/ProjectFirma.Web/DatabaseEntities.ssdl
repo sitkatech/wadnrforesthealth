@@ -326,8 +326,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
+    <AssociationSet Name="FK_GrantAllocation_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Organization_OrganizationID">
@@ -1388,7 +1388,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="EndDate" Type="datetime" />
     <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
     <Property Name="ComplianceNotes" Type="varchar(max)" />
-    <Property Name="AwardedFunds" Type="money" />
     <Property Name="CFDANumber" Type="varchar" MaxLength="10" />
     <Property Name="GrantName" Type="varchar" Nullable="false" MaxLength="64" />
     <Property Name="GrantTypeID" Type="int" />
@@ -1401,7 +1400,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <PropertyRef Name="GrantAllocationID" />
     </Key>
     <Property Name="GrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationName" Type="nvarchar" MaxLength="100" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
@@ -1411,6 +1409,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="DNRUplandRegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
+    <Property Name="GrantModificationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationAward">
     <Key>
@@ -3245,15 +3244,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocation_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+  <Association Name="FK_GrantAllocation_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
       </Principal>
       <Dependent Role="GrantAllocations">
-        <PropertyRef Name="GrantID" />
+        <PropertyRef Name="GrantModificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantModification()
         {
+            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantModificationGrantModificationPurposes = new HashSet<GrantModificationGrantModificationPurpose>();
             this.GrantModificationNoteInternals = new HashSet<GrantModificationNoteInternal>();
         }
@@ -94,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantModificationGrantModificationPurposes.Any() || GrantModificationNoteInternals.Any();
+            return GrantAllocations.Any() || GrantModificationGrantModificationPurposes.Any() || GrantModificationNoteInternals.Any();
         }
 
         /// <summary>
@@ -104,6 +105,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(GrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
             if(GrantModificationGrantModificationPurposes.Any())
             {
                 dependentObjects.Add(typeof(GrantModificationGrantModificationPurpose).Name);
@@ -119,7 +125,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantModificationGrantModificationPurpose).Name, typeof(GrantModificationNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantAllocation).Name, typeof(GrantModificationGrantModificationPurpose).Name, typeof(GrantModificationNoteInternal).Name};
 
 
         /// <summary>
@@ -143,6 +149,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in GrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in GrantModificationGrantModificationPurposes.ToList())
             {
@@ -168,6 +179,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantModificationID; } set { GrantModificationID = value; } }
 
+        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual ICollection<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual Grant Grant { get; set; }

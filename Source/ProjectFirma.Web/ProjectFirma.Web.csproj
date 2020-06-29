@@ -817,6 +817,7 @@
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Security\ViewJsonApiLandingPageFeature.cs" />
     <Compile Include="UnitTestCommon\TestGrant.cs" />
+    <Compile Include="UnitTestCommon\TestGrantModification.cs" />
     <Compile Include="UnitTestCommon\TestInvoice.cs" />
     <Compile Include="UnitTestCommon\TestInvoiceLineItem.cs" />
     <Compile Include="UnitTestCommon\TestGrantAllocation.cs" />

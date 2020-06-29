@@ -141,8 +141,9 @@ namespace ProjectFirma.Web.Controllers
                 // Null is likely wrong here!!!
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null);
             }
-            var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == viewModel.GrantID);
-            var grantAllocation = GrantAllocation.CreateNewBlank(grant);
+            //var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == viewModel.GrantID);
+            var grantModification = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.GrantModificationID);
+            var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
