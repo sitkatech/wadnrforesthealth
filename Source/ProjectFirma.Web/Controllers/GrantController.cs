@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -288,6 +289,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        // TODO: Remove when sure no longer needed.
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
@@ -297,6 +299,24 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        {
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+
+            // HACK. Don't keep this, be more obvious.
+            if (grantModificationPrimaryKey.PrimaryKeyValue == UrlTemplate.Parameter1Int)
+            {
+                return new GridJsonNetJObjectResult<GrantAllocation>(new List<GrantAllocation>(), gridSpec);
+            }
+
+            var grantModification = grantModificationPrimaryKey.EntityObject;
+            var grantAllocations = grantModification.GrantAllocations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
 
         /// <summary>
         /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.

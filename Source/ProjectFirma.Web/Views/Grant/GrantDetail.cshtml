@@ -210,7 +210,9 @@
             </div>
             <div class="panel-body">
                <div class="basicsLayout">
-                  @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+                  @*NO -- NOT TEMPLATE*@
+                  @*@Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrlTemplate, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)*@
+                  @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, "/Grant/GrantAllocationGridJsonDataByGrantModification/48", null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
                </div>
             </div>
          </div>
@@ -269,9 +271,17 @@
        {
           console.log('selectGrantAllocationsInChildGridForAGrantModification(' + currentSelectedGrantModificationIDInParentGrantGrid + ')');
           var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
+          var grantAllocationGridDataUrlTemplate = "@ViewDataTyped.GrantAllocationGridDataUrlTemplate";
+          var grantAllocationGridDataUrl = new Sitka.UrlTemplate(grantAllocationGridDataUrlTemplate).ParameterReplace(currentSelectedGrantModificationIDInParentGrantGrid);
 
+          console.log('Clearing grantAllocationGridDataUrl: ' + grantAllocationGridDataUrl);
+          grantAllocationGrid.grid.clearAll();
 
-            @*var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
+          console.log('Loading grantAllocationGridDataUrl: ' + grantAllocationGridDataUrl);
+          grantAllocationGrid.grid.load(grantAllocationGridDataUrl, "json");
+          //grantAllocationGrid.grid.load(grantAllocationGridDataUrl);
+
+          @*var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
             //console.log('Grant allocation child grid grant column index: ' + grantNumberColumnIndexForChildGrantGrid);
             var grantNumberFilterForChildGrantGrid = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndexForChildGrantGrid);
             //console.log('Got filter element for child grantNumberColumnIndex: ' + grantNumberColumnIndexForChildGrantGrid);
@@ -291,7 +301,7 @@
             grantAllocationGrid.grid.filterByAll();
 
             //console.log('grantGrid onRowSelect - exiting');*@
-        }
+       }
 
         grantModificationGrid.grid.attachEvent("onRowSelect", function (rowId)
         {
