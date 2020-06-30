@@ -29,7 +29,6 @@ using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
-using log4net.Repository.Hierarchy;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 
@@ -182,7 +181,7 @@ namespace ProjectFirma.Web.Models
             DbPropertyEntry modifiedProperty)
         {
             var propertyName = modifiedProperty.Name;
-            if (!string.Equals(propertyName, string.Format("{0}ID", tableName), StringComparison.InvariantCultureIgnoreCase) && !string.Equals(propertyName, "TenantID", StringComparison.InvariantCultureIgnoreCase))
+            if (!string.Equals(propertyName, $"{tableName}ID", StringComparison.InvariantCultureIgnoreCase) && !string.Equals(propertyName, "TenantID", StringComparison.InvariantCultureIgnoreCase))
             {
                 var optionalAuditDescriptionString = GetAuditDescriptionStringIfAnyForProperty(objectContext, dbEntry, propertyName, auditLogEventType);
                 var auditLogEntry = CreateAuditLogEntryImpl(dbEntry,

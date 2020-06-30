@@ -57,7 +57,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
             }
         }
-
     }
 
     public class GrantAllocationBudgetLineItemAjaxModel
