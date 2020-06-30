@@ -45,8 +45,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [Required]
         public int? OrganizationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
-        public int GrantID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModification)]
         public int GrantModificationID { get; set; }
@@ -94,7 +92,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// </summary>
         public EditGrantAllocationViewModel()
         {
-
             ProgramIndexProjectCodeJsons = new List<ProgramIndexProjectCodeJson>();
         }
 
@@ -103,7 +100,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
-            GrantID = grantAllocation.GrantModification.GrantID;
             GrantModificationID = grantAllocation.GrantModificationID;
 
             ProgramIndexProjectCodeJsons =
@@ -118,6 +114,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EndDate = grantAllocation.EndDate;
             ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
             GrantManagerID = grantAllocation.GrantManagerID;
+            //GrantAllocationFileResourceDatas = grantAllocation.GrantAllocationFileResources
         }
 
         public static int CountWordsSeparatedByWhitespaceOrCommaInString(string stringToCheck)
@@ -230,7 +227,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             // this section is only applicable to when it is a new Grant Allocation being created. We no longer need to delete the old ones on submit 
             // because editing and deleting the files will happen outside of the BASICS editor for a grant allocation.
-            if (GrantAllocationFileResourceDatas != null)
+            if (GrantAllocationFileResourceDatas != null && GrantAllocationFileResourceDatas[0] != null)
             {
                 for (int key = 0; key < GrantAllocationFileResourceDatas.Count; key++)
                 {
