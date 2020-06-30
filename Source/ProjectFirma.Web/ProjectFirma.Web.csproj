@@ -919,7 +919,7 @@
     <Compile Include="Views\GrantModification\GrantModificationDetail.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetailViewData.cs" />
     <Compile Include="Views\Grant\GrantDetail.cs" />
-    <Compile Include="Views\Grant\DetailViewData.cs" />
+    <Compile Include="Views\Grant\GrantDetailViewData.cs" />
     <Compile Include="Views\Grant\EditGrantNote.cs" />
     <Compile Include="Views\Grant\EditGrantNoteInternal.cs" />
     <Compile Include="Views\Grant\EditGrantNoteInternalViewData.cs" />

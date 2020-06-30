@@ -226,8 +226,8 @@ namespace ProjectFirma.Web.Controllers
                 SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNoteInternal(grantPrimaryKey)),
                 grant.GrantName,
                 userHasEditGrantPermissions);
-            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
-            return RazorView<GrantDetail, DetailViewData>(viewData);
+            var viewData = new Views.Grant.GrantDetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
+            return RazorView<GrantDetail, GrantDetailViewData>(viewData);
         }
 
         [GrantsViewFullListFeature]

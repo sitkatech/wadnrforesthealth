@@ -25,6 +25,7 @@
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.Shared
 @using ProjectFirma.Web.Views.Shared.Grant
 @using ProjectFirma.Web.Views.Shared.TextControls
@@ -63,182 +64,244 @@
 
 
 <div class="col-sm-12">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
-                        Basics
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantName)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="Name">@ViewDataTyped.Grant.GrantName</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
-                            </div>
-                        </div>
+   <div class="row">
+      <div class="col-sm-6">
+         <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+               <h3>
+                  @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
+                  Basics
+               </h3>
+            </div>
+            <div class="panel-body">
+               <div class="basicsLayout">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantName)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="Name">@ViewDataTyped.Grant.GrantName</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
+                     </div>
+                  </div>
 
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.Organization)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantType)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.CFDA)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="Type">@ViewDataTyped.Grant.CFDANumber</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
-                            </div>
-                            <div class="col-sm-8">
-                                <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
-                            </div>
-                            <div class="col-sm-8">
-                                <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.Organization)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantType)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.CFDA)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="Type">@ViewDataTyped.Grant.CFDANumber</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
+                     </div>
+                     <div class="col-sm-8">
+                        <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-4">
+                        @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
+                     </div>
+                     <div class="col-sm-8">
+                        <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>Files</h3>
-                </div>
-                <div class="panel-body">
-                    @{ GrantDetailsFileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
-                </div>
+         </div>
+      </div>
+      <div class="col-sm-6">
+         <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+               <h3>Files</h3>
             </div>
+            <div class="panel-body">
+               @{ GrantDetailsFileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
+            </div>
+         </div>
             
-        </div>
-    </div>
+      </div>
+   </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.GrantModification.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        @Html.DhtmlxGrid(ViewDataTyped.GrantModificationGridSpec, ViewDataTyped.GrantModificationGridName, ViewDataTyped.GrantModificationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
-                    </div>
-                </div>
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+               <h3>
+                  @FieldDefinition.GrantModification.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+               </h3>
             </div>
-        </div>
-    </div>
-
-
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
-                    </div>
-                </div>
+            <div class="panel-body">
+               <div class="basicsLayout">
+                  @Html.DhtmlxGrid(ViewDataTyped.GrantModificationGridSpec, ViewDataTyped.GrantModificationGridName, ViewDataTyped.GrantModificationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 
 
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        Notes
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        <strong>Public Notes</strong>
-                        @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
-
-                        @if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
-                        {
-                            <strong>Internal Notes</strong>
-                            EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantNotesViewData);
-                        }
-                    </div>
-                </div>
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+               <h3>
+                  @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+               </h3>
             </div>
-        </div>
-    </div>
+            <div class="panel-body">
+               <div class="basicsLayout">
+                  @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+               <h3>
+                  Notes
+               </h3>
+            </div>
+            <div class="panel-body">
+               <div class="basicsLayout">
+                  <strong>Public Notes</strong>
+                  @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
+
+                  @if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+                  {
+                     <strong>Internal Notes</strong>
+                     EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantNotesViewData);
+                  }
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
+
+
+<script type="text/javascript">
+    // <![CDATA[
+    var displayEmptyGrid = false;
+    jQuery(document).ready(function()
+    {
+        //console.log('jQuery Document Ready');
+        var grantModificationGrid = Sitka.@ViewDataTyped.GrantModificationGridName;
+
+        // Get current selected GrantModificationID from Parent grid for a given rowId
+        function getCurrentSelectedGrantModificationIDInParentGrid(rowId)
+        {
+           console.log('getCurrentSelectedGrantModificationIDInParentGrid('+ rowId +')');
+           var grantModificationIDColumnIndexForParentGrantModificationGrid = grantModificationGrid.getColumnIndexByName('@GrantModificationGridSpec.GrantModificationIDHiddenColumnName');
+           console.log('grantModificationIDColumnIndexForParentGrantModificationGrid: ' + grantModificationIDColumnIndexForParentGrantModificationGrid);
+           var currentSelectedGrantModificationIDInParentGrantGrid = grantModificationGrid.grid.cells(rowId, grantModificationIDColumnIndexForParentGrantModificationGrid).getValue();
+           console.log('currentSelectedGrantModificationIDInParentGrantGrid: ' + currentSelectedGrantModificationIDInParentGrantGrid);
+           return currentSelectedGrantModificationIDInParentGrantGrid;
+        }
+
+        // Show appropriate Grant Allocations for the selected Grant Modification ID
+       function selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid)
+       {
+          console.log('selectGrantAllocationsInChildGridForAGrantModification(' + currentSelectedGrantModificationIDInParentGrantGrid + ')');
+          var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
+
+
+            @*var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
+            //console.log('Grant allocation child grid grant column index: ' + grantNumberColumnIndexForChildGrantGrid);
+            var grantNumberFilterForChildGrantGrid = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndexForChildGrantGrid);
+            //console.log('Got filter element for child grantNumberColumnIndex: ' + grantNumberColumnIndexForChildGrantGrid);
+            //console.log('Filter element for child grantNumberColumnIndex: ' + grantNumberFilterForChildGrantGrid);
+            grantNumberFilterForChildGrantGrid.value = currentSelectedGrantNumberInParentGrantGrid;
+            // This conditional block is used to show/hide a grid with "no results" versus a grid that is filtered to available results
+            if (grantNumberFilterForChildGrantGrid.value === '') {
+                jQuery("#grantAllocationGridWithData").hide();
+                jQuery("#grantAllocationGridWithoutDataForNoGrantFilterResults").show();
+            }
+            else
+            {
+                jQuery("#grantAllocationGridWithoutDataForNoGrantFilterResults").hide();
+                jQuery("#grantAllocationGridWithData").show();
+            }
+            //console.log(grantNumberFilterForChildGrantGrid.value === '' ? 'empty string' : grantNumberFilterForChildGrantGrid.value);
+            grantAllocationGrid.grid.filterByAll();
+
+            //console.log('grantGrid onRowSelect - exiting');*@
+        }
+
+        grantModificationGrid.grid.attachEvent("onRowSelect", function (rowId)
+        {
+           console.log('grantModificationGrid - onRowSelect - RowID: ' + rowId);
+           var currentSelectedGrantModificationIDInParentGrantGrid = getCurrentSelectedGrantModificationIDInParentGrid(rowId);
+           selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid);
+        });
+        grantModificationGrid.grid.attachEvent("onXLE", function() { grantModificationGrid.grid.selectRow(0, true); });
+        grantModificationGrid.grid.attachEvent("onFilterEnd", function() { grantModificationGrid.grid.selectRow(0, true); });
+    });
+    // ]]>
+
+</script>

@@ -31,7 +31,7 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class DetailViewData : GrantViewData
+    public class GrantDetailViewData : GrantViewData
     {
         public string NewGrantNoteUrl { get; set; }
         public EntityNotesViewData GrantNotesViewData { get; set; }
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantModificationGridDataUrl { get; }
         public GrantDetailsFileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
-        public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
+        public GrantDetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
         {
             PageTitle = grant.GrantTitle.ToEllipsifiedStringClean(110);

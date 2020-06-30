@@ -31,7 +31,6 @@ namespace ProjectFirma.Web.Views.Grant
         public readonly string GrantGridName;
         public readonly string GrantGridDataUrl;
 
-
         public readonly GrantAllocationGridSpec GrantAllocationGridSpec;
         public readonly string GrantAllocationGridName;
         public readonly string GrantAllocationGridDataUrl;

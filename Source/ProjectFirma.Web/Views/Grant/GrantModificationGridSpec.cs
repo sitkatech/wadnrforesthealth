@@ -32,15 +32,14 @@ using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-
     public class GrantModificationGridSpec : GridSpec<Models.GrantModification>
     {
+        public static string GrantModificationIDHiddenColumnName = "GrantModificationID_HiddenColumnName";
 
         public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
         {
             GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate, grantModificationFileExistsOnAtLeastOne);
         }
-
 
         private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
         {
@@ -56,6 +55,9 @@ namespace ProjectFirma.Web.Views.Grant
                 var contentUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.NewGrantModificationForAGrant(grantToAssociate.PrimaryKey));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}");
             }
+
+            // hidden column for grant number for use by JavaScript
+            Add(GrantModificationIDHiddenColumnName, x => x.GrantModificationID, 0);
 
             var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)

@@ -23,7 +23,7 @@ using System;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public abstract class GrantDetail : LtInfo.Common.Mvc.TypedWebViewPage<DetailViewData>
+    public abstract class GrantDetail : LtInfo.Common.Mvc.TypedWebViewPage<GrantDetailViewData>
     {
         public string StringToDateString(string stringDate)
         {
