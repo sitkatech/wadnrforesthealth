@@ -227,7 +227,7 @@ namespace ProjectFirma.Web.Controllers
                 grant.GrantName,
                 userHasEditGrantPermissions);
             var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
-            return RazorView<Detail, DetailViewData>(viewData);
+            return RazorView<GrantDetail, DetailViewData>(viewData);
         }
 
         [GrantsViewFullListFeature]

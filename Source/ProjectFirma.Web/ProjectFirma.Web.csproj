@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -918,7 +918,7 @@
     <Compile Include="Views\GrantModification\EditGrantModificationViewModel.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetail.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetailViewData.cs" />
-    <Compile Include="Views\Grant\Detail.cs" />
+    <Compile Include="Views\Grant\GrantDetail.cs" />
     <Compile Include="Views\Grant\DetailViewData.cs" />
     <Compile Include="Views\Grant\EditGrantNote.cs" />
     <Compile Include="Views\Grant\EditGrantNoteInternal.cs" />
@@ -1130,7 +1130,7 @@
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
     <Content Include="Views\FocusArea\EditBoundaryErrors.cshtml" />
-    <Content Include="Views\Grant\Detail.cshtml" />
+    <Content Include="Views\Grant\GrantDetail.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
     <Content Include="Views\ProjectCreate\DNRUplandRegions.cshtml" />
