@@ -107,12 +107,14 @@ namespace ProjectFirma.Web.Controllers
             var regions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+            var grantModifications = HttpRequestStorage.DatabaseEntities.GrantModifications.ToList();
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                                                             grantAllocationBeingEdited,
                                                             organizations,
                                                             grantTypes,
                                                             grants,
+                                                            grantModifications,
                                                             divisions,
                                                             regions,
                                                             federalFundCodes,
@@ -128,6 +130,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var viewModel = new EditGrantAllocationViewModel();
             // Null is likely wrong here!!!
+            // 6/29/20 TK - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on a Grant Allocation that may have lost their "program manager" permissions
             return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null);
         }
 
@@ -139,6 +142,7 @@ namespace ProjectFirma.Web.Controllers
             if (!ModelState.IsValid)
             {
                 // Null is likely wrong here!!!
+                // 6/29/20 TK - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on a Grant Allocation that may have lost their "program manager" permissions
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null);
             }
             //var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == viewModel.GrantID);

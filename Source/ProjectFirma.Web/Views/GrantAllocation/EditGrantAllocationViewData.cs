@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public EditGrantAllocationType EditGrantAllocationType { get; set; }
         public IEnumerable<SelectListItem> GrantTypes { get; }
         public IEnumerable<SelectListItem> GrantNumbers { get; }
+        public IEnumerable<SelectListItem> GrantModifications { get; }
         public IEnumerable<SelectListItem> Divisions { get; }
         public IEnumerable<SelectListItem> Regions { get; }
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
@@ -53,6 +54,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                                         IEnumerable<ProjectFirma.Web.Models.Organization> organizations,
                                         IEnumerable<GrantType> grantTypes,
                                         List<ProjectFirma.Web.Models.Grant> grants,
+                                        List<Models.GrantModification> grantModifications,
                                         IEnumerable<Division> divisions,
                                         IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
@@ -60,10 +62,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
-            GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
+            GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectList(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
             Divisions = divisions.OrderBy(x => x.DivisionDisplayName).ToSelectListWithEmptyFirstRow(x => x.DivisionID.ToString(CultureInfo.InvariantCulture), y => y.DivisionDisplayName);
             Regions = dnrUplandRegions.OrderBy(x => x.DNRUplandRegionName).ToSelectListWithEmptyFirstRow(x => x.DNRUplandRegionID.ToString(CultureInfo.InvariantCulture), y => y.DNRUplandRegionName);
-            
+            GrantModifications = grantModifications.OrderByDescending(x => x.GrantModificationNameForDisplay).ToSelectListWithEmptyFirstRow(x => x.GrantModificationID.ToString(CultureInfo.InvariantCulture), y => y.GrantModificationNameForDisplay);
+            AngularViewData = new EditGrantAllocationAngularViewData(grantModifications);
+
             FederalFundCodes = federalFundCodes.OrderBy(x => x.FederalFundCodeAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
             GrantManagers = allPeople.OrderBy(x => x.FullNameLastFirst)
@@ -89,8 +93,25 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
     }
 
+    public class GrantModificationJson
+    {
+        public int GrantModificationID { get; set; }
+        public int GrantID { get; set; }
+
+        public GrantModificationJson(Models.GrantModification grantModification)
+        {
+            GrantModificationID = grantModification.GrantModificationID;
+            GrantID = grantModification.GrantID;
+        }
+    }
+
     public class EditGrantAllocationAngularViewData
     {
+        public List<GrantModificationJson> GrantModificationJsons { get; set; }
 
+        public EditGrantAllocationAngularViewData(List<Models.GrantModification> grantModifications)
+        {
+            GrantModificationJsons = grantModifications.Select(x => new GrantModificationJson(x)).ToList();
+        }
     }
 }
