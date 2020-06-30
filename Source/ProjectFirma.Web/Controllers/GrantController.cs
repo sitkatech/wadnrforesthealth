@@ -289,28 +289,21 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        // TODO: Remove when sure no longer needed.
-        [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
-        {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-            var grant = grantPrimaryKey.EntityObject;
-            var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
+        //// TODO: Remove when sure no longer needed.
+        //[GrantsViewFullListFeature]
+        //public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
+        //{
+        //    var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+        //    var grant = grantPrimaryKey.EntityObject;
+        //    var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
+        //    var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+        //    return gridJsonNetJObjectResult;
+        //}
 
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
         {
             var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-
-            // HACK. Don't keep this, be more obvious.
-            if (grantModificationPrimaryKey.PrimaryKeyValue == UrlTemplate.Parameter1Int)
-            {
-                return new GridJsonNetJObjectResult<GrantAllocation>(new List<GrantAllocation>(), gridSpec);
-            }
-
             var grantModification = grantModificationPrimaryKey.EntityObject;
             var grantAllocations = grantModification.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);

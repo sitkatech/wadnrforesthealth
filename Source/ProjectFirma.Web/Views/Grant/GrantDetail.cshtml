@@ -210,9 +210,8 @@
             </div>
             <div class="panel-body">
                <div class="basicsLayout">
-                  @*NO -- NOT TEMPLATE*@
-                  @*@Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrlTemplate, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)*@
-                  @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, "/Grant/GrantAllocationGridJsonDataByGrantModification/48", null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+                  @*Note that we start with a blank grid Data URL. It will load whatever is appropriate for the parent grid when the JS script below kicks in, so no need to preload anything.*@
+                  @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, "", null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
                </div>
             </div>
          </div>
@@ -258,54 +257,32 @@
         // Get current selected GrantModificationID from Parent grid for a given rowId
         function getCurrentSelectedGrantModificationIDInParentGrid(rowId)
         {
-           console.log('getCurrentSelectedGrantModificationIDInParentGrid('+ rowId +')');
+           //console.log('getCurrentSelectedGrantModificationIDInParentGrid('+ rowId +')');
            var grantModificationIDColumnIndexForParentGrantModificationGrid = grantModificationGrid.getColumnIndexByName('@GrantModificationGridSpec.GrantModificationIDHiddenColumnName');
-           console.log('grantModificationIDColumnIndexForParentGrantModificationGrid: ' + grantModificationIDColumnIndexForParentGrantModificationGrid);
+           //console.log('grantModificationIDColumnIndexForParentGrantModificationGrid: ' + grantModificationIDColumnIndexForParentGrantModificationGrid);
            var currentSelectedGrantModificationIDInParentGrantGrid = grantModificationGrid.grid.cells(rowId, grantModificationIDColumnIndexForParentGrantModificationGrid).getValue();
-           console.log('currentSelectedGrantModificationIDInParentGrantGrid: ' + currentSelectedGrantModificationIDInParentGrantGrid);
+           //console.log('currentSelectedGrantModificationIDInParentGrantGrid: ' + currentSelectedGrantModificationIDInParentGrantGrid);
            return currentSelectedGrantModificationIDInParentGrantGrid;
         }
 
         // Show appropriate Grant Allocations for the selected Grant Modification ID
        function selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid)
        {
-          console.log('selectGrantAllocationsInChildGridForAGrantModification(' + currentSelectedGrantModificationIDInParentGrantGrid + ')');
+          //console.log('selectGrantAllocationsInChildGridForAGrantModification(' + currentSelectedGrantModificationIDInParentGrantGrid + ')');
           var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
           var grantAllocationGridDataUrlTemplate = "@ViewDataTyped.GrantAllocationGridDataUrlTemplate";
           var grantAllocationGridDataUrl = new Sitka.UrlTemplate(grantAllocationGridDataUrlTemplate).ParameterReplace(currentSelectedGrantModificationIDInParentGrantGrid);
 
-          console.log('Clearing grantAllocationGridDataUrl: ' + grantAllocationGridDataUrl);
+          //console.log('Clearing grid ' + '@ViewDataTyped.GrantAllocationGridName');
           grantAllocationGrid.grid.clearAll();
 
-          console.log('Loading grantAllocationGridDataUrl: ' + grantAllocationGridDataUrl);
+          //console.log('Loading grantAllocationGridDataUrl: ' + grantAllocationGridDataUrl);
           grantAllocationGrid.grid.load(grantAllocationGridDataUrl, "json");
-          //grantAllocationGrid.grid.load(grantAllocationGridDataUrl);
-
-          @*var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
-            //console.log('Grant allocation child grid grant column index: ' + grantNumberColumnIndexForChildGrantGrid);
-            var grantNumberFilterForChildGrantGrid = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndexForChildGrantGrid);
-            //console.log('Got filter element for child grantNumberColumnIndex: ' + grantNumberColumnIndexForChildGrantGrid);
-            //console.log('Filter element for child grantNumberColumnIndex: ' + grantNumberFilterForChildGrantGrid);
-            grantNumberFilterForChildGrantGrid.value = currentSelectedGrantNumberInParentGrantGrid;
-            // This conditional block is used to show/hide a grid with "no results" versus a grid that is filtered to available results
-            if (grantNumberFilterForChildGrantGrid.value === '') {
-                jQuery("#grantAllocationGridWithData").hide();
-                jQuery("#grantAllocationGridWithoutDataForNoGrantFilterResults").show();
-            }
-            else
-            {
-                jQuery("#grantAllocationGridWithoutDataForNoGrantFilterResults").hide();
-                jQuery("#grantAllocationGridWithData").show();
-            }
-            //console.log(grantNumberFilterForChildGrantGrid.value === '' ? 'empty string' : grantNumberFilterForChildGrantGrid.value);
-            grantAllocationGrid.grid.filterByAll();
-
-            //console.log('grantGrid onRowSelect - exiting');*@
        }
 
         grantModificationGrid.grid.attachEvent("onRowSelect", function (rowId)
         {
-           console.log('grantModificationGrid - onRowSelect - RowID: ' + rowId);
+           //console.log('grantModificationGrid - onRowSelect - RowID: ' + rowId);
            var currentSelectedGrantModificationIDInParentGrantGrid = getCurrentSelectedGrantModificationIDInParentGrid(rowId);
            selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid);
         });
