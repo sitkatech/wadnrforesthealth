@@ -22,7 +22,7 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
     angularModelAndViewData) {
 
     $scope.files = [];
-    console.log('start of EditGrantAllocationController');
+    //console.log('start of EditGrantAllocationController');
 
     $scope.addProgramIndexProjectCodePair = function (programIndexID, programIndexName, projectCodeID, projectCodeName) {
 
@@ -76,8 +76,8 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
-    console.log('EditGrantAllocationController -- Angular view model:');
-    console.log($scope.AngularViewModel);
+    //console.log('EditGrantAllocationController -- Angular view model:');
+    //console.log($scope.AngularViewModel);
 
     $scope.selectedProgramIndexID = null;
     $scope.selectedProgramIndexName = null;
