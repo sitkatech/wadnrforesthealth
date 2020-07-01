@@ -264,23 +264,17 @@
            return currentSelectedGrantModificationIDInParentGrantGrid;
        }
 
-
         // Get current selected Grant Modification Name from Grant Modification grid for a given rowId
        function getCurrentSelectedGrantModificationName(grantModificationGridRowId)
         {
-          console.log('getCurrentSelectedGrantModificationNameInParentGrid(' + grantModificationGridRowId +')');
+           //console.log('getCurrentSelectedGrantModificationNameInParentGrid(' + grantModificationGridRowId +')');
            var grantModificationNameColumnIndex = grantModificationGrid.getColumnIndexByName('@ViewDataTyped.GrantModificationGridSpec.GrantModificationNameHiddenColumnName');
-           console.log('grantModificationNameColumnIndex (in parent grid): ' + grantModificationNameColumnIndex);
+           //console.log('grantModificationNameColumnIndex (in parent grid): ' + grantModificationNameColumnIndex);
 
-          var currentSelectedGrantModificationName = grantModificationGrid.grid.cells(grantModificationGridRowId, grantModificationNameColumnIndex).getValue();
-           console.log('currentSelectedGrantModificationName: ' + currentSelectedGrantModificationName);
+           var currentSelectedGrantModificationName = grantModificationGrid.grid.cells(grantModificationGridRowId, grantModificationNameColumnIndex).getValue();
+           //console.log('currentSelectedGrantModificationName: ' + currentSelectedGrantModificationName);
            return currentSelectedGrantModificationName;
         }
-
-
-
-
-
 
         // Show appropriate Grant Allocations for the selected Grant Modification ID
        function selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid)
@@ -299,15 +293,9 @@
 
        function setGrantAllocationPanelTitle(grantModificationGridRowId)
        {
-          console.log('setGrantAllocationPanelTitle...');
-
-          //var selectedParentGrantModificationName = "[FILL THIS IN]";
           var selectedParentGrantModificationName = getCurrentSelectedGrantModificationName(grantModificationGridRowId);
-
-          console.log('About to set panel title...');
-
           var grantAllocationPanelTitle = "@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to " + selectedParentGrantModificationName + " of this grant";
-          console.log('Setting Grant Allocation Panel Title: ' + grantAllocationPanelTitle);
+          //console.log('Setting Grant Allocation Panel Title: ' + grantAllocationPanelTitle);
           jQuery('#@ViewDataTyped.GrantAllocationPanelTitleID').text(grantAllocationPanelTitle);
        }
 
