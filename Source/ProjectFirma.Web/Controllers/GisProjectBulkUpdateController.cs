@@ -199,6 +199,7 @@ namespace ProjectFirma.Web.Controllers
                     , Project.CreateNewFhtProjectNumber());
                 project.CompletionDate = completionDate;
                 project.PlannedDate = startDate;
+                project.CreateGisUploadAttemptID = gisUploadAttemptID;
                 projectList.Add(project);
                 HttpRequestStorage.DatabaseEntities.Projects.Add(project);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();

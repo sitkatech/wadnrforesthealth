@@ -127,6 +127,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
+            
             Delete(dbContext);
         }
 
