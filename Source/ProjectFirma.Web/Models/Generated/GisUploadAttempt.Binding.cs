@@ -27,6 +27,8 @@ namespace ProjectFirma.Web.Models
         {
             this.GisFeatures = new HashSet<GisFeature>();
             this.GisUploadAttemptGisMetadataAttributes = new HashSet<GisUploadAttemptGisMetadataAttribute>();
+            this.ProjectsWhereYouAreTheCreateGisUploadAttempt = new HashSet<Project>();
+            this.ProjectsWhereYouAreTheLastUpdateGisUploadAttempt = new HashSet<Project>();
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any();
+            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any() || ProjectsWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.Any();
         }
 
         /// <summary>
@@ -103,13 +105,23 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(GisUploadAttemptGisMetadataAttribute).Name);
             }
+
+            if(ProjectsWhereYouAreTheCreateGisUploadAttempt.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
+
+            if(ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name, typeof(Project).Name};
 
 
         /// <summary>
@@ -143,6 +155,16 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in ProjectsWhereYouAreTheCreateGisUploadAttempt.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -156,6 +178,8 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<GisFeature> GisFeatures { get; set; }
         public virtual ICollection<GisUploadAttemptGisMetadataAttribute> GisUploadAttemptGisMetadataAttributes { get; set; }
+        public virtual ICollection<Project> ProjectsWhereYouAreTheCreateGisUploadAttempt { get; set; }
+        public virtual ICollection<Project> ProjectsWhereYouAreTheLastUpdateGisUploadAttempt { get; set; }
         public virtual GisUploadSourceOrganization GisUploadSourceOrganization { get; set; }
         public virtual Person GisUploadAttemptCreatePerson { get; set; }
 

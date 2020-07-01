@@ -730,6 +730,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
+    <AssociationSet Name="FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="ProjectsWhereYouAreTheCreateGisUploadAttempt" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="LastUpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" EntitySet="Project" />
+    </AssociationSet>
     <AssociationSet Name="FK_Project_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Project_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="ProjectsWhereYouAreThePrimaryContactPerson" EntitySet="Project" />
@@ -2087,6 +2095,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
     <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
+    <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -4453,6 +4463,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="Projects">
         <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="ProjectsWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="ProjectsWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="LastUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt">
+        <PropertyRef Name="LastUpdateGisUploadAttemptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
