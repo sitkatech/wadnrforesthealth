@@ -43,6 +43,8 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantModificationGridDataUrl { get; }
         public GrantDetailsFileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
+        public readonly string GrantAllocationPanelTitleID = "GrantAllocationPanelTitle";
+
         public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
         public string GrantAllocationGridName { get; }
         public string GrantAllocationGridDataUrlTemplate { get; }

@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Views.Grant
     public class GrantModificationGridSpec : GridSpec<Models.GrantModification>
     {
         public static string GrantModificationIDHiddenColumnName = "GrantModificationID_HiddenColumnName";
+        public readonly string GrantModificationNameHiddenColumnName = "GrantModificationName_HiddenColumnName";
 
         public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
         {
@@ -56,8 +57,9 @@ namespace ProjectFirma.Web.Views.Grant
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}");
             }
 
-            // hidden column for grant number for use by JavaScript
+            // hidden columns for use by JavaScript
             Add(GrantModificationIDHiddenColumnName, x => x.GrantModificationID, 0);
+            Add(GrantModificationNameHiddenColumnName, x => x.GrantModificationName, 0);
 
             var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)

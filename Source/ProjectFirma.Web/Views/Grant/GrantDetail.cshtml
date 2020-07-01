@@ -199,13 +199,12 @@
    </div>
 
 
-
    <div class="row">
       <div class="col-sm-12">
          <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-               <h3>
-                  @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+               <h3 id="@ViewDataTyped.GrantAllocationPanelTitleID">
+                  @*@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)*@
                </h3>
             </div>
             <div class="panel-body">
@@ -263,7 +262,25 @@
            var currentSelectedGrantModificationIDInParentGrantGrid = grantModificationGrid.grid.cells(rowId, grantModificationIDColumnIndexForParentGrantModificationGrid).getValue();
            //console.log('currentSelectedGrantModificationIDInParentGrantGrid: ' + currentSelectedGrantModificationIDInParentGrantGrid);
            return currentSelectedGrantModificationIDInParentGrantGrid;
+       }
+
+
+        // Get current selected Grant Modification Name from Grant Modification grid for a given rowId
+       function getCurrentSelectedGrantModificationName(grantModificationGridRowId)
+        {
+          console.log('getCurrentSelectedGrantModificationNameInParentGrid(' + grantModificationGridRowId +')');
+           var grantModificationNameColumnIndex = grantModificationGrid.getColumnIndexByName('@ViewDataTyped.GrantModificationGridSpec.GrantModificationNameHiddenColumnName');
+           console.log('grantModificationNameColumnIndex (in parent grid): ' + grantModificationNameColumnIndex);
+
+          var currentSelectedGrantModificationName = grantModificationGrid.grid.cells(grantModificationGridRowId, grantModificationNameColumnIndex).getValue();
+           console.log('currentSelectedGrantModificationName: ' + currentSelectedGrantModificationName);
+           return currentSelectedGrantModificationName;
         }
+
+
+
+
+
 
         // Show appropriate Grant Allocations for the selected Grant Modification ID
        function selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid)
@@ -280,11 +297,27 @@
           grantAllocationGrid.grid.load(grantAllocationGridDataUrl, "json");
        }
 
+       function setGrantAllocationPanelTitle(grantModificationGridRowId)
+       {
+          console.log('setGrantAllocationPanelTitle...');
+
+          //var selectedParentGrantModificationName = "[FILL THIS IN]";
+          var selectedParentGrantModificationName = getCurrentSelectedGrantModificationName(grantModificationGridRowId);
+
+          console.log('About to set panel title...');
+
+          var grantAllocationPanelTitle = "@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to " + selectedParentGrantModificationName + " of this grant";
+          console.log('Setting Grant Allocation Panel Title: ' + grantAllocationPanelTitle);
+          jQuery('#@ViewDataTyped.GrantAllocationPanelTitleID').text(grantAllocationPanelTitle);
+       }
+
         grantModificationGrid.grid.attachEvent("onRowSelect", function (rowId)
         {
            //console.log('grantModificationGrid - onRowSelect - RowID: ' + rowId);
-           var currentSelectedGrantModificationIDInParentGrantGrid = getCurrentSelectedGrantModificationIDInParentGrid(rowId);
-           selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid);
+           var currentSelectedGrantModificationRowID = getCurrentSelectedGrantModificationIDInParentGrid(rowId);
+           selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationRowID);
+
+           setGrantAllocationPanelTitle(rowId);
         });
         grantModificationGrid.grid.attachEvent("onXLE", function() { grantModificationGrid.grid.selectRow(0, true); });
         grantModificationGrid.grid.attachEvent("onFilterEnd", function() { grantModificationGrid.grid.selectRow(0, true); });
