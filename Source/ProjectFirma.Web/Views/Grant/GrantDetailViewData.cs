@@ -49,7 +49,6 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantAllocationGridName { get; }
         public string GrantAllocationGridDataUrlTemplate { get; }
 
-
         public GrantDetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
         {
@@ -59,7 +58,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
             // Used for creating file download link, if file available
-            ShowDownload = grant.GrantFileResources.Any();
+            ShowDownload = grant.GrantFileResources.Any(); ;
 
             bool grantModificationFileExistsOnAtLeastOne = grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue);
             GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant, grantModificationFileExistsOnAtLeastOne);
