@@ -294,7 +294,7 @@
        function setGrantAllocationPanelTitle(grantModificationGridRowId)
        {
           var selectedParentGrantModificationName = getCurrentSelectedGrantModificationName(grantModificationGridRowId);
-          var grantAllocationPanelTitle = "@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to " + selectedParentGrantModificationName + " of this grant";
+          var grantAllocationPanelTitle = "@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to " + selectedParentGrantModificationName + " of this grant (@ViewDataTyped.Grant.GrantName)";
           //console.log('Setting Grant Allocation Panel Title: ' + grantAllocationPanelTitle);
           jQuery('#@ViewDataTyped.GrantAllocationPanelTitleID').text(grantAllocationPanelTitle);
        }
