@@ -30,7 +30,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -69,7 +68,6 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
-        
 
         [HttpGet]
         [GrantEditAsAdminFeature]
@@ -113,9 +111,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantCreateFeature]
         public PartialViewResult New()
         {
-            
             var viewModel = new NewGrantViewModel();
-            return ViewNew(viewModel,EditGrantType.NewGrant);
+            return ViewNew(viewModel, EditGrantType.NewGrant);
         }
 
         [HttpPost]

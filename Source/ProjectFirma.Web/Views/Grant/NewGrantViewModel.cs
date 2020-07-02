@@ -44,10 +44,6 @@ namespace ProjectFirma.Web.Views.Grant
         [StringLength(Models.Grant.FieldLengths.CFDANumber)]
         public string CFDANumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
-        [Required]
-        public Money? TotalAwardAmount { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public DateTime? GrantStartDate { get; set; }
 
@@ -74,10 +70,8 @@ namespace ProjectFirma.Web.Views.Grant
             GrantTypeID = grant.GrantTypeID;
             GrantNumber = grant.GrantNumber;
             CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.GetTotalAwardAmount();
             GrantStartDate = grant.StartDate;
             GrantEndDate = grant.EndDate;
-
         }
 
         public void UpdateModel(Models.Grant grant, Person currentPerson)
@@ -89,7 +83,6 @@ namespace ProjectFirma.Web.Views.Grant
             grant.GrantTypeID = GrantTypeID;
             grant.GrantNumber = GrantNumber;
             grant.CFDANumber = CFDANumber;
-            //grant.AwardedFunds = TotalAwardAmount;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
 
@@ -99,10 +92,8 @@ namespace ProjectFirma.Web.Views.Grant
                 bool anyActualFileResourceDatasSupplied = GrantFileResourceDatas.Any(frd => frd != null);
                 if (anyActualFileResourceDatasSupplied)
                 {
-                    for (int key = 0; key < GrantFileResourceDatas.Count; key++)
+                    foreach (var currentGrantFileResourceData in GrantFileResourceDatas)
                     {
-                        // If any are supplied, we assume they *ALL* will be valid (non-null)
-                        var currentGrantFileResourceData = GrantFileResourceDatas[key];
                         Check.EnsureNotNull(currentGrantFileResourceData);
 
                         var fileResource = FileResource.CreateNewFromHttpPostedFile(currentGrantFileResourceData, currentPerson);
