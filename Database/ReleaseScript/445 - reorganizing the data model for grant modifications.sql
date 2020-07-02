@@ -19,7 +19,7 @@ select * from dbo.[Grant]
 
 INSERT INTO dbo.GrantModification (GrantModificationName, GrantModificationStartDate, GrantModificationEndDate, GrantID, GrantModificationStatusID, GrantModificationAmount)
     SELECT 
-            'Initial Grant' as GrantModificationName,
+            'Initial Award' as GrantModificationName,
             COALESCE(StartDate, '1753-01-01') as GrantModificationStartDate,
             COALESCE(EndDate, '1753-01-01') as GrantModificationEndDate,
             GrantID as GrantID,
@@ -39,7 +39,7 @@ from
     dbo.GrantModification as gm 
     join dbo.GrantAllocation as ga on gm.GrantID = ga.GrantID
 where 
-    gm.GrantModificationName = 'Initial Grant' 
+    gm.GrantModificationName = 'Initial Award' 
     and ga.GrantModificationID is null
 
 alter table dbo.GrantAllocation
