@@ -272,7 +272,8 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
         {
             var gridSpec = new GrantGridSpec(CurrentPerson);
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            // They want the most current grants on top it seems, and sorting by Grant Number might be good enough -- SLG 7/2/2020
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderByDescending(g => g.GrantNumber).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Grant>(grants, gridSpec);
             return gridJsonNetJObjectResult;
         }
