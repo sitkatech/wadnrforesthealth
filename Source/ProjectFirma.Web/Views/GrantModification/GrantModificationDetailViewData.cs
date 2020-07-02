@@ -23,6 +23,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.GrantModification
@@ -36,6 +37,9 @@ namespace ProjectFirma.Web.Views.GrantModification
         public bool UserHasEditGrantModificationPermissions { get; }
         public string ParentGrantUrl { get; }
         public string BackToParentGrantUrlText { get; }
+        public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
+        public string GrantAllocationGridName { get; }
+        public string GrantAllocationGridDataUrl { get; }
 
         public GrantModificationDetailViewData(Person currentPerson, Models.GrantModification grantModification, EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
         {
@@ -49,6 +53,10 @@ namespace ProjectFirma.Web.Views.GrantModification
             UserHasEditGrantModificationPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             // Used for creating file download link, if file available
             ShowDownload = grantModification.GrantModificationFileResource != null;
+
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
+            GrantAllocationGridName = "grantAllocationsGridName";
+            GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(grantModification));
         }
     }
 }
