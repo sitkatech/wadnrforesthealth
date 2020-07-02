@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -93,12 +95,21 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (GrantFileResourceDatas != null)
             {
-                for (int key = 0; key < GrantFileResourceDatas.Count; key++)
+                // We allow for empty file resources to be posted - at least until such time as they become required.
+                bool anyActualFileResourceDatasSupplied = GrantFileResourceDatas.Any(frd => frd != null);
+                if (anyActualFileResourceDatasSupplied)
                 {
-                    var fileResource = FileResource.CreateNewFromHttpPostedFile(GrantFileResourceDatas[key], currentPerson);
-                    HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                    var grantFileResource = new GrantFileResource(grant, fileResource);
-                    grant.GrantFileResources.Add(grantFileResource);
+                    for (int key = 0; key < GrantFileResourceDatas.Count; key++)
+                    {
+                        // If any are supplied, we assume they *ALL* will be valid (non-null)
+                        var currentGrantFileResourceData = GrantFileResourceDatas[key];
+                        Check.EnsureNotNull(currentGrantFileResourceData);
+
+                        var fileResource = FileResource.CreateNewFromHttpPostedFile(currentGrantFileResourceData, currentPerson);
+                        HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
+                        var grantFileResource = new GrantFileResource(grant, fileResource);
+                        grant.GrantFileResources.Add(grantFileResource);
+                    }
                 }
             }
         }
