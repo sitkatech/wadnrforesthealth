@@ -95,6 +95,7 @@ namespace ProjectFirma.Web.Controllers
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, grantAllocation.GrantModification.Grant);
             }
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -167,6 +168,7 @@ namespace ProjectFirma.Web.Controllers
             Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
             var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -344,7 +346,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (lineItem == null)
             {
-                return Json($"There was an issue saving the budget line item for the cost type, {costType.CostTypeDisplayName}.");
+                return Json($"There was an issue saving the {FieldDefinition.GrantAllocationBudgetLineItem.FieldDefinitionDisplayName} for {FieldDefinition.CostType.FieldDefinitionDisplayName} \"{costType.CostTypeDisplayName}\".");
             }
 
             lineItem.GrantAllocationBudgetLineItemAmount = grantAllocationBudgetLineItemAjaxModel.LineItemAmount;
@@ -352,7 +354,7 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            return Json($"Saved budget line item for the cost type, {costType.CostTypeDisplayName}.");
+            return Json($"Saved {FieldDefinition.GrantAllocationBudgetLineItem.FieldDefinitionDisplayName} for {FieldDefinition.CostType.FieldDefinitionDisplayName} \"{costType.CostTypeDisplayName}\".");
         }
 
 
