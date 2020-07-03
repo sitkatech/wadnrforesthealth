@@ -92,6 +92,7 @@ namespace ProjectFirma.Web.Controllers
 
             var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
             viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
+            SetMessageForDisplay($"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -127,6 +128,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModification = GrantModification.CreateNewBlank(grant, grantModificationStatus);
             var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
             viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
+            SetMessageForDisplay($"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
 
