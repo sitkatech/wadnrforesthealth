@@ -1082,6 +1082,7 @@
           <ScalarProperty Name="NoPriorityLandscapesExplanation" ColumnName="NoPriorityLandscapesExplanation" />
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
+          <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

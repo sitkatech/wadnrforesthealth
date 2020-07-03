@@ -50,6 +50,16 @@
                 @Html.ValidationMessageFor(m => m.ProjectIdentifierMetadataAttributeID)
             </div>
         </div>
+        
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectNameMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectNameMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectNameMetadataAttributeID)
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-xs-4 control-label">

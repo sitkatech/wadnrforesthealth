@@ -141,6 +141,7 @@ namespace ProjectFirma.Web.Controllers
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
             var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
             var projectIdentifierMetadataAttributeID = viewModel.ProjectIdentifierMetadataAttributeID;
+            var projectNameMetadataAttributeID = viewModel.ProjectNameMetadataAttributeID;
             var completionDateMetadataAttributeID = viewModel.CompletionDateMetadataAttributeID;
             var startDateMetadataAttributeID = viewModel.StartDateMetadataAttributeID;
 
@@ -153,6 +154,10 @@ namespace ProjectFirma.Web.Controllers
             var completionDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
                 x.GisMetadataAttributeID == completionDateMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+
+            var projectNameDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                gisFeatureIDs.Contains(x.GisFeatureID) &&
+                x.GisMetadataAttributeID == projectNameMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
             var startDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
@@ -180,18 +185,26 @@ namespace ProjectFirma.Web.Controllers
                 var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
                     .SelectMany(x => startDateDictionary[x]).ToList();
 
+                var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
+                    .SelectMany(x => projectNameDictionary[x]).ToList();
+
                 
+
+
 
                 var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
                 var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+                var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
+                    .ToList();
 
                 var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
                 var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
+                var projectName = projectNames.First();
 
 
                 var project = new Project(otherProjectType.ProjectTypeID
                     , ProjectStage.Completed.ProjectStageID
-                    , distinctGisValue
+                    , projectName
                     , "fake description"
                     , false
                     , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
@@ -200,6 +213,7 @@ namespace ProjectFirma.Web.Controllers
                 project.CompletionDate = completionDate;
                 project.PlannedDate = startDate;
                 project.CreateGisUploadAttemptID = gisUploadAttemptID;
+                project.ProjectGisIdentifier = distinctGisValue;
                 projectList.Add(project);
                 HttpRequestStorage.DatabaseEntities.Projects.Add(project);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();

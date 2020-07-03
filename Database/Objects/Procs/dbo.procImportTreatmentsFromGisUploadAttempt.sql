@@ -38,7 +38,7 @@ join (
 select gf.GisFeatureGeometry, gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf
 join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
 where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID
-and gf.GisUploadAttemptID = @piGisUploadAttemptID) x on x.GisFeatureMetadataAttributeValue = p.ProjectName
+and gf.GisUploadAttemptID = @piGisUploadAttemptID) x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
 where p.CreateGisUploadAttemptID = @piGisUploadAttemptID
   
 
