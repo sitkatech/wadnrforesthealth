@@ -398,6 +398,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNoteInternal = GrantNoteInternal.CreateNewBlank(grant, CurrentPerson);
             viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantNoteInternals.Add(grantNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -414,6 +415,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNote = GrantNote.CreateNewBlank(grant, CurrentPerson);
             viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantNotes.Add(grantNote);
+            SetMessageForDisplay($"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -439,6 +441,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNote = grantNotePrimaryKey.EntityObject;
             viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.ExistingNote);
             HttpRequestStorage.DatabaseEntities.GrantNotes.AddOrUpdate(grantNote);
+            SetMessageForDisplay($"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -472,6 +475,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
             viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.ExistingNote);
             HttpRequestStorage.DatabaseEntities.GrantNoteInternals.AddOrUpdate(grantNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 

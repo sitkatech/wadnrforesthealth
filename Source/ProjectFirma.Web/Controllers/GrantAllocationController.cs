@@ -493,6 +493,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationNote = GrantAllocationNote.CreateNewBlank(grantAllocation, CurrentPerson);
             viewModel.UpdateModel(grantAllocationNote, CurrentPerson, EditGrantAllocationNoteType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantAllocationNotes.Add(grantAllocationNote);
+            SetMessageForDisplay($"New {FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -524,6 +525,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationNoteInternal = GrantAllocationNoteInternal.CreateNewBlank(grantAllocation, CurrentPerson);
             viewModel.UpdateModel(grantAllocationNoteInternal, CurrentPerson, EditGrantAllocationNoteType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantAllocationNoteInternals.Add(grantAllocationNoteInternal);
+            SetMessageForDisplay($"New {FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -557,6 +559,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationNoteInternal = grantAllocationNoteInternalPrimaryKey.EntityObject;
             viewModel.UpdateModel(grantAllocationNoteInternal, CurrentPerson, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
             HttpRequestStorage.DatabaseEntities.GrantAllocationNoteInternals.AddOrUpdate(grantAllocationNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -615,6 +618,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationNote = grantAllocationNotePrimaryKey.EntityObject;
             viewModel.UpdateModel(grantAllocationNote, CurrentPerson, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
             HttpRequestStorage.DatabaseEntities.GrantAllocationNotes.AddOrUpdate(grantAllocationNote);
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 

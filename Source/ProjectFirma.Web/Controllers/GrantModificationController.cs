@@ -177,6 +177,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModificationNoteInternal = GrantModificationNoteInternal.CreateNewBlank(grantModification, CurrentPerson);
             viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteInternalType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.Add(grantModificationNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -209,6 +210,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
             viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteInternalType.ExistingGrantModificationNoteInternal);
             HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.AddOrUpdate(grantModificationNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
