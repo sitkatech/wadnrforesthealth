@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -41,8 +42,13 @@ namespace ProjectFirma.Web.Views.GrantModification
         public string GrantAllocationGridName { get; }
         public string GrantAllocationGridDataUrl { get; }
 
-        public GrantModificationDetailViewData(Person currentPerson, Models.GrantModification grantModification, EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
+        public GrantModificationDetailViewData(Person currentPerson,
+                                               Models.GrantModification grantModification,
+                                               EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
         {
+            Check.EnsureNotNull(currentPerson);
+            Check.EnsureNotNull(grantModification);
+
             GrantModification = grantModification;
             PageTitle = grantModification.GrantModificationName;
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} Detail";
@@ -54,7 +60,8 @@ namespace ProjectFirma.Web.Views.GrantModification
             // Used for creating file download link, if file available
             ShowDownload = grantModification.GrantModificationFileResource != null;
 
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
+            var relevantGrant = grantModification.Grant;
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(grantModification));
         }
