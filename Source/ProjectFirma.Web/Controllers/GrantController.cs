@@ -89,6 +89,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
             }
             viewModel.UpdateModel(grant, CurrentPerson);
+            SetMessageForDisplay($"{grant.GrantName} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -128,6 +129,7 @@ namespace ProjectFirma.Web.Controllers
             var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
             var grant = Grant.CreateNewBlank(grantStatus, grantOrganization);
             viewModel.UpdateModel(grant, CurrentPerson);
+            SetMessageForDisplay($"{grant.GrantName} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
