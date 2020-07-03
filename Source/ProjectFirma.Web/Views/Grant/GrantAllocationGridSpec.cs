@@ -34,16 +34,22 @@ namespace ProjectFirma.Web.Views.Grant
 
     public class GrantAllocationGridSpec : GridSpec<Models.GrantAllocation>
     {
+        public enum GrantAllocationGridCreateButtonType
+        {
+            Hidden,
+            Shown
+        }
+
         public const int GrantNumberColumnWidth = 140;
 
-        public GrantAllocationGridSpec(Person currentPerson)
+        public GrantAllocationGridSpec(Person currentPerson, GrantAllocationGridCreateButtonType createButtonType)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}"; ;
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new GrantAllocationDeleteFeature().HasPermissionByPerson(currentPerson);
             var userHasCreatePermissions = new GrantCreateFeature().HasPermissionByPerson(currentPerson);
-            if (userHasCreatePermissions)
+            if (userHasCreatePermissions && createButtonType == GrantAllocationGridCreateButtonType.Shown)
             {
                 var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New());
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, "Create a new Grant Allocation");

@@ -281,7 +281,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
         {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
@@ -301,7 +302,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
         {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
             var grantModification = grantModificationPrimaryKey.EntityObject;
             var grantAllocations = grantModification.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
@@ -317,7 +319,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
         {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantModification.Grant.GrantNumber == "").ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;

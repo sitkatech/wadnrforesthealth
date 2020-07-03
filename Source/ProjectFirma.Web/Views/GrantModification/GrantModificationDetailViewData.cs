@@ -41,7 +41,9 @@ namespace ProjectFirma.Web.Views.GrantModification
         public string GrantAllocationGridName { get; }
         public string GrantAllocationGridDataUrl { get; }
 
-        public GrantModificationDetailViewData(Person currentPerson, Models.GrantModification grantModification, EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
+        public GrantModificationDetailViewData(Person currentPerson,
+                                               Models.GrantModification grantModification, 
+                                               EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
         {
             GrantModification = grantModification;
             PageTitle = grantModification.GrantModificationName;
@@ -54,7 +56,7 @@ namespace ProjectFirma.Web.Views.GrantModification
             // Used for creating file download link, if file available
             ShowDownload = grantModification.GrantModificationFileResource != null;
 
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(grantModification));
         }

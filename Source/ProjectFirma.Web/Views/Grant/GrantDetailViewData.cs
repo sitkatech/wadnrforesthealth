@@ -49,7 +49,10 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantAllocationGridName { get; }
         public string GrantAllocationGridDataUrlTemplate { get; }
 
-        public GrantDetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
+        public GrantDetailViewData(Person currentPerson,
+                                    Models.Grant grant,
+                                    EntityNotesViewData grantNotesViewData,
+                                    EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
         {
             PageTitle = grant.GrantTitle.ToEllipsifiedStringClean(110);
@@ -65,7 +68,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown);
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrlTemplate = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(UrlTemplate.Parameter1Int));
 
