@@ -278,38 +278,40 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        // Move these to their relevant controllers instead??
+
         [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
+        public GridJsonNetJObjectResult<GrantAllocation> AllGrantAllocationGridJsonData()
         {
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, null);
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
-        //// TODO: Remove when sure no longer needed.
-        //[GrantsViewFullListFeature]
-        //public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
-        //{
-        //    var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-        //    var grant = grantPrimaryKey.EntityObject;
-        //    var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
-        //    var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
-        //    return gridJsonNetJObjectResult;
-        //}
-
         [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
+            var relevantGrant = grantPrimaryKey.EntityObject;
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
-            var grantModification = grantModificationPrimaryKey.EntityObject;
-            var grantAllocations = grantModification.GrantAllocations.ToList();
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            var grantAllocations = relevantGrant.GrantModifications.SelectMany(gm => gm.GrantAllocations).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        {
+            var grantModification = grantModificationPrimaryKey.EntityObject;
+            var relevantGrant = grantModification.Grant;
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            var grantAllocations = grantModification.GrantAllocations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
 
         /// <summary>
         /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.
@@ -320,12 +322,11 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
         {
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden);
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, null);
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantModification.Grant.GrantNumber == "").ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
 
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
