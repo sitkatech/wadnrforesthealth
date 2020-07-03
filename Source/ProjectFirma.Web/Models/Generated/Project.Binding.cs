@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -86,6 +86,7 @@ namespace ProjectFirma.Web.Models
             this.NoPriorityLandscapesExplanation = noPriorityLandscapesExplanation;
             this.CreateGisUploadAttemptID = createGisUploadAttemptID;
             this.LastUpdateGisUploadAttemptID = lastUpdateGisUploadAttemptID;
+            this.ProjectGisIdentifier = projectGisIdentifier;
         }
 
         /// <summary>
@@ -451,6 +452,7 @@ namespace ProjectFirma.Web.Models
         public string NoPriorityLandscapesExplanation { get; set; }
         public int? CreateGisUploadAttemptID { get; set; }
         public int? LastUpdateGisUploadAttemptID { get; set; }
+        public string ProjectGisIdentifier { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -499,6 +501,7 @@ namespace ProjectFirma.Web.Models
             public const int NoRegionsExplanation = 4000;
             public const int FhtProjectNumber = 20;
             public const int NoPriorityLandscapesExplanation = 4000;
+            public const int ProjectGisIdentifier = 140;
         }
     }
 }

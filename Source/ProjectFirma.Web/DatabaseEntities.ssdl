@@ -2097,6 +2097,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="CreateGisUploadAttemptID" Type="int" />
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
+    <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
