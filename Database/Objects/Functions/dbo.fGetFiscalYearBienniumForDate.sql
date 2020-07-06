@@ -19,7 +19,6 @@ begin
     declare @dayNumberToCheck int
     set @dayNumberToCheck = (SELECT DAY(@dateToCheck))
 
-    --return (select top 1 CurrentBienniumFiscalYear  from dbo.CurrentBiennium)
     declare @isOddYear bit
     set @isOddYear = (@yearToCheck % 2)
 
@@ -64,6 +63,7 @@ SELECT 1 FROM dbo.Project
 SELECT dbo.fGetFiscalYearBienniumForDate(GETDATE())
 
 SELECT dbo.fGetFiscalYearBienniumForDate('1/1/2017')
+SELECT dbo.fGetFiscalYearBienniumForDate('1/1/2021')
 
 SELECT dbo.fGetFiscalYearBienniumForDate('1/1/2018')
 

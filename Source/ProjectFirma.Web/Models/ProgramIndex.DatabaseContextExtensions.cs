@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<ProgramIndex> GetProgramIndicesInTheCurrentBiennium(this List<ProgramIndex> programIndices)
         {
-            return programIndices.Where(pi => pi.Biennium == CurrentBiennium.GetCurrentBienniumFiscalYear()).ToList();
+            return programIndices.Where(pi => pi.Biennium == CurrentBiennium.GetCurrentBienniumFiscalYearFromDatabase()).ToList();
         }
 
     }

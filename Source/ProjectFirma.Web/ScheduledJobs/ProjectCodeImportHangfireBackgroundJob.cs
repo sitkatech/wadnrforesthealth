@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' ProjectCodeImportJson");
             string vendorImportProc = "dbo.pProjectCodeImportJson";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {

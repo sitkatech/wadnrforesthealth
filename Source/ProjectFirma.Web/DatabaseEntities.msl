@@ -132,14 +132,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CurrentBiennium">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CurrentBiennium">
-        <MappingFragment StoreEntitySet="CurrentBiennium">
-          <ScalarProperty Name="CurrentBienniumID" ColumnName="CurrentBienniumID" />
-          <ScalarProperty Name="CurrentBienniumFiscalYear" ColumnName="CurrentBienniumFiscalYear" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CustomPage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CustomPage">
         <MappingFragment StoreEntitySet="CustomPage">

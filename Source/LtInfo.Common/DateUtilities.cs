@@ -371,28 +371,28 @@ namespace LtInfo.Common
 
         public static int GetCurrentFiscalYear()
         {
-            return DateTime.Now.GetFiscalYear();
+            return DateTime.Now.GetWadnrFiscalYear();
         }
 
         public static int GetPreviousFiscalYear(this DateTime dateToCheck)
         {
-            return dateToCheck.GetFiscalYear() - 1;
+            return dateToCheck.GetWadnrFiscalYear() - 1;
         }
 
         public static int GetNextFiscalYear(this DateTime dateToCheck)
         {
-            return DateTime.Now.GetFiscalYear() + 1;
+            return DateTime.Now.GetWadnrFiscalYear() + 1;
         }
 
-        public static int GetFiscalYear(this DateTime dateToCheck)
+        public static int GetWadnrFiscalYear(this DateTime dateToCheck)
         {
             var fiscalQuarter = ((Month)dateToCheck.Month).GetFiscalQuarter();
             // June 30th boundary for WADNR fiscal year
             if (fiscalQuarter == FiscalQuarter.First || fiscalQuarter == FiscalQuarter.Second)
             {
-                return dateToCheck.Year + 1;
+                return dateToCheck.Year;
             }
-            return dateToCheck.Year;
+            return dateToCheck.Year - 1;
         }
 
 
@@ -443,7 +443,7 @@ namespace LtInfo.Common
 
         public static DateTime GetFirstDateInFiscalYear(this DateTime dateInFiscalYear)
         {
-            int fiscalYear = dateInFiscalYear.GetFiscalYear();
+            int fiscalYear = dateInFiscalYear.GetWadnrFiscalYear();
             return GetFirstDateInFiscalYear(fiscalYear);
         }
 
@@ -457,7 +457,7 @@ namespace LtInfo.Common
 
         public static DateTime GetLastDateInFiscalYear(this DateTime dateInFiscalYear)
         {
-            int fiscalYear = dateInFiscalYear.GetFiscalYear();
+            int fiscalYear = dateInFiscalYear.GetWadnrFiscalYear();
             return GetLastDateInFiscalYear(fiscalYear);
         }
 

@@ -31,6 +31,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -484,7 +485,7 @@ namespace ProjectFirma.Web.Models
         public static void ClearAuditLogTable()
         {
             string vendorImportProc = "pClearAuditLogTable";
-            using (SqlConnection sqlConnection = ScheduledJobs.SocrataDataMartUpdateBackgroundJob.CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
