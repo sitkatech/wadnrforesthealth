@@ -144,6 +144,8 @@ namespace ProjectFirma.Web.Controllers
             var projectNameMetadataAttributeID = viewModel.ProjectNameMetadataAttributeID;
             var completionDateMetadataAttributeID = viewModel.CompletionDateMetadataAttributeID;
             var startDateMetadataAttributeID = viewModel.StartDateMetadataAttributeID;
+            var priorityLandscapeMetadataAttributeID = viewModel.PriorityLandscapeMetadataAttributeID;
+            var projectStageMetadataAttributeID = viewModel.ProjectStageMetadataAttributeID;
 
             var projectIdentifierMetadataAttribute =
                 gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
@@ -163,6 +165,14 @@ namespace ProjectFirma.Web.Controllers
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
                 x.GisMetadataAttributeID == startDateMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
+            var priorityLandscapeDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                gisFeatureIDs.Contains(x.GisFeatureID) &&
+                x.GisMetadataAttributeID == priorityLandscapeMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+
+            var projectStageDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                gisFeatureIDs.Contains(x.GisFeatureID) &&
+                x.GisMetadataAttributeID == projectStageMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+
             var gisValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
             var distinctGisValues = gisValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
@@ -171,6 +181,9 @@ namespace ProjectFirma.Web.Controllers
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var projectList = new List<Project>();
+
+            var priorityLandscapeList = HttpRequestStorage.DatabaseEntities.PriorityLandscapes.ToList();
+            var gisCrossWalkDefaultList = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.ToList();
 
             foreach (var distinctGisValue in distinctGisValues)
             {
@@ -188,22 +201,42 @@ namespace ProjectFirma.Web.Controllers
                 var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
                     .SelectMany(x => projectNameDictionary[x]).ToList();
 
-                
+                var priorityLandscapeAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => priorityLandscapeDictionary.ContainsKey(x))
+                    .SelectMany(x => priorityLandscapeDictionary[x]).ToList();
+
+                var projectStageAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectStageDictionary.ContainsKey(x))
+                    .SelectMany(x => projectStageDictionary[x]).ToList();
+
+
 
 
 
                 var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
                 var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-                var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
-                    .ToList();
+                var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+                var priorityLandscapes = priorityLandscapeAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+                var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
                 var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
                 var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
-                var projectName = projectNames.First();
+                var projectName = projectNames.Single();
+                var projectStageString = projectStages.Single();
+                var priorityLandscapeStringList = priorityLandscapes.Where(x => !string.IsNullOrEmpty(x)).ToList();
+
+                var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
+                    x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
+                    x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
+
+                var projectStageMappedString = projectStageCrossWalks.Single(x =>
+                    x.GisCrossWalkSourceValue.Equals(projectStageString, StringComparison.InvariantCultureIgnoreCase))?.GisCrossWalkMappedValue;
+
+                var projectStage = ProjectStage.All.Single(x =>
+                    x.ProjectStageName.Equals(projectStageMappedString, StringComparison.InvariantCultureIgnoreCase));
+
 
 
                 var project = new Project(otherProjectType.ProjectTypeID
-                    , ProjectStage.Completed.ProjectStageID
+                    , projectStage.ProjectStageID
                     , projectName
                     , "fake description"
                     , false
@@ -214,9 +247,26 @@ namespace ProjectFirma.Web.Controllers
                 project.PlannedDate = startDate;
                 project.CreateGisUploadAttemptID = gisUploadAttemptID;
                 project.ProjectGisIdentifier = distinctGisValue;
+
                 projectList.Add(project);
                 HttpRequestStorage.DatabaseEntities.Projects.Add(project);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+                if (priorityLandscapeStringList.Any())
+                {
+
+                    foreach (var priorityLandscapeString in priorityLandscapeStringList)
+                    {
+                        var priorityLandscape = priorityLandscapeList.SingleOrDefault(x =>
+                            x.PriorityLandscapeName.Contains(priorityLandscapeString) ||
+                            priorityLandscapeString.Contains(x.PriorityLandscapeName));
+                        var projectPriorityLandscape = new ProjectPriorityLandscape(project, priorityLandscape);
+                        HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Add(projectPriorityLandscape);
+                    }
+
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                }
+                
             }
 
             ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID, projectIdentifierMetadataAttributeID);
