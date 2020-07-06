@@ -50,7 +50,7 @@
                 @Html.ValidationMessageFor(m => m.ProjectIdentifierMetadataAttributeID)
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.ProjectNameMetadataAttributeID)
@@ -78,6 +78,26 @@
             <div class="col-xs-8">
                 @Html.DropDownListFor(m => m.StartDateMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.StartDateMetadataAttributeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectStageMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectStageMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectStageMetadataAttributeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.PriorityLandscapeMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.PriorityLandscapeMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PriorityLandscapeMetadataAttributeID)
             </div>
         </div>
     </div>

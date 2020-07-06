@@ -51,6 +51,11 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Start Date Column")]
         public int? StartDateMetadataAttributeID { get; set; }
 
+        [DisplayName("Project Stage Column")]
+        public int? ProjectStageMetadataAttributeID { get; set; }
+
+        [DisplayName("Priority Landscape Column")]
+        public int? PriorityLandscapeMetadataAttributeID { get; set; }
 
 
         /// <summary>
