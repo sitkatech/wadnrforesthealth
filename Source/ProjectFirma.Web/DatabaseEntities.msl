@@ -272,6 +272,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisCrossWalkDefault">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisCrossWalkDefault">
+        <MappingFragment StoreEntitySet="GisCrossWalkDefault">
+          <ScalarProperty Name="GisCrossWalkDefaultID" ColumnName="GisCrossWalkDefaultID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="FieldDefinitionID" ColumnName="FieldDefinitionID" />
+          <ScalarProperty Name="GisCrossWalkSourceValue" ColumnName="GisCrossWalkSourceValue" />
+          <ScalarProperty Name="GisCrossWalkMappedValue" ColumnName="GisCrossWalkMappedValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisFeature">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeature">
         <MappingFragment StoreEntitySet="GisFeature">

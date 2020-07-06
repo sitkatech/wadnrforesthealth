@@ -26,6 +26,7 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
+    <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.GisCrossWalkDefault" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.GisFeature" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisFeatureMetadataAttribute" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisMetadataAttribute" />
@@ -330,6 +331,10 @@
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisCrossWalkDefaults" EntitySet="GisCrossWalkDefault" />
     </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
@@ -1380,6 +1385,17 @@
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
   </EntityType>
+  <EntityType Name="GisCrossWalkDefault">
+    <Key>
+      <PropertyRef Name="GisCrossWalkDefaultID" />
+    </Key>
+    <Property Name="GisCrossWalkDefaultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="FieldDefinitionID" Type="Int32" Nullable="false" />
+    <Property Name="GisCrossWalkSourceValue" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
+    <Property Name="GisCrossWalkMappedValue" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisCrossWalkDefaults" ToRole="GisUploadSourceOrganization" />
+  </EntityType>
   <EntityType Name="GisFeature">
     <Key>
       <PropertyRef Name="GisFeatureID" />
@@ -1446,6 +1462,7 @@
     </Key>
     <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GisUploadSourceOrganizationName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />
   </EntityType>
   <EntityType Name="Grant">
@@ -3764,6 +3781,18 @@
       </Principal>
       <Dependent Role="ProjectUpdates">
         <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisCrossWalkDefaults" Type="ProjectFirma.Web.Models.GisCrossWalkDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisCrossWalkDefaults">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
