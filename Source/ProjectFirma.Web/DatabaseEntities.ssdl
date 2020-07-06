@@ -26,6 +26,7 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.Store.GisFeature" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisMetadataAttribute" store:Type="Tables" Schema="dbo" />
@@ -277,6 +278,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisCrossWalkDefaults" EntitySet="GisCrossWalkDefault" />
     </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
@@ -1332,6 +1337,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GisCrossWalkDefault">
+    <Key>
+      <PropertyRef Name="GisCrossWalkDefaultID" />
+    </Key>
+    <Property Name="GisCrossWalkDefaultID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
+    <Property Name="FieldDefinitionID" Type="int" Nullable="false" />
+    <Property Name="GisCrossWalkSourceValue" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="GisCrossWalkMappedValue" Type="varchar" Nullable="false" MaxLength="300" />
   </EntityType>
   <EntityType Name="GisFeature">
     <Key>
@@ -3108,6 +3123,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="FocusAreaLocationStagings">
         <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisCrossWalkDefaults" Type="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisCrossWalkDefaults">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

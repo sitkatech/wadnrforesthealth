@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GisUploadSourceOrganization()
         {
+            this.GisCrossWalkDefaults = new HashSet<GisCrossWalkDefault>();
             this.GisUploadAttempts = new HashSet<GisUploadAttempt>();
         }
 
@@ -63,7 +64,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadAttempts.Any();
+            return GisCrossWalkDefaults.Any() || GisUploadAttempts.Any();
         }
 
         /// <summary>
@@ -73,6 +74,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(GisCrossWalkDefaults.Any())
+            {
+                dependentObjects.Add(typeof(GisCrossWalkDefault).Name);
+            }
+
             if(GisUploadAttempts.Any())
             {
                 dependentObjects.Add(typeof(GisUploadAttempt).Name);
@@ -83,7 +89,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadSourceOrganization).Name, typeof(GisUploadAttempt).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadSourceOrganization).Name, typeof(GisCrossWalkDefault).Name, typeof(GisUploadAttempt).Name};
 
 
         /// <summary>
@@ -108,6 +114,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
+            foreach(var x in GisCrossWalkDefaults.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GisUploadAttempts.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -120,6 +131,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
+        public virtual ICollection<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual ICollection<GisUploadAttempt> GisUploadAttempts { get; set; }
 
         public static class FieldLengths
