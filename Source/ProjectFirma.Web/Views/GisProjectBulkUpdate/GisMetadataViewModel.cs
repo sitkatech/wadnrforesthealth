@@ -57,6 +57,12 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Priority Landscape Column")]
         public int? PriorityLandscapeMetadataAttributeID { get; set; }
 
+        [DisplayName("DNR Upland Region Column")]
+        public int? DNRUplandRegionMetadataAttributeID { get; set; }
+
+        [DisplayName("Other Treatment Acres Column")]
+        public int? OtherTreatmentAcresMetadataAttributeID { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
