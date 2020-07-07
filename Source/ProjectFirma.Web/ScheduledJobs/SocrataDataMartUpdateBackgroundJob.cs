@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             // the proc to keep it at arm's length.
             Logger.Info($"Starting '{JobName}' MarkJsonImportStatus");
             string markJsonImportStatus = "dbo.pMarkJsonImportStatus";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 Logger.Info($"'{JobName}' MarkJsonImportStatus - Marking socrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID} as JsonImportStatusType {jsonImportStatusType.JsonImportStatusTypeName}");
                 using (SqlCommand cmd = new SqlCommand(markJsonImportStatus, sqlConnection))
@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             logger.Info($"Starting  pClearSocrataDataMartRawJsonImportsTable");
             string vendorImportProc = "pClearSocrataDataMartRawJsonImportsTable";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
@@ -149,7 +149,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             logger.Info($"Starting pClearOutdatedSocrataDataMartRawJsonImports({StaleEntriesDayCutoff} days)");
             string vendorImportProc = "pClearOutdatedSocrataDataMartRawJsonImports";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
@@ -194,7 +194,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             // the proc to keep it at arm's length.
             Logger.Info($"Starting '{JobName}' LatestSuccessfulJsonImportInfoForBienniumAndImportTableType");
             string vendorImportProc = "dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
@@ -227,15 +227,5 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
         }
 
-        //exec dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType @SocrataDataMartRawJsonImportTableTypeID= 4, @OptionalBienniumFiscalYear = 2003
-
-        public static SqlConnection CreateAndOpenSqlConnection()
-        {
-            var db = new UnitTestCommon.ProjectFirmaSqlDatabase();
-            var sqlConnection = db.CreateConnection();
-            sqlConnection.Open();
-            return sqlConnection;
-        }
-
-    }
+     }
 }

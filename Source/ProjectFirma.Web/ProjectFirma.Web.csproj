@@ -90,9 +90,6 @@
     <Compile Include="Models\Generated\County.Binding.cs" />
     <Compile Include="Models\Generated\County.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CountyPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\CurrentBiennium.Binding.cs" />
-    <Compile Include="Models\Generated\CurrentBiennium.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\CurrentBienniumPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CustomPage.Binding.cs" />
     <Compile Include="Models\Generated\CustomPage.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CustomPageDisplayType.Binding.cs" />
@@ -637,6 +634,7 @@
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProgramIndexImportHangfireBackgroundJob.cs" />
+    <Compile Include="Common\SQLHelpers.cs" />
     <Compile Include="ScheduledJobs\VendorImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
