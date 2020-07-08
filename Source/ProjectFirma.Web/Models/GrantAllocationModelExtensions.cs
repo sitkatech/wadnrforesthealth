@@ -102,7 +102,8 @@ namespace ProjectFirma.Web.Models
             return string.Join(", ", programIndexProjectCodePairs);
         }
 
-        public static List<GrantAllocationBudgetLineItem> GetOrCreateBudgetLineItemsForEachCostType(this GrantAllocation grantAllocation)
+
+        public static List<GrantAllocationBudgetLineItem> CreateAllGrantAllocationBudgetLineItemsByCostType(this GrantAllocation grantAllocation)
         {
             var grantAllocationBudgetLineItems = new List<GrantAllocationBudgetLineItem>();
             var shouldSaveChanges = false;
@@ -121,26 +122,13 @@ namespace ProjectFirma.Web.Models
 
             if (shouldSaveChanges)
             {
-                // This is a rare spot where we can potentially be calling a write operation in an anonymous user context. This is arguably not a good thing,
-                // but as I type this, https://wadnrforesthealth.localhost.projectfirma.com/GrantAllocation/GrantAllocationDetail/134 will crash if called when
-                // not logged in, at least until that URL is visited successfully at least once.
-                //
-                // I believe this is because the AuditLog code below here in DatabaseEntities.SaveChangesImpl tries to write an anonymous Person object to the DB, and that
-                // anonymous person fails validation since it's half-baked (no valid FirstName or LastName).
-                //
-                // So, instead, IF we are anonymous here, we attribute THESE changes only to the System User. This seemed the least-worst option without revisiting
-                // the write-when-anonymous issue. -- SLG 6/29/2020
-                var personToAttributeWriteTo = HttpRequestStorage.Person;
-                if (personToAttributeWriteTo.IsAnonymousOrUnassigned)
-                {
-                    personToAttributeWriteTo = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
-                }
-
-                HttpRequestStorage.DatabaseEntities.SaveChanges(personToAttributeWriteTo);
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
             }
 
             return grantAllocationBudgetLineItems;
         }
+
+
 
     }
 }

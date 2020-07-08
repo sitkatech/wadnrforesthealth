@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -43,7 +44,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             CostTypes = CostType.GetLineItemCostTypes();
             GrantAllocationID = grantAllocationBeingEdited.GrantAllocationID;
-            GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems;
+            GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems.OrderBy(x => x.CostType.SortOrder).ToList();
 
             PersonHasPermissionToEditBudgetLineItems = new GrantAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             //This will prevent the JS from posting back if the user doesn't have permission to edit the budget line items
