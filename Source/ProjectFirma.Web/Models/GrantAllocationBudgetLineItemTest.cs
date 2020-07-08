@@ -34,6 +34,36 @@ namespace ProjectFirma.Web.Models
             var message = grantAllocationsAndTheCostTypesMissing.Select(x => $"grantAllocationID:{x.Key} costTypeID:{string.Join(",",x.Value)}");
             Assert.That(!grantAllocationsAndTheCostTypesMissing.Any(), $"There are GrantAllocations missing GrantAllocationBudgetLineItems. There are {countOfMissingBudgetLineItems} missing BudgetLineItems. Here they are: {string.Join(" | ",message)}");
 
+            /*
+             *  Here is the SQL needed to find and add all missing GrantAllocationBudgetLineItems:
+                select *
+                into
+                    #tmpGrantAllocationBudgetLineItemsToCreate
+                from
+                (
+                    select
+                        ga.GrantAllocationID,
+                        ct.CostTypeID
+                    from
+                        dbo.GrantAllocation as ga
+                    cross join dbo.CostType as ct
+                    left outer join dbo.GrantAllocationBudgetLineItem as bli
+                        on bli.GrantAllocationID = ga.GrantAllocationID and bli.CostTypeID = ct.CostTypeID
+                    where 
+                        bli.GrantAllocationBudgetLineItemID IS NULL AND 
+                        ct.IsValidInvoiceLineItemCostType = 1
+                ) as myData
+
+                INSERT INTO dbo.GrantAllocationBudgetLineItem(GrantAllocationID, CostTypeID, GrantAllocationBudgetLineItemAmount)
+                SELECT
+                        GrantAllocationID as GrantAllocationID,
+                        CostTypeID as CostTypeID,
+                        0 as GrantAllocationBudgetLineItemAmount
+                FROM
+                    #tmpGrantAllocationBudgetLineItemsToCreate
+             *
+             */
+
         }
     }
 }

@@ -168,6 +168,7 @@ namespace ProjectFirma.Web.Controllers
             Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
             var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
