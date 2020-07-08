@@ -23,14 +23,7 @@ join dbo.GrantAllocation as ga
 join dbo.CostType as ct
     on bli.CostTypeID = ct.CostTypeID
 
-select
-    *
-from
-    dbo.GrantAllocation as ga
-cross join dbo.CostType as ct
-left outer join dbo.GrantAllocationBudgetLineItem as bli
-    on bli.GrantAllocationID = ga.GrantAllocationID and bli.CostTypeID = ct.CostTypeID
-where bli.GrantAllocationBudgetLineItemID IS NULL AND ct.IsValidInvoiceLineItemCostType = 1
+
 
 
 select 
@@ -47,27 +40,37 @@ where
     ct.IsValidInvoiceLineItemCostType = 1
 
 
+*/
 
-SELECT *
-INTO #TempGrantAllocationsMissingBudgetLineItems
+
+select
+    *
+into
+    #tmpGrantAllocationBudgetLineItemsToCreate
+from
+(
+    select
+        ga.GrantAllocationID,
+        ct.CostTypeID
+    from
+        dbo.GrantAllocation as ga
+    cross join dbo.CostType as ct
+    left outer join dbo.GrantAllocationBudgetLineItem as bli
+        on bli.GrantAllocationID = ga.GrantAllocationID and bli.CostTypeID = ct.CostTypeID
+    where 
+        bli.GrantAllocationBudgetLineItemID IS NULL AND 
+        ct.IsValidInvoiceLineItemCostType = 1
+) as myData
+
+
+
+
+INSERT INTO dbo.GrantAllocationBudgetLineItem(GrantAllocationID, CostTypeID, GrantAllocationBudgetLineItemAmount)
+SELECT
+        GrantAllocationID as GrantAllocationID,
+        CostTypeID as CostTypeID,
+        0 as GrantAllocationBudgetLineItemAmount
 FROM
+    #tmpGrantAllocationBudgetLineItemsToCreate
 
-  (SELECT
-     Received,
-     Total,
-     Answer,
-     (CASE WHEN application LIKE '%STUFF%' THEN 'MORESTUFF' END) AS application
-   FROM
-     FirstTable
-   WHERE
-     Recieved = 1 AND
-     application = 'MORESTUFF'
-   GROUP BY
-     CASE WHEN application LIKE '%STUFF%' THEN 'MORESTUFF' END) data
-WHERE
-  application LIKE
-    isNull(
-      '%MORESTUFF%',
-      '%')
 
-      */
