@@ -545,12 +545,12 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string AssocatedOrganizationNames(Organization organization)
+        public string AssociatedOrganizationNames(Organization organization)
         {
-            var projectOrganizationAssocationNames = new List<string>();
+            var projectOrganizationAssociationNames = new List<string>();
             this.GetAssociatedOrganizations().Where(x => x.Organization == organization).ForEach(x =>
-                projectOrganizationAssocationNames.Add(x.RelationshipType.RelationshipTypeName));
-            return string.Join(", ", projectOrganizationAssocationNames);
+                projectOrganizationAssociationNames.Add(x.RelationshipType.RelationshipTypeName));
+            return string.Join(", ", projectOrganizationAssociationNames);
         }
 
         public ProjectImage KeyPhoto
