@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models
             var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
-            var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut);
+            var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut, false);
             ogr2OgrCommandLineRunner.ImportFileGdbToSql(gdbFile, false,
                 GISImportTableName, GeomName, FIDName, connectionString);
             return featureClassNames;

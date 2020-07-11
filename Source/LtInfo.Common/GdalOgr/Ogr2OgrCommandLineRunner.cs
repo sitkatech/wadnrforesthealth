@@ -127,7 +127,8 @@ namespace LtInfo.Common.GdalOgr
                 databaseConnectionString,
                 sourceShapeFilePath,
                 "-nln",
-                destinationTableName
+                destinationTableName,
+                "-skipfailures"
             };
             return commandLineArguments;
         }
@@ -320,6 +321,7 @@ namespace LtInfo.Common.GdalOgr
                 inputGdbFile.FullName,
                 "-nln",
                 $"\"{destinationTableName}\""
+                , "-skipfailures"
             };
 
             return commandLineArguments.Where(x => x != null).ToList();
