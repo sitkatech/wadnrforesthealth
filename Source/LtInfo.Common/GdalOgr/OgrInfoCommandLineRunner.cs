@@ -28,7 +28,7 @@ namespace LtInfo.Common.GdalOgr
 {
     public static class OgrInfoCommandLineRunner
     {
-        public static List<string> GetFeatureClassNamesFromFileGdb(FileInfo ogrInfoFileInfo, FileInfo gdbFileInfo, double totalMilliseconds)
+        public static List<string> GetFeatureClassNamesFromFileGdb(FileInfo ogrInfoFileInfo, FileInfo gdbFileInfo, double totalMilliseconds, bool addCheck = true)
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             var gdalDataDirectory = new DirectoryInfo(Path.Combine(ogrInfoFileInfo.DirectoryName, "gdal-data"));
@@ -36,7 +36,10 @@ namespace LtInfo.Common.GdalOgr
             var processUtilityResult = ProcessUtility.ShellAndWaitImpl(ogrInfoFileInfo.DirectoryName, ogrInfoFileInfo.FullName, commandLineArguments, true, Convert.ToInt32(totalMilliseconds));
 
             List<string> featureClassesFromFileGdb = processUtilityResult.StdOut.Split(new[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries).ToList();
-            Check.Ensure(featureClassesFromFileGdb.Any(), "No feature classes found in GDB!");
+            if (addCheck)
+            {
+                Check.Ensure(featureClassesFromFileGdb.Any(), "No feature classes found in GDB!");
+            }
             return featureClassesFromFileGdb.Select(x => x.Split(' ').Skip(1).First()).ToList();
         }
 
