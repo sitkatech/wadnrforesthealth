@@ -35,6 +35,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using LtInfo.Common.DbSpatial;
 
 namespace ProjectFirma.Web.Models
 {
@@ -417,8 +418,10 @@ namespace ProjectFirma.Web.Models
 
         public void AutoAssignProjectPriorityLandscapes(DbGeometry projectLocation)
         {
+            var geometry = projectLocation.IsValid ? projectLocation : projectLocation.ToSqlGeometry().MakeValid().ToDbGeometryWithCoordinateSystem();
+
             var updatedProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.PriorityLandscapes
-                .Where(x => x.PriorityLandscapeLocation.Intersects(projectLocation))
+                .Where(x => x.PriorityLandscapeLocation.Intersects(geometry))
                 .ToList()
                 .Select(x => new ProjectPriorityLandscape(ProjectID, x.PriorityLandscapeID))
                 .ToList();
@@ -426,7 +429,7 @@ namespace ProjectFirma.Web.Models
             ProjectPriorityLandscapes.Merge(updatedProjectPriorityLandscapes, HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local, (x, y) => x.ProjectID == y.ProjectID && x.PriorityLandscapeID == y.PriorityLandscapeID);
 
             var updatedProjectRegions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions
-                .Where(x => x.DNRUplandRegionLocation.Intersects(projectLocation))
+                .Where(x => x.DNRUplandRegionLocation.Intersects(geometry))
                 .ToList()
                 .Select(x => new ProjectRegion(ProjectID, x.DNRUplandRegionID))
                 .ToList();
