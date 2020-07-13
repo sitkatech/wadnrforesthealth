@@ -419,7 +419,9 @@ namespace ProjectFirma.Web.Controllers
             {
                 var gisRecordID = int.Parse(gisRecord.GisColumnNames.First().ID);
                 gisRecord.ID = gisRecordID;
-                var featureRecord = listOfFeatures.Single(x => x.GisImportFeatureKey == gisRecordID);
+                var featureRecordsMatchingGisRecordID =
+                    listOfFeatures.Where(x => x.GisImportFeatureKey == gisRecordID).ToList();
+                var featureRecord = featureRecordsMatchingGisRecordID.Single();
                 gisRecord.GisFeature = featureRecord;
             }
 

@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
 
@@ -27,7 +28,8 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("View Full Invoice List")]
     // Admin for now, until someone tells us differently
     //public class GrantsViewFullListFeature : FirmaAdminFeature
-    public class InvoicesViewFullListFeature : AnonymousUnclassifiedFeature
+    public class InvoicesViewFullListFeature : FirmaFeature
     {
+        public InvoicesViewFullListFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward }) { }
     }
 }
