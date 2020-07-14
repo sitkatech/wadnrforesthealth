@@ -56,7 +56,5 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             GisMetadataPostUrl = gisMetadataPostUrl;
             ProjectIndexUrl = projectIndexUrl;
         }
-
-
     }
 }

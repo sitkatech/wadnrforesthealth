@@ -29,16 +29,13 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Spatial;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
-using ProjectFirma.Web.Views.ProjectUpdate;
+using LtInfo.Common.DbSpatial;
 
 namespace ProjectFirma.Web.Models
 {
@@ -407,6 +404,39 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityLandscapes.Select(x => x.PriorityLandscape);
         }
 
+        public void AutoAssignProjectPriorityLandscapes(ICollection<DbGeometry> projectLocations)
+        {
+            if (!projectLocations.Any())
+            {
+                return;
+            }
+
+            var projectLocation = projectLocations.Aggregate((x, y) => x.Union(y));
+
+            AutoAssignProjectPriorityLandscapes(projectLocation);
+        }
+
+        public void AutoAssignProjectPriorityLandscapes(DbGeometry projectLocation)
+        {
+            var geometry = projectLocation.IsValid ? projectLocation : projectLocation.ToSqlGeometry().MakeValid().ToDbGeometryWithCoordinateSystem();
+
+            var updatedProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.PriorityLandscapes
+                .Where(x => x.PriorityLandscapeLocation.Intersects(geometry))
+                .ToList()
+                .Select(x => new ProjectPriorityLandscape(ProjectID, x.PriorityLandscapeID))
+                .ToList();
+
+            ProjectPriorityLandscapes.Merge(updatedProjectPriorityLandscapes, HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local, (x, y) => x.ProjectID == y.ProjectID && x.PriorityLandscapeID == y.PriorityLandscapeID);
+
+            var updatedProjectRegions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions
+                .Where(x => x.DNRUplandRegionLocation.Intersects(geometry))
+                .ToList()
+                .Select(x => new ProjectRegion(ProjectID, x.DNRUplandRegionID))
+                .ToList();
+
+            ProjectRegions.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegions.Local, (x, y) => x.ProjectID == y.ProjectID && x.DNRUplandRegionID == y.DNRUplandRegionID);
+        }
+
         public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()
         {
             return ProjectLocations.ToGeoJsonFeatureCollection();
@@ -518,12 +548,12 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string AssocatedOrganizationNames(Organization organization)
+        public string AssociatedOrganizationNames(Organization organization)
         {
-            var projectOrganizationAssocationNames = new List<string>();
+            var projectOrganizationAssociationNames = new List<string>();
             this.GetAssociatedOrganizations().Where(x => x.Organization == organization).ForEach(x =>
-                projectOrganizationAssocationNames.Add(x.RelationshipType.RelationshipTypeName));
-            return string.Join(", ", projectOrganizationAssocationNames);
+                projectOrganizationAssociationNames.Add(x.RelationshipType.RelationshipTypeName));
+            return string.Join(", ", projectOrganizationAssociationNames);
         }
 
         public ProjectImage KeyPhoto

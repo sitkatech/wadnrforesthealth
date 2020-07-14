@@ -665,10 +665,15 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(project);
+
+            if (project.HasProjectLocationPoint)
+            {
+                project.AutoAssignProjectPriorityLandscapes(project.ProjectLocationPoint);
+            }
+
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Location successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationSimple.ProjectCreateSectionDisplayName);
         }
-
 
         private static string GenerateEditProjectLocationSimpleFormID(Project project)
         {
@@ -854,6 +859,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
+
+            project.AutoAssignProjectPriorityLandscapes(project.ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList());
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)
