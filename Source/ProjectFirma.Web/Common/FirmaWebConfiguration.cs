@@ -44,8 +44,8 @@ namespace ProjectFirma.Web.Common
         public static readonly FirmaEnvironment FirmaEnvironment = FirmaEnvironment.MakeFirmaEnvironment(SitkaConfiguration.GetRequiredAppSetting("FirmaEnvironment"));
 
         public static readonly string Saml2IDPCertificateThumbPrint = SitkaConfiguration.GetRequiredAppSetting("SamlIDPCertificateThumbPrint");
-        public static readonly string SAWEndPoint = SitkaConfiguration.GetRequiredAppSetting("SAWEndPoint");
-        public static readonly string ADFSEndPoint = SitkaConfiguration.GetRequiredAppSetting("ADFSEndPoint");
+        public static readonly Uri SAWEndPoint = new Uri(SitkaConfiguration.GetRequiredAppSetting("SAWEndPoint"));
+        public static readonly Uri ADFSEndPoint = new Uri(SitkaConfiguration.GetRequiredAppSetting("ADFSEndPoint"));
 
         public static readonly string CanonicalHostName = SitkaConfiguration.GetRequiredAppSetting("CanonicalHostName");
 

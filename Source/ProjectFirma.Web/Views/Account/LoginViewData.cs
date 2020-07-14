@@ -19,16 +19,17 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Account
 {
     public class LoginViewData : FirmaViewData
     {
-        public string SAWLoginUrl {get; }
-        public string ADFSLoginUrl { get; }
+        public Uri SAWLoginUrl {get; }
+        public Uri ADFSLoginUrl { get; }
 
-        public LoginViewData(Person currentPerson, string sawLoginUrl, string adfsLoginUrl) : base(currentPerson, null)
+        public LoginViewData(Person currentPerson, Uri sawLoginUrl, Uri adfsLoginUrl) : base(currentPerson, null)
         {
             PageTitle = "Log In";
             SAWLoginUrl = sawLoginUrl;
