@@ -44,28 +44,35 @@ namespace ProjectFirma.Web
             var nodeList = _xmlDoc.SelectNodes("//ds:Signature", _xmlNameSpaceManager);
             if (nodeList == null || nodeList.Count == 0)
             {
+                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, could not find signature node in xml response.");
                 return false;
             }
             var signedXml = new SignedXml(_xmlDoc);
             signedXml.LoadXml((XmlElement)nodeList[0]);
-            bool validateSignatureReference = ValidateSignatureReference(signedXml);
-            if (!validateSignatureReference)
+            var hasValidSignatureReference = HasValidSignatureReference(signedXml);
+            if (!hasValidSignatureReference)
             {
                 SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, could not validate SignatureReference.");
             }
-            bool checkSignature = signedXml.CheckSignature(_certificate, true);
+            var checkSignature = signedXml.CheckSignature(_certificate, true);
             if (!checkSignature)
             {
                 SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, xml signature is invalid.");
             }
-            bool isNotExpired = !IsExpired();
-            return validateSignatureReference && checkSignature && isNotExpired;
+            var isResponseStillWithinValidTimePeriod = IsResponseStillWithinValidTimePeriod();
+            if (isResponseStillWithinValidTimePeriod)
+            {
+                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, current time is past the expiration time for the response.");
+            }
+            return hasValidSignatureReference && checkSignature && isResponseStillWithinValidTimePeriod;
         }
 
-        //an XML signature can "cover" not the whole document, but only a part of it
-        //.NET's built in "CheckSignature" does not cover this case, it will validate to true.
-        //We should check the signature reference, so it "references" the id of the root document element! If not - it's a hack
-        private bool ValidateSignatureReference(SignedXml signedXml)
+        /// <summary>
+        /// an XML signature can "cover" not the whole document, but only a part of it
+        /// .NET's built in "CheckSignature" does not cover this case, it will validate to true.
+        /// We should check the signature reference, so it "references" the id of the root document element! If not - it's a hack
+        /// </summary>
+        private bool HasValidSignatureReference(SignedXml signedXml)
         {
             if (signedXml.SignedInfo.References.Count != 1) //no ref at all
             {
@@ -138,25 +145,21 @@ namespace ProjectFirma.Web
             return Authenticator.SAWPROD;
         }
 
-        private bool IsExpired()
+        private bool IsResponseStillWithinValidTimePeriod()
         {
-            var expirationDate = DateTime.MaxValue;
+            var expirationDateTimeOffset = DateTimeOffset.MaxValue;
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:Subject/saml:SubjectConfirmation/saml:SubjectConfirmationData", _xmlNameSpaceManager);
             if (node?.Attributes?["NotOnOrAfter"] != null)
             {
-                DateTime.TryParse(node.Attributes["NotOnOrAfter"].Value, out expirationDate);
+                DateTimeOffset.TryParse(node.Attributes["NotOnOrAfter"].Value, out expirationDateTimeOffset);
             }
-            return DateTime.UtcNow > expirationDate.ToUniversalTime();
+            return DateTimeOffset.Now < expirationDateTimeOffset;
         }
-
-        //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesnt work in an XML doc with namespaces
-
-
-        //see https://stackoverflow.com/questions/7178111/why-is-xmlnamespacemanager-necessary
-
 
         private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
         {
+            //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesnt work in an XML doc with namespaces
+            //see https://stackoverflow.com/questions/7178111/why-is-xmlnamespacemanager-necessary
             var manager = new XmlNamespaceManager(xmlDocument.NameTable);
             manager.AddNamespace("ds", SignedXml.XmlDsigNamespaceUrl);
             manager.AddNamespace("saml", "urn:oasis:names:tc:SAML:2.0:assertion");
