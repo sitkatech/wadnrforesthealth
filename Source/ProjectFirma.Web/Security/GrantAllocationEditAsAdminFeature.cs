@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
@@ -22,7 +23,13 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, GrantAllocation contextModelObject)
         {
-            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
+
+            if (person != null && person.PersonID != Person.AnonymousPersonID && GrantedRoles.Select(x => x.RoleID).Contains(person.RoleID))
+            {
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
+            }
+            return PermissionCheckResult.MakeFailurePermissionCheckResult("You are not allowed to add files to Grant Allocations");
+
         }
     }
 }
