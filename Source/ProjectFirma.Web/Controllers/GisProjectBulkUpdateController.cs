@@ -256,8 +256,8 @@ namespace ProjectFirma.Web.Controllers
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
             var projectName = projectNames.Single();
-            var projectStageString = projectStages.Single();
-            var projectTypeString = projectTypes.First();
+            var projectStageString = projectStages.SingleOrDefault();
+            var projectTypeString = projectTypes.FirstOrDefault();
 
             var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
                 x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
@@ -267,20 +267,39 @@ namespace ProjectFirma.Web.Controllers
                 x.FieldDefinitionID == FieldDefinition.ProjectType.FieldDefinitionID &&
                 x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
 
-            var projectStageMappedString = projectStageCrossWalks.Single(x =>
-                    x.GisCrossWalkSourceValue.Equals(projectStageString, StringComparison.InvariantCultureIgnoreCase))
-                ?.GisCrossWalkMappedValue;
 
-            var projectTypeMappedString = projectTypeCrossWalks.Single(x =>
-                    x.GisCrossWalkSourceValue.Equals(projectTypeString, StringComparison.InvariantCultureIgnoreCase))
-                ?.GisCrossWalkMappedValue;
+            ProjectStage projectStage = ProjectStage.Completed;
+            if (!string.IsNullOrEmpty(projectStageString))
+            {
+                var projectStageMappedString = projectStageCrossWalks.Single(x =>
+                        x.GisCrossWalkSourceValue.Equals(projectStageString, StringComparison.InvariantCultureIgnoreCase))
+                    ?.GisCrossWalkMappedValue;
 
+                if (!string.IsNullOrEmpty(projectStageMappedString))
+                {
+                    projectStage = ProjectStage.All.SingleOrDefault(x =>
+                        x.ProjectStageName.Equals(projectStageMappedString, StringComparison.InvariantCultureIgnoreCase));
+                }
 
-            var projectStage = ProjectStage.All.Single(x =>
-                x.ProjectStageName.Equals(projectStageMappedString, StringComparison.InvariantCultureIgnoreCase));
+                if (projectStage == null)
+                {
+                    projectStage = ProjectStage.Completed;
+                }
+            }
 
-            var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.Single(x =>
-                x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
+            ProjectType projectType = null;
+            if (!string.IsNullOrEmpty(projectTypeString))
+            {
+                var projectTypeMappedString = projectTypeCrossWalks.SingleOrDefault(x =>
+                        x.GisCrossWalkSourceValue.Equals(projectTypeString, StringComparison.InvariantCultureIgnoreCase))
+                    ?.GisCrossWalkMappedValue;
+                if (!string.IsNullOrEmpty(projectTypeMappedString))
+                {
+                    projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
+                        x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
+                }
+            }
+
 
             var project = new Project(otherProjectType.ProjectTypeID
                 , projectStage.ProjectStageID
