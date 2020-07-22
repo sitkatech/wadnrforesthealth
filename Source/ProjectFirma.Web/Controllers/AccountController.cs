@@ -77,13 +77,12 @@ namespace ProjectFirma.Web.Controllers
         // ReSharper disable once InconsistentNaming
         public ActionResult SAWPost(string returnUrl)
         {
-            var samlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
+            var samlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromUri(FirmaWebConfiguration.SAWEndPoint));
             try
             {
                 // SAML providers usually POST the data into this var
                 samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
-
-                if (!samlResponse.IsValid())
+                if (samlResponse.IsValid())
                 {
                     var firstName = samlResponse.GetFirstName();
                     var lastName = samlResponse.GetLastName();
