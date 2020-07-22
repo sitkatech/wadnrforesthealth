@@ -59,8 +59,8 @@ select p.ProjectID
 join (
 select gf.GisFeatureGeometry, gfma.GisFeatureMetadataAttributeValue, gfmaOther.GisFeatureMetadataAttributeValue as OtherTreatmentAcres from dbo.GisFeature gf
 join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
-left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID
-where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gfmaOther.GisMetadataAttributeID = @otherTreatmentAcresMetadataAttributeID
+left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @otherTreatmentAcresMetadataAttributeID
+where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID 
 and gf.GisUploadAttemptID = @piGisUploadAttemptID) x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
 where p.CreateGisUploadAttemptID = @piGisUploadAttemptID
   
