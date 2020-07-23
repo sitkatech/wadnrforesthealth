@@ -257,7 +257,10 @@ namespace ProjectFirma.Web.Controllers
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
             var projectName = projectNames.Single();
             var projectStageString = projectStages.SingleOrDefault();
+
             var projectTypeString = projectTypes.FirstOrDefault();
+            bool shouldBeIntegratedForestHealthProjectType = projectTypes.Count > 1;
+
 
             var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
                 x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
@@ -288,7 +291,15 @@ namespace ProjectFirma.Web.Controllers
             }
 
             ProjectType projectType = null;
-            if (!string.IsNullOrEmpty(projectTypeString))
+
+            if (shouldBeIntegratedForestHealthProjectType)
+            {
+                var projectTypeMappedString = "Integrated forest health project";
+                projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
+                    x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            else if (!string.IsNullOrEmpty(projectTypeString))
             {
                 var projectTypeMappedString = projectTypeCrossWalks.SingleOrDefault(x =>
                         x.GisCrossWalkSourceValue.Equals(projectTypeString, StringComparison.InvariantCultureIgnoreCase))
@@ -315,12 +326,6 @@ namespace ProjectFirma.Web.Controllers
             project.ProjectGisIdentifier = distinctGisValue;
             project.ProjectType = projectType;
 
-            var projectGeometries = gisUploadAttempt.GisFeatures
-                .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID))
-                .Select(x => x.GisFeatureGeometry)
-                .ToList();
-
-            
             
             HttpRequestStorage.DatabaseEntities.Projects.Add(project);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
