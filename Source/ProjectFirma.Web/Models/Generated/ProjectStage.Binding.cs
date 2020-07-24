@@ -19,7 +19,7 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class ProjectStage : IHavePrimaryKey
     {
-        public static readonly ProjectStageApplication Application = ProjectStageApplication.Instance;
+        public static readonly ProjectStageProposed Proposed = ProjectStageProposed.Instance;
         public static readonly ProjectStagePlanned Planned = ProjectStagePlanned.Instance;
         public static readonly ProjectStageImplementation Implementation = ProjectStageImplementation.Instance;
         public static readonly ProjectStageCompleted Completed = ProjectStageCompleted.Instance;
@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectStage()
         {
-            All = new List<ProjectStage> { Application, Planned, Implementation, Completed, Cancelled };
+            All = new List<ProjectStage> { Proposed, Planned, Implementation, Completed, Cancelled };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectStage>(All.ToDictionary(x => x.ProjectStageID));
         }
 
@@ -107,8 +107,6 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case ProjectStageEnum.Application:
-                    return Application;
                 case ProjectStageEnum.Cancelled:
                     return Cancelled;
                 case ProjectStageEnum.Completed:
@@ -117,6 +115,8 @@ namespace ProjectFirma.Web.Models
                     return Implementation;
                 case ProjectStageEnum.Planned:
                     return Planned;
+                case ProjectStageEnum.Proposed:
+                    return Proposed;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -125,17 +125,17 @@ namespace ProjectFirma.Web.Models
 
     public enum ProjectStageEnum
     {
-        Application = 1,
+        Proposed = 1,
         Planned = 2,
         Implementation = 3,
         Completed = 4,
         Cancelled = 5
     }
 
-    public partial class ProjectStageApplication : ProjectStage
+    public partial class ProjectStageProposed : ProjectStage
     {
-        private ProjectStageApplication(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
-        public static readonly ProjectStageApplication Instance = new ProjectStageApplication(1, @"Application", @"Application", 5, @"#dbbdff");
+        private ProjectStageProposed(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
+        public static readonly ProjectStageProposed Instance = new ProjectStageProposed(1, @"Proposed", @"Proposed", 5, @"#dbbdff");
     }
 
     public partial class ProjectStagePlanned : ProjectStage

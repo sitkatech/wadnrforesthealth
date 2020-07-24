@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Controllers
             var projectTypeHasBeenSet = true;
             var viewData = new EditProjectViewData(editProjectType,
                 projectTypeDisplayName,
-                ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
+                ProjectStage.All.Except(new[] {ProjectStage.Proposed}), organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
                 totalExpenditures,
@@ -327,7 +327,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static List<ProjectStage> GetActiveProjectStages(Project project)
         {
-            var activeProjectStages = new List<ProjectStage> {ProjectStage.Application, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
+            var activeProjectStages = new List<ProjectStage> {ProjectStage.Proposed, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
 
             if (project.ProjectStage == ProjectStage.Cancelled)
             {

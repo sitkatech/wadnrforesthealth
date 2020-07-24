@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsEditable = true;
         public bool ProjectTypeHasBeenSet { get; set; }
 
-        public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Application}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
+        public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Proposed}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
 
         public IEnumerable<SelectListItem> FocusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas
             .OrderBy(x => x.FocusAreaName)
@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IEnumerable<Models.ProjectType> projectTypes)
             : base(currentPerson, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
-            ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
+            ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Proposed;
             ProjectDisplayName = project.DisplayName;
             AssignParameters(projectTypes);
             ProjectTypeHasBeenSet = project?.ProjectType != null;
