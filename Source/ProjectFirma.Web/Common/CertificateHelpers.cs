@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using log4net;
+using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
+using LtInfo.Common.Tasks;
 
 namespace ProjectFirma.Web.Common
 {
     public static class CertificateHelpers
     {
+        static readonly ILog Logger = LogManager.GetLogger(typeof(CertificateHelpers));
+
         public static X509Certificate2 GetX509Certificate2FromStore(string certificateSerialNumber)
         {
             using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
@@ -27,6 +32,7 @@ namespace ProjectFirma.Web.Common
             Check.RequireNotNull(uriOfWebsiteFromWhichToGetCertificate, "Need a proper uri but was null");
             Check.Require(uriOfWebsiteFromWhichToGetCertificate.IsAbsoluteUri, $"Must be an absolute uri to get a Certificate but was {uriOfWebsiteFromWhichToGetCertificate.OriginalString}");
             Check.Require(string.Equals(uriOfWebsiteFromWhichToGetCertificate.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase), $"Must be a secure url to have a Certificate (expected scheme {Uri.UriSchemeHttps} got scheme {uriOfWebsiteFromWhichToGetCertificate.Scheme}) for url {uriOfWebsiteFromWhichToGetCertificate.OriginalString}");
+            Logger.Info($"about to make web request to get x509 cert. url is: {uriOfWebsiteFromWhichToGetCertificate.OriginalString}");
 
             // Make actual web GET request to retrieve cert
             var request = (HttpWebRequest)WebRequest.Create(uriOfWebsiteFromWhichToGetCertificate);
