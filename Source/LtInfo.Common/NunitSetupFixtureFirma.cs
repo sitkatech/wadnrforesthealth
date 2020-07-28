@@ -18,6 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
+using System.Net;
 using NUnit.Framework;
 using LtInfo.Common;
 
@@ -35,5 +38,9 @@ public class NunitSetupFixtureLtInfoCommon
     {
         SitkaLogger.RegisterLogger();
         log4net.Config.XmlConfigurator.Configure();
+
+        // This is a *partial* fix for some of the issues discovered when disabling TLS 1.0 as part of the following story: https://projects.sitkatech.com/projects/gemini/cards/4197
+        // Allow multiple protocols so that we can connect to more than one endpoint, over time we may need to add Tls13 etc
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
     }
 }

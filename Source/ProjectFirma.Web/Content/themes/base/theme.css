@@ -14,10 +14,6 @@
 
 /* Component containers
 ----------------------------------*/
-.field-validation-valid .hiddenError {
-        display: none !important;
-}
-
 .ui-widget {
 	font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
 	font-size: 1.1em/*{fsDefault}*/;
