@@ -106,7 +106,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantModification)
         </div>
         <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantModification.GrantModificationName</span>
+            <span>@ViewDataTyped.GrantAllocation.GrantModification.GetGrantModificationNameAsUrl()</span>
         </div>
     </div>
     <div class="row">
