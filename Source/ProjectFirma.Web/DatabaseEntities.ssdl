@@ -12,7 +12,6 @@
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.Store.ClassificationSystem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CostTypeDatamartMapping" EntityType="ProjectFirma.Web.Models.Store.CostTypeDatamartMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.Store.CurrentBiennium" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DNRUplandRegion" EntityType="ProjectFirma.Web.Models.Store.DNRUplandRegion" store:Type="Tables" Schema="dbo" />
@@ -26,6 +25,7 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.Store.GisFeature" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisMetadataAttribute" store:Type="Tables" Schema="dbo" />
@@ -278,6 +278,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
     </AssociationSet>
+    <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisCrossWalkDefaults" EntitySet="GisCrossWalkDefault" />
+    </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="GisFeatures" EntitySet="GisFeature" />
@@ -326,8 +330,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
+    <AssociationSet Name="FK_GrantAllocation_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Organization_OrganizationID">
@@ -729,6 +733,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_Project_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="Projects" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="ProjectsWhereYouAreTheCreateGisUploadAttempt" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="LastUpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" EntitySet="Project" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Project_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
@@ -1199,13 +1211,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
     <Property Name="CountyFeature" Type="geometry" />
   </EntityType>
-  <EntityType Name="CurrentBiennium">
-    <Key>
-      <PropertyRef Name="CurrentBienniumID" />
-    </Key>
-    <Property Name="CurrentBienniumID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="CurrentBienniumFiscalYear" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="CustomPage">
     <Key>
       <PropertyRef Name="CustomPageID" />
@@ -1325,6 +1330,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="GisCrossWalkDefault">
+    <Key>
+      <PropertyRef Name="GisCrossWalkDefaultID" />
+    </Key>
+    <Property Name="GisCrossWalkDefaultID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
+    <Property Name="FieldDefinitionID" Type="int" Nullable="false" />
+    <Property Name="GisCrossWalkSourceValue" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="GisCrossWalkMappedValue" Type="varchar" Nullable="false" MaxLength="300" />
+  </EntityType>
   <EntityType Name="GisFeature">
     <Key>
       <PropertyRef Name="GisFeatureID" />
@@ -1388,7 +1403,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="EndDate" Type="datetime" />
     <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
     <Property Name="ComplianceNotes" Type="varchar(max)" />
-    <Property Name="AwardedFunds" Type="money" />
     <Property Name="CFDANumber" Type="varchar" MaxLength="10" />
     <Property Name="GrantName" Type="varchar" Nullable="false" MaxLength="64" />
     <Property Name="GrantTypeID" Type="int" />
@@ -1401,7 +1415,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <PropertyRef Name="GrantAllocationID" />
     </Key>
     <Property Name="GrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationName" Type="nvarchar" MaxLength="100" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
@@ -1411,6 +1424,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="DNRUplandRegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
+    <Property Name="GrantModificationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationAward">
     <Key>
@@ -2088,6 +2102,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
     <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
+    <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
+    <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -3101,6 +3118,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisCrossWalkDefaults" Type="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisCrossWalkDefaults">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
     <End Role="GisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="1" />
     <End Role="GisFeatures" Type="ProjectFirma.Web.Models.Store.GisFeature" Multiplicity="*" />
@@ -3245,15 +3274,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocation_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+  <Association Name="FK_GrantAllocation_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
       </Principal>
       <Dependent Role="GrantAllocations">
-        <PropertyRef Name="GrantID" />
+        <PropertyRef Name="GrantModificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4457,6 +4486,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="ProjectsWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="ProjectsWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="LastUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt">
+        <PropertyRef Name="LastUpdateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Project_Person_PrimaryContactPersonID_PersonID">
     <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
     <End Role="ProjectsWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
@@ -5569,6 +5622,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   <Function Name="procImportTreatmentsFromGisUploadAttempt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
     <Parameter Name="projectIdentifierGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="otherTreatmentAcresMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

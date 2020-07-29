@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Models
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
 
-        public string GrantNumberAndGrantAllocationDisplayName => $"{Grant.GrantNumber} {GrantAllocationName}";
+        public string GrantNumberAndGrantAllocationDisplayName => $"{GrantModification.Grant.GrantNumber} {GrantAllocationName}";
 
         public string AllocationAmountCurrencyDisplay => $"{AllocationAmount.ToStringCurrency()}";
 
@@ -106,7 +106,7 @@ namespace ProjectFirma.Web.Models
             // Then show everything else, alpha sorted.
             var grantAllocationsWithoutYears = grantAllocations
                 .Where(ga => !allGrantAllocationIDSPrefixedWithGrantYear.Contains(ga.GrantAllocationID)).ToList();
-            outgoingGrantAllocations.AddRange(grantAllocationsWithoutYears.OrderBy(x => x.Grant.GrantNumber));
+            outgoingGrantAllocations.AddRange(grantAllocationsWithoutYears.OrderBy(x => x.GrantModification.Grant.GrantNumber));
             return outgoingGrantAllocations;
         }
 
@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Models
             const string yearMatchPattern = @"^(?<year>[1-9][0-9][0-9][0-9])-";
 
             var grantYearRegex = new Regex(yearMatchPattern);
-            MatchCollection matches = grantYearRegex.Matches(ga.Grant.GrantNumber);
+            MatchCollection matches = grantYearRegex.Matches(ga.GrantModification.Grant.GrantNumber);
             if (matches.Count > 0)
             {
                 var firstMatch = matches[0];
@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Models
                     return this.Organization;
                 }
 
-                return this.Grant.Organization;
+                return this.GrantModification.Grant.Organization;
             }
         }
 

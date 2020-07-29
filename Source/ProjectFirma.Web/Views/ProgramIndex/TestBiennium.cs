@@ -19,9 +19,12 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Linq;
+using LtInfo.Common;
 using NUnit.Framework;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProgramIndex
 {
@@ -29,16 +32,46 @@ namespace ProjectFirma.Web.Views.ProgramIndex
     public class BienniumTest
     {
         [Test]
-        public void EnsureBienniumInDatabaseIsLikelyCorrectTest()
+        public void CheckBienniumFiscalYearCalculation()
         {
-            var currentBiennium = HttpRequestStorage.DatabaseEntities.CurrentBiennia.FirstOrDefault();
-            Assert.That(currentBiennium != null, "There should be an entry in the CurrentBiennium table, corresponding to the current fiscal year biennium");
-            Assert.That(HttpRequestStorage.DatabaseEntities.CurrentBiennia.Count() == 1, "There should not be multiple entries in the CurrentBiennium table. The single entry should correspond to the current fiscal year biennium");
-
-            int currentBienniumFiscalYear = HttpRequestStorage.DatabaseEntities.CurrentBiennia.First().CurrentBienniumFiscalYear;
             int currentFiscalYear = LtInfo.Common.DateUtilities.GetCurrentFiscalYear();
 
-            Assert.That(currentFiscalYear - currentBienniumFiscalYear < 2, $"We now appear to be outside the current biennium, which is [{currentBienniumFiscalYear}-{currentBienniumFiscalYear+1}]. Current Fiscal year is {currentFiscalYear}.");
+            Assert.That( CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2019, 7, 1)) == 2019);
+            Assert.That( CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2020, 1, 1)) == 2019);
+            Assert.That( CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2020, 7, 1)) == 2019);
+            Assert.That( CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2021, 1, 1)) == 2019);
+
+            Assert.That(CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2021, 7, 1)) == 2021);
+            Assert.That(CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2022, 1, 1)) == 2021);
+            Assert.That(CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2022, 7, 1)) == 2021);
+            Assert.That(CurrentBiennium.GetBienniumFiscalYearForDate(new DateTime(2023, 1, 1)) == 2021);
+        }
+
+        [Test]
+        public void CheckFiscalYearCalculation()
+        {
+            int currentFiscalYear = LtInfo.Common.DateUtilities.GetCurrentFiscalYear();
+
+            Assert.That(new DateTime(2019, 7, 1).GetWadnrFiscalYear() == 2019);
+            Assert.That(new DateTime(2020, 1, 1).GetWadnrFiscalYear() == 2019);
+
+            Assert.That(new DateTime(2020, 7, 1).GetWadnrFiscalYear() == 2020);
+            Assert.That(new DateTime(2021, 1, 1).GetWadnrFiscalYear() == 2020);
+                        
+            Assert.That(new DateTime(2021, 7, 1).GetWadnrFiscalYear() == 2021);
+            Assert.That(new DateTime(2022, 1, 1).GetWadnrFiscalYear() == 2021);
+
+            Assert.That(new DateTime(2022, 7, 1).GetWadnrFiscalYear() == 2022);
+            Assert.That(new DateTime(2023, 1, 1).GetWadnrFiscalYear() == 2022);
+        }
+
+        [Test]
+        public void EnsureBienniumCalculationIsLikelyCorrectTest()
+        {
+            int currentBienniumAccordingToTheDatabase = CurrentBiennium.GetCurrentBienniumFiscalYearFromDatabase();
+            int currentFiscalYear = LtInfo.Common.DateUtilities.GetCurrentFiscalYear();
+
+            Assert.That(currentFiscalYear - currentBienniumAccordingToTheDatabase < 2, $"We now appear to be outside the current biennium, which is [{currentBienniumAccordingToTheDatabase}-{currentBienniumAccordingToTheDatabase + 1}]. Current Fiscal year is {currentFiscalYear}.");
         }
     }
 }

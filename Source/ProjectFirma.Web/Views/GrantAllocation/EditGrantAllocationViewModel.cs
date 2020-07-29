@@ -36,6 +36,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public int GrantAllocationID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModification)]
+        [Required]
+        public int GrantModificationID { get; set; }
+
         [StringLength(Models.GrantAllocation.FieldLengths.GrantAllocationName)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationName)]
         [Required]
@@ -45,12 +49,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [Required]
         public int? OrganizationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
-        public int GrantID { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndexProjectCode)]
         public List<ProgramIndexProjectCodeJson> ProgramIndexProjectCodeJsons { get; set; }
-
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public int? FederalFundCodeID { get; set; }
@@ -91,7 +91,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// </summary>
         public EditGrantAllocationViewModel()
         {
-
             ProgramIndexProjectCodeJsons = new List<ProgramIndexProjectCodeJson>();
         }
 
@@ -100,7 +99,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
-            GrantID = grantAllocation.GrantID;
+            GrantModificationID = grantAllocation.GrantModificationID;
 
             ProgramIndexProjectCodeJsons =
                 ProgramIndexProjectCodeJson
@@ -114,6 +113,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EndDate = grantAllocation.EndDate;
             ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
             GrantManagerID = grantAllocation.GrantManagerID;
+            //GrantAllocationFileResourceDatas = grantAllocation.GrantAllocationFileResources
         }
 
         public static int CountWordsSeparatedByWhitespaceOrCommaInString(string stringToCheck)
@@ -183,7 +183,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
-            grantAllocation.GrantID = GrantID;
+            //grantAllocation.GrantID = GrantID;
             
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
@@ -226,7 +226,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             // this section is only applicable to when it is a new Grant Allocation being created. We no longer need to delete the old ones on submit 
             // because editing and deleting the files will happen outside of the BASICS editor for a grant allocation.
-            if (GrantAllocationFileResourceDatas != null)
+            if (GrantAllocationFileResourceDatas != null && GrantAllocationFileResourceDatas[0] != null)
             {
                 for (int key = 0; key < GrantAllocationFileResourceDatas.Count; key++)
                 {
@@ -245,6 +245,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
         }
     }
+
 
     public class ProgramIndexProjectCodeJson
     {

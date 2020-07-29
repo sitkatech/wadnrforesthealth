@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -112,7 +114,15 @@ namespace ProjectFirma.Web.Models
                 AuditLogs.AddRange(auditRecordsForChange);
             }
             // we need to save the audit log entries now
-            base.SaveChanges();
+            try
+            {
+                base.SaveChanges();
+            }
+            catch (DbEntityValidationException validationException)
+            {
+                Console.WriteLine(validationException);
+                throw;
+            }
 
             scope.Complete();
             return changes;

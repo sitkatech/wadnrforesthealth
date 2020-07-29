@@ -462,7 +462,7 @@ namespace LtInfo.Common.DhtmlWrappers
         /// <returns></returns>
         public static string CreateViewingRowCountGridHeaderHtml(string gridName, string objectNamePlural)
         {
-            return String.Format("Currently viewing <span id=\"{0}FilteredRowCount\"></span> of <span id=\"{0}UnfilteredRowCount\"></span> {1}", gridName, objectNamePlural);
+            return $"Currently viewing <span id=\"{gridName}FilteredRowCount\"></span> of <span id=\"{gridName}UnfilteredRowCount\"></span> {objectNamePlural}";
         }
 
         /// <summary>

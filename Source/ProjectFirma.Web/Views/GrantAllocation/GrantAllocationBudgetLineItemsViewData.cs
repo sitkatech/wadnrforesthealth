@@ -23,12 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Linq;
-using System.Web.Mvc;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
-using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
@@ -47,7 +44,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             CostTypes = CostType.GetLineItemCostTypes();
             GrantAllocationID = grantAllocationBeingEdited.GrantAllocationID;
-            GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems;
+            GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems.OrderBy(x => x.CostType.SortOrder).ToList();
 
             PersonHasPermissionToEditBudgetLineItems = new GrantAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             //This will prevent the JS from posting back if the user doesn't have permission to edit the budget line items
@@ -57,7 +54,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
             }
         }
-
     }
 
     public class GrantAllocationBudgetLineItemAjaxModel

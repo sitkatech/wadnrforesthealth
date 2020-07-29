@@ -31,6 +31,9 @@ CREATE TABLE [dbo].[Project](
 	[ExpirationDate] [datetime] NULL,
 	[FhtProjectNumber] [varchar](20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[NoPriorityLandscapesExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[CreateGisUploadAttemptID] [int] NULL,
+	[LastUpdateGisUploadAttemptID] [int] NULL,
+	[ProjectGisIdentifier] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC
@@ -46,6 +49,16 @@ ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_FocusArea_Fo
 REFERENCES [dbo].[FocusArea] ([FocusAreaID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_FocusArea_FocusAreaID]
+GO
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID] FOREIGN KEY([CreateGisUploadAttemptID])
+REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
+GO
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID]
+GO
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID] FOREIGN KEY([LastUpdateGisUploadAttemptID])
+REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
+GO
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_PersonID] FOREIGN KEY([PrimaryContactPersonID])
 REFERENCES [dbo].[Person] ([PersonID])

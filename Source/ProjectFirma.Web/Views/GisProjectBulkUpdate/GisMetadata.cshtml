@@ -53,6 +53,26 @@
 
         <div class="form-group">
             <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectNameMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectNameMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectNameMetadataAttributeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectTypeMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectTypeMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectTypeMetadataAttributeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.CompletionDateMetadataAttributeID)
             </div>
             <div class="col-xs-8">
@@ -70,10 +90,28 @@
                 @Html.ValidationMessageFor(m => m.StartDateMetadataAttributeID)
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectStageMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectStageMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectStageMetadataAttributeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.OtherTreatmentAcresMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.OtherTreatmentAcresMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OtherTreatmentAcresMetadataAttributeID)
+            </div>
+        </div>
     </div>
 </form>
-
-
 
 <div class="pull-right">
     @*<a class="btn btn-xs btn-firma" href="@ViewDataTyped.GisMetadataUrl">Continue <span class='glyphicon glyphicon-chevron-right'></span></a>*@

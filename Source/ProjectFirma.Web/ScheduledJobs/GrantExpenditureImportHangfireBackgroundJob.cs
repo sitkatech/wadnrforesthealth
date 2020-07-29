@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' ClearGrantAllocationExpenditureTables");
             string vendorImportProc = "pClearGrantAllocationExpenditureTables";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
@@ -44,6 +44,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             Logger.Info($"Ending '{JobName}' ClearGrantAllocationExpenditureTables");
         }
+
 
         public void DownloadGrantExpendituresTableForAllFiscalYears()
         {
@@ -60,7 +61,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             const int bienniumStep = 2;
 
             // Go at least one biennium beyond the current one
-            var endBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear() + bienniumStep;
+            var endBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYearFromDatabase() + bienniumStep;
 
             // Step through all the desired Bienniums
             for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)
@@ -86,7 +87,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' GrantExpenditureImportJson");
             string vendorImportProc = "dbo.pGrantExpenditureImportJson";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {

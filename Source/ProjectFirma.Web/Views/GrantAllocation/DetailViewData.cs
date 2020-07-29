@@ -101,17 +101,15 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
             GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(grantAllocation));
 
-
-
-            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation, grantAllocation.GetOrCreateBudgetLineItemsForEachCostType());
+            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation, grantAllocation.GrantAllocationBudgetLineItems.ToList());
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
 
-
+            var canEditDocuments = new GrantAllocationEditAsAdminFeature().HasPermission(currentPerson, grantAllocation).HasPermission;
             GrantAllocationDetailsFileDetailsViewData = new GrantDetailsFileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grantAllocation.GrantAllocationFileResources)),
                 SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(grantAllocation.PrimaryKey)),
                 grantAllocation.GrantAllocationName,
-                new GrantAllocationEditAsAdminFeature().HasPermission(currentPerson, grantAllocation).HasPermission,
+                canEditDocuments,
                 Models.FieldDefinition.GrantAllocation
             );
 

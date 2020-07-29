@@ -102,7 +102,8 @@ namespace ProjectFirma.Web.Models
             return string.Join(", ", programIndexProjectCodePairs);
         }
 
-        public static List<GrantAllocationBudgetLineItem> GetOrCreateBudgetLineItemsForEachCostType(this GrantAllocation grantAllocation)
+
+        public static List<GrantAllocationBudgetLineItem> CreateAllGrantAllocationBudgetLineItemsByCostType(this GrantAllocation grantAllocation)
         {
             var grantAllocationBudgetLineItems = new List<GrantAllocationBudgetLineItem>();
             var shouldSaveChanges = false;
@@ -113,7 +114,7 @@ namespace ProjectFirma.Web.Models
                 {
                     var tempLineItem = new GrantAllocationBudgetLineItem(grantAllocation.GrantAllocationID, costType.CostTypeID, 0);
                     lineItemByCostType = HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.Add(tempLineItem);
-                    
+
                     shouldSaveChanges = true;
                 }
                 grantAllocationBudgetLineItems.Add(lineItemByCostType);
@@ -123,10 +124,11 @@ namespace ProjectFirma.Web.Models
             {
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
             }
-            
 
             return grantAllocationBudgetLineItems;
         }
+
+
 
     }
 }

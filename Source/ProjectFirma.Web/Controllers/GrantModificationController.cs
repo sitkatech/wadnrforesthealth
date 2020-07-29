@@ -92,6 +92,7 @@ namespace ProjectFirma.Web.Controllers
 
             var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
             viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
+            SetMessageForDisplay($"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -127,6 +128,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModification = GrantModification.CreateNewBlank(grant, grantModificationStatus);
             var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
             viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
+            SetMessageForDisplay($"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -175,6 +177,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModificationNoteInternal = GrantModificationNoteInternal.CreateNewBlank(grantModification, CurrentPerson);
             viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteInternalType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.Add(grantModificationNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -207,6 +210,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
             viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteInternalType.ExistingGrantModificationNoteInternal);
             HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.AddOrUpdate(grantModificationNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 

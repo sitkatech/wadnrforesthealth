@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -69,7 +68,6 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
-        
 
         [HttpGet]
         [GrantEditAsAdminFeature]
@@ -91,6 +89,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
             }
             viewModel.UpdateModel(grant, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\" has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -113,9 +112,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantCreateFeature]
         public PartialViewResult New()
         {
-            
             var viewModel = new NewGrantViewModel();
-            return ViewNew(viewModel,EditGrantType.NewGrant);
+            return ViewNew(viewModel, EditGrantType.NewGrant);
         }
 
         [HttpPost]
@@ -123,7 +121,6 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult New(NewGrantViewModel viewModel)
         {
-            
             if (!ModelState.IsValid)
             {
                 return ViewNew(viewModel, EditGrantType.NewGrant);
@@ -132,6 +129,7 @@ namespace ProjectFirma.Web.Controllers
             var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
             var grant = Grant.CreateNewBlank(grantStatus, grantOrganization);
             viewModel.UpdateModel(grant, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -212,7 +210,6 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-
         [GrantsViewFeature]
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
         {
@@ -229,8 +226,8 @@ namespace ProjectFirma.Web.Controllers
                 SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNoteInternal(grantPrimaryKey)),
                 grant.GrantName,
                 userHasEditGrantPermissions);
-            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
-            return RazorView<Detail, DetailViewData>(viewData);
+            var viewData = new Views.Grant.GrantDetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
+            return RazorView<GrantDetail, GrantDetailViewData>(viewData);
         }
 
         [GrantsViewFullListFeature]
@@ -277,15 +274,19 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
         {
             var gridSpec = new GrantGridSpec(CurrentPerson);
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            // They want the most current grants on top it seems, and sorting by Grant Number might be good enough -- SLG 7/2/2020
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderByDescending(g => g.GrantNumber).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Grant>(grants, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
+        // Move these to their relevant controllers instead??
+
         [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
+        public GridJsonNetJObjectResult<GrantAllocation> AllGrantAllocationGridJsonData()
         {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, null);
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
@@ -294,9 +295,22 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-            var grant = grantPrimaryKey.EntityObject;
-            var grantAllocations = grant.GrantAllocations.ToList();
+            var relevantGrant = grantPrimaryKey.EntityObject;
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            var grantAllocations = relevantGrant.GrantModifications.SelectMany(gm => gm.GrantAllocations).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        {
+            var grantModification = grantModificationPrimaryKey.EntityObject;
+            var relevantGrant = grantModification.Grant;
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            var grantAllocations = grantModification.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -309,12 +323,12 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
         {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.Grant.GrantNumber == "").ToList();
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, null);
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantModification.Grant.GrantNumber == "").ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
 
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
@@ -384,6 +398,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNoteInternal = GrantNoteInternal.CreateNewBlank(grant, CurrentPerson);
             viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantNoteInternals.Add(grantNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -400,6 +415,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNote = GrantNote.CreateNewBlank(grant, CurrentPerson);
             viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.NewNote);
             HttpRequestStorage.DatabaseEntities.GrantNotes.Add(grantNote);
+            SetMessageForDisplay($"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -425,6 +441,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNote = grantNotePrimaryKey.EntityObject;
             viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.ExistingNote);
             HttpRequestStorage.DatabaseEntities.GrantNotes.AddOrUpdate(grantNote);
+            SetMessageForDisplay($"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -458,6 +475,7 @@ namespace ProjectFirma.Web.Controllers
             var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
             viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.ExistingNote);
             HttpRequestStorage.DatabaseEntities.GrantNoteInternals.AddOrUpdate(grantNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 

@@ -132,14 +132,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CurrentBiennium">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CurrentBiennium">
-        <MappingFragment StoreEntitySet="CurrentBiennium">
-          <ScalarProperty Name="CurrentBienniumID" ColumnName="CurrentBienniumID" />
-          <ScalarProperty Name="CurrentBienniumFiscalYear" ColumnName="CurrentBienniumFiscalYear" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CustomPage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CustomPage">
         <MappingFragment StoreEntitySet="CustomPage">
@@ -272,6 +264,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisCrossWalkDefault">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisCrossWalkDefault">
+        <MappingFragment StoreEntitySet="GisCrossWalkDefault">
+          <ScalarProperty Name="GisCrossWalkDefaultID" ColumnName="GisCrossWalkDefaultID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="FieldDefinitionID" ColumnName="FieldDefinitionID" />
+          <ScalarProperty Name="GisCrossWalkSourceValue" ColumnName="GisCrossWalkSourceValue" />
+          <ScalarProperty Name="GisCrossWalkMappedValue" ColumnName="GisCrossWalkMappedValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisFeature">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeature">
         <MappingFragment StoreEntitySet="GisFeature">
@@ -340,7 +343,6 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="ConditionsAndRequirements" ColumnName="ConditionsAndRequirements" />
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
-          <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
           <ScalarProperty Name="CFDANumber" ColumnName="CFDANumber" />
           <ScalarProperty Name="GrantName" ColumnName="GrantName" />
           <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
@@ -354,7 +356,6 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocation">
         <MappingFragment StoreEntitySet="GrantAllocation">
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="GrantAllocationName" ColumnName="GrantAllocationName" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
@@ -364,6 +365,7 @@
           <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1081,6 +1083,9 @@
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="FhtProjectNumber" ColumnName="FhtProjectNumber" />
           <ScalarProperty Name="NoPriorityLandscapesExplanation" ColumnName="NoPriorityLandscapesExplanation" />
+          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
+          <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
+          <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

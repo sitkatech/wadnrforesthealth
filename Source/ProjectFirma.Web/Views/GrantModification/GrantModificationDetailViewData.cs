@@ -19,10 +19,12 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.GrantModification
@@ -36,9 +38,17 @@ namespace ProjectFirma.Web.Views.GrantModification
         public bool UserHasEditGrantModificationPermissions { get; }
         public string ParentGrantUrl { get; }
         public string BackToParentGrantUrlText { get; }
+        public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
+        public string GrantAllocationGridName { get; }
+        public string GrantAllocationGridDataUrl { get; }
 
-        public GrantModificationDetailViewData(Person currentPerson, Models.GrantModification grantModification, EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
+        public GrantModificationDetailViewData(Person currentPerson,
+                                               Models.GrantModification grantModification,
+                                               EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
         {
+            Check.EnsureNotNull(currentPerson);
+            Check.EnsureNotNull(grantModification);
+
             GrantModification = grantModification;
             PageTitle = grantModification.GrantModificationName;
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} Detail";
@@ -49,6 +59,11 @@ namespace ProjectFirma.Web.Views.GrantModification
             UserHasEditGrantModificationPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             // Used for creating file download link, if file available
             ShowDownload = grantModification.GrantModificationFileResource != null;
+
+            var relevantGrant = grantModification.Grant;
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            GrantAllocationGridName = "grantAllocationsGridName";
+            GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(grantModification));
         }
     }
 }

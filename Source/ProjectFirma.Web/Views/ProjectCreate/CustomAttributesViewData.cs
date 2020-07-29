@@ -36,16 +36,13 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         private string ProjectDisplayName { get; }
         public bool IsEditable = true;
 
-
-		
-
         public CustomAttributesViewData(Person currentPerson,
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, project, ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
-            ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
+            ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Proposed;
             ProjectDisplayName = project.DisplayName;
             AssignParameters( projectCustomAttributeTypes);
         }

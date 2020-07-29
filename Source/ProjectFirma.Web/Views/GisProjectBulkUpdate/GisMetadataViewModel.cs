@@ -39,15 +39,25 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Identifier Column")]
         public int ProjectIdentifierMetadataAttributeID { get; set; }
 
+        [Required]
+        [DisplayName("Project Name Column")]
+        public int ProjectNameMetadataAttributeID { get; set; }
 
+        [DisplayName("Project Type Column")]
+        public int? ProjectTypeMetadataAttributeID { get; set; }
+
+        [Required]
         [DisplayName("Completion Date Column")]
-        public int? CompletionDateMetadataAttributeID { get; set; }
-
+        public int CompletionDateMetadataAttributeID { get; set; }
 
         [DisplayName("Start Date Column")]
         public int? StartDateMetadataAttributeID { get; set; }
 
+        [DisplayName("Project Stage Column")]
+        public int? ProjectStageMetadataAttributeID { get; set; }
 
+        [DisplayName("Other Treatment Acres Column")]
+        public int? OtherTreatmentAcresMetadataAttributeID { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder

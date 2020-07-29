@@ -161,9 +161,9 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
                                 <a href="@ViewDataTyped.ManageGrantAllocationsUrl">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</a>
 
-                                <span class="pull-right">
+                                @*<span class="pull-right">
                                     @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewGrantAllocationUrl, string.Format("Create a new {0}", FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()), new List<string>(), ViewDataTyped.CanCreateNewGrantAllocation)
-                                </span>
+                                </span>*@
                             </div>
                             <div class="panel-body">
                                 @if (ViewDataTyped.Organization.GrantAllocations.Any())

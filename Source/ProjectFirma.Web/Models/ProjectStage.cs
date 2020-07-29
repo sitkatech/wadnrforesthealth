@@ -43,12 +43,12 @@ namespace ProjectFirma.Web.Models
             _forwardLookingFactSheetProjectStages ?? (_forwardLookingFactSheetProjectStages =
             new List<ProjectStage>
             {
-                Application,
+                Proposed,
                 Planned
             });
     }
 
-    public partial class ProjectStageApplication
+    public partial class ProjectStageProposed
     {
         public override bool IsOnCompletedList()
         {
@@ -86,7 +86,6 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-
     public partial class ProjectStagePlanned
     {
         public override bool IsOnCompletedList()
@@ -123,7 +122,7 @@ namespace ProjectFirma.Web.Models
         {
             return All.Except(new[]
             {
-                Application
+                Proposed
             });
         }
     }
@@ -162,7 +161,7 @@ namespace ProjectFirma.Web.Models
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
         {
-            return All.Except(new ProjectStage[] {Planned, Application});
+            return All.Except(new ProjectStage[] {Planned, Proposed});
         }
     }
 
@@ -234,7 +233,7 @@ namespace ProjectFirma.Web.Models
 
         public override bool ShouldShowOnMap()
         {
-            return false;
+            return true;
         }
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()

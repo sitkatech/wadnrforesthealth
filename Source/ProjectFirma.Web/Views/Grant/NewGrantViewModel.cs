@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -42,10 +44,6 @@ namespace ProjectFirma.Web.Views.Grant
         [StringLength(Models.Grant.FieldLengths.CFDANumber)]
         public string CFDANumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
-        [Required]
-        public Money? TotalAwardAmount { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public DateTime? GrantStartDate { get; set; }
 
@@ -72,10 +70,8 @@ namespace ProjectFirma.Web.Views.Grant
             GrantTypeID = grant.GrantTypeID;
             GrantNumber = grant.GrantNumber;
             CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.AwardedFunds;
             GrantStartDate = grant.StartDate;
             GrantEndDate = grant.EndDate;
-
         }
 
         public void UpdateModel(Models.Grant grant, Person currentPerson)
@@ -87,18 +83,24 @@ namespace ProjectFirma.Web.Views.Grant
             grant.GrantTypeID = GrantTypeID;
             grant.GrantNumber = GrantNumber;
             grant.CFDANumber = CFDANumber;
-            grant.AwardedFunds = TotalAwardAmount;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
 
             if (GrantFileResourceDatas != null)
             {
-                for (int key = 0; key < GrantFileResourceDatas.Count; key++)
+                // We allow for empty file resources to be posted - at least until such time as they become required.
+                bool anyActualFileResourceDatasSupplied = GrantFileResourceDatas.Any(frd => frd != null);
+                if (anyActualFileResourceDatasSupplied)
                 {
-                    var fileResource = FileResource.CreateNewFromHttpPostedFile(GrantFileResourceDatas[key], currentPerson);
-                    HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                    var grantFileResource = new GrantFileResource(grant, fileResource);
-                    grant.GrantFileResources.Add(grantFileResource);
+                    foreach (var currentGrantFileResourceData in GrantFileResourceDatas)
+                    {
+                        Check.EnsureNotNull(currentGrantFileResourceData);
+
+                        var fileResource = FileResource.CreateNewFromHttpPostedFile(currentGrantFileResourceData, currentPerson);
+                        HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
+                        var grantFileResource = new GrantFileResource(grant, fileResource);
+                        grant.GrantFileResources.Add(grantFileResource);
+                    }
                 }
             }
         }

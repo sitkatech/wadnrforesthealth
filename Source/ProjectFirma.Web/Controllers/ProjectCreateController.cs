@@ -162,7 +162,7 @@ namespace ProjectFirma.Web.Controllers
             var basicsViewModel = new BasicsViewModel();
             if (newProjectIsProposal)
             {
-                basicsViewModel.ProjectStageID = ProjectStage.Application.ProjectStageID;
+                basicsViewModel.ProjectStageID = ProjectStage.Proposed.ProjectStageID;
             }
             
             return ViewCreateAndEditBasics(basicsViewModel, !newProjectIsProposal);
@@ -274,7 +274,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Application.ProjectStageID;
+                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Proposed.ProjectStageID;
                 return ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey) ? ViewEditBasics(project, viewModel) : ViewCreateAndEditBasics(viewModel, showProjectStageDropDown);
             }
 
@@ -285,7 +285,7 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(project, CurrentPerson);
 
-            if (project.ProjectStage == ProjectStage.Application)
+            if (project.ProjectStage == ProjectStage.Proposed)
             {
                 DeletePerformanceMeasureActuals(project);
                 foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears)
@@ -665,10 +665,15 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(project);
+
+            if (project.HasProjectLocationPoint)
+            {
+                project.AutoAssignProjectPriorityLandscapes(project.ProjectLocationPoint);
+            }
+
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Location successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationSimple.ProjectCreateSectionDisplayName);
         }
-
 
         private static string GenerateEditProjectLocationSimpleFormID(Project project)
         {
@@ -854,6 +859,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
+
+            project.AutoAssignProjectPriorityLandscapes(project.ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList());
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)
@@ -1171,7 +1178,7 @@ namespace ProjectFirma.Web.Controllers
             project.ReviewedByPerson = CurrentPerson;
 
             // Business logic: An approved Proposal becomes an active project in the Planning and Design stage
-            if (project.ProjectStageID == ProjectStage.Application.ProjectStageID)
+            if (project.ProjectStageID == ProjectStage.Proposed.ProjectStageID)
             {
                 project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             }

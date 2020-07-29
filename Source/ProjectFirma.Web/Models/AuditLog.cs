@@ -29,9 +29,9 @@ using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
-using log4net.Repository.Hierarchy;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -182,7 +182,7 @@ namespace ProjectFirma.Web.Models
             DbPropertyEntry modifiedProperty)
         {
             var propertyName = modifiedProperty.Name;
-            if (!string.Equals(propertyName, string.Format("{0}ID", tableName), StringComparison.InvariantCultureIgnoreCase) && !string.Equals(propertyName, "TenantID", StringComparison.InvariantCultureIgnoreCase))
+            if (!string.Equals(propertyName, $"{tableName}ID", StringComparison.InvariantCultureIgnoreCase) && !string.Equals(propertyName, "TenantID", StringComparison.InvariantCultureIgnoreCase))
             {
                 var optionalAuditDescriptionString = GetAuditDescriptionStringIfAnyForProperty(objectContext, dbEntry, propertyName, auditLogEventType);
                 var auditLogEntry = CreateAuditLogEntryImpl(dbEntry,
@@ -485,7 +485,7 @@ namespace ProjectFirma.Web.Models
         public static void ClearAuditLogTable()
         {
             string vendorImportProc = "pClearAuditLogTable";
-            using (SqlConnection sqlConnection = ScheduledJobs.SocrataDataMartUpdateBackgroundJob.CreateAndOpenSqlConnection())
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {

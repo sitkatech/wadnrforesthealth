@@ -82,13 +82,13 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             // ReSharper disable PossibleNullReferenceException
             ProjectStateIsValidInWizard = project.ProjectApprovalStatus == ProjectApprovalStatus.Draft || project.ProjectApprovalStatus == ProjectApprovalStatus.Returned || project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
 
-            InstructionsPageUrl = project.ProjectStage == ProjectStage.Application
+            InstructionsPageUrl = project.ProjectStage == ProjectStage.Proposed
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
                     x.InstructionsProposal(project.ProjectID))
                 : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
                     x.InstructionsEnterHistoric(project.ProjectID));
 
-            var pagetitle = project.ProjectStage == ProjectStage.Application ? $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}" : $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+            var pagetitle = project.ProjectStage == ProjectStage.Proposed ? $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}" : $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
             PageTitle = $"{pagetitle}: {project.DisplayName}";
 
             ProposalDetailUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project));

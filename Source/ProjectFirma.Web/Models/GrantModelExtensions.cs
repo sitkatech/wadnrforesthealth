@@ -63,13 +63,24 @@ namespace ProjectFirma.Web.Models
 
         public static Money GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(this Grant grant)
         {
-            var grantAllocations = grant.GrantAllocations.ToList();
+            var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
             var allBudgetLineItemVsActualItems = grantAllocations.Select(ga => ga.GetTotalBudgetVsActualLineItem());
             var currentBalanceOfAllGrantAllocations = allBudgetLineItemVsActualItems.Select(blai => blai.BudgetMinusExpendituresFromDatamart).ToList();
             Money total = 0;
             foreach (var grantAllocationTotal in currentBalanceOfAllGrantAllocations)
             {
                 total += grantAllocationTotal;
+            }
+
+            return total;
+        }
+
+        public static Money GetTotalAwardAmount(this Grant grant)
+        {
+            Money total = 0;
+            foreach (var grantMod in grant.GrantModifications)
+            {
+                total += grantMod.GrantModificationAmount;
             }
 
             return total;
