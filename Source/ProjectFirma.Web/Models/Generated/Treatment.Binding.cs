@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int treatmentID, int projectID, DbGeometry treatmentFeature, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, decimal treatmentChippingAcres, decimal treatmentPruningAcres, decimal treatmentThinningAcres, decimal treatmentMasticationAcres, decimal treatmentGrazingAcres, decimal treatmentLopAndScatterAcres, decimal treatmentBiomassRemovalAcres, decimal treatmentHandPileAcres, decimal treatmentBroadcastBurnAcres, decimal treatmentHandPileBurnAcres, decimal treatmentMachinePileBurnAcres, decimal treatmentOtherTreatmentAcres, decimal treatmentSlashAcres, string treatmentNotes) : this()
+        public Treatment(int treatmentID, int projectID, DbGeometry treatmentFeature, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, decimal treatmentChippingAcres, decimal treatmentPruningAcres, decimal treatmentThinningAcres, decimal treatmentMasticationAcres, decimal treatmentGrazingAcres, decimal treatmentLopAndScatterAcres, decimal treatmentBiomassRemovalAcres, decimal treatmentHandPileAcres, decimal treatmentBroadcastBurnAcres, decimal treatmentHandPileBurnAcres, decimal treatmentMachinePileBurnAcres, decimal treatmentOtherTreatmentAcres, decimal treatmentSlashAcres, string treatmentNotes, int treatmentTypeID) : this()
         {
             this.TreatmentID = treatmentID;
             this.ProjectID = projectID;
@@ -54,12 +54,13 @@ namespace ProjectFirma.Web.Models
             this.TreatmentOtherTreatmentAcres = treatmentOtherTreatmentAcres;
             this.TreatmentSlashAcres = treatmentSlashAcres;
             this.TreatmentNotes = treatmentNotes;
+            this.TreatmentTypeID = treatmentTypeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int projectID, decimal treatmentFootprintAcres, decimal treatmentChippingAcres, decimal treatmentPruningAcres, decimal treatmentThinningAcres, decimal treatmentMasticationAcres, decimal treatmentGrazingAcres, decimal treatmentLopAndScatterAcres, decimal treatmentBiomassRemovalAcres, decimal treatmentHandPileAcres, decimal treatmentBroadcastBurnAcres, decimal treatmentHandPileBurnAcres, decimal treatmentMachinePileBurnAcres, decimal treatmentOtherTreatmentAcres, decimal treatmentSlashAcres) : this()
+        public Treatment(int projectID, decimal treatmentFootprintAcres, decimal treatmentChippingAcres, decimal treatmentPruningAcres, decimal treatmentThinningAcres, decimal treatmentMasticationAcres, decimal treatmentGrazingAcres, decimal treatmentLopAndScatterAcres, decimal treatmentBiomassRemovalAcres, decimal treatmentHandPileAcres, decimal treatmentBroadcastBurnAcres, decimal treatmentHandPileBurnAcres, decimal treatmentMachinePileBurnAcres, decimal treatmentOtherTreatmentAcres, decimal treatmentSlashAcres, int treatmentTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -79,12 +80,13 @@ namespace ProjectFirma.Web.Models
             this.TreatmentMachinePileBurnAcres = treatmentMachinePileBurnAcres;
             this.TreatmentOtherTreatmentAcres = treatmentOtherTreatmentAcres;
             this.TreatmentSlashAcres = treatmentSlashAcres;
+            this.TreatmentTypeID = treatmentTypeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Treatment(Project project, decimal treatmentFootprintAcres, decimal treatmentChippingAcres, decimal treatmentPruningAcres, decimal treatmentThinningAcres, decimal treatmentMasticationAcres, decimal treatmentGrazingAcres, decimal treatmentLopAndScatterAcres, decimal treatmentBiomassRemovalAcres, decimal treatmentHandPileAcres, decimal treatmentBroadcastBurnAcres, decimal treatmentHandPileBurnAcres, decimal treatmentMachinePileBurnAcres, decimal treatmentOtherTreatmentAcres, decimal treatmentSlashAcres) : this()
+        public Treatment(Project project, decimal treatmentFootprintAcres, decimal treatmentChippingAcres, decimal treatmentPruningAcres, decimal treatmentThinningAcres, decimal treatmentMasticationAcres, decimal treatmentGrazingAcres, decimal treatmentLopAndScatterAcres, decimal treatmentBiomassRemovalAcres, decimal treatmentHandPileAcres, decimal treatmentBroadcastBurnAcres, decimal treatmentHandPileBurnAcres, decimal treatmentMachinePileBurnAcres, decimal treatmentOtherTreatmentAcres, decimal treatmentSlashAcres, TreatmentType treatmentType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -105,14 +107,15 @@ namespace ProjectFirma.Web.Models
             this.TreatmentMachinePileBurnAcres = treatmentMachinePileBurnAcres;
             this.TreatmentOtherTreatmentAcres = treatmentOtherTreatmentAcres;
             this.TreatmentSlashAcres = treatmentSlashAcres;
+            this.TreatmentTypeID = treatmentType.TreatmentTypeID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Treatment CreateNewBlank(Project project)
+        public static Treatment CreateNewBlank(Project project, TreatmentType treatmentType)
         {
-            return new Treatment(project, default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal));
+            return new Treatment(project, default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), treatmentType);
         }
 
         /// <summary>
@@ -179,11 +182,13 @@ namespace ProjectFirma.Web.Models
         public decimal TreatmentOtherTreatmentAcres { get; set; }
         public decimal TreatmentSlashAcres { get; set; }
         public string TreatmentNotes { get; set; }
+        public int TreatmentTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentID; } set { TreatmentID = value; } }
 
         public virtual Project Project { get; set; }
         public virtual GrantAllocationAwardLandownerCostShareLineItem GrantAllocationAwardLandownerCostShareLineItem { get; set; }
+        public TreatmentType TreatmentType { get { return TreatmentType.AllLookupDictionary[TreatmentTypeID]; } }
 
         public static class FieldLengths
         {

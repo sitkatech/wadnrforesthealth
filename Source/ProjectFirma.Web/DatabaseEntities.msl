@@ -1761,6 +1761,7 @@
           <ScalarProperty Name="TreatmentOtherTreatmentAcres" ColumnName="TreatmentOtherTreatmentAcres" />
           <ScalarProperty Name="TreatmentSlashAcres" ColumnName="TreatmentSlashAcres" />
           <ScalarProperty Name="TreatmentNotes" ColumnName="TreatmentNotes" />
+          <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

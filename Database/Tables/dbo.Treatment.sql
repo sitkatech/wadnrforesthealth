@@ -24,6 +24,7 @@ CREATE TABLE [dbo].[Treatment](
 	[TreatmentOtherTreatmentAcres] [decimal](38, 10) NOT NULL,
 	[TreatmentSlashAcres] [decimal](38, 10) NOT NULL,
 	[TreatmentNotes] [varchar](2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[TreatmentTypeID] [int] NOT NULL,
  CONSTRAINT [PK_Treatment_TreatmentID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentID] ASC
@@ -40,3 +41,8 @@ ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_Project_
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_Project_ProjectID]
+GO
+ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentType_TreatmentTypeID] FOREIGN KEY([TreatmentTypeID])
+REFERENCES [dbo].[TreatmentType] ([TreatmentTypeID])
+GO
+ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_TreatmentType_TreatmentTypeID]
