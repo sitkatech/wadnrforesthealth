@@ -157,6 +157,12 @@ namespace LtInfo.Common.GdalOgr
 
         private ProcessUtilityResult ExecuteOgr2OgrCommand(List<string> commandLineArguments)
         {
+
+            var argumentsAsStringCombined = String.Join(" ", commandLineArguments.Select(ProcessUtility.EncodeArgumentForCommandLine).ToList());
+            var fullProcessAndArgumentsString =
+                $"{ProcessUtility.EncodeArgumentForCommandLine(_ogr2OgrExecutable.FullName)} {argumentsAsStringCombined}";
+            var errorMessageString = $"Process Command Line:\r\n{fullProcessAndArgumentsString}\r\n\r\nProcess Working Directory: {_ogr2OgrExecutable.DirectoryName}";
+
             var processUtilityResult = ProcessUtility.ShellAndWaitImpl(_ogr2OgrExecutable.DirectoryName, _ogr2OgrExecutable.FullName, commandLineArguments, true, Convert.ToInt32(_totalMilliseconds));
             if (processUtilityResult.ReturnCode != 0)
             {
