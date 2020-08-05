@@ -19,8 +19,19 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class TreatmentType : IHavePrimaryKey
     {
-        public static readonly TreatmentTypeTreatmentOne TreatmentOne = TreatmentTypeTreatmentOne.Instance;
-        public static readonly TreatmentTypeTreatmentEleven TreatmentEleven = TreatmentTypeTreatmentEleven.Instance;
+        public static readonly TreatmentTypeChipping Chipping = TreatmentTypeChipping.Instance;
+        public static readonly TreatmentTypePruning Pruning = TreatmentTypePruning.Instance;
+        public static readonly TreatmentTypeThinning Thinning = TreatmentTypeThinning.Instance;
+        public static readonly TreatmentTypeMastication Mastication = TreatmentTypeMastication.Instance;
+        public static readonly TreatmentTypeGrazing Grazing = TreatmentTypeGrazing.Instance;
+        public static readonly TreatmentTypeLopAndScatter LopAndScatter = TreatmentTypeLopAndScatter.Instance;
+        public static readonly TreatmentTypeBiomassRemoval BiomassRemoval = TreatmentTypeBiomassRemoval.Instance;
+        public static readonly TreatmentTypeHandPile HandPile = TreatmentTypeHandPile.Instance;
+        public static readonly TreatmentTypeBroadcastBurn BroadcastBurn = TreatmentTypeBroadcastBurn.Instance;
+        public static readonly TreatmentTypeHandPileBurn HandPileBurn = TreatmentTypeHandPileBurn.Instance;
+        public static readonly TreatmentTypeMachinePileBurn MachinePileBurn = TreatmentTypeMachinePileBurn.Instance;
+        public static readonly TreatmentTypeSlash Slash = TreatmentTypeSlash.Instance;
+        public static readonly TreatmentTypeOther Other = TreatmentTypeOther.Instance;
 
         public static readonly List<TreatmentType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentType> AllLookupDictionary;
@@ -30,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentType()
         {
-            All = new List<TreatmentType> { TreatmentOne, TreatmentEleven };
+            All = new List<TreatmentType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentType>(All.ToDictionary(x => x.TreatmentTypeID));
         }
 
@@ -100,10 +111,32 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case TreatmentTypeEnum.TreatmentEleven:
-                    return TreatmentEleven;
-                case TreatmentTypeEnum.TreatmentOne:
-                    return TreatmentOne;
+                case TreatmentTypeEnum.BiomassRemoval:
+                    return BiomassRemoval;
+                case TreatmentTypeEnum.BroadcastBurn:
+                    return BroadcastBurn;
+                case TreatmentTypeEnum.Chipping:
+                    return Chipping;
+                case TreatmentTypeEnum.Grazing:
+                    return Grazing;
+                case TreatmentTypeEnum.HandPile:
+                    return HandPile;
+                case TreatmentTypeEnum.HandPileBurn:
+                    return HandPileBurn;
+                case TreatmentTypeEnum.LopAndScatter:
+                    return LopAndScatter;
+                case TreatmentTypeEnum.MachinePileBurn:
+                    return MachinePileBurn;
+                case TreatmentTypeEnum.Mastication:
+                    return Mastication;
+                case TreatmentTypeEnum.Other:
+                    return Other;
+                case TreatmentTypeEnum.Pruning:
+                    return Pruning;
+                case TreatmentTypeEnum.Slash:
+                    return Slash;
+                case TreatmentTypeEnum.Thinning:
+                    return Thinning;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -112,19 +145,96 @@ namespace ProjectFirma.Web.Models
 
     public enum TreatmentTypeEnum
     {
-        TreatmentOne = 1,
-        TreatmentEleven = 2
+        Chipping = 1,
+        Pruning = 2,
+        Thinning = 3,
+        Mastication = 4,
+        Grazing = 5,
+        LopAndScatter = 6,
+        BiomassRemoval = 7,
+        HandPile = 8,
+        BroadcastBurn = 9,
+        HandPileBurn = 10,
+        MachinePileBurn = 11,
+        Slash = 12,
+        Other = 13
     }
 
-    public partial class TreatmentTypeTreatmentOne : TreatmentType
+    public partial class TreatmentTypeChipping : TreatmentType
     {
-        private TreatmentTypeTreatmentOne(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
-        public static readonly TreatmentTypeTreatmentOne Instance = new TreatmentTypeTreatmentOne(1, @"TreatmentOne", @"Treatment #1");
+        private TreatmentTypeChipping(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeChipping Instance = new TreatmentTypeChipping(1, @"Chipping", @"Chipping");
     }
 
-    public partial class TreatmentTypeTreatmentEleven : TreatmentType
+    public partial class TreatmentTypePruning : TreatmentType
     {
-        private TreatmentTypeTreatmentEleven(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
-        public static readonly TreatmentTypeTreatmentEleven Instance = new TreatmentTypeTreatmentEleven(2, @"TreatmentEleven", @"Treatment XI");
+        private TreatmentTypePruning(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypePruning Instance = new TreatmentTypePruning(2, @"Pruning", @"Pruning");
+    }
+
+    public partial class TreatmentTypeThinning : TreatmentType
+    {
+        private TreatmentTypeThinning(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeThinning Instance = new TreatmentTypeThinning(3, @"Thinning", @"Thinning");
+    }
+
+    public partial class TreatmentTypeMastication : TreatmentType
+    {
+        private TreatmentTypeMastication(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeMastication Instance = new TreatmentTypeMastication(4, @"Mastication", @"Mastication");
+    }
+
+    public partial class TreatmentTypeGrazing : TreatmentType
+    {
+        private TreatmentTypeGrazing(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeGrazing Instance = new TreatmentTypeGrazing(5, @"Grazing", @"Grazing");
+    }
+
+    public partial class TreatmentTypeLopAndScatter : TreatmentType
+    {
+        private TreatmentTypeLopAndScatter(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeLopAndScatter Instance = new TreatmentTypeLopAndScatter(6, @"LopAndScatter", @"Lop and Scatter");
+    }
+
+    public partial class TreatmentTypeBiomassRemoval : TreatmentType
+    {
+        private TreatmentTypeBiomassRemoval(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeBiomassRemoval Instance = new TreatmentTypeBiomassRemoval(7, @"BiomassRemoval", @"Biomass Removal");
+    }
+
+    public partial class TreatmentTypeHandPile : TreatmentType
+    {
+        private TreatmentTypeHandPile(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeHandPile Instance = new TreatmentTypeHandPile(8, @"HandPile", @"Hand Pile");
+    }
+
+    public partial class TreatmentTypeBroadcastBurn : TreatmentType
+    {
+        private TreatmentTypeBroadcastBurn(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeBroadcastBurn Instance = new TreatmentTypeBroadcastBurn(9, @"BroadcastBurn", @"Broadcast Burn");
+    }
+
+    public partial class TreatmentTypeHandPileBurn : TreatmentType
+    {
+        private TreatmentTypeHandPileBurn(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeHandPileBurn Instance = new TreatmentTypeHandPileBurn(10, @"HandPileBurn", @"Hand Pile Burn");
+    }
+
+    public partial class TreatmentTypeMachinePileBurn : TreatmentType
+    {
+        private TreatmentTypeMachinePileBurn(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeMachinePileBurn Instance = new TreatmentTypeMachinePileBurn(11, @"MachinePileBurn", @"Machine Pile Burn");
+    }
+
+    public partial class TreatmentTypeSlash : TreatmentType
+    {
+        private TreatmentTypeSlash(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeSlash Instance = new TreatmentTypeSlash(12, @"Slash", @"Slash");
+    }
+
+    public partial class TreatmentTypeOther : TreatmentType
+    {
+        private TreatmentTypeOther(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeOther Instance = new TreatmentTypeOther(13, @"Other", @"Other");
     }
 }
