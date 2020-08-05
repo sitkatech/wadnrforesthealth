@@ -627,6 +627,7 @@ namespace ProjectFirma.Web.Controllers
                 using (var conn = sqlConnection)
                 {
                     command.Connection = conn;
+                    command.CommandTimeout = 400;
                     ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
                 }
             }
