@@ -60,7 +60,11 @@ namespace ProjectFirma.Web.Views.Project
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),200, DhtmlxGridColumnFilterType.Html);
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.FocusAreaTotalCompletedFootprintAcres.ToGridHeaderString(), x => x.TotalCompletedFootprintAcres.ToString(CultureInfo.CurrentUICulture), 100, DhtmlxGridColumnFilterType.FormattedNumeric);
+
+            var completedAcresHeaderString = LabelWithSugarForExtensions
+                .LabelWithSugarFor(null, Models.FieldDefinition.ProjectTotalCompletedFootprintAcres, "Completed Acres")
+                .ToHtmlString();
+            Add(completedAcresHeaderString, x => x.TotalCompletedFootprintAcres.ToString(CultureInfo.CurrentUICulture), 100, DhtmlxGridColumnFilterType.FormattedNumeric);
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.Text);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
