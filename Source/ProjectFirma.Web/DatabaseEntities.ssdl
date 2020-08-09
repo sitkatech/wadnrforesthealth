@@ -2726,6 +2726,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentOtherTreatmentAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentSlashAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>

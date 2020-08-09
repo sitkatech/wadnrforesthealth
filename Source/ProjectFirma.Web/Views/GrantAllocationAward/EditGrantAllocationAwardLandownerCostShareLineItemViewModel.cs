@@ -172,7 +172,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             {
                 treatment = new Treatment(grantAllocationAwardLandownerCostShareLineItem.Project.ProjectID, FootprintAcres,ChippingAcres, PruningAcres, ThinningAcres, MasticationAcres,GrazingAcres
                 ,LopAndScatterAcres,BiomassRemovalAcres,HandPileAcres,BroadcastBurnAcres
-                , HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres);
+                , HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres, TreatmentType.Other.TreatmentTypeID);
 
                 treatment.GrantAllocationAwardLandownerCostShareLineItemID =
                     grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID;

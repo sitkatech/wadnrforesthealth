@@ -3146,6 +3146,7 @@
     <Property Name="TreatmentOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentSlashAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentTypeID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
   </EntityType>
