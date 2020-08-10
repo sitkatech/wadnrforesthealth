@@ -581,7 +581,6 @@
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPriorityLandscape.Binding.cs" />
-    <Compile Include="Models\Generated\vGeoServerProjectTreatmentArea.Binding.cs" />
     <Compile Include="Models\Generated\vSocrataDataMartRawJsonImportIndex.Binding.cs" />
     <Compile Include="Common\CertificateHelpersTest.cs" />
     <Compile Include="Controllers\GisFeatureController.cs" />

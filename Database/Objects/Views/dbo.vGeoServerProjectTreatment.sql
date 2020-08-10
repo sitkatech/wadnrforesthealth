@@ -11,7 +11,7 @@ select
 	p.ProjectName,
     p.FhtProjectNumber,
 	ta.TreatmentAreaFeature as Ogr_Geometry,
-    ta.TreatmentAreaFeature
+    ta.TreatmentAreaFeature as TreatmentFeature
 	
 from
 	dbo.Treatment as pa
