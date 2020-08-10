@@ -10,26 +10,27 @@ create procedure dbo.procImportTreatmentsFromGisUploadAttempt
 as
 
 
-INSERT INTO [dbo].[Treatment]
+if object_id('tempdb.dbo.#tempTreatments') is not null drop table #tempTreatments
+
+CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT NULL,
+	[ProjectID] [int] NOT NULL,
+    [TreatmentAreaFeature] [geometry] NOT NULL,
+	[GrantAllocationAwardLandownerCostShareLineItemID] [int] NULL,
+	[TreatmentStartDate] [datetime] NULL,
+	[TreatmentEndDate] [datetime] NULL,
+	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
+	[TreatmentNotes] [varchar](2000) NULL,
+	[TreatmentTypeID] [int] NOT NULL,
+	[TreatmentAreaID] [int] NULL)
+
+
+INSERT INTO #tempTreatments
            ([ProjectID]
-           ,[TreatmentFeature]
+           ,[TreatmentAreaFeature]
            ,[GrantAllocationAwardLandownerCostShareLineItemID]
            ,[TreatmentStartDate]
            ,[TreatmentEndDate]
            ,[TreatmentFootprintAcres]
-           ,[TreatmentChippingAcres]
-           ,[TreatmentPruningAcres]
-           ,[TreatmentThinningAcres]
-           ,[TreatmentMasticationAcres]
-           ,[TreatmentGrazingAcres]
-           ,[TreatmentLopAndScatterAcres]
-           ,[TreatmentBiomassRemovalAcres]
-           ,[TreatmentHandPileAcres]
-           ,[TreatmentBroadcastBurnAcres]
-           ,[TreatmentHandPileBurnAcres]
-           ,[TreatmentMachinePileBurnAcres]
-           ,[TreatmentOtherTreatmentAcres]
-           ,[TreatmentSlashAcres]
            ,[TreatmentNotes])
 
 
@@ -39,20 +40,7 @@ select p.ProjectID
 , null
 , null
 , null
-, 0
-,0
-,0
-,0
-,0
-,0
-,0
-,0
-,0
-,0
-,0
-,0
-,isnull(TRY_PARSE(x.OtherTreatmentAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
-,0
+, isnull(TRY_PARSE(x.OtherTreatmentAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
 ,null
 
  from dbo.Project p
@@ -64,6 +52,39 @@ where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID
 and gf.GisUploadAttemptID = @piGisUploadAttemptID) x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
 where p.CreateGisUploadAttemptID = @piGisUploadAttemptID
   
+
+
+
+
+
+
+insert into dbo.TreatmentArea(TreatmentAreaFeature, TemporaryTreatmentCacheID)
+
+select x.TreatmentAreaFeature, x.TemporaryTreatmentCacheID from #tempTreatments x
+
+
+insert into dbo.Treatment ([ProjectID]
+           ,[GrantAllocationAwardLandownerCostShareLineItemID]
+           ,[TreatmentStartDate]
+           ,[TreatmentEndDate]
+           ,[TreatmentFootprintAcres]
+           ,[TreatmentNotes]
+           , TreatmentAreaID)
+
+select 
+
+            [ProjectID]
+           ,[GrantAllocationAwardLandownerCostShareLineItemID]
+           ,[TreatmentStartDate]
+           ,[TreatmentEndDate]
+           ,[TreatmentFootprintAcres]
+           ,[TreatmentNotes]
+           , ta.TreatmentAreaID
+
+from #tempTreatments x
+join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+
+
 
 
 /*

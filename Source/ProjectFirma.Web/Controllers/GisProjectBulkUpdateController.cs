@@ -206,7 +206,7 @@ namespace ProjectFirma.Web.Controllers
             var treatments =
                 HttpRequestStorage.DatabaseEntities.Treatments.Where(x => projectIDList.Contains(x.ProjectID)).ToList();
 
-            var treatmentDictionary = treatments.GroupBy(x => x.ProjectID).ToDictionary(y => y.Key, x => x.ToList().Select(z => z.TreatmentFeature).ToList());
+            var treatmentDictionary = treatments.GroupBy(x => x.ProjectID).ToDictionary(y => y.Key, x => x.ToList().Select(z => z.TreatmentArea.TreatmentAreaFeature).ToList());
 
             projects.ForEach(x => x.AutoAssignProjectPriorityLandscapes(treatmentDictionary[x.ProjectID]));
 

@@ -143,6 +143,7 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Store.Treatment" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.Store.TreatmentArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityLandscape" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityLandscape">
       <DefiningQuery>SELECT 
@@ -161,7 +162,7 @@ FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</Defin
 [vGeoServerProjectTreatmentArea].[ProjectName] AS [ProjectName], 
 [vGeoServerProjectTreatmentArea].[FhtProjectNumber] AS [FhtProjectNumber], 
 [vGeoServerProjectTreatmentArea].[Ogr_Geometry] AS [Ogr_Geometry], 
-[vGeoServerProjectTreatmentArea].[TreatmentFeature] AS [TreatmentFeature]
+[vGeoServerProjectTreatmentArea].[TreatmentAreaFeature] AS [TreatmentAreaFeature]
 FROM [dbo].[vGeoServerProjectTreatmentArea] AS [vGeoServerProjectTreatmentArea]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
@@ -1088,6 +1089,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentArea_TreatmentAreaID">
+      <End Role="TreatmentArea" EntitySet="TreatmentArea" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
   </EntityContainer>
@@ -2707,26 +2712,22 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="TreatmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="TreatmentFeature" Type="geometry" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="int" />
     <Property Name="TreatmentStartDate" Type="datetime" />
     <Property Name="TreatmentEndDate" Type="datetime" />
     <Property Name="TreatmentFootprintAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentChippingAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentPruningAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentThinningAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentMasticationAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentGrazingAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentLopAndScatterAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentBiomassRemovalAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentHandPileAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentBroadcastBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentHandPileBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentMachinePileBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentOtherTreatmentAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentSlashAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="varchar" MaxLength="2000" />
     <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentAreaID" Type="int" />
+    <Property Name="TreatmentTreatedAcres" Type="decimal" Precision="38" Scale="10" />
+  </EntityType>
+  <EntityType Name="TreatmentArea">
+    <Key>
+      <PropertyRef Name="TreatmentAreaID" />
+    </Key>
+    <Property Name="TreatmentAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
+    <Property Name="TemporaryTreatmentCacheID" Type="int" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -2787,14 +2788,16 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatment
       <PropertyRef Name="ProjectID" />
       <PropertyRef Name="ProjectName" />
       <PropertyRef Name="FhtProjectNumber" />
+      <PropertyRef Name="Ogr_Geometry" />
+      <PropertyRef Name="TreatmentAreaFeature" />
     </Key>
     <Property Name="TreatmentID" Type="int" Nullable="false" />
     <Property Name="PrimaryKey" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
     <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-    <Property Name="TreatmentFeature" Type="geometry" />
+    <Property Name="Ogr_Geometry" Type="geometry" Nullable="false" />
+    <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -5552,6 +5555,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_TreatmentArea_TreatmentAreaID">
+    <End Role="TreatmentArea" Type="ProjectFirma.Web.Models.Store.TreatmentArea" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentArea">
+        <PropertyRef Name="TreatmentAreaID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="TreatmentAreaID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -120,28 +120,80 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             GrantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID;
             GrantAllocationAwardID = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardID;
-            var treatment = grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault();
+            var treatment = grantAllocationAwardLandownerCostShareLineItem.Treatments.FirstOrDefault();
            
             StartDate = treatment.TreatmentStartDate ?? DateTime.Today;
             EndDate = treatment.TreatmentEndDate ?? DateTime.Today;
+            FootprintAcres = (treatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
 
-            ProjectID = treatment.ProjectID;
+            ProjectID = grantAllocationAwardLandownerCostShareLineItem.ProjectID;
             StatusID = grantAllocationAwardLandownerCostShareLineItem.LandownerCostShareLineItemStatusID;
 
-            FootprintAcres = (treatment?.TreatmentFootprintAcres ?? 0 ).ToDecimalFormatted();
-            SlashAcres = (treatment?.TreatmentSlashAcres ?? 0).ToDecimalFormatted();
-            ChippingAcres = (treatment?.TreatmentChippingAcres ?? 0).ToDecimalFormatted();
-            PruningAcres = (treatment?.TreatmentPruningAcres ?? 0).ToDecimalFormatted();
-            ThinningAcres = (treatment?.TreatmentThinningAcres ?? 0).ToDecimalFormatted();
-            MasticationAcres = (treatment?.TreatmentMasticationAcres ?? 0).ToDecimalFormatted();
-            GrazingAcres = (treatment?.TreatmentGrazingAcres ?? 0).ToDecimalFormatted();
-            LopAndScatterAcres = (treatment?.TreatmentLopAndScatterAcres ?? 0).ToDecimalFormatted();
-            BiomassRemovalAcres = (treatment?.TreatmentBiomassRemovalAcres ?? 0).ToDecimalFormatted();
-            HandPileAcres = (treatment?.TreatmentHandPileAcres ?? 0).ToDecimalFormatted();
-            BroadcastBurnAcres = (treatment?.TreatmentBroadcastBurnAcres ?? 0).ToDecimalFormatted();
-            HandPileBurnAcres = (treatment?.TreatmentHandPileBurnAcres ?? 0).ToDecimalFormatted();
-            MachinePileBurnAcres = (treatment?.TreatmentMachinePileBurnAcres ?? 0).ToDecimalFormatted();
-            OtherTreatmentAcres = (treatment?.TreatmentOtherTreatmentAcres ?? 0).ToDecimalFormatted();
+
+            var slashTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Slash);
+            SlashAcres = (slashTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var chippingTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Chipping);
+            ChippingAcres = (chippingTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var pruningTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Pruning);
+            PruningAcres = (pruningTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var thinningTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Thinning);
+            ThinningAcres = (thinningTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var masticationTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Mastication);
+            MasticationAcres = (masticationTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var grazingTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Grazing);
+            GrazingAcres = (grazingTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var lopAndScatterTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.LopAndScatter);
+            LopAndScatterAcres = (lopAndScatterTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var biomassRemovalTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.BiomassRemoval);
+            BiomassRemovalAcres = (biomassRemovalTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var handPileTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.HandPile);
+            HandPileAcres = (handPileTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var broadCastBurnTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.BroadcastBurn);
+            BroadcastBurnAcres = (broadCastBurnTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var handPileBurnTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.HandPileBurn);
+            HandPileBurnAcres = (handPileBurnTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var machinePileBurnTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.MachinePileBurn);
+            MachinePileBurnAcres = (machinePileBurnTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+
+            var otherTreatment =
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault(x =>
+                    x.TreatmentType == TreatmentType.Other);
+            OtherTreatmentAcres = (otherTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
 
             TotalCost = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemTotalCost;
             AllocatedAmount = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
@@ -167,43 +219,56 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             grantAllocationAwardLandownerCostShareLineItem.ProjectID = ProjectID;
             grantAllocationAwardLandownerCostShareLineItem.LandownerCostShareLineItemStatusID = StatusID;
 
-            var treatment = grantAllocationAwardLandownerCostShareLineItem.Treatments.SingleOrDefault();
-            if (treatment == null)
-            {
-                treatment = new Treatment(grantAllocationAwardLandownerCostShareLineItem.Project.ProjectID, FootprintAcres,ChippingAcres, PruningAcres, ThinningAcres, MasticationAcres,GrazingAcres
-                ,LopAndScatterAcres,BiomassRemovalAcres,HandPileAcres,BroadcastBurnAcres
-                , HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres, TreatmentType.Other.TreatmentTypeID);
 
-                treatment.GrantAllocationAwardLandownerCostShareLineItemID =
-                    grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID;
-                treatment.GrantAllocationAwardLandownerCostShareLineItem =
-                    grantAllocationAwardLandownerCostShareLineItem;
-                treatment.Project = grantAllocationAwardLandownerCostShareLineItem.Project;
-                grantAllocationAwardLandownerCostShareLineItem.Treatments.Add(treatment);
-            }
+            var treatments = grantAllocationAwardLandownerCostShareLineItem.Treatments;
+            var projectID = grantAllocationAwardLandownerCostShareLineItem.Project.ProjectID;
+            var grantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItem
+                .GrantAllocationAwardLandownerCostShareLineItemID;
 
-            treatment.TreatmentStartDate = StartDate;
-            treatment.TreatmentEndDate = EndDate;
-
-            treatment.TreatmentFootprintAcres = FootprintAcres;
-            treatment.TreatmentChippingAcres = ChippingAcres;
-            treatment.TreatmentPruningAcres = PruningAcres;
-            treatment.TreatmentThinningAcres = ThinningAcres;
-            treatment.TreatmentMasticationAcres = MasticationAcres;
-            treatment.TreatmentGrazingAcres = GrazingAcres;
-            treatment.TreatmentLopAndScatterAcres = LopAndScatterAcres;
-            treatment.TreatmentBiomassRemovalAcres = BiomassRemovalAcres;
-            treatment.TreatmentHandPileAcres = HandPileAcres;
-            treatment.TreatmentBroadcastBurnAcres = BroadcastBurnAcres;
-            treatment.TreatmentHandPileBurnAcres = HandPileBurnAcres;
-            treatment.TreatmentMachinePileBurnAcres = MachinePileBurnAcres;
-            treatment.TreatmentOtherTreatmentAcres = OtherTreatmentAcres;
-            treatment.TreatmentSlashAcres = SlashAcres;
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Chipping, ChippingAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Pruning, PruningAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Thinning, ThinningAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Mastication, MasticationAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Grazing, GrazingAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.LopAndScatter, LopAndScatterAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.BiomassRemoval, BiomassRemovalAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.HandPile, HandPileAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.BroadcastBurn, BroadcastBurnAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.HandPileBurn, HandPileBurnAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.MachinePileBurn, MachinePileBurnAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Other, OtherTreatmentAcres);
+            UpdateTreatmentByTreatmentType(grantAllocationAwardLandownerCostShareLineItem, treatments, projectID, grantAllocationAwardLandownerCostShareLineItemID, TreatmentType.Slash, SlashAcres);
 
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount = AllocatedAmount;
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemTotalCost = TotalCost;
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemNotes = Notes;
 
+        }
+
+        private void UpdateTreatmentByTreatmentType(
+            Models.GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem,
+            ICollection<Treatment> treatments
+            , int projectID
+            , int grantAllocationAwardLandownerCostShareLineItemID
+            , TreatmentType treatmentType
+            , decimal treatedAcres)
+        {
+            var chippingTreatment = treatments.SingleOrDefault(x => x.TreatmentType == treatmentType);
+            if (chippingTreatment == null)
+            {
+                chippingTreatment = new Treatment(projectID, FootprintAcres, treatmentType.TreatmentTypeID);
+                chippingTreatment.GrantAllocationAwardLandownerCostShareLineItemID =
+                    grantAllocationAwardLandownerCostShareLineItemID;
+                chippingTreatment.GrantAllocationAwardLandownerCostShareLineItem =
+                    grantAllocationAwardLandownerCostShareLineItem;
+                chippingTreatment.Project = grantAllocationAwardLandownerCostShareLineItem.Project;
+                grantAllocationAwardLandownerCostShareLineItem.Treatments.Add(chippingTreatment);
+            }
+
+            chippingTreatment.TreatmentFootprintAcres = FootprintAcres;
+            chippingTreatment.TreatmentTreatedAcres = treatedAcres;
+            chippingTreatment.TreatmentStartDate = StartDate;
+            chippingTreatment.TreatmentEndDate = EndDate;
         }
     }
 
