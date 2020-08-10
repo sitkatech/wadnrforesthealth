@@ -31,7 +31,8 @@ INSERT INTO #tempTreatments
            ,[TreatmentStartDate]
            ,[TreatmentEndDate]
            ,[TreatmentFootprintAcres]
-           ,[TreatmentNotes])
+           ,[TreatmentNotes]
+           ,[TreatmentTypeID])
 
 
 
@@ -42,6 +43,7 @@ select p.ProjectID
 , null
 , isnull(TRY_PARSE(x.OtherTreatmentAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
 ,null
+, 13 -- other
 
  from dbo.Project p
 join (
@@ -69,7 +71,8 @@ insert into dbo.Treatment ([ProjectID]
            ,[TreatmentEndDate]
            ,[TreatmentFootprintAcres]
            ,[TreatmentNotes]
-           , TreatmentAreaID)
+           , TreatmentAreaID
+           , TreatmentTypeID)
 
 select 
 
@@ -80,6 +83,7 @@ select
            ,[TreatmentFootprintAcres]
            ,[TreatmentNotes]
            , ta.TreatmentAreaID
+           , 13 -- other
 
 from #tempTreatments x
 join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
