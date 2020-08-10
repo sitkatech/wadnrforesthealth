@@ -19,9 +19,9 @@ namespace ProjectFirma.Web.Models
 
             var featureCollection = new FeatureCollection();
 
-            foreach (var treatmnent in treatmentsAsList.Where(ie => ie.TreatmentFeature != null))
+            foreach (var treatmnent in treatmentsAsList.Where(ie => ie.TreatmentArea != null))
             {
-                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatmnent.TreatmentFeature);
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatmnent.TreatmentArea.TreatmentAreaFeature);
                 feature.Properties.Add("TreatmentID", treatmnent.TreatmentID);
                 //feature.Properties.Add("PopupUrl", treatmnent.GetMapPopupUrl());
                 featureCollection.Features.Add(feature);
