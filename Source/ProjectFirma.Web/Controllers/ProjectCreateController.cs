@@ -181,7 +181,6 @@ namespace ProjectFirma.Web.Controllers
             var project = new Project(viewModel.ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID,
                                       viewModel.ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID,
                                       viewModel.ProjectName,
-                                      viewModel.ProjectDescription,
                                       false,
                                       ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
                                       ProjectApprovalStatus.Draft.ProjectApprovalStatusID,
@@ -190,7 +189,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 ProposingPerson = CurrentPerson,
                 ProposingDate = DateTime.Now,
-                FocusAreaID = viewModel.FocusAreaID
+                FocusAreaID = viewModel.FocusAreaID,
+                ProjectDescription = viewModel.ProjectDescription
             };
 
             return SaveProjectAndCreateAuditEntry(project, viewModel);
