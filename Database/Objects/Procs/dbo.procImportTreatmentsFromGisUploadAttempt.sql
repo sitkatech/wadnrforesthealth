@@ -106,6 +106,10 @@ join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatment
 
 
 
+update dbo.TreatmentArea
+set TemporaryTreatmentCacheID = null
+
+
 
 update dbo.Treatment
 set TreatmentTypeID = tt.TreatmentTypeID
