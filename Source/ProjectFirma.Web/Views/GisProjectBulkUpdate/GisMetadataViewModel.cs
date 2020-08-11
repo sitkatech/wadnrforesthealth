@@ -56,14 +56,49 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Stage Column")]
         public int? ProjectStageMetadataAttributeID { get; set; }
 
-        [DisplayName("Other Treatment Acres Column")]
-        public int? OtherTreatmentAcresMetadataAttributeID { get; set; }
+        [DisplayName("Treatment Type")]
+        public int? TreatmentTypeMetadataAttributeID { get; set; }
+
+        [DisplayName("Treated Acres Column")]
+        public int? TreatedAcresMetadataAttributeID { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public GisMetadataViewModel()
+        public GisMetadataViewModel() { }
+
+
+        public GisMetadataViewModel(GisUploadAttempt gisUploadAttempt, List<Models.GisMetadataAttribute> gisMetadataAttributes)
         {
+            var organization = gisUploadAttempt.GisUploadSourceOrganization;
+            var defaults = organization.GisDefaultMappings;
+            ProjectIdentifierMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectIdentifier) ?? 0;
+            ProjectNameMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectName) ?? 0;
+            ProjectTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectType);
+            CompletionDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.CompletionDate) ?? 0;
+            StartDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.PlannedDate);
+            ProjectStageMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectStage);
+            TreatedAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatedAcres);
+            TreatmentTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentType);
+        }
+
+        private static int? GetPossibleDefaultMetadataAttributeID(List<GisMetadataAttribute> gisMetadataAttributes, ICollection<GisDefaultMapping> defaults, Models.FieldDefinition fieldDefinition)
+        {
+            int? defaultMetadataAttributeID = null;
+            var projectIdentifierDefault =
+                defaults.SingleOrDefault(x => x.FieldDefinition == fieldDefinition);
+            if (projectIdentifierDefault != null)
+            {
+                var projectIdentifierGisMetadataAttribute = gisMetadataAttributes
+                    .SingleOrDefault(x => string.Equals(x.GisMetadataAttributeName,
+                        projectIdentifierDefault.GisDefaultMappingColumnName));
+                if (projectIdentifierGisMetadataAttribute != null)
+                {
+                    defaultMetadataAttributeID = projectIdentifierGisMetadataAttribute.GisMetadataAttributeID;
+                }
+            }
+
+            return defaultMetadataAttributeID;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

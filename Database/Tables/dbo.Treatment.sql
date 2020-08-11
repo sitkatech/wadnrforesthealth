@@ -13,12 +13,25 @@ CREATE TABLE [dbo].[Treatment](
 	[TreatmentTypeID] [int] NOT NULL,
 	[TreatmentAreaID] [int] NULL,
 	[TreatmentTreatedAcres] [decimal](38, 10) NULL,
+	[TreatmentTypeImportedText] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[CreateGisUploadAttemptID] [int] NULL,
+	[UpdateGisUploadAttemptID] [int] NULL,
  CONSTRAINT [PK_Treatment_TreatmentID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID] FOREIGN KEY([CreateGisUploadAttemptID])
+REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
+GO
+ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID]
+GO
+ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID] FOREIGN KEY([UpdateGisUploadAttemptID])
+REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
+GO
+ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID]
 GO
 ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID] FOREIGN KEY([GrantAllocationAwardLandownerCostShareLineItemID])
 REFERENCES [dbo].[GrantAllocationAwardLandownerCostShareLineItem] ([GrantAllocationAwardLandownerCostShareLineItemID])

@@ -29,6 +29,8 @@ namespace ProjectFirma.Web.Models
             this.GisUploadAttemptGisMetadataAttributes = new HashSet<GisUploadAttemptGisMetadataAttribute>();
             this.ProjectsWhereYouAreTheCreateGisUploadAttempt = new HashSet<Project>();
             this.ProjectsWhereYouAreTheLastUpdateGisUploadAttempt = new HashSet<Project>();
+            this.TreatmentsWhereYouAreTheCreateGisUploadAttempt = new HashSet<Treatment>();
+            this.TreatmentsWhereYouAreTheUpdateGisUploadAttempt = new HashSet<Treatment>();
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any() || ProjectsWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.Any();
+            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any() || ProjectsWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.Any() || TreatmentsWhereYouAreTheCreateGisUploadAttempt.Any() || TreatmentsWhereYouAreTheUpdateGisUploadAttempt.Any();
         }
 
         /// <summary>
@@ -115,13 +117,23 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(Project).Name);
             }
+
+            if(TreatmentsWhereYouAreTheCreateGisUploadAttempt.Any())
+            {
+                dependentObjects.Add(typeof(Treatment).Name);
+            }
+
+            if(TreatmentsWhereYouAreTheUpdateGisUploadAttempt.Any())
+            {
+                dependentObjects.Add(typeof(Treatment).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name, typeof(Project).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name, typeof(Project).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -165,6 +177,16 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in TreatmentsWhereYouAreTheCreateGisUploadAttempt.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in TreatmentsWhereYouAreTheUpdateGisUploadAttempt.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -180,6 +202,8 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GisUploadAttemptGisMetadataAttribute> GisUploadAttemptGisMetadataAttributes { get; set; }
         public virtual ICollection<Project> ProjectsWhereYouAreTheCreateGisUploadAttempt { get; set; }
         public virtual ICollection<Project> ProjectsWhereYouAreTheLastUpdateGisUploadAttempt { get; set; }
+        public virtual ICollection<Treatment> TreatmentsWhereYouAreTheCreateGisUploadAttempt { get; set; }
+        public virtual ICollection<Treatment> TreatmentsWhereYouAreTheUpdateGisUploadAttempt { get; set; }
         public virtual GisUploadSourceOrganization GisUploadSourceOrganization { get; set; }
         public virtual Person GisUploadAttemptCreatePerson { get; set; }
 

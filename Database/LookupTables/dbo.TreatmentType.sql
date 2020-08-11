@@ -15,4 +15,6 @@ values
 (10, 'HandPileBurn', 'Hand Pile Burn'),
 (11, 'MachinePileBurn', 'Machine Pile Burn'),
 (12, 'Slash', 'Slash'),
-(13, 'Other', 'Other')
+(13, 'Other', 'Other'),
+(14, 'JackpotBurn', 'Jackpot Burn'),
+(15, 'MachinePile', 'Machine Pile')
