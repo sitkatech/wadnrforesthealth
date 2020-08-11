@@ -368,8 +368,16 @@
 
                         @if (ViewDataTyped.Project.Treatments.Any())
                         {
-                            <div class="panel-body">
+                            <div>
+                                <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
+                            </div>
+                            
+                            <div class="panel-body" id="treatmentGridNonFlattened">
                                 @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
+
+                            <div class="panel-body" id="treatmentGridFlattened">
+                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentAreaGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         }
                         else
@@ -535,6 +543,19 @@
             jQuery('body').scrollspy({
                 target: '#tableOfContents'
             });
+
+            jQuery('#displayFlattenedByTreatmentArea').prop('checked', '');
+
+            jQuery('#displayFlattenedByTreatmentArea').change(function() {
+                if (this.checked) {
+                    jQuery("#treatmentGridNonFlattened").hide();
+                    jQuery("#treatmentGridFlattened").show();
+                } else {
+                    jQuery("#treatmentGridNonFlattened").show();
+                    jQuery("#treatmentGridFlattened").hide();
+                }
+            });
+            jQuery("#treatmentGridFlattened").hide();
 
             jQuery('#tableOfContentsAffixed')
                 .affix({
