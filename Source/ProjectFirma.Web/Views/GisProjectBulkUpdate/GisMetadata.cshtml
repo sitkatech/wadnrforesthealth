@@ -103,11 +103,21 @@
 
         <div class="form-group">
             <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.OtherTreatmentAcresMetadataAttributeID)
+                @Html.LabelWithSugarFor(m => m.TreatmentTypeMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.OtherTreatmentAcresMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.OtherTreatmentAcresMetadataAttributeID)
+                @Html.DropDownListFor(m => m.TreatmentTypeMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TreatmentTypeMetadataAttributeID)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatedAcresMetadataAttributeID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.TreatedAcresMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TreatedAcresMetadataAttributeID)
             </div>
         </div>
     </div>

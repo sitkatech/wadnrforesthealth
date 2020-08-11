@@ -5,7 +5,8 @@ create procedure dbo.procImportTreatmentsFromGisUploadAttempt
 (
     @piGisUploadAttemptID int,
     @projectIdentifierGisMetadataAttributeID int,
-    @otherTreatmentAcresMetadataAttributeID int
+    @treatedAcresMetadataAttributeID int,
+    @treatmentTypeMetadataAttributeID int
 )
 as
 
@@ -21,7 +22,8 @@ CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT N
 	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
 	[TreatmentNotes] [varchar](2000) NULL,
 	[TreatmentTypeID] [int] NOT NULL,
-	[TreatmentAreaID] [int] NULL)
+	[TreatmentAreaID] [int] NULL,
+    TreatmentTypeImportedText varchar(200))
 
 
 INSERT INTO #tempTreatments
@@ -32,7 +34,8 @@ INSERT INTO #tempTreatments
            ,[TreatmentEndDate]
            ,[TreatmentFootprintAcres]
            ,[TreatmentNotes]
-           ,[TreatmentTypeID])
+           ,[TreatmentTypeID]
+           ,[TreatmentTypeImportedText])
 
 
 
@@ -44,14 +47,21 @@ select p.ProjectID
 , isnull(TRY_PARSE(x.OtherTreatmentAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
 ,null
 , 13 -- other
+, x.TreatmentTypeImportedText
 
  from dbo.Project p
 join (
-select gf.GisFeatureGeometry, gfma.GisFeatureMetadataAttributeValue, gfmaOther.GisFeatureMetadataAttributeValue as OtherTreatmentAcres from dbo.GisFeature gf
-join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
-left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @otherTreatmentAcresMetadataAttributeID
-where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID 
-and gf.GisUploadAttemptID = @piGisUploadAttemptID) x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
+        select gf.GisFeatureGeometry
+        , gfma.GisFeatureMetadataAttributeValue
+        , gfmaOther.GisFeatureMetadataAttributeValue as OtherTreatmentAcres 
+        , gfmaTreatmentType.GisFeatureMetadataAttributeValue as TreatmentTypeImportedText
+        from dbo.GisFeature gf
+        join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
+        left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @treatedAcresMetadataAttributeID
+        left join dbo.GisFeatureMetadataAttribute gfmaTreatmentType on gfmaTreatmentType.GisFeatureID = gf.GisFeatureID and gfmaTreatmentType.GisMetadataAttributeID = @treatmentTypeMetadataAttributeID
+        where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID 
+        and gf.GisUploadAttemptID = @piGisUploadAttemptID)
+   x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
 where p.CreateGisUploadAttemptID = @piGisUploadAttemptID
   
 
@@ -72,7 +82,10 @@ insert into dbo.Treatment ([ProjectID]
            ,[TreatmentFootprintAcres]
            ,[TreatmentNotes]
            , TreatmentAreaID
-           , TreatmentTypeID)
+           , TreatmentTypeID
+           , TreatmentTypeImportedText
+           , CreateGisUploadAttemptID
+           , TreatmentTreatedAcres)
 
 select 
 
@@ -84,11 +97,24 @@ select
            ,[TreatmentNotes]
            , ta.TreatmentAreaID
            , 13 -- other
+           , TreatmentTypeImportedText
+           , @piGisUploadAttemptID
+           , [TreatmentFootprintAcres]
 
 from #tempTreatments x
 join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
+
+
+update dbo.Treatment
+set TreatmentTypeID = tt.TreatmentTypeID
+from dbo.Treatment t
+join dbo.GisUploadAttempt gua on t.CreateGisUploadAttemptID = gua.GisUploadAttemptID
+join dbo.GisUploadSourceOrganization guso on guso.GisUploadSourceOrganizationID = gua.GisUploadSourceOrganizationID
+join dbo.GisCrossWalkDefault gcwd on gcwd.GisUploadSourceOrganizationID = guso.GisUploadSourceOrganizationID and gcwd.GisCrossWalkSourceValue = t.TreatmentTypeImportedText
+join dbo.TreatmentType tt on tt.TreatmentTypeDisplayName = gcwd.GisCrossWalkMappedValue
+where gcwd.FieldDefinitionID = 468
 
 
 /*

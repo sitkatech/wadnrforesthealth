@@ -1760,6 +1760,9 @@
           <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
           <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
           <ScalarProperty Name="TreatmentTreatedAcres" ColumnName="TreatmentTreatedAcres" />
+          <ScalarProperty Name="TreatmentTypeImportedText" ColumnName="TreatmentTypeImportedText" />
+          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
+          <ScalarProperty Name="UpdateGisUploadAttemptID" ColumnName="UpdateGisUploadAttemptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

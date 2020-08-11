@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, int? treatmentAreaID, decimal? treatmentTreatedAcres) : this()
+        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, int? treatmentAreaID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID) : this()
         {
             this.TreatmentID = treatmentID;
             this.ProjectID = projectID;
@@ -43,6 +43,9 @@ namespace ProjectFirma.Web.Models
             this.TreatmentTypeID = treatmentTypeID;
             this.TreatmentAreaID = treatmentAreaID;
             this.TreatmentTreatedAcres = treatmentTreatedAcres;
+            this.TreatmentTypeImportedText = treatmentTypeImportedText;
+            this.CreateGisUploadAttemptID = createGisUploadAttemptID;
+            this.UpdateGisUploadAttemptID = updateGisUploadAttemptID;
         }
 
         /// <summary>
@@ -133,6 +136,9 @@ namespace ProjectFirma.Web.Models
         public int TreatmentTypeID { get; set; }
         public int? TreatmentAreaID { get; set; }
         public decimal? TreatmentTreatedAcres { get; set; }
+        public string TreatmentTypeImportedText { get; set; }
+        public int? CreateGisUploadAttemptID { get; set; }
+        public int? UpdateGisUploadAttemptID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentID; } set { TreatmentID = value; } }
 
@@ -140,10 +146,13 @@ namespace ProjectFirma.Web.Models
         public virtual GrantAllocationAwardLandownerCostShareLineItem GrantAllocationAwardLandownerCostShareLineItem { get; set; }
         public TreatmentType TreatmentType { get { return TreatmentType.AllLookupDictionary[TreatmentTypeID]; } }
         public virtual TreatmentArea TreatmentArea { get; set; }
+        public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
+        public virtual GisUploadAttempt UpdateGisUploadAttempt { get; set; }
 
         public static class FieldLengths
         {
             public const int TreatmentNotes = 2000;
+            public const int TreatmentTypeImportedText = 200;
         }
     }
 }

@@ -56,12 +56,18 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Stage Column")]
         public int? ProjectStageMetadataAttributeID { get; set; }
 
-        [DisplayName("Other Treatment Acres Column")]
-        public int? OtherTreatmentAcresMetadataAttributeID { get; set; }
+        [DisplayName("Treatment Type")]
+        public int? TreatmentTypeMetadataAttributeID { get; set; }
+
+        [DisplayName("Treated Acres Column")]
+        public int? TreatedAcresMetadataAttributeID { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
+        public GisMetadataViewModel() { }
+
+
         public GisMetadataViewModel(GisUploadAttempt gisUploadAttempt, List<Models.GisMetadataAttribute> gisMetadataAttributes)
         {
             var organization = gisUploadAttempt.GisUploadSourceOrganization;
@@ -72,7 +78,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             CompletionDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.CompletionDate) ?? 0;
             StartDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.PlannedDate);
             ProjectStageMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectStage);
-            OtherTreatmentAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatedAcres);
+            TreatedAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatedAcres);
+            TreatmentTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentType);
         }
 
         private static int? GetPossibleDefaultMetadataAttributeID(List<GisMetadataAttribute> gisMetadataAttributes, ICollection<GisDefaultMapping> defaults, Models.FieldDefinition fieldDefinition)

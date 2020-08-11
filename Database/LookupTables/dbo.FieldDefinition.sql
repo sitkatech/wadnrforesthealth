@@ -286,6 +286,7 @@ VALUES
 (464, N'GrantAllocationAwardCalendarStartYear', 'Grant Allocation Award Calendar Start Year', N'<p>Placeholder definition for Grant Allocation Award Calendar Start Year.</p>'),
 (465, N'ProjectIdentifier', 'Project Identifier', N'<p>Project Identifier for mapping to GIS source data</p>'),
 (466, N'PlannedDate', 'Planned Date', N'<p>The date work is planned to start for a Project</p>'),
-(467, N'TreatedAcres', 'Treated Acres', N'<p>The amount of acres completed under a treatment</p>')
+(467, N'TreatedAcres', 'Treated Acres', N'<p>The amount of acres completed under a treatment</p>'),
+(468, N'TreatmentType', 'Treatment Type', N'<p>The type of treatment</p>')
 
 

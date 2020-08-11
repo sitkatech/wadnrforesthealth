@@ -1077,6 +1077,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="UpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" EntitySet="Treatment" />
+    </AssociationSet>
     <AssociationSet Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
       <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
       <End Role="Treatments" EntitySet="Treatment" />
@@ -2723,6 +2731,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
     <Property Name="TreatmentAreaID" Type="int" />
     <Property Name="TreatmentTreatedAcres" Type="decimal" Precision="38" Scale="10" />
+    <Property Name="TreatmentTypeImportedText" Type="varchar" MaxLength="200" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
+    <Property Name="UpdateGisUploadAttemptID" Type="int" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -5531,6 +5542,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="UpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UpdateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt">
+        <PropertyRef Name="UpdateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
     <End Role="GrantAllocationAwardLandownerCostShareLineItem" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="0..1" />
     <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
@@ -5635,7 +5670,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   <Function Name="procImportTreatmentsFromGisUploadAttempt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
     <Parameter Name="projectIdentifierGisMetadataAttributeID" Type="int" Mode="In" />
-    <Parameter Name="otherTreatmentAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatedAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentTypeMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

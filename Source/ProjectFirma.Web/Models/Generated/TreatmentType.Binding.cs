@@ -32,6 +32,8 @@ namespace ProjectFirma.Web.Models
         public static readonly TreatmentTypeMachinePileBurn MachinePileBurn = TreatmentTypeMachinePileBurn.Instance;
         public static readonly TreatmentTypeSlash Slash = TreatmentTypeSlash.Instance;
         public static readonly TreatmentTypeOther Other = TreatmentTypeOther.Instance;
+        public static readonly TreatmentTypeJackpotBurn JackpotBurn = TreatmentTypeJackpotBurn.Instance;
+        public static readonly TreatmentTypeMachinePile MachinePile = TreatmentTypeMachinePile.Instance;
 
         public static readonly List<TreatmentType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentType> AllLookupDictionary;
@@ -41,7 +43,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentType()
         {
-            All = new List<TreatmentType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other };
+            All = new List<TreatmentType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentType>(All.ToDictionary(x => x.TreatmentTypeID));
         }
 
@@ -123,8 +125,12 @@ namespace ProjectFirma.Web.Models
                     return HandPile;
                 case TreatmentTypeEnum.HandPileBurn:
                     return HandPileBurn;
+                case TreatmentTypeEnum.JackpotBurn:
+                    return JackpotBurn;
                 case TreatmentTypeEnum.LopAndScatter:
                     return LopAndScatter;
+                case TreatmentTypeEnum.MachinePile:
+                    return MachinePile;
                 case TreatmentTypeEnum.MachinePileBurn:
                     return MachinePileBurn;
                 case TreatmentTypeEnum.Mastication:
@@ -157,7 +163,9 @@ namespace ProjectFirma.Web.Models
         HandPileBurn = 10,
         MachinePileBurn = 11,
         Slash = 12,
-        Other = 13
+        Other = 13,
+        JackpotBurn = 14,
+        MachinePile = 15
     }
 
     public partial class TreatmentTypeChipping : TreatmentType
@@ -236,5 +244,17 @@ namespace ProjectFirma.Web.Models
     {
         private TreatmentTypeOther(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
         public static readonly TreatmentTypeOther Instance = new TreatmentTypeOther(13, @"Other", @"Other");
+    }
+
+    public partial class TreatmentTypeJackpotBurn : TreatmentType
+    {
+        private TreatmentTypeJackpotBurn(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeJackpotBurn Instance = new TreatmentTypeJackpotBurn(14, @"JackpotBurn", @"Jackpot Burn");
+    }
+
+    public partial class TreatmentTypeMachinePile : TreatmentType
+    {
+        private TreatmentTypeMachinePile(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeMachinePile Instance = new TreatmentTypeMachinePile(15, @"MachinePile", @"Machine Pile");
     }
 }
