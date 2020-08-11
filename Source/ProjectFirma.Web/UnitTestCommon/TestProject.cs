@@ -50,7 +50,6 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var project = new Project(projectType,
                     projectStage,
                     $"Test Project Name {Guid.NewGuid()}",
-                    MakeTestName("Test Project Description"),
                     false,
                     ProjectLocationSimpleType.None,
                     // TODO: Verify that this is correct or use the correct value
@@ -58,6 +57,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                     Project.CreateNewFhtProjectNumber()
                     );
                 project.FocusArea = focusArea;
+                project.ProjectDescription = MakeTestName("Test Project Description");
                 dbContext.Projects.Add(project);
                 return project;
             }
@@ -69,11 +69,12 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var focusArea = TestFocusArea.Create();
 
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, Project.CreateNewFhtProjectNumber())
+                var project = new Project(projectType, projectStage, projectName,  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, Project.CreateNewFhtProjectNumber())
                 {
                     ProjectID = projectID
                 };
                 project.FocusArea = focusArea;
+                project.ProjectDescription = "Some description";
                 return project;
             }
 
