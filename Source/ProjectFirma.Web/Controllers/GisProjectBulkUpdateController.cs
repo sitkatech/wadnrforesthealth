@@ -98,7 +98,13 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
-            var viewModel = new GisMetadataViewModel();
+            var gisMetadataAttributeIDs = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
+            var metadataAttributes =
+                HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
+                    gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
+
+
+            var viewModel = new GisMetadataViewModel(gisUploadAttempt, metadataAttributes.ToList());
             return ViewUploadGisMetadata(gisUploadAttempt, viewModel);
         }
 

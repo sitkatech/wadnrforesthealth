@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
+        public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual DbSet<GisFeatureMetadataAttribute> GisFeatureMetadataAttributes { get; set; }
         public virtual DbSet<GisFeature> GisFeatures { get; set; }
         public virtual DbSet<GisMetadataAttribute> GisMetadataAttributes { get; set; }
@@ -350,6 +351,9 @@ namespace ProjectFirma.Web.Models
 
                 case "GisCrossWalkDefault":
                     return GisCrossWalkDefaults.GetGisCrossWalkDefault(primaryKey);
+
+                case "GisDefaultMapping":
+                    return GisDefaultMappings.GetGisDefaultMapping(primaryKey);
 
                 case "GisFeatureMetadataAttribute":
                     return GisFeatureMetadataAttributes.GetGisFeatureMetadataAttribute(primaryKey);

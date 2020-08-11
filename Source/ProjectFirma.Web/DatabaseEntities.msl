@@ -275,6 +275,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisDefaultMapping">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisDefaultMapping">
+        <MappingFragment StoreEntitySet="GisDefaultMapping">
+          <ScalarProperty Name="GisDefaultMappingID" ColumnName="GisDefaultMappingID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="FieldDefinitionID" ColumnName="FieldDefinitionID" />
+          <ScalarProperty Name="GisDefaultMappingColumnName" ColumnName="GisDefaultMappingColumnName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisFeature">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeature">
         <MappingFragment StoreEntitySet="GisFeature">

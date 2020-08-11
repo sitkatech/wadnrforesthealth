@@ -151,6 +151,9 @@
     <Compile Include="Models\Generated\GisCrossWalkDefault.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefaultPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GisDefaultMapping.Binding.cs" />
+    <Compile Include="Models\Generated\GisDefaultMapping.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GisDefaultMappingPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisFeature.Binding.cs" />
     <Compile Include="Models\Generated\GisFeature.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisFeatureMetadataAttribute.Binding.cs" />

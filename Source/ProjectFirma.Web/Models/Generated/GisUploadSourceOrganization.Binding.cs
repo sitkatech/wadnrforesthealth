@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected GisUploadSourceOrganization()
         {
             this.GisCrossWalkDefaults = new HashSet<GisCrossWalkDefault>();
+            this.GisDefaultMappings = new HashSet<GisDefaultMapping>();
             this.GisUploadAttempts = new HashSet<GisUploadAttempt>();
         }
 
@@ -64,7 +65,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisCrossWalkDefaults.Any() || GisUploadAttempts.Any();
+            return GisCrossWalkDefaults.Any() || GisDefaultMappings.Any() || GisUploadAttempts.Any();
         }
 
         /// <summary>
@@ -79,6 +80,11 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(GisCrossWalkDefault).Name);
             }
 
+            if(GisDefaultMappings.Any())
+            {
+                dependentObjects.Add(typeof(GisDefaultMapping).Name);
+            }
+
             if(GisUploadAttempts.Any())
             {
                 dependentObjects.Add(typeof(GisUploadAttempt).Name);
@@ -89,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadSourceOrganization).Name, typeof(GisCrossWalkDefault).Name, typeof(GisUploadAttempt).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadSourceOrganization).Name, typeof(GisCrossWalkDefault).Name, typeof(GisDefaultMapping).Name, typeof(GisUploadAttempt).Name};
 
 
         /// <summary>
@@ -119,6 +125,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in GisDefaultMappings.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GisUploadAttempts.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -132,6 +143,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
         public virtual ICollection<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
+        public virtual ICollection<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual ICollection<GisUploadAttempt> GisUploadAttempts { get; set; }
 
         public static class FieldLengths
