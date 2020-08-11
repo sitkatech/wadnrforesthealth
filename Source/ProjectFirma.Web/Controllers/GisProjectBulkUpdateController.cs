@@ -322,7 +322,6 @@ namespace ProjectFirma.Web.Controllers
             var project = new Project(otherProjectType.ProjectTypeID
                 , projectStage.ProjectStageID
                 , projectName
-                , "fake description"
                 , false
                 , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
                 , ProjectApprovalStatus.Approved.ProjectApprovalStatusID

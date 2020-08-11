@@ -2094,7 +2094,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectTypeID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
-    <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
+    <Property Name="ProjectDescription" Type="varchar" MaxLength="4000" />
     <Property Name="CompletionDate" Type="datetime" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />

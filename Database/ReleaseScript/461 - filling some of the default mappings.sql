@@ -6,5 +6,5 @@ values(2, 30, 'nepa_doc_name'),
 (2,28, 'date_completed'),
 (2,466,'date_planned'),
 (2, 36, 'stage_value'),
-(2, 467, 'acres'),
+(2, 467, 'gis_acres'),
 (2,468, 'treatment_type')
