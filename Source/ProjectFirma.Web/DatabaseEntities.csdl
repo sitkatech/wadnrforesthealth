@@ -2381,7 +2381,7 @@
     <Property Name="ProjectTypeID" Type="Int32" Nullable="false" />
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDescription" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />

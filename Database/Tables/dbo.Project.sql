@@ -7,7 +7,7 @@ CREATE TABLE [dbo].[Project](
 	[ProjectTypeID] [int] NOT NULL,
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[CompletionDate] [datetime] NULL,
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,

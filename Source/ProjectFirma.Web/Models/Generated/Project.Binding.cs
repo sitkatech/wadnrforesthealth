@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectTypeID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID, string fhtProjectNumber) : this()
+        public Project(int projectTypeID, int projectStageID, string projectName, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID, string fhtProjectNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -100,7 +100,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectTypeID = projectTypeID;
             this.ProjectStageID = projectStageID;
             this.ProjectName = projectName;
-            this.ProjectDescription = projectDescription;
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatusID;
@@ -110,7 +109,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus, string fhtProjectNumber) : this()
+        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus, string fhtProjectNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -119,7 +118,6 @@ namespace ProjectFirma.Web.Models
             projectType.Projects.Add(this);
             this.ProjectStageID = projectStage.ProjectStageID;
             this.ProjectName = projectName;
-            this.ProjectDescription = projectDescription;
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleType.ProjectLocationSimpleTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatus.ProjectApprovalStatusID;
@@ -131,7 +129,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Project CreateNewBlank(ProjectType projectType, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus)
         {
-            return new Project(projectType, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus, default(string));
+            return new Project(projectType, projectStage, default(string), default(bool), projectLocationSimpleType, projectApprovalStatus, default(string));
         }
 
         /// <summary>
