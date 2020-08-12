@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, int? treatmentAreaID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID) : this()
+        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, int? treatmentAreaID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText) : this()
         {
             this.TreatmentID = treatmentID;
             this.ProjectID = projectID;
@@ -46,12 +46,14 @@ namespace ProjectFirma.Web.Models
             this.TreatmentTypeImportedText = treatmentTypeImportedText;
             this.CreateGisUploadAttemptID = createGisUploadAttemptID;
             this.UpdateGisUploadAttemptID = updateGisUploadAttemptID;
+            this.TreatmentDetailedActivityTypeID = treatmentDetailedActivityTypeID;
+            this.TreatmentDetailedActivityTypeImportedText = treatmentDetailedActivityTypeImportedText;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int projectID, decimal treatmentFootprintAcres, int treatmentTypeID) : this()
+        public Treatment(int projectID, decimal treatmentFootprintAcres, int treatmentTypeID, int treatmentDetailedActivityTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -59,12 +61,13 @@ namespace ProjectFirma.Web.Models
             this.ProjectID = projectID;
             this.TreatmentFootprintAcres = treatmentFootprintAcres;
             this.TreatmentTypeID = treatmentTypeID;
+            this.TreatmentDetailedActivityTypeID = treatmentDetailedActivityTypeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Treatment(Project project, decimal treatmentFootprintAcres, TreatmentType treatmentType) : this()
+        public Treatment(Project project, decimal treatmentFootprintAcres, TreatmentType treatmentType, TreatmentDetailedActivityType treatmentDetailedActivityType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -73,14 +76,15 @@ namespace ProjectFirma.Web.Models
             project.Treatments.Add(this);
             this.TreatmentFootprintAcres = treatmentFootprintAcres;
             this.TreatmentTypeID = treatmentType.TreatmentTypeID;
+            this.TreatmentDetailedActivityTypeID = treatmentDetailedActivityType.TreatmentDetailedActivityTypeID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Treatment CreateNewBlank(Project project, TreatmentType treatmentType)
+        public static Treatment CreateNewBlank(Project project, TreatmentType treatmentType, TreatmentDetailedActivityType treatmentDetailedActivityType)
         {
-            return new Treatment(project, default(decimal), treatmentType);
+            return new Treatment(project, default(decimal), treatmentType, treatmentDetailedActivityType);
         }
 
         /// <summary>
@@ -139,6 +143,8 @@ namespace ProjectFirma.Web.Models
         public string TreatmentTypeImportedText { get; set; }
         public int? CreateGisUploadAttemptID { get; set; }
         public int? UpdateGisUploadAttemptID { get; set; }
+        public int TreatmentDetailedActivityTypeID { get; set; }
+        public string TreatmentDetailedActivityTypeImportedText { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentID; } set { TreatmentID = value; } }
 
@@ -148,11 +154,13 @@ namespace ProjectFirma.Web.Models
         public virtual TreatmentArea TreatmentArea { get; set; }
         public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
         public virtual GisUploadAttempt UpdateGisUploadAttempt { get; set; }
+        public TreatmentDetailedActivityType TreatmentDetailedActivityType { get { return TreatmentDetailedActivityType.AllLookupDictionary[TreatmentDetailedActivityTypeID]; } }
 
         public static class FieldLengths
         {
             public const int TreatmentNotes = 2000;
             public const int TreatmentTypeImportedText = 200;
+            public const int TreatmentDetailedActivityTypeImportedText = 200;
         }
     }
 }

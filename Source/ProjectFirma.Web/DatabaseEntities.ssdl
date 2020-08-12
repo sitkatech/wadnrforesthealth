@@ -2734,6 +2734,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentTypeImportedText" Type="varchar" MaxLength="200" />
     <Property Name="CreateGisUploadAttemptID" Type="int" />
     <Property Name="UpdateGisUploadAttemptID" Type="int" />
+    <Property Name="TreatmentDetailedActivityTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -5672,6 +5674,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     <Parameter Name="projectIdentifierGisMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="treatedAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="treatmentTypeMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentDetailedActivityTypeMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

@@ -43,8 +43,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Name Column")]
         public int ProjectNameMetadataAttributeID { get; set; }
 
-        [DisplayName("Project Type Column")]
-        public int? ProjectTypeMetadataAttributeID { get; set; }
+        [DisplayName("Treatment Type Column")]
+        public int? TreatmentTypeMetadataAttributeID { get; set; }
 
         [Required]
         [DisplayName("Completion Date Column")]
@@ -56,8 +56,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Stage Column")]
         public int? ProjectStageMetadataAttributeID { get; set; }
 
-        [DisplayName("Treatment Type")]
-        public int? TreatmentTypeMetadataAttributeID { get; set; }
+        [DisplayName("Treatment Detailed Activity Type Column")]
+        public int? TreatmentDetailedActivityTypeMetadataAttributeID { get; set; }
 
         [DisplayName("Treated Acres Column")]
         public int? TreatedAcresMetadataAttributeID { get; set; }
@@ -74,12 +74,12 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             var defaults = organization.GisDefaultMappings;
             ProjectIdentifierMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectIdentifier) ?? 0;
             ProjectNameMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectName) ?? 0;
-            ProjectTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectType);
+            TreatmentTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentType);
             CompletionDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.CompletionDate) ?? 0;
             StartDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.PlannedDate);
             ProjectStageMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectStage);
             TreatedAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatedAcres);
-            TreatmentTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentType);
+            TreatmentDetailedActivityTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentDetailedActivityType);
         }
 
         private static int? GetPossibleDefaultMetadataAttributeID(List<GisMetadataAttribute> gisMetadataAttributes, ICollection<GisDefaultMapping> defaults, Models.FieldDefinition fieldDefinition)

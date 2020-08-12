@@ -287,6 +287,7 @@ VALUES
 (465, N'ProjectIdentifier', 'Project Identifier', N'<p>Project Identifier for mapping to GIS source data</p>'),
 (466, N'PlannedDate', 'Planned Date', N'<p>The date work is planned to start for a Project</p>'),
 (467, N'TreatedAcres', 'Treated Acres', N'<p>The amount of acres completed under a treatment</p>'),
-(468, N'TreatmentType', 'Treatment Type', N'<p>The type of treatment</p>')
+(468, N'TreatmentType', 'Treatment Type', N'<p>The type of treatment</p>'),
+(469, N'TreatmentDetailedActivityType', 'Treatment Detailed Activity Type', N'<p>The type of treatment detailed activity</p>')
 
 

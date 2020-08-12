@@ -151,8 +151,8 @@ namespace ProjectFirma.Web.Controllers
             var completionDateMetadataAttributeID = viewModel.CompletionDateMetadataAttributeID;
             var startDateMetadataAttributeID = viewModel.StartDateMetadataAttributeID;
             var projectStageMetadataAttributeID = viewModel.ProjectStageMetadataAttributeID;
-            var projectTypeMetadataAttributeID = viewModel.ProjectTypeMetadataAttributeID;
             var treatmentTypeMetadataAttributeID = viewModel.TreatmentTypeMetadataAttributeID;
+            var treatmentActivityTypeMetadataAttributeID = viewModel.TreatmentDetailedActivityTypeMetadataAttributeID;
             var treatedAcresMetadataAttributeID = viewModel.TreatedAcresMetadataAttributeID;
 
             var projectIdentifierMetadataAttribute =
@@ -176,12 +176,6 @@ namespace ProjectFirma.Web.Controllers
             var projectStageDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
                 x.GisMetadataAttributeID == projectStageMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-
-            var projectTypeDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
-                gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == projectTypeMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-
-
             
 
             var gisValues =
@@ -198,10 +192,10 @@ namespace ProjectFirma.Web.Controllers
             foreach (var distinctGisValue in distinctGisValues)
             {
                 MakeProject(projectIdentifierMetadataAttribute, distinctGisValue, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, projectTypeDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList);
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList);
             }
 
-            ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID, projectIdentifierMetadataAttributeID, treatedAcresMetadataAttributeID, treatmentTypeMetadataAttributeID);
+            ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID, projectIdentifierMetadataAttributeID, treatedAcresMetadataAttributeID, treatmentTypeMetadataAttributeID, treatmentActivityTypeMetadataAttributeID);
 
 
 
@@ -224,10 +218,8 @@ namespace ProjectFirma.Web.Controllers
 
         private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute, string distinctGisValue,
             Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary,
-           Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectTypeDictionary,
-
-
-            List<GisCrossWalkDefault> gisCrossWalkDefaultList,
+           Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
+        List<GisCrossWalkDefault> gisCrossWalkDefaultList,
             GisUploadAttempt gisUploadAttempt, ProjectType otherProjectType, int gisUploadAttemptID, List<Project> projectList)
         {
             var gisFeaturesIdListWithProjectIdentifier =
@@ -248,35 +240,22 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => projectStageDictionary.ContainsKey(x))
                 .SelectMany(x => projectStageDictionary[x]).ToList();
 
-            var projectTypeAttributes = gisFeaturesIdListWithProjectIdentifier
-                .Where(x => projectTypeDictionary.ContainsKey(x))
-                .SelectMany(x => projectTypeDictionary[x]).ToList();
-
             var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
             var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-            var projectTypes = projectTypeAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
             var projectName = projectNames.Single();
             var projectStageString = projectStages.SingleOrDefault();
 
-            var projectTypeString = projectTypes.FirstOrDefault();
-            bool shouldBeIntegratedForestHealthProjectType = projectTypes.Count > 1;
-
 
             var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
                 x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
                 x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
-
-            var projectTypeCrossWalks = gisCrossWalkDefaultList.Where(x =>
-                x.FieldDefinitionID == FieldDefinition.ProjectType.FieldDefinitionID &&
-                x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
-
 
             ProjectStage projectStage = ProjectStage.Completed;
             if (!string.IsNullOrEmpty(projectStageString))
@@ -297,27 +276,9 @@ namespace ProjectFirma.Web.Controllers
                 }
             }
 
-            ProjectType projectType = null;
-
-            if (shouldBeIntegratedForestHealthProjectType)
-            {
-                var projectTypeMappedString = "Integrated forest health project";
-                projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
-                    x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
-            }
-
-            else if (!string.IsNullOrEmpty(projectTypeString))
-            {
-                var projectTypeMappedString = projectTypeCrossWalks.SingleOrDefault(x =>
-                        x.GisCrossWalkSourceValue.Equals(projectTypeString, StringComparison.InvariantCultureIgnoreCase))
-                    ?.GisCrossWalkMappedValue;
-                if (!string.IsNullOrEmpty(projectTypeMappedString))
-                {
-                    projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
-                        x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
-                }
-            }
-
+            var projectTypeMappedString = "Integrated forest health project";
+            var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
+                x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
 
             var project = new Project(otherProjectType.ProjectTypeID
                 , projectStage.ProjectStageID
@@ -614,7 +575,7 @@ namespace ProjectFirma.Web.Controllers
             }
         }
 
-        private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID, int projectIdentifierMetadataAttributeID, int? treatedAcresMetadataAttributeID, int? treatmentTypeMetadataAttributeID)
+        private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID, int projectIdentifierMetadataAttributeID, int? treatedAcresMetadataAttributeID, int? treatmentTypeMetadataAttributeID, int? treatmentDetailedActivityTypeMetadataAttributeID )
         {
             int treatedAcresID;
             if (!treatedAcresMetadataAttributeID.HasValue)
@@ -637,9 +598,18 @@ namespace ProjectFirma.Web.Controllers
                 treatmentTypeID = treatmentTypeMetadataAttributeID.Value;
             }
 
+            int treatmentDetailedActivityTypeID;
+            if (!treatmentDetailedActivityTypeMetadataAttributeID.HasValue)
+            {
+                treatmentDetailedActivityTypeID = -1;
+            }
+            else
+            {
+                treatmentDetailedActivityTypeID = treatmentDetailedActivityTypeMetadataAttributeID.Value;
+            }
 
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
-            var sqlQueryOne = $"exec dbo.procImportTreatmentsFromGisUploadAttempt @piGisUploadAttemptID = {gisUploadAttemptID}, @projectIdentifierGisMetadataAttributeID = {projectIdentifierMetadataAttributeID}, @treatedAcresMetadataAttributeID = {treatedAcresID}, @treatmentTypeMetadataAttributeID = {treatmentTypeID}";
+            var sqlQueryOne = $"exec dbo.procImportTreatmentsFromGisUploadAttempt @piGisUploadAttemptID = {gisUploadAttemptID}, @projectIdentifierGisMetadataAttributeID = {projectIdentifierMetadataAttributeID}, @treatedAcresMetadataAttributeID = {treatedAcresID}, @treatmentTypeMetadataAttributeID = {treatmentTypeID}, @treatmentDetailedActivityTypeMetadataAttributeID = {treatmentDetailedActivityTypeID}";
             using (var command = new SqlCommand(sqlQueryOne))
             {
                 var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);

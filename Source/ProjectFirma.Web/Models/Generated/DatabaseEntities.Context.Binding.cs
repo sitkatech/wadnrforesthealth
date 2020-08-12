@@ -881,6 +881,11 @@ namespace ProjectFirma.Web.Models
                 case "TreatmentArea":
                     return TreatmentAreas.GetTreatmentArea(primaryKey);
 
+                case "TreatmentDetailedActivityType":
+                    var treatmentDetailedActivityType = TreatmentDetailedActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(treatmentDetailedActivityType, "TreatmentDetailedActivityType", primaryKey);
+                    return treatmentDetailedActivityType;
+
                 case "Treatment":
                     return Treatments.GetTreatment(primaryKey);
 
