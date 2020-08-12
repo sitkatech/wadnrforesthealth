@@ -16,6 +16,8 @@ CREATE TABLE [dbo].[Treatment](
 	[TreatmentTypeImportedText] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[CreateGisUploadAttemptID] [int] NULL,
 	[UpdateGisUploadAttemptID] [int] NULL,
+	[TreatmentDetailedActivityTypeID] [int] NOT NULL,
+	[TreatmentDetailedActivityTypeImportedText] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Treatment_TreatmentID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentID] ASC
@@ -47,6 +49,11 @@ ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_Treatmen
 REFERENCES [dbo].[TreatmentArea] ([TreatmentAreaID])
 GO
 ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_TreatmentArea_TreatmentAreaID]
+GO
+ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID] FOREIGN KEY([TreatmentDetailedActivityTypeID])
+REFERENCES [dbo].[TreatmentDetailedActivityType] ([TreatmentDetailedActivityTypeID])
+GO
+ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID]
 GO
 ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentType_TreatmentTypeID] FOREIGN KEY([TreatmentTypeID])
 REFERENCES [dbo].[TreatmentType] ([TreatmentTypeID])

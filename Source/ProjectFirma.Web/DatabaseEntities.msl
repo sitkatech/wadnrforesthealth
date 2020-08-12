@@ -1763,6 +1763,8 @@
           <ScalarProperty Name="TreatmentTypeImportedText" ColumnName="TreatmentTypeImportedText" />
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
           <ScalarProperty Name="UpdateGisUploadAttemptID" ColumnName="UpdateGisUploadAttemptID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

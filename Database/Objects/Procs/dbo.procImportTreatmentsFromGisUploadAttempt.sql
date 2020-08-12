@@ -6,7 +6,8 @@ create procedure dbo.procImportTreatmentsFromGisUploadAttempt
     @piGisUploadAttemptID int,
     @projectIdentifierGisMetadataAttributeID int,
     @treatedAcresMetadataAttributeID int,
-    @treatmentTypeMetadataAttributeID int
+    @treatmentTypeMetadataAttributeID int,
+    @treatmentDetailedActivityTypeMetadataAttributeID int
 )
 as
 
@@ -22,8 +23,11 @@ CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT N
 	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
 	[TreatmentNotes] [varchar](2000) NULL,
 	[TreatmentTypeID] [int] NOT NULL,
+    [TreatmentDetailedActivityTypeID] [int] not null,
 	[TreatmentAreaID] [int] NULL,
-    TreatmentTypeImportedText varchar(200))
+    TreatmentTypeImportedText varchar(200),
+    [TreatmentDetailedActivityTypeImportedText] varchar(200))
+
 
 
 INSERT INTO #tempTreatments
@@ -35,7 +39,9 @@ INSERT INTO #tempTreatments
            ,[TreatmentFootprintAcres]
            ,[TreatmentNotes]
            ,[TreatmentTypeID]
-           ,[TreatmentTypeImportedText])
+           ,[TreatmentDetailedActivityTypeID]
+           ,[TreatmentTypeImportedText]
+           ,[TreatmentDetailedActivityTypeImportedText])
 
 
 
@@ -45,9 +51,11 @@ select p.ProjectID
 , null
 , null
 , isnull(TRY_PARSE(x.OtherTreatmentAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
-,null
+, null
+, 4
 , 13 -- other
 , x.TreatmentTypeImportedText
+, x.TreatmentDetailedActivityTypeImportedText
 
  from dbo.Project p
 join (
@@ -55,10 +63,12 @@ join (
         , gfma.GisFeatureMetadataAttributeValue
         , gfmaOther.GisFeatureMetadataAttributeValue as OtherTreatmentAcres 
         , gfmaTreatmentType.GisFeatureMetadataAttributeValue as TreatmentTypeImportedText
+        , gfmaTreatmentDetailedActivityType.GisFeatureMetadataAttributeValue as TreatmentDetailedActivityTypeImportedText
         from dbo.GisFeature gf
         join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
         left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @treatedAcresMetadataAttributeID
         left join dbo.GisFeatureMetadataAttribute gfmaTreatmentType on gfmaTreatmentType.GisFeatureID = gf.GisFeatureID and gfmaTreatmentType.GisMetadataAttributeID = @treatmentTypeMetadataAttributeID
+        left join dbo.GisFeatureMetadataAttribute gfmaTreatmentDetailedActivityType on gfmaTreatmentDetailedActivityType.GisFeatureID = gf.GisFeatureID and gfmaTreatmentDetailedActivityType.GisMetadataAttributeID = @treatmentDetailedActivityTypeMetadataAttributeID
         where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID 
         and gf.GisUploadAttemptID = @piGisUploadAttemptID)
    x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
@@ -83,23 +93,27 @@ insert into dbo.Treatment ([ProjectID]
            ,[TreatmentNotes]
            , TreatmentAreaID
            , TreatmentTypeID
+           , TreatmentDetailedActivityTypeID
            , TreatmentTypeImportedText
+           , TreatmentDetailedActivityTypeImportedText
            , CreateGisUploadAttemptID
            , TreatmentTreatedAcres)
 
 select 
 
-            [ProjectID]
-           ,[GrantAllocationAwardLandownerCostShareLineItemID]
-           ,[TreatmentStartDate]
-           ,[TreatmentEndDate]
-           ,[TreatmentFootprintAcres]
-           ,[TreatmentNotes]
+             x.ProjectID
+           , x.GrantAllocationAwardLandownerCostShareLineItemID
+           , x.TreatmentStartDate
+           , x.TreatmentEndDate
+           , x.TreatmentFootprintAcres
+           , x.TreatmentNotes
            , ta.TreatmentAreaID
-           , 13 -- other
-           , TreatmentTypeImportedText
+           , x.TreatmentTypeID
+           , x.TreatmentDetailedActivityTypeID
+           , x.TreatmentTypeImportedText
+           , x.TreatmentDetailedActivityTypeImportedText
            , @piGisUploadAttemptID
-           , [TreatmentFootprintAcres]
+           , x.TreatmentFootprintAcres
 
 from #tempTreatments x
 join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
@@ -120,6 +134,16 @@ join dbo.GisCrossWalkDefault gcwd on gcwd.GisUploadSourceOrganizationID = guso.G
 join dbo.TreatmentType tt on tt.TreatmentTypeDisplayName = gcwd.GisCrossWalkMappedValue
 where gcwd.FieldDefinitionID = 468
 
+
+
+update dbo.Treatment
+set TreatmentDetailedActivityTypeID = tt.TreatmentDetailedActivityTypeID
+from dbo.Treatment t
+join dbo.GisUploadAttempt gua on t.CreateGisUploadAttemptID = gua.GisUploadAttemptID
+join dbo.GisUploadSourceOrganization guso on guso.GisUploadSourceOrganizationID = gua.GisUploadSourceOrganizationID
+join dbo.GisCrossWalkDefault gcwd on gcwd.GisUploadSourceOrganizationID = guso.GisUploadSourceOrganizationID and gcwd.GisCrossWalkSourceValue = t.TreatmentDetailedActivityTypeImportedText
+join dbo.TreatmentDetailedActivityType tt on tt.TreatmentDetailedActivityTypeDisplayName = gcwd.GisCrossWalkMappedValue
+where gcwd.FieldDefinitionID = 469
 
 /*
 
