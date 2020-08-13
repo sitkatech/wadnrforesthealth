@@ -89,8 +89,7 @@ namespace ProjectFirma.Web.Controllers
                 new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()}",
                     Project.MappedPointsToGeoJsonFeatureCollection(projectsToShow, true, true), "red", 1,
                     LayerInitialVisibility.Show);
-            var projectLocationsMapInitJson = new ProjectLocationsMapInitJson(projectLocationsLayerGeoJson,
-                initialCustomization, "ProjectLocationsMap");
+            var projectLocationsMapInitJson = new ProjectLocationsMapInitJson(projectLocationsLayerGeoJson, initialCustomization, "ProjectLocationsMap");
 
             projectLocationsMapInitJson.Layers.AddRange(HttpRequestStorage.DatabaseEntities.Organizations.GetBoundaryLayerGeoJson());
 

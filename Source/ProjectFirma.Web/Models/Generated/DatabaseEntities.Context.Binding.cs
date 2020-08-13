@@ -172,8 +172,11 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentArea> TreatmentAreas { get; set; }
+        public virtual DbSet<TreatmentDetailedActivityType> TreatmentDetailedActivityTypes { get; set; }
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
+        public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
@@ -882,9 +885,7 @@ namespace ProjectFirma.Web.Models
                     return TreatmentAreas.GetTreatmentArea(primaryKey);
 
                 case "TreatmentDetailedActivityType":
-                    var treatmentDetailedActivityType = TreatmentDetailedActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(treatmentDetailedActivityType, "TreatmentDetailedActivityType", primaryKey);
-                    return treatmentDetailedActivityType;
+                    return TreatmentDetailedActivityTypes.GetTreatmentDetailedActivityType(primaryKey);
 
                 case "Treatment":
                     return Treatments.GetTreatment(primaryKey);
@@ -896,6 +897,12 @@ namespace ProjectFirma.Web.Models
 
                 case "Vendor":
                     return Vendors.GetVendor(primaryKey);
+
+                case "WashingtonCounty":
+                    return WashingtonCounties.GetWashingtonCounty(primaryKey);
+
+                case "WashingtonLegislativeDistrict":
+                    return WashingtonLegislativeDistricts.GetWashingtonLegislativeDistrict(primaryKey);
                 default:
                     throw new NotImplementedException(string.Format("No loader for type \"{0}\"", type.FullName));
             }

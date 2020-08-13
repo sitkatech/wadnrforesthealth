@@ -578,6 +578,7 @@
     <Compile Include="Models\Generated\TreatmentArea.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\TreatmentAreaPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentDetailedActivityType.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentDetailedActivityType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\TreatmentDetailedActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
@@ -587,6 +588,12 @@
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPriorityLandscape.Binding.cs" />
     <Compile Include="Models\Generated\vSocrataDataMartRawJsonImportIndex.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonCounty.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonCounty.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\WashingtonCountyPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
     <Compile Include="Common\CertificateHelpersTest.cs" />
     <Compile Include="Controllers\GisFeatureController.cs" />
     <Compile Include="Controllers\GisProjectBulkUpdateController.cs" />

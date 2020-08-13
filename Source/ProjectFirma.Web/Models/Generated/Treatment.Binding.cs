@@ -77,6 +77,8 @@ namespace ProjectFirma.Web.Models
             this.TreatmentFootprintAcres = treatmentFootprintAcres;
             this.TreatmentTypeID = treatmentType.TreatmentTypeID;
             this.TreatmentDetailedActivityTypeID = treatmentDetailedActivityType.TreatmentDetailedActivityTypeID;
+            this.TreatmentDetailedActivityType = treatmentDetailedActivityType;
+            treatmentDetailedActivityType.Treatments.Add(this);
         }
 
         /// <summary>
@@ -154,7 +156,7 @@ namespace ProjectFirma.Web.Models
         public virtual TreatmentArea TreatmentArea { get; set; }
         public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
         public virtual GisUploadAttempt UpdateGisUploadAttempt { get; set; }
-        public TreatmentDetailedActivityType TreatmentDetailedActivityType { get { return TreatmentDetailedActivityType.AllLookupDictionary[TreatmentDetailedActivityTypeID]; } }
+        public virtual TreatmentDetailedActivityType TreatmentDetailedActivityType { get; set; }
 
         public static class FieldLengths
         {

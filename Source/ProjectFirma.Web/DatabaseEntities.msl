@@ -1777,6 +1777,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentDetailedActivityType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentDetailedActivityType">
+        <MappingFragment StoreEntitySet="TreatmentDetailedActivityType">
+          <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeName" ColumnName="TreatmentDetailedActivityTypeName" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeDisplayName" ColumnName="TreatmentDetailedActivityTypeDisplayName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Vendor">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Vendor">
         <MappingFragment StoreEntitySet="Vendor">
@@ -1800,6 +1809,26 @@
           <ScalarProperty Name="VendorStatus" ColumnName="VendorStatus" />
           <ScalarProperty Name="TaxpayerIdNumber" ColumnName="TaxpayerIdNumber" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WashingtonCounty">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonCounty">
+        <MappingFragment StoreEntitySet="WashingtonCounty">
+          <ScalarProperty Name="WashingtonCountyID" ColumnName="WashingtonCountyID" />
+          <ScalarProperty Name="WashingtonCountyLocation" ColumnName="WashingtonCountyLocation" />
+          <ScalarProperty Name="WashingtonCountyName" ColumnName="WashingtonCountyName" />
+          <ScalarProperty Name="WashingtonCountyFullName" ColumnName="WashingtonCountyFullName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WashingtonLegislativeDistrict">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonLegislativeDistrict">
+        <MappingFragment StoreEntitySet="WashingtonLegislativeDistrict">
+          <ScalarProperty Name="WashingtonLegislativeDistrictID" ColumnName="WashingtonLegislativeDistrictID" />
+          <ScalarProperty Name="WashingtonLegislativeDistrictLocation" ColumnName="WashingtonLegislativeDistrictLocation" />
+          <ScalarProperty Name="WashingtonLegislativeDistrictNumber" ColumnName="WashingtonLegislativeDistrictNumber" />
+          <ScalarProperty Name="WashingtonLegislativeDistrictName" ColumnName="WashingtonLegislativeDistrictName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -145,7 +145,10 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Treatment" />
     <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.TreatmentArea" />
+    <EntitySet Name="TreatmentDetailedActivityType" EntityType="ProjectFirma.Web.Models.TreatmentDetailedActivityType" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
+    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
+    <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
@@ -1074,6 +1077,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID">
       <End Role="TreatmentArea" EntitySet="TreatmentArea" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" Association="ProjectFirma.Web.Models.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID">
+      <End Role="TreatmentDetailedActivityType" EntitySet="TreatmentDetailedActivityType" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
@@ -3175,6 +3182,7 @@
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
     <NavigationProperty Name="TreatmentArea" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="Treatments" ToRole="TreatmentArea" />
+    <NavigationProperty Name="TreatmentDetailedActivityType" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" FromRole="Treatments" ToRole="TreatmentDetailedActivityType" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -3184,6 +3192,15 @@
     <Property Name="TreatmentAreaFeature" Type="Geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="Int32" />
     <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="TreatmentArea" ToRole="Treatments" />
+  </EntityType>
+  <EntityType Name="TreatmentDetailedActivityType">
+    <Key>
+      <PropertyRef Name="TreatmentDetailedActivityTypeID" />
+    </Key>
+    <Property Name="TreatmentDetailedActivityTypeID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentDetailedActivityTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentDetailedActivityTypeDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" FromRole="TreatmentDetailedActivityType" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -3211,6 +3228,24 @@
     <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
+  </EntityType>
+  <EntityType Name="WashingtonCounty">
+    <Key>
+      <PropertyRef Name="WashingtonCountyID" />
+    </Key>
+    <Property Name="WashingtonCountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WashingtonCountyLocation" Type="Geometry" Nullable="false" />
+    <Property Name="WashingtonCountyName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="WashingtonCountyFullName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WashingtonLegislativeDistrict">
+    <Key>
+      <PropertyRef Name="WashingtonLegislativeDistrictID" />
+    </Key>
+    <Property Name="WashingtonLegislativeDistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WashingtonLegislativeDistrictLocation" Type="Geometry" Nullable="false" />
+    <Property Name="WashingtonLegislativeDistrictNumber" Type="Int32" Nullable="false" />
+    <Property Name="WashingtonLegislativeDistrictName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="vGeoServerPriorityLandscape">
     <Key>
@@ -6025,6 +6060,18 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="TreatmentAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID">
+    <End Role="TreatmentDetailedActivityType" Type="ProjectFirma.Web.Models.TreatmentDetailedActivityType" Multiplicity="1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentDetailedActivityType">
+        <PropertyRef Name="TreatmentDetailedActivityTypeID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="TreatmentDetailedActivityTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
