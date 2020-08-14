@@ -558,6 +558,22 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 }
             );
             break;
+        case "WashingtonCountyLocation":
+            linkText = firstFeature.properties.WashingtonCountyFullName;
+            labelText = "Washington County";
+            deferred.resolve({
+                label: labelText,
+                link: linkText
+            });
+            break;
+        case "WashingtonLegislativeDistrictLocation":
+            linkText = firstFeature.properties.WashingtonLegislativeDistrictName;
+            labelText = "Washington Legislative District";
+            deferred.resolve({
+                label: labelText,
+                link: linkText
+            });
+            break;
         default:
                 console.log("layer not configured for feature info: " + firstFeature.geometry_name);
             deferred.resolve(null);

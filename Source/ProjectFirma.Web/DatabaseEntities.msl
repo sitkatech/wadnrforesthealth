@@ -1777,15 +1777,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TreatmentDetailedActivityType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentDetailedActivityType">
-        <MappingFragment StoreEntitySet="TreatmentDetailedActivityType">
-          <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
-          <ScalarProperty Name="TreatmentDetailedActivityTypeName" ColumnName="TreatmentDetailedActivityTypeName" />
-          <ScalarProperty Name="TreatmentDetailedActivityTypeDisplayName" ColumnName="TreatmentDetailedActivityTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Vendor">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Vendor">
         <MappingFragment StoreEntitySet="Vendor">

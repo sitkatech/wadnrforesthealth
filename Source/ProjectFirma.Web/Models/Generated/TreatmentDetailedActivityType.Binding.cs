@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[TreatmentDetailedActivityType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using CodeFirstStoreFunctions;
@@ -16,119 +17,244 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[TreatmentDetailedActivityType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[TreatmentDetailedActivityType]")]
-    public partial class TreatmentDetailedActivityType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class TreatmentDetailedActivityType : IHavePrimaryKey
     {
+        public static readonly TreatmentDetailedActivityTypeChipping Chipping = TreatmentDetailedActivityTypeChipping.Instance;
+        public static readonly TreatmentDetailedActivityTypePruning Pruning = TreatmentDetailedActivityTypePruning.Instance;
+        public static readonly TreatmentDetailedActivityTypeThinning Thinning = TreatmentDetailedActivityTypeThinning.Instance;
+        public static readonly TreatmentDetailedActivityTypeMastication Mastication = TreatmentDetailedActivityTypeMastication.Instance;
+        public static readonly TreatmentDetailedActivityTypeGrazing Grazing = TreatmentDetailedActivityTypeGrazing.Instance;
+        public static readonly TreatmentDetailedActivityTypeLopAndScatter LopAndScatter = TreatmentDetailedActivityTypeLopAndScatter.Instance;
+        public static readonly TreatmentDetailedActivityTypeBiomassRemoval BiomassRemoval = TreatmentDetailedActivityTypeBiomassRemoval.Instance;
+        public static readonly TreatmentDetailedActivityTypeHandPile HandPile = TreatmentDetailedActivityTypeHandPile.Instance;
+        public static readonly TreatmentDetailedActivityTypeBroadcastBurn BroadcastBurn = TreatmentDetailedActivityTypeBroadcastBurn.Instance;
+        public static readonly TreatmentDetailedActivityTypeHandPileBurn HandPileBurn = TreatmentDetailedActivityTypeHandPileBurn.Instance;
+        public static readonly TreatmentDetailedActivityTypeMachinePileBurn MachinePileBurn = TreatmentDetailedActivityTypeMachinePileBurn.Instance;
+        public static readonly TreatmentDetailedActivityTypeSlash Slash = TreatmentDetailedActivityTypeSlash.Instance;
+        public static readonly TreatmentDetailedActivityTypeOther Other = TreatmentDetailedActivityTypeOther.Instance;
+        public static readonly TreatmentDetailedActivityTypeJackpotBurn JackpotBurn = TreatmentDetailedActivityTypeJackpotBurn.Instance;
+        public static readonly TreatmentDetailedActivityTypeMachinePile MachinePile = TreatmentDetailedActivityTypeMachinePile.Instance;
+
+        public static readonly List<TreatmentDetailedActivityType> All;
+        public static readonly ReadOnlyDictionary<int, TreatmentDetailedActivityType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected TreatmentDetailedActivityType()
+        static TreatmentDetailedActivityType()
         {
-            this.Treatments = new HashSet<Treatment>();
+            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile };
+            AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentDetailedActivityType>(All.ToDictionary(x => x.TreatmentDetailedActivityTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public TreatmentDetailedActivityType(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : this()
+        protected TreatmentDetailedActivityType(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName)
         {
-            this.TreatmentDetailedActivityTypeID = treatmentDetailedActivityTypeID;
-            this.TreatmentDetailedActivityTypeName = treatmentDetailedActivityTypeName;
-            this.TreatmentDetailedActivityTypeDisplayName = treatmentDetailedActivityTypeDisplayName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public TreatmentDetailedActivityType(string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.TreatmentDetailedActivityTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.TreatmentDetailedActivityTypeName = treatmentDetailedActivityTypeName;
-            this.TreatmentDetailedActivityTypeDisplayName = treatmentDetailedActivityTypeDisplayName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static TreatmentDetailedActivityType CreateNewBlank()
-        {
-            return new TreatmentDetailedActivityType(default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return Treatments.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(Treatments.Any())
-            {
-                dependentObjects.Add(typeof(Treatment).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TreatmentDetailedActivityType).Name, typeof(Treatment).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.TreatmentDetailedActivityTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Treatments.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            TreatmentDetailedActivityTypeID = treatmentDetailedActivityTypeID;
+            TreatmentDetailedActivityTypeName = treatmentDetailedActivityTypeName;
+            TreatmentDetailedActivityTypeDisplayName = treatmentDetailedActivityTypeDisplayName;
         }
 
         [Key]
-        public int TreatmentDetailedActivityTypeID { get; set; }
-        public string TreatmentDetailedActivityTypeName { get; set; }
-        public string TreatmentDetailedActivityTypeDisplayName { get; set; }
+        public int TreatmentDetailedActivityTypeID { get; private set; }
+        public string TreatmentDetailedActivityTypeName { get; private set; }
+        public string TreatmentDetailedActivityTypeDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return TreatmentDetailedActivityTypeID; } set { TreatmentDetailedActivityTypeID = value; } }
+        public int PrimaryKey { get { return TreatmentDetailedActivityTypeID; } }
 
-        public virtual ICollection<Treatment> Treatments { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(TreatmentDetailedActivityType other)
         {
-            public const int TreatmentDetailedActivityTypeName = 50;
-            public const int TreatmentDetailedActivityTypeDisplayName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.TreatmentDetailedActivityTypeID == TreatmentDetailedActivityTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TreatmentDetailedActivityType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return TreatmentDetailedActivityTypeID;
+        }
+
+        public static bool operator ==(TreatmentDetailedActivityType left, TreatmentDetailedActivityType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TreatmentDetailedActivityType left, TreatmentDetailedActivityType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public TreatmentDetailedActivityTypeEnum ToEnum { get { return (TreatmentDetailedActivityTypeEnum)GetHashCode(); } }
+
+        public static TreatmentDetailedActivityType ToType(int enumValue)
+        {
+            return ToType((TreatmentDetailedActivityTypeEnum)enumValue);
+        }
+
+        public static TreatmentDetailedActivityType ToType(TreatmentDetailedActivityTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case TreatmentDetailedActivityTypeEnum.BiomassRemoval:
+                    return BiomassRemoval;
+                case TreatmentDetailedActivityTypeEnum.BroadcastBurn:
+                    return BroadcastBurn;
+                case TreatmentDetailedActivityTypeEnum.Chipping:
+                    return Chipping;
+                case TreatmentDetailedActivityTypeEnum.Grazing:
+                    return Grazing;
+                case TreatmentDetailedActivityTypeEnum.HandPile:
+                    return HandPile;
+                case TreatmentDetailedActivityTypeEnum.HandPileBurn:
+                    return HandPileBurn;
+                case TreatmentDetailedActivityTypeEnum.JackpotBurn:
+                    return JackpotBurn;
+                case TreatmentDetailedActivityTypeEnum.LopAndScatter:
+                    return LopAndScatter;
+                case TreatmentDetailedActivityTypeEnum.MachinePile:
+                    return MachinePile;
+                case TreatmentDetailedActivityTypeEnum.MachinePileBurn:
+                    return MachinePileBurn;
+                case TreatmentDetailedActivityTypeEnum.Mastication:
+                    return Mastication;
+                case TreatmentDetailedActivityTypeEnum.Other:
+                    return Other;
+                case TreatmentDetailedActivityTypeEnum.Pruning:
+                    return Pruning;
+                case TreatmentDetailedActivityTypeEnum.Slash:
+                    return Slash;
+                case TreatmentDetailedActivityTypeEnum.Thinning:
+                    return Thinning;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum TreatmentDetailedActivityTypeEnum
+    {
+        Chipping = 1,
+        Pruning = 2,
+        Thinning = 3,
+        Mastication = 4,
+        Grazing = 5,
+        LopAndScatter = 6,
+        BiomassRemoval = 7,
+        HandPile = 8,
+        BroadcastBurn = 9,
+        HandPileBurn = 10,
+        MachinePileBurn = 11,
+        Slash = 12,
+        Other = 13,
+        JackpotBurn = 14,
+        MachinePile = 15
+    }
+
+    public partial class TreatmentDetailedActivityTypeChipping : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeChipping(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeChipping Instance = new TreatmentDetailedActivityTypeChipping(1, @"Chipping", @"Chipping");
+    }
+
+    public partial class TreatmentDetailedActivityTypePruning : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypePruning(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypePruning Instance = new TreatmentDetailedActivityTypePruning(2, @"Pruning", @"Pruning");
+    }
+
+    public partial class TreatmentDetailedActivityTypeThinning : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeThinning(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeThinning Instance = new TreatmentDetailedActivityTypeThinning(3, @"Thinning", @"Thinning");
+    }
+
+    public partial class TreatmentDetailedActivityTypeMastication : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeMastication(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeMastication Instance = new TreatmentDetailedActivityTypeMastication(4, @"Mastication", @"Mastication");
+    }
+
+    public partial class TreatmentDetailedActivityTypeGrazing : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeGrazing(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeGrazing Instance = new TreatmentDetailedActivityTypeGrazing(5, @"Grazing", @"Grazing");
+    }
+
+    public partial class TreatmentDetailedActivityTypeLopAndScatter : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeLopAndScatter(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeLopAndScatter Instance = new TreatmentDetailedActivityTypeLopAndScatter(6, @"LopAndScatter", @"Lop and Scatter");
+    }
+
+    public partial class TreatmentDetailedActivityTypeBiomassRemoval : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeBiomassRemoval(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeBiomassRemoval Instance = new TreatmentDetailedActivityTypeBiomassRemoval(7, @"BiomassRemoval", @"Biomass Removal");
+    }
+
+    public partial class TreatmentDetailedActivityTypeHandPile : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeHandPile(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeHandPile Instance = new TreatmentDetailedActivityTypeHandPile(8, @"HandPile", @"Hand Pile");
+    }
+
+    public partial class TreatmentDetailedActivityTypeBroadcastBurn : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeBroadcastBurn(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeBroadcastBurn Instance = new TreatmentDetailedActivityTypeBroadcastBurn(9, @"BroadcastBurn", @"Broadcast Burn");
+    }
+
+    public partial class TreatmentDetailedActivityTypeHandPileBurn : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeHandPileBurn(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeHandPileBurn Instance = new TreatmentDetailedActivityTypeHandPileBurn(10, @"HandPileBurn", @"Hand Pile Burn");
+    }
+
+    public partial class TreatmentDetailedActivityTypeMachinePileBurn : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeMachinePileBurn(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeMachinePileBurn Instance = new TreatmentDetailedActivityTypeMachinePileBurn(11, @"MachinePileBurn", @"Machine Pile Burn");
+    }
+
+    public partial class TreatmentDetailedActivityTypeSlash : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeSlash(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeSlash Instance = new TreatmentDetailedActivityTypeSlash(12, @"Slash", @"Slash");
+    }
+
+    public partial class TreatmentDetailedActivityTypeOther : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeOther(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeOther Instance = new TreatmentDetailedActivityTypeOther(13, @"Other", @"Other");
+    }
+
+    public partial class TreatmentDetailedActivityTypeJackpotBurn : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeJackpotBurn(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeJackpotBurn Instance = new TreatmentDetailedActivityTypeJackpotBurn(14, @"JackpotBurn", @"Jackpot Burn");
+    }
+
+    public partial class TreatmentDetailedActivityTypeMachinePile : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeMachinePile(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeMachinePile Instance = new TreatmentDetailedActivityTypeMachinePile(15, @"MachinePile", @"Machine Pile");
     }
 }

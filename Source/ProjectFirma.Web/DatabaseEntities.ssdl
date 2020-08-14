@@ -145,7 +145,6 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Store.Treatment" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.Store.TreatmentArea" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TreatmentDetailedActivityType" EntityType="ProjectFirma.Web.Models.Store.TreatmentDetailedActivityType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
@@ -1098,10 +1097,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentArea_TreatmentAreaID">
       <End Role="TreatmentArea" EntitySet="TreatmentArea" />
-      <End Role="Treatments" EntitySet="Treatment" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID">
-      <End Role="TreatmentDetailedActivityType" EntitySet="TreatmentDetailedActivityType" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
   </EntityContainer>
@@ -2752,14 +2747,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="int" />
   </EntityType>
-  <EntityType Name="TreatmentDetailedActivityType">
-    <Key>
-      <PropertyRef Name="TreatmentDetailedActivityTypeID" />
-    </Key>
-    <Property Name="TreatmentDetailedActivityTypeID" Type="int" Nullable="false" />
-    <Property Name="TreatmentDetailedActivityTypeName" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="TreatmentDetailedActivityTypeDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
-  </EntityType>
   <EntityType Name="Vendor">
     <Key>
       <PropertyRef Name="VendorID" />
@@ -2829,6 +2816,12 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatmentArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonLegislativeDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -5634,18 +5627,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="TreatmentAreaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID">
-    <End Role="TreatmentDetailedActivityType" Type="ProjectFirma.Web.Models.Store.TreatmentDetailedActivityType" Multiplicity="1" />
-    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TreatmentDetailedActivityType">
-        <PropertyRef Name="TreatmentDetailedActivityTypeID" />
-      </Principal>
-      <Dependent Role="Treatments">
-        <PropertyRef Name="TreatmentDetailedActivityTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

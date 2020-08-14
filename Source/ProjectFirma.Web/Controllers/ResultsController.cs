@@ -95,7 +95,8 @@ namespace ProjectFirma.Web.Controllers
 
             var interactionEventLayer = HttpRequestStorage.DatabaseEntities.InteractionEvents.GetInteractionEventsLayerGeoJson();
             projectLocationsMapInitJson.Layers.Add(interactionEventLayer);
-
+            projectLocationsMapInitJson.Layers.Add(MapInitJson.GetWashingtonCountyLayer());
+            projectLocationsMapInitJson.Layers.Add(MapInitJson.GetWashingtonLegislativeDistrictLayer());
             
 
             var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID, 

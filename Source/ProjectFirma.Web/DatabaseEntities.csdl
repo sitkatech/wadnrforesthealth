@@ -145,7 +145,6 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Treatment" />
     <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.TreatmentArea" />
-    <EntitySet Name="TreatmentDetailedActivityType" EntityType="ProjectFirma.Web.Models.TreatmentDetailedActivityType" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
@@ -1077,10 +1076,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID">
       <End Role="TreatmentArea" EntitySet="TreatmentArea" />
-      <End Role="Treatments" EntitySet="Treatment" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" Association="ProjectFirma.Web.Models.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID">
-      <End Role="TreatmentDetailedActivityType" EntitySet="TreatmentDetailedActivityType" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
@@ -3182,7 +3177,6 @@
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
     <NavigationProperty Name="TreatmentArea" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="Treatments" ToRole="TreatmentArea" />
-    <NavigationProperty Name="TreatmentDetailedActivityType" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" FromRole="Treatments" ToRole="TreatmentDetailedActivityType" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -3192,15 +3186,6 @@
     <Property Name="TreatmentAreaFeature" Type="Geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="Int32" />
     <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="TreatmentArea" ToRole="Treatments" />
-  </EntityType>
-  <EntityType Name="TreatmentDetailedActivityType">
-    <Key>
-      <PropertyRef Name="TreatmentDetailedActivityTypeID" />
-    </Key>
-    <Property Name="TreatmentDetailedActivityTypeID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentDetailedActivityTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="TreatmentDetailedActivityTypeDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID" FromRole="TreatmentDetailedActivityType" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -6060,18 +6045,6 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="TreatmentAreaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID">
-    <End Role="TreatmentDetailedActivityType" Type="ProjectFirma.Web.Models.TreatmentDetailedActivityType" Multiplicity="1" />
-    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TreatmentDetailedActivityType">
-        <PropertyRef Name="TreatmentDetailedActivityTypeID" />
-      </Principal>
-      <Dependent Role="Treatments">
-        <PropertyRef Name="TreatmentDetailedActivityTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

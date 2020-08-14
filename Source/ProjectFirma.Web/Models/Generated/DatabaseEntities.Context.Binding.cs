@@ -172,7 +172,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentArea> TreatmentAreas { get; set; }
-        public virtual DbSet<TreatmentDetailedActivityType> TreatmentDetailedActivityTypes { get; set; }
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
@@ -885,7 +884,9 @@ namespace ProjectFirma.Web.Models
                     return TreatmentAreas.GetTreatmentArea(primaryKey);
 
                 case "TreatmentDetailedActivityType":
-                    return TreatmentDetailedActivityTypes.GetTreatmentDetailedActivityType(primaryKey);
+                    var treatmentDetailedActivityType = TreatmentDetailedActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(treatmentDetailedActivityType, "TreatmentDetailedActivityType", primaryKey);
+                    return treatmentDetailedActivityType;
 
                 case "Treatment":
                     return Treatments.GetTreatment(primaryKey);
