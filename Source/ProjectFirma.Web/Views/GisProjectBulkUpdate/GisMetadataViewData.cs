@@ -38,13 +38,20 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public readonly string ProjectIndexUrl;
 
         public GisRecordGridSpec GisRecordGridSpec { get; set; }
-        public IEnumerable<SelectListItem> GisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> ProjectIDGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> ProjectNameGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> TreatmentTypeGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> CompletionDateGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> StartDateGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> ProjectStageGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> TreatedAcresGisMetadataAttributes { get; }
 
         public GisMetadataViewData(Person currentPerson,
             GisUploadAttempt gisUploadAttempt
             , GisImportSectionStatus gisImportSectionStatus
             , GisRecordGridSpec gisRecordGridSpec
-            , IEnumerable<Models.GisMetadataAttribute> gisMetadataAttributes
+            , List<Models.GisMetadataAttribute> gisMetadataAttributes
             , string gisMetadataPostUrl
             , string projectIndexUrl)
             : base(currentPerson, gisUploadAttempt, GisUploadAttemptWorkflowSection.ValidateMetadata.GisUploadAttemptWorkflowSectionDisplayName, gisImportSectionStatus)
@@ -52,7 +59,14 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             GisRecordGridSpec = gisRecordGridSpec;
             GridDataUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(tc => tc.GisRecordGridJsonData(gisUploadAttempt.GisUploadAttemptID));
             GridName = "GisRecordGrid";
-            GisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            ProjectIDGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            ProjectNameGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            TreatmentTypeGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            CompletionDateGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            StartDateGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            ProjectStageGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            TreatmentDetailedActivityTypeGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            TreatedAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             GisMetadataPostUrl = gisMetadataPostUrl;
             ProjectIndexUrl = projectIndexUrl;
         }

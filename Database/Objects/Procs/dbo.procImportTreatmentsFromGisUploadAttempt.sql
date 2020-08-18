@@ -7,7 +7,9 @@ create procedure dbo.procImportTreatmentsFromGisUploadAttempt
     @projectIdentifierGisMetadataAttributeID int,
     @treatedAcresMetadataAttributeID int,
     @treatmentTypeMetadataAttributeID int,
-    @treatmentDetailedActivityTypeMetadataAttributeID int
+    @treatmentDetailedActivityTypeMetadataAttributeID int,
+    @treatmentTypeID int,
+    @treatmentDetailedActivityTypeID int
 )
 as
 
@@ -52,8 +54,8 @@ select p.ProjectID
 , null
 , isnull(TRY_PARSE(x.OtherTreatmentAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
 , null
-, 4
-, 13 -- other
+, @treatmentTypeID -- TreatmentTypeID
+, @treatmentDetailedActivityTypeID -- TreatmentDetailedActivityTypeID
 , x.TreatmentTypeImportedText
 , x.TreatmentDetailedActivityTypeImportedText
 

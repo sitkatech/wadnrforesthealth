@@ -5,6 +5,8 @@ GO
 CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[GisUploadSourceOrganizationID] [int] IDENTITY(1,1) NOT NULL,
 	[GisUploadSourceOrganizationName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProjectTypeDefaultName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[TreatmentTypeDefaultName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC

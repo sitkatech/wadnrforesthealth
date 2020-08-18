@@ -1410,6 +1410,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GisUploadSourceOrganizationName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectTypeDefaultName" Type="varchar" MaxLength="100" />
+    <Property Name="TreatmentTypeDefaultName" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
