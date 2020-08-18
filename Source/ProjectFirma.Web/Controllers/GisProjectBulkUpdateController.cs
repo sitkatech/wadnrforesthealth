@@ -112,7 +112,10 @@ namespace ProjectFirma.Web.Controllers
         {
             var gisImportSectionStatus = GetGisImportSectionStatus(gisUploadAttempt);
             var realColumns = gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.ToList();
-            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
+            var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
+            var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
+                .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
+            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList);
             
             var gisMetadataPostUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.GisMetadata(gisUploadAttempt.GisUploadAttemptID, null));
             var projectIndexUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Index());
@@ -134,7 +137,7 @@ namespace ProjectFirma.Web.Controllers
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
 
-            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns);
+            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GisFeature>(gisFeatureList, gridSpec);
             return gridJsonNetJObjectResult;
         }

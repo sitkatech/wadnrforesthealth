@@ -40,13 +40,19 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
     public class GisRecordGridSpec : GridSpec<Models.GisFeature>
     {
 
-        public GisRecordGridSpec(Models.Person currentPerson, List<GisUploadAttemptGisMetadataAttribute> columns)
+        public GisRecordGridSpec(Models.Person currentPerson, List<GisUploadAttemptGisMetadataAttribute> columns, List<Models.GisFeature> gisFeatures)
         {
             ObjectNameSingular = $"GIS Record";
             ObjectNamePlural = $"GIS Records";
             SaveFiltersInCookie = false;
-
-            var columnsOrdered = columns.Where(x => x.SortOrder != 1).Where(x =>! string.Equals(x.GisMetadataAttribute.GisMetadataAttributeName, "Shape", StringComparison.InvariantCultureIgnoreCase)).OrderBy(x => x.SortOrder).ToList();
+            var gisFeatureIDs = gisFeatures.Select(x => x.GisFeatureID);
+            var allAttributesOnGisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
+            var dictionary = allAttributesOnGisUploadAttempt.GroupBy(x => x.GisMetadataAttributeID).ToDictionary(x => x.Key, y => y.ToList());
+            var columnsOrdered = columns.Where(x => x.SortOrder != 1)
+                .Where(x =>! string.Equals(x.GisMetadataAttribute.GisMetadataAttributeName, "Shape", StringComparison.InvariantCultureIgnoreCase))
+                .Where(x => dictionary.ContainsKey(x.GisMetadataAttributeID))
+                .OrderBy(x => x.SortOrder)
+                .ToList();
 
 
             Add("ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GisFeatureID.ToString()), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
