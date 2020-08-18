@@ -46,6 +46,21 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public IEnumerable<SelectListItem> ProjectStageGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> TreatedAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> FootprintAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> PruningAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> ThinningAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> ChippingAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> MasticationAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> GrazingAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> LopScatAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> BiomassRemovalAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> HandPileAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> HandPileBurnAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> MachinePileBurnAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> BroadcastBurnAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> OtherBurnAcresGisMetadataAttributes { get; }
+
+        public bool IsFlattened { get; set; }
 
         public GisMetadataViewData(Person currentPerson,
             GisUploadAttempt gisUploadAttempt
@@ -67,8 +82,25 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             ProjectStageGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             TreatmentDetailedActivityTypeGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             TreatedAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            FootprintAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            PruningAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            ThinningAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            ChippingAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            MasticationAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            GrazingAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            LopScatAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            BiomassRemovalAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            HandPileAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            HandPileBurnAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            MachinePileBurnAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            BroadcastBurnAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            OtherBurnAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             GisMetadataPostUrl = gisMetadataPostUrl;
             ProjectIndexUrl = projectIndexUrl;
+            IsFlattened = gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue
+                ? gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value
+                : false;
         }
     }
 }
+

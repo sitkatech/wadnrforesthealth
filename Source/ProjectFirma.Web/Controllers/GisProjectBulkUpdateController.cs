@@ -158,6 +158,7 @@ namespace ProjectFirma.Web.Controllers
             var treatmentTypeMetadataAttributeID = viewModel.TreatmentTypeMetadataAttributeID;
             var treatmentActivityTypeMetadataAttributeID = viewModel.TreatmentDetailedActivityTypeMetadataAttributeID;
             var treatedAcresMetadataAttributeID = viewModel.TreatedAcresMetadataAttributeID;
+            var footprintAcresMetadataAttributeID = viewModel.FootprintAcresMetadataAttributeID;
 
             var projectIdentifierMetadataAttribute =
                 gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
@@ -199,12 +200,39 @@ namespace ProjectFirma.Web.Controllers
                     projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization);
             }
 
+
+            var pruningAcresMetadataAttributeID = viewModel.PruningAcresMetadataAttributeID;
+            var thinningAcresMetadataAttributeID = viewModel.ThinningAcresMetadataAttributeID;
+            var chippingAcresMetadataAttributeID = viewModel.ChippingAcresMetadataAttributeID;
+            var masticationAcresMetadataAttributeID = viewModel.MasticationAcresMetadataAttributeID;
+            var grazingAcresMetadataAttributeID = viewModel.GrazingAcresMetadataAttributeID;
+            var lopScatAcresMetadataAttributeID = viewModel.LopScatAcresMetadataAttributeID;
+            var biomassRemovalAcresMetadataAttributeID = viewModel.BiomassRemovalAcresMetadataAttributeID;
+            var handPileAcresMetadataAttributeID = viewModel.HandPileAcresMetadataAttributeID;
+            var handPileBurnAcresMetadataAttributeID = viewModel.HandPileBurnAcresMetadataAttributeID;
+            var machinePileBurnAcresMetadataAttributeID = viewModel.MachinePileBurnAcresMetadataAttributeID;
+            var broadcastBurnAcresMetadataAttributeID = viewModel.BroadcastBurnAcresMetadataAttributeID;
+            var otherAcresMetadataAttributeID = viewModel.OtherAcresMetadataAttributeID;
+
             ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID
                 , projectIdentifierMetadataAttributeID
+                , footprintAcresMetadataAttributeID
                 , treatedAcresMetadataAttributeID
                 , treatmentTypeMetadataAttributeID
                 , treatmentActivityTypeMetadataAttributeID
-                , sourceOrganization);
+                , sourceOrganization
+                , pruningAcresMetadataAttributeID
+                , thinningAcresMetadataAttributeID
+                , chippingAcresMetadataAttributeID
+                , masticationAcresMetadataAttributeID
+                , grazingAcresMetadataAttributeID
+                , lopScatAcresMetadataAttributeID
+                , biomassRemovalAcresMetadataAttributeID
+                , handPileAcresMetadataAttributeID
+                , handPileBurnAcresMetadataAttributeID
+                , machinePileBurnAcresMetadataAttributeID
+                , broadcastBurnAcresMetadataAttributeID
+                , otherAcresMetadataAttributeID);
 
 
 
@@ -262,7 +290,11 @@ namespace ProjectFirma.Web.Controllers
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
-            var projectName = projectNames.Single();
+            var projectName = projectNames.SingleOrDefault();
+            if (string.IsNullOrEmpty(projectName))
+            {
+                projectName = "Default Project Name";
+            }
             var projectStageString = projectStages.SingleOrDefault();
 
 
@@ -592,41 +624,55 @@ namespace ProjectFirma.Web.Controllers
 
         private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID
             , int projectIdentifierMetadataAttributeID
+            , int? footprintAcresMetadataAttributeID
             , int? treatedAcresMetadataAttributeID
             , int? treatmentTypeMetadataAttributeID
             , int? treatmentDetailedActivityTypeMetadataAttributeID
-            , GisUploadSourceOrganization gisUploadSourceOrganization)
+            , GisUploadSourceOrganization gisUploadSourceOrganization
+            , int? pruningAcresMetadataAttributeID
+            , int? thinningAcresMetadataAttributeID
+            , int? chippingAcresMetadataAttributeID
+            , int? masticationAcresMetadataAttributeID
+            , int? grazingAcresMetadataAttributeID
+            , int? lopScatAcresMetadataAttributeID
+            , int? biomassRemovalAcresMetadataAttributeID
+            , int? handPileAcresMetadataAttributeID
+            , int? handPileBurnAcresMetadataAttributeID
+            , int? machinePileBurnAcresMetadataAttributeID
+            , int? broadcastBurnAcresMetadataAttributeID
+            , int? otherAcresMetadataAttributeID)
         {
-            int treatedAcresMetadataAttributeSqlID;
-            if (!treatedAcresMetadataAttributeID.HasValue)
+
+
+            int footprintAcresMetadataAttributeSqlID;
+            if (!footprintAcresMetadataAttributeID.HasValue)
             {
-                treatedAcresMetadataAttributeSqlID = -1;
+                footprintAcresMetadataAttributeSqlID = -1;
             }
             else
             {
-                treatedAcresMetadataAttributeSqlID = treatedAcresMetadataAttributeID.Value;
+                footprintAcresMetadataAttributeSqlID = footprintAcresMetadataAttributeID.Value;
             }
 
-
-            int treatmentTypeMetadataAttributeSqlID;
-            if (!treatmentTypeMetadataAttributeID.HasValue)
-            {
-                treatmentTypeMetadataAttributeSqlID = -1;
-            }
-            else
-            {
-                treatmentTypeMetadataAttributeSqlID = treatmentTypeMetadataAttributeID.Value;
-            }
-
-            int treatmentDetailedActivityTypeMetadataAttributeSqlID;
-            if (!treatmentDetailedActivityTypeMetadataAttributeID.HasValue)
-            {
-                treatmentDetailedActivityTypeMetadataAttributeSqlID = -1;
-            }
-            else
-            {
-                treatmentDetailedActivityTypeMetadataAttributeSqlID = treatmentDetailedActivityTypeMetadataAttributeID.Value;
-            }
+            var treatedAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(treatedAcresMetadataAttributeID);
+            var treatmentTypeMetadataAttributeSqlID = GetMetadataAttributeSqlID(treatmentTypeMetadataAttributeID);
+            var treatmentDetailedActivityTypeMetadataAttributeSqlID = GetMetadataAttributeSqlID(treatmentDetailedActivityTypeMetadataAttributeID);
+            var pruningAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(pruningAcresMetadataAttributeID);
+            var thinningAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(thinningAcresMetadataAttributeID);
+            var chippingAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(chippingAcresMetadataAttributeID);
+            var masticationAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(masticationAcresMetadataAttributeID);
+            var grazingAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(grazingAcresMetadataAttributeID);
+            var lopScatAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(lopScatAcresMetadataAttributeID);
+            var biomassRemovalAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(biomassRemovalAcresMetadataAttributeID);
+            var handPileAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(handPileAcresMetadataAttributeID);
+            var handPileBurnAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(handPileBurnAcresMetadataAttributeID);
+            var machinePileBurnAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(machinePileBurnAcresMetadataAttributeID);
+            var broadcastBurnAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(broadcastBurnAcresMetadataAttributeID);
+            var otherAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(otherAcresMetadataAttributeID);
+            var isFlattened = gisUploadSourceOrganization.ImportIsFlattened.HasValue
+                ? gisUploadSourceOrganization.ImportIsFlattened.Value
+                : false;
+            var isFlattenedSqlVal = isFlattened ? 1 : 0;
 
             var treatmentTypeID = TreatmentType.Other.TreatmentTypeID;
 
@@ -644,16 +690,30 @@ namespace ProjectFirma.Web.Controllers
             var treatmentDetailedActivityTypeID = TreatmentDetailedActivityType.Other.TreatmentDetailedActivityTypeID;
 
 
-
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
             var sqlQueryOne = $"exec dbo.procImportTreatmentsFromGisUploadAttempt " +
                               $"@piGisUploadAttemptID = {gisUploadAttemptID}" +
                               $", @projectIdentifierGisMetadataAttributeID = {projectIdentifierMetadataAttributeID}" +
+                              $", @footprintAcresMetadataAttributeID = {footprintAcresMetadataAttributeSqlID}" +
                               $", @treatedAcresMetadataAttributeID = {treatedAcresMetadataAttributeSqlID}" +
                               $", @treatmentTypeMetadataAttributeID = {treatmentTypeMetadataAttributeSqlID}" +
                               $", @treatmentDetailedActivityTypeMetadataAttributeID = {treatmentDetailedActivityTypeMetadataAttributeSqlID}" +
-                              $", @treatmentTypeID = {treatmentTypeID}" + 
-                              $", @treatmentDetailedActivityTypeID = {treatmentDetailedActivityTypeID}";
+                              $", @treatmentTypeID = {treatmentTypeID}" +
+                              $", @treatmentDetailedActivityTypeID = {treatmentDetailedActivityTypeID}" +
+                              $", @isFlattened = {isFlattenedSqlVal}" +
+                              $", @pruningAcresMetadataAttributeID = {pruningAcresMetadataAttributeSqlID}" +
+                              $", @thinningAcresMetadataAttributeID = {thinningAcresMetadataAttributeSqlID}" +
+                              $", @chippingAcresMetadataAttributeID = {chippingAcresMetadataAttributeSqlID}" +
+                              $", @masticationAcresMetadataAttributeID = {masticationAcresMetadataAttributeSqlID}" +
+                              $", @grazingAcresMetadataAttributeID = {grazingAcresMetadataAttributeSqlID}" +
+                              $", @lopScatterAcresMetadataAttributeID = {lopScatAcresMetadataAttributeSqlID}" +
+                              $", @biomassRemovalAcresMetadataAttributeID = {biomassRemovalAcresMetadataAttributeSqlID}" +
+                              $", @handPileAcresMetadataAttributeID = {handPileAcresMetadataAttributeSqlID}" +
+                              $", @handPileBurnAcresMetadataAttributeID = {handPileBurnAcresMetadataAttributeSqlID}" +
+                              $", @machineBurnAcresMetadataAttributeID = {machinePileBurnAcresMetadataAttributeSqlID}" +
+                              $", @broadcastBurnAcresMetadataAttributeID = {broadcastBurnAcresMetadataAttributeSqlID}" +
+                              $", @otherBurnAcresMetadataAttributeID = {otherAcresMetadataAttributeSqlID}" +
+                              $"";
             using (var command = new SqlCommand(sqlQueryOne))
             {
                 var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
@@ -664,6 +724,21 @@ namespace ProjectFirma.Web.Controllers
                     ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
                 }
             }
+        }
+
+        private static int GetMetadataAttributeSqlID(int? metadataAttributeID)
+        {
+            int metadataAttributeSqlID;
+            if (!metadataAttributeID.HasValue)
+            {
+                metadataAttributeSqlID = -1;
+            }
+            else
+            {
+                metadataAttributeSqlID = metadataAttributeID.Value;
+            }
+
+            return metadataAttributeSqlID;
         }
 
 

@@ -33,12 +33,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName) : this()
+        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened) : this()
         {
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
             this.ProjectTypeDefaultName = projectTypeDefaultName;
             this.TreatmentTypeDefaultName = treatmentTypeDefaultName;
+            this.ImportIsFlattened = importIsFlattened;
         }
 
         /// <summary>
@@ -143,6 +144,7 @@ namespace ProjectFirma.Web.Models
         public string GisUploadSourceOrganizationName { get; set; }
         public string ProjectTypeDefaultName { get; set; }
         public string TreatmentTypeDefaultName { get; set; }
+        public bool? ImportIsFlattened { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
