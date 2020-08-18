@@ -341,6 +341,9 @@
         <MappingFragment StoreEntitySet="GisUploadSourceOrganization">
           <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
           <ScalarProperty Name="GisUploadSourceOrganizationName" ColumnName="GisUploadSourceOrganizationName" />
+          <ScalarProperty Name="ProjectTypeDefaultName" ColumnName="ProjectTypeDefaultName" />
+          <ScalarProperty Name="TreatmentTypeDefaultName" ColumnName="TreatmentTypeDefaultName" />
+          <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

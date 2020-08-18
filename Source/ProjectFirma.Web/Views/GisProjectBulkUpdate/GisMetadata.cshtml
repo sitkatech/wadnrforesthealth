@@ -46,7 +46,7 @@
                 @Html.LabelWithSugarFor(m => m.ProjectIdentifierMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.ProjectIdentifierMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.ProjectIdentifierMetadataAttributeID, ViewDataTyped.ProjectIDGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.ProjectIdentifierMetadataAttributeID)
             </div>
         </div>
@@ -56,18 +56,20 @@
                 @Html.LabelWithSugarFor(m => m.ProjectNameMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.ProjectNameMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.ProjectNameMetadataAttributeID, ViewDataTyped.ProjectNameGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.ProjectNameMetadataAttributeID)
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatmentTypeMetadataAttributeID)
-            </div>
-            <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.TreatmentTypeMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.TreatmentTypeMetadataAttributeID)
+    
+        <div class="nonFlattenedColumns">
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentTypeMetadataAttributeID)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.TreatmentTypeMetadataAttributeID, ViewDataTyped.TreatmentTypeGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TreatmentTypeMetadataAttributeID)
+                </div>
             </div>
         </div>
 
@@ -76,7 +78,7 @@
                 @Html.LabelWithSugarFor(m => m.CompletionDateMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.CompletionDateMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.CompletionDateMetadataAttributeID, ViewDataTyped.CompletionDateGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.CompletionDateMetadataAttributeID)
             </div>
         </div>
@@ -86,7 +88,7 @@
                 @Html.LabelWithSugarFor(m => m.StartDateMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.StartDateMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.StartDateMetadataAttributeID, ViewDataTyped.StartDateGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.StartDateMetadataAttributeID)
             </div>
         </div>
@@ -96,29 +98,169 @@
                 @Html.LabelWithSugarFor(m => m.ProjectStageMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.ProjectStageMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.ProjectStageMetadataAttributeID, ViewDataTyped.ProjectStageGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.ProjectStageMetadataAttributeID)
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatmentDetailedActivityTypeMetadataAttributeID)
+                @Html.LabelWithSugarFor(m => m.FootprintAcresMetadataAttributeID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.TreatmentDetailedActivityTypeMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.TreatmentDetailedActivityTypeMetadataAttributeID)
+                @Html.DropDownListFor(m => m.FootprintAcresMetadataAttributeID, ViewDataTyped.FootprintAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FootprintAcresMetadataAttributeID)
+            </div>
+        </div>
+
+        
+        <div class="nonFlattenedColumns">
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentDetailedActivityTypeMetadataAttributeID)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.TreatmentDetailedActivityTypeMetadataAttributeID, ViewDataTyped.TreatmentDetailedActivityTypeGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TreatmentDetailedActivityTypeMetadataAttributeID)
+                </div>
+            </div>
+        </div>
+    
+        <div class="nonFlattenedColumns">
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatedAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.TreatedAcresMetadataAttributeID, ViewDataTyped.TreatedAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TreatedAcresMetadataAttributeID)
+                </div>
             </div>
         </div>
         
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatedAcresMetadataAttributeID)
+        
+        <div id="detailedTreatmentActivityTypes" class="flattenedColumns">
+            <hr/>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.PruningAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.PruningAcresMetadataAttributeID, ViewDataTyped.PruningAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PruningAcresMetadataAttributeID)
+                </div>
             </div>
-            <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.TreatedAcresMetadataAttributeID, ViewDataTyped.GisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.TreatedAcresMetadataAttributeID)
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.ThinningAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.ThinningAcresMetadataAttributeID, ViewDataTyped.ThinningAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ThinningAcresMetadataAttributeID)
+                </div>
             </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.ChippingAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.ChippingAcresMetadataAttributeID, ViewDataTyped.ChippingAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ChippingAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.MasticationAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.MasticationAcresMetadataAttributeID, ViewDataTyped.MasticationAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MasticationAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.GrazingAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.GrazingAcresMetadataAttributeID, ViewDataTyped.GrazingAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.GrazingAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.LopScatAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.LopScatAcresMetadataAttributeID, ViewDataTyped.LopScatAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LopScatAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.BiomassRemovalAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.BiomassRemovalAcresMetadataAttributeID, ViewDataTyped.BiomassRemovalAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BiomassRemovalAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.HandPileAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.HandPileAcresMetadataAttributeID, ViewDataTyped.HandPileAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.HandPileAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.HandPileBurnAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.HandPileBurnAcresMetadataAttributeID, ViewDataTyped.HandPileBurnAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.HandPileBurnAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.MachinePileBurnAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.MachinePileBurnAcresMetadataAttributeID, ViewDataTyped.MachinePileBurnAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MachinePileBurnAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.BroadcastBurnAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.BroadcastBurnAcresMetadataAttributeID, ViewDataTyped.BroadcastBurnAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BroadcastBurnAcresMetadataAttributeID)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.OtherAcresMetadataAttributeID, true)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.OtherAcresMetadataAttributeID, ViewDataTyped.OtherBurnAcresGisMetadataAttributes, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.OtherAcresMetadataAttributeID)
+                </div>
+            </div>
+
         </div>
     </div>
 </form>
@@ -178,5 +320,14 @@
     jQuery(document)
         .ready(function() {
             jQuery("#uploadAdvance").click(createProjectsAndAdvanceCurrentPage);
+
+
+            if ('@ViewDataTyped.IsFlattened' == 'True' || '@ViewDataTyped.IsFlattened' == 'true') {
+                jQuery(".nonFlattenedColumns").hide();
+            } else {
+                jQuery(".flattenedColumns").hide();
+            }
+
+
         });
 </script>

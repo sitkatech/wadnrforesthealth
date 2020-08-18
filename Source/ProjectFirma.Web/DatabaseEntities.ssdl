@@ -1410,6 +1410,9 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GisUploadSourceOrganizationName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectTypeDefaultName" Type="varchar" MaxLength="100" />
+    <Property Name="TreatmentTypeDefaultName" Type="varchar" MaxLength="100" />
+    <Property Name="ImportIsFlattened" Type="bit" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -5698,9 +5701,25 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   <Function Name="procImportTreatmentsFromGisUploadAttempt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
     <Parameter Name="projectIdentifierGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="footprintAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="treatedAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="treatmentTypeMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="treatmentDetailedActivityTypeMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentTypeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentDetailedActivityTypeID" Type="int" Mode="In" />
+    <Parameter Name="isFlattened" Type="bit" Mode="In" />
+    <Parameter Name="pruningAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="thinningAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="chippingAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="masticationAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="grazingAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="lopScatterAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="biomassRemovalAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="handPileAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="handPileBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="machineBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="broadcastBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="otherBurnAcresMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

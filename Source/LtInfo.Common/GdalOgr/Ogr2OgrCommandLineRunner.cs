@@ -79,13 +79,13 @@ namespace LtInfo.Common.GdalOgr
             return processUtilityResult.StdOut;
         }
 
-        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString)
+        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString, string featureClassNameToImport)
         {
             Check.Require(inputGdbFile.FullName.ToLower().EndsWith(".gdb.zip"),
                 $"Input filename for GDB input must end with .gdb.zip. Filename passed is {inputGdbFile.FullName}");
             Check.RequireFileExists(inputGdbFile, "Can't find input File GDB for import with ogr2ogr");
 
-            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName, geomName, idName, connectionString);
+            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName, geomName, idName, connectionString, featureClassNameToImport);
             var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
             return processUtilityResult.StdOut;
         }
@@ -303,7 +303,8 @@ namespace LtInfo.Common.GdalOgr
             , string destinationTableName
             , string geomName
             , string fIDName
-            , string connectionString)
+            , string connectionString
+            , string featureClassNameToImport)
         {
             var databaseConnectionString = $"MSSQL:{connectionString}";
             var commandLineArguments = new List<string>
@@ -329,6 +330,11 @@ namespace LtInfo.Common.GdalOgr
                 $"\"{destinationTableName}\""
                 , "-skipfailures"
             };
+
+            if (!string.IsNullOrEmpty(featureClassNameToImport))
+            {
+                commandLineArguments.Add(featureClassNameToImport);
+            }
 
             return commandLineArguments.Where(x => x != null).ToList();
         }

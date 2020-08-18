@@ -29,8 +29,14 @@ namespace ProjectFirma.Web.Models
                 Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
                 FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
             var featureClassNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gdbFile, Ogr2OgrCommandLineRunner.DefaultTimeOut, false);
+            var featureClassNameToImport = string.Empty;
+            if (featureClassNames.Count > 1)
+            {
+                featureClassNameToImport = featureClassNames
+                    .Where(x => !x.Contains("ATTACH", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            }
             ogr2OgrCommandLineRunner.ImportFileGdbToSql(gdbFile, false,
-                GISImportTableName, GeomName, FIDName, connectionString);
+                GISImportTableName, GeomName, FIDName, connectionString, featureClassNameToImport);
             return featureClassNames;
         }
 
