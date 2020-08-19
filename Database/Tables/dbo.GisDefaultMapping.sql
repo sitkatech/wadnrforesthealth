@@ -7,7 +7,7 @@ CREATE TABLE [dbo].[GisDefaultMapping](
 	[GisUploadSourceOrganizationID] [int] NOT NULL,
 	[FieldDefinitionID] [int] NOT NULL,
 	[GisDefaultMappingColumnName] [varchar](300) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
- CONSTRAINT [PK_GisDefaultMapping_GisDefaultMappingD] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_GisDefaultMapping_GisDefaultMappingID] PRIMARY KEY CLUSTERED 
 (
 	[GisDefaultMappingID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

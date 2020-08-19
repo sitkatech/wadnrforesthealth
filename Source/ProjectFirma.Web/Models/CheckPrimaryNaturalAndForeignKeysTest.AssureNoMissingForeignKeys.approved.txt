@@ -22,3 +22,4 @@ tmpAgreementContact	AgreementContactID
 tmpTreatmentsFromArcGis	GlobalID					
 tmpTreatmentsFromArcGis	TRT_LOCAL_ID					
 tmpTreatmentsFromArcGis	UNIT_ID					
+TreatmentArea	TemporaryTreatmentCacheID					
