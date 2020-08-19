@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Controllers
             var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
-            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList);
+            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList, gisUploadAttempt);
             
             var gisMetadataPostUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.GisMetadata(gisUploadAttempt.GisUploadAttemptID, null));
             var projectIndexUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Index());
@@ -141,7 +141,7 @@ namespace ProjectFirma.Web.Controllers
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
 
-            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList);
+            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList, gisUploadAttempt);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GisFeature>(gisFeatureList, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -187,9 +187,9 @@ namespace ProjectFirma.Web.Controllers
                 x.GisMetadataAttributeID == projectStageMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
             
 
-            var gisValues =
+            var projectIdentifierValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctGisValues = gisValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
+            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x =>
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
@@ -198,11 +198,24 @@ namespace ProjectFirma.Web.Controllers
 
             var gisCrossWalkDefaultList = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.ToList();
 
-            foreach (var distinctGisValue in distinctGisValues)
+            var currentCounter = 1;
+            var lastProjectCreatedThisYear = HttpRequestStorage.DatabaseEntities.Projects.Where(p => p.FhtProjectNumber.Contains(DateTime.Now.Year.ToString())).OrderByDescending(p => p.FhtProjectNumber).ToList().FirstOrDefault(p => p.FhtProjectNumber.StartsWith($"FHT-{DateTime.Now.Year}"));
+            if (lastProjectCreatedThisYear != null)
             {
-                MakeProject(projectIdentifierMetadataAttribute, distinctGisValue, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization);
+                var splitFhtProjectNumber = lastProjectCreatedThisYear.FhtProjectNumber.Split('-');
+                Int32.TryParse(splitFhtProjectNumber[2], out currentCounter);
+                currentCounter++;
+
             }
+
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                MakeProject(projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, ref currentCounter);
+            }
+
+            HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
             var pruningAcresMetadataAttributeID = viewModel.PruningAcresMetadataAttributeID;
@@ -265,8 +278,10 @@ namespace ProjectFirma.Web.Controllers
             , ProjectType otherProjectType
             , int gisUploadAttemptID
             , List<Project> projectList
-            , GisUploadSourceOrganization gisUploadSourceOrganization)
+            , GisUploadSourceOrganization gisUploadSourceOrganization
+            , ref int currentCounter)
         {
+            var projectNumber = $"FHT-{DateTime.Now.Year}-{currentCounter:00000}";
             var gisFeaturesIdListWithProjectIdentifier =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
@@ -289,7 +304,7 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue.ToLowerInvariant()).Distinct().ToList();
             var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
@@ -299,7 +314,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectName = "Default Project Name";
             }
-            var projectStageString = projectStages.SingleOrDefault();
+            var projectStageString = gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue && gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value ? string.Empty : projectStages.SingleOrDefault();
 
 
             var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
@@ -307,6 +322,11 @@ namespace ProjectFirma.Web.Controllers
                 x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
 
             ProjectStage projectStage = ProjectStage.Completed;
+
+            if (!completionDate.HasValue)
+            {
+                projectStage = ProjectStage.Implementation;
+            }
             if (!string.IsNullOrEmpty(projectStageString))
             {
                 var projectStageMappedString = projectStageCrossWalks.Single(x =>
@@ -335,7 +355,7 @@ namespace ProjectFirma.Web.Controllers
                 , false
                 , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
                 , ProjectApprovalStatus.Approved.ProjectApprovalStatusID
-                , Project.CreateNewFhtProjectNumber());
+                , projectNumber);
             project.CompletionDate = completionDate;
             project.PlannedDate = startDate;
             project.CreateGisUploadAttemptID = gisUploadAttemptID;
@@ -344,9 +364,10 @@ namespace ProjectFirma.Web.Controllers
             {
                 project.ProjectType = projectType;
             }
+
+            currentCounter++;
+
             
-            HttpRequestStorage.DatabaseEntities.Projects.Add(project);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
             projectList.Add(project);
         }
 
@@ -469,14 +490,18 @@ namespace ProjectFirma.Web.Controllers
                 var feature = features[j];
                 var gisFeature = new GisFeature(gisUploadAttempt, feature.ToSqlGeometry().MakeValid().ToDbGeometry(), j);
                 gisFeatures.Add(gisFeature);
-                feature.Properties.Add("GisFeatureKey", j.ToString());
                 feature.Properties.Add("GisFeature", gisFeature);
             }
 
             HttpRequestStorage.DatabaseEntities.GisFeatures.AddRange(gisFeatures);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
-            var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel().SelectMany(y => y.Properties.AsParallel().Select(x => new GisFeatureMetadataAttribute(((GisFeature) y.Properties["GisFeature"]).GisFeatureID, attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID) { GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null }));
+            var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel()
+                .SelectMany(y => y.Properties.Where(z => !string.Equals(z.Key, "GisFeature"))
+                    .AsParallel().Select(x => new GisFeatureMetadataAttribute(((GisFeature) y.Properties["GisFeature"]).GisFeatureID
+                        , attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID) 
+                        { GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null }
+                    ));
             HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.AddRange(
                 listOfGisFeatureMetadataAttributesToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();

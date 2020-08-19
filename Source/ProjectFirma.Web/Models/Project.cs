@@ -381,7 +381,7 @@ namespace ProjectFirma.Web.Models
 
             }
 
-            return $"FHT-{DateTime.Now.Year}-{currentCounter:0000}";
+            return $"FHT-{DateTime.Now.Year}-{currentCounter:00000}";
 
         }
 
