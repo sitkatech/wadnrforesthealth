@@ -12,9 +12,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
+using GeoJSON.Net;
+using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GdalOgr;
+using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using Microsoft.SqlServer.Types;
 using ProjectFirma.Web.Common;
@@ -115,7 +119,7 @@ namespace ProjectFirma.Web.Controllers
             var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
-            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList);
+            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList, gisUploadAttempt);
             
             var gisMetadataPostUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.GisMetadata(gisUploadAttempt.GisUploadAttemptID, null));
             var projectIndexUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Index());
@@ -137,7 +141,7 @@ namespace ProjectFirma.Web.Controllers
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttemptID).Include(x => x.GisFeatureMetadataAttributes).ToList();
 
-            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList);
+            var gridSpec = new GisRecordGridSpec(CurrentPerson, realColumns, gisFeatureList, gisUploadAttempt);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GisFeature>(gisFeatureList, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -183,9 +187,9 @@ namespace ProjectFirma.Web.Controllers
                 x.GisMetadataAttributeID == projectStageMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
             
 
-            var gisValues =
+            var projectIdentifierValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctGisValues = gisValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
+            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x =>
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
@@ -194,11 +198,24 @@ namespace ProjectFirma.Web.Controllers
 
             var gisCrossWalkDefaultList = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.ToList();
 
-            foreach (var distinctGisValue in distinctGisValues)
+            var currentCounter = 1;
+            var lastProjectCreatedThisYear = HttpRequestStorage.DatabaseEntities.Projects.Where(p => p.FhtProjectNumber.Contains(DateTime.Now.Year.ToString())).OrderByDescending(p => p.FhtProjectNumber).ToList().FirstOrDefault(p => p.FhtProjectNumber.StartsWith($"FHT-{DateTime.Now.Year}"));
+            if (lastProjectCreatedThisYear != null)
             {
-                MakeProject(projectIdentifierMetadataAttribute, distinctGisValue, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization);
+                var splitFhtProjectNumber = lastProjectCreatedThisYear.FhtProjectNumber.Split('-');
+                Int32.TryParse(splitFhtProjectNumber[2], out currentCounter);
+                currentCounter++;
+
             }
+
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                MakeProject(projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, ref currentCounter);
+            }
+
+            HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
             var pruningAcresMetadataAttributeID = viewModel.PruningAcresMetadataAttributeID;
@@ -261,8 +278,10 @@ namespace ProjectFirma.Web.Controllers
             , ProjectType otherProjectType
             , int gisUploadAttemptID
             , List<Project> projectList
-            , GisUploadSourceOrganization gisUploadSourceOrganization)
+            , GisUploadSourceOrganization gisUploadSourceOrganization
+            , ref int currentCounter)
         {
+            var projectNumber = $"FHT-{DateTime.Now.Year}-{currentCounter:00000}";
             var gisFeaturesIdListWithProjectIdentifier =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
@@ -285,7 +304,7 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue.ToLowerInvariant()).Distinct().ToList();
             var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
@@ -295,7 +314,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectName = "Default Project Name";
             }
-            var projectStageString = projectStages.SingleOrDefault();
+            var projectStageString = gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue && gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value ? string.Empty : projectStages.SingleOrDefault();
 
 
             var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
@@ -303,6 +322,11 @@ namespace ProjectFirma.Web.Controllers
                 x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
 
             ProjectStage projectStage = ProjectStage.Completed;
+
+            if (!completionDate.HasValue)
+            {
+                projectStage = ProjectStage.Implementation;
+            }
             if (!string.IsNullOrEmpty(projectStageString))
             {
                 var projectStageMappedString = projectStageCrossWalks.Single(x =>
@@ -331,7 +355,7 @@ namespace ProjectFirma.Web.Controllers
                 , false
                 , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
                 , ProjectApprovalStatus.Approved.ProjectApprovalStatusID
-                , Project.CreateNewFhtProjectNumber());
+                , projectNumber);
             project.CompletionDate = completionDate;
             project.PlannedDate = startDate;
             project.CreateGisUploadAttemptID = gisUploadAttemptID;
@@ -340,9 +364,10 @@ namespace ProjectFirma.Web.Controllers
             {
                 project.ProjectType = projectType;
             }
+
+            currentCounter++;
+
             
-            HttpRequestStorage.DatabaseEntities.Projects.Add(project);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
             projectList.Add(project);
         }
 
@@ -381,6 +406,8 @@ namespace ProjectFirma.Web.Controllers
             var shapeFileSuccessfullyExtractedToDisk = false;
             var shapeFilePath = GisUploadAttemptStaging.UnzipAndSaveFileToDiskIfShapefile(httpPostedFileBase, gisUploadAttempt, ref shapeFileSuccessfullyExtractedToDisk);
             var importWasSuccesful = false;
+            var isgdb = false;
+            FeatureCollection featureCollection = null;
 
             if (shapeFileSuccessfullyExtractedToDisk)
             {
@@ -389,8 +416,19 @@ namespace ProjectFirma.Web.Controllers
 
             else
             {
+                isgdb = true;
                 var filePath = GisUploadAttemptStaging.SaveFileToDiskIfGdb(httpPostedFileBase, gisUploadAttempt);
-                importWasSuccesful = ImportGdbToSql(filePath);
+                if (gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value)
+                {
+                    var fileInfo = new FileInfo(filePath);
+                    featureCollection = ImportGdbToGeoJson(fileInfo);
+                }
+
+                else
+                {
+                    importWasSuccesful = ImportGdbToSql(filePath);
+                }
             }
 
             if (importWasSuccesful)
@@ -399,8 +437,74 @@ namespace ProjectFirma.Web.Controllers
             }
             
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SaveGisUploadToNormalizedFields(gisUploadAttempt, importWasSuccesful);
+            if (gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value && isgdb && featureCollection != null)
+            {
+                SaveGisUploadToNormalizedFieldsUsingGeoJson(gisUploadAttempt, featureCollection);
+            }
+
+            else
+            {
+                SaveGisUploadToNormalizedFields(gisUploadAttempt, importWasSuccesful);
+            }
             return new ModalDialogFormJsonResult();
+        }
+
+
+        private void SaveGisUploadToNormalizedFieldsUsingGeoJson(GisUploadAttempt gisUploadAttempt, FeatureCollection featureCollection)
+        {
+            var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
+            var listOfPropertiesFromFirstFeature = featureCollection.Features.FirstOrDefault() != null
+                ? featureCollection.Features.First().Properties.Select(x => x.Key).ToList()
+                : new List<string>();
+            var distinctListOfFields = featureCollection.Features.SelectMany(x => x.Properties.Select(y => y.Key)).OrderBy(x => x).Distinct().ToList();
+            distinctListOfFields.Where(x => !listOfPropertiesFromFirstFeature.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ForEach(x => listOfPropertiesFromFirstFeature.Add(x));
+            for (int i = 0; i< listOfPropertiesFromFirstFeature.Count();i++)
+            {
+                var columnName = listOfPropertiesFromFirstFeature[i];
+                var existingGisMetdataAttribute = gisMetdataAttributes.SingleOrDefault(x => string.Equals(x.GisMetadataAttributeName, columnName, StringComparison.InvariantCultureIgnoreCase));
+                if (existingGisMetdataAttribute == null)
+                {
+                    HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Add(new GisMetadataAttribute(columnName.ToLowerInvariant()));
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                }
+
+                existingGisMetdataAttribute = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList().Single(x => string.Equals(x.GisMetadataAttributeName, columnName, StringComparison.InvariantCultureIgnoreCase));
+
+                HttpRequestStorage.DatabaseEntities.GisUploadAttemptGisMetadataAttributes.Add(new GisUploadAttemptGisMetadataAttribute(gisUploadAttempt, existingGisMetdataAttribute, i));
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+            }
+
+
+            var listOfPossibleAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
+
+
+            var attributeDictionary = listOfPossibleAttributes.ToDictionary(x => x.GisMetadataAttributeName, y => y);
+
+            var features = featureCollection.Features;
+
+            var gisFeatures = new List<GisFeature>();
+
+            for (int j = 0; j<features.Count; j++)
+            {
+                var feature = features[j];
+                var gisFeature = new GisFeature(gisUploadAttempt, feature.ToSqlGeometry().MakeValid().ToDbGeometry(), j);
+                gisFeatures.Add(gisFeature);
+                feature.Properties.Add("GisFeature", gisFeature);
+            }
+
+            HttpRequestStorage.DatabaseEntities.GisFeatures.AddRange(gisFeatures);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel()
+                .SelectMany(y => y.Properties.Where(z => !string.Equals(z.Key, "GisFeature"))
+                    .AsParallel().Select(x => new GisFeatureMetadataAttribute(((GisFeature) y.Properties["GisFeature"]).GisFeatureID
+                        , attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID) 
+                        { GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null }
+                    ));
+            HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.AddRange(
+                listOfGisFeatureMetadataAttributesToAdd);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
         private void SaveGisUploadToNormalizedFields( GisUploadAttempt gisUploadAttempt, bool importWasSuccessful)
@@ -620,6 +724,39 @@ namespace ProjectFirma.Web.Controllers
                     ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
                 }
             }
+        }
+
+        public static bool IsUsableFeatureGeoJson(Feature feature)
+        {
+            return feature != null && feature.Geometry != null && new List<GeoJSONObjectType> { GeoJSONObjectType.Polygon, GeoJSONObjectType.MultiPolygon }.Contains(feature.Geometry.Type);
+        }
+
+        public static bool IsUsableFeatureCollectionGeoJson(FeatureCollection featureCollection)
+        {
+            return featureCollection.Features.Any(IsUsableFeatureGeoJson);
+        }
+
+        public static FeatureCollection ImportGdbToGeoJson(
+            FileInfo gisFile)
+        {
+            var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
+                Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
+                FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
+
+            var classNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(
+                new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gisFile,
+                Ogr2OgrCommandLineRunner.DefaultTimeOut);
+            var allFeatureClasses =
+                classNames.Select(x => ogr2OgrCommandLineRunner.ImportFileGdbToGeoJson(gisFile, x, false));
+            var goodFeatureClasses = allFeatureClasses.Where(x =>
+                IsUsableFeatureCollectionGeoJson(JsonTools.DeserializeObject<FeatureCollection>(x)));
+            var goodFeatures = goodFeatureClasses.Select(x =>
+                new FeatureCollection(JsonTools.DeserializeObject<FeatureCollection>(x).Features
+                    .Where(IsUsableFeatureGeoJson).ToList())).ToList();
+
+            Check.Assert(goodFeatures.Count != 0, "Number of usable Feature Classes in uploaded file must be greater than 0.");
+
+            return goodFeatures.First();
         }
 
         private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID

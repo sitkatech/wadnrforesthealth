@@ -24,6 +24,7 @@ using System.Data.Entity.Spatial;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
 using LtInfo.Common.DesignByContract;
+using Newtonsoft.Json;
 
 namespace LtInfo.Common.GeoJson
 {
@@ -59,7 +60,7 @@ namespace LtInfo.Common.GeoJson
             {
                 throw new ArgumentException();
             }
-            var coordinates = new GeographicPosition(inp.YCoordinate.Value, inp.XCoordinate.Value, null);
+            var coordinates = new Position(inp.YCoordinate.Value, inp.XCoordinate.Value, null);
             var point = new Point(coordinates);
             return point;
         }
@@ -71,10 +72,10 @@ namespace LtInfo.Common.GeoJson
             {
                 throw new ArgumentException();
             }
-            var coordinates = new List<GeographicPosition>();
+            var coordinates = new List<Position>();
             for (var i = 1; i <= inp.PointCount; i++)
             {
-                coordinates.Add(new GeographicPosition(inp.PointAt(i).YCoordinate.Value, inp.PointAt(i).XCoordinate.Value, null));
+                coordinates.Add(new Position(inp.PointAt(i).YCoordinate.Value, inp.PointAt(i).XCoordinate.Value, null));
             }
             var lineString = new LineString(coordinates);
             return lineString;
@@ -86,11 +87,13 @@ namespace LtInfo.Common.GeoJson
             {
                 throw new ArgumentException();
             }
-            var multiPoint = new MultiPoint();
+
+            var points = new List<Point>();
             for (var i = 1; i <= inp.ElementCount; i++)
             {
-                multiPoint.Coordinates.Add(PointFromDbGeometry(inp.ElementAt(i)));
+                points.Add(PointFromDbGeometry(inp.ElementAt(i)));
             }
+            var multiPoint = new MultiPoint(points);
             return multiPoint;
         }
 
@@ -138,18 +141,26 @@ namespace LtInfo.Common.GeoJson
             {
                 throw new ArgumentException();
             }
-            var multiPolygon = new MultiPolygon();
 
+            var polygons = new List<Polygon>();
             for (var i = 1; i <= inp.ElementCount; i++)
             {
-                multiPolygon.Coordinates.Add(PolygonFromDbGeometry(inp.ElementAt(i)));
+                polygons.Add(PolygonFromDbGeometry(inp.ElementAt(i)));
             }
+            var multiPolygon = new MultiPolygon(polygons);
             return multiPolygon;
         }
 
         public static bool CanParseGeometry(DbGeometry geometry)
         {
             return geometry != null && geometry.IsValid && geometry.SpatialTypeName != "GeometryCollection";
+        }
+
+        public static string MakeDbGeometryIntoGeoJsonString(DbGeometry geometry, Formatting formatting)
+        {
+            var dbGeometryAsFeature = DbGeometryToGeoJsonHelper.FromDbGeometry(geometry);
+            return JsonConvert.SerializeObject(dbGeometryAsFeature, formatting);
+            
         }
 
     }
