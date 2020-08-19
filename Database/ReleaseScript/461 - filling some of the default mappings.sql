@@ -12,9 +12,8 @@ values(2, 30, 'nepa_doc_name'),
 
 
 insert into dbo.GisDefaultMapping(GisUploadSourceOrganizationID, FieldDefinitionID, GisDefaultMappingColumnName)
-values(3, 30, 'landowner'),
-(3, 465, 'globalid'),
-(3, 468,'group_'),
+values(3, 30, 'approval_id'),
+(3, 465, 'approval_id'),
 (3, 28, 'date_completed'),
 (3, 36, 'project_status'),
 (3, 470, 'gis_acres'),

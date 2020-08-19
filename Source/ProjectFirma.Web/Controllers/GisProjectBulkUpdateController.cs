@@ -304,11 +304,21 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue.ToLowerInvariant()).Distinct().ToList();
+            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
             var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
+
+            if (projectNames.Count > 1)
+            {
+                var projectNameLower = projectNames.Select(x => x.ToLowerInvariant()).Distinct().ToList();
+                if (projectNameLower.Count == 1)
+                {
+                    projectNames = projectNames.Take(1).ToList();
+                }
+            }
+
             var projectName = projectNames.SingleOrDefault();
             if (string.IsNullOrEmpty(projectName))
             {
@@ -488,7 +498,7 @@ namespace ProjectFirma.Web.Controllers
             for (int j = 0; j<features.Count; j++)
             {
                 var feature = features[j];
-                var gisFeature = new GisFeature(gisUploadAttempt, feature.ToSqlGeometry().MakeValid().ToDbGeometry(), j);
+                var gisFeature = new GisFeature(gisUploadAttempt, feature.ToSqlGeometry().MakeValid().ToDbGeometryWithCoordinateSystem(), j);
                 gisFeatures.Add(gisFeature);
                 feature.Properties.Add("GisFeature", gisFeature);
             }
@@ -726,9 +736,28 @@ namespace ProjectFirma.Web.Controllers
             }
         }
 
+        public static List<GeoJSONObjectType> ListOfValidGeoJsonTypes = new List<GeoJSONObjectType>
+            {GeoJSONObjectType.Polygon, GeoJSONObjectType.MultiPolygon};
+
         public static bool IsUsableFeatureGeoJson(Feature feature)
         {
-            return feature != null && feature.Geometry != null && new List<GeoJSONObjectType> { GeoJSONObjectType.Polygon, GeoJSONObjectType.MultiPolygon }.Contains(feature.Geometry.Type);
+            if (feature == null)
+            {
+                return false;
+            }
+
+            if (feature.Geometry == null)
+            {
+                return false;
+            }
+
+            var isValidType = ListOfValidGeoJsonTypes.Contains(feature.Geometry.Type);
+
+            if (!isValidType)
+            {
+                return false;
+            }
+            return true;
         }
 
         public static bool IsUsableFeatureCollectionGeoJson(FeatureCollection featureCollection)
