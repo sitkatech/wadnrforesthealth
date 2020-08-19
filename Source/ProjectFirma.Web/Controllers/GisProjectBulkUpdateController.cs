@@ -12,9 +12,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
+using GeoJSON.Net;
+using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GdalOgr;
+using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using Microsoft.SqlServer.Types;
 using ProjectFirma.Web.Common;
@@ -381,6 +385,8 @@ namespace ProjectFirma.Web.Controllers
             var shapeFileSuccessfullyExtractedToDisk = false;
             var shapeFilePath = GisUploadAttemptStaging.UnzipAndSaveFileToDiskIfShapefile(httpPostedFileBase, gisUploadAttempt, ref shapeFileSuccessfullyExtractedToDisk);
             var importWasSuccesful = false;
+            var isgdb = false;
+            FeatureCollection featureCollection = null;
 
             if (shapeFileSuccessfullyExtractedToDisk)
             {
@@ -389,8 +395,19 @@ namespace ProjectFirma.Web.Controllers
 
             else
             {
+                isgdb = true;
                 var filePath = GisUploadAttemptStaging.SaveFileToDiskIfGdb(httpPostedFileBase, gisUploadAttempt);
-                importWasSuccesful = ImportGdbToSql(filePath);
+                if (gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value)
+                {
+                    var fileInfo = new FileInfo(filePath);
+                    featureCollection = ImportGdbToGeoJson(fileInfo);
+                }
+
+                else
+                {
+                    importWasSuccesful = ImportGdbToSql(filePath);
+                }
             }
 
             if (importWasSuccesful)
@@ -399,8 +416,70 @@ namespace ProjectFirma.Web.Controllers
             }
             
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SaveGisUploadToNormalizedFields(gisUploadAttempt, importWasSuccesful);
+            if (gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value && isgdb && featureCollection != null)
+            {
+                SaveGisUploadToNormalizedFieldsUsingGeoJson(gisUploadAttempt, featureCollection);
+            }
+
+            else
+            {
+                SaveGisUploadToNormalizedFields(gisUploadAttempt, importWasSuccesful);
+            }
             return new ModalDialogFormJsonResult();
+        }
+
+
+        private void SaveGisUploadToNormalizedFieldsUsingGeoJson(GisUploadAttempt gisUploadAttempt, FeatureCollection featureCollection)
+        {
+            var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
+            var listOfPropertiesFromFirstFeature = featureCollection.Features.FirstOrDefault() != null
+                ? featureCollection.Features.First().Properties.Select(x => x.Key).ToList()
+                : new List<string>();
+            var distinctListOfFields = featureCollection.Features.SelectMany(x => x.Properties.Select(y => y.Key)).OrderBy(x => x).Distinct().ToList();
+            distinctListOfFields.Where(x => !listOfPropertiesFromFirstFeature.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ForEach(x => listOfPropertiesFromFirstFeature.Add(x));
+            for (int i = 0; i< listOfPropertiesFromFirstFeature.Count();i++)
+            {
+                var columnName = listOfPropertiesFromFirstFeature[i];
+                var existingGisMetdataAttribute = gisMetdataAttributes.SingleOrDefault(x => string.Equals(x.GisMetadataAttributeName, columnName, StringComparison.InvariantCultureIgnoreCase));
+                if (existingGisMetdataAttribute == null)
+                {
+                    HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Add(new GisMetadataAttribute(columnName.ToLowerInvariant()));
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                }
+
+                existingGisMetdataAttribute = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList().Single(x => string.Equals(x.GisMetadataAttributeName, columnName, StringComparison.InvariantCultureIgnoreCase));
+
+                HttpRequestStorage.DatabaseEntities.GisUploadAttemptGisMetadataAttributes.Add(new GisUploadAttemptGisMetadataAttribute(gisUploadAttempt, existingGisMetdataAttribute, i));
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+            }
+
+
+            var listOfPossibleAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
+
+
+            var attributeDictionary = listOfPossibleAttributes.ToDictionary(x => x.GisMetadataAttributeName, y => y);
+
+            var features = featureCollection.Features;
+
+            var gisFeatures = new List<GisFeature>();
+
+            for (int j = 0; j<features.Count; j++)
+            {
+                var feature = features[j];
+                var gisFeature = new GisFeature(gisUploadAttempt, feature.ToSqlGeometry().MakeValid().ToDbGeometry(), j);
+                gisFeatures.Add(gisFeature);
+                feature.Properties.Add("GisFeatureKey", j.ToString());
+                feature.Properties.Add("GisFeature", gisFeature);
+            }
+
+            HttpRequestStorage.DatabaseEntities.GisFeatures.AddRange(gisFeatures);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel().SelectMany(y => y.Properties.AsParallel().Select(x => new GisFeatureMetadataAttribute(((GisFeature) y.Properties["GisFeature"]).GisFeatureID, attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID) { GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null }));
+            HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.AddRange(
+                listOfGisFeatureMetadataAttributesToAdd);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
         private void SaveGisUploadToNormalizedFields( GisUploadAttempt gisUploadAttempt, bool importWasSuccessful)
@@ -620,6 +699,39 @@ namespace ProjectFirma.Web.Controllers
                     ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
                 }
             }
+        }
+
+        public static bool IsUsableFeatureGeoJson(Feature feature)
+        {
+            return feature != null && feature.Geometry != null && new List<GeoJSONObjectType> { GeoJSONObjectType.Polygon, GeoJSONObjectType.MultiPolygon }.Contains(feature.Geometry.Type);
+        }
+
+        public static bool IsUsableFeatureCollectionGeoJson(FeatureCollection featureCollection)
+        {
+            return featureCollection.Features.Any(IsUsableFeatureGeoJson);
+        }
+
+        public static FeatureCollection ImportGdbToGeoJson(
+            FileInfo gisFile)
+        {
+            var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
+                Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
+                FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
+
+            var classNames = OgrInfoCommandLineRunner.GetFeatureClassNamesFromFileGdb(
+                new FileInfo(FirmaWebConfiguration.OgrInfoExecutable), gisFile,
+                Ogr2OgrCommandLineRunner.DefaultTimeOut);
+            var allFeatureClasses =
+                classNames.Select(x => ogr2OgrCommandLineRunner.ImportFileGdbToGeoJson(gisFile, x, false));
+            var goodFeatureClasses = allFeatureClasses.Where(x =>
+                IsUsableFeatureCollectionGeoJson(JsonTools.DeserializeObject<FeatureCollection>(x)));
+            var goodFeatures = goodFeatureClasses.Select(x =>
+                new FeatureCollection(JsonTools.DeserializeObject<FeatureCollection>(x).Features
+                    .Where(IsUsableFeatureGeoJson).ToList())).ToList();
+
+            Check.Assert(goodFeatures.Count != 0, "Number of usable Feature Classes in uploaded file must be greater than 0.");
+
+            return goodFeatures.First();
         }
 
         private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID
