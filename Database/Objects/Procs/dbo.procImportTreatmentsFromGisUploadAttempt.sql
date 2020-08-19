@@ -231,7 +231,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 2 -- Pruning
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -266,7 +266,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 3 -- Thinning
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -302,8 +302,8 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
-               , 1 -- Thinning
+               , 3 -- non-commercial
+               , 1 -- chipping
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
                , @piGisUploadAttemptID
@@ -337,7 +337,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 4 -- Mastication
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -371,7 +371,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 5 -- Grazing
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -406,7 +406,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 6 -- Lop and Scatter
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -440,7 +440,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 7 -- Biomass Removal
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -474,7 +474,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 8 -- Hand Pile
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -509,7 +509,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 2 -- burn
                , 10 -- Hand Pile Burn
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -544,7 +544,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 2 -- burn
                , 11 -- Machine Burn
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -579,7 +579,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 2 -- fire
                , 9 -- Broadcast Burn
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
@@ -614,7 +614,7 @@ begin
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
                , ta.TreatmentAreaID
-               , x.TreatmentTypeID
+               , 3 -- non-commercial
                , 13 -- Other
                , x.TreatmentTypeImportedText
                , x.TreatmentDetailedActivityTypeImportedText
