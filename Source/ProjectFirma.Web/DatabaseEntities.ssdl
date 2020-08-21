@@ -106,6 +106,7 @@
     <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectGrantAllocationRequestRequestFundingSource" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestRequestFundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.Store.ProjectImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImageUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectImageUpdate" store:Type="Tables" Schema="dbo" />
@@ -842,6 +843,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_ProjectGrantAllocationRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID">
+      <End Role="ProjectGrantAllocationRequest" EntitySet="ProjectGrantAllocationRequest" />
+      <End Role="ProjectGrantAllocationRequestRequestFundingSources" EntitySet="ProjectGrantAllocationRequestRequestFundingSource" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -2276,6 +2281,15 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
+    <Property Name="ProjectGrantAllocationRequestNote" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="ProjectGrantAllocationRequestRequestFundingSource">
+    <Key>
+      <PropertyRef Name="ProjectGrantAllocationRequestRequestFundingSourceID" />
+    </Key>
+    <Property Name="ProjectGrantAllocationRequestRequestFundingSourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectGrantAllocationRequestID" Type="int" Nullable="false" />
+    <Property Name="ProjectGrantAllocationRequestFundingSourceID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationRequestUpdate">
     <Key>
@@ -2285,6 +2299,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
+    <Property Name="ProjectGrantAllocationRequestUPdateNote" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="ProjectImage">
     <Key>
@@ -4862,6 +4877,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="ProjectGrantAllocationRequests">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID">
+    <End Role="ProjectGrantAllocationRequest" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" Multiplicity="1" />
+    <End Role="ProjectGrantAllocationRequestRequestFundingSources" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestRequestFundingSource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectGrantAllocationRequest">
+        <PropertyRef Name="ProjectGrantAllocationRequestID" />
+      </Principal>
+      <Dependent Role="ProjectGrantAllocationRequestRequestFundingSources">
+        <PropertyRef Name="ProjectGrantAllocationRequestID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

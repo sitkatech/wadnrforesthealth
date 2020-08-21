@@ -1265,6 +1265,16 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="ProjectGrantAllocationRequestNote" ColumnName="ProjectGrantAllocationRequestNote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectGrantAllocationRequestRequestFundingSource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationRequestRequestFundingSource">
+        <MappingFragment StoreEntitySet="ProjectGrantAllocationRequestRequestFundingSource">
+          <ScalarProperty Name="ProjectGrantAllocationRequestRequestFundingSourceID" ColumnName="ProjectGrantAllocationRequestRequestFundingSourceID" />
+          <ScalarProperty Name="ProjectGrantAllocationRequestID" ColumnName="ProjectGrantAllocationRequestID" />
+          <ScalarProperty Name="ProjectGrantAllocationRequestFundingSourceID" ColumnName="ProjectGrantAllocationRequestFundingSourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1275,6 +1285,7 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="ProjectGrantAllocationRequestUPdateNote" ColumnName="ProjectGrantAllocationRequestUPdateNote" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

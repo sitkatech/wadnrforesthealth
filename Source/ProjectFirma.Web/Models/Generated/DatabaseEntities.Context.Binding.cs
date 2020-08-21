@@ -132,6 +132,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequestRequestFundingSource> ProjectGrantAllocationRequestRequestFundingSources { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
@@ -692,6 +693,14 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectGrantAllocationExpenditureUpdate":
                     return ProjectGrantAllocationExpenditureUpdates.GetProjectGrantAllocationExpenditureUpdate(primaryKey);
+
+                case "ProjectGrantAllocationRequestFundingSource":
+                    var projectGrantAllocationRequestFundingSource = ProjectGrantAllocationRequestFundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(projectGrantAllocationRequestFundingSource, "ProjectGrantAllocationRequestFundingSource", primaryKey);
+                    return projectGrantAllocationRequestFundingSource;
+
+                case "ProjectGrantAllocationRequestRequestFundingSource":
+                    return ProjectGrantAllocationRequestRequestFundingSources.GetProjectGrantAllocationRequestRequestFundingSource(primaryKey);
 
                 case "ProjectGrantAllocationRequest":
                     return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);
