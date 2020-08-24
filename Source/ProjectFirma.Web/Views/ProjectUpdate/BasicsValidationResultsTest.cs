@@ -38,21 +38,18 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ProjectStageID = ProjectStage.Completed.ProjectStageID;
             var warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
             Assert.That(warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
                                     
             projectUpdate.CompletionDate = new DateTime(2007, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
 
             projectUpdate.PlannedDate = new DateTime(2010, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(!warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
             Assert.That(warningMessages.Contains(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear));
@@ -66,7 +63,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.PlannedDate = new DateTime(2025,1,1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(!warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateShouldBeLessThanCurrentYear));
 
 
