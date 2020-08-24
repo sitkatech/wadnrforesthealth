@@ -22,11 +22,7 @@ create table dbo.ProjectGrantAllocationRequestRequestFundingSource
     ProjectGrantAllocationRequestFundingSourceID int not null constraint FK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequestFundingSource_ProjectGrantAllocationRequestFun foreign key references dbo.ProjectGrantAllocationRequestFundingSource(ProjectGrantAllocationRequestFundingSourceID)
 )
 
-alter table dbo.ProjectGrantAllocationRequest
-add ProjectGrantAllocationRequestNote varchar(max);
 
-alter table dbo.ProjectGrantAllocationRequestUpdate
-add ProjectGrantAllocationRequestUPdateNote varchar(max);
 
 
 --select * from dbo.ProjectGrantAllocationRequest
