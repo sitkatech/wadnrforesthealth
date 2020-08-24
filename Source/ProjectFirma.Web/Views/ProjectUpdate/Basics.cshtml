@@ -50,12 +50,12 @@
     <div class="form-horizontal">
         <div class="row form-group form-group-condensed">
             <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectDescription, true)
+                @Html.LabelWithSugarFor(m => m.ProjectDescription, false)
             </div>
             <div class="col-sm-8" style="padding-left: 10px;">
                 @if (ViewDataTyped.IsEditable)
                 {
-                    @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 6), null, new List<string> { "form-control" })
+                    @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 6), null, new List<string> { "form-control" }, false)
                     @Html.ValidationMessageFor(m => m.ProjectDescription)
                 }
                 else

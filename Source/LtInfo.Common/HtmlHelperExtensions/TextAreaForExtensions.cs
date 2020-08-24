@@ -69,8 +69,17 @@ namespace LtInfo.Common.HtmlHelperExtensions
             Expression<Func<TViewModel, TValue>> expression,
             TextAreaDimensions textAreaDimensions, string optionalPlaceholderText)
         {
-            return html.TextAreaWithMaxLengthFor(expression, textAreaDimensions, optionalPlaceholderText, null);
+            return html.TextAreaWithMaxLengthFor(expression, textAreaDimensions, optionalPlaceholderText, null, true);
         }
+
+
+        public static MvcHtmlString TextAreaWithMaxLengthFor<TViewModel, TValue>(this HtmlHelper<TViewModel> html,
+            Expression<Func<TViewModel, TValue>> expression,
+            TextAreaDimensions textAreaDimensions
+            , string optionalPlaceholderText
+            , IEnumerable<string> cssClasses
+            )
+        { return html.TextAreaWithMaxLengthFor(expression, textAreaDimensions, optionalPlaceholderText, cssClasses, true); }
 
         /// <summary>
         /// Custom TextArea control that has the max chars left in another div
@@ -78,7 +87,10 @@ namespace LtInfo.Common.HtmlHelperExtensions
         /// </summary>
         public static MvcHtmlString TextAreaWithMaxLengthFor<TViewModel, TValue>(this HtmlHelper<TViewModel> html,
             Expression<Func<TViewModel, TValue>> expression,
-            TextAreaDimensions textAreaDimensions, string optionalPlaceholderText, IEnumerable<string> cssClasses)
+            TextAreaDimensions textAreaDimensions
+            , string optionalPlaceholderText
+            , IEnumerable<string> cssClasses
+            , bool required)
         {
             int? maxLength = null;
             var memberExpression = expression.Body as MemberExpression;
@@ -126,6 +138,12 @@ namespace LtInfo.Common.HtmlHelperExtensions
             var validationAttributes = html.GetUnobtrusiveValidationAttributes(fullBindingName, metadata);
             foreach (var key in validationAttributes.Keys)
             {
+
+                if (!required && key.Contains("required", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    continue;
+                }
+
                 textAreaTag.Attributes.Add(key, validationAttributes[key].ToString());
             }
 
