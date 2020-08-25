@@ -60,8 +60,7 @@ namespace ProjectFirma.Web.Controllers
                 return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
             }
 
-            var interactionEvent = new InteractionEvent(viewModel.InteractionEventTypeID, viewModel.DNRStaffPersonID,
-                viewModel.Title, viewModel.Date);
+            var interactionEvent = new InteractionEvent(viewModel.InteractionEventTypeID, viewModel.Title, viewModel.Date);
             viewModel.UpdateModel(interactionEvent, CurrentPerson, new List<InteractionEventProject>(), new List<InteractionEventContact>());
             HttpRequestStorage.DatabaseEntities.InteractionEvents.Add(interactionEvent);
             SetMessageForDisplay($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} \"{interactionEvent.InteractionEventTitle}\" successfully created.");

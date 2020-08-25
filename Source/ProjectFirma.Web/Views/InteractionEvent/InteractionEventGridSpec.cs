@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             Add("Description", x => x.InteractionEventDescription, 200, DhtmlxGridColumnFilterType.Text);
             Add("Date", x => x.InteractionEventDate, 80, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(), x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson?.FullNameFirstLast, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }
