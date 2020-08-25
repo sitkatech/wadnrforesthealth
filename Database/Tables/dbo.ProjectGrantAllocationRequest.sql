@@ -7,7 +7,6 @@ CREATE TABLE [dbo].[ProjectGrantAllocationRequest](
 	[ProjectID] [int] NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[TotalAmount] [money] NULL,
-	[ProjectGrantAllocationRequestNote] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectGrantAllocationRequestID] ASC
@@ -17,7 +16,7 @@ CREATE TABLE [dbo].[ProjectGrantAllocationRequest](
 	[ProjectID] ASC,
 	[GrantAllocationID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
 ALTER TABLE [dbo].[ProjectGrantAllocationRequest]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])

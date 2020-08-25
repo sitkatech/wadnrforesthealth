@@ -3003,6 +3003,6 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionFundingSourceNote : FieldDefinition
     {
         private FieldDefinitionFundingSourceNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundingSourceNote Instance = new FieldDefinitionFundingSourceNote(472, @"FundingSourceNote", @"FundingSourceNote", @"<p>A note about the funding source(s) selected.</p>");
+        public static readonly FieldDefinitionFundingSourceNote Instance = new FieldDefinitionFundingSourceNote(472, @"FundingSourceNote", @"Funding Source Note", @"<p>A note about the funding source(s) selected.</p>");
     }
 }

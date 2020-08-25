@@ -1,6 +1,6 @@
-delete from dbo.ProjectGrantAllocationRequestFundingSource
+delete from dbo.ProjectFundingSource
 
-insert dbo.ProjectGrantAllocationRequestFundingSource (ProjectGrantAllocationRequestFundingSourceID, ProjectGrantAllocationRequestFundingSourceName, ProjectGrantAllocationRequestFundingSourceDisplayName) 
+insert dbo.ProjectFundingSource (ProjectFundingSourceID, ProjectFundingSourceName, ProjectFundingSourceDisplayName) 
 values 
 (1, 'Federal', 'Federal'),
 (2, 'State', 'State'),

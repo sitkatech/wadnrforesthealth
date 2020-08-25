@@ -39,6 +39,13 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [JsonIgnore]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSource)]
+        public List<int> ProjectFundingSourceIDs { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSourceNote)]
+        [StringLength(Models.Project.FieldLengths.ProjectFundingSourceNotes)]
+        public string ProjectFundingSourceNotes { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder

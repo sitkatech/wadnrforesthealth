@@ -130,9 +130,9 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
+        public virtual DbSet<ProjectFundingSource> ProjectFundingSources { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
-        public virtual DbSet<ProjectGrantAllocationRequestRequestFundingSource> ProjectGrantAllocationRequestRequestFundingSources { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
@@ -688,19 +688,14 @@ namespace ProjectFirma.Web.Models
                 case "ProjectExternalLinkUpdate":
                     return ProjectExternalLinkUpdates.GetProjectExternalLinkUpdate(primaryKey);
 
+                case "ProjectFundingSource":
+                    return ProjectFundingSources.GetProjectFundingSource(primaryKey);
+
                 case "ProjectGrantAllocationExpenditure":
                     return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
 
                 case "ProjectGrantAllocationExpenditureUpdate":
                     return ProjectGrantAllocationExpenditureUpdates.GetProjectGrantAllocationExpenditureUpdate(primaryKey);
-
-                case "ProjectGrantAllocationRequestFundingSource":
-                    var projectGrantAllocationRequestFundingSource = ProjectGrantAllocationRequestFundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(projectGrantAllocationRequestFundingSource, "ProjectGrantAllocationRequestFundingSource", primaryKey);
-                    return projectGrantAllocationRequestFundingSource;
-
-                case "ProjectGrantAllocationRequestRequestFundingSource":
-                    return ProjectGrantAllocationRequestRequestFundingSources.GetProjectGrantAllocationRequestRequestFundingSource(primaryKey);
 
                 case "ProjectGrantAllocationRequest":
                     return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);

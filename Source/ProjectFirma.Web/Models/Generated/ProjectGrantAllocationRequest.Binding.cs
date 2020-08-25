@@ -25,19 +25,18 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectGrantAllocationRequest()
         {
-            this.ProjectGrantAllocationRequestRequestFundingSources = new HashSet<ProjectGrantAllocationRequestRequestFundingSource>();
+
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int grantAllocationID, decimal? totalAmount, string projectGrantAllocationRequestNote) : this()
+        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int grantAllocationID, decimal? totalAmount) : this()
         {
             this.ProjectGrantAllocationRequestID = projectGrantAllocationRequestID;
             this.ProjectID = projectID;
             this.GrantAllocationID = grantAllocationID;
             this.TotalAmount = totalAmount;
-            this.ProjectGrantAllocationRequestNote = projectGrantAllocationRequestNote;
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectGrantAllocationRequestRequestFundingSources.Any();
+            return false;
         }
 
         /// <summary>
@@ -91,17 +90,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(ProjectGrantAllocationRequestRequestFundingSources.Any())
-            {
-                dependentObjects.Add(typeof(ProjectGrantAllocationRequestRequestFundingSource).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestRequestFundingSource).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectGrantAllocationRequest).Name};
 
 
         /// <summary>
@@ -117,19 +112,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in ProjectGrantAllocationRequestRequestFundingSources.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -137,11 +121,9 @@ namespace ProjectFirma.Web.Models
         public int ProjectID { get; set; }
         public int GrantAllocationID { get; set; }
         public decimal? TotalAmount { get; set; }
-        public string ProjectGrantAllocationRequestNote { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectGrantAllocationRequestID; } set { ProjectGrantAllocationRequestID = value; } }
 
-        public virtual ICollection<ProjectGrantAllocationRequestRequestFundingSource> ProjectGrantAllocationRequestRequestFundingSources { get; set; }
         public virtual Project Project { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
 

@@ -291,6 +291,6 @@ VALUES
 (469, N'TreatmentDetailedActivityType', 'Treatment Detailed Activity Type', N'<p>The type of treatment detailed activity</p>'),
 (470, N'FootprintAcres', 'Footprint Acres', N'<p>The footprint acres of a treatment</p>'),
 (471, N'FundingSource', 'Funding Source', N'<p>The funding source for the expected funding.</p>'),
-(472, N'FundingSourceNote', 'FundingSourceNote', N'<p>A note about the funding source(s) selected.</p>')
+(472, N'FundingSourceNote', 'Funding Source Note', N'<p>A note about the funding source(s) selected.</p>')
 
 

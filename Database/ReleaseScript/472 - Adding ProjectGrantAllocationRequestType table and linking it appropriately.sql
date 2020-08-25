@@ -1,13 +1,13 @@
 --select * from dbo.ProjectGrantAllocationRequest
 
-create table dbo.ProjectGrantAllocationRequestFundingSource
+create table dbo.ProjectFundingSource
 (
-    ProjectGrantAllocationRequestFundingSourceID int not null constraint PK_ProjectGrantAllocationRequestFundingSource_ProjectGrantAllocationRequestFundingSourceID primary key,
-    ProjectGrantAllocationRequestFundingSourceName varchar(150) not null,
-    ProjectGrantAllocationRequestFundingSourceDisplayName varchar(150) not null
+    ProjectFundingSourceID int not null constraint PK_ProjectFundingSource_ProjectFundingSourceID primary key,
+    ProjectFundingSourceName varchar(150) not null,
+    ProjectFundingSourceDisplayName varchar(150) not null
 )
 
-insert dbo.ProjectGrantAllocationRequestFundingSource (ProjectGrantAllocationRequestFundingSourceID, ProjectGrantAllocationRequestFundingSourceName, ProjectGrantAllocationRequestFundingSourceDisplayName) 
+insert dbo.ProjectFundingSource (ProjectFundingSourceID, ProjectFundingSourceName, ProjectFundingSourceDisplayName) 
 values 
 (1, 'Federal', 'Federal'),
 (2, 'State', 'State'),
@@ -15,15 +15,10 @@ values
 (4, 'Other', 'Other')
 
 
-create table dbo.ProjectGrantAllocationRequestRequestFundingSource
-(
-    ProjectGrantAllocationRequestRequestFundingSourceID int not null identity(1,1) constraint PK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequestRequestFundingSourceID primary key,
-    ProjectGrantAllocationRequestID int not null constraint FK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID foreign key references dbo.ProjectGrantAllocationRequest(ProjectGrantAllocationRequestID),
-    ProjectGrantAllocationRequestFundingSourceID int not null constraint FK_ProjectGrantAllocationRequestRequestFundingSource_ProjectGrantAllocationRequestFundingSource_ProjectGrantAllocationRequestFun foreign key references dbo.ProjectGrantAllocationRequestFundingSource(ProjectGrantAllocationRequestFundingSourceID)
-)
 
+alter table dbo.Project
+add ProjectFundingSourceID int null constraint FK_Project_ProjectFundingSource_ProjectFundingSourceID foreign key references dbo.ProjectFundingSource(ProjectFundingSourceID);
 
+alter table dbo.Project
+add ProjectFundingSourceNotes varchar(4000)
 
-
---select * from dbo.ProjectGrantAllocationRequest
---select * from dbo.ProjectGrantAllocationRequestUpdate

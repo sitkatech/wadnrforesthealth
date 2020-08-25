@@ -423,6 +423,9 @@
     <Compile Include="Models\Generated\ProjectExternalLinkUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectExternalLinkUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectExternalLinkUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSource.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditure.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditurePrimaryKey.Binding.cs" />
@@ -431,12 +434,7 @@
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditureUpdatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationRequest.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationRequest.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\ProjectGrantAllocationRequestFundingSource.Binding.cs" />
-    <Compile Include="Models\Generated\ProjectGrantAllocationRequestFundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationRequestPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\ProjectGrantAllocationRequestRequestFundingSource.Binding.cs" />
-    <Compile Include="Models\Generated\ProjectGrantAllocationRequestRequestFundingSource.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\ProjectGrantAllocationRequestRequestFundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationRequestUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationRequestUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationRequestUpdatePrimaryKey.Binding.cs" />

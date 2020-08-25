@@ -19,6 +19,9 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Common;
@@ -29,6 +32,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     {
         public readonly string RequestGrantAllocationUrl;
         public readonly ViewDataForAngularClass ViewDataForAngular;
+        public List<SelectListItem> FundingSources { get; }
 
         public ExpectedFundingViewData(Person currentPerson,
             Models.Project project,
@@ -37,6 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             ViewDataForAngular = viewDataForAngularClass;
             RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
+            FundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.ToSelectListWithEmptyFirstRow(x => x.ProjectFundingSourceID.ToString(), y => y.ProjectFundingSourceDisplayName).ToList();
         }
 
         public class ViewDataForAngularClass
