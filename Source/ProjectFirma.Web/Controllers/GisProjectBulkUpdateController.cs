@@ -251,22 +251,17 @@ namespace ProjectFirma.Web.Controllers
                 , broadcastBurnAcresMetadataAttributeID
                 , otherAcresMetadataAttributeID);
 
+            var projectPriorityLandscapesCalculated = HttpRequestStorage.DatabaseEntities.GetfGetProjectPriorityLandscapes(gisUploadAttempt.GisUploadAttemptID).ToList();
+            var projectPriorityLandscapes = projectPriorityLandscapesCalculated
+                .Select(x => new ProjectPriorityLandscape(x.ProjectID, x.PriorityLandscapeID)).ToList();
+            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 180;
+            var projectUplandDnrRegionsCalculated = HttpRequestStorage.DatabaseEntities.GetfGetProjectDnrUploadRegions(gisUploadAttempt.GisUploadAttemptID).ToList();
+            var projectRegions = projectUplandDnrRegionsCalculated
+                .Select(x => new ProjectRegion(x.ProjectID, x.DNRUplandRegionID)).ToList();
 
-
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x =>
-                x.CreateGisUploadAttemptID.HasValue && x.CreateGisUploadAttemptID.Value == gisUploadAttemptID).ToList();
-
-            var projectIDList = projects.Select(x => x.ProjectID).ToList();
-
-            var treatments =
-                HttpRequestStorage.DatabaseEntities.Treatments.Where(x => projectIDList.Contains(x.ProjectID)).ToList();
-
-            var treatmentDictionary = treatments.GroupBy(x => x.ProjectID).ToDictionary(y => y.Key, x => x.ToList().Select(z => z.TreatmentArea.TreatmentAreaFeature).ToList());
-
-            projects.ForEach(x => x.AutoAssignProjectPriorityLandscapes(treatmentDictionary[x.ProjectID]));
-
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-
+            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapes);
+            HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectRegions);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
             return new ModalDialogFormJsonResult();
         }
 

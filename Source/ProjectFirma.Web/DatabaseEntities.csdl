@@ -1081,6 +1081,12 @@
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
       <Parameter Name="psTableName" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="fGetProjectDnrUploadRegion" ReturnType="Collection(ProjectFirma.Web.Models.fGetProjectDnrUploadRegion_Result)" IsComposable="true">
+      <Parameter Name="piGisUploadAttemptID" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="fGetProjectPriorityLandscape" ReturnType="Collection(ProjectFirma.Web.Models.fGetProjectPriorityLandscape_Result)" IsComposable="true">
+      <Parameter Name="piGisUploadAttemptID" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
       <Parameter Name="stringToSplit" Type="String" />
       <Parameter Name="delimiter" Type="String" />
@@ -1089,6 +1095,16 @@
   <ComplexType Name="fGetColumnNamesForTable_Result">
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+  </ComplexType>
+  <ComplexType Name="fGetProjectDnrUploadRegion_Result">
+    <Property Name="number" Type="Int64" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="fGetProjectPriorityLandscape_Result">
+    <Property Name="number" Type="Int64" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
   </ComplexType>
   <ComplexType Name="fnSplitString_Result">
     <Property Name="splitdata" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
