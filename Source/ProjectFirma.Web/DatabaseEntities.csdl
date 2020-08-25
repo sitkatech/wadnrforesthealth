@@ -1943,7 +1943,7 @@
     </Key>
     <Property Name="InteractionEventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="InteractionEventTypeID" Type="Int32" Nullable="false" />
-    <Property Name="StaffPersonID" Type="Int32" Nullable="false" />
+    <Property Name="StaffPersonID" Type="Int32" />
     <Property Name="InteractionEventTitle" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InteractionEventDescription" Type="String" MaxLength="3000" Unicode="false" FixedLength="false" />
     <Property Name="InteractionEventDate" Type="DateTime" Nullable="false" />
@@ -4616,7 +4616,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_InteractionEvent_Person_StaffPersonID_PersonID">
-    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
     <End Role="InteractionEventsWhereYouAreTheStaffPerson" Type="ProjectFirma.Web.Models.InteractionEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffPerson">

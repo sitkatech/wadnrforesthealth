@@ -42,8 +42,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        [Required]
-        public int DNRStaffPersonID { get; set; }
+        public int? DNRStaffPersonID { get; set; }
 
         public List<InteractionEventProjectSimpleJson> InteractionEventProjects { get; set; }
 

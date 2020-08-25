@@ -1765,7 +1765,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="InteractionEventID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InteractionEventTypeID" Type="int" Nullable="false" />
-    <Property Name="StaffPersonID" Type="int" Nullable="false" />
+    <Property Name="StaffPersonID" Type="int" />
     <Property Name="InteractionEventTitle" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InteractionEventDescription" Type="varchar" MaxLength="3000" />
     <Property Name="InteractionEventDate" Type="datetime" Nullable="false" />
@@ -3894,7 +3894,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_InteractionEvent_Person_StaffPersonID_PersonID">
-    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
     <End Role="InteractionEventsWhereYouAreTheStaffPerson" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffPerson">
