@@ -352,6 +352,11 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
 
+                case "FundingSource":
+                    var fundingSource = FundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(fundingSource, "FundingSource", primaryKey);
+                    return fundingSource;
+
                 case "GisCrossWalkDefault":
                     return GisCrossWalkDefaults.GetGisCrossWalkDefault(primaryKey);
 

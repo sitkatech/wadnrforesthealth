@@ -1,13 +1,13 @@
 --select * from dbo.ProjectGrantAllocationRequest
 
-create table dbo.ProjectFundingSource
+create table dbo.FundingSource
 (
-    ProjectFundingSourceID int not null constraint PK_ProjectFundingSource_ProjectFundingSourceID primary key,
-    ProjectFundingSourceName varchar(150) not null,
-    ProjectFundingSourceDisplayName varchar(150) not null
+    FundingSourceID int not null constraint PK_FundingSource_FundingSourceID primary key,
+    FundingSourceName varchar(150) not null,
+    FundingSourceDisplayName varchar(150) not null
 )
 
-insert dbo.ProjectFundingSource (ProjectFundingSourceID, ProjectFundingSourceName, ProjectFundingSourceDisplayName) 
+insert dbo.FundingSource (FundingSourceID, FundingSourceName, FundingSourceDisplayName) 
 values 
 (1, 'Federal', 'Federal'),
 (2, 'State', 'State'),
@@ -16,9 +16,16 @@ values
 
 
 
-alter table dbo.Project
-add ProjectFundingSourceID int null constraint FK_Project_ProjectFundingSource_ProjectFundingSourceID foreign key references dbo.ProjectFundingSource(ProjectFundingSourceID);
+--alter table dbo.Project
+--add FundingSourceID int null constraint FK_Project_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID);
 
 alter table dbo.Project
 add ProjectFundingSourceNotes varchar(4000)
+
+create table dbo.ProjectFundingSource
+(
+    ProjectFundingSourceID int not null identity(1,1) constraint PK_ProjectFundingSource_ProjectFundingSourceID primary key,
+    ProjectID int not null constraint FK_ProjectFundingSource_Project_ProjectID foreign key references dbo.Project(ProjectID),
+    FundingSourceID int not null constraint FK_ProjectFundingSource_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID)
+)
 

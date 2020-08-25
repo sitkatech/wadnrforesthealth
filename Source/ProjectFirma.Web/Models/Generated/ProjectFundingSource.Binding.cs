@@ -25,38 +25,50 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectFundingSource()
         {
-            this.Projects = new HashSet<Project>();
+
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSource(int projectFundingSourceID, string projectFundingSourceName, string projectFundingSourceDisplayName) : this()
+        public ProjectFundingSource(int projectFundingSourceID, int projectID, int fundingSourceID) : this()
         {
             this.ProjectFundingSourceID = projectFundingSourceID;
-            this.ProjectFundingSourceName = projectFundingSourceName;
-            this.ProjectFundingSourceDisplayName = projectFundingSourceDisplayName;
+            this.ProjectID = projectID;
+            this.FundingSourceID = fundingSourceID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSource(string projectFundingSourceName, string projectFundingSourceDisplayName) : this()
+        public ProjectFundingSource(int projectID, int fundingSourceID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ProjectFundingSourceName = projectFundingSourceName;
-            this.ProjectFundingSourceDisplayName = projectFundingSourceDisplayName;
+            this.ProjectID = projectID;
+            this.FundingSourceID = fundingSourceID;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public ProjectFundingSource(Project project, FundingSource fundingSource) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.ProjectFundingSourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectID = project.ProjectID;
+            this.Project = project;
+            project.ProjectFundingSources.Add(this);
+            this.FundingSourceID = fundingSource.FundingSourceID;
+        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectFundingSource CreateNewBlank()
+        public static ProjectFundingSource CreateNewBlank(Project project, FundingSource fundingSource)
         {
-            return new ProjectFundingSource(default(string), default(string));
+            return new ProjectFundingSource(project, fundingSource);
         }
 
         /// <summary>
@@ -65,7 +77,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Projects.Any();
+            return false;
         }
 
         /// <summary>
@@ -75,17 +87,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(Projects.Any())
-            {
-                dependentObjects.Add(typeof(Project).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectFundingSource).Name, typeof(Project).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectFundingSource).Name};
 
 
         /// <summary>
@@ -101,34 +109,23 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Projects.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
         public int ProjectFundingSourceID { get; set; }
-        public string ProjectFundingSourceName { get; set; }
-        public string ProjectFundingSourceDisplayName { get; set; }
+        public int ProjectID { get; set; }
+        public int FundingSourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectFundingSourceID; } set { ProjectFundingSourceID = value; } }
 
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual Project Project { get; set; }
+        public FundingSource FundingSource { get { return FundingSource.AllLookupDictionary[FundingSourceID]; } }
 
         public static class FieldLengths
         {
-            public const int ProjectFundingSourceName = 150;
-            public const int ProjectFundingSourceDisplayName = 150;
+
         }
     }
 }

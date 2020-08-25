@@ -34,7 +34,6 @@ CREATE TABLE [dbo].[Project](
 	[CreateGisUploadAttemptID] [int] NULL,
 	[LastUpdateGisUploadAttemptID] [int] NULL,
 	[ProjectGisIdentifier] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[ProjectFundingSourceID] [int] NULL,
 	[ProjectFundingSourceNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
@@ -81,11 +80,6 @@ ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_ProjectAppro
 REFERENCES [dbo].[ProjectApprovalStatus] ([ProjectApprovalStatusID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_ProjectApprovalStatus_ProjectApprovalStatusID]
-GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_ProjectFundingSource_ProjectFundingSourceID] FOREIGN KEY([ProjectFundingSourceID])
-REFERENCES [dbo].[ProjectFundingSource] ([ProjectFundingSourceID])
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_ProjectFundingSource_ProjectFundingSourceID]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_ProjectLocationSimpleType_ProjectLocationSimpleTypeID] FOREIGN KEY([ProjectLocationSimpleTypeID])
 REFERENCES [dbo].[ProjectLocationSimpleType] ([ProjectLocationSimpleTypeID])

@@ -148,6 +148,8 @@
     <Compile Include="Models\Generated\FocusAreaPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatus.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatusPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\FundingSource.Binding.cs" />
+    <Compile Include="Models\Generated\FundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefaultPrimaryKey.Binding.cs" />

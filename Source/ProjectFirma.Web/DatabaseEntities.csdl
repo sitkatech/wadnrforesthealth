@@ -879,10 +879,6 @@
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="ProjectPriorityLandscapeUpdates" EntitySet="ProjectPriorityLandscapeUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_Project_ProjectFundingSource_ProjectFundingSourceID" Association="ProjectFirma.Web.Models.FK_Project_ProjectFundingSource_ProjectFundingSourceID">
-      <End Role="ProjectFundingSource" EntitySet="ProjectFundingSource" />
-      <End Role="Projects" EntitySet="Project" />
-    </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="Projects" EntitySet="Project" />
@@ -906,6 +902,10 @@
     <AssociationSet Name="FK_ProjectExternalLink_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectExternalLink_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectExternalLinks" EntitySet="ProjectExternalLink" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectFundingSource_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectFundingSources" EntitySet="ProjectFundingSource" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -2418,7 +2418,6 @@
     <Property Name="CreateGisUploadAttemptID" Type="Int32" />
     <Property Name="LastUpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectFundingSourceID" Type="Int32" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
@@ -2431,13 +2430,13 @@
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectsWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProjectsWhereYouAreTheProposingPerson" ToRole="ProposingPerson" />
     <NavigationProperty Name="ReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ProjectsWhereYouAreTheReviewedByPerson" ToRole="ReviewedByPerson" />
-    <NavigationProperty Name="ProjectFundingSource" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectFundingSource_ProjectFundingSourceID" FromRole="Projects" ToRole="ProjectFundingSource" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="Projects" ToRole="ProjectType" />
     <NavigationProperty Name="ProjectClassifications" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="Project" ToRole="ProjectClassifications" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID" FromRole="Project" ToRole="ProjectCustomAttributes" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID" FromRole="Project" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectExemptReportingYears" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID" FromRole="Project" ToRole="ProjectExemptReportingYears" />
     <NavigationProperty Name="ProjectExternalLinks" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLink_Project_ProjectID" FromRole="Project" ToRole="ProjectExternalLinks" />
+    <NavigationProperty Name="ProjectFundingSources" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID" FromRole="Project" ToRole="ProjectFundingSources" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationExpenditures" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_Project_ProjectID" FromRole="Project" ToRole="ProjectImages" />
@@ -2600,10 +2599,10 @@
     <Key>
       <PropertyRef Name="ProjectFundingSourceID" />
     </Key>
-    <Property Name="ProjectFundingSourceID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectFundingSourceName" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectFundingSourceDisplayName" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectFundingSource_ProjectFundingSourceID" FromRole="ProjectFundingSource" ToRole="Projects" />
+    <Property Name="ProjectFundingSourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID" FromRole="ProjectFundingSources" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationExpenditure">
     <Key>
@@ -5468,18 +5467,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Project_ProjectFundingSource_ProjectFundingSourceID">
-    <End Role="ProjectFundingSource" Type="ProjectFirma.Web.Models.ProjectFundingSource" Multiplicity="0..1" />
-    <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectFundingSource">
-        <PropertyRef Name="ProjectFundingSourceID" />
-      </Principal>
-      <Dependent Role="Projects">
-        <PropertyRef Name="ProjectFundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Project_ProjectType_ProjectTypeID">
     <End Role="ProjectType" Type="ProjectFirma.Web.Models.ProjectType" Multiplicity="1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
@@ -5548,6 +5535,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectExternalLinks">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectFundingSource_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectFundingSources" Type="ProjectFirma.Web.Models.ProjectFundingSource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectFundingSources">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

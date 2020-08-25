@@ -1099,7 +1099,6 @@
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
-          <ScalarProperty Name="ProjectFundingSourceID" ColumnName="ProjectFundingSourceID" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -1242,8 +1241,8 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSource">
         <MappingFragment StoreEntitySet="ProjectFundingSource">
           <ScalarProperty Name="ProjectFundingSourceID" ColumnName="ProjectFundingSourceID" />
-          <ScalarProperty Name="ProjectFundingSourceName" ColumnName="ProjectFundingSourceName" />
-          <ScalarProperty Name="ProjectFundingSourceDisplayName" ColumnName="ProjectFundingSourceDisplayName" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

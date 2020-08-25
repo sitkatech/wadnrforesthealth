@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             ViewDataForAngular = viewDataForAngularClass;
             RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
-            FundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.ToSelectListWithEmptyFirstRow(x => x.ProjectFundingSourceID.ToString(), y => y.ProjectFundingSourceDisplayName).ToList();
+            FundingSources = FundingSource.All.ToSelectListWithEmptyFirstRow(x => x.FundingSourceID.ToString(), y => y.FundingSourceDisplayName).ToList();
         }
 
         public class ViewDataForAngularClass
