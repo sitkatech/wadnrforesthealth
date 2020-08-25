@@ -145,7 +145,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             {
                 var projectIdentifierGisMetadataAttribute = gisMetadataAttributes
                     .SingleOrDefault(x => string.Equals(x.GisMetadataAttributeName,
-                        projectIdentifierDefault.GisDefaultMappingColumnName));
+                        projectIdentifierDefault.GisDefaultMappingColumnName) || (projectIdentifierDefault.GisDefaultMappingColumnName.Length > 10 && string.Equals(x.GisMetadataAttributeName,
+                        projectIdentifierDefault.GisDefaultMappingColumnName.Substring(0,10))));
                 if (projectIdentifierGisMetadataAttribute != null)
                 {
                     defaultMetadataAttributeID = projectIdentifierGisMetadataAttribute.GisMetadataAttributeID;

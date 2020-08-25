@@ -179,6 +179,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
+        public virtual DbSet<fGetProjectDnrUploadRegion_Result> fGetProjectDnrUploadRegionResults { get; set; }
+        public virtual DbSet<fGetProjectPriorityLandscape_Result> fGetProjectPriorityLandscapeResults { get; set; }
         public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }
 
         [DbFunction("DatabaseEntities", "fGetColumnNamesForTable")]
@@ -191,6 +193,30 @@ namespace ProjectFirma.Web.Models
             };
             return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
                   .CreateQuery<fGetColumnNamesForTable_Result>("DatabaseEntities.fGetColumnNamesForTable(@psTableName)",psTableName);
+        }
+
+        [DbFunction("DatabaseEntities", "fGetProjectDnrUploadRegion")]
+        public virtual IQueryable<fGetProjectDnrUploadRegion_Result> GetfGetProjectDnrUploadRegions(int? piGisUploadAttemptIDParameter)
+        {
+            
+            var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
+            {
+                Value = piGisUploadAttemptIDParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetProjectDnrUploadRegion_Result>("DatabaseEntities.fGetProjectDnrUploadRegion(@piGisUploadAttemptID)",piGisUploadAttemptID);
+        }
+
+        [DbFunction("DatabaseEntities", "fGetProjectPriorityLandscape")]
+        public virtual IQueryable<fGetProjectPriorityLandscape_Result> GetfGetProjectPriorityLandscapes(int? piGisUploadAttemptIDParameter)
+        {
+            
+            var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
+            {
+                Value = piGisUploadAttemptIDParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetProjectPriorityLandscape_Result>("DatabaseEntities.fGetProjectPriorityLandscape(@piGisUploadAttemptID)",piGisUploadAttemptID);
         }
 
         [DbFunction("DatabaseEntities", "fnSplitString")]

@@ -1861,6 +1861,24 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetProjectDnrUploadRegion" FunctionImportName="fGetProjectDnrUploadRegion">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetProjectDnrUploadRegion_Result">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetProjectPriorityLandscape" FunctionImportName="fGetProjectPriorityLandscape">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetProjectPriorityLandscape_Result">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fnSplitString" FunctionImportName="fnSplitString">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fnSplitString_Result">
