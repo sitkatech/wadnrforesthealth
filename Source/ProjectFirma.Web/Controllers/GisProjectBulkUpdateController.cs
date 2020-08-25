@@ -189,7 +189,8 @@ namespace ProjectFirma.Web.Controllers
 
             var projectIdentifierValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrEmpty(y)).Distinct();
+            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue)
+                .Where(y => !string.IsNullOrWhiteSpace(y)).Distinct().OrderBy(x => x).ToList();
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x =>
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
