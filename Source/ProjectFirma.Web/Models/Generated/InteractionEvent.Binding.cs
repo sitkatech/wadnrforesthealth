@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public InteractionEvent(int interactionEventID, int interactionEventTypeID, int staffPersonID, string interactionEventTitle, string interactionEventDescription, DateTime interactionEventDate, DbGeometry interactionEventLocationSimple) : this()
+        public InteractionEvent(int interactionEventID, int interactionEventTypeID, int? staffPersonID, string interactionEventTitle, string interactionEventDescription, DateTime interactionEventDate, DbGeometry interactionEventLocationSimple) : this()
         {
             this.InteractionEventID = interactionEventID;
             this.InteractionEventTypeID = interactionEventTypeID;
@@ -46,13 +46,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public InteractionEvent(int interactionEventTypeID, int staffPersonID, string interactionEventTitle, DateTime interactionEventDate) : this()
+        public InteractionEvent(int interactionEventTypeID, string interactionEventTitle, DateTime interactionEventDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InteractionEventID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.InteractionEventTypeID = interactionEventTypeID;
-            this.StaffPersonID = staffPersonID;
             this.InteractionEventTitle = interactionEventTitle;
             this.InteractionEventDate = interactionEventDate;
         }
@@ -60,16 +59,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public InteractionEvent(InteractionEventType interactionEventType, Person staffPerson, string interactionEventTitle, DateTime interactionEventDate) : this()
+        public InteractionEvent(InteractionEventType interactionEventType, string interactionEventTitle, DateTime interactionEventDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InteractionEventID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.InteractionEventTypeID = interactionEventType.InteractionEventTypeID;
             this.InteractionEventType = interactionEventType;
             interactionEventType.InteractionEvents.Add(this);
-            this.StaffPersonID = staffPerson.PersonID;
-            this.StaffPerson = staffPerson;
-            staffPerson.InteractionEventsWhereYouAreTheStaffPerson.Add(this);
             this.InteractionEventTitle = interactionEventTitle;
             this.InteractionEventDate = interactionEventDate;
         }
@@ -77,9 +73,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static InteractionEvent CreateNewBlank(InteractionEventType interactionEventType, Person staffPerson)
+        public static InteractionEvent CreateNewBlank(InteractionEventType interactionEventType)
         {
-            return new InteractionEvent(interactionEventType, staffPerson, default(string), default(DateTime));
+            return new InteractionEvent(interactionEventType, default(string), default(DateTime));
         }
 
         /// <summary>
@@ -152,7 +148,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int InteractionEventID { get; set; }
         public int InteractionEventTypeID { get; set; }
-        public int StaffPersonID { get; set; }
+        public int? StaffPersonID { get; set; }
         public string InteractionEventTitle { get; set; }
         public string InteractionEventDescription { get; set; }
         public DateTime InteractionEventDate { get; set; }

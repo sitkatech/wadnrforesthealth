@@ -5,7 +5,7 @@ GO
 CREATE TABLE [dbo].[InteractionEvent](
 	[InteractionEventID] [int] IDENTITY(1,1) NOT NULL,
 	[InteractionEventTypeID] [int] NOT NULL,
-	[StaffPersonID] [int] NOT NULL,
+	[StaffPersonID] [int] NULL,
 	[InteractionEventTitle] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[InteractionEventDescription] [varchar](3000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[InteractionEventDate] [datetime] NOT NULL,
