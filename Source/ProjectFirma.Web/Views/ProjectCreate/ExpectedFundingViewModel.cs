@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public Money? ProjectEstimatedTotalCost { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSource)]
-        public List<int> ProjectFundingSourceIDs { get; set; }
+        public List<int> FundingSourceIDs { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSourceNote)]
         [StringLength(Models.Project.FieldLengths.ProjectFundingSourceNotes)]
@@ -54,17 +54,21 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
         }
 
-        public ExpectedFundingViewModel(List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, Money? projectEstimatedTotalCost)
+        public ExpectedFundingViewModel(List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, Money? projectEstimatedTotalCost, string projectFundingSourceNotes, List<ProjectFundingSource> projectFundingSources)
         {
             ProjectGrantAllocationRequestSimples = projectGrantAllocationRequests.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
-
+            ProjectFundingSourceNotes = projectFundingSourceNotes;
+            FundingSourceIDs = projectFundingSources.Select(x => x.FundingSourceID).ToList();
         }
 
         public void UpdateModel(Models.Project project,
             List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
-            IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests)
+            IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests,
+            List<ProjectFundingSource> currentProjectFundingSources,
+            IList<ProjectFundingSource> allProjectFundingSources)
         {
+            //UPdate the ProjectGrantAllocationRequests
             var projectGrantAllocationRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequestSimples != null)
             {
@@ -77,6 +81,21 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 allProjectGrantAllocationRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) => { x.TotalAmount = y.TotalAmount; });
+
+            //Update the ProjectFundingSources
+            var projectFundingSourcesUpdated = new List<Models.ProjectFundingSource>();
+            if (FundingSourceIDs.Any())
+            {
+                // Completely rebuild the list
+                projectFundingSourcesUpdated = FundingSourceIDs.Select(x => new ProjectFundingSource(project.ProjectID, x)).ToList();
+            }
+
+            currentProjectFundingSources.Merge(projectFundingSourcesUpdated,
+                allProjectFundingSources,
+                (x, y) => x.ProjectID == y.ProjectID && x.FundingSourceID == y.FundingSourceID);
+
+            //Update Project fields
+            project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.EstimatedTotalCost = ProjectEstimatedTotalCost;
         }
 

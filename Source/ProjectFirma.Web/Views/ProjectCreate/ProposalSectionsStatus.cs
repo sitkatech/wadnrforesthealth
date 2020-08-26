@@ -78,7 +78,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
 
             var efValidationResults = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(),
-                    project.EstimatedTotalCost)
+                                                                   project.EstimatedTotalCost,
+                                                                   project.ProjectFundingSourceNotes,
+                                                                   project.ProjectFundingSources.ToList())
                 .GetValidationResults();
             IsExpectedFundingSectionComplete = !efValidationResults.Any();
 
