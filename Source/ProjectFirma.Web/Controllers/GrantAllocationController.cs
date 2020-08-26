@@ -184,9 +184,8 @@ namespace ProjectFirma.Web.Controllers
             Check.EnsureNotNull(originalGrantAllocation);
             var relevantGrant = originalGrantAllocation.GrantModification.Grant;
             
-            // Copy original grant allocation to new view model, except grant mod and allocation amount
+            // Copy original grant allocation to new view model, except for the allocation amount
             var viewModel = new EditGrantAllocationViewModel(originalGrantAllocation);
-            viewModel.GrantModificationID = 0;
             viewModel.AllocationAmount = null;
             viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
 
