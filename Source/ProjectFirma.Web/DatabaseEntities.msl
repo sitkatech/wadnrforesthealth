@@ -1099,6 +1099,7 @@
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
+          <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1233,6 +1234,24 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ExternalLinkLabel" ColumnName="ExternalLinkLabel" />
           <ScalarProperty Name="ExternalLinkUrl" ColumnName="ExternalLinkUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectFundingSource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSource">
+        <MappingFragment StoreEntitySet="ProjectFundingSource">
+          <ScalarProperty Name="ProjectFundingSourceID" ColumnName="ProjectFundingSourceID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectFundingSourceUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceUpdate">
+        <MappingFragment StoreEntitySet="ProjectFundingSourceUpdate">
+          <ScalarProperty Name="ProjectFundingSourceUpdateID" ColumnName="ProjectFundingSourceUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1533,6 +1552,7 @@
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

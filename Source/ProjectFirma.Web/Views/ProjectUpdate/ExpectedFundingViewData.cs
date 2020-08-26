@@ -19,6 +19,9 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.ProjectFunding;
@@ -28,14 +31,15 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class ExpectedFundingViewData : ProjectUpdateViewData
     {
-        public readonly string RefreshUrl;
-        public readonly string DiffUrl;
+        public string RefreshUrl { get; }
+        public string DiffUrl { get; }
         public ProjectFundingDetailViewData ProjectFundingDetailViewData { get; set; }
+        public List<SelectListItem> FundingSources { get; }
 
-        public readonly string RequestGrantAllocationUrl;
-        public readonly ViewDataForAngularClass ViewDataForAngular;
-        public readonly SectionCommentsViewData SectionCommentsViewData;
-        
+        public string RequestGrantAllocationUrl { get; }
+        public ViewDataForAngularClass ViewDataForAngular { get; }
+        public SectionCommentsViewData SectionCommentsViewData { get; }
+
         public ExpectedFundingViewData(Person currentPerson, ProjectUpdateBatch projectUpdateBatch, ViewDataForAngularClass viewDataForAngularClass, ProjectFundingDetailViewData projectFundingDetailViewData, UpdateStatus updateStatus, ExpectedFundingValidationResult expectedFundingValidationResult)
             : base(currentPerson, projectUpdateBatch, updateStatus, expectedFundingValidationResult.GetWarningMessages(), ProjectUpdateSection.ExpectedFunding.ProjectUpdateSectionDisplayName)
         {
@@ -46,6 +50,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectFundingDetailViewData = projectFundingDetailViewData;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.ExpectedFundingComment, projectUpdateBatch.IsReturned);
             ValidationWarnings = expectedFundingValidationResult.GetWarningMessages();
+            FundingSources = FundingSource.All.ToSelectList(x => x.FundingSourceID.ToString(), y => y.FundingSourceDisplayName).ToList();
+
         }
 
         public class ViewDataForAngularClass

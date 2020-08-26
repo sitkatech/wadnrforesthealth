@@ -150,6 +150,8 @@
     <Compile Include="Models\Generated\FocusAreaPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatus.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatusPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\FundingSource.Binding.cs" />
+    <Compile Include="Models\Generated\FundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefaultPrimaryKey.Binding.cs" />
@@ -425,6 +427,12 @@
     <Compile Include="Models\Generated\ProjectExternalLinkUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectExternalLinkUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectExternalLinkUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSource.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourcePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourceUpdate.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourceUpdate.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourceUpdatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditure.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditurePrimaryKey.Binding.cs" />
@@ -644,6 +652,8 @@
     <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
+    <Compile Include="Models\ProjectFundingSource.cs" />
+    <Compile Include="Models\ProjectFundingSourceUpdate.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\SqlBienniumTest.cs" />
     <Compile Include="Models\TreatmentModelExtensions.cs" />

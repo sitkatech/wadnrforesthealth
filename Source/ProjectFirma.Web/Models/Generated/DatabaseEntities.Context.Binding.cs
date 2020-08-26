@@ -130,6 +130,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
+        public virtual DbSet<ProjectFundingSource> ProjectFundingSources { get; set; }
+        public virtual DbSet<ProjectFundingSourceUpdate> ProjectFundingSourceUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
@@ -376,6 +378,11 @@ namespace ProjectFirma.Web.Models
                     var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
+
+                case "FundingSource":
+                    var fundingSource = FundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(fundingSource, "FundingSource", primaryKey);
+                    return fundingSource;
 
                 case "GisCrossWalkDefault":
                     return GisCrossWalkDefaults.GetGisCrossWalkDefault(primaryKey);
@@ -712,6 +719,12 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectExternalLinkUpdate":
                     return ProjectExternalLinkUpdates.GetProjectExternalLinkUpdate(primaryKey);
+
+                case "ProjectFundingSource":
+                    return ProjectFundingSources.GetProjectFundingSource(primaryKey);
+
+                case "ProjectFundingSourceUpdate":
+                    return ProjectFundingSourceUpdates.GetProjectFundingSourceUpdate(primaryKey);
 
                 case "ProjectGrantAllocationExpenditure":
                     return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
