@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
@@ -40,7 +41,7 @@ namespace ProjectFirma.Web.Views.GrantModification
         public EditGrantModificationViewData(IEnumerable<Models.GrantModificationStatus> grantModificationStatuses, IEnumerable<GrantModificationPurpose> grantModificationPurposes)
         {
             GrantModificationStatuses = grantModificationStatuses.ToSelectListWithEmptyFirstRow(k => k.GrantModificationStatusID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationStatusName);
-            AllGrantModificationPurposes = grantModificationPurposes.ToSelectList(k => k.GrantModificationPurposeID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationPurposeName);
+            AllGrantModificationPurposes = grantModificationPurposes.ToSelectList(k => k.GrantModificationPurposeID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationPurposeName).OrderBy(x => x.Text);
 
         }
     }
