@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.GrantModification
             ShowDownload = grantModification.GrantModificationFileResource != null;
 
             var relevantGrant = grantModification.Grant;
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, relevantGrant);
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(grantModification));
         }
