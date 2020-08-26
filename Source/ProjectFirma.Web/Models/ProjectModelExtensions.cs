@@ -170,5 +170,17 @@ namespace ProjectFirma.Web.Models
             return explicitOrganizations.DistinctBy(x => new {x.Project.ProjectID, x.Organization.OrganizationID})
                 .ToList();
         }
+
+        public static string GetProjectFundingSourcesAsCommaSeparatedList(this Project project)
+        {
+            if (project.ProjectFundingSources.Any())
+            {
+                var fundingSourceDisplayNames = project.ProjectFundingSources.Select(pfs => pfs.FundingSource.FundingSourceDisplayName);
+                var fundingSourcesForDisplay = string.Join(", ", fundingSourceDisplayNames);
+                return fundingSourcesForDisplay;
+            }
+
+            return $"No {FieldDefinition.FundingSource.FieldDefinitionDisplayName} selected.";
+        }
     }
 }

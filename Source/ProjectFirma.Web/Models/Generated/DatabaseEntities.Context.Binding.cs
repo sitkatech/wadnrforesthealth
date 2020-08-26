@@ -131,6 +131,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
         public virtual DbSet<ProjectFundingSource> ProjectFundingSources { get; set; }
+        public virtual DbSet<ProjectFundingSourceUpdate> ProjectFundingSourceUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
@@ -695,6 +696,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectFundingSource":
                     return ProjectFundingSources.GetProjectFundingSource(primaryKey);
+
+                case "ProjectFundingSourceUpdate":
+                    return ProjectFundingSourceUpdates.GetProjectFundingSourceUpdate(primaryKey);
 
                 case "ProjectGrantAllocationExpenditure":
                     return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);

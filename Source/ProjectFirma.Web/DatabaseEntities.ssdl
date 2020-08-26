@@ -104,6 +104,7 @@
     <EntitySet Name="ProjectExternalLink" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLink" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLinkUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectFundingSource" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectFundingSourceUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSourceUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" store:Type="Tables" Schema="dbo" />
@@ -823,6 +824,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_ProjectFundingSource_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundingSource_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectFundingSources" EntitySet="ProjectFundingSource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectFundingSourceUpdates" EntitySet="ProjectFundingSourceUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -2262,6 +2267,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ProjectFundingSourceUpdate">
+    <Key>
+      <PropertyRef Name="ProjectFundingSourceUpdateID" />
+    </Key>
+    <Property Name="ProjectFundingSourceUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
+    <Property Name="FundingSourceID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ProjectGrantAllocationExpenditure">
     <Key>
       <PropertyRef Name="ProjectGrantAllocationExpenditureID" />
@@ -2535,6 +2548,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="FocusAreaID" Type="int" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
     <Key>
@@ -4816,6 +4830,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="ProjectFundingSources">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectFundingSourceUpdates" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectFundingSourceUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

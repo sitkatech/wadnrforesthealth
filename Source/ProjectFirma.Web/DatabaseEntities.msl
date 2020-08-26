@@ -1246,6 +1246,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectFundingSourceUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceUpdate">
+        <MappingFragment StoreEntitySet="ProjectFundingSourceUpdate">
+          <ScalarProperty Name="ProjectFundingSourceUpdateID" ColumnName="ProjectFundingSourceUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProjectGrantAllocationExpenditure">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure">
         <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditure">
@@ -1543,6 +1552,7 @@
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -16,6 +16,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[PrimaryContactPersonID] [int] NULL,
 	[FocusAreaID] [int] NULL,
 	[ExpirationDate] [datetime] NULL,
+	[ProjectFundingSourceNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectUpdate_ProjectUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateID] ASC

@@ -292,6 +292,14 @@
                             <label class="col-xs-6 col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()</div>
                         </div>
+                        <div class="row">
+                            <label class="col-xs-6 col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.FundingSource)</label>
+                            <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.GetProjectFundingSourcesAsCommaSeparatedList()</div>
+                        </div>
+                        <div class="row">
+                            <label class="col-xs-6 col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.FundingSourceNote)</label>
+                            <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.ProjectFundingSourceNotes</div>
+                        </div>
                         <hr />
                         @{
                             ProjectFundingDetail.RenderPartialView(Html, ViewDataTyped.ProjectFundingDetailViewData);

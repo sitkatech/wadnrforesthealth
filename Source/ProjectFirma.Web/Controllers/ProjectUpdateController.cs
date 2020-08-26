@@ -633,7 +633,10 @@ namespace ProjectFirma.Web.Controllers
             }
             var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectGrantAllocationRequestUpdates,
-                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost);
+                                                         projectUpdateBatch.ExpectedFundingComment, 
+                                                         projectUpdate.EstimatedTotalCost,
+                                                         projectUpdate.ProjectFundingSourceNotes,
+                                                         projectUpdateBatch.ProjectFundingSourceUpdates.ToList());
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
         }
 
@@ -652,10 +655,17 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewExpectedFunding(projectUpdateBatch, viewModel);
             }
+
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Load();
             var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
             var allProjectGrantAllocationExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Local;
-            viewModel.UpdateModel(projectUpdateBatch, projectGrantAllocationRequestUpdates, allProjectGrantAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate);
+
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.Load();
+            var projectFundingSourceUpdates = projectUpdateBatch.ProjectFundingSourceUpdates.ToList();
+            var allProjectFundingSourceUpdates = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.Local;
+
+            viewModel.UpdateModel(projectUpdateBatch, projectGrantAllocationRequestUpdates, allProjectGrantAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate, projectFundingSourceUpdates, allProjectFundingSourceUpdates);
+
             if (projectUpdateBatch.IsSubmitted)
             {
                 projectUpdateBatch.ExpectedFundingComment = viewModel.Comments;
@@ -1487,6 +1497,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
             var allprojectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Load();
+            var allprojectFundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Local;
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //HttpRequestStorage.DatabaseEntities.ProjectBudgets.Load();
             //var allProjectBudgets = HttpRequestStorage.DatabaseEntities.ProjectBudgets.Local;
@@ -1521,8 +1533,9 @@ namespace ProjectFirma.Web.Controllers
                 DateTime.Now,
                 allProjectExemptReportingYears,
                 allProjectGrantAllocationExpenditures,
+                allprojectFundingSources,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
-//                allProjectBudgets,
+                //                allProjectBudgets,
                 allPerformanceMeasureActuals,
                 allPerformanceMeasureActualSubcategoryOptions,
                 allProjectExternalLinks,

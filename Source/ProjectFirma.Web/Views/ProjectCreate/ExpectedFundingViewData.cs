@@ -30,8 +30,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ExpectedFundingViewData : ProjectCreateViewData
     {
-        public readonly string RequestGrantAllocationUrl;
-        public readonly ViewDataForAngularClass ViewDataForAngular;
+        public string RequestGrantAllocationUrl { get; }
+        public ViewDataForAngularClass ViewDataForAngular { get; }
         public List<SelectListItem> FundingSources { get; }
 
         public ExpectedFundingViewData(Person currentPerson,

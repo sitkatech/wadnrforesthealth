@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID, DateTime? expirationDate) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID, DateTime? expirationDate, string projectFundingSourceNotes) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
             this.PrimaryContactPersonID = primaryContactPersonID;
             this.FocusAreaID = focusAreaID;
             this.ExpirationDate = expirationDate;
+            this.ProjectFundingSourceNotes = projectFundingSourceNotes;
         }
 
         /// <summary>
@@ -138,6 +139,7 @@ namespace ProjectFirma.Web.Models
         public int? PrimaryContactPersonID { get; set; }
         public int? FocusAreaID { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public string ProjectFundingSourceNotes { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateID; } set { ProjectUpdateID = value; } }
 
@@ -151,6 +153,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProjectDescription = 4000;
             public const int ProjectLocationNotes = 4000;
+            public const int ProjectFundingSourceNotes = 4000;
         }
     }
 }

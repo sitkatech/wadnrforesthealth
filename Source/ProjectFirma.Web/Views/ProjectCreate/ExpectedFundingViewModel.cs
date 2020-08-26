@@ -63,12 +63,12 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         }
 
         public void UpdateModel(Models.Project project,
-            List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
-            IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests,
-            List<ProjectFundingSource> currentProjectFundingSources,
-            IList<ProjectFundingSource> allProjectFundingSources)
+                                List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
+                                IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests,
+                                List<ProjectFundingSource> currentProjectFundingSources,
+                                IList<ProjectFundingSource> allProjectFundingSources)
         {
-            //UPdate the ProjectGrantAllocationRequests
+            //Update the ProjectGrantAllocationRequests
             var projectGrantAllocationRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequestSimples != null)
             {

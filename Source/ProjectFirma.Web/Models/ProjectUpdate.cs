@@ -77,6 +77,7 @@ namespace ProjectFirma.Web.Models
             project.ExpirationDate = ExpirationDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
+            project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
             project.PrimaryContactPersonID = PrimaryContactPersonID;
         }

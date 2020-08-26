@@ -29,3 +29,13 @@ create table dbo.ProjectFundingSource
     FundingSourceID int not null constraint FK_ProjectFundingSource_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID)
 )
 
+
+alter table dbo.ProjectUpdate
+add ProjectFundingSourceNotes varchar(4000)
+
+create table dbo.ProjectFundingSourceUpdate
+(
+    ProjectFundingSourceUpdateID int not null identity(1,1) constraint PK_ProjectFundingSourceUpdate_ProjectFundingSourceUpdateID primary key,
+    ProjectUpdateBatchID int not null constraint FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID foreign key references dbo.ProjectUpdateBatch(ProjectUpdateBatchID),
+    FundingSourceID int not null constraint FK_ProjectFundingSourceUpdate_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID)
+)
