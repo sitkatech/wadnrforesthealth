@@ -78,6 +78,20 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                     @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col-md-4 text-right" >@Html.LabelWithSugarFor(m => m.FundingSourceIDs)</div>
+                <div class="col-md-8">
+                    @Html.CheckBoxListFor(m => m.FundingSourceIDs, ViewDataTyped.FundingSources, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols)
+                    @Html.ValidationMessageFor(x => x.FundingSourceIDs)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4 text-right" >@Html.LabelWithSugarFor(m => m.ProjectFundingSourceNotes)</div>
+                <div class="col-md-8">
+                    @Html.TextAreaFor(m => m.ProjectFundingSourceNotes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.ProjectFundingSourceNotes)
+                </div>
+            </div>
             <hr/>
             <div ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequests | orderBy:[getGrantAllocationName]">
                 <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.ProjectID}}"/>

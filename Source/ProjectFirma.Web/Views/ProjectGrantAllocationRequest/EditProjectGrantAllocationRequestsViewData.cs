@@ -20,17 +20,21 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 {
     public class EditProjectGrantAllocationRequestsViewData : FirmaUserControlViewData
     {
-        public readonly List<GrantAllocationSimple> AllGrantAllocations;
-        public readonly List<ProjectSimple> AllProjects;
-        public readonly int? ProjectID;
-        public readonly int? GrantAllocationID;
-        public readonly bool FromGrantAllocation;
+        public List<GrantAllocationSimple> AllGrantAllocations { get; }
+        public List<ProjectSimple> AllProjects { get; }
+        public int? ProjectID { get; }
+        public int? GrantAllocationID { get; }
+        public bool FromGrantAllocation { get; }
+        public List<SelectListItem> FundingSources { get; }
 
         private EditProjectGrantAllocationRequestsViewData(List<ProjectSimple> allProjects,
             List<GrantAllocationSimple> allGrantAllocations,
@@ -41,8 +45,8 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
             ProjectID = projectID;
             GrantAllocationID = grantAllocationID;
             AllProjects = allProjects;
+            FundingSources = FundingSource.All.ToSelectList(x => x.FundingSourceID.ToString(), y => y.FundingSourceDisplayName).ToList();
 
-            
             var displayMode = GrantAllocationID.HasValue ? EditorDisplayMode.FromGrantAllocation : EditorDisplayMode.FromProject;
             FromGrantAllocation = displayMode == EditorDisplayMode.FromGrantAllocation;
         }

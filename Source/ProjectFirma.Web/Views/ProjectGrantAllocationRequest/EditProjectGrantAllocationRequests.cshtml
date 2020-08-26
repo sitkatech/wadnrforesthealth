@@ -61,34 +61,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 if (!ViewDataTyped.FromGrantAllocation)
                 {
                     @Html.HiddenFor(m => m.ForProject)
-                    @*<div class="form-group row">
-                        <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectEstimatedIndirectCost)</div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(m => m.ProjectEstimatedIndirectCost)
-                            @Html.ValidationMessageFor(x => x.ProjectEstimatedIndirectCost)
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectEstimatedPersonnelAndBenefitsCost)</div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(m => m.ProjectEstimatedPersonnelAndBenefitsCost)
-                            @Html.ValidationMessageFor(x => x.ProjectEstimatedPersonnelAndBenefitsCost)
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectEstimatedSuppliesCost)</div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(m => m.ProjectEstimatedSuppliesCost)
-                            @Html.ValidationMessageFor(x => x.ProjectEstimatedSuppliesCost)
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTravelCost)</div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(m => m.ProjectEstimatedTravelCost)
-                            @Html.ValidationMessageFor(x => x.ProjectEstimatedTravelCost)
-                        </div>
-                    </div>*@
+
                     <div class="form-group row">
                         <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
                         <div class="col-md-8">
@@ -96,6 +69,21 @@ Source code is available upon request via <support@sitkatech.com>.
                             @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-4" >@Html.LabelWithSugarFor(m => m.FundingSourceIDs)</div>
+                        <div class="col-md-8">
+                            @Html.CheckBoxListFor(m => m.FundingSourceIDs, ViewDataTyped.FundingSources, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols)
+                            @Html.ValidationMessageFor(x => x.FundingSourceIDs)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4" >@Html.LabelWithSugarFor(m => m.ProjectFundingSourceNotes)</div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.ProjectFundingSourceNotes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ProjectFundingSourceNotes)
+                        </div>
+                    </div>
+
 
                     <hr />
                 }

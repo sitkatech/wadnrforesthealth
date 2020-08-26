@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Controllers
             var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
             Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
 
-            var viewModel = new EditProjectGrantAllocationRequestsViewModel(currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost);
+            var viewModel = new EditProjectGrantAllocationRequestsViewModel(currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost, project.ProjectFundingSourceNotes, project.ProjectFundingSources.ToList());
             return ViewEditProjectGrantAllocationRequests(project, viewModel);
         }
 
@@ -62,12 +62,17 @@ namespace ProjectFirma.Web.Controllers
 
 
         private static ActionResult UpdateProjectGrantAllocationRequests(EditProjectGrantAllocationRequestsViewModel viewModel,
-                                                                       List<ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests, 
-                                                                       Project project)
+                                                                         List<ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests, 
+                                                                         Project project)
         {
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
             var allProjectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
-            viewModel.UpdateModel(currentProjectGrantAllocationRequests, allProjectGrantAllocationRequests, project);
+
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Load();
+            var allProjectFundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Local;
+            var currentProjectFundingSources = project.ProjectFundingSources.ToList();
+
+            viewModel.UpdateModel(currentProjectGrantAllocationRequests, allProjectGrantAllocationRequests, project, currentProjectFundingSources, allProjectFundingSources);
             
             return new ModalDialogFormJsonResult();
         }

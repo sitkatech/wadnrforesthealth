@@ -27,6 +27,7 @@ using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -45,6 +46,13 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 
         public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSource)]
+        public List<int> FundingSourceIDs { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSourceNote)]
+        [StringLength(Models.Project.FieldLengths.ProjectFundingSourceNotes)]
+        public string ProjectFundingSourceNotes { get; set; }
+
         //TODO: Get TotalAmount in here, pass to Angular Controller in EditProjectGrantAllocationRequests.cshtml
 
         /// <summary>
@@ -54,17 +62,25 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         {
         }
 
-        public EditProjectGrantAllocationRequestsViewModel(
-            List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, bool forProject, Money? projectEstimatedTotalCost)
+        public EditProjectGrantAllocationRequestsViewModel(List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, 
+                                                           bool forProject, 
+                                                           Money? projectEstimatedTotalCost,
+                                                           string projectFundingSourceNotes,
+                                                           List<ProjectFundingSource> projectFundingSources)
         {
             ProjectGrantAllocationRequests = projectGrantAllocationRequests
                 .Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ForProject = forProject;
+            ProjectFundingSourceNotes = projectFundingSourceNotes;
+            FundingSourceIDs = projectFundingSources.Select(x => x.FundingSourceID).ToList();
         }
 
         public void UpdateModel(List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
-            IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests, Models.Project project)
+                                IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests, 
+                                Models.Project project,
+                                List<ProjectFundingSource> currentProjectFundingSources,
+                                IList<ProjectFundingSource> allProjectFundingSources)
         {
             var projectGrantAllocationRequestsModified = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequests != null)
@@ -80,6 +96,21 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                     throw new InvalidOperationException(
                         $"Project is required to update {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Requests for a Project");
                 }
+
+                //Update the ProjectFundingSources
+                var projectFundingSourcesUpdated = new List<Models.ProjectFundingSource>();
+                if (FundingSourceIDs.Any())
+                {
+                    // Completely rebuild the list
+                    projectFundingSourcesUpdated = FundingSourceIDs.Select(x => new ProjectFundingSource(project.ProjectID, x)).ToList();
+                }
+
+                currentProjectFundingSources.Merge(projectFundingSourcesUpdated,
+                    allProjectFundingSources,
+                    (x, y) => x.ProjectID == y.ProjectID && x.FundingSourceID == y.FundingSourceID);
+
+                //Update Project fields
+                project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
                 project.EstimatedTotalCost = ProjectEstimatedTotalCost;
             }
 

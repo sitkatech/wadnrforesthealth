@@ -536,6 +536,7 @@ namespace ProjectFirma.Web.Models
             Person currentPerson, DateTime transitionDate,
             IList<ProjectExemptReportingYear> projectExemptReportingYears,
             IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
+            IList<ProjectFundingSource> projectFundingSources,
             IList<PerformanceMeasureActual> performanceMeasureActuals,
             IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
             IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
@@ -552,8 +553,9 @@ namespace ProjectFirma.Web.Models
             Check.Require(IsSubmitted, $"You cannot approve a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted!");
             CommitChangesToProject(projectExemptReportingYears,
                 projectGrantAllocationExpenditures,
+                projectFundingSources,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
-//                projectBudgets,
+                //                projectBudgets,
                 performanceMeasureActuals,
                 performanceMeasureActualSubcategoryOptions,
                 projectExternalLinks,
@@ -591,6 +593,7 @@ namespace ProjectFirma.Web.Models
 //            IList<ProjectBudget> projectBudgets,
                 IList<ProjectExemptReportingYear> projectExemptReportingYears,
                 IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
+                IList<ProjectFundingSource> projectFundingSources,
                 IList<PerformanceMeasureActual> performanceMeasureActuals,
                 IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
                 IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
@@ -612,6 +615,8 @@ namespace ProjectFirma.Web.Models
 
             // expected funding
             ProjectGrantAllocationRequestUpdate.CommitChangesToProject(this, projectGrantAllocationRequests);
+
+            ProjectFundingSourceUpdate.CommitChangesToProject(this, projectFundingSources);
 
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //  project budgets

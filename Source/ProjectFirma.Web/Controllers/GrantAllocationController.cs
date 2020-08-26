@@ -146,6 +146,9 @@ namespace ProjectFirma.Web.Controllers
         {
             Grant relevantGrant = grantPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationViewModel();
+            // Pre-populate allocation dates from the grant
+            viewModel.StartDate = relevantGrant.StartDate;
+            viewModel.EndDate = relevantGrant.EndDate;
             // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
             // a Grant Allocation that may have lost their "program manager" permissions
             return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
