@@ -177,6 +177,50 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
+        [GrantAllocationCreateFeature]
+        public PartialViewResult Duplicate(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
+            Check.EnsureNotNull(originalGrantAllocation);
+            var relevantGrant = originalGrantAllocation.GrantModification.Grant;
+            
+            // Copy original grant allocation to new view model, except grant mod and allocation amount
+            var viewModel = new EditGrantAllocationViewModel(originalGrantAllocation);
+            viewModel.GrantModificationID = 0;
+            viewModel.AllocationAmount = null;
+            viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
+
+            // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
+            // a Grant Allocation that may have lost their "program manager" permissions
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
+        }
+
+        [HttpPost]
+        [GrantAllocationCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Duplicate(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationViewModel viewModel)
+        {
+            var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
+            Check.EnsureNotNull(originalGrantAllocation);
+            var relevantGrant = originalGrantAllocation.GrantModification.Grant;
+            if (!ModelState.IsValid)
+            {
+                // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
+                // a Grant Allocation that may have lost their "program manager" permissions
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
+            }
+
+            var grantModification = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.GrantModificationID);
+            // Sanity check for alignment
+            Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
+            var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
         [GrantAllocationEditAsAdminFeature]
         public PartialViewResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {

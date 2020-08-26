@@ -39,6 +39,7 @@ namespace LtInfo.Common.DhtmlWrappers
         public static readonly HtmlString PlusIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus-sign gi-1x blue");
         public static readonly HtmlString UndoIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-regular undo gi-1x blue");
         public static readonly HtmlString EditIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit gi-1x blue");
+        public static readonly HtmlString DuplicateIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-duplicate gi-1x blue");
         public static readonly HtmlString FileIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file gi-1x blue");
         public static readonly HtmlString DeleteIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue");
         public static readonly HtmlString OkCircleIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIconWithHiddenText("glyphicon-ok-circle gi-1x blue", "Yes");
@@ -627,6 +628,14 @@ namespace LtInfo.Common.DhtmlWrappers
                 modalDialogForm.OnJavascriptReadyFunction,
                 null,
                 null);
+        }
+
+        /// <summary>
+        /// For making a duplicate icon on the grid with an editor in a jquery ui dialog
+        /// </summary>
+        public static HtmlString MakeDuplicateIconAndLinkBootstrap(string dialogContentUrl, int dialogWidth, string dialogTitle)
+        {
+            return MakeModalDialogLink($"{DuplicateIconBootstrap}<span style=\"display:none\">Duplicate</span>", dialogContentUrl, dialogWidth, dialogTitle, null);
         }
 
         /// <summary>
