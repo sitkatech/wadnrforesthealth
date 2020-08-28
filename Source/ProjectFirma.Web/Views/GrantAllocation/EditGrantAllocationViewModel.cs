@@ -244,6 +244,34 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null).Select(gapipc =>
                     new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
         }
+
+        // Some fields can't be serialized to JSON which is needed for the Angular controller,
+        // so this creates a clone without those fields
+        public EditGrantAllocationViewModel SerializableClone()
+        {
+            var clone = new EditGrantAllocationViewModel
+            {
+                GrantAllocationID = GrantAllocationID,
+                GrantModificationID = GrantModificationID,
+                GrantAllocationName = GrantAllocationName,
+                OrganizationID = OrganizationID,
+                ProgramIndexProjectCodeJsons = ProgramIndexProjectCodeJsons,
+                FederalFundCodeID = FederalFundCodeID,
+                DivisionID = DivisionID,
+                DNRUplandRegionID = DNRUplandRegionID,
+                AllocationAmount = AllocationAmount,
+                GrantAllocationChangeLogNote = GrantAllocationChangeLogNote,
+                StartDate = StartDate,
+                EndDate = EndDate,
+                ProgramManagerPersonIDs = ProgramManagerPersonIDs,
+                GrantManagerID = GrantManagerID,
+                GrantAllocationFileResourceDatas = new List<HttpPostedFileBase>()
+            };
+
+            // HttpPostedFileBase cannot be serialize by the default serializer
+
+            return clone;
+        }
     }
 
 

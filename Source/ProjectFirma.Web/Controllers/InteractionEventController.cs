@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -13,6 +14,7 @@ using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -139,6 +141,71 @@ namespace ProjectFirma.Web.Controllers
 
             interactionEvent.DeleteFull(HttpRequestStorage.DatabaseEntities);
 
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult NewInteractionEventFiles(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            Check.EnsureNotNull(interactionEventPrimaryKey.EntityObject);
+            var viewModel = new NewFileViewModel();
+            return ViewNewInteractionEventFiles(viewModel);
+        }
+
+        [HttpPost]
+        [InteractionEventManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewInteractionEventFiles(InteractionEventPrimaryKey interactionEventPrimaryKey, NewFileViewModel viewModel)
+        {
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewNewInteractionEventFiles(new NewFileViewModel());
+            }
+
+            viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} \"{interactionEvent.InteractionEventTitle}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewNewInteractionEventFiles(NewFileViewModel viewModel)
+        {
+            var viewData = new NewFileViewData();
+            return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult DeleteInteractionEventFile(InteractionEventFileResourcePrimaryKey interactionEventFileResourcePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(interactionEventFileResourcePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteInteractionEventFile(interactionEventFileResourcePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteInteractionEventFile(InteractionEventFileResource interactionEventFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{interactionEventFileResource.DisplayName}\" file created on '{interactionEventFileResource.FileResource.CreateDate}' by '{interactionEventFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [InteractionEventManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteInteractionEventFile(InteractionEventFileResourcePrimaryKey interactionEventFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var interactionEventFileResource = interactionEventFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteInteractionEventFile(interactionEventFileResource, viewModel);
+            }
+
+            var message = $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} file \"{interactionEventFileResource.DisplayName}\" created on '{interactionEventFileResource.FileResource.CreateDate}' by '{interactionEventFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
+            interactionEventFileResource.FileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            interactionEventFileResource.Delete(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }

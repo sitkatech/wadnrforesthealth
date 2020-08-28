@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantModification.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="InteractionEventFileResource.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,17 +19,19 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
-namespace ProjectFirma.Web.Views.GrantModification
+namespace ProjectFirma.Web.Models
 {
-    public abstract class EditGrantModification : TypedWebPartialViewPage<EditGrantModificationViewData, EditGrantModificationViewModel>
+    public partial class InteractionEventFileResource : IAuditableEntity, IEntityDocument
     {
-    }
+        public string AuditDescriptionString => $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}  \"{InteractionEvent?.InteractionEventTitle ?? "<Not Found>"}\" document \"{FileResource?.OriginalCompleteFileName ?? "<Not Found>"}\"";
 
-    public enum EditGrantModificationType
-    {
-        New,
-        Existing,
+        public string DeleteUrl => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.DeleteInteractionEventFile(InteractionEventFileResourceID));
+
+        public string EditUrl => string.Empty;
+
+        public string DisplayCssClass { get; set; }
     }
 }

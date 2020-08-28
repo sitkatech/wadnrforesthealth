@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Security;
@@ -33,6 +34,7 @@ using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -224,30 +226,32 @@ namespace ProjectFirma.Web.Controllers
         [GrantAllocationEditAsAdminFeature]
         public PartialViewResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var viewModel = new NewGrantAllocationFileViewModel(grantAllocationPrimaryKey.EntityObject);
+            Check.EnsureNotNull(grantAllocationPrimaryKey.EntityObject);
+            var viewModel = new NewFileViewModel();
             return ViewNewGrantAllocationFiles(viewModel);
         }
 
         [HttpPost]
         [GrantAllocationEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey, NewGrantAllocationFileViewModel viewModel)
+        public ActionResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey, NewFileViewModel viewModel)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNewGrantAllocationFiles(new NewGrantAllocationFileViewModel());
+                return ViewNewGrantAllocationFiles(new NewFileViewModel());
             }
 
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
-            SetMessageForDisplay($"Successfully created {viewModel.GrantAllocationFileResourceDatas.Count} new files(s) for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\".");
+            HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\".");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewNewGrantAllocationFiles(NewGrantAllocationFileViewModel viewModel)
+        private PartialViewResult ViewNewGrantAllocationFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewGrantAllocationFileViewData();
-            return RazorPartialView<NewGrantAllocationFile, NewGrantAllocationFileViewData, NewGrantAllocationFileViewModel>(viewData, viewModel);
+            var viewData = new NewFileViewData();
+            return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
         [HttpGet]

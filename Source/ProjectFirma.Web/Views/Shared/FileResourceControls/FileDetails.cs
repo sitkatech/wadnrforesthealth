@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantModification.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="FileDetails.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,17 +19,17 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.GrantModification
+namespace ProjectFirma.Web.Views.Shared.FileResourceControls
 {
-    public abstract class EditGrantModification : TypedWebPartialViewPage<EditGrantModificationViewData, EditGrantModificationViewModel>
+    public abstract class FileDetails : TypedWebPartialViewPage<FileDetailsViewData>
     {
-    }
-
-    public enum EditGrantModificationType
-    {
-        New,
-        Existing,
+        public static void RenderPartialView(HtmlHelper html, FileDetailsViewData viewData)
+        {
+            html.RenderRazorSitkaPartial<FileDetails, FileDetailsViewData>(viewData);
+        }
     }
 }

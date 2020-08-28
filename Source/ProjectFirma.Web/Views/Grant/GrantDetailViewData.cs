@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.Grant
             // Used for creating file download link, if file available
             ShowDownload = grant.GrantFileResources.Any(); ;
 
-            bool grantModificationFileExistsOnAtLeastOne = grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue);
+            bool grantModificationFileExistsOnAtLeastOne = false;//grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue);
             GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant, grantModificationFileExistsOnAtLeastOne);
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantModification.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="NewFileViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,17 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.Mvc;
-
-namespace ProjectFirma.Web.Views.GrantModification
+namespace ProjectFirma.Web.Views.Shared.FileResourceControls
 {
-    public abstract class EditGrantModification : TypedWebPartialViewPage<EditGrantModificationViewData, EditGrantModificationViewModel>
-    {
-    }
-
-    public enum EditGrantModificationType
-    {
-        New,
-        Existing,
-    }
+    public class NewFileViewData : FirmaUserControlViewData { }
 }

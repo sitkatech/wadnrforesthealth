@@ -3,14 +3,14 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using JetBrains.Annotations;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocation : IAuditableEntity
+    public partial class GrantAllocation : IAuditableEntity, ICanUploadNewFiles
     {
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
@@ -169,6 +169,10 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-
+        public void AddNewFileResource(FileResource fileResource)
+        {
+            var grantAllocationFileResource = new GrantAllocationFileResource(this, fileResource);
+            GrantAllocationFileResources.Add(grantAllocationFileResource);
+        }
     }
 }

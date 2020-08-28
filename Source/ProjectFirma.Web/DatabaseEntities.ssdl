@@ -52,6 +52,7 @@
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantModificationFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationPurpose" store:Type="Tables" Schema="dbo" />
@@ -62,6 +63,7 @@
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.Store.InteractionEvent" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.Store.InteractionEventContact" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InteractionEventFileResource" EntityType="ProjectFirma.Web.Models.Store.InteractionEventFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventProject" EntityType="ProjectFirma.Web.Models.Store.InteractionEventProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
@@ -461,10 +463,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantFileResources" EntitySet="GrantFileResource" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
-      <End Role="GrantModificationFileResource" EntitySet="FileResource" />
-      <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" EntitySet="GrantModification" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantModification_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantModifications" EntitySet="GrantModification" />
@@ -472,6 +470,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
       <End Role="GrantModificationStatus" EntitySet="GrantModificationStatus" />
       <End Role="GrantModifications" EntitySet="GrantModification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationFileResource_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
+      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
@@ -532,6 +538,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_InteractionEventContact_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventContact_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="InteractionEventContacts" EntitySet="InteractionEventContact" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEventFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="InteractionEventFileResources" EntitySet="InteractionEventFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEventFileResource_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventFileResource_InteractionEvent_InteractionEventID">
+      <End Role="InteractionEvent" EntitySet="InteractionEvent" />
+      <End Role="InteractionEventFileResources" EntitySet="InteractionEventFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_InteractionEventProject_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventProject_InteractionEvent_InteractionEventID">
       <End Role="InteractionEvent" EntitySet="InteractionEvent" />
@@ -1695,7 +1709,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantModificationStatusID" Type="int" Nullable="false" />
     <Property Name="GrantModificationAmount" Type="money" Nullable="false" />
     <Property Name="GrantModificationDescription" Type="nvarchar(max)" />
-    <Property Name="GrantModificationFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantModificationFileResource">
+    <Key>
+      <PropertyRef Name="GrantModificationFileResourceID" />
+    </Key>
+    <Property Name="GrantModificationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantModificationID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="GrantModificationGrantModificationPurpose">
     <Key>
@@ -1788,6 +1811,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="InteractionEventContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InteractionEventID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InteractionEventFileResource">
+    <Key>
+      <PropertyRef Name="InteractionEventFileResourceID" />
+    </Key>
+    <Property Name="InteractionEventFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InteractionEventID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="InteractionEventProject">
     <Key>
@@ -3741,18 +3774,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
-    <End Role="GrantModificationFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModificationFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantModificationsWhereYouAreTheGrantModificationFileResource">
-        <PropertyRef Name="GrantModificationFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantModification_Grant_GrantID">
     <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
     <End Role="GrantModifications" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="*" />
@@ -3774,6 +3795,32 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantModifications">
         <PropertyRef Name="GrantModificationStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.Store.GrantModificationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantModificationFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
+    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.Store.GrantModificationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
+      </Principal>
+      <Dependent Role="GrantModificationFileResources">
+        <PropertyRef Name="GrantModificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3954,6 +4001,32 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="InteractionEventContacts">
         <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEventFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="InteractionEventFileResources" Type="ProjectFirma.Web.Models.Store.InteractionEventFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="InteractionEventFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEventFileResource_InteractionEvent_InteractionEventID">
+    <End Role="InteractionEvent" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="1" />
+    <End Role="InteractionEventFileResources" Type="ProjectFirma.Web.Models.Store.InteractionEventFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InteractionEvent">
+        <PropertyRef Name="InteractionEventID" />
+      </Principal>
+      <Dependent Role="InteractionEventFileResources">
+        <PropertyRef Name="InteractionEventID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

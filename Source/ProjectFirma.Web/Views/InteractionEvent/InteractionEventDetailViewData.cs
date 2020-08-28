@@ -25,6 +25,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
@@ -47,6 +48,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public MapInitJson InteractionEventLocationSummaryMapInitJson { get; set; }
 
+        public FileDetailsViewData InteractionEventDetailFileDetailsViewData { get; set; }
 
 
         public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent, string locationMapFormID, MapInitJson interactionEventLocationSummaryMapInitJson) : base(currentPerson)
@@ -64,11 +66,13 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             InteractionEventLocationSummaryMapInitJson = interactionEventLocationSummaryMapInitJson;
             PageTitle = interactionEvent.InteractionEventTitle;
 
-
+            var canEditDocuments = new InteractionEventManageFeature().HasPermissionByPerson(CurrentPerson);
+            InteractionEventDetailFileDetailsViewData = new FileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(interactionEvent.InteractionEventFileResources)),
+                SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.NewInteractionEventFiles(interactionEvent.PrimaryKey)),
+                canEditDocuments,
+                Models.FieldDefinition.InteractionEvent
+            );
         }
-
-        
     }
-
-    
 }

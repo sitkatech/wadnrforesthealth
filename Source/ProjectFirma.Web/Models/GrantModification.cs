@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantModification : IAuditableEntity
+    public partial class GrantModification : IAuditableEntity, ICanUploadNewFiles
     {
         public string GrantModificationNameForDisplay => $"{Grant.GrantNumber} - {GrantModificationName}";
         public string StartDateDisplay => GrantModificationStartDate.ToShortDateString();
@@ -17,6 +17,12 @@ namespace ProjectFirma.Web.Models
                 var listOfNames = GrantModificationGrantModificationPurposes.Select(gmgmp => gmgmp.GrantModificationPurpose.GrantModificationPurposeName).ToList();
                 return string.Join(", ", listOfNames);
             }
+        }
+
+        public void AddNewFileResource(FileResource fileResource)
+        {
+            var grantModificationFileResource = new GrantModificationFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
+            GrantModificationFileResources.Add(grantModificationFileResource);
         }
     }
 }

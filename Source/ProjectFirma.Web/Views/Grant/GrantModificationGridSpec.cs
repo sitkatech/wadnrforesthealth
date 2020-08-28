@@ -75,12 +75,12 @@ namespace ProjectFirma.Web.Views.Grant
                                                                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            if (grantModificationFileExistsOnAtLeastOne)
-            {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), 
-                                                                                                   $"Download file for {ObjectNameSingular} -  {x.GrantModificationName}"), 
-                                                                                                       30, DhtmlxGridColumnFilterType.None);
-            }
+            //if (grantModificationFileExistsOnAtLeastOne)
+            //{
+            //    Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), 
+            //                                                                                       $"Download file for {ObjectNameSingular} -  {x.GrantModificationName}"), 
+            //                                                                                           30, DhtmlxGridColumnFilterType.None);
+            //}
             Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.GrantModificationStartDate, 100, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.GrantModificationEndDate, 100, DhtmlxGridColumnFormatType.Date);
