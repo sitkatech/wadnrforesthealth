@@ -65,11 +65,10 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" successfully deleted.";
-            grantModification.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            grantModification.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
-        
 
         [HttpGet]
         [GrantModificationEditAsAdminFeature]
@@ -216,7 +215,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} file \"{grantModificationFileResource.DisplayName}\" created on '{grantModificationFileResource.FileResource.CreateDate}' by '{grantModificationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
-            grantModificationFileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            grantModificationFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }

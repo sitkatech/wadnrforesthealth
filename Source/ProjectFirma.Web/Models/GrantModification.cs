@@ -24,5 +24,21 @@ namespace ProjectFirma.Web.Models
             var grantModificationFileResource = new GrantModificationFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
             GrantModificationFileResources.Add(grantModificationFileResource);
         }
+
+        public void DeleteFullAndChildless(DatabaseEntities dbContext)
+        {
+            foreach (var x in GrantModificationFileResources.ToList())
+            {
+                x.DeleteFullAndChildless(dbContext);
+            }
+
+            foreach (var x in GrantAllocations.ToList())
+            {
+                x.DeleteFullAndChildless(dbContext);
+            }
+
+            DeleteChildren(dbContext);
+            Delete(dbContext);
+        }
     }
 }

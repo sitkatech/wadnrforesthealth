@@ -9,5 +9,11 @@ namespace ProjectFirma.Web.Models
         public string DeleteUrl => SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.DeleteGrantAllocationFile(GrantAllocationFileResourceID));
         public string EditUrl => SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.EditGrantAllocationFile(GrantAllocationFileResourceID));
         public string DisplayCssClass { get; set; }
+
+        public void DeleteFullAndChildless(DatabaseEntities dbContext)
+        {
+            FileResource.DeleteFull(dbContext);
+            DeleteFull(dbContext);
+        }
     }
 }

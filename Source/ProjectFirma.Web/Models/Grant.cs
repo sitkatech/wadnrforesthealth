@@ -1,4 +1,5 @@
-﻿using ProjectFirma.Web.Views.Shared.FileResourceControls;
+﻿using System.Linq;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
 {
@@ -14,6 +15,22 @@ namespace ProjectFirma.Web.Models
         {
             var grantFileResource = new GrantFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
             GrantFileResources.Add(grantFileResource);
+        }
+
+        public void DeleteFullAndChildless(DatabaseEntities dbContext)
+        {
+            foreach (var x in GrantFileResources.ToList())
+            {
+                x.DeleteFullAndChildless(dbContext);
+            }
+
+            foreach (var x in GrantModifications.ToList())
+            {
+                x.DeleteFullAndChildless(dbContext);
+            }
+
+            DeleteChildren(dbContext);
+            Delete(dbContext);
         }
     }
 }

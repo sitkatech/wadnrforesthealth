@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" successfully deleted.";
-            grantAllocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            grantAllocation.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -305,9 +305,8 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteGrantAllocationFile(grantAllocationFileResource, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} file \"{grantAllocationFileResource.DisplayName}\" created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
-            grantAllocationFileResource.FileResource.Delete(HttpRequestStorage.DatabaseEntities);
-            grantAllocationFileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} file \"{grantAllocationFileResource.DisplayName}\" deleted on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
+            grantAllocationFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }

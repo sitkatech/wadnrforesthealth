@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Controllers
 
             var message = $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} \"{interactionEvent.InteractionEventTitle}\" successfully deleted.";
 
-            interactionEvent.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            interactionEvent.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
 
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -229,8 +229,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} file \"{interactionEventFileResource.DisplayName}\" created on '{interactionEventFileResource.FileResource.CreateDate}' by '{interactionEventFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
-            interactionEventFileResource.FileResource.Delete(HttpRequestStorage.DatabaseEntities);
-            interactionEventFileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            interactionEventFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }

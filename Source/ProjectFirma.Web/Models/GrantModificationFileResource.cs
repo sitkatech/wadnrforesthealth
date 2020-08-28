@@ -27,13 +27,14 @@ namespace ProjectFirma.Web.Models
     public partial class GrantModificationFileResource : IAuditableEntity, IEntityDocument
     {
         public string AuditDescriptionString => $"{FieldDefinition.Grant.GetFieldDefinitionLabel()}  \"{GrantModification?.GrantModificationName ?? "<Not Found>"}\" document \"{FileResource?.OriginalCompleteFileName ?? "<Not Found>"}\"";
-
-        public string DeleteUrl => SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x =>
-                    x.DeleteGrantModificationFile(GrantModificationFileResourceID));
-
-        public string EditUrl => SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x =>
-            x.EditGrantModificationFile(GrantModificationFileResourceID));
-
+        public string DeleteUrl => SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x => x.DeleteGrantModificationFile(GrantModificationFileResourceID));
+        public string EditUrl => SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x => x.EditGrantModificationFile(GrantModificationFileResourceID));
         public string DisplayCssClass { get; set; }
+
+        public void DeleteFullAndChildless(DatabaseEntities dbContext)
+        {
+            FileResource.DeleteFull(dbContext);
+            DeleteFull(dbContext);
+        }
     }
 }

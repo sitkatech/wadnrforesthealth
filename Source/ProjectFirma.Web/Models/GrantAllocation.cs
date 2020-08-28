@@ -174,5 +174,16 @@ namespace ProjectFirma.Web.Models
             var grantAllocationFileResource = new GrantAllocationFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
             GrantAllocationFileResources.Add(grantAllocationFileResource);
         }
+
+        public void DeleteFullAndChildless(DatabaseEntities dbContext)
+        {
+            foreach (var x in GrantAllocationFileResources.ToList())
+            {
+                x.DeleteFullAndChildless(dbContext);
+            }
+
+            DeleteChildren(dbContext);
+            Delete(dbContext);
+        }
     }
 }

@@ -27,11 +27,14 @@ namespace ProjectFirma.Web.Models
     public partial class InteractionEventFileResource : IAuditableEntity, IEntityDocument
     {
         public string AuditDescriptionString => $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}  \"{InteractionEvent?.InteractionEventTitle ?? "<Not Found>"}\" document \"{FileResource?.OriginalCompleteFileName ?? "<Not Found>"}\"";
-
         public string DeleteUrl => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.DeleteInteractionEventFile(InteractionEventFileResourceID));
-
         public string EditUrl => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventFile(InteractionEventFileResourceID));
-
         public string DisplayCssClass { get; set; }
+
+        public void DeleteFullAndChildless(DatabaseEntities dbContext)
+        {
+            FileResource.DeleteFull(dbContext);
+            DeleteFull(dbContext);
+        }
     }
 }
