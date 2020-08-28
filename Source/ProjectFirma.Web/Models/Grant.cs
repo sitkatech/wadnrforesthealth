@@ -11,9 +11,9 @@ namespace ProjectFirma.Web.Models
         public string GrantTitle => string.IsNullOrWhiteSpace(ShortName) ? GrantName : $"{GrantName} ({ShortName})";
         public string AuditDescriptionString => GrantName;
 
-        public void AddNewFileResource(FileResource fileResource)
+        public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {
-            var grantFileResource = new GrantFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
+            var grantFileResource = new GrantFileResource(this, fileResource, displayName) {Description = description};
             GrantFileResources.Add(grantFileResource);
         }
 

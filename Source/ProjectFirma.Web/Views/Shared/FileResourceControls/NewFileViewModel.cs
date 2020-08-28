@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -35,6 +36,13 @@ namespace ProjectFirma.Web.Views.Shared.FileResourceControls
         [DisplayName("New File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public List<HttpPostedFileBase> FileResourcesData { get; set; }
+
+        [Required]
+        [DisplayName("Display Name")]
+        public List<string> DisplayNames { get; set; }
+
+        [DisplayName("Description")]
+        public List<string> Descriptions { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -48,19 +56,46 @@ namespace ProjectFirma.Web.Views.Shared.FileResourceControls
         {
             if (FileResourcesData == null) return;
 
-            var fileResources = FileResourcesData.Select(fileData =>
-                FileResource.CreateNewFromHttpPostedFile(fileData, currentPerson));
-
-            foreach (var fileResource in fileResources)
+            for (int key = 0; key < FileResourcesData.Count; key++)
             {
+                var fileResource = FileResource.CreateNewFromHttpPostedFile(FileResourcesData[key], currentPerson);
                 HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                fileContainer.AddNewFileResource(fileResource);
+                var displayName = DisplayNames[key];
+                var description = !string.IsNullOrWhiteSpace(Descriptions[key]) ? Descriptions[key] : null;
+                fileContainer.AddNewFileResource(fileResource, displayName, description);
             }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            yield return null;
+            var validationResults = new List<ValidationResult>();
+
+            if (FileResourcesData[0] == null)
+            {
+                validationResults.Add(new SitkaValidationResult<NewFileViewModel, List<HttpPostedFileBase>>($"You must select at least one file to upload.", m => m.FileResourcesData));
+            }
+
+            for (int key = 0; key < FileResourcesData.Count; key++)
+            {
+                if (string.IsNullOrWhiteSpace(DisplayNames[key]))
+                {
+                    validationResults.Add(new SitkaValidationResult<NewFileViewModel, List<string>>($"Display Name is a required field.", m => m.DisplayNames));
+                }
+
+                if (Descriptions[key].Length > Models.ProjectDocument.FieldLengths.Description)
+                {
+                    validationResults.Add(new SitkaValidationResult<NewFileViewModel, List<string>>($"Display Name \"{Descriptions[key]}\" is longer than the allowed {Models.ProjectDocument.FieldLengths.Description} character maximum.", m => m.Descriptions));
+                }
+
+                if (DisplayNames[key].Length > Models.ProjectDocument.FieldLengths.DisplayName)
+                {
+                    validationResults.Add(new SitkaValidationResult<NewFileViewModel, List<string>>($"Display Name \"{DisplayNames[key]}\" is longer than the allowed {Models.ProjectDocument.FieldLengths.DisplayName} character maximum.", m => m.DisplayNames));
+                }
+
+                FileResource.ValidateFileSize(FileResourcesData[key], validationResults, "Files");
+            }
+
+            return validationResults;
         }
     }
 }

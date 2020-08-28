@@ -19,9 +19,9 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public void AddNewFileResource(FileResource fileResource)
+        public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {
-            var grantModificationFileResource = new GrantModificationFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
+            var grantModificationFileResource = new GrantModificationFileResource(this, fileResource, displayName) {Description = description};
             GrantModificationFileResources.Add(grantModificationFileResource);
         }
 

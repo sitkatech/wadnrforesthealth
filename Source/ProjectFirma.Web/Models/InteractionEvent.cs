@@ -11,9 +11,9 @@ namespace ProjectFirma.Web.Models
 
         public bool HasLocationSet => InteractionEventLocationSimple != null;
 
-        public void AddNewFileResource(FileResource fileResource)
+        public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {
-            var interactionEventFileResource = new InteractionEventFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
+            var interactionEventFileResource = new InteractionEventFileResource(this, fileResource, displayName) {Description = description};
             InteractionEventFileResources.Add(interactionEventFileResource);
         }
 

@@ -23,6 +23,6 @@ namespace ProjectFirma.Web.Views.Shared.FileResourceControls
 {
     public interface ICanUploadNewFiles
     {
-        void AddNewFileResource(Models.FileResource fileResource);
+        void AddNewFileResource(Models.FileResource fileResource, string displayName, string description);
     }
 }
