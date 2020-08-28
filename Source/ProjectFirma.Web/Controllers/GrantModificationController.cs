@@ -186,9 +186,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(fileResource);
-
             SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
-
             return new ModalDialogFormJsonResult();
         }
 

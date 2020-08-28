@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
-            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have access to Grant {contextModelObject.DisplayName}");
+            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have access to manage the Grant Allocation file {contextModelObject.DisplayName}");
         }
     }
 }

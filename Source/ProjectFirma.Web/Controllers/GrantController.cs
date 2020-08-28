@@ -149,6 +149,8 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<NewGrant, NewGrantViewData, NewGrantViewModel>(viewData, viewModel);
         }
 
+        #region FileResources
+
         [HttpGet]
         [GrantEditAsAdminFeature]
         public PartialViewResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey)
@@ -181,22 +183,46 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantDeleteFileAsAdminFeature]
+        [GrantManageFileResourceAsAdminFeature]
+        public PartialViewResult EditGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey)
+        {
+            var fileResource = grantFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditGrantFile(viewModel);
+        }
+
+        [HttpPost]
+        [GrantManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = grantFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditGrantFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantManageFileResourceAsAdminFeature]
         public PartialViewResult DeleteGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantFileResourcePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantFile(grantFileResourcePrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantFile(GrantFileResource grantFileResource, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this \"{grantFileResource.DisplayName}\" file created on '{grantFileResource.FileResource.CreateDate}' by '{grantFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
         [HttpPost]
-        [GrantDeleteFileAsAdminFeature]
+        [GrantManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -212,6 +238,15 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        private PartialViewResult ViewDeleteGrantFile(GrantFileResource grantFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantFileResource.DisplayName}\" file created on '{grantFileResource.FileResource.CreateDate}' by '{grantFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [GrantsViewFeature]
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)

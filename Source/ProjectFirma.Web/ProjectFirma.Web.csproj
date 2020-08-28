@@ -701,7 +701,7 @@
     <Compile Include="Security\GrantAllocationAwardSuppliesLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardViewFeature.cs" />
     <Compile Include="Security\GrantAllocationManageFileResourceAsAdminFeature.cs" />
-    <Compile Include="Security\GrantDeleteFileAsAdminFeature.cs" />
+    <Compile Include="Security\GrantManageFileResourceAsAdminFeature.cs" />
     <Compile Include="Security\GrantModificationManageFileResourceAsAdminFeature.cs" />
     <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />

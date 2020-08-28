@@ -222,6 +222,8 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        #region FileResources
+
         [HttpGet]
         [GrantAllocationEditAsAdminFeature]
         public PartialViewResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
@@ -255,17 +257,41 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantAllocationManageFileResourceAsAdminFeature]
+        public PartialViewResult EditGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey)
+        {
+            var fileResource = grantAllocationFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditGrantAllocationFile(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = grantAllocationFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantAllocationFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditGrantAllocationFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationManageFileResourceAsAdminFeature]
         public PartialViewResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantAllocationFileResourcePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantAllocationFile(grantAllocationFileResourcePrimaryKey.EntityObject, viewModel);
-        }
-
-        private PartialViewResult ViewDeleteGrantAllocationFile(GrantAllocationFileResource grantAllocationFileResource, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this \"{grantAllocationFileResource.DisplayName}\" file created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
@@ -285,6 +311,15 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        private PartialViewResult ViewDeleteGrantAllocationFile(GrantAllocationFileResource grantAllocationFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantAllocationFileResource.DisplayName}\" file created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [HttpGet]
         [GrantAllocationsViewFeature]

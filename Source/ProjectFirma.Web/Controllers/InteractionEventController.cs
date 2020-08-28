@@ -145,6 +145,8 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        #region FileResources
+
         [HttpGet]
         [InteractionEventManageFeature]
         public PartialViewResult NewInteractionEventFiles(InteractionEventPrimaryKey interactionEventPrimaryKey)
@@ -178,17 +180,41 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [InteractionEventManageFeature]
+        public PartialViewResult EditInteractionEventFile(InteractionEventFileResourcePrimaryKey interactionEventFileResourcePrimaryKey)
+        {
+            var fileResource = interactionEventFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditInteractionFile(viewModel);
+        }
+
+        [HttpPost]
+        [InteractionEventManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInteractionEventFile(InteractionEventFileResourcePrimaryKey interactionEventFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = interactionEventFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditInteractionFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditInteractionFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
         public PartialViewResult DeleteInteractionEventFile(InteractionEventFileResourcePrimaryKey interactionEventFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(interactionEventFileResourcePrimaryKey.PrimaryKeyValue);
             return ViewDeleteInteractionEventFile(interactionEventFileResourcePrimaryKey.EntityObject, viewModel);
-        }
-
-        private PartialViewResult ViewDeleteInteractionEventFile(InteractionEventFileResource interactionEventFileResource, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this \"{interactionEventFileResource.DisplayName}\" file created on '{interactionEventFileResource.FileResource.CreateDate}' by '{interactionEventFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
@@ -208,6 +234,15 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        private PartialViewResult ViewDeleteInteractionEventFile(InteractionEventFileResource interactionEventFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{interactionEventFileResource.DisplayName}\" file created on '{interactionEventFileResource.FileResource.CreateDate}' by '{interactionEventFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [HttpGet]
         [InteractionEventViewFeature]

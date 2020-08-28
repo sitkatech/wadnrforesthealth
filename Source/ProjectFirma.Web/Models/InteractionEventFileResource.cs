@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
 
         public string DeleteUrl => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.DeleteInteractionEventFile(InteractionEventFileResourceID));
 
-        public string EditUrl => string.Empty;
+        public string EditUrl => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventFile(InteractionEventFileResourceID));
 
         public string DisplayCssClass { get; set; }
     }
