@@ -250,7 +250,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewGrantAllocationFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData();
+            var viewData = new NewFileViewData(FieldDefinition.GrantAllocation.FieldDefinitionDisplayName);
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 

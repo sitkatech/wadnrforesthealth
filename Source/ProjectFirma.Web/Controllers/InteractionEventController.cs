@@ -173,7 +173,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewInteractionEventFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData();
+            var viewData = new NewFileViewData(FieldDefinition.InteractionEvent.FieldDefinitionDisplayName);
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 

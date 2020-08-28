@@ -21,5 +21,13 @@ Source code is available upon request via <support@sitkatech.com>.
 
 namespace ProjectFirma.Web.Views.Shared.FileResourceControls
 {
-    public class NewFileViewData : FirmaUserControlViewData { }
+    public class NewFileViewData : FirmaUserControlViewData
+    {
+        public readonly string TargetObjectName;
+
+        public NewFileViewData(string targetObjectName)
+        {
+            TargetObjectName = targetObjectName;
+        }
+    }
 }

@@ -22,6 +22,36 @@ ALTER TABLE dbo.GrantModification
 
 ALTER TABLE dbo.GrantModification REBUILD;
 
+ALTER TABLE dbo.GrantAllocationFileResource
+    ADD DisplayName varchar(200) NULL,
+	    Description varchar(1000) NULL;
+
+GO
+
+UPDATE gafr 
+	SET gafr.DisplayName = CONCAT(fr.OriginalBaseFilename, fr.OriginalFileExtension)
+	FROM dbo.GrantAllocationFileResource gafr
+	INNER JOIN dbo.FileResource fr
+	    ON fr.FileResourceID = gafr.FileResourceID;
+
+ALTER TABLE dbo.GrantAllocationFileResource
+    ALTER COLUMN DisplayName varchar(200) NOT NULL;
+
+ALTER TABLE dbo.GrantFileResource
+    ADD DisplayName varchar(200) NULL,
+	    Description varchar(1000) NULL;
+
+GO
+
+UPDATE gfr 
+	SET gfr.DisplayName = CONCAT(fr.OriginalBaseFilename, fr.OriginalFileExtension)
+	FROM dbo.GrantFileResource gfr
+	INNER JOIN dbo.FileResource fr
+	    ON fr.FileResourceID = gfr.FileResourceID;
+
+ALTER TABLE dbo.GrantAllocationFileResource
+    ALTER COLUMN DisplayName varchar(200) NOT NULL;
+
 CREATE TABLE dbo.InteractionEventFileResource
 (
     InteractionEventFileResourceID int IDENTITY(1,1) NOT NULL CONSTRAINT PK_InteractionEventFileResource_InteractionEventFileResourceID PRIMARY KEY,

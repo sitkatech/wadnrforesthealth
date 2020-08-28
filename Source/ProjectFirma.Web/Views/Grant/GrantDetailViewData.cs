@@ -26,7 +26,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.Shared.Grant;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Grant
@@ -41,9 +41,7 @@ namespace ProjectFirma.Web.Views.Grant
         public GrantModificationGridSpec GrantModificationGridSpec { get; }
         public string GrantModificationGridName { get; }
         public string GrantModificationGridDataUrl { get; }
-        public GrantDetailsFileDetailsViewData GrantDetailsFileDetailsViewData { get; }
-
-        public readonly string GrantAllocationPanelTitleID = "GrantAllocationPanelTitle";
+        public FileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
         public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
         public string GrantAllocationGridName { get; }
@@ -72,10 +70,9 @@ namespace ProjectFirma.Web.Views.Grant
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrlTemplate = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(UrlTemplate.Parameter1Int));
 
-            GrantDetailsFileDetailsViewData = new GrantDetailsFileDetailsViewData(
+            GrantDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
                 SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantFiles(grant.PrimaryKey)),
-                grant.GrantName,
                 new GrantEditAsAdminFeature().HasPermission(currentPerson, grant).HasPermission,
                 Models.FieldDefinition.Grant
             );

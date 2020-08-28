@@ -1790,6 +1790,8 @@
     <Property Name="GrantAllocationFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="GrantAllocationFileResources" ToRole="FileResource" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationFileResources" ToRole="GrantAllocation" />
   </EntityType>

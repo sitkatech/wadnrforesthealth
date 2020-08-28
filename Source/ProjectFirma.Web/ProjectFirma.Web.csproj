@@ -946,9 +946,6 @@
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
-    <Compile Include="Views\GrantAllocation\NewGrantAllocationFile.cs" />
-    <Compile Include="Views\GrantAllocation\NewGrantAllocationFileViewData.cs" />
-    <Compile Include="Views\GrantAllocation\NewGrantAllocationFileViewModel.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternal.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewData.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewModel.cs" />
@@ -1091,8 +1088,6 @@
     <Compile Include="Views\Shared\FileResourceControls\NewFile.cs" />
     <Compile Include="Views\Shared\FileResourceControls\NewFileViewData.cs" />
     <Compile Include="Views\Shared\FileResourceControls\NewFileViewModel.cs" />
-    <Compile Include="Views\Shared\Grant\GrantDetailsFileDetailsViewData.cs" />
-    <Compile Include="Views\Shared\Grant\GrantDetailsFileDetails.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
@@ -1677,9 +1672,7 @@
     <Content Include="Views\GisProjectBulkUpdate\_ViewStart.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\UploadGisFile.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
-    <Content Include="Views\Shared\Grant\GrantDetailsFileDetails.cshtml" />
     <Content Include="Views\Grant\NewGrantFile.cshtml" />
-    <Content Include="Views\GrantAllocation\NewGrantAllocationFile.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\GisMetadata.cshtml" />
     <Content Include="Views\GisFeature\Detail.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />

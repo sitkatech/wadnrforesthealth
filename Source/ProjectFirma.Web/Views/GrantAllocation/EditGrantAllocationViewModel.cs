@@ -224,15 +224,15 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
 
-            // this section is only applicable to when it is a new Grant Allocation being created. We no longer need to delete the old ones on submit 
-            // because editing and deleting the files will happen outside of the BASICS editor for a grant allocation.
-            if (GrantAllocationFileResourceDatas != null && GrantAllocationFileResourceDatas[0] != null)
+            if (GrantAllocationFileResourceDatas?[0] != null)
             {
-                for (int key = 0; key < GrantAllocationFileResourceDatas.Count; key++)
+                var fileResources = GrantAllocationFileResourceDatas.Select(fileData =>
+                    FileResource.CreateNewFromHttpPostedFile(fileData, currentPerson));
+
+                foreach (var fileResource in fileResources)
                 {
-                    var fileResource = FileResource.CreateNewFromHttpPostedFile(GrantAllocationFileResourceDatas[key], currentPerson);
                     HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                    var grantAllocationFileResource = new GrantAllocationFileResource(grantAllocation, fileResource);
+                    var grantAllocationFileResource = new GrantAllocationFileResource(grantAllocation, fileResource, fileResource.OriginalCompleteFileName);
                     grantAllocation.GrantAllocationFileResources.Add(grantAllocationFileResource);
                 }
             }

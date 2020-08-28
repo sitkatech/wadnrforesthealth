@@ -171,7 +171,7 @@ namespace ProjectFirma.Web.Models
 
         public void AddNewFileResource(FileResource fileResource)
         {
-            var grantAllocationFileResource = new GrantAllocationFileResource(this, fileResource);
+            var grantAllocationFileResource = new GrantAllocationFileResource(this, fileResource, fileResource.OriginalCompleteFileName);
             GrantAllocationFileResources.Add(grantAllocationFileResource);
         }
     }
