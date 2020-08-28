@@ -26,16 +26,16 @@ namespace ProjectFirma.Web.Views.Shared.FileResourceControls
 {
     public class FileDetailsViewData
     {
-        public List<EntityDocument> Documents { get; }
-        public string AddDocumentUrl { get; }
-        public bool CanEditDocuments { get; }
+        public List<EntityDocument> Files { get; }
+        public string AddFilesUrl { get; }
+        public bool CanEditFiles { get; }
         public Models.FieldDefinition FieldDefinition { get; }
 
-        public FileDetailsViewData(List<EntityDocument> documents, string addDocumentUrl, bool canEditDocuments, Models.FieldDefinition fieldDefinition)
+        public FileDetailsViewData(List<EntityDocument> files, string addFilesUrl, bool canEditFiles, Models.FieldDefinition fieldDefinition)
         {
-            Documents = documents;
-            AddDocumentUrl = addDocumentUrl;
-            CanEditDocuments = canEditDocuments;
+            Files = files;
+            AddFilesUrl = addFilesUrl;
+            CanEditFiles = canEditFiles;
             FieldDefinition = fieldDefinition;
         }
     }

@@ -25,22 +25,22 @@ Source code is available upon request via <support@sitkatech.com>.
 
 @inherits ProjectFirma.Web.Views.Shared.FileResourceControls.FileDetails
 
-@if (ViewDataTyped.CanEditDocuments)
+@if (ViewDataTyped.CanEditFiles)
 {
     <div class="pull-right">
-        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add File(s)", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.AddDocumentUrl, "Upload New File(s)", new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditDocuments)
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add File(s)", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.AddFilesUrl, "Upload New File(s)", new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditFiles)
     </div>
 }
 
-@if (!ViewDataTyped.Documents.Any())
+@if (!ViewDataTyped.Files.Any())
 {
     <p class="systemText">No files associated with this @ViewDataTyped.FieldDefinition.GetFieldDefinitionLabel().</p>
 }
 
-@foreach (var file in ViewDataTyped.Documents)
+@foreach (var file in ViewDataTyped.Files)
 {
     <div class="@file.DisplayCssClass">
-        @if (ViewDataTyped.CanEditDocuments)
+        @if (ViewDataTyped.CanEditFiles)
         {
             <span style="margin-left: 8px; margin-right: 8px;">
             @ModalDialogFormHelper.MakeDeleteLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash").ToString(), file.DeleteUrl, null, true)
@@ -58,6 +58,12 @@ Source code is available upon request via <support@sitkatech.com>.
 
             <dt>File Type</dt>
             <dd>@file.FileResource.FileResourceMimeType.FileResourceMimeTypeDisplayName</dd>
+            
+            @if (!string.IsNullOrWhiteSpace(file.Description))
+            {
+                <dt>Description</dt>
+                <dd>@file.Description</dd>
+            }
         </dl>
     </div>
 }

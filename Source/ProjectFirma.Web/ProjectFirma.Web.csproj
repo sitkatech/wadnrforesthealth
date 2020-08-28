@@ -1151,7 +1151,6 @@
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
     <Content Include="Views\GrantModification\EditGrantModificationController.js" />
-    <Content Include="Views\Grant\GrantFilesController.js" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\FocusArea\Index.cshtml" />
