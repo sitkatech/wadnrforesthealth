@@ -20,7 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
-using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -36,7 +35,6 @@ namespace ProjectFirma.Web.Views.Grant
         public string NewGrantNoteUrl { get; set; }
         public EntityNotesViewData GrantNotesViewData { get; set; }
         public EntityNotesViewData InternalGrantNotesViewData { get; set; }
-        public bool ShowDownload { get; set; }
 
         public GrantModificationGridSpec GrantModificationGridSpec { get; }
         public string GrantModificationGridName { get; }
@@ -58,11 +56,8 @@ namespace ProjectFirma.Web.Views.Grant
             NewGrantNoteUrl = grant.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
-            // Used for creating file download link, if file available
-            ShowDownload = grant.GrantFileResources.Any(); ;
 
-            bool grantModificationFileExistsOnAtLeastOne = false;//grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue);
-            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant, grantModificationFileExistsOnAtLeastOne);
+            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant);
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 

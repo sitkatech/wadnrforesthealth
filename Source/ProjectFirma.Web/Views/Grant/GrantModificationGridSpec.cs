@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
@@ -37,12 +36,12 @@ namespace ProjectFirma.Web.Views.Grant
         public static string GrantModificationIDHiddenColumnName = "GrantModificationID_HiddenColumnName";
         public readonly string GrantModificationNameHiddenColumnName = "GrantModificationName_HiddenColumnName";
 
-        public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
+        public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate)
         {
-            GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate, grantModificationFileExistsOnAtLeastOne);
+            GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate);
         }
 
-        private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
+        private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate)
         {
             Check.Ensure(grantToAssociate != null, "Grant is null. Creating a New Grant Modification without a current Grant is currently not supported.");
 
@@ -75,12 +74,6 @@ namespace ProjectFirma.Web.Views.Grant
                                                                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            //if (grantModificationFileExistsOnAtLeastOne)
-            //{
-            //    Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), 
-            //                                                                                       $"Download file for {ObjectNameSingular} -  {x.GrantModificationName}"), 
-            //                                                                                           30, DhtmlxGridColumnFilterType.None);
-            //}
             Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.GrantModificationStartDate, 100, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.GrantModificationEndDate, 100, DhtmlxGridColumnFormatType.Date);
@@ -88,8 +81,6 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.GrantModificationPurpose.ToGridHeaderString(), x => x.GrantModificationPurposeNamesAsCommaDelimitedString, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantModificationAmount.ToGridHeaderString(), x => x.GrantModificationAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantModificationDescription.ToGridHeaderString(), x => x.GrantModificationDescription, 125, DhtmlxGridColumnFilterType.Text);
-
         }
-
     }
 }
