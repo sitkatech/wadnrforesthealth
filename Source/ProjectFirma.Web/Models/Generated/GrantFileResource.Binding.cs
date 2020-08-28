@@ -31,29 +31,32 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantFileResource(int grantFileResourceID, int grantID, int fileResourceID) : this()
+        public GrantFileResource(int grantFileResourceID, int grantID, int fileResourceID, string displayName, string description) : this()
         {
             this.GrantFileResourceID = grantFileResourceID;
             this.GrantID = grantID;
             this.FileResourceID = fileResourceID;
+            this.DisplayName = displayName;
+            this.Description = description;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantFileResource(int grantID, int fileResourceID) : this()
+        public GrantFileResource(int grantID, int fileResourceID, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantID = grantID;
             this.FileResourceID = fileResourceID;
+            this.DisplayName = displayName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantFileResource(Grant grant, FileResource fileResource) : this()
+        public GrantFileResource(Grant grant, FileResource fileResource, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -63,6 +66,7 @@ namespace ProjectFirma.Web.Models
             this.FileResourceID = fileResource.FileResourceID;
             this.FileResource = fileResource;
             fileResource.GrantFileResources.Add(this);
+            this.DisplayName = displayName;
         }
 
         /// <summary>
@@ -70,7 +74,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantFileResource CreateNewBlank(Grant grant, FileResource fileResource)
         {
-            return new GrantFileResource(grant, fileResource);
+            return new GrantFileResource(grant, fileResource, default(string));
         }
 
         /// <summary>
@@ -119,6 +123,8 @@ namespace ProjectFirma.Web.Models
         public int GrantFileResourceID { get; set; }
         public int GrantID { get; set; }
         public int FileResourceID { get; set; }
+        public string DisplayName { get; set; }
+        public string Description { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantFileResourceID; } set { GrantFileResourceID = value; } }
 
@@ -127,7 +133,8 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-
+            public const int DisplayName = 200;
+            public const int Description = 1000;
         }
     }
 }

@@ -623,6 +623,8 @@
           <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

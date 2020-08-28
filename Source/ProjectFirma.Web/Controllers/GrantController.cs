@@ -30,7 +30,9 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
@@ -151,30 +153,31 @@ namespace ProjectFirma.Web.Controllers
         [GrantEditAsAdminFeature]
         public PartialViewResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey)
         {
-            var viewModel = new NewGrantFileViewModel(grantPrimaryKey.EntityObject);
+            Check.EnsureNotNull(grantPrimaryKey.EntityObject);
+            var viewModel = new NewFileViewModel();
             return ViewNewGrantFiles(viewModel);
         }
 
         [HttpPost]
         [GrantEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey, NewGrantFileViewModel viewModel)
+        public ActionResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey, NewFileViewModel viewModel)
         {
             var grant = grantPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNewGrantFiles(new NewGrantFileViewModel());
+                return ViewNewGrantFiles(new NewFileViewModel());
             }
 
             viewModel.UpdateModel(grant, CurrentPerson);
-            SetMessageForDisplay($"Successfully created {viewModel.GrantFileResourceDatas.Count} new files(s) for {FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\".");
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\".");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewNewGrantFiles(NewGrantFileViewModel viewModel)
+        private PartialViewResult ViewNewGrantFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewGrantFileViewData();
-            return RazorPartialView<NewGrantFile, NewGrantFileViewData, NewGrantFileViewModel>(viewData, viewModel);
+            var viewData = new NewFileViewData(FieldDefinition.Grant.FieldDefinitionDisplayName);
+            return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
         [HttpGet]

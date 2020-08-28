@@ -166,7 +166,6 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(interactionEvent, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
             SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} \"{interactionEvent.InteractionEventTitle}\".");
             return new ModalDialogFormJsonResult();
         }

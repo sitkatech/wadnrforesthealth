@@ -1698,6 +1698,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="GrantModification">
     <Key>

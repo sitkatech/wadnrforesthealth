@@ -1854,6 +1854,8 @@
     <Property Name="GrantFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID" FromRole="GrantFileResources" ToRole="FileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="GrantFileResources" ToRole="Grant" />
   </EntityType>

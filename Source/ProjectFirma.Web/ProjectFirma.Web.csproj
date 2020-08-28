@@ -993,11 +993,8 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
-    <Compile Include="Views\Grant\NewGrantFile.cs" />
     <Compile Include="Views\Grant\NewGrant.cs" />
-    <Compile Include="Views\Grant\NewGrantFileViewData.cs" />
     <Compile Include="Views\Grant\NewGrantViewData.cs" />
-    <Compile Include="Views\Grant\NewGrantFileViewModel.cs" />
     <Compile Include="Views\Grant\NewGrantViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
@@ -1672,7 +1669,6 @@
     <Content Include="Views\GisProjectBulkUpdate\_ViewStart.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\UploadGisFile.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
-    <Content Include="Views\Grant\NewGrantFile.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\GisMetadata.cshtml" />
     <Content Include="Views\GisFeature\Detail.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />

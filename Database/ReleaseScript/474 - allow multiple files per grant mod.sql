@@ -49,7 +49,7 @@ UPDATE gfr
 	INNER JOIN dbo.FileResource fr
 	    ON fr.FileResourceID = gfr.FileResourceID;
 
-ALTER TABLE dbo.GrantAllocationFileResource
+ALTER TABLE dbo.GrantFileResource
     ALTER COLUMN DisplayName varchar(200) NOT NULL;
 
 CREATE TABLE dbo.InteractionEventFileResource

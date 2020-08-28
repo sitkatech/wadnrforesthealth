@@ -243,7 +243,6 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
             SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\".");
             return new ModalDialogFormJsonResult();
         }
