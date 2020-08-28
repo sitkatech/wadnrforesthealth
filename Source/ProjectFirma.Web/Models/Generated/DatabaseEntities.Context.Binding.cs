@@ -78,6 +78,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
+        public virtual DbSet<GrantModificationFileResource> GrantModificationFileResources { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual DbSet<GrantModificationPurpose> GrantModificationPurposes { get; set; }
@@ -89,6 +90,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
         public virtual DbSet<InteractionEventContact> InteractionEventContacts { get; set; }
+        public virtual DbSet<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         public virtual DbSet<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual DbSet<InteractionEvent> InteractionEvents { get; set; }
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
@@ -484,6 +486,9 @@ namespace ProjectFirma.Web.Models
                 case "GrantFileResource":
                     return GrantFileResources.GetGrantFileResource(primaryKey);
 
+                case "GrantModificationFileResource":
+                    return GrantModificationFileResources.GetGrantModificationFileResource(primaryKey);
+
                 case "GrantModificationGrantModificationPurpose":
                     return GrantModificationGrantModificationPurposes.GetGrantModificationGrantModificationPurpose(primaryKey);
 
@@ -516,6 +521,9 @@ namespace ProjectFirma.Web.Models
 
                 case "InteractionEventContact":
                     return InteractionEventContacts.GetInteractionEventContact(primaryKey);
+
+                case "InteractionEventFileResource":
+                    return InteractionEventFileResources.GetInteractionEventFileResource(primaryKey);
 
                 case "InteractionEventProject":
                     return InteractionEventProjects.GetInteractionEventProject(primaryKey);

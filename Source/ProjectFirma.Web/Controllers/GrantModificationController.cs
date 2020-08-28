@@ -19,8 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
-using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -31,6 +29,9 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.DesignByContract;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
+using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
@@ -64,11 +65,10 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" successfully deleted.";
-            grantModification.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            grantModification.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
-        
 
         [HttpGet]
         [GrantModificationEditAsAdminFeature]
@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantModification = grantModificationPrimaryKey.EntityObject;
             var viewModel = new EditGrantModificationViewModel(grantModification);
-            return ViewEditGrantModification(viewModel);
+            return ViewEditGrantModification(viewModel, EditGrantModificationType.Existing);
         }
 
         [HttpPost]
@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Controllers
             var grantModification = grantModificationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEditGrantModification(viewModel);
+                return ViewEditGrantModification(viewModel, EditGrantModificationType.Existing);
             }
 
             var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
@@ -96,22 +96,21 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditGrantModification(EditGrantModificationViewModel viewModel)
+        private PartialViewResult ViewEditGrantModification(EditGrantModificationViewModel viewModel, EditGrantModificationType editGrantModificationType)
         {
             var grantModificationStatuses = HttpRequestStorage.DatabaseEntities.GrantModificationStatuses;
             var grantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationPurposes;
             
-            var viewData = new EditGrantModificationViewData(grantModificationStatuses, grantModificationPurposes);
+            var viewData = new EditGrantModificationViewData(grantModificationStatuses, grantModificationPurposes, editGrantModificationType);
             return RazorPartialView<EditGrantModification, EditGrantModificationViewData, EditGrantModificationViewModel>(viewData, viewModel);
         }
-
 
         [HttpGet]
         [GrantModificationCreateFeature]
         public PartialViewResult NewGrantModificationForAGrant(GrantPrimaryKey grantPrimaryKey)
         {
             var viewModel = new EditGrantModificationViewModel(grantPrimaryKey.EntityObject);
-            return ViewEditGrantModification(viewModel);
+            return ViewEditGrantModification(viewModel, EditGrantModificationType.New);
         }
 
         [HttpPost]
@@ -121,7 +120,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditGrantModification(viewModel);
+                return ViewEditGrantModification(viewModel, EditGrantModificationType.New);
             }
             var grantModificationStatus = HttpRequestStorage.DatabaseEntities.GrantModificationStatuses.Single(g => g.GrantModificationStatusID == viewModel.GrantModificationStatusID);
             var grant = HttpRequestStorage.DatabaseEntities.Grants.FirstOrDefault(x => x.GrantID == viewModel.GrantID);
@@ -131,6 +130,104 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay($"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
+
+        #region  FileResources
+
+        [HttpGet]
+        [GrantModificationEditAsAdminFeature]
+        public PartialViewResult NewGrantModificationFiles(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        {
+            Check.EnsureNotNull(grantModificationPrimaryKey.EntityObject);
+            var viewModel = new NewFileViewModel();
+            return ViewNewGrantModificationFiles(viewModel);
+        }
+
+        [HttpPost]
+        [GrantModificationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantModificationFiles(GrantModificationPrimaryKey grantModificationPrimaryKey, NewFileViewModel viewModel)
+        {
+            var grantModification = grantModificationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewNewGrantModificationFiles(new NewFileViewModel());
+            }
+
+            viewModel.UpdateModel(grantModification, CurrentPerson);
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewNewGrantModificationFiles(NewFileViewModel viewModel)
+        {
+            var viewData = new NewFileViewData(FieldDefinition.GrantModification.FieldDefinitionDisplayName);
+            return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantModificationManageFileResourceAsAdminFeature]
+        public PartialViewResult EditGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey)
+        {
+            var fileResource = grantModificationFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditGrantModificationFile(viewModel);
+        }
+
+        [HttpPost]
+        [GrantModificationManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = grantModificationFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantModificationFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditGrantModificationFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantModificationManageFileResourceAsAdminFeature]
+        public PartialViewResult DeleteGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantModificationFileResourcePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantModificationFile(grantModificationFileResourcePrimaryKey.EntityObject, viewModel);
+        }
+
+        [HttpPost]
+        [GrantModificationManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantModificationFileResource = grantModificationFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantModificationFile(grantModificationFileResource, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} file \"{grantModificationFileResource.DisplayName}\" created on '{grantModificationFileResource.FileResource.CreateDate}' by '{grantModificationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
+            grantModificationFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewDeleteGrantModificationFile(GrantModificationFileResource grantModificationFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantModificationFileResource.DisplayName}\" file created on '{grantModificationFileResource.FileResource.CreateDate}' by '{grantModificationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [GrantModificationViewFeature]
         public ViewResult GrantModificationDetail(GrantModificationPrimaryKey grantModificationPrimaryKey)

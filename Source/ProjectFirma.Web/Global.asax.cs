@@ -60,7 +60,7 @@ namespace ProjectFirma.Web
                 "~/Views/Shared/SortOrder/{0}.cshtml",
                 "~/Views/Shared/ProjectDocument/{0}.cshtml",
                 "~/Views/Shared/UserStewardshipAreas/{0}.cshtml",
-                
+                "~/Views/Shared/FileResourceControls/{0}.cshtml",
             } };
             // read the log4net configuration from the web.config file
             XmlConfigurator.Configure();

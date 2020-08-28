@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected InteractionEvent()
         {
             this.InteractionEventContacts = new HashSet<InteractionEventContact>();
+            this.InteractionEventFileResources = new HashSet<InteractionEventFileResource>();
             this.InteractionEventProjects = new HashSet<InteractionEventProject>();
         }
 
@@ -84,7 +85,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return InteractionEventContacts.Any() || InteractionEventProjects.Any();
+            return InteractionEventContacts.Any() || InteractionEventFileResources.Any() || InteractionEventProjects.Any();
         }
 
         /// <summary>
@@ -99,6 +100,11 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(InteractionEventContact).Name);
             }
 
+            if(InteractionEventFileResources.Any())
+            {
+                dependentObjects.Add(typeof(InteractionEventFileResource).Name);
+            }
+
             if(InteractionEventProjects.Any())
             {
                 dependentObjects.Add(typeof(InteractionEventProject).Name);
@@ -109,7 +115,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InteractionEventProject).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InteractionEventFileResource).Name, typeof(InteractionEventProject).Name};
 
 
         /// <summary>
@@ -139,6 +145,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in InteractionEventFileResources.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in InteractionEventProjects.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -157,6 +168,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return InteractionEventID; } set { InteractionEventID = value; } }
 
         public virtual ICollection<InteractionEventContact> InteractionEventContacts { get; set; }
+        public virtual ICollection<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         public virtual ICollection<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual InteractionEventType InteractionEventType { get; set; }
         public virtual Person StaffPerson { get; set; }

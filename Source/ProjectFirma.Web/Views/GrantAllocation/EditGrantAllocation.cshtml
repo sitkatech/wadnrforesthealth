@@ -266,10 +266,9 @@
 
 
 <script type="text/javascript">
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
-    {
+    angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function () {
         return {
-            AngularModel: @Html.Raw(JObject.FromObject(Model)),
+            AngularModel: @Html.Raw(JObject.FromObject(Model.SerializableClone())),
             AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
         };
     });

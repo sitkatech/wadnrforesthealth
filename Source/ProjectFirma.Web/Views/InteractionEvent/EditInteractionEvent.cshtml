@@ -18,10 +18,13 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.Mvc
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.InteractionEvent
 @inherits ProjectFirma.Web.Views.InteractionEvent.EditInteractionEvent
 
 <script type="text/javascript">
@@ -146,7 +149,7 @@
             </div>
         </div>
 
-        <hr/>
+        <hr />
         <div class="row">
             <div class="col-md-12">
                 <p><strong>Select the @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.InteractionEvent.GetFieldDefinitionLabel().</strong></p>
@@ -181,7 +184,24 @@
             </div>
         </div>
 
-
+        @if (ViewDataTyped.EditInteractionEventEditType == EditInteractionEventEditType.NewInteractionEventEdit)
+        {
+            <div class="multiple-file-upload-wrapper">
+                <div class="form-group">
+                    <div class="col-sm-3 control-label">
+                        @Html.LabelWithSugarFor(m => m.InteractionEventFileResourceData)
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="file" ng-file-model="files" multiple name="@Html.NameFor(x => x.InteractionEventFileResourceData)" class="multiple-file-upload" id="@Html.IdFor(x => x.InteractionEventFileResourceData)" />
+                        <p class="help-block">Drag and drop or click on the box above to upload files. <br />Allowed Extensions: @Model.GetFileExtensions(x => x.InteractionEventFileResourceData)</p>
+                        @Html.ValidationMessageFor(m => m.InteractionEventFileResourceData)
+                        <div class="form-horizontal file-inputs" ng-repeat="(key, file) in files">
+                            <p class="help-block" style="margin-bottom: 0;"> @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file") {{file.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
 
         <div ng-repeat="interactionEventProject in AngularModel.InteractionEventProjects">
             <input type="hidden" name="@Html.NameFor(x => x.InteractionEventProjects[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{interactionEventProject.ProjectID}}" />
@@ -189,13 +209,8 @@
         <div ng-repeat="interactionEventContact in AngularModel.InteractionEventContacts">
             <input type="hidden" name="@Html.NameFor(x => x.InteractionEventContacts[0].PersonID).ToString().Replace("0", "{{$index}}")" value="{{interactionEventContact.PersonID}}" />
         </div>
-
     </div>
-
-
-
-
-
+    
     @Html.HiddenFor(m => m.InteractionEventID)
 
 </form>

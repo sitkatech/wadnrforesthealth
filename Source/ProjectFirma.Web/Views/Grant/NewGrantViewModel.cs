@@ -98,7 +98,7 @@ namespace ProjectFirma.Web.Views.Grant
 
                         var fileResource = FileResource.CreateNewFromHttpPostedFile(currentGrantFileResourceData, currentPerson);
                         HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                        var grantFileResource = new GrantFileResource(grant, fileResource);
+                        var grantFileResource = new GrantFileResource(grant, fileResource, fileResource.OriginalCompleteFileName);
                         grant.GrantFileResources.Add(grantFileResource);
                     }
                 }

@@ -31,29 +31,32 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationFileResource(int grantAllocationFileResourceID, int grantAllocationID, int fileResourceID) : this()
+        public GrantAllocationFileResource(int grantAllocationFileResourceID, int grantAllocationID, int fileResourceID, string displayName, string description) : this()
         {
             this.GrantAllocationFileResourceID = grantAllocationFileResourceID;
             this.GrantAllocationID = grantAllocationID;
             this.FileResourceID = fileResourceID;
+            this.DisplayName = displayName;
+            this.Description = description;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationFileResource(int grantAllocationID, int fileResourceID) : this()
+        public GrantAllocationFileResource(int grantAllocationID, int fileResourceID, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantAllocationID = grantAllocationID;
             this.FileResourceID = fileResourceID;
+            this.DisplayName = displayName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationFileResource(GrantAllocation grantAllocation, FileResource fileResource) : this()
+        public GrantAllocationFileResource(GrantAllocation grantAllocation, FileResource fileResource, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -63,6 +66,7 @@ namespace ProjectFirma.Web.Models
             this.FileResourceID = fileResource.FileResourceID;
             this.FileResource = fileResource;
             fileResource.GrantAllocationFileResources.Add(this);
+            this.DisplayName = displayName;
         }
 
         /// <summary>
@@ -70,7 +74,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantAllocationFileResource CreateNewBlank(GrantAllocation grantAllocation, FileResource fileResource)
         {
-            return new GrantAllocationFileResource(grantAllocation, fileResource);
+            return new GrantAllocationFileResource(grantAllocation, fileResource, default(string));
         }
 
         /// <summary>
@@ -119,6 +123,8 @@ namespace ProjectFirma.Web.Models
         public int GrantAllocationFileResourceID { get; set; }
         public int GrantAllocationID { get; set; }
         public int FileResourceID { get; set; }
+        public string DisplayName { get; set; }
+        public string Description { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationFileResourceID; } set { GrantAllocationFileResourceID = value; } }
 
@@ -127,7 +133,8 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-
+            public const int DisplayName = 200;
+            public const int Description = 1000;
         }
     }
 }
