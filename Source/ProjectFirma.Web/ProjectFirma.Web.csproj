@@ -700,9 +700,9 @@
     <Compile Include="Security\GrantAllocationAwardTravelLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardSuppliesLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardViewFeature.cs" />
-    <Compile Include="Security\GrantAllocationDeleteFileAsAdminFeature.cs" />
+    <Compile Include="Security\GrantAllocationManageFileResourceAsAdminFeature.cs" />
     <Compile Include="Security\GrantDeleteFileAsAdminFeature.cs" />
-    <Compile Include="Security\GrantModificationDeleteFileAsAdminFeature.cs" />
+    <Compile Include="Security\GrantModificationManageFileResourceAsAdminFeature.cs" />
     <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />
     <Compile Include="Models\CurrentBiennium.cs" />
@@ -1079,6 +1079,9 @@
     <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\EditFileResource.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\EditFileResourceViewData.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\EditFileResourceViewModel.cs" />
     <Compile Include="Views\Shared\FileResourceControls\FileDetails.cs" />
     <Compile Include="Views\Shared\FileResourceControls\FileDetailsViewData.cs" />
     <Compile Include="Views\Shared\FileResourceControls\ICanUploadNewFiles.cs" />
@@ -2269,6 +2272,7 @@
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationsMap.cshtml" />
     <Content Include="Views\Shared\FileResourceControls\NewFile.cshtml" />
     <Content Include="Views\Shared\FileResourceControls\FileDetails.cshtml" />
+    <Content Include="Views\Shared\FileResourceControls\EditFileResource.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

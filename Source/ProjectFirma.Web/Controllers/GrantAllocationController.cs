@@ -254,7 +254,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantAllocationDeleteFileAsAdminFeature]
+        [GrantAllocationManageFileResourceAsAdminFeature]
         public PartialViewResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantAllocationFileResourcePrimaryKey.PrimaryKeyValue);
@@ -269,7 +269,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationDeleteFileAsAdminFeature]
+        [GrantAllocationManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {

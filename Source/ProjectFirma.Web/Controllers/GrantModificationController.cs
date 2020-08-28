@@ -19,8 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
-using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -33,6 +31,7 @@ using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
+using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
@@ -133,6 +132,8 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        #region  FileResources
+
         [HttpGet]
         [GrantModificationEditAsAdminFeature]
         public PartialViewResult NewGrantModificationFiles(GrantModificationPrimaryKey grantModificationPrimaryKey)
@@ -165,22 +166,48 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantModificationDeleteFileAsAdminFeature]
+        [GrantModificationManageFileResourceAsAdminFeature]
+        public PartialViewResult EditGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey)
+        {
+            var fileResource = grantModificationFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditGrantModificationFile(viewModel);
+        }
+
+        [HttpPost]
+        [GrantModificationManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = grantModificationFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantModificationFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditGrantModificationFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantModificationManageFileResourceAsAdminFeature]
         public PartialViewResult DeleteGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantModificationFileResourcePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantModificationFile(grantModificationFileResourcePrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantModificationFile(GrantModificationFileResource grantModificationFileResource, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this \"{grantModificationFileResource.DisplayName}\" file created on '{grantModificationFileResource.FileResource.CreateDate}' by '{grantModificationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
         [HttpPost]
-        [GrantModificationDeleteFileAsAdminFeature]
+        [GrantModificationManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteGrantModificationFile(GrantModificationFileResourcePrimaryKey grantModificationFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -195,6 +222,15 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        private PartialViewResult ViewDeleteGrantModificationFile(GrantModificationFileResource grantModificationFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantModificationFileResource.DisplayName}\" file created on '{grantModificationFileResource.FileResource.CreateDate}' by '{grantModificationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [GrantModificationViewFeature]
         public ViewResult GrantModificationDetail(GrantModificationPrimaryKey grantModificationPrimaryKey)

@@ -1,6 +1,6 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="NewFileViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
-Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+< copyright file = "EditFileResourceViewData.cs" company = "Tahoe Regional Planning Agency and Sitka Technology Group" >
+Copyright(c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
 
@@ -21,13 +21,5 @@ Source code is available upon request via <support@sitkatech.com>.
 
 namespace ProjectFirma.Web.Views.Shared.FileResourceControls
 {
-    public class NewFileViewData : FirmaUserControlViewData
-    {
-        public readonly string TargetEntityName;
-
-        public NewFileViewData(string targetEntityName)
-        {
-            TargetEntityName = targetEntityName;
-        }
-    }
+    public class EditFileResourceViewData { }
 }

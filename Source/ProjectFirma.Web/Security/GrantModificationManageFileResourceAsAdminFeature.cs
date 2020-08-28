@@ -24,12 +24,12 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Delete Grant Modification File")]
-    public class GrantModificationDeleteFileAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantModificationFileResource>
+    [SecurityFeatureDescription("Edit or Delete Grant Modification File")]
+    public class GrantModificationManageFileResourceAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantModificationFileResource>
     {
         private readonly FirmaFeatureWithContextImpl<GrantModificationFileResource> _firmaFeatureWithContextImpl;
 
-        public GrantModificationDeleteFileAsAdminFeature()
+        public GrantModificationManageFileResourceAsAdminFeature()
             : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<GrantModificationFileResource>(this);

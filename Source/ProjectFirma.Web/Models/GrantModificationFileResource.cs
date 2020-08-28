@@ -31,8 +31,9 @@ namespace ProjectFirma.Web.Models
         public string DeleteUrl => SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x =>
                     x.DeleteGrantModificationFile(GrantModificationFileResourceID));
 
-        public string EditUrl => string.Empty;
-        
+        public string EditUrl => SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x =>
+            x.EditGrantModificationFile(GrantModificationFileResourceID));
+
         public string DisplayCssClass { get; set; }
     }
 }
