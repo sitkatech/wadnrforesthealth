@@ -22,6 +22,8 @@ angular.module("ProjectFirmaApp").controller("InteractionEventController", funct
     $scope.ProjectToAdd = null;
     $scope.PersonToAdd = null;
 
+    $scope.files = [];
+
     $scope.$watch(function() {
         jQuery(".selectpicker").selectpicker("refresh");
 

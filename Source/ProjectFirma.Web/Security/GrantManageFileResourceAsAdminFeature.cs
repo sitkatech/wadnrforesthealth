@@ -3,12 +3,12 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Delete Grant File")]
-    public class GrantDeleteFileAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantFileResource>
+    [SecurityFeatureDescription("Edit or Delete Grant File")]
+    public class GrantManageFileResourceAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantFileResource>
     {
         private readonly FirmaFeatureWithContextImpl<GrantFileResource> _firmaFeatureWithContextImpl;
 
-        public GrantDeleteFileAsAdminFeature()
+        public GrantManageFileResourceAsAdminFeature()
             : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<GrantFileResource>(this);
@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
-            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have access to delete the Grant File {contextModelObject.DisplayName}");
+            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have access to manage the Grant file {contextModelObject.DisplayName}");
         }
     }
 }

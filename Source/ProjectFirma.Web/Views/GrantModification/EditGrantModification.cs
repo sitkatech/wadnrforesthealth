@@ -26,5 +26,10 @@ namespace ProjectFirma.Web.Views.GrantModification
     public abstract class EditGrantModification : TypedWebPartialViewPage<EditGrantModificationViewData, EditGrantModificationViewModel>
     {
     }
-    
+
+    public enum EditGrantModificationType
+    {
+        New,
+        Existing,
+    }
 }

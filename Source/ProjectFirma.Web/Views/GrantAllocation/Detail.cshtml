@@ -27,9 +27,8 @@
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
-@using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.GrantAllocation
-@using ProjectFirma.Web.Views.Shared.Grant
+@using ProjectFirma.Web.Views.Shared.FileResourceControls
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @using ProjectFirma.Web.Views.Shared.TextControls
 
@@ -92,7 +91,7 @@
                             <h3>Files</h3>
                         </div>
                         <div class="panel-body">
-                            @{ GrantDetailsFileDetails.RenderPartialView(Html, ViewDataTyped.GrantAllocationDetailsFileDetailsViewData); }
+                            @{ FileDetails.RenderPartialView(Html, ViewDataTyped.GrantAllocationDetailsFileDetailsViewData); }
                         </div>
                     </div>
                 </div>

@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Views.GrantModification
 
         [DisplayName("Grant Modification File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
-        public HttpPostedFileBase GrantModificationFileResourceData { get; set; }
+        public List<HttpPostedFileBase> GrantModificationFileResourceData { get; set; }
 
         [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationPurpose)]
@@ -94,7 +94,6 @@ namespace ProjectFirma.Web.Views.GrantModification
             GrantModificationAmount = grantModification.GrantModificationAmount;
             GrantID = grantModification.GrantID;
             GrantModificationPurposeIDs = grantModification.GrantModificationGrantModificationPurposes.Select(x => x.GrantModificationPurposeID).ToList();
-
         }
 
         public void UpdateModel(Models.GrantModification grantModification, Person currentPerson, List<GrantModificationGrantModificationPurpose> allGrantModificationGrantModificationPurposes)
@@ -107,24 +106,23 @@ namespace ProjectFirma.Web.Views.GrantModification
             grantModification.GrantID = GrantID;
             grantModification.GrantModificationAmount = GrantModificationAmount;
 
-            if (GrantModificationFileResourceData != null)
+            if (GrantModificationFileResourceData?[0] != null)
             {
-                var currentGrantModificationFileResource = grantModification.GrantModificationFileResource;
-                grantModification.GrantModificationFileResource = null;
-                // Delete old grantModificationAllocation file, if present
-                if (currentGrantModificationFileResource != null)
+                var fileResources = GrantModificationFileResourceData.Select(fileData =>
+                    FileResource.CreateNewFromHttpPostedFile(fileData, currentPerson));
+
+                foreach (var fileResource in fileResources)
                 {
-                    HttpRequestStorage.DatabaseEntities.SaveChanges();
-                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentGrantModificationFileResource);
+                    HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
+                    var grantModificationFileResource = new GrantModificationFileResource(grantModification, fileResource, fileResource.OriginalCompleteFileName);
+                    grantModification.GrantModificationFileResources.Add(grantModificationFileResource);
                 }
-                grantModification.GrantModificationFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantModificationFileResourceData, currentPerson);
             }
 
             var grantModificationPurposesUpdated = GrantModificationPurposeIDs.Select(x => new GrantModificationGrantModificationPurpose(grantModification.GrantModificationID, x)).ToList();
             grantModification.GrantModificationGrantModificationPurposes.Merge(grantModificationPurposesUpdated,
                                                                                allGrantModificationGrantModificationPurposes,
                                                                                (x, y) => x.GrantModificationID == y.GrantModificationID && x.GrantModificationPurposeID == y.GrantModificationPurposeID);
-
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

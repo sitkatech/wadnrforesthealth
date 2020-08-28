@@ -567,6 +567,8 @@
           <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -621,6 +623,8 @@
           <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -635,7 +639,17 @@
           <ScalarProperty Name="GrantModificationStatusID" ColumnName="GrantModificationStatusID" />
           <ScalarProperty Name="GrantModificationAmount" ColumnName="GrantModificationAmount" />
           <ScalarProperty Name="GrantModificationDescription" ColumnName="GrantModificationDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationFileResource">
+        <MappingFragment StoreEntitySet="GrantModificationFileResource">
           <ScalarProperty Name="GrantModificationFileResourceID" ColumnName="GrantModificationFileResourceID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -738,6 +752,17 @@
           <ScalarProperty Name="InteractionEventContactID" ColumnName="InteractionEventContactID" />
           <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventFileResource">
+        <MappingFragment StoreEntitySet="InteractionEventFileResource">
+          <ScalarProperty Name="InteractionEventFileResourceID" ColumnName="InteractionEventFileResourceID" />
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

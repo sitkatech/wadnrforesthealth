@@ -30,7 +30,9 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
@@ -64,7 +66,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantTitle}\" successfully deleted.";
-            grant.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            grant.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -147,53 +149,80 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<NewGrant, NewGrantViewData, NewGrantViewModel>(viewData, viewModel);
         }
 
+        #region FileResources
+
         [HttpGet]
         [GrantEditAsAdminFeature]
         public PartialViewResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey)
         {
-            var viewModel = new NewGrantFileViewModel(grantPrimaryKey.EntityObject);
+            Check.EnsureNotNull(grantPrimaryKey.EntityObject);
+            var viewModel = new NewFileViewModel();
             return ViewNewGrantFiles(viewModel);
         }
 
         [HttpPost]
         [GrantEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey, NewGrantFileViewModel viewModel)
+        public ActionResult NewGrantFiles(GrantPrimaryKey grantPrimaryKey, NewFileViewModel viewModel)
         {
             var grant = grantPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNewGrantFiles(new NewGrantFileViewModel());
+                return ViewNewGrantFiles(new NewFileViewModel());
             }
 
             viewModel.UpdateModel(grant, CurrentPerson);
-            SetMessageForDisplay($"Successfully created {viewModel.GrantFileResourceDatas.Count} new files(s) for {FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\".");
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantName}\".");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewNewGrantFiles(NewGrantFileViewModel viewModel)
+        private PartialViewResult ViewNewGrantFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewGrantFileViewData();
-            return RazorPartialView<NewGrantFile, NewGrantFileViewData, NewGrantFileViewModel>(viewData, viewModel);
+            var viewData = new NewFileViewData(FieldDefinition.Grant.FieldDefinitionDisplayName);
+            return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
-        [GrantDeleteFileAsAdminFeature]
+        [GrantManageFileResourceAsAdminFeature]
+        public PartialViewResult EditGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey)
+        {
+            var fileResource = grantFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditGrantFile(viewModel);
+        }
+
+        [HttpPost]
+        [GrantManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = grantFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditGrantFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantManageFileResourceAsAdminFeature]
         public PartialViewResult DeleteGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantFileResourcePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantFile(grantFileResourcePrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantFile(GrantFileResource grantFileResource, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this \"{grantFileResource.DisplayName}\" file created on '{grantFileResource.FileResource.CreateDate}' by '{grantFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
         [HttpPost]
-        [GrantDeleteFileAsAdminFeature]
+        [GrantManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteGrantFile(GrantFileResourcePrimaryKey grantFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -204,11 +233,19 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} file \"{grantFileResource.DisplayName}\" created on '{grantFileResource.FileResource.CreateDate}' by '{grantFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
-            grantFileResource.FileResource.Delete(HttpRequestStorage.DatabaseEntities);
-            grantFileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            grantFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        private PartialViewResult ViewDeleteGrantFile(GrantFileResource grantFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantFileResource.DisplayName}\" file created on '{grantFileResource.FileResource.CreateDate}' by '{grantFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [GrantsViewFeature]
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
@@ -334,7 +371,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
             var grant = grantPrimaryKey.EntityObject;
-            var gridSpec = new GrantModificationGridSpec(CurrentPerson, grant, grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue));
+            var gridSpec = new GrantModificationGridSpec(CurrentPerson, grant);
             var grantModifications = grant.GrantModifications.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantModification>(grantModifications, gridSpec);
             return gridJsonNetJObjectResult;

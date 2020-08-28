@@ -6,6 +6,8 @@ CREATE TABLE [dbo].[GrantAllocationFileResource](
 	[GrantAllocationFileResourceID] [int] IDENTITY(1,1) NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[FileResourceID] [int] NOT NULL,
+	[DisplayName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[Description] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_GrantAllocationFileResource_GrantAllocationFileResourceID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationFileResourceID] ASC
