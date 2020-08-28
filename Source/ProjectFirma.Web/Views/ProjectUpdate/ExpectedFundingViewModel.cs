@@ -90,7 +90,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             //Update the ProjectFundingSourceUpdates
             var projectFundingSourceUpdatesUpdated = new List<Models.ProjectFundingSourceUpdate>();
-            if (FundingSourceIDs.Any())
+            if (FundingSourceIDs != null && FundingSourceIDs.Any())
             {
                 // Completely rebuild the list
                 projectFundingSourceUpdatesUpdated = FundingSourceIDs.Select(x => new ProjectFundingSourceUpdate(projectUpdateBatch.ProjectUpdateBatchID, x)).ToList();
