@@ -119,10 +119,12 @@ namespace ProjectFirma.Web.Views.GrantModification
                 }
             }
 
+            var existingRecordsToClear = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes
+                .Where(gmgmp => gmgmp.GrantModificationID == grantModification.GrantModificationID).ToList();
+            HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.RemoveRange(existingRecordsToClear);
+
             var grantModificationPurposesUpdated = GrantModificationPurposeIDs.Select(x => new GrantModificationGrantModificationPurpose(grantModification.GrantModificationID, x)).ToList();
-            grantModification.GrantModificationGrantModificationPurposes.Merge(grantModificationPurposesUpdated,
-                                                                               allGrantModificationGrantModificationPurposes,
-                                                                               (x, y) => x.GrantModificationID == y.GrantModificationID && x.GrantModificationPurposeID == y.GrantModificationPurposeID);
+            HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.AddRange(grantModificationPurposesUpdated);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
