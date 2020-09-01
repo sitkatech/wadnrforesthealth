@@ -1467,6 +1467,7 @@
     <Property Name="GisFeatureGeometry" Type="Geometry" Nullable="false" />
     <Property Name="GisImportFeatureKey" Type="Int32" Nullable="false" />
     <Property Name="IsValid" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="CalculatedArea" Type="Decimal" Precision="38" Scale="20" />
     <NavigationProperty Name="GisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" FromRole="GisFeatures" ToRole="GisUploadAttempt" />
     <NavigationProperty Name="GisFeatureMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID" FromRole="GisFeature" ToRole="GisFeatureMetadataAttributes" />
   </EntityType>
@@ -1529,6 +1530,7 @@
     <Property Name="ProjectTypeDefaultName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="TreatmentTypeDefaultName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="ImportIsFlattened" Type="Boolean" />
+    <Property Name="RequireCompletionDate" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />

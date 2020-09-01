@@ -31,13 +31,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisFeature(int gisFeatureID, int gisUploadAttemptID, DbGeometry gisFeatureGeometry, int gisImportFeatureKey, bool? isValid) : this()
+        public GisFeature(int gisFeatureID, int gisUploadAttemptID, DbGeometry gisFeatureGeometry, int gisImportFeatureKey, bool? isValid, decimal? calculatedArea) : this()
         {
             this.GisFeatureID = gisFeatureID;
             this.GisUploadAttemptID = gisUploadAttemptID;
             this.GisFeatureGeometry = gisFeatureGeometry;
             this.GisImportFeatureKey = gisImportFeatureKey;
             this.IsValid = isValid;
+            this.CalculatedArea = calculatedArea;
         }
 
         /// <summary>
@@ -138,6 +139,7 @@ namespace ProjectFirma.Web.Models
         public DbGeometry GisFeatureGeometry { get; set; }
         public int GisImportFeatureKey { get; set; }
         public bool? IsValid { get; private set; }
+        public decimal? CalculatedArea { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisFeatureID; } set { GisFeatureID = value; } }
 

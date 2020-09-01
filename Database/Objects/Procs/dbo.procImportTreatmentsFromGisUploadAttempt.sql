@@ -92,8 +92,10 @@ select p.ProjectID
 , null
 , null
 , null
-, isnull(TRY_PARSE(x.FootprintAcres AS decimal(38,10)),0)  as [TreatmentFootprintAcres]
-, isnull(TRY_PARSE(x.TreatedAcres AS decimal(38,10)),0)  as [TreatmentOtherTreatmentAcres]
+, case  when @footprintAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
+        else isnull(TRY_PARSE(x.FootprintAcres AS decimal(38,10)),0) end  as [TreatmentFootprintAcres]
+, case  when @treatedAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
+        else isnull(TRY_PARSE(x.TreatedAcres AS decimal(38,10)),0) end  as [TreatedAcres]
 , null
 , @treatmentTypeID -- TreatmentTypeID
 , @treatmentDetailedActivityTypeID -- TreatmentDetailedActivityTypeID
@@ -115,6 +117,7 @@ select p.ProjectID
  from dbo.Project p
 join (
         select gf.GisFeatureGeometry
+        , gf.CalculatedArea
         , gfma.GisFeatureMetadataAttributeValue
         , gfmaFootprint.GisFeatureMetadataAttributeValue as FootprintAcres
         , gfmaTreated.GisFeatureMetadataAttributeValue as TreatedAcres 

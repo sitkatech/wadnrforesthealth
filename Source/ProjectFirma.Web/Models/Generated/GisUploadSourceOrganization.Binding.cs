@@ -33,24 +33,26 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened) : this()
+        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool requireCompletionDate) : this()
         {
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
             this.ProjectTypeDefaultName = projectTypeDefaultName;
             this.TreatmentTypeDefaultName = treatmentTypeDefaultName;
             this.ImportIsFlattened = importIsFlattened;
+            this.RequireCompletionDate = requireCompletionDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName) : this()
+        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool requireCompletionDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GisUploadSourceOrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
+            this.RequireCompletionDate = requireCompletionDate;
         }
 
 
@@ -59,7 +61,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GisUploadSourceOrganization CreateNewBlank()
         {
-            return new GisUploadSourceOrganization(default(string));
+            return new GisUploadSourceOrganization(default(string), default(bool));
         }
 
         /// <summary>
@@ -145,6 +147,7 @@ namespace ProjectFirma.Web.Models
         public string ProjectTypeDefaultName { get; set; }
         public string TreatmentTypeDefaultName { get; set; }
         public bool? ImportIsFlattened { get; set; }
+        public bool RequireCompletionDate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
