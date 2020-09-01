@@ -346,6 +346,7 @@
           <ScalarProperty Name="TreatmentTypeDefaultName" ColumnName="TreatmentTypeDefaultName" />
           <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
           <ScalarProperty Name="RequireCompletionDate" ColumnName="RequireCompletionDate" />
+          <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

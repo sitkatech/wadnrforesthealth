@@ -1439,6 +1439,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="TreatmentTypeDefaultName" Type="varchar" MaxLength="100" />
     <Property Name="ImportIsFlattened" Type="bit" />
     <Property Name="RequireCompletionDate" Type="bit" Nullable="false" />
+    <Property Name="AdjustProjectTypeBasedOnTreatmentTypes" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
