@@ -79,6 +79,23 @@ namespace LtInfo.Common.GdalOgr
             return processUtilityResult.StdOut;
         }
 
+        public string ImportSqlToGeoJson(string sqlQuery, string connectionString, int coordinateSystemID)
+        {
+            var databaseConnectionString = $"MSSQL:{connectionString}";
+            var commandLineArguments = BuildCommandLineArgumentsForSqlToGeoJson(sqlQuery, _gdalDataPath, coordinateSystemID, databaseConnectionString);
+            var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
+            return processUtilityResult.StdOut;
+        }
+
+        public string ImportShapeFileToGeoJson(string shapeFilePath, string sourceLayerName, bool explodeCollections)
+        {
+            Check.Require(shapeFilePath.ToLower().EndsWith(".shp"), $"Input filename for shp input must end with .shp. Filename passed is {shapeFilePath}");
+
+            var commandLineArguments = BuildCommandLineArgumentsForShapeFileToGeoJson(shapeFilePath, _gdalDataPath, sourceLayerName, _coordinateSystemId, explodeCollections);
+            var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
+            return processUtilityResult.StdOut;
+        }
+
         public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString, string featureClassNameToImport)
         {
             Check.Require(inputGdbFile.FullName.ToLower().EndsWith(".gdb.zip"),
@@ -284,6 +301,62 @@ namespace LtInfo.Common.GdalOgr
                 "GeoJSON",
                 "/dev/stdout",
                 inputGdbFile.FullName,
+                $"\"{sourceLayerName}\"",
+                "-dim",
+                "2"
+            };
+
+            return commandLineArguments.Where(x => x != null).ToList();
+        }
+
+        /// <summary>
+        /// Produces the command line arguments for ogr2ogr.exe to run the File Geodatabase import.
+        /// <example>"C:\Program Files\GDAL\ogr2ogr.exe" -preserve_fid --config GDAL_DATA "C:\\Program Files\\GDAL\\gdal-data" -t_srs EPSG:4326 -f GeoJSON /dev/stdout "C:\\svn\\sitkatech\\trunk\\Corral\\Source\\ProjectFirma.Web\\Models\\GdalOgr\\SampleFileGeodatabase.gdb.zip" "somelayername"</example>
+        /// </summary>
+        internal static List<string> BuildCommandLineArgumentsForSqlToGeoJson(string sqlQuery, DirectoryInfo gdalDataDirectoryInfo, int coordinateSystemId, string connectionString)
+        {
+
+            var replacedConnectionString =
+                connectionString.Replace("Trusted_Connection=True", "Trusted_Connection=Yes");
+
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-t_srs",
+                GetMapProjection(coordinateSystemId),
+                "-f",
+                "GeoJSON",
+                "/dev/stdout",
+                replacedConnectionString,
+                "-sql",
+                sqlQuery,
+                "-dim",
+                "2"
+            };
+
+            return commandLineArguments.Where(x => x != null).ToList();
+        }
+
+        /// <summary>
+        /// Produces the command line arguments for ogr2ogr.exe to run the File Geodatabase import.
+        /// <example>"C:\Program Files\GDAL\ogr2ogr.exe" -preserve_fid --config GDAL_DATA "C:\\Program Files\\GDAL\\gdal-data" -t_srs EPSG:4326 -f GeoJSON /dev/stdout "C:\\svn\\sitkatech\\trunk\\Corral\\Source\\ProjectFirma.Web\\Models\\GdalOgr\\SampleFileGeodatabase.gdb.zip" "somelayername"</example>
+        /// </summary>
+        internal static List<string> BuildCommandLineArgumentsForShapeFileToGeoJson(string shapeFilePath, DirectoryInfo gdalDataDirectoryInfo, string sourceLayerName, int coordinateSystemId, bool explodeCollections)
+        {
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-t_srs",
+                GetMapProjection(coordinateSystemId),
+                explodeCollections ? "-explodecollections" : null,
+                "-f",
+                "GeoJSON",
+                "/dev/stdout",
+                shapeFilePath,
                 $"\"{sourceLayerName}\"",
                 "-dim",
                 "2"

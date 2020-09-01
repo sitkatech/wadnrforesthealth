@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[GisFeature](
 	[GisFeatureGeometry] [geometry] NOT NULL,
 	[GisImportFeatureKey] [int] NOT NULL,
 	[IsValid]  AS ([GisFeatureGeometry].[STIsValid]()),
+	[CalculatedArea] [decimal](38, 20) NULL,
  CONSTRAINT [PK_GisFeature_GisFeatureID] PRIMARY KEY CLUSTERED 
 (
 	[GisFeatureID] ASC

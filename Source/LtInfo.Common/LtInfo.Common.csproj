@@ -185,6 +185,7 @@
     <Compile Include="DhtmlWrappers\DhtmlxGridColumnAggregationType.cs" />
     <Compile Include="DhtmlWrappers\DhtmlxGridHtmlHelpersTest.cs" />
     <Compile Include="GdalOgr\GeoJsonToSqlGeometryHelper.cs" />
+    <Compile Include="GdalOgr\GeoJsonToSqlGeographyHelper.cs" />
     <Compile Include="GeneralUtility.cs" />
     <Compile Include="GeneralUtilityTest.cs" />
     <Compile Include="HtmlHelperExtensions\DropdownForExtensions.cs" />

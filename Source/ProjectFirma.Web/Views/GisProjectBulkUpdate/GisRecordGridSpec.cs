@@ -45,12 +45,10 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             ObjectNameSingular = $"GIS Record";
             ObjectNamePlural = $"GIS Records";
             SaveFiltersInCookie = false;
-            var isFlattened = gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
-                              gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value;
             var gisFeatureIDs = gisFeatures.Select(x => x.GisFeatureID);
             var allAttributesOnGisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
             var dictionary = allAttributesOnGisUploadAttempt.GroupBy(x => x.GisMetadataAttributeID).ToDictionary(x => x.Key, y => y.ToList());
-            var columnsOrdered = columns.Where(x => x.SortOrder != 1 || isFlattened)
+            var columnsOrdered = columns
                 .Where(x =>! string.Equals(x.GisMetadataAttribute.GisMetadataAttributeName, "Shape", StringComparison.InvariantCultureIgnoreCase))
                 .Where(x => dictionary.ContainsKey(x.GisMetadataAttributeID))
                 .OrderBy(x => x.SortOrder)
@@ -59,6 +57,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 
             Add("ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GisFeatureID.ToString()), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Is Valid", x => (x.IsValid ?? false).ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Calculated Area in Acres", x => x.CalculatedArea.ToString(), 90, DhtmlxGridColumnFilterType.Numeric);
 
             foreach (var fGetColumnNamesForTableResult in columnsOrdered)
             {

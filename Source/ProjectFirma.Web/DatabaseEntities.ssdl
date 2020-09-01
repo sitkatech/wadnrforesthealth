@@ -1391,6 +1391,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GisFeatureGeometry" Type="geometry" Nullable="false" />
     <Property Name="GisImportFeatureKey" Type="int" Nullable="false" />
     <Property Name="IsValid" Type="bit" StoreGeneratedPattern="Computed" />
+    <Property Name="CalculatedArea" Type="decimal" Precision="38" Scale="20" />
   </EntityType>
   <EntityType Name="GisFeatureMetadataAttribute">
     <Key>
@@ -1437,6 +1438,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="ProjectTypeDefaultName" Type="varchar" MaxLength="100" />
     <Property Name="TreatmentTypeDefaultName" Type="varchar" MaxLength="100" />
     <Property Name="ImportIsFlattened" Type="bit" />
+    <Property Name="RequireCompletionDate" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>

@@ -293,6 +293,7 @@
           <ScalarProperty Name="GisFeatureGeometry" ColumnName="GisFeatureGeometry" />
           <ScalarProperty Name="GisImportFeatureKey" ColumnName="GisImportFeatureKey" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+          <ScalarProperty Name="CalculatedArea" ColumnName="CalculatedArea" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -344,6 +345,7 @@
           <ScalarProperty Name="ProjectTypeDefaultName" ColumnName="ProjectTypeDefaultName" />
           <ScalarProperty Name="TreatmentTypeDefaultName" ColumnName="TreatmentTypeDefaultName" />
           <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
+          <ScalarProperty Name="RequireCompletionDate" ColumnName="RequireCompletionDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

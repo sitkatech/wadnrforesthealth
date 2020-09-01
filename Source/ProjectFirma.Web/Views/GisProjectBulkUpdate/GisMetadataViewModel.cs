@@ -56,7 +56,6 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Stage Column")]
         public int? ProjectStageMetadataAttributeID { get; set; }
 
-        [Required]
         [DisplayName("Footprint Acres Column")]
         public int? FootprintAcresMetadataAttributeID { get; set; }
 
