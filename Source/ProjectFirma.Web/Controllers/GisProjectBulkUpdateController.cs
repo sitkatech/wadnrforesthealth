@@ -263,7 +263,74 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapes);
             HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectRegions);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+
+            
+            UpdateProjectTypesIfNeeded(gisUploadAttempt);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+
             return new ModalDialogFormJsonResult();
+        }
+
+        private static void UpdateProjectTypesIfNeeded(GisUploadAttempt gisUploadAttempt)
+        {
+            if (gisUploadAttempt.GisUploadSourceOrganization.AdjustProjectTypeBasedOnTreatmentTypes)
+            {
+                var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList();
+                var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x =>
+                    x.CreateGisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).Include(x => x.Treatments).ToList();
+                foreach (var project in projects)
+                {
+                    var treatments = project.Treatments;
+                    var distinctDetailedActivityTypes =
+                        treatments.Select(x => x.TreatmentDetailedActivityTypeImportedText).Distinct().ToList();
+                    if (distinctDetailedActivityTypes.Count == 1)
+                    {
+                        if (string.Equals(gisUploadAttempt.GisUploadSourceOrganization.GisUploadSourceOrganizationName,
+                            "WDFW", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            var sourceString = distinctDetailedActivityTypes.Single();
+                            if (string.Equals(sourceString, "Commercial Thin",
+                                StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var projectType = projectTypes.SingleOrDefault(x =>
+                                    string.Equals("Commercial vegetation treatment", x.ProjectTypeName.Trim(),
+                                        StringComparison.InvariantCultureIgnoreCase));
+                                if (projectType != null)
+                                {
+                                    project.ProjectType = projectType;
+                                }
+                            }
+
+                            if (string.Equals(sourceString, "PreCommercialThin",
+                                StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var projectType = projectTypes.SingleOrDefault(x =>
+                                    string.Equals("Non-commercial vegetation treatment", x.ProjectTypeName.Trim(),
+                                        StringComparison.InvariantCultureIgnoreCase));
+                                if (projectType != null)
+                                {
+                                    project.ProjectType = projectType;
+                                }
+                            }
+
+                            if (string.Equals(sourceString, "PrescribedFire",
+                                StringComparison.InvariantCultureIgnoreCase) || string.Equals(sourceString, "PileAndBurn",
+                                StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var projectType = projectTypes.SingleOrDefault(x =>
+                                    string.Equals("Prescribed fire treatment", x.ProjectTypeName.Trim(),
+                                        StringComparison.InvariantCultureIgnoreCase));
+                                if (projectType != null)
+                                {
+                                    project.ProjectType = projectType;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute, string distinctGisValue,

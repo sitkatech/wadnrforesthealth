@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[TreatmentTypeDefaultName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ImportIsFlattened] [bit] NULL,
 	[RequireCompletionDate] [bit] NOT NULL,
+	[AdjustProjectTypeBasedOnTreatmentTypes] [bit] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC
