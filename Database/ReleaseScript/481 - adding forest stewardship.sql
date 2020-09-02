@@ -42,3 +42,10 @@ select 6, 30, 'plan_name'
 insert into dbo.GisDefaultMapping(GisUploadSourceOrganizationID, FieldDefinitionID, GisDefaultMappingColumnName)
 select 6, 465, 'smart_plan_id'
 
+insert into dbo.GisDefaultMapping(GisUploadSourceOrganizationID, FieldDefinitionID, GisDefaultMappingColumnName)
+select 6, 466, 'plan_start_date'
+
+insert into dbo.GisDefaultMapping(GisUploadSourceOrganizationID, FieldDefinitionID, GisDefaultMappingColumnName)
+select 6, 467, 'gis_acres'
+
+
