@@ -10,8 +10,16 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[ImportIsFlattened] [bit] NULL,
 	[RequireCompletionDate] [bit] NOT NULL,
 	[AdjustProjectTypeBasedOnTreatmentTypes] [bit] NOT NULL,
+	[ProjectStageDefaultID] [int] NOT NULL,
+	[DataDeriveProjectStage] [bit] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_ProjectStage_ProjectStageDefaultID_ProjectStageID] FOREIGN KEY([ProjectStageDefaultID])
+REFERENCES [dbo].[ProjectStage] ([ProjectStageID])
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_ProjectStage_ProjectStageDefaultID_ProjectStageID]
