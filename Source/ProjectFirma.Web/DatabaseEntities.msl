@@ -347,6 +347,8 @@
           <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
           <ScalarProperty Name="RequireCompletionDate" ColumnName="RequireCompletionDate" />
           <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
+          <ScalarProperty Name="ProjectStageDefaultID" ColumnName="ProjectStageDefaultID" />
+          <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

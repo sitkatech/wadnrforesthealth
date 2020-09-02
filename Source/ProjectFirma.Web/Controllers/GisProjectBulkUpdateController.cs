@@ -380,7 +380,7 @@ namespace ProjectFirma.Web.Controllers
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-            var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+            
 
             
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
@@ -399,36 +399,9 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectName = "Default Project Name";
             }
-            var projectStageString = gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue && gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value ? string.Empty : projectStages.SingleOrDefault();
-
-
-            var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
-                x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
-                x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
-
-            ProjectStage projectStage = ProjectStage.Completed;
-
-            if (!completionDate.HasValue)
-            {
-                projectStage = ProjectStage.Implementation;
-            }
-            if (!string.IsNullOrEmpty(projectStageString))
-            {
-                var projectStageMappedString = projectStageCrossWalks.Single(x =>
-                        x.GisCrossWalkSourceValue.Equals(projectStageString, StringComparison.InvariantCultureIgnoreCase))
-                    ?.GisCrossWalkMappedValue;
-
-                if (!string.IsNullOrEmpty(projectStageMappedString))
-                {
-                    projectStage = ProjectStage.All.SingleOrDefault(x =>
-                        x.ProjectStageName.Equals(projectStageMappedString, StringComparison.InvariantCultureIgnoreCase));
-                }
-
-                if (projectStage == null)
-                {
-                    projectStage = ProjectStage.Completed;
-                }
-            }
+            
+            ProjectStage projectStage = gisUploadAttempt.GisUploadSourceOrganization.ProjectStageDefault;
+            projectStage = CalculateProjectStageIfNeeded(gisCrossWalkDefaultList, gisUploadAttempt, projectStageAttributes, completionDate, projectStage);
 
             var projectTypeMappedString = string.IsNullOrEmpty(gisUploadSourceOrganization.ProjectTypeDefaultName) ? string.Empty : gisUploadSourceOrganization.ProjectTypeDefaultName;
             var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
@@ -454,6 +427,50 @@ namespace ProjectFirma.Web.Controllers
 
             
             projectList.Add(project);
+        }
+
+        private static ProjectStage CalculateProjectStageIfNeeded(List<GisCrossWalkDefault> gisCrossWalkDefaultList,
+            GisUploadAttempt gisUploadAttempt, List<GisFeatureMetadataAttribute> projectStageAttributes, DateTime? completionDate, ProjectStage projectStage)
+        {
+            if (gisUploadAttempt.GisUploadSourceOrganization.DataDeriveProjectStage)
+            {
+                var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+                var projectStageString =
+                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value
+                        ? string.Empty
+                        : projectStages.SingleOrDefault();
+
+
+                var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
+                    x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
+                    x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
+
+                if (!completionDate.HasValue)
+                {
+                    projectStage = ProjectStage.Implementation;
+                }
+
+                if (!string.IsNullOrEmpty(projectStageString))
+                {
+                    var projectStageMappedString = projectStageCrossWalks.Single(x =>
+                            x.GisCrossWalkSourceValue.Equals(projectStageString, StringComparison.InvariantCultureIgnoreCase))
+                        ?.GisCrossWalkMappedValue;
+
+                    if (!string.IsNullOrEmpty(projectStageMappedString))
+                    {
+                        projectStage = ProjectStage.All.SingleOrDefault(x =>
+                            x.ProjectStageName.Equals(projectStageMappedString, StringComparison.InvariantCultureIgnoreCase));
+                    }
+
+                    if (projectStage == null)
+                    {
+                        projectStage = ProjectStage.Completed;
+                    }
+                }
+            }
+
+            return projectStage;
         }
 
         private ViewResult ViewUploadGisFile(UploadGisFileViewModel viewModel, GisUploadAttempt gisUploadAttempt)

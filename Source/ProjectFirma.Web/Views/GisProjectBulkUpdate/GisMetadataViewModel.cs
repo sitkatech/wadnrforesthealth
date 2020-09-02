@@ -46,9 +46,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Treatment Type Column")]
         public int? TreatmentTypeMetadataAttributeID { get; set; }
 
-        [Required]
         [DisplayName("Completion Date Column")]
-        public int CompletionDateMetadataAttributeID { get; set; }
+        public int? CompletionDateMetadataAttributeID { get; set; }
 
         [DisplayName("Start Date Column")]
         public int? StartDateMetadataAttributeID { get; set; }
