@@ -17,4 +17,6 @@ values
 (12, 'Slash', 'Slash'),
 (13, 'Other', 'Other'),
 (14, 'JackpotBurn', 'Jackpot Burn'),
-(15, 'MachinePile', 'Machine Pile')
+(15, 'MachinePile', 'Machine Pile'),
+(16, 'FuelBreak', 'Fuel Break'),
+(17, 'Planting', 'Planting')

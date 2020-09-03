@@ -34,6 +34,8 @@ namespace ProjectFirma.Web.Models
         public static readonly TreatmentDetailedActivityTypeOther Other = TreatmentDetailedActivityTypeOther.Instance;
         public static readonly TreatmentDetailedActivityTypeJackpotBurn JackpotBurn = TreatmentDetailedActivityTypeJackpotBurn.Instance;
         public static readonly TreatmentDetailedActivityTypeMachinePile MachinePile = TreatmentDetailedActivityTypeMachinePile.Instance;
+        public static readonly TreatmentDetailedActivityTypeFuelBreak FuelBreak = TreatmentDetailedActivityTypeFuelBreak.Instance;
+        public static readonly TreatmentDetailedActivityTypePlanting Planting = TreatmentDetailedActivityTypePlanting.Instance;
 
         public static readonly List<TreatmentDetailedActivityType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentDetailedActivityType> AllLookupDictionary;
@@ -43,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentDetailedActivityType()
         {
-            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile };
+            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile, FuelBreak, Planting };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentDetailedActivityType>(All.ToDictionary(x => x.TreatmentDetailedActivityTypeID));
         }
 
@@ -119,6 +121,8 @@ namespace ProjectFirma.Web.Models
                     return BroadcastBurn;
                 case TreatmentDetailedActivityTypeEnum.Chipping:
                     return Chipping;
+                case TreatmentDetailedActivityTypeEnum.FuelBreak:
+                    return FuelBreak;
                 case TreatmentDetailedActivityTypeEnum.Grazing:
                     return Grazing;
                 case TreatmentDetailedActivityTypeEnum.HandPile:
@@ -137,6 +141,8 @@ namespace ProjectFirma.Web.Models
                     return Mastication;
                 case TreatmentDetailedActivityTypeEnum.Other:
                     return Other;
+                case TreatmentDetailedActivityTypeEnum.Planting:
+                    return Planting;
                 case TreatmentDetailedActivityTypeEnum.Pruning:
                     return Pruning;
                 case TreatmentDetailedActivityTypeEnum.Slash:
@@ -165,7 +171,9 @@ namespace ProjectFirma.Web.Models
         Slash = 12,
         Other = 13,
         JackpotBurn = 14,
-        MachinePile = 15
+        MachinePile = 15,
+        FuelBreak = 16,
+        Planting = 17
     }
 
     public partial class TreatmentDetailedActivityTypeChipping : TreatmentDetailedActivityType
@@ -256,5 +264,17 @@ namespace ProjectFirma.Web.Models
     {
         private TreatmentDetailedActivityTypeMachinePile(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
         public static readonly TreatmentDetailedActivityTypeMachinePile Instance = new TreatmentDetailedActivityTypeMachinePile(15, @"MachinePile", @"Machine Pile");
+    }
+
+    public partial class TreatmentDetailedActivityTypeFuelBreak : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeFuelBreak(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeFuelBreak Instance = new TreatmentDetailedActivityTypeFuelBreak(16, @"FuelBreak", @"Fuel Break");
+    }
+
+    public partial class TreatmentDetailedActivityTypePlanting : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypePlanting(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypePlanting Instance = new TreatmentDetailedActivityTypePlanting(17, @"Planting", @"Planting");
     }
 }

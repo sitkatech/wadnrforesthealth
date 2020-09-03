@@ -283,16 +283,12 @@ namespace ProjectFirma.Web.Controllers
                 foreach (var project in projects)
                 {
                     var treatments = project.Treatments;
-                    var distinctDetailedActivityTypes =
-                        treatments.Select(x => x.TreatmentDetailedActivityTypeImportedText).Distinct().ToList();
-                    if (distinctDetailedActivityTypes.Count == 1)
+                    var distinctTreatmentTypes = treatments.Select(x => x.TreatmentTypeID).Distinct().ToList();
+                    if (distinctTreatmentTypes.Count == 1)
                     {
-                        if (string.Equals(gisUploadAttempt.GisUploadSourceOrganization.GisUploadSourceOrganizationName,
-                            "WDFW", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            var sourceString = distinctDetailedActivityTypes.Single();
-                            if (string.Equals(sourceString, "Commercial Thin",
-                                StringComparison.InvariantCultureIgnoreCase))
+                        var treatmentTypeID = distinctTreatmentTypes.Single();
+                        var treatmentType = TreatmentType.AllLookupDictionary[treatmentTypeID];
+                            if (treatmentType == TreatmentType.Commercial)
                             {
                                 var projectType = projectTypes.SingleOrDefault(x =>
                                     string.Equals("Commercial vegetation treatment", x.ProjectTypeName.Trim(),
@@ -303,8 +299,7 @@ namespace ProjectFirma.Web.Controllers
                                 }
                             }
 
-                            if (string.Equals(sourceString, "PreCommercialThin",
-                                StringComparison.InvariantCultureIgnoreCase))
+                            if (treatmentType == TreatmentType.NonCommercial)
                             {
                                 var projectType = projectTypes.SingleOrDefault(x =>
                                     string.Equals("Non-commercial vegetation treatment", x.ProjectTypeName.Trim(),
@@ -315,9 +310,7 @@ namespace ProjectFirma.Web.Controllers
                                 }
                             }
 
-                            if (string.Equals(sourceString, "PrescribedFire",
-                                StringComparison.InvariantCultureIgnoreCase) || string.Equals(sourceString, "PileAndBurn",
-                                StringComparison.InvariantCultureIgnoreCase))
+                            if (treatmentType == TreatmentType.PrescribedFire)
                             {
                                 var projectType = projectTypes.SingleOrDefault(x =>
                                     string.Equals("Prescribed fire treatment", x.ProjectTypeName.Trim(),
@@ -327,14 +320,17 @@ namespace ProjectFirma.Web.Controllers
                                     project.ProjectType = projectType;
                                 }
                             }
-                        }
+                        
                     }
                 }
             }
         }
 
-        private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute, string distinctGisValue,
-            Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary,
+        private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute
+            , string distinctGisValue,
+            Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary
+            , Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary
+            , Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary,
            Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
         List<GisCrossWalkDefault> gisCrossWalkDefaultList,
             GisUploadAttempt gisUploadAttempt
