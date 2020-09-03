@@ -442,9 +442,15 @@ namespace ProjectFirma.Web.Controllers
                     x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
                     x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
 
-                if (!completionDate.HasValue)
+                if (!completionDate.HasValue && gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value)
                 {
-                    projectStage = ProjectStage.Implementation;
+                    projectStage = ProjectStage.Planned;
+                }
+
+                else if (!completionDate.HasValue)
+                {
+                    projectStage = ProjectStage.Planned;
                 }
 
                 if (!string.IsNullOrEmpty(projectStageString))
