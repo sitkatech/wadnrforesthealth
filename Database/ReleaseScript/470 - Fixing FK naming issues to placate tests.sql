@@ -1,1 +1,0 @@
-exec sp_rename 'PK_GisDefaultMapping_GisDefaultMappingD', 'PK_GisDefaultMapping_GisDefaultMappingID', 'OBJECT'
