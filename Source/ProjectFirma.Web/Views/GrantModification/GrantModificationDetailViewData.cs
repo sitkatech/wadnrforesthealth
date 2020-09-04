@@ -19,12 +19,14 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.GrantModification
@@ -34,10 +36,11 @@ namespace ProjectFirma.Web.Views.GrantModification
         public Models.GrantModification GrantModification { get; }
         public string EditGrantModificationBasicsUrl { get; }
         public EntityNotesViewData InternalGrantModificationNotesViewData { get; }
-        public bool ShowDownload { get; }
         public bool UserHasEditGrantModificationPermissions { get; }
         public string ParentGrantUrl { get; }
         public string BackToParentGrantUrlText { get; }
+        public FileDetailsViewData GrantModificationDetailFileDetailsViewData { get; set; }
+
         public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
         public string GrantAllocationGridName { get; }
         public string GrantAllocationGridDataUrl { get; }
@@ -57,11 +60,17 @@ namespace ProjectFirma.Web.Views.GrantModification
             BackToParentGrantUrlText = $"Back to {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}: {grantModification.Grant.GrantName}";
             EditGrantModificationBasicsUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.EditGrantModification(grantModification.PrimaryKey));
             UserHasEditGrantModificationPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            // Used for creating file download link, if file available
-            ShowDownload = grantModification.GrantModificationFileResource != null;
+
+            var canEditDocuments = new GrantModificationEditAsAdminFeature().HasPermission(currentPerson, grantModification).HasPermission;
+            GrantModificationDetailFileDetailsViewData = new FileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grantModification.GrantModificationFileResources)),
+                SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x => x.NewGrantModificationFiles(grantModification.PrimaryKey)),
+                canEditDocuments,
+                Models.FieldDefinition.GrantModification
+            );
 
             var relevantGrant = grantModification.Grant;
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, relevantGrant);
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(grantModification));
         }

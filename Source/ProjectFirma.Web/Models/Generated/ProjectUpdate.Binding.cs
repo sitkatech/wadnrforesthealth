@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID, DateTime? expirationDate) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID, DateTime? expirationDate, string projectFundingSourceNotes) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -46,33 +46,32 @@ namespace ProjectFirma.Web.Models
             this.PrimaryContactPersonID = primaryContactPersonID;
             this.FocusAreaID = focusAreaID;
             this.ExpirationDate = expirationDate;
+            this.ProjectFundingSourceNotes = projectFundingSourceNotes;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateBatchID, int projectStageID, string projectDescription, int projectLocationSimpleTypeID) : this()
+        public ProjectUpdate(int projectUpdateBatchID, int projectStageID, int projectLocationSimpleTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectStageID = projectStageID;
-            this.ProjectDescription = projectDescription;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, string projectDescription, ProjectLocationSimpleType projectLocationSimpleType) : this()
+        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
             this.ProjectUpdateBatch = projectUpdateBatch;
             this.ProjectStageID = projectStage.ProjectStageID;
-            this.ProjectDescription = projectDescription;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleType.ProjectLocationSimpleTypeID;
         }
 
@@ -81,7 +80,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProjectUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType)
         {
-            return new ProjectUpdate(projectUpdateBatch, projectStage, default(string), projectLocationSimpleType);
+            return new ProjectUpdate(projectUpdateBatch, projectStage, projectLocationSimpleType);
         }
 
         /// <summary>
@@ -140,6 +139,7 @@ namespace ProjectFirma.Web.Models
         public int? PrimaryContactPersonID { get; set; }
         public int? FocusAreaID { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public string ProjectFundingSourceNotes { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateID; } set { ProjectUpdateID = value; } }
 
@@ -153,6 +153,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProjectDescription = 4000;
             public const int ProjectLocationNotes = 4000;
+            public const int ProjectFundingSourceNotes = 4000;
         }
     }
 }

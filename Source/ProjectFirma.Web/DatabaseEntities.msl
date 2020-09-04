@@ -275,6 +275,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisDefaultMapping">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisDefaultMapping">
+        <MappingFragment StoreEntitySet="GisDefaultMapping">
+          <ScalarProperty Name="GisDefaultMappingID" ColumnName="GisDefaultMappingID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="FieldDefinitionID" ColumnName="FieldDefinitionID" />
+          <ScalarProperty Name="GisDefaultMappingColumnName" ColumnName="GisDefaultMappingColumnName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisFeature">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeature">
         <MappingFragment StoreEntitySet="GisFeature">
@@ -283,6 +293,7 @@
           <ScalarProperty Name="GisFeatureGeometry" ColumnName="GisFeatureGeometry" />
           <ScalarProperty Name="GisImportFeatureKey" ColumnName="GisImportFeatureKey" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+          <ScalarProperty Name="CalculatedArea" ColumnName="CalculatedArea" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -331,6 +342,13 @@
         <MappingFragment StoreEntitySet="GisUploadSourceOrganization">
           <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
           <ScalarProperty Name="GisUploadSourceOrganizationName" ColumnName="GisUploadSourceOrganizationName" />
+          <ScalarProperty Name="ProjectTypeDefaultName" ColumnName="ProjectTypeDefaultName" />
+          <ScalarProperty Name="TreatmentTypeDefaultName" ColumnName="TreatmentTypeDefaultName" />
+          <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
+          <ScalarProperty Name="RequireCompletionDate" ColumnName="RequireCompletionDate" />
+          <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
+          <ScalarProperty Name="ProjectStageDefaultID" ColumnName="ProjectStageDefaultID" />
+          <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -554,6 +572,8 @@
           <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -608,6 +628,8 @@
           <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -622,7 +644,17 @@
           <ScalarProperty Name="GrantModificationStatusID" ColumnName="GrantModificationStatusID" />
           <ScalarProperty Name="GrantModificationAmount" ColumnName="GrantModificationAmount" />
           <ScalarProperty Name="GrantModificationDescription" ColumnName="GrantModificationDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationFileResource">
+        <MappingFragment StoreEntitySet="GrantModificationFileResource">
           <ScalarProperty Name="GrantModificationFileResourceID" ColumnName="GrantModificationFileResourceID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -725,6 +757,17 @@
           <ScalarProperty Name="InteractionEventContactID" ColumnName="InteractionEventContactID" />
           <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventFileResource">
+        <MappingFragment StoreEntitySet="InteractionEventFileResource">
+          <ScalarProperty Name="InteractionEventFileResourceID" ColumnName="InteractionEventFileResourceID" />
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1086,6 +1129,7 @@
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
+          <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1220,6 +1264,24 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ExternalLinkLabel" ColumnName="ExternalLinkLabel" />
           <ScalarProperty Name="ExternalLinkUrl" ColumnName="ExternalLinkUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectFundingSource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSource">
+        <MappingFragment StoreEntitySet="ProjectFundingSource">
+          <ScalarProperty Name="ProjectFundingSourceID" ColumnName="ProjectFundingSourceID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectFundingSourceUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceUpdate">
+        <MappingFragment StoreEntitySet="ProjectFundingSourceUpdate">
+          <ScalarProperty Name="ProjectFundingSourceUpdateID" ColumnName="ProjectFundingSourceUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1520,6 +1582,7 @@
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1742,25 +1805,28 @@
         <MappingFragment StoreEntitySet="Treatment">
           <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="TreatmentFeature" ColumnName="TreatmentFeature" />
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemID" ColumnName="GrantAllocationAwardLandownerCostShareLineItemID" />
           <ScalarProperty Name="TreatmentStartDate" ColumnName="TreatmentStartDate" />
           <ScalarProperty Name="TreatmentEndDate" ColumnName="TreatmentEndDate" />
           <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
-          <ScalarProperty Name="TreatmentChippingAcres" ColumnName="TreatmentChippingAcres" />
-          <ScalarProperty Name="TreatmentPruningAcres" ColumnName="TreatmentPruningAcres" />
-          <ScalarProperty Name="TreatmentThinningAcres" ColumnName="TreatmentThinningAcres" />
-          <ScalarProperty Name="TreatmentMasticationAcres" ColumnName="TreatmentMasticationAcres" />
-          <ScalarProperty Name="TreatmentGrazingAcres" ColumnName="TreatmentGrazingAcres" />
-          <ScalarProperty Name="TreatmentLopAndScatterAcres" ColumnName="TreatmentLopAndScatterAcres" />
-          <ScalarProperty Name="TreatmentBiomassRemovalAcres" ColumnName="TreatmentBiomassRemovalAcres" />
-          <ScalarProperty Name="TreatmentHandPileAcres" ColumnName="TreatmentHandPileAcres" />
-          <ScalarProperty Name="TreatmentBroadcastBurnAcres" ColumnName="TreatmentBroadcastBurnAcres" />
-          <ScalarProperty Name="TreatmentHandPileBurnAcres" ColumnName="TreatmentHandPileBurnAcres" />
-          <ScalarProperty Name="TreatmentMachinePileBurnAcres" ColumnName="TreatmentMachinePileBurnAcres" />
-          <ScalarProperty Name="TreatmentOtherTreatmentAcres" ColumnName="TreatmentOtherTreatmentAcres" />
-          <ScalarProperty Name="TreatmentSlashAcres" ColumnName="TreatmentSlashAcres" />
           <ScalarProperty Name="TreatmentNotes" ColumnName="TreatmentNotes" />
+          <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
+          <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
+          <ScalarProperty Name="TreatmentTreatedAcres" ColumnName="TreatmentTreatedAcres" />
+          <ScalarProperty Name="TreatmentTypeImportedText" ColumnName="TreatmentTypeImportedText" />
+          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
+          <ScalarProperty Name="UpdateGisUploadAttemptID" ColumnName="UpdateGisUploadAttemptID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentArea">
+        <MappingFragment StoreEntitySet="TreatmentArea">
+          <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
+          <ScalarProperty Name="TreatmentAreaFeature" ColumnName="TreatmentAreaFeature" />
+          <ScalarProperty Name="TemporaryTreatmentCacheID" ColumnName="TemporaryTreatmentCacheID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1790,6 +1856,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="WashingtonCounty">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonCounty">
+        <MappingFragment StoreEntitySet="WashingtonCounty">
+          <ScalarProperty Name="WashingtonCountyID" ColumnName="WashingtonCountyID" />
+          <ScalarProperty Name="WashingtonCountyLocation" ColumnName="WashingtonCountyLocation" />
+          <ScalarProperty Name="WashingtonCountyName" ColumnName="WashingtonCountyName" />
+          <ScalarProperty Name="WashingtonCountyFullName" ColumnName="WashingtonCountyFullName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WashingtonLegislativeDistrict">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonLegislativeDistrict">
+        <MappingFragment StoreEntitySet="WashingtonLegislativeDistrict">
+          <ScalarProperty Name="WashingtonLegislativeDistrictID" ColumnName="WashingtonLegislativeDistrictID" />
+          <ScalarProperty Name="WashingtonLegislativeDistrictLocation" ColumnName="WashingtonLegislativeDistrictLocation" />
+          <ScalarProperty Name="WashingtonLegislativeDistrictNumber" ColumnName="WashingtonLegislativeDistrictNumber" />
+          <ScalarProperty Name="WashingtonLegislativeDistrictName" ColumnName="WashingtonLegislativeDistrictName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vGeoServerPriorityLandscape">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPriorityLandscape">
         <MappingFragment StoreEntitySet="vGeoServerPriorityLandscape">
@@ -1798,19 +1884,6 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerProjectTreatmentArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerProjectTreatmentArea">
-        <MappingFragment StoreEntitySet="vGeoServerProjectTreatmentArea">
-          <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-          <ScalarProperty Name="FhtProjectNumber" ColumnName="FhtProjectNumber" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-          <ScalarProperty Name="TreatmentFeature" ColumnName="TreatmentFeature" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1835,6 +1908,24 @@
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetColumnNamesForTable_Result">
           <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
           <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetProjectDnrUploadRegion" FunctionImportName="fGetProjectDnrUploadRegion">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetProjectDnrUploadRegion_Result">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetProjectPriorityLandscape" FunctionImportName="fGetProjectPriorityLandscape">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetProjectPriorityLandscape_Result">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

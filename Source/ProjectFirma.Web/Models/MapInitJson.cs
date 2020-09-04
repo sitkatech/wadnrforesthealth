@@ -112,6 +112,20 @@ namespace ProjectFirma.Web.Models
                 LayerInitialVisibility.Hide);
         }
 
+        public static LayerGeoJson GetWashingtonCountyLayer()
+        {
+            return new LayerGeoJson($"Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), "orange", .2m,
+                LayerInitialVisibility.Hide);
+        }
+
+        public static LayerGeoJson GetWashingtonLegislativeDistrictLayer()
+        {
+            return new LayerGeoJson($"Washington Legislative Districts", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetWashingtonLegislativeDistrictWmsLayerName(), "orange", .2m,
+                LayerInitialVisibility.Hide);
+        }
+
         public static List<LayerGeoJson> GetProjectLocationSimpleMapLayer(IProject project)
         {
             var layerGeoJsons = new List<LayerGeoJson>();

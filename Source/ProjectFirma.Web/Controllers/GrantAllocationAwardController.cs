@@ -512,12 +512,22 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
+        public GridJsonNetJObjectResult<TreatmentArea> TreatmentAreaProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var treatmentAreas = project.Treatments.Select(x => x.TreatmentArea).GroupBy(x => x.TreatmentAreaID).Select(x => x.ToList().First());
+            var gridSpec = new TreatmentAreaGridSpec(CurrentPerson);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentArea>(treatmentAreas.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
         public GridJsonNetJObjectResult<Treatment> TreatmentProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var treatments = project.Treatments;
+            var treatments = project.Treatments.ToList();
             var gridSpec = new TreatmentGridSpec(CurrentPerson);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Treatment>(treatments.ToList(), gridSpec);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Treatment>(treatments, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

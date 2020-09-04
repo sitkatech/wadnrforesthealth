@@ -27,9 +27,8 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.Grant;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -58,7 +57,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public GrantAllocationExpendituresGridSpec GrantAllocationExpendituresGridSpec { get; }
         public string GrantAllocationExpendituresGridName { get; }
         public string GrantAllocationExpendituresGridDataUrl { get; }
-        public GrantDetailsFileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
+        public FileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
@@ -105,14 +104,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
 
             var canEditDocuments = new GrantAllocationEditAsAdminFeature().HasPermission(currentPerson, grantAllocation).HasPermission;
-            GrantAllocationDetailsFileDetailsViewData = new GrantDetailsFileDetailsViewData(
+            GrantAllocationDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grantAllocation.GrantAllocationFileResources)),
                 SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(grantAllocation.PrimaryKey)),
-                grantAllocation.GrantAllocationName,
                 canEditDocuments,
                 Models.FieldDefinition.GrantAllocation
             );
-
         }
     }
 }

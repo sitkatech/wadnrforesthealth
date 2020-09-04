@@ -24,6 +24,7 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Shared.FileResourceControls
 @inherits ProjectFirma.Web.Views.InteractionEvent.InteractionEventDetail
 @section JavascriptAndStylesContent
 {
@@ -101,6 +102,15 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="panel panelFirma">
+    <div class="panel-heading panelTitle">
+        <h3>Files</h3>
+    </div>
+    <div class="panel-body">
+        @{ FileDetails.RenderPartialView(Html, ViewDataTyped.InteractionEventDetailFileDetailsViewData); }
     </div>
 </div>
 

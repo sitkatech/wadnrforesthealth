@@ -215,7 +215,9 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
 
+            var treatmentAreaGridSpec = new TreatmentAreaGridSpec(CurrentPerson);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson);
+            var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
             var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
 
             var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, project);
@@ -261,8 +263,13 @@ namespace ProjectFirma.Web.Controllers
                 userCanEditProposal,
                 projectOrganizationsDetailViewData,
                 classificationSystems,
-                ProjectLocationController.EditProjectBoundingBoxFormID, projectPeopleDetailViewData,
-                treatmentGridSpec, treatmentGridDataUrl, editProjectRegionUrl, editProjectPriorityLandscapeUrl,
+                ProjectLocationController.EditProjectBoundingBoxFormID
+                , projectPeopleDetailViewData
+                , treatmentAreaGridSpec
+                , treatmentAreaGridDataUrl
+                , treatmentGridSpec
+                , treatmentGridDataUrl
+                , editProjectRegionUrl, editProjectPriorityLandscapeUrl,
                 projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
             return RazorView<Detail, DetailViewData>(viewData);
         }

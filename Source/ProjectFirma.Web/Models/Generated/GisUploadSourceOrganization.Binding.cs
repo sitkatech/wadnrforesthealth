@@ -26,36 +26,61 @@ namespace ProjectFirma.Web.Models
         protected GisUploadSourceOrganization()
         {
             this.GisCrossWalkDefaults = new HashSet<GisCrossWalkDefault>();
+            this.GisDefaultMappings = new HashSet<GisDefaultMapping>();
             this.GisUploadAttempts = new HashSet<GisUploadAttempt>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName) : this()
+        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage) : this()
         {
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
+            this.ProjectTypeDefaultName = projectTypeDefaultName;
+            this.TreatmentTypeDefaultName = treatmentTypeDefaultName;
+            this.ImportIsFlattened = importIsFlattened;
+            this.RequireCompletionDate = requireCompletionDate;
+            this.AdjustProjectTypeBasedOnTreatmentTypes = adjustProjectTypeBasedOnTreatmentTypes;
+            this.ProjectStageDefaultID = projectStageDefaultID;
+            this.DataDeriveProjectStage = dataDeriveProjectStage;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName) : this()
+        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GisUploadSourceOrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
+            this.RequireCompletionDate = requireCompletionDate;
+            this.AdjustProjectTypeBasedOnTreatmentTypes = adjustProjectTypeBasedOnTreatmentTypes;
+            this.ProjectStageDefaultID = projectStageDefaultID;
+            this.DataDeriveProjectStage = dataDeriveProjectStage;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, ProjectStage projectStageDefault, bool dataDeriveProjectStage) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.GisUploadSourceOrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
+            this.RequireCompletionDate = requireCompletionDate;
+            this.AdjustProjectTypeBasedOnTreatmentTypes = adjustProjectTypeBasedOnTreatmentTypes;
+            this.ProjectStageDefaultID = projectStageDefault.ProjectStageID;
+            this.DataDeriveProjectStage = dataDeriveProjectStage;
+        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GisUploadSourceOrganization CreateNewBlank()
+        public static GisUploadSourceOrganization CreateNewBlank(ProjectStage projectStageDefault)
         {
-            return new GisUploadSourceOrganization(default(string));
+            return new GisUploadSourceOrganization(default(string), default(bool), default(bool), projectStageDefault, default(bool));
         }
 
         /// <summary>
@@ -64,7 +89,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisCrossWalkDefaults.Any() || GisUploadAttempts.Any();
+            return GisCrossWalkDefaults.Any() || GisDefaultMappings.Any() || GisUploadAttempts.Any();
         }
 
         /// <summary>
@@ -79,6 +104,11 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(GisCrossWalkDefault).Name);
             }
 
+            if(GisDefaultMappings.Any())
+            {
+                dependentObjects.Add(typeof(GisDefaultMapping).Name);
+            }
+
             if(GisUploadAttempts.Any())
             {
                 dependentObjects.Add(typeof(GisUploadAttempt).Name);
@@ -89,7 +119,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadSourceOrganization).Name, typeof(GisCrossWalkDefault).Name, typeof(GisUploadAttempt).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadSourceOrganization).Name, typeof(GisCrossWalkDefault).Name, typeof(GisDefaultMapping).Name, typeof(GisUploadAttempt).Name};
 
 
         /// <summary>
@@ -119,6 +149,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in GisDefaultMappings.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GisUploadAttempts.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -128,15 +163,26 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int GisUploadSourceOrganizationID { get; set; }
         public string GisUploadSourceOrganizationName { get; set; }
+        public string ProjectTypeDefaultName { get; set; }
+        public string TreatmentTypeDefaultName { get; set; }
+        public bool? ImportIsFlattened { get; set; }
+        public bool RequireCompletionDate { get; set; }
+        public bool AdjustProjectTypeBasedOnTreatmentTypes { get; set; }
+        public int ProjectStageDefaultID { get; set; }
+        public bool DataDeriveProjectStage { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
         public virtual ICollection<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
+        public virtual ICollection<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual ICollection<GisUploadAttempt> GisUploadAttempts { get; set; }
+        public ProjectStage ProjectStageDefault { get { return ProjectStage.AllLookupDictionary[ProjectStageDefaultID]; } }
 
         public static class FieldLengths
         {
             public const int GisUploadSourceOrganizationName = 100;
+            public const int ProjectTypeDefaultName = 100;
+            public const int TreatmentTypeDefaultName = 100;
         }
     }
 }

@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected GrantModification()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantModificationFileResources = new HashSet<GrantModificationFileResource>();
             this.GrantModificationGrantModificationPurposes = new HashSet<GrantModificationGrantModificationPurpose>();
             this.GrantModificationNoteInternals = new HashSet<GrantModificationNoteInternal>();
         }
@@ -33,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantModification(int grantModificationID, string grantModificationName, int grantID, DateTime grantModificationStartDate, DateTime grantModificationEndDate, int grantModificationStatusID, decimal grantModificationAmount, string grantModificationDescription, int? grantModificationFileResourceID) : this()
+        public GrantModification(int grantModificationID, string grantModificationName, int grantID, DateTime grantModificationStartDate, DateTime grantModificationEndDate, int grantModificationStatusID, decimal grantModificationAmount, string grantModificationDescription) : this()
         {
             this.GrantModificationID = grantModificationID;
             this.GrantModificationName = grantModificationName;
@@ -43,7 +44,6 @@ namespace ProjectFirma.Web.Models
             this.GrantModificationStatusID = grantModificationStatusID;
             this.GrantModificationAmount = grantModificationAmount;
             this.GrantModificationDescription = grantModificationDescription;
-            this.GrantModificationFileResourceID = grantModificationFileResourceID;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || GrantModificationGrantModificationPurposes.Any() || GrantModificationNoteInternals.Any();
+            return GrantAllocations.Any() || GrantModificationFileResources.Any() || GrantModificationGrantModificationPurposes.Any() || GrantModificationNoteInternals.Any();
         }
 
         /// <summary>
@@ -108,6 +108,11 @@ namespace ProjectFirma.Web.Models
             if(GrantAllocations.Any())
             {
                 dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
+            if(GrantModificationFileResources.Any())
+            {
+                dependentObjects.Add(typeof(GrantModificationFileResource).Name);
             }
 
             if(GrantModificationGrantModificationPurposes.Any())
@@ -125,7 +130,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantAllocation).Name, typeof(GrantModificationGrantModificationPurpose).Name, typeof(GrantModificationNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantAllocation).Name, typeof(GrantModificationFileResource).Name, typeof(GrantModificationGrantModificationPurpose).Name, typeof(GrantModificationNoteInternal).Name};
 
 
         /// <summary>
@@ -155,6 +160,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in GrantModificationFileResources.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GrantModificationGrantModificationPurposes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -175,16 +185,15 @@ namespace ProjectFirma.Web.Models
         public int GrantModificationStatusID { get; set; }
         public decimal GrantModificationAmount { get; set; }
         public string GrantModificationDescription { get; set; }
-        public int? GrantModificationFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantModificationID; } set { GrantModificationID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<GrantModificationFileResource> GrantModificationFileResources { get; set; }
         public virtual ICollection<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual ICollection<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual GrantModificationStatus GrantModificationStatus { get; set; }
-        public virtual FileResource GrantModificationFileResource { get; set; }
 
         public static class FieldLengths
         {

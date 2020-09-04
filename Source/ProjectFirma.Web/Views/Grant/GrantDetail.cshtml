@@ -25,9 +25,8 @@
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
-@using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.Shared
-@using ProjectFirma.Web.Views.Shared.Grant
+@using ProjectFirma.Web.Views.Shared.FileResourceControls
 @using ProjectFirma.Web.Views.Shared.TextControls
 @inherits ProjectFirma.Web.Views.Grant.GrantDetail
 
@@ -174,10 +173,9 @@
                <h3>Files</h3>
             </div>
             <div class="panel-body">
-               @{ GrantDetailsFileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
+               @{ FileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
             </div>
          </div>
-            
       </div>
    </div>
 
@@ -197,27 +195,6 @@
          </div>
       </div>
    </div>
-
-
-   <div class="row">
-      <div class="col-sm-12">
-         <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-               <h3 id="@ViewDataTyped.GrantAllocationPanelTitleID">
-                  @*@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)*@
-               </h3>
-            </div>
-            <div class="panel-body">
-               <div class="basicsLayout">
-                  @*Note that we start with a blank grid Data URL. It will load whatever is appropriate for the parent grid when the JS script below kicks in, so no need to preload anything.*@
-                  @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, "", null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-
-
 
    <div class="row">
       <div class="col-sm-12">
@@ -243,73 +220,3 @@
       </div>
    </div>
 </div>
-
-
-<script type="text/javascript">
-    // <![CDATA[
-    var displayEmptyGrid = false;
-    jQuery(document).ready(function()
-    {
-        //console.log('jQuery Document Ready');
-        var grantModificationGrid = Sitka.@ViewDataTyped.GrantModificationGridName;
-
-        // Get current selected GrantModificationID from Parent grid for a given rowId
-        function getCurrentSelectedGrantModificationIDInParentGrid(rowId)
-        {
-           //console.log('getCurrentSelectedGrantModificationIDInParentGrid('+ rowId +')');
-           var grantModificationIDColumnIndexForParentGrantModificationGrid = grantModificationGrid.getColumnIndexByName('@GrantModificationGridSpec.GrantModificationIDHiddenColumnName');
-           //console.log('grantModificationIDColumnIndexForParentGrantModificationGrid: ' + grantModificationIDColumnIndexForParentGrantModificationGrid);
-           var currentSelectedGrantModificationIDInParentGrantGrid = grantModificationGrid.grid.cells(rowId, grantModificationIDColumnIndexForParentGrantModificationGrid).getValue();
-           //console.log('currentSelectedGrantModificationIDInParentGrantGrid: ' + currentSelectedGrantModificationIDInParentGrantGrid);
-           return currentSelectedGrantModificationIDInParentGrantGrid;
-       }
-
-        // Get current selected Grant Modification Name from Grant Modification grid for a given rowId
-       function getCurrentSelectedGrantModificationName(grantModificationGridRowId)
-        {
-           //console.log('getCurrentSelectedGrantModificationNameInParentGrid(' + grantModificationGridRowId +')');
-           var grantModificationNameColumnIndex = grantModificationGrid.getColumnIndexByName('@ViewDataTyped.GrantModificationGridSpec.GrantModificationNameHiddenColumnName');
-           //console.log('grantModificationNameColumnIndex (in parent grid): ' + grantModificationNameColumnIndex);
-
-           var currentSelectedGrantModificationName = grantModificationGrid.grid.cells(grantModificationGridRowId, grantModificationNameColumnIndex).getValue();
-           //console.log('currentSelectedGrantModificationName: ' + currentSelectedGrantModificationName);
-           return currentSelectedGrantModificationName;
-        }
-
-        // Show appropriate Grant Allocations for the selected Grant Modification ID
-       function selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationIDInParentGrantGrid)
-       {
-          //console.log('selectGrantAllocationsInChildGridForAGrantModification(' + currentSelectedGrantModificationIDInParentGrantGrid + ')');
-          var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
-          var grantAllocationGridDataUrlTemplate = "@ViewDataTyped.GrantAllocationGridDataUrlTemplate";
-          var grantAllocationGridDataUrl = new Sitka.UrlTemplate(grantAllocationGridDataUrlTemplate).ParameterReplace(currentSelectedGrantModificationIDInParentGrantGrid);
-
-          //console.log('Clearing grid ' + '@ViewDataTyped.GrantAllocationGridName');
-          grantAllocationGrid.grid.clearAll();
-
-          //console.log('Loading grantAllocationGridDataUrl: ' + grantAllocationGridDataUrl);
-          grantAllocationGrid.grid.load(grantAllocationGridDataUrl, "json");
-       }
-
-       function setGrantAllocationPanelTitle(grantModificationGridRowId)
-       {
-          var selectedParentGrantModificationName = getCurrentSelectedGrantModificationName(grantModificationGridRowId);
-          var grantAllocationPanelTitle = "@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() Related to " + selectedParentGrantModificationName + " of this grant (@ViewDataTyped.Grant.GrantName)";
-          //console.log('Setting Grant Allocation Panel Title: ' + grantAllocationPanelTitle);
-          jQuery('#@ViewDataTyped.GrantAllocationPanelTitleID').text(grantAllocationPanelTitle);
-       }
-
-        grantModificationGrid.grid.attachEvent("onRowSelect", function (rowId)
-        {
-           //console.log('grantModificationGrid - onRowSelect - RowID: ' + rowId);
-           var currentSelectedGrantModificationRowID = getCurrentSelectedGrantModificationIDInParentGrid(rowId);
-           selectGrantAllocationsInChildGridForAGrantModification(currentSelectedGrantModificationRowID);
-
-           setGrantAllocationPanelTitle(rowId);
-        });
-        grantModificationGrid.grid.attachEvent("onXLE", function() { grantModificationGrid.grid.selectRow(0, true); });
-        grantModificationGrid.grid.attachEvent("onFilterEnd", function() { grantModificationGrid.grid.selectRow(0, true); });
-    });
-    // ]]>
-
-</script>

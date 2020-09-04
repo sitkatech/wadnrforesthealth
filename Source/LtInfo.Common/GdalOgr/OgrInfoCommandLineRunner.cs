@@ -56,6 +56,7 @@ namespace LtInfo.Common.GdalOgr
             return featureClassesFromFileGdb.Select(x => x.Split(' ').Skip(1).First()).ToList();
         }
 
+
         public static Tuple<double, double, double, double> GetExtentFromGeoJson(FileInfo ogrInfoFileInfo, string geoJson, double totalMilliseconds)
         {
             using (var geoJsonFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".json"))

@@ -24,6 +24,10 @@ namespace ProjectFirma.Web
 
         protected void Application_Start()
         {
+            // This is a *partial* fix for some of the issues discovered when disabling TLS 1.0 as part of the following story: https://projects.sitkatech.com/projects/gemini/cards/4197
+            // Allow multiple protocols so that we can connect to more than one endpoint, over time we may need to add Tls13 etc
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
+
             SitkaLogger.RegisterLogger(new FirmaLogger());
 
             // this needs to match the Area Name declared in the Areas folder
@@ -56,7 +60,7 @@ namespace ProjectFirma.Web
                 "~/Views/Shared/SortOrder/{0}.cshtml",
                 "~/Views/Shared/ProjectDocument/{0}.cshtml",
                 "~/Views/Shared/UserStewardshipAreas/{0}.cshtml",
-                
+                "~/Views/Shared/FileResourceControls/{0}.cshtml",
             } };
             // read the log4net configuration from the web.config file
             XmlConfigurator.Configure();

@@ -19,29 +19,26 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Models;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Grant;
 
 namespace ProjectFirma.Web.Views.GrantModification
 {
     public class EditGrantModificationViewData : FirmaUserControlViewData
     {
-
+        public EditGrantModificationType EditGrantModificationType { get; set; }
         public IEnumerable<SelectListItem> GrantModificationStatuses { get; }
         public IEnumerable<SelectListItem> AllGrantModificationPurposes { get; }
 
-
-        public EditGrantModificationViewData(IEnumerable<Models.GrantModificationStatus> grantModificationStatuses, IEnumerable<GrantModificationPurpose> grantModificationPurposes)
+        public EditGrantModificationViewData(IEnumerable<Models.GrantModificationStatus> grantModificationStatuses, IEnumerable<GrantModificationPurpose> grantModificationPurposes, EditGrantModificationType editGrantModificationType)
         {
             GrantModificationStatuses = grantModificationStatuses.ToSelectListWithEmptyFirstRow(k => k.GrantModificationStatusID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationStatusName);
-            AllGrantModificationPurposes = grantModificationPurposes.ToSelectList(k => k.GrantModificationPurposeID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationPurposeName);
-
+            AllGrantModificationPurposes = grantModificationPurposes.ToSelectList(k => k.GrantModificationPurposeID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationPurposeName).OrderBy(x => x.Text);
+            EditGrantModificationType = editGrantModificationType;
         }
     }
 }

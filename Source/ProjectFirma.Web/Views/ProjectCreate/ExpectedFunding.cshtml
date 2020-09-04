@@ -18,6 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
+@using DocumentFormat.OpenXml.Wordprocessing
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
@@ -53,6 +54,20 @@ Source code is available upon request via <support@sitkatech.com>.
             <div class="col-md-8">
                 @Html.EditorFor(m => m.ProjectEstimatedTotalCost)
                 @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4 text-right" >@Html.LabelWithSugarFor(m => m.FundingSourceIDs)</div>
+            <div class="col-md-8">
+                @Html.CheckBoxListFor(m => m.FundingSourceIDs, ViewDataTyped.FundingSources, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols)
+                @Html.ValidationMessageFor(x => x.FundingSourceIDs)
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4 text-right" >@Html.LabelWithSugarFor(m => m.ProjectFundingSourceNotes)</div>
+            <div class="col-md-8">
+                @Html.TextAreaFor(m => m.ProjectFundingSourceNotes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ProjectFundingSourceNotes)
             </div>
         </div>
         <hr/>

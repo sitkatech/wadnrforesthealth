@@ -26,6 +26,7 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.Store.GisDefaultMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.Store.GisFeature" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisMetadataAttribute" store:Type="Tables" Schema="dbo" />
@@ -51,6 +52,7 @@
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantModificationFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationPurpose" store:Type="Tables" Schema="dbo" />
@@ -61,6 +63,7 @@
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.Store.InteractionEvent" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.Store.InteractionEventContact" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InteractionEventFileResource" EntityType="ProjectFirma.Web.Models.Store.InteractionEventFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventProject" EntityType="ProjectFirma.Web.Models.Store.InteractionEventProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
@@ -102,6 +105,8 @@
     <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExemptReportingYearUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExternalLink" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLink" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLinkUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectFundingSource" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectFundingSourceUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSourceUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" store:Type="Tables" Schema="dbo" />
@@ -143,7 +148,10 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Store.Treatment" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.Store.TreatmentArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityLandscape" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityLandscape">
       <DefiningQuery>SELECT 
 [vGeoServerPriorityLandscape].[PriorityLandscapeID] AS [PriorityLandscapeID], 
@@ -152,17 +160,6 @@
 [vGeoServerPriorityLandscape].[PriorityLandscapeLocation] AS [PriorityLandscapeLocation], 
 [vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry]
 FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerProjectTreatmentArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerProjectTreatmentArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerProjectTreatmentArea">
-      <DefiningQuery>SELECT 
-[vGeoServerProjectTreatmentArea].[TreatmentID] AS [TreatmentID], 
-[vGeoServerProjectTreatmentArea].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerProjectTreatmentArea].[ProjectID] AS [ProjectID], 
-[vGeoServerProjectTreatmentArea].[ProjectName] AS [ProjectName], 
-[vGeoServerProjectTreatmentArea].[FhtProjectNumber] AS [FhtProjectNumber], 
-[vGeoServerProjectTreatmentArea].[Ogr_Geometry] AS [Ogr_Geometry], 
-[vGeoServerProjectTreatmentArea].[TreatmentFeature] AS [TreatmentFeature]
-FROM [dbo].[vGeoServerProjectTreatmentArea] AS [vGeoServerProjectTreatmentArea]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
       <DefiningQuery>SELECT 
@@ -281,6 +278,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisCrossWalkDefaults" EntitySet="GisCrossWalkDefault" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisDefaultMappings" EntitySet="GisDefaultMapping" />
     </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
@@ -462,10 +463,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantFileResources" EntitySet="GrantFileResource" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
-      <End Role="GrantModificationFileResource" EntitySet="FileResource" />
-      <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" EntitySet="GrantModification" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantModification_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantModifications" EntitySet="GrantModification" />
@@ -473,6 +470,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
       <End Role="GrantModificationStatus" EntitySet="GrantModificationStatus" />
       <End Role="GrantModifications" EntitySet="GrantModification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationFileResource_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
+      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
@@ -533,6 +538,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_InteractionEventContact_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventContact_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="InteractionEventContacts" EntitySet="InteractionEventContact" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEventFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="InteractionEventFileResources" EntitySet="InteractionEventFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEventFileResource_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventFileResource_InteractionEvent_InteractionEventID">
+      <End Role="InteractionEvent" EntitySet="InteractionEvent" />
+      <End Role="InteractionEventFileResources" EntitySet="InteractionEventFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_InteractionEventProject_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEventProject_InteractionEvent_InteractionEventID">
       <End Role="InteractionEvent" EntitySet="InteractionEvent" />
@@ -822,6 +835,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectExternalLinkUpdates" EntitySet="ProjectExternalLinkUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectFundingSource_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundingSource_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectFundingSources" EntitySet="ProjectFundingSource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectFundingSourceUpdates" EntitySet="ProjectFundingSourceUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
@@ -1082,12 +1103,24 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="UpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" EntitySet="Treatment" />
+    </AssociationSet>
     <AssociationSet Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
       <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentArea_TreatmentAreaID">
+      <End Role="TreatmentArea" EntitySet="TreatmentArea" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
   </EntityContainer>
@@ -1340,6 +1373,15 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GisCrossWalkSourceValue" Type="varchar" Nullable="false" MaxLength="300" />
     <Property Name="GisCrossWalkMappedValue" Type="varchar" Nullable="false" MaxLength="300" />
   </EntityType>
+  <EntityType Name="GisDefaultMapping">
+    <Key>
+      <PropertyRef Name="GisDefaultMappingID" />
+    </Key>
+    <Property Name="GisDefaultMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
+    <Property Name="FieldDefinitionID" Type="int" Nullable="false" />
+    <Property Name="GisDefaultMappingColumnName" Type="varchar" Nullable="false" MaxLength="300" />
+  </EntityType>
   <EntityType Name="GisFeature">
     <Key>
       <PropertyRef Name="GisFeatureID" />
@@ -1349,6 +1391,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GisFeatureGeometry" Type="geometry" Nullable="false" />
     <Property Name="GisImportFeatureKey" Type="int" Nullable="false" />
     <Property Name="IsValid" Type="bit" StoreGeneratedPattern="Computed" />
+    <Property Name="CalculatedArea" Type="decimal" Precision="38" Scale="20" />
   </EntityType>
   <EntityType Name="GisFeatureMetadataAttribute">
     <Key>
@@ -1392,6 +1435,13 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GisUploadSourceOrganizationName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectTypeDefaultName" Type="varchar" MaxLength="100" />
+    <Property Name="TreatmentTypeDefaultName" Type="varchar" MaxLength="100" />
+    <Property Name="ImportIsFlattened" Type="bit" />
+    <Property Name="RequireCompletionDate" Type="bit" Nullable="false" />
+    <Property Name="AdjustProjectTypeBasedOnTreatmentTypes" Type="bit" Nullable="false" />
+    <Property Name="ProjectStageDefaultID" Type="int" Nullable="false" />
+    <Property Name="DataDeriveProjectStage" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -1602,6 +1652,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -1651,6 +1703,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="GrantModification">
     <Key>
@@ -1664,7 +1718,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantModificationStatusID" Type="int" Nullable="false" />
     <Property Name="GrantModificationAmount" Type="money" Nullable="false" />
     <Property Name="GrantModificationDescription" Type="nvarchar(max)" />
-    <Property Name="GrantModificationFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantModificationFileResource">
+    <Key>
+      <PropertyRef Name="GrantModificationFileResourceID" />
+    </Key>
+    <Property Name="GrantModificationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantModificationID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="GrantModificationGrantModificationPurpose">
     <Key>
@@ -1744,7 +1807,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="InteractionEventID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InteractionEventTypeID" Type="int" Nullable="false" />
-    <Property Name="StaffPersonID" Type="int" Nullable="false" />
+    <Property Name="StaffPersonID" Type="int" />
     <Property Name="InteractionEventTitle" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InteractionEventDescription" Type="varchar" MaxLength="3000" />
     <Property Name="InteractionEventDate" Type="datetime" Nullable="false" />
@@ -1757,6 +1820,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="InteractionEventContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InteractionEventID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InteractionEventFileResource">
+    <Key>
+      <PropertyRef Name="InteractionEventFileResourceID" />
+    </Key>
+    <Property Name="InteractionEventFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InteractionEventID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="InteractionEventProject">
     <Key>
@@ -2078,7 +2151,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectTypeID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
-    <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
+    <Property Name="ProjectDescription" Type="varchar" MaxLength="4000" />
     <Property Name="CompletionDate" Type="datetime" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
@@ -2105,6 +2178,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="CreateGisUploadAttemptID" Type="int" />
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
+    <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -2226,6 +2300,22 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ExternalLinkLabel" Type="varchar" Nullable="false" MaxLength="300" />
     <Property Name="ExternalLinkUrl" Type="varchar" Nullable="false" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="ProjectFundingSource">
+    <Key>
+      <PropertyRef Name="ProjectFundingSourceID" />
+    </Key>
+    <Property Name="ProjectFundingSourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="FundingSourceID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectFundingSourceUpdate">
+    <Key>
+      <PropertyRef Name="ProjectFundingSourceUpdateID" />
+    </Key>
+    <Property Name="ProjectFundingSourceUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
+    <Property Name="FundingSourceID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationExpenditure">
     <Key>
@@ -2490,7 +2580,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
-    <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
+    <Property Name="ProjectDescription" Type="varchar" MaxLength="4000" />
     <Property Name="CompletionDate" Type="datetime" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
@@ -2500,6 +2590,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="FocusAreaID" Type="int" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
     <Key>
@@ -2707,25 +2798,27 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="TreatmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="TreatmentFeature" Type="geometry" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="int" />
     <Property Name="TreatmentStartDate" Type="datetime" />
     <Property Name="TreatmentEndDate" Type="datetime" />
     <Property Name="TreatmentFootprintAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentChippingAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentPruningAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentThinningAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentMasticationAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentGrazingAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentLopAndScatterAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentBiomassRemovalAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentHandPileAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentBroadcastBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentHandPileBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentMachinePileBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentOtherTreatmentAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentSlashAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentAreaID" Type="int" />
+    <Property Name="TreatmentTreatedAcres" Type="decimal" Precision="38" Scale="10" />
+    <Property Name="TreatmentTypeImportedText" Type="varchar" MaxLength="200" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
+    <Property Name="UpdateGisUploadAttemptID" Type="int" />
+    <Property Name="TreatmentDetailedActivityTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="TreatmentArea">
+    <Key>
+      <PropertyRef Name="TreatmentAreaID" />
+    </Key>
+    <Property Name="TreatmentAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
+    <Property Name="TemporaryTreatmentCacheID" Type="int" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -2751,6 +2844,24 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="VendorStatus" Type="varchar" MaxLength="200" />
     <Property Name="TaxpayerIdNumber" Type="varchar" MaxLength="200" />
     <Property Name="Email" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="WashingtonCounty">
+    <Key>
+      <PropertyRef Name="WashingtonCountyID" />
+    </Key>
+    <Property Name="WashingtonCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="WashingtonCountyLocation" Type="geometry" Nullable="false" />
+    <Property Name="WashingtonCountyName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="WashingtonCountyFullName" Type="nvarchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="WashingtonLegislativeDistrict">
+    <Key>
+      <PropertyRef Name="WashingtonLegislativeDistrictID" />
+    </Key>
+    <Property Name="WashingtonLegislativeDistrictID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="WashingtonLegislativeDistrictLocation" Type="geometry" Nullable="false" />
+    <Property Name="WashingtonLegislativeDistrictNumber" Type="int" Nullable="false" />
+    <Property Name="WashingtonLegislativeDistrictName" Type="varchar" Nullable="false" MaxLength="200" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -2779,22 +2890,12 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatmentArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerProjectTreatmentArea">
-    <Key>
-      <PropertyRef Name="TreatmentID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="ProjectID" />
-      <PropertyRef Name="ProjectName" />
-      <PropertyRef Name="FhtProjectNumber" />
-    </Key>
-    <Property Name="TreatmentID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
-    <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-    <Property Name="TreatmentFeature" Type="geometry" />
-  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonLegislativeDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -3126,6 +3227,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
         <PropertyRef Name="GisUploadSourceOrganizationID" />
       </Principal>
       <Dependent Role="GisCrossWalkDefaults">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisDefaultMappings" Type="ProjectFirma.Web.Models.Store.GisDefaultMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisDefaultMappings">
         <PropertyRef Name="GisUploadSourceOrganizationID" />
       </Dependent>
     </ReferentialConstraint>
@@ -3670,18 +3783,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
-    <End Role="GrantModificationFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModificationFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantModificationsWhereYouAreTheGrantModificationFileResource">
-        <PropertyRef Name="GrantModificationFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantModification_Grant_GrantID">
     <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
     <End Role="GrantModifications" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="*" />
@@ -3703,6 +3804,32 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantModifications">
         <PropertyRef Name="GrantModificationStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.Store.GrantModificationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantModificationFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
+    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.Store.GrantModificationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
+      </Principal>
+      <Dependent Role="GrantModificationFileResources">
+        <PropertyRef Name="GrantModificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3851,7 +3978,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_InteractionEvent_Person_StaffPersonID_PersonID">
-    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
     <End Role="InteractionEventsWhereYouAreTheStaffPerson" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffPerson">
@@ -3883,6 +4010,32 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="InteractionEventContacts">
         <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEventFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="InteractionEventFileResources" Type="ProjectFirma.Web.Models.Store.InteractionEventFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="InteractionEventFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEventFileResource_InteractionEvent_InteractionEventID">
+    <End Role="InteractionEvent" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="1" />
+    <End Role="InteractionEventFileResources" Type="ProjectFirma.Web.Models.Store.InteractionEventFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InteractionEvent">
+        <PropertyRef Name="InteractionEventID" />
+      </Principal>
+      <Dependent Role="InteractionEventFileResources">
+        <PropertyRef Name="InteractionEventID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4750,6 +4903,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectFundingSource_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="ProjectFundingSources" Type="ProjectFirma.Web.Models.Store.ProjectFundingSource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectFundingSources">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectFundingSourceUpdates" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectFundingSourceUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" Multiplicity="*" />
@@ -5530,6 +5707,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="UpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UpdateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt">
+        <PropertyRef Name="UpdateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
     <End Role="GrantAllocationAwardLandownerCostShareLineItem" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="0..1" />
     <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
@@ -5554,6 +5755,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Treatment_TreatmentArea_TreatmentAreaID">
+    <End Role="TreatmentArea" Type="ProjectFirma.Web.Models.Store.TreatmentArea" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentArea">
+        <PropertyRef Name="TreatmentAreaID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="TreatmentAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
   </Function>
@@ -5571,6 +5784,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   <Function Name="fGetCurrentFiscalYearBiennium" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fGetFiscalYearBienniumForDate" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="dateToCheck" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="fGetProjectDnrUploadRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="number" Type="bigint" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fGetProjectPriorityLandscape" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="number" Type="bigint" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
   </Function>
   <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -5622,7 +5859,25 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   <Function Name="procImportTreatmentsFromGisUploadAttempt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
     <Parameter Name="projectIdentifierGisMetadataAttributeID" Type="int" Mode="In" />
-    <Parameter Name="otherTreatmentAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="footprintAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatedAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentTypeMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentDetailedActivityTypeMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentTypeID" Type="int" Mode="In" />
+    <Parameter Name="treatmentDetailedActivityTypeID" Type="int" Mode="In" />
+    <Parameter Name="isFlattened" Type="bit" Mode="In" />
+    <Parameter Name="pruningAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="thinningAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="chippingAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="masticationAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="grazingAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="lopScatterAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="biomassRemovalAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="handPileAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="handPileBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="machineBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="broadcastBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="otherBurnAcresMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

@@ -19,8 +19,10 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class TreatmentType : IHavePrimaryKey
     {
-        public static readonly TreatmentTypeTreatmentOne TreatmentOne = TreatmentTypeTreatmentOne.Instance;
-        public static readonly TreatmentTypeTreatmentEleven TreatmentEleven = TreatmentTypeTreatmentEleven.Instance;
+        public static readonly TreatmentTypeCommercial Commercial = TreatmentTypeCommercial.Instance;
+        public static readonly TreatmentTypePrescribedFire PrescribedFire = TreatmentTypePrescribedFire.Instance;
+        public static readonly TreatmentTypeNonCommercial NonCommercial = TreatmentTypeNonCommercial.Instance;
+        public static readonly TreatmentTypeOther Other = TreatmentTypeOther.Instance;
 
         public static readonly List<TreatmentType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentType> AllLookupDictionary;
@@ -30,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentType()
         {
-            All = new List<TreatmentType> { TreatmentOne, TreatmentEleven };
+            All = new List<TreatmentType> { Commercial, PrescribedFire, NonCommercial, Other };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentType>(All.ToDictionary(x => x.TreatmentTypeID));
         }
 
@@ -100,10 +102,14 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case TreatmentTypeEnum.TreatmentEleven:
-                    return TreatmentEleven;
-                case TreatmentTypeEnum.TreatmentOne:
-                    return TreatmentOne;
+                case TreatmentTypeEnum.Commercial:
+                    return Commercial;
+                case TreatmentTypeEnum.NonCommercial:
+                    return NonCommercial;
+                case TreatmentTypeEnum.Other:
+                    return Other;
+                case TreatmentTypeEnum.PrescribedFire:
+                    return PrescribedFire;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -112,19 +118,33 @@ namespace ProjectFirma.Web.Models
 
     public enum TreatmentTypeEnum
     {
-        TreatmentOne = 1,
-        TreatmentEleven = 2
+        Commercial = 1,
+        PrescribedFire = 2,
+        NonCommercial = 3,
+        Other = 4
     }
 
-    public partial class TreatmentTypeTreatmentOne : TreatmentType
+    public partial class TreatmentTypeCommercial : TreatmentType
     {
-        private TreatmentTypeTreatmentOne(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
-        public static readonly TreatmentTypeTreatmentOne Instance = new TreatmentTypeTreatmentOne(1, @"TreatmentOne", @"Treatment #1");
+        private TreatmentTypeCommercial(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeCommercial Instance = new TreatmentTypeCommercial(1, @"Commercial", @"Commercial");
     }
 
-    public partial class TreatmentTypeTreatmentEleven : TreatmentType
+    public partial class TreatmentTypePrescribedFire : TreatmentType
     {
-        private TreatmentTypeTreatmentEleven(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
-        public static readonly TreatmentTypeTreatmentEleven Instance = new TreatmentTypeTreatmentEleven(2, @"TreatmentEleven", @"Treatment XI");
+        private TreatmentTypePrescribedFire(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypePrescribedFire Instance = new TreatmentTypePrescribedFire(2, @"PrescribedFire", @"Prescribed Fire");
+    }
+
+    public partial class TreatmentTypeNonCommercial : TreatmentType
+    {
+        private TreatmentTypeNonCommercial(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeNonCommercial Instance = new TreatmentTypeNonCommercial(3, @"NonCommercial", @"Non-Commercial");
+    }
+
+    public partial class TreatmentTypeOther : TreatmentType
+    {
+        private TreatmentTypeOther(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeOther Instance = new TreatmentTypeOther(4, @"Other", @"Other");
     }
 }

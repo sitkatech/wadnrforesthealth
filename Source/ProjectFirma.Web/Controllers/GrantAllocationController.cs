@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Security;
@@ -33,6 +34,7 @@ using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -67,7 +69,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" successfully deleted.";
-            grantAllocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            grantAllocation.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -146,6 +148,9 @@ namespace ProjectFirma.Web.Controllers
         {
             Grant relevantGrant = grantPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationViewModel();
+            // Pre-populate allocation dates from the grant
+            viewModel.StartDate = relevantGrant.StartDate;
+            viewModel.EndDate = relevantGrant.EndDate;
             // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
             // a Grant Allocation that may have lost their "program manager" permissions
             return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
@@ -174,52 +179,123 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
+        [GrantAllocationCreateFeature]
+        public PartialViewResult Duplicate(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
+            Check.EnsureNotNull(originalGrantAllocation);
+            var relevantGrant = originalGrantAllocation.GrantModification.Grant;
+            
+            // Copy original grant allocation to new view model, except for the grant mod and allocation amount
+            var viewModel = new EditGrantAllocationViewModel(originalGrantAllocation);
+            viewModel.GrantModificationID = 0;
+            viewModel.AllocationAmount = null;
+            viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
+
+            // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
+            // a Grant Allocation that may have lost their "program manager" permissions
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
+        }
+
+        [HttpPost]
+        [GrantAllocationCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Duplicate(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationViewModel viewModel)
+        {
+            var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
+            Check.EnsureNotNull(originalGrantAllocation);
+            var relevantGrant = originalGrantAllocation.GrantModification.Grant;
+            if (!ModelState.IsValid)
+            {
+                // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
+                // a Grant Allocation that may have lost their "program manager" permissions
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
+            }
+
+            var grantModification = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.GrantModificationID);
+            // Sanity check for alignment
+            Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
+            var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
+            return new ModalDialogFormJsonResult();
+        }
+
+        #region FileResources
+
+        [HttpGet]
         [GrantAllocationEditAsAdminFeature]
         public PartialViewResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var viewModel = new NewGrantAllocationFileViewModel(grantAllocationPrimaryKey.EntityObject);
+            Check.EnsureNotNull(grantAllocationPrimaryKey.EntityObject);
+            var viewModel = new NewFileViewModel();
             return ViewNewGrantAllocationFiles(viewModel);
         }
 
         [HttpPost]
         [GrantAllocationEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey, NewGrantAllocationFileViewModel viewModel)
+        public ActionResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey, NewFileViewModel viewModel)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNewGrantAllocationFiles(new NewGrantAllocationFileViewModel());
+                return ViewNewGrantAllocationFiles(new NewFileViewModel());
             }
 
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
-            SetMessageForDisplay($"Successfully created {viewModel.GrantAllocationFileResourceDatas.Count} new files(s) for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\".");
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\".");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewNewGrantAllocationFiles(NewGrantAllocationFileViewModel viewModel)
+        private PartialViewResult ViewNewGrantAllocationFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewGrantAllocationFileViewData();
-            return RazorPartialView<NewGrantAllocationFile, NewGrantAllocationFileViewData, NewGrantAllocationFileViewModel>(viewData, viewModel);
+            var viewData = new NewFileViewData(FieldDefinition.GrantAllocation.FieldDefinitionDisplayName);
+            return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
-        [GrantAllocationDeleteFileAsAdminFeature]
+        [GrantAllocationManageFileResourceAsAdminFeature]
+        public PartialViewResult EditGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey)
+        {
+            var fileResource = grantAllocationFileResourcePrimaryKey.EntityObject;
+            var viewModel = new EditFileResourceViewModel(fileResource);
+            return ViewEditGrantAllocationFile(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationManageFileResourceAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        {
+            var fileResource = grantAllocationFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantAllocationFile(viewModel);
+            }
+
+            viewModel.UpdateModel(fileResource);
+            SetMessageForDisplay($"Successfully updated file \"{fileResource.DisplayName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditGrantAllocationFile(EditFileResourceViewModel viewModel)
+        {
+            var viewData = new EditFileResourceViewData();
+            return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationManageFileResourceAsAdminFeature]
         public PartialViewResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantAllocationFileResourcePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantAllocationFile(grantAllocationFileResourcePrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantAllocationFile(GrantAllocationFileResource grantAllocationFileResource, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this \"{grantAllocationFileResource.DisplayName}\" file created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
         [HttpPost]
-        [GrantAllocationDeleteFileAsAdminFeature]
+        [GrantAllocationManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -229,12 +305,20 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteGrantAllocationFile(grantAllocationFileResource, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} file \"{grantAllocationFileResource.DisplayName}\" created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
-            grantAllocationFileResource.FileResource.Delete(HttpRequestStorage.DatabaseEntities);
-            grantAllocationFileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} file \"{grantAllocationFileResource.DisplayName}\" deleted on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
+            grantAllocationFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        private PartialViewResult ViewDeleteGrantAllocationFile(GrantAllocationFileResource grantAllocationFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantAllocationFileResource.DisplayName}\" file created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        #endregion
 
         [HttpGet]
         [GrantAllocationsViewFeature]

@@ -41,10 +41,11 @@ namespace ProjectFirma.Web.Models
                 : 0;
         }
 
-        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch) : this(projectUpdateBatch, projectUpdateBatch.Project.ProjectStage, projectUpdateBatch.Project.ProjectDescription, 
+        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch) : this(projectUpdateBatch, projectUpdateBatch.Project.ProjectStage, 
                                                                            projectUpdateBatch.Project.ProjectLocationSimpleType)
         {
             this.FocusAreaID = projectUpdateBatch.Project.FocusAreaID;
+            this.ProjectDescription = projectUpdateBatch.Project.ProjectDescription;
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
             LoadSimpleLocationFromProject(project);            
@@ -76,6 +77,7 @@ namespace ProjectFirma.Web.Models
             project.ExpirationDate = ExpirationDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
+            project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
             project.PrimaryContactPersonID = PrimaryContactPersonID;
         }

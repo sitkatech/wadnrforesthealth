@@ -26,6 +26,7 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.GisCrossWalkDefault" />
+    <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.GisDefaultMapping" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.GisFeature" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisFeatureMetadataAttribute" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisMetadataAttribute" />
@@ -51,6 +52,7 @@
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramManager" />
     <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.GrantFileResource" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.GrantModification" />
+    <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.GrantModificationFileResource" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantModificationNoteInternal" />
     <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationPurpose" />
@@ -61,6 +63,7 @@
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.InteractionEvent" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.InteractionEventContact" />
+    <EntitySet Name="InteractionEventFileResource" EntityType="ProjectFirma.Web.Models.InteractionEventFileResource" />
     <EntitySet Name="InteractionEventProject" EntityType="ProjectFirma.Web.Models.InteractionEventProject" />
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.InteractionEventType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
@@ -102,6 +105,8 @@
     <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYearUpdate" />
     <EntitySet Name="ProjectExternalLink" EntityType="ProjectFirma.Web.Models.ProjectExternalLink" />
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.ProjectExternalLinkUpdate" />
+    <EntitySet Name="ProjectFundingSource" EntityType="ProjectFirma.Web.Models.ProjectFundingSource" />
+    <EntitySet Name="ProjectFundingSourceUpdate" EntityType="ProjectFirma.Web.Models.ProjectFundingSourceUpdate" />
     <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" />
     <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" />
     <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationRequest" />
@@ -143,9 +148,11 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Treatment" />
+    <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.TreatmentArea" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
+    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
+    <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
-    <EntitySet Name="vGeoServerProjectTreatmentArea" EntityType="ProjectFirma.Web.Models.vGeoServerProjectTreatmentArea" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
@@ -275,9 +282,13 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="GrantFileResources" EntitySet="GrantFileResource" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
-      <End Role="GrantModificationFileResource" EntitySet="FileResource" />
-      <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" EntitySet="GrantModification" />
+    <AssociationSet Name="FK_GrantModificationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantModificationFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEventFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_InteractionEventFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="InteractionEventFileResources" EntitySet="InteractionEventFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
       <End Role="InvoiceFileResource" EntitySet="FileResource" />
@@ -335,6 +346,10 @@
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisCrossWalkDefaults" EntitySet="GisCrossWalkDefault" />
     </AssociationSet>
+    <AssociationSet Name="FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisDefaultMappings" EntitySet="GisDefaultMapping" />
+    </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="GisFeatures" EntitySet="GisFeature" />
@@ -370,6 +385,14 @@
     <AssociationSet Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="LastUpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="UpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -539,6 +562,10 @@
       <End Role="GrantModificationStatus" EntitySet="GrantModificationStatus" />
       <End Role="GrantModifications" EntitySet="GrantModification" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.FK_GrantModificationFileResource_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
+      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
@@ -586,6 +613,10 @@
     <AssociationSet Name="FK_InteractionEventContact_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.FK_InteractionEventContact_InteractionEvent_InteractionEventID">
       <End Role="InteractionEvent" EntitySet="InteractionEvent" />
       <End Role="InteractionEventContacts" EntitySet="InteractionEventContact" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEventFileResource_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.FK_InteractionEventFileResource_InteractionEvent_InteractionEventID">
+      <End Role="InteractionEvent" EntitySet="InteractionEvent" />
+      <End Role="InteractionEventFileResources" EntitySet="InteractionEventFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_InteractionEventProject_InteractionEvent_InteractionEventID" Association="ProjectFirma.Web.Models.FK_InteractionEventProject_InteractionEvent_InteractionEventID">
       <End Role="InteractionEvent" EntitySet="InteractionEvent" />
@@ -887,6 +918,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectExternalLinks" EntitySet="ProjectExternalLink" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectFundingSource_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectFundingSources" EntitySet="ProjectFundingSource" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
@@ -979,6 +1014,10 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectExternalLinkUpdates" EntitySet="ProjectExternalLinkUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectFundingSourceUpdates" EntitySet="ProjectFundingSourceUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
@@ -1059,8 +1098,18 @@
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID">
+      <End Role="TreatmentArea" EntitySet="TreatmentArea" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
       <Parameter Name="psTableName" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="fGetProjectDnrUploadRegion" ReturnType="Collection(ProjectFirma.Web.Models.fGetProjectDnrUploadRegion_Result)" IsComposable="true">
+      <Parameter Name="piGisUploadAttemptID" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="fGetProjectPriorityLandscape" ReturnType="Collection(ProjectFirma.Web.Models.fGetProjectPriorityLandscape_Result)" IsComposable="true">
+      <Parameter Name="piGisUploadAttemptID" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
       <Parameter Name="stringToSplit" Type="String" />
@@ -1070,6 +1119,16 @@
   <ComplexType Name="fGetColumnNamesForTable_Result">
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+  </ComplexType>
+  <ComplexType Name="fGetProjectDnrUploadRegion_Result">
+    <Property Name="number" Type="Int64" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="fGetProjectPriorityLandscape_Result">
+    <Property Name="number" Type="Int64" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
   </ComplexType>
   <ComplexType Name="fnSplitString_Result">
     <Property Name="splitdata" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -1304,7 +1363,8 @@
     <NavigationProperty Name="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" FromRole="GrantAllocationAwardContractorInvoiceFileResource" ToRole="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" />
     <NavigationProperty Name="GrantAllocationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantAllocationFileResources" />
     <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantFileResources" />
-    <NavigationProperty Name="GrantModificationsWhereYouAreTheGrantModificationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" FromRole="GrantModificationFileResource" ToRole="GrantModificationsWhereYouAreTheGrantModificationFileResource" />
+    <NavigationProperty Name="GrantModificationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantModificationFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantModificationFileResources" />
+    <NavigationProperty Name="InteractionEventFileResources" Relationship="ProjectFirma.Web.Models.FK_InteractionEventFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="InteractionEventFileResources" />
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
@@ -1388,6 +1448,16 @@
     <Property Name="GisCrossWalkMappedValue" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisCrossWalkDefaults" ToRole="GisUploadSourceOrganization" />
   </EntityType>
+  <EntityType Name="GisDefaultMapping">
+    <Key>
+      <PropertyRef Name="GisDefaultMappingID" />
+    </Key>
+    <Property Name="GisDefaultMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="FieldDefinitionID" Type="Int32" Nullable="false" />
+    <Property Name="GisDefaultMappingColumnName" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisDefaultMappings" ToRole="GisUploadSourceOrganization" />
+  </EntityType>
   <EntityType Name="GisFeature">
     <Key>
       <PropertyRef Name="GisFeatureID" />
@@ -1397,6 +1467,7 @@
     <Property Name="GisFeatureGeometry" Type="Geometry" Nullable="false" />
     <Property Name="GisImportFeatureKey" Type="Int32" Nullable="false" />
     <Property Name="IsValid" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="CalculatedArea" Type="Decimal" Precision="38" Scale="20" />
     <NavigationProperty Name="GisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" FromRole="GisFeatures" ToRole="GisUploadAttempt" />
     <NavigationProperty Name="GisFeatureMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisFeatureMetadataAttribute_GisFeature_GisFeatureID" FromRole="GisFeature" ToRole="GisFeatureMetadataAttributes" />
   </EntityType>
@@ -1436,6 +1507,8 @@
     <NavigationProperty Name="GisUploadAttemptGisMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttempt" ToRole="GisUploadAttemptGisMetadataAttributes" />
     <NavigationProperty Name="ProjectsWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" />
     <NavigationProperty Name="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="LastUpdateGisUploadAttempt" ToRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" />
+    <NavigationProperty Name="TreatmentsWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" />
+    <NavigationProperty Name="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="UpdateGisUploadAttempt" ToRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" />
   </EntityType>
   <EntityType Name="GisUploadAttemptGisMetadataAttribute">
     <Key>
@@ -1454,7 +1527,15 @@
     </Key>
     <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GisUploadSourceOrganizationName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectTypeDefaultName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentTypeDefaultName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ImportIsFlattened" Type="Boolean" />
+    <Property Name="RequireCompletionDate" Type="Boolean" Nullable="false" />
+    <Property Name="AdjustProjectTypeBasedOnTreatmentTypes" Type="Boolean" Nullable="false" />
+    <Property Name="ProjectStageDefaultID" Type="Int32" Nullable="false" />
+    <Property Name="DataDeriveProjectStage" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
+    <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />
   </EntityType>
   <EntityType Name="Grant">
@@ -1714,6 +1795,8 @@
     <Property Name="GrantAllocationFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="GrantAllocationFileResources" ToRole="FileResource" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationFileResources" ToRole="GrantAllocation" />
   </EntityType>
@@ -1776,6 +1859,8 @@
     <Property Name="GrantFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID" FromRole="GrantFileResources" ToRole="FileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="GrantFileResources" ToRole="Grant" />
   </EntityType>
@@ -1791,13 +1876,24 @@
     <Property Name="GrantModificationStatusID" Type="Int32" Nullable="false" />
     <Property Name="GrantModificationAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="GrantModificationDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="GrantModificationFileResourceID" Type="Int32" />
-    <NavigationProperty Name="GrantModificationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" FromRole="GrantModificationsWhereYouAreTheGrantModificationFileResource" ToRole="GrantModificationFileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID" FromRole="GrantModifications" ToRole="Grant" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantModification_GrantModificationID" FromRole="GrantModification" ToRole="GrantAllocations" />
     <NavigationProperty Name="GrantModificationStatus" Relationship="ProjectFirma.Web.Models.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" FromRole="GrantModifications" ToRole="GrantModificationStatus" />
+    <NavigationProperty Name="GrantModificationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantModificationFileResource_GrantModification_GrantModificationID" FromRole="GrantModification" ToRole="GrantModificationFileResources" />
     <NavigationProperty Name="GrantModificationGrantModificationPurposes" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" FromRole="GrantModification" ToRole="GrantModificationGrantModificationPurposes" />
     <NavigationProperty Name="GrantModificationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" FromRole="GrantModification" ToRole="GrantModificationNoteInternals" />
+  </EntityType>
+  <EntityType Name="GrantModificationFileResource">
+    <Key>
+      <PropertyRef Name="GrantModificationFileResourceID" />
+    </Key>
+    <Property Name="GrantModificationFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantModificationID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantModificationFileResource_FileResource_FileResourceID" FromRole="GrantModificationFileResources" ToRole="FileResource" />
+    <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantModificationFileResource_GrantModification_GrantModificationID" FromRole="GrantModificationFileResources" ToRole="GrantModification" />
   </EntityType>
   <EntityType Name="GrantModificationGrantModificationPurpose">
     <Key>
@@ -1892,7 +1988,7 @@
     </Key>
     <Property Name="InteractionEventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="InteractionEventTypeID" Type="Int32" Nullable="false" />
-    <Property Name="StaffPersonID" Type="Int32" Nullable="false" />
+    <Property Name="StaffPersonID" Type="Int32" />
     <Property Name="InteractionEventTitle" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InteractionEventDescription" Type="String" MaxLength="3000" Unicode="false" FixedLength="false" />
     <Property Name="InteractionEventDate" Type="DateTime" Nullable="false" />
@@ -1900,6 +1996,7 @@
     <NavigationProperty Name="InteractionEventType" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" FromRole="InteractionEvents" ToRole="InteractionEventType" />
     <NavigationProperty Name="StaffPerson" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID" FromRole="InteractionEventsWhereYouAreTheStaffPerson" ToRole="StaffPerson" />
     <NavigationProperty Name="InteractionEventContacts" Relationship="ProjectFirma.Web.Models.FK_InteractionEventContact_InteractionEvent_InteractionEventID" FromRole="InteractionEvent" ToRole="InteractionEventContacts" />
+    <NavigationProperty Name="InteractionEventFileResources" Relationship="ProjectFirma.Web.Models.FK_InteractionEventFileResource_InteractionEvent_InteractionEventID" FromRole="InteractionEvent" ToRole="InteractionEventFileResources" />
     <NavigationProperty Name="InteractionEventProjects" Relationship="ProjectFirma.Web.Models.FK_InteractionEventProject_InteractionEvent_InteractionEventID" FromRole="InteractionEvent" ToRole="InteractionEventProjects" />
   </EntityType>
   <EntityType Name="InteractionEventContact">
@@ -1911,6 +2008,18 @@
     <Property Name="PersonID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="InteractionEvent" Relationship="ProjectFirma.Web.Models.FK_InteractionEventContact_InteractionEvent_InteractionEventID" FromRole="InteractionEventContacts" ToRole="InteractionEvent" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_InteractionEventContact_Person_PersonID" FromRole="InteractionEventContacts" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="InteractionEventFileResource">
+    <Key>
+      <PropertyRef Name="InteractionEventFileResourceID" />
+    </Key>
+    <Property Name="InteractionEventFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InteractionEventID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_InteractionEventFileResource_FileResource_FileResourceID" FromRole="InteractionEventFileResources" ToRole="FileResource" />
+    <NavigationProperty Name="InteractionEvent" Relationship="ProjectFirma.Web.Models.FK_InteractionEventFileResource_InteractionEvent_InteractionEventID" FromRole="InteractionEventFileResources" ToRole="InteractionEvent" />
   </EntityType>
   <EntityType Name="InteractionEventProject">
     <Key>
@@ -2351,7 +2460,7 @@
     <Property Name="ProjectTypeID" Type="Int32" Nullable="false" />
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDescription" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
@@ -2378,6 +2487,7 @@
     <Property Name="CreateGisUploadAttemptID" Type="Int32" />
     <Property Name="LastUpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
@@ -2395,6 +2505,7 @@
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID" FromRole="Project" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectExemptReportingYears" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID" FromRole="Project" ToRole="ProjectExemptReportingYears" />
     <NavigationProperty Name="ProjectExternalLinks" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLink_Project_ProjectID" FromRole="Project" ToRole="ProjectExternalLinks" />
+    <NavigationProperty Name="ProjectFundingSources" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID" FromRole="Project" ToRole="ProjectFundingSources" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationExpenditures" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_Project_ProjectID" FromRole="Project" ToRole="ProjectImages" />
@@ -2552,6 +2663,24 @@
     <Property Name="ExternalLinkLabel" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
     <Property Name="ExternalLinkUrl" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectExternalLinkUpdates" ToRole="ProjectUpdateBatch" />
+  </EntityType>
+  <EntityType Name="ProjectFundingSource">
+    <Key>
+      <PropertyRef Name="ProjectFundingSourceID" />
+    </Key>
+    <Property Name="ProjectFundingSourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID" FromRole="ProjectFundingSources" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectFundingSourceUpdate">
+    <Key>
+      <PropertyRef Name="ProjectFundingSourceUpdateID" />
+    </Key>
+    <Property Name="ProjectFundingSourceUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectFundingSourceUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationExpenditure">
     <Key>
@@ -2873,7 +3002,7 @@
     <Property Name="ProjectUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDescription" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
@@ -2883,6 +3012,7 @@
     <Property Name="PrimaryContactPersonID" Type="Int32" />
     <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
@@ -2928,6 +3058,7 @@
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectExemptReportingYearUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExemptReportingYearUpdates" />
     <NavigationProperty Name="ProjectExternalLinkUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExternalLinkUpdates" />
+    <NavigationProperty Name="ProjectFundingSourceUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectFundingSourceUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectGrantAllocationExpenditureUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectGrantAllocationRequestUpdates" />
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectImageUpdates" />
@@ -3127,27 +3258,33 @@
     </Key>
     <Property Name="TreatmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentFeature" Type="Geometry" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="Int32" />
     <Property Name="TreatmentStartDate" Type="DateTime" />
     <Property Name="TreatmentEndDate" Type="DateTime" />
     <Property Name="TreatmentFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentChippingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentPruningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentThinningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentMasticationAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentGrazingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentHandPileAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
-    <Property Name="TreatmentSlashAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentTypeID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentAreaID" Type="Int32" />
+    <Property Name="TreatmentTreatedAcres" Type="Decimal" Precision="38" Scale="10" />
+    <Property Name="TreatmentTypeImportedText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="CreateGisUploadAttemptID" Type="Int32" />
+    <Property Name="UpdateGisUploadAttemptID" Type="Int32" />
+    <Property Name="TreatmentDetailedActivityTypeID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentDetailedActivityTypeImportedText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
+    <NavigationProperty Name="UpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" ToRole="UpdateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
+    <NavigationProperty Name="TreatmentArea" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="Treatments" ToRole="TreatmentArea" />
+  </EntityType>
+  <EntityType Name="TreatmentArea">
+    <Key>
+      <PropertyRef Name="TreatmentAreaID" />
+    </Key>
+    <Property Name="TreatmentAreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TreatmentAreaFeature" Type="Geometry" Nullable="false" />
+    <Property Name="TemporaryTreatmentCacheID" Type="Int32" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="TreatmentArea" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -3176,6 +3313,24 @@
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
+  <EntityType Name="WashingtonCounty">
+    <Key>
+      <PropertyRef Name="WashingtonCountyID" />
+    </Key>
+    <Property Name="WashingtonCountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WashingtonCountyLocation" Type="Geometry" Nullable="false" />
+    <Property Name="WashingtonCountyName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="WashingtonCountyFullName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WashingtonLegislativeDistrict">
+    <Key>
+      <PropertyRef Name="WashingtonLegislativeDistrictID" />
+    </Key>
+    <Property Name="WashingtonLegislativeDistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WashingtonLegislativeDistrictLocation" Type="Geometry" Nullable="false" />
+    <Property Name="WashingtonLegislativeDistrictNumber" Type="Int32" Nullable="false" />
+    <Property Name="WashingtonLegislativeDistrictName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
   <EntityType Name="vGeoServerPriorityLandscape">
     <Key>
       <PropertyRef Name="PriorityLandscapeID" />
@@ -3187,22 +3342,6 @@
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
-  <EntityType Name="vGeoServerProjectTreatmentArea">
-    <Key>
-      <PropertyRef Name="TreatmentID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="ProjectID" />
-      <PropertyRef Name="ProjectName" />
-      <PropertyRef Name="FhtProjectNumber" />
-    </Key>
-    <Property Name="TreatmentID" Type="Int32" Nullable="false" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
-    <Property Name="FhtProjectNumber" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-    <Property Name="TreatmentFeature" Type="Geometry" />
   </EntityType>
   <EntityType Name="vSocrataDataMartRawJsonImportIndex">
     <Key>
@@ -3608,15 +3747,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
-    <End Role="GrantModificationFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
-    <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="*" />
+  <Association Name="FK_GrantModificationFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.GrantModificationFileResource" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="GrantModificationFileResource">
+      <Principal Role="FileResource">
         <PropertyRef Name="FileResourceID" />
       </Principal>
-      <Dependent Role="GrantModificationsWhereYouAreTheGrantModificationFileResource">
-        <PropertyRef Name="GrantModificationFileResourceID" />
+      <Dependent Role="GrantModificationFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEventFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="InteractionEventFileResources" Type="ProjectFirma.Web.Models.InteractionEventFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="InteractionEventFileResources">
+        <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3788,6 +3943,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisDefaultMappings" Type="ProjectFirma.Web.Models.GisDefaultMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisDefaultMappings">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
     <End Role="GisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="1" />
     <End Role="GisFeatures" Type="ProjectFirma.Web.Models.GisFeature" Multiplicity="*" />
@@ -3893,6 +4060,30 @@
       </Principal>
       <Dependent Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt">
         <PropertyRef Name="LastUpdateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentsWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="UpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UpdateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt">
+        <PropertyRef Name="UpdateGisUploadAttemptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4400,6 +4591,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="1" />
+    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.GrantModificationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
+      </Principal>
+      <Dependent Role="GrantModificationFileResources">
+        <PropertyRef Name="GrantModificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
     <End Role="GrantModification" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="1" />
     <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" Multiplicity="*" />
@@ -4521,7 +4724,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_InteractionEvent_Person_StaffPersonID_PersonID">
-    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
     <End Role="InteractionEventsWhereYouAreTheStaffPerson" Type="ProjectFirma.Web.Models.InteractionEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffPerson">
@@ -4540,6 +4743,18 @@
         <PropertyRef Name="InteractionEventID" />
       </Principal>
       <Dependent Role="InteractionEventContacts">
+        <PropertyRef Name="InteractionEventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEventFileResource_InteractionEvent_InteractionEventID">
+    <End Role="InteractionEvent" Type="ProjectFirma.Web.Models.InteractionEvent" Multiplicity="1" />
+    <End Role="InteractionEventFileResources" Type="ProjectFirma.Web.Models.InteractionEventFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InteractionEvent">
+        <PropertyRef Name="InteractionEventID" />
+      </Principal>
+      <Dependent Role="InteractionEventFileResources">
         <PropertyRef Name="InteractionEventID" />
       </Dependent>
     </ReferentialConstraint>
@@ -5444,6 +5659,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectFundingSource_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectFundingSources" Type="ProjectFirma.Web.Models.ProjectFundingSource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectFundingSources">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
     <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" Multiplicity="*" />
@@ -5720,6 +5947,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectFundingSourceUpdates" Type="ProjectFirma.Web.Models.ProjectFundingSourceUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectFundingSourceUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
@@ -5957,6 +6196,18 @@
       </Principal>
       <Dependent Role="TaxonomyBranches">
         <PropertyRef Name="TaxonomyTrunkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_TreatmentArea_TreatmentAreaID">
+    <End Role="TreatmentArea" Type="ProjectFirma.Web.Models.TreatmentArea" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentArea">
+        <PropertyRef Name="TreatmentAreaID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="TreatmentAreaID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

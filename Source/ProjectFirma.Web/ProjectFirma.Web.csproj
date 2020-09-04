@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -111,6 +111,8 @@
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\fGetColumnNamesForTable.Binding.cs" />
+    <Compile Include="Models\Generated\fGetProjectDnrUploadRegion.Binding.cs" />
+    <Compile Include="Models\Generated\fGetProjectPriorityLandscape.Binding.cs" />
     <Compile Include="Models\Generated\FieldDefinition.Binding.cs" />
     <Compile Include="Models\Generated\FieldDefinitionData.Binding.cs" />
     <Compile Include="Models\Generated\FieldDefinitionData.DatabaseContextExtensions.cs" />
@@ -149,9 +151,14 @@
     <Compile Include="Models\Generated\FocusAreaPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatus.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatusPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\FundingSource.Binding.cs" />
+    <Compile Include="Models\Generated\FundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefaultPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GisDefaultMapping.Binding.cs" />
+    <Compile Include="Models\Generated\GisDefaultMapping.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GisDefaultMappingPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisFeature.Binding.cs" />
     <Compile Include="Models\Generated\GisFeature.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisFeatureMetadataAttribute.Binding.cs" />
@@ -235,6 +242,9 @@
     <Compile Include="Models\Generated\GrantFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantModification.Binding.cs" />
     <Compile Include="Models\Generated\GrantModification.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantModificationFileResource.Binding.cs" />
+    <Compile Include="Models\Generated\GrantModificationFileResource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantModificationFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantModificationGrantModificationPurpose.Binding.cs" />
     <Compile Include="Models\Generated\GrantModificationGrantModificationPurpose.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantModificationGrantModificationPurposePrimaryKey.Binding.cs" />
@@ -266,6 +276,9 @@
     <Compile Include="Models\Generated\InteractionEventContact.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventContact.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\InteractionEventContactPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\InteractionEventFileResource.Binding.cs" />
+    <Compile Include="Models\Generated\InteractionEventFileResource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\InteractionEventFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventProject.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventProject.DatabaseContextExtensions.cs" />
@@ -421,6 +434,12 @@
     <Compile Include="Models\Generated\ProjectExternalLinkUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectExternalLinkUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectExternalLinkUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSource.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSource.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourcePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourceUpdate.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourceUpdate.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectFundingSourceUpdatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditure.Binding.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectGrantAllocationExpenditurePrimaryKey.Binding.cs" />
@@ -572,6 +591,11 @@
     <Compile Include="Models\Generated\TrainingVideoPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Treatment.Binding.cs" />
     <Compile Include="Models\Generated\Treatment.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\TreatmentArea.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentArea.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\TreatmentAreaPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentDetailedActivityType.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentDetailedActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
@@ -579,8 +603,13 @@
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPriorityLandscape.Binding.cs" />
-    <Compile Include="Models\Generated\vGeoServerProjectTreatmentArea.Binding.cs" />
     <Compile Include="Models\Generated\vSocrataDataMartRawJsonImportIndex.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonCounty.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonCounty.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\WashingtonCountyPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
+    <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
     <Compile Include="Common\CertificateHelpersTest.cs" />
     <Compile Include="Controllers\GisFeatureController.cs" />
     <Compile Include="Controllers\GisProjectBulkUpdateController.cs" />
@@ -613,6 +642,8 @@
     <Compile Include="Models\GrantAllocationChangeLog.cs" />
     <Compile Include="Models\GrantAllocationFileResource.cs" />
     <Compile Include="Models\GrantFileResource.cs" />
+    <Compile Include="Models\GrantModificationFileResource.cs" />
+    <Compile Include="Models\InteractionEventFileResource.cs" />
     <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
@@ -630,6 +661,8 @@
     <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
+    <Compile Include="Models\ProjectFundingSource.cs" />
+    <Compile Include="Models\ProjectFundingSourceUpdate.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\SqlBienniumTest.cs" />
     <Compile Include="Models\TreatmentModelExtensions.cs" />
@@ -668,8 +701,9 @@
     <Compile Include="Security\GrantAllocationAwardTravelLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardSuppliesLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardViewFeature.cs" />
-    <Compile Include="Security\GrantAllocationDeleteFileAsAdminFeature.cs" />
-    <Compile Include="Security\GrantDeleteFileAsAdminFeature.cs" />
+    <Compile Include="Security\GrantAllocationManageFileResourceAsAdminFeature.cs" />
+    <Compile Include="Security\GrantManageFileResourceAsAdminFeature.cs" />
+    <Compile Include="Security\GrantModificationManageFileResourceAsAdminFeature.cs" />
     <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />
     <Compile Include="Models\CurrentBiennium.cs" />
@@ -889,6 +923,8 @@
     <Compile Include="Views\GrantAllocationAward\ContractorInvoiceItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\TravelLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\SuppliesLineItemGridSpec.cs" />
+    <Compile Include="Views\GrantAllocationAward\TreatmentAreaGridSpec.cs" />
+    <Compile Include="Views\GrantAllocationAward\TreatmentGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActuals.cs" />
@@ -911,9 +947,6 @@
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
-    <Compile Include="Views\GrantAllocation\NewGrantAllocationFile.cs" />
-    <Compile Include="Views\GrantAllocation\NewGrantAllocationFileViewData.cs" />
-    <Compile Include="Views\GrantAllocation\NewGrantAllocationFileViewModel.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternal.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewData.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewModel.cs" />
@@ -961,11 +994,8 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
-    <Compile Include="Views\Grant\NewGrantFile.cs" />
     <Compile Include="Views\Grant\NewGrant.cs" />
-    <Compile Include="Views\Grant\NewGrantFileViewData.cs" />
     <Compile Include="Views\Grant\NewGrantViewData.cs" />
-    <Compile Include="Views\Grant\NewGrantFileViewModel.cs" />
     <Compile Include="Views\Grant\NewGrantViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
@@ -1050,8 +1080,15 @@
     <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
-    <Compile Include="Views\Shared\Grant\GrantDetailsFileDetailsViewData.cs" />
-    <Compile Include="Views\Shared\Grant\GrantDetailsFileDetails.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\EditFileResource.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\EditFileResourceViewData.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\EditFileResourceViewModel.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\FileDetails.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\FileDetailsViewData.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\ICanUploadNewFiles.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\NewFile.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\NewFileViewData.cs" />
+    <Compile Include="Views\Shared\FileResourceControls\NewFileViewModel.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
@@ -1117,6 +1154,7 @@
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
+    <Content Include="Views\GrantModification\EditGrantModificationController.js" />
     <Content Include="Views\Grant\GrantFilesController.js" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -1594,6 +1632,7 @@
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
     <Content Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.CreateFromGrantAllocationsAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Results\ProjectMapController.js" />
+    <Content Include="Views\Shared\FileResourceControls\NewFileController.js" />
     <Content Include="Views\Shared\ProjectDocument\ProjectDocumentsController.js" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailController.js" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
@@ -1634,9 +1673,6 @@
     <Content Include="Views\GisProjectBulkUpdate\_ViewStart.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\UploadGisFile.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
-    <Content Include="Views\Shared\Grant\GrantDetailsFileDetails.cshtml" />
-    <Content Include="Views\Grant\NewGrantFile.cshtml" />
-    <Content Include="Views\GrantAllocation\NewGrantAllocationFile.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\GisMetadata.cshtml" />
     <Content Include="Views\GisFeature\Detail.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
@@ -2236,6 +2272,9 @@
     <Content Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cshtml" />
     <Content Include="Views\ProgramIndex\EditProgramIndex.cshtml" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationsMap.cshtml" />
+    <Content Include="Views\Shared\FileResourceControls\NewFile.cshtml" />
+    <Content Include="Views\Shared\FileResourceControls\FileDetails.cshtml" />
+    <Content Include="Views\Shared\FileResourceControls\EditFileResource.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
@@ -2281,8 +2320,8 @@
     <Reference Include="FluentValidation.Mvc, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="GeoJSON.Net, Version=0.1.47.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\GeoJSON.Net.0.1.47\lib\portable-net40+sl5+wp80+win8+wpa81\GeoJSON.Net.dll</HintPath>
+    <Reference Include="GeoJSON.Net, Version=1.2.16.0, Culture=neutral, PublicKeyToken=42c00ea87f5f14d4, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\GeoJSON.Net.1.2.19\lib\net45\GeoJSON.Net.dll</HintPath>
     </Reference>
     <Reference Include="Hangfire.Core, Version=1.6.19.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Hangfire.Core.1.6.19\lib\net45\Hangfire.Core.dll</HintPath>
@@ -2390,7 +2429,7 @@
       <HintPath>..\NuGetPackages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\NuGetPackages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>

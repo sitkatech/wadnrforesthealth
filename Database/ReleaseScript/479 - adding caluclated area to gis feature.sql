@@ -1,0 +1,1 @@
+ALTER TABLE dbo.GisFeature ADD CalculatedArea decimal(38,20)

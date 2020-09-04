@@ -181,7 +181,6 @@ namespace ProjectFirma.Web.Controllers
             var project = new Project(viewModel.ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID,
                                       viewModel.ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID,
                                       viewModel.ProjectName,
-                                      viewModel.ProjectDescription,
                                       false,
                                       ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
                                       ProjectApprovalStatus.Draft.ProjectApprovalStatusID,
@@ -190,7 +189,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 ProposingPerson = CurrentPerson,
                 ProposingDate = DateTime.Now,
-                FocusAreaID = viewModel.FocusAreaID
+                FocusAreaID = viewModel.FocusAreaID,
+                ProjectDescription = viewModel.ProjectDescription
             };
 
             return SaveProjectAndCreateAuditEntry(project, viewModel);
@@ -460,7 +460,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult ExpectedFunding(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(), project.EstimatedTotalCost);
+            var viewModel = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(), project.EstimatedTotalCost, project.ProjectFundingSourceNotes, project.ProjectFundingSources.ToList());
             return ViewExpectedFunding(project, viewModel);
         }
 
@@ -490,7 +490,12 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
             var projectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
             var allprojectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
-            viewModel.UpdateModel(project, projectGrantAllocationRequests, allprojectGrantAllocationRequests);
+
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Load();
+            var projectFundingSources = project.ProjectFundingSources.ToList();
+            var allProjectFundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Local;
+
+            viewModel.UpdateModel(project, projectGrantAllocationRequests, allprojectGrantAllocationRequests, projectFundingSources, allProjectFundingSources);
             SetMessageForDisplay("Expected Funding successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName);
         }

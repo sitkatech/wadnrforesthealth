@@ -43,12 +43,11 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Name Column")]
         public int ProjectNameMetadataAttributeID { get; set; }
 
-        [DisplayName("Project Type Column")]
-        public int? ProjectTypeMetadataAttributeID { get; set; }
+        [DisplayName("Treatment Type Column")]
+        public int? TreatmentTypeMetadataAttributeID { get; set; }
 
-        [Required]
         [DisplayName("Completion Date Column")]
-        public int CompletionDateMetadataAttributeID { get; set; }
+        public int? CompletionDateMetadataAttributeID { get; set; }
 
         [DisplayName("Start Date Column")]
         public int? StartDateMetadataAttributeID { get; set; }
@@ -56,14 +55,113 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Stage Column")]
         public int? ProjectStageMetadataAttributeID { get; set; }
 
-        [DisplayName("Other Treatment Acres Column")]
-        public int? OtherTreatmentAcresMetadataAttributeID { get; set; }
+        [DisplayName("Footprint Acres Column")]
+        public int? FootprintAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Treatment Detailed Activity Type Column")]
+        public int? TreatmentDetailedActivityTypeMetadataAttributeID { get; set; }
+
+        [DisplayName("Treated Acres Column")]
+        public int? TreatedAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Pruning Acres Column")]
+        public int? PruningAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Thinning Acres Column")]
+        public int? ThinningAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Chipping Acres Column")]
+        public int? ChippingAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Mastication Acres Column")]
+        public int? MasticationAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Grazing Acres Column")]
+        public int? GrazingAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Lop and Scatter Acres Column")]
+        public int? LopScatAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Biomass Removal Acres Column")]
+        public int? BiomassRemovalAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Hand Pile Acres Column")]
+        public int? HandPileAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Hand Pile Burn Acres Column")]
+        public int? HandPileBurnAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Machine Pile Burn Acres Column")]
+        public int? MachinePileBurnAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Broadcast Burn Acres Column")]
+        public int? BroadcastBurnAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Other Acres Column")]
+        public int? OtherAcresMetadataAttributeID { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public GisMetadataViewModel()
+        public GisMetadataViewModel() { }
+
+
+        public GisMetadataViewModel(GisUploadAttempt gisUploadAttempt, List<Models.GisMetadataAttribute> gisMetadataAttributes)
         {
+            var organization = gisUploadAttempt.GisUploadSourceOrganization;
+            var defaults = organization.GisDefaultMappings;
+            ProjectIdentifierMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectIdentifier) ?? 0;
+            ProjectNameMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectName) ?? 0;
+            TreatmentTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentType);
+            CompletionDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.CompletionDate) ?? 0;
+            StartDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.PlannedDate);
+            ProjectStageMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectStage);
+            FootprintAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.FootprintAcres);
+            TreatedAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatedAcres);
+            TreatmentDetailedActivityTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentDetailedActivityType);
+            PruningAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres);
+            ThinningAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres);
+            ChippingAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres);
+            MasticationAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres);
+            GrazingAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres);
+            LopScatAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres);
+            BiomassRemovalAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres);
+            HandPileAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres);
+            HandPileBurnAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres);
+            MachinePileBurnAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres);
+            BroadcastBurnAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres);
+            OtherAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres);
+        }
+
+        private static int? GetPossibleDefaultMetadataAttributeID(List<GisMetadataAttribute> gisMetadataAttributes, ICollection<GisDefaultMapping> defaults, Models.FieldDefinition fieldDefinition)
+        {
+            int? defaultMetadataAttributeID = null;
+            var projectIdentifierDefault =
+                defaults.SingleOrDefault(x => x.FieldDefinition == fieldDefinition);
+            if (projectIdentifierDefault != null)
+            {
+                var projectIdentifierGisMetadataAttribute = gisMetadataAttributes
+                    .SingleOrDefault(x => string.Equals(x.GisMetadataAttributeName,
+                        projectIdentifierDefault.GisDefaultMappingColumnName));
+
+                if (projectIdentifierGisMetadataAttribute == null)
+                {
+                    projectIdentifierGisMetadataAttribute = gisMetadataAttributes
+                        .FirstOrDefault(x => string.Equals(x.GisMetadataAttributeName,
+                            projectIdentifierDefault.GisDefaultMappingColumnName) || (projectIdentifierDefault.GisDefaultMappingColumnName.Length > 10 && string.Equals(x.GisMetadataAttributeName,
+                            projectIdentifierDefault.GisDefaultMappingColumnName.Substring(0, 10))));
+                }
+
+
+                
+                if (projectIdentifierGisMetadataAttribute != null)
+                {
+                    defaultMetadataAttributeID = projectIdentifierGisMetadataAttribute.GisMetadataAttributeID;
+                }
+            }
+
+            return defaultMetadataAttributeID;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

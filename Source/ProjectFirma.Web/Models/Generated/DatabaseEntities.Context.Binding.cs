@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
+        public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual DbSet<GisFeatureMetadataAttribute> GisFeatureMetadataAttributes { get; set; }
         public virtual DbSet<GisFeature> GisFeatures { get; set; }
         public virtual DbSet<GisMetadataAttribute> GisMetadataAttributes { get; set; }
@@ -77,6 +78,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
+        public virtual DbSet<GrantModificationFileResource> GrantModificationFileResources { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual DbSet<GrantModificationPurpose> GrantModificationPurposes { get; set; }
@@ -88,6 +90,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
         public virtual DbSet<InteractionEventContact> InteractionEventContacts { get; set; }
+        public virtual DbSet<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         public virtual DbSet<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual DbSet<InteractionEvent> InteractionEvents { get; set; }
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
@@ -129,6 +132,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
+        public virtual DbSet<ProjectFundingSource> ProjectFundingSources { get; set; }
+        public virtual DbSet<ProjectFundingSourceUpdate> ProjectFundingSourceUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
@@ -170,12 +175,16 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
+        public virtual DbSet<TreatmentArea> TreatmentAreas { get; set; }
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
+        public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
-        public virtual DbSet<vGeoServerProjectTreatmentArea> vGeoServerProjectTreatmentAreas { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
+        public virtual DbSet<fGetProjectDnrUploadRegion_Result> fGetProjectDnrUploadRegionResults { get; set; }
+        public virtual DbSet<fGetProjectPriorityLandscape_Result> fGetProjectPriorityLandscapeResults { get; set; }
         public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }
 
         [DbFunction("DatabaseEntities", "fGetColumnNamesForTable")]
@@ -188,6 +197,30 @@ namespace ProjectFirma.Web.Models
             };
             return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
                   .CreateQuery<fGetColumnNamesForTable_Result>("DatabaseEntities.fGetColumnNamesForTable(@psTableName)",psTableName);
+        }
+
+        [DbFunction("DatabaseEntities", "fGetProjectDnrUploadRegion")]
+        public virtual IQueryable<fGetProjectDnrUploadRegion_Result> GetfGetProjectDnrUploadRegions(int? piGisUploadAttemptIDParameter)
+        {
+            
+            var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
+            {
+                Value = piGisUploadAttemptIDParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetProjectDnrUploadRegion_Result>("DatabaseEntities.fGetProjectDnrUploadRegion(@piGisUploadAttemptID)",piGisUploadAttemptID);
+        }
+
+        [DbFunction("DatabaseEntities", "fGetProjectPriorityLandscape")]
+        public virtual IQueryable<fGetProjectPriorityLandscape_Result> GetfGetProjectPriorityLandscapes(int? piGisUploadAttemptIDParameter)
+        {
+            
+            var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
+            {
+                Value = piGisUploadAttemptIDParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetProjectPriorityLandscape_Result>("DatabaseEntities.fGetProjectPriorityLandscape(@piGisUploadAttemptID)",piGisUploadAttemptID);
         }
 
         [DbFunction("DatabaseEntities", "fnSplitString")]
@@ -348,8 +381,16 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
 
+                case "FundingSource":
+                    var fundingSource = FundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(fundingSource, "FundingSource", primaryKey);
+                    return fundingSource;
+
                 case "GisCrossWalkDefault":
                     return GisCrossWalkDefaults.GetGisCrossWalkDefault(primaryKey);
+
+                case "GisDefaultMapping":
+                    return GisDefaultMappings.GetGisDefaultMapping(primaryKey);
 
                 case "GisFeatureMetadataAttribute":
                     return GisFeatureMetadataAttributes.GetGisFeatureMetadataAttribute(primaryKey);
@@ -445,6 +486,9 @@ namespace ProjectFirma.Web.Models
                 case "GrantFileResource":
                     return GrantFileResources.GetGrantFileResource(primaryKey);
 
+                case "GrantModificationFileResource":
+                    return GrantModificationFileResources.GetGrantModificationFileResource(primaryKey);
+
                 case "GrantModificationGrantModificationPurpose":
                     return GrantModificationGrantModificationPurposes.GetGrantModificationGrantModificationPurpose(primaryKey);
 
@@ -477,6 +521,9 @@ namespace ProjectFirma.Web.Models
 
                 case "InteractionEventContact":
                     return InteractionEventContacts.GetInteractionEventContact(primaryKey);
+
+                case "InteractionEventFileResource":
+                    return InteractionEventFileResources.GetInteractionEventFileResource(primaryKey);
 
                 case "InteractionEventProject":
                     return InteractionEventProjects.GetInteractionEventProject(primaryKey);
@@ -681,6 +728,12 @@ namespace ProjectFirma.Web.Models
                 case "ProjectExternalLinkUpdate":
                     return ProjectExternalLinkUpdates.GetProjectExternalLinkUpdate(primaryKey);
 
+                case "ProjectFundingSource":
+                    return ProjectFundingSources.GetProjectFundingSource(primaryKey);
+
+                case "ProjectFundingSourceUpdate":
+                    return ProjectFundingSourceUpdates.GetProjectFundingSourceUpdate(primaryKey);
+
                 case "ProjectGrantAllocationExpenditure":
                     return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
 
@@ -874,6 +927,14 @@ namespace ProjectFirma.Web.Models
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);
 
+                case "TreatmentArea":
+                    return TreatmentAreas.GetTreatmentArea(primaryKey);
+
+                case "TreatmentDetailedActivityType":
+                    var treatmentDetailedActivityType = TreatmentDetailedActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(treatmentDetailedActivityType, "TreatmentDetailedActivityType", primaryKey);
+                    return treatmentDetailedActivityType;
+
                 case "Treatment":
                     return Treatments.GetTreatment(primaryKey);
 
@@ -884,6 +945,12 @@ namespace ProjectFirma.Web.Models
 
                 case "Vendor":
                     return Vendors.GetVendor(primaryKey);
+
+                case "WashingtonCounty":
+                    return WashingtonCounties.GetWashingtonCounty(primaryKey);
+
+                case "WashingtonLegislativeDistrict":
+                    return WashingtonLegislativeDistricts.GetWashingtonLegislativeDistrict(primaryKey);
                 default:
                     throw new NotImplementedException(string.Format("No loader for type \"{0}\"", type.FullName));
             }

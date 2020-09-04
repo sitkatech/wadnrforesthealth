@@ -28,6 +28,7 @@
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
+@using ProjectFirma.Web.Views.Shared.FileResourceControls
 @using ProjectFirma.Web.Views.Shared.TextControls
 @inherits ProjectFirma.Web.Views.GrantModification.GrantModificationDetail
 
@@ -120,26 +121,20 @@
                                 @ViewDataTyped.GrantModification.EndDateDisplay
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Grant Modification File")
-                            </div>
-                            <div class="col-sm-8">
-                                <span>
-                                    @if (ViewDataTyped.ShowDownload)
-                                    {
-                                        <a href="@ViewDataTyped.GrantModification.GrantModificationFileResource.FileResourceUrl">
-                                            @ViewDataTyped.GrantModification.GrantModificationFileResource.OriginalCompleteFileName
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <span>No documents uploaded yet.</span>
-                                    }
-                                </span>
-                            </div>
-                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>Files</h3>
+                </div>
+                <div class="panel-body">
+                    @{ FileDetails.RenderPartialView(Html, ViewDataTyped.GrantModificationDetailFileDetailsViewData); }
                 </div>
             </div>
         </div>

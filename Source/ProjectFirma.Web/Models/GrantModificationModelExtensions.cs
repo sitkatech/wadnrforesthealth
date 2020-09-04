@@ -31,17 +31,5 @@ namespace ProjectFirma.Web.Models
         {
             return grantModification != null ? UrlTemplate.MakeHrefString(grantModification.GetDetailUrl(), grantModification.GrantModificationName) : new HtmlString(null);
         }
-
-        public static string GetFileDownloadUrl(this GrantModification grantModification)
-        {
-            if (grantModification.GrantModificationFileResource != null)
-            {
-                var url = FileResource.FileResourceByGuidUrlTemplate;
-                return url.ParameterReplace(grantModification.GrantModificationFileResource.FileResourceGUIDAsString);
-            }
-
-            return string.Empty;
-        }
-
     }
 }

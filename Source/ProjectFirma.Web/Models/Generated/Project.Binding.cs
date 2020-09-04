@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectDocuments = new HashSet<ProjectDocument>();
             this.ProjectExemptReportingYears = new HashSet<ProjectExemptReportingYear>();
             this.ProjectExternalLinks = new HashSet<ProjectExternalLink>();
+            this.ProjectFundingSources = new HashSet<ProjectFundingSource>();
             this.ProjectGrantAllocationExpenditures = new HashSet<ProjectGrantAllocationExpenditure>();
             this.ProjectGrantAllocationRequests = new HashSet<ProjectGrantAllocationRequest>();
             this.ProjectImages = new HashSet<ProjectImage>();
@@ -54,7 +55,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -87,12 +88,13 @@ namespace ProjectFirma.Web.Models
             this.CreateGisUploadAttemptID = createGisUploadAttemptID;
             this.LastUpdateGisUploadAttemptID = lastUpdateGisUploadAttemptID;
             this.ProjectGisIdentifier = projectGisIdentifier;
+            this.ProjectFundingSourceNotes = projectFundingSourceNotes;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectTypeID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID, string fhtProjectNumber) : this()
+        public Project(int projectTypeID, int projectStageID, string projectName, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID, string fhtProjectNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -100,7 +102,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectTypeID = projectTypeID;
             this.ProjectStageID = projectStageID;
             this.ProjectName = projectName;
-            this.ProjectDescription = projectDescription;
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatusID;
@@ -110,7 +111,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus, string fhtProjectNumber) : this()
+        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus, string fhtProjectNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -119,7 +120,6 @@ namespace ProjectFirma.Web.Models
             projectType.Projects.Add(this);
             this.ProjectStageID = projectStage.ProjectStageID;
             this.ProjectName = projectName;
-            this.ProjectDescription = projectDescription;
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleType.ProjectLocationSimpleTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatus.ProjectApprovalStatusID;
@@ -131,7 +131,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Project CreateNewBlank(ProjectType projectType, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus)
         {
-            return new Project(projectType, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus, default(string));
+            return new Project(projectType, projectStage, default(string), default(bool), projectLocationSimpleType, projectApprovalStatus, default(string));
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
+            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -198,6 +198,11 @@ namespace ProjectFirma.Web.Models
             if(ProjectExternalLinks.Any())
             {
                 dependentObjects.Add(typeof(ProjectExternalLink).Name);
+            }
+
+            if(ProjectFundingSources.Any())
+            {
+                dependentObjects.Add(typeof(ProjectFundingSource).Name);
             }
 
             if(ProjectGrantAllocationExpenditures.Any())
@@ -275,7 +280,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -346,6 +351,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in ProjectExternalLinks.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in ProjectFundingSources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -453,6 +463,7 @@ namespace ProjectFirma.Web.Models
         public int? CreateGisUploadAttemptID { get; set; }
         public int? LastUpdateGisUploadAttemptID { get; set; }
         public string ProjectGisIdentifier { get; set; }
+        public string ProjectFundingSourceNotes { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -466,6 +477,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
         public virtual ICollection<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
         public virtual ICollection<ProjectExternalLink> ProjectExternalLinks { get; set; }
+        public virtual ICollection<ProjectFundingSource> ProjectFundingSources { get; set; }
         public virtual ICollection<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual ICollection<ProjectImage> ProjectImages { get; set; }
@@ -502,6 +514,7 @@ namespace ProjectFirma.Web.Models
             public const int FhtProjectNumber = 20;
             public const int NoPriorityLandscapesExplanation = 4000;
             public const int ProjectGisIdentifier = 140;
+            public const int ProjectFundingSourceNotes = 4000;
         }
     }
 }

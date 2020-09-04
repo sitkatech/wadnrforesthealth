@@ -21,7 +21,6 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -36,7 +35,7 @@ namespace LtInfo.Common.GeoJson
 {
     [TestFixture]
     public class GeoJsonTest
-    {        
+    {
         private List<TestGeospatialObject> _testGeospatialObjects;
 
         private class TestGeospatialObject
@@ -75,7 +74,6 @@ namespace LtInfo.Common.GeoJson
             {
                 var geom = DbGeometry.FromText(c.Geometry, 4326);
                 var f = DbGeometryToGeoJsonHelper.FromDbGeometry(geom);
-                f.Id = c.ID.ToString(CultureInfo.InvariantCulture);
                 f.Properties.Add("Name", c.Name);
                 fc.Features.Add(f);
             });

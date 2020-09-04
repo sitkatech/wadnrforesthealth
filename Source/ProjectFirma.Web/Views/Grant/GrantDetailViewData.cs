@@ -20,13 +20,12 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
-using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.Shared.Grant;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Grant
@@ -36,14 +35,11 @@ namespace ProjectFirma.Web.Views.Grant
         public string NewGrantNoteUrl { get; set; }
         public EntityNotesViewData GrantNotesViewData { get; set; }
         public EntityNotesViewData InternalGrantNotesViewData { get; set; }
-        public bool ShowDownload { get; set; }
 
         public GrantModificationGridSpec GrantModificationGridSpec { get; }
         public string GrantModificationGridName { get; }
         public string GrantModificationGridDataUrl { get; }
-        public GrantDetailsFileDetailsViewData GrantDetailsFileDetailsViewData { get; }
-
-        public readonly string GrantAllocationPanelTitleID = "GrantAllocationPanelTitle";
+        public FileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
         public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
         public string GrantAllocationGridName { get; }
@@ -60,11 +56,8 @@ namespace ProjectFirma.Web.Views.Grant
             NewGrantNoteUrl = grant.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
-            // Used for creating file download link, if file available
-            ShowDownload = grant.GrantFileResources.Any(); ;
 
-            bool grantModificationFileExistsOnAtLeastOne = grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue);
-            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant, grantModificationFileExistsOnAtLeastOne);
+            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant);
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 
@@ -72,10 +65,9 @@ namespace ProjectFirma.Web.Views.Grant
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrlTemplate = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(UrlTemplate.Parameter1Int));
 
-            GrantDetailsFileDetailsViewData = new GrantDetailsFileDetailsViewData(
+            GrantDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
                 SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantFiles(grant.PrimaryKey)),
-                grant.GrantName,
                 new GrantEditAsAdminFeature().HasPermission(currentPerson, grant).HasPermission,
                 Models.FieldDefinition.Grant
             );

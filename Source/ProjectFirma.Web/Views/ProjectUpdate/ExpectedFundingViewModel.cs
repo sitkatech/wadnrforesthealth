@@ -44,6 +44,13 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [JsonIgnore]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSource)]
+        public List<int> FundingSourceIDs { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSourceNote)]
+        [StringLength(Models.Project.FieldLengths.ProjectFundingSourceNotes)]
+        public string ProjectFundingSourceNotes { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -53,16 +60,21 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public ExpectedFundingViewModel(List<ProjectGrantAllocationRequestUpdate> projectGrantAllocationRequestUpdates,
-            string comments, Money? projectEstimatedTotalCost)
+            string comments, Money? projectEstimatedTotalCost, string projectFundingSourceNotes, List<ProjectFundingSourceUpdate> projectFundingSourceUpdates)
         {
             ProjectGrantAllocationRequests = projectGrantAllocationRequestUpdates.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             Comments = comments;
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
+            ProjectFundingSourceNotes = projectFundingSourceNotes;
+            FundingSourceIDs = projectFundingSourceUpdates.Select(x => x.FundingSourceID).ToList();
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
-            List<ProjectGrantAllocationRequestUpdate> currentProjectGrantAllocationRequestUpdates,
-            IList<ProjectGrantAllocationRequestUpdate> allProjectGrantAllocationRequestUpdates, Models.ProjectUpdate projectUpdate)
+                                List<ProjectGrantAllocationRequestUpdate> currentProjectGrantAllocationRequestUpdates,
+                                IList<ProjectGrantAllocationRequestUpdate> allProjectGrantAllocationRequestUpdates, 
+                                Models.ProjectUpdate projectUpdate,
+                                List<ProjectFundingSourceUpdate> currentProjectFundingSourceUpdates,
+                                IList<ProjectFundingSourceUpdate> allProjectFundingSourceUpdates)
         {
             var projectGrantAllocationRequestUpdatesUpdated = new List<ProjectGrantAllocationRequestUpdate>();
             if (ProjectGrantAllocationRequests != null)
@@ -76,6 +88,20 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) => { x.TotalAmount = y.TotalAmount; });
 
+            //Update the ProjectFundingSourceUpdates
+            var projectFundingSourceUpdatesUpdated = new List<Models.ProjectFundingSourceUpdate>();
+            if (FundingSourceIDs != null && FundingSourceIDs.Any())
+            {
+                // Completely rebuild the list
+                projectFundingSourceUpdatesUpdated = FundingSourceIDs.Select(x => new ProjectFundingSourceUpdate(projectUpdateBatch.ProjectUpdateBatchID, x)).ToList();
+            }
+
+            currentProjectFundingSourceUpdates.Merge(projectFundingSourceUpdatesUpdated,
+                allProjectFundingSourceUpdates,
+                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.FundingSourceID == y.FundingSourceID);
+
+            //Update Project Update fields
+            projectUpdate.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             projectUpdate.EstimatedTotalCost = ProjectEstimatedTotalCost;
         }
 

@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using ProjectFirma.Web.UnitTestCommon;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
@@ -28,28 +29,23 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
     public class BasicsViewModelValidatorTest
     {
         private BasicsViewModelValidator _validator;
-        private Models.ProjectUpdate _projectUpdate;
 
         [SetUp]
         public void Setup()
         {
-            _projectUpdate = TestFramework.TestProjectUpdate.Create();
-            _projectUpdate.ProjectDescription = "TestProjectUpdateDescription777";
-            _projectUpdate.ProjectUpdateID = -999999;
             _validator = new BasicsViewModelValidator();
         }
 
         [Test]
-        public void ShouldHaveErrorWhenProjectDescriptionIsNullOrWhiteSpaceOrInvalidLength()
+        public void ShouldHaveErrorWhenProjectStageIsEmpty()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.ProjectDescription, string.Empty);
-            //            _validator.ShouldHaveValidationErrorFor(x => x.ProjectDescription, TestFramework.MakeTestNameLongerThan("Random Text", Models.ProjectUpdate.FieldLengths.ProjectDescription));
+            _validator.ShouldHaveValidationErrorFor(x => x.ProjectStageID, 0);
         }
 
         [Test]
-        public void ShouldNotHaveErrorWhenProjectDescriptionIsSpecified()
+        public void ShouldNotHaveErrorWhenProjectStageIsSpecified()
         {
-            _validator.ShouldNotHaveValidationErrorFor(x => x.ProjectDescription, TestFramework.MakeTestName("Random Text", Models.ProjectUpdate.FieldLengths.ProjectDescription));
+            _validator.ShouldNotHaveValidationErrorFor(x => x.ProjectStageID, ProjectStage.Completed.ProjectStageID);
         }
     }
 }

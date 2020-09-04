@@ -20,8 +20,10 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ApprovalUtilities.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -42,14 +44,15 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        [Required]
-        public int DNRStaffPersonID { get; set; }
+        public int? DNRStaffPersonID { get; set; }
 
         public List<InteractionEventProjectSimpleJson> InteractionEventProjects { get; set; }
 
         public List<InteractionEventContactSimpleJson> InteractionEventContacts { get; set; }
 
-
+        [DisplayName("Interaction/Event File Upload")]
+        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
+        public List<HttpPostedFileBase> InteractionEventFileResourceData { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -129,6 +132,19 @@ namespace ProjectFirma.Web.Views.InteractionEvent
                 interactionEvent.InteractionEventContacts.Merge(interactionEventContactsUpdated,
                     allInteractionEventContacts,
                     (x, y) => x.InteractionEventID == y.InteractionEventID && x.PersonID == y.PersonID);
+            }
+
+            if (InteractionEventFileResourceData?[0] != null)
+            {
+                var fileResources = InteractionEventFileResourceData.Select(fileData =>
+                    FileResource.CreateNewFromHttpPostedFile(fileData, currentPerson));
+
+                foreach (var fileResource in fileResources)
+                {
+                    HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
+                    var interactionEventFileResource = new InteractionEventFileResource(interactionEvent, fileResource, fileResource.OriginalCompleteFileName);
+                    interactionEvent.InteractionEventFileResources.Add(interactionEventFileResource);
+                }
             }
         }
     }

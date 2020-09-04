@@ -79,13 +79,30 @@ namespace LtInfo.Common.GdalOgr
             return processUtilityResult.StdOut;
         }
 
-        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString)
+        public string ImportSqlToGeoJson(string sqlQuery, string connectionString, int coordinateSystemID)
+        {
+            var databaseConnectionString = $"MSSQL:{connectionString}";
+            var commandLineArguments = BuildCommandLineArgumentsForSqlToGeoJson(sqlQuery, _gdalDataPath, coordinateSystemID, databaseConnectionString);
+            var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
+            return processUtilityResult.StdOut;
+        }
+
+        public string ImportShapeFileToGeoJson(string shapeFilePath, string sourceLayerName, bool explodeCollections)
+        {
+            Check.Require(shapeFilePath.ToLower().EndsWith(".shp"), $"Input filename for shp input must end with .shp. Filename passed is {shapeFilePath}");
+
+            var commandLineArguments = BuildCommandLineArgumentsForShapeFileToGeoJson(shapeFilePath, _gdalDataPath, sourceLayerName, _coordinateSystemId, explodeCollections);
+            var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
+            return processUtilityResult.StdOut;
+        }
+
+        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName, string geomName, string idName, string connectionString, string featureClassNameToImport)
         {
             Check.Require(inputGdbFile.FullName.ToLower().EndsWith(".gdb.zip"),
                 $"Input filename for GDB input must end with .gdb.zip. Filename passed is {inputGdbFile.FullName}");
             Check.RequireFileExists(inputGdbFile, "Can't find input File GDB for import with ogr2ogr");
 
-            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName, geomName, idName, connectionString);
+            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName, geomName, idName, connectionString, featureClassNameToImport);
             var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
             return processUtilityResult.StdOut;
         }
@@ -157,6 +174,12 @@ namespace LtInfo.Common.GdalOgr
 
         private ProcessUtilityResult ExecuteOgr2OgrCommand(List<string> commandLineArguments)
         {
+
+            var argumentsAsStringCombined = String.Join(" ", commandLineArguments.Select(ProcessUtility.EncodeArgumentForCommandLine).ToList());
+            var fullProcessAndArgumentsString =
+                $"{ProcessUtility.EncodeArgumentForCommandLine(_ogr2OgrExecutable.FullName)} {argumentsAsStringCombined}";
+            var errorMessageString = $"Process Command Line:\r\n{fullProcessAndArgumentsString}\r\n\r\nProcess Working Directory: {_ogr2OgrExecutable.DirectoryName}";
+
             var processUtilityResult = ProcessUtility.ShellAndWaitImpl(_ogr2OgrExecutable.DirectoryName, _ogr2OgrExecutable.FullName, commandLineArguments, true, Convert.ToInt32(_totalMilliseconds));
             if (processUtilityResult.ReturnCode != 0)
             {
@@ -290,6 +313,62 @@ namespace LtInfo.Common.GdalOgr
         /// Produces the command line arguments for ogr2ogr.exe to run the File Geodatabase import.
         /// <example>"C:\Program Files\GDAL\ogr2ogr.exe" -preserve_fid --config GDAL_DATA "C:\\Program Files\\GDAL\\gdal-data" -t_srs EPSG:4326 -f GeoJSON /dev/stdout "C:\\svn\\sitkatech\\trunk\\Corral\\Source\\ProjectFirma.Web\\Models\\GdalOgr\\SampleFileGeodatabase.gdb.zip" "somelayername"</example>
         /// </summary>
+        internal static List<string> BuildCommandLineArgumentsForSqlToGeoJson(string sqlQuery, DirectoryInfo gdalDataDirectoryInfo, int coordinateSystemId, string connectionString)
+        {
+
+            var replacedConnectionString =
+                connectionString.Replace("Trusted_Connection=True", "Trusted_Connection=Yes");
+
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-t_srs",
+                GetMapProjection(coordinateSystemId),
+                "-f",
+                "GeoJSON",
+                "/dev/stdout",
+                replacedConnectionString,
+                "-sql",
+                sqlQuery,
+                "-dim",
+                "2"
+            };
+
+            return commandLineArguments.Where(x => x != null).ToList();
+        }
+
+        /// <summary>
+        /// Produces the command line arguments for ogr2ogr.exe to run the File Geodatabase import.
+        /// <example>"C:\Program Files\GDAL\ogr2ogr.exe" -preserve_fid --config GDAL_DATA "C:\\Program Files\\GDAL\\gdal-data" -t_srs EPSG:4326 -f GeoJSON /dev/stdout "C:\\svn\\sitkatech\\trunk\\Corral\\Source\\ProjectFirma.Web\\Models\\GdalOgr\\SampleFileGeodatabase.gdb.zip" "somelayername"</example>
+        /// </summary>
+        internal static List<string> BuildCommandLineArgumentsForShapeFileToGeoJson(string shapeFilePath, DirectoryInfo gdalDataDirectoryInfo, string sourceLayerName, int coordinateSystemId, bool explodeCollections)
+        {
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-t_srs",
+                GetMapProjection(coordinateSystemId),
+                explodeCollections ? "-explodecollections" : null,
+                "-f",
+                "GeoJSON",
+                "/dev/stdout",
+                shapeFilePath,
+                $"\"{sourceLayerName}\"",
+                "-dim",
+                "2"
+            };
+
+            return commandLineArguments.Where(x => x != null).ToList();
+        }
+
+        /// <summary>
+        /// Produces the command line arguments for ogr2ogr.exe to run the File Geodatabase import.
+        /// <example>"C:\Program Files\GDAL\ogr2ogr.exe" -preserve_fid --config GDAL_DATA "C:\\Program Files\\GDAL\\gdal-data" -t_srs EPSG:4326 -f GeoJSON /dev/stdout "C:\\svn\\sitkatech\\trunk\\Corral\\Source\\ProjectFirma.Web\\Models\\GdalOgr\\SampleFileGeodatabase.gdb.zip" "somelayername"</example>
+        /// </summary>
         internal static List<string> BuildCommandLineArgumentsForFileGdbToSql(FileInfo inputGdbFile
             , DirectoryInfo gdalDataDirectoryInfo
             , int coordinateSystemId
@@ -297,7 +376,8 @@ namespace LtInfo.Common.GdalOgr
             , string destinationTableName
             , string geomName
             , string fIDName
-            , string connectionString)
+            , string connectionString
+            , string featureClassNameToImport)
         {
             var databaseConnectionString = $"MSSQL:{connectionString}";
             var commandLineArguments = new List<string>
@@ -324,6 +404,11 @@ namespace LtInfo.Common.GdalOgr
                 , "-skipfailures"
             };
 
+            if (!string.IsNullOrEmpty(featureClassNameToImport))
+            {
+                commandLineArguments.Add(featureClassNameToImport);
+            }
+
             return commandLineArguments.Where(x => x != null).ToList();
         }
 
@@ -331,5 +416,8 @@ namespace LtInfo.Common.GdalOgr
         {
             return $"EPSG:{coordinateSystemId}";
         }
+
+
+     
     }
 }
