@@ -219,6 +219,18 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
+            var leadImplementerOrganization =
+                gisUploadAttempt.GisUploadSourceOrganization.DefaultLeadImplementerOrganization;
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.CreateGisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).ToList();
+            var relationshipType = gisUploadAttempt.GisUploadSourceOrganization.RelationshipTypeForDefaultOrganization;
+
+            var projectOrganizations = projects
+                .Select(x => new ProjectOrganization(x, leadImplementerOrganization, relationshipType)).ToList();
+
+            HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizations);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+
             var pruningAcresMetadataAttributeID = viewModel.PruningAcresMetadataAttributeID;
             var thinningAcresMetadataAttributeID = viewModel.ThinningAcresMetadataAttributeID;
             var chippingAcresMetadataAttributeID = viewModel.ChippingAcresMetadataAttributeID;

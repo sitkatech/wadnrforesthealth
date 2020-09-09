@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected RelationshipType()
         {
+            this.GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization = new HashSet<GisUploadSourceOrganization>();
             this.OrganizationTypeRelationshipTypes = new HashSet<OrganizationTypeRelationshipType>();
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectOrganizationUpdates = new HashSet<ProjectOrganizationUpdate>();
@@ -76,7 +77,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return OrganizationTypeRelationshipTypes.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
+            return GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization.Any() || OrganizationTypeRelationshipTypes.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
         }
 
         /// <summary>
@@ -86,6 +87,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization.Any())
+            {
+                dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
+            }
+
             if(OrganizationTypeRelationshipTypes.Any())
             {
                 dependentObjects.Add(typeof(OrganizationTypeRelationshipType).Name);
@@ -106,7 +112,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(RelationshipType).Name, typeof(OrganizationTypeRelationshipType).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(RelationshipType).Name, typeof(GisUploadSourceOrganization).Name, typeof(OrganizationTypeRelationshipType).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
 
 
         /// <summary>
@@ -130,6 +136,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in OrganizationTypeRelationshipTypes.ToList())
             {
@@ -159,6 +170,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return RelationshipTypeID; } set { RelationshipTypeID = value; } }
 
+        public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization { get; set; }
         public virtual ICollection<OrganizationTypeRelationshipType> OrganizationTypeRelationshipTypes { get; set; }
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get; set; }
