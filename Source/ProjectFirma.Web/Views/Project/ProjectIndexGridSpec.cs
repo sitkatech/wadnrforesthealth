@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Views.Project
             var completedAcresHeaderString = LabelWithSugarForExtensions
                 .LabelWithSugarFor(null, Models.FieldDefinition.ProjectTotalCompletedFootprintAcres, "Completed Acres")
                 .ToHtmlString();
-            Add(completedAcresHeaderString, x => x.TotalCompletedFootprintAcres.ToString(CultureInfo.CurrentUICulture), 100, DhtmlxGridColumnFilterType.FormattedNumeric);
+            Add(completedAcresHeaderString, x => x.TotalTreatedAcres.ToString(CultureInfo.CurrentUICulture), 100, DhtmlxGridColumnFilterType.FormattedNumeric);
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.Text);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
