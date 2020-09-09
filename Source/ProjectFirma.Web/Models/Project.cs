@@ -82,6 +82,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public decimal TotalTreatedAcres
+        {
+            get
+            {
+                return Math.Round(Treatments.Select(x => x.TreatmentTreatedAcres ?? 0).Sum(), 2);
+            }
+        }
+
         public Organization GetPrimaryContactOrganization()
         {
             return ProjectOrganizations.SingleOrDefault(x => x.RelationshipType.IsPrimaryContact)?.Organization;
