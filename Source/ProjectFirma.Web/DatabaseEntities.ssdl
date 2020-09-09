@@ -311,6 +311,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
     </AssociationSet>
+    <AssociationSet Name="FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID">
+      <End Role="DefaultLeadImplementerOrganization" EntitySet="Organization" />
+      <End Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization" EntitySet="GisUploadSourceOrganization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID">
+      <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
+      <End Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" EntitySet="GisUploadSourceOrganization" />
+    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
       <End Role="Grants" EntitySet="Grant" />
@@ -1442,6 +1450,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="AdjustProjectTypeBasedOnTreatmentTypes" Type="bit" Nullable="false" />
     <Property Name="ProjectStageDefaultID" Type="int" Nullable="false" />
     <Property Name="DataDeriveProjectStage" Type="bit" Nullable="false" />
+    <Property Name="DefaultLeadImplementerOrganizationID" Type="int" Nullable="false" />
+    <Property Name="RelationshipTypeForDefaultOrganizationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -3324,6 +3334,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GisUploadAttemptGisMetadataAttributes">
         <PropertyRef Name="GisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID">
+    <End Role="DefaultLeadImplementerOrganization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DefaultLeadImplementerOrganization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization">
+        <PropertyRef Name="DefaultLeadImplementerOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID">
+    <End Role="RelationshipTypeForDefaultOrganization" Type="ProjectFirma.Web.Models.Store.RelationshipType" Multiplicity="1" />
+    <End Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RelationshipTypeForDefaultOrganization">
+        <PropertyRef Name="RelationshipTypeID" />
+      </Principal>
+      <Dependent Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization">
+        <PropertyRef Name="RelationshipTypeForDefaultOrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

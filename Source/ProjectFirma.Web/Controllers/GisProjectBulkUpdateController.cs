@@ -172,19 +172,19 @@ namespace ProjectFirma.Web.Controllers
 
             var completionDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == completionDateMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+                x.GisMetadataAttributeID == completionDateMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
             var projectNameDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == projectNameMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+                x.GisMetadataAttributeID == projectNameMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
             var startDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == startDateMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+                x.GisMetadataAttributeID == startDateMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
             var projectStageDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == projectStageMetadataAttributeID).GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+                x.GisMetadataAttributeID == projectStageMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
             
 
             var projectIdentifierValues =
@@ -216,6 +216,18 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+
+            var leadImplementerOrganization =
+                gisUploadAttempt.GisUploadSourceOrganization.DefaultLeadImplementerOrganization;
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.CreateGisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).ToList();
+            var relationshipType = gisUploadAttempt.GisUploadSourceOrganization.RelationshipTypeForDefaultOrganization;
+
+            var projectOrganizations = projects
+                .Select(x => new ProjectOrganization(x, leadImplementerOrganization, relationshipType)).ToList();
+
+            HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizations);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 

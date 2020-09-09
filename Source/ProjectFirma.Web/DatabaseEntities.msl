@@ -349,6 +349,8 @@
           <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
           <ScalarProperty Name="ProjectStageDefaultID" ColumnName="ProjectStageDefaultID" />
           <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />
+          <ScalarProperty Name="DefaultLeadImplementerOrganizationID" ColumnName="DefaultLeadImplementerOrganizationID" />
+          <ScalarProperty Name="RelationshipTypeForDefaultOrganizationID" ColumnName="RelationshipTypeForDefaultOrganizationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

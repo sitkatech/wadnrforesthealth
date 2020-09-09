@@ -12,6 +12,8 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[AdjustProjectTypeBasedOnTreatmentTypes] [bit] NOT NULL,
 	[ProjectStageDefaultID] [int] NOT NULL,
 	[DataDeriveProjectStage] [bit] NOT NULL,
+	[DefaultLeadImplementerOrganizationID] [int] NOT NULL,
+	[RelationshipTypeForDefaultOrganizationID] [int] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC
@@ -19,7 +21,17 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 ) ON [PRIMARY]
 
 GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID] FOREIGN KEY([DefaultLeadImplementerOrganizationID])
+REFERENCES [dbo].[Organization] ([OrganizationID])
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID]
+GO
 ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_ProjectStage_ProjectStageDefaultID_ProjectStageID] FOREIGN KEY([ProjectStageDefaultID])
 REFERENCES [dbo].[ProjectStage] ([ProjectStageID])
 GO
 ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_ProjectStage_ProjectStageDefaultID_ProjectStageID]
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID] FOREIGN KEY([RelationshipTypeForDefaultOrganizationID])
+REFERENCES [dbo].[RelationshipType] ([RelationshipTypeID])
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID]
