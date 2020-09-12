@@ -57,10 +57,6 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         {
         }
 
-        public EditProjectGrantAllocationRequestsViewData(GrantAllocationSimple grantAllocation, List<ProjectSimple> allProjects)
-            : this(allProjects, new List<GrantAllocationSimple> {grantAllocation}, null, grantAllocation.GrantAllocationID)
-        {
-        }
 
         public enum EditorDisplayMode
         {
