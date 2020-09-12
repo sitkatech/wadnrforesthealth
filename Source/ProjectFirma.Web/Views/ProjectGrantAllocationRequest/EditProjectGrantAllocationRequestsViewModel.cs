@@ -42,7 +42,10 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         public Money? ProjectEstimatedTotalCost { get; set; }
 
         [Required]
-        public bool? ForProject { get; set; }
+        public bool ForProject { get; set; }
+
+        [Required]
+        public int PrimaryKeyID { get; set; }
 
         public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
 
@@ -62,7 +65,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         {
         }
 
-        public EditProjectGrantAllocationRequestsViewModel(List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, 
+        public EditProjectGrantAllocationRequestsViewModel(int primaryKeyID, List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, 
                                                            bool forProject, 
                                                            Money? projectEstimatedTotalCost,
                                                            string projectFundingSourceNotes,
@@ -74,6 +77,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
             ForProject = forProject;
             ProjectFundingSourceNotes = projectFundingSourceNotes;
             FundingSourceIDs = projectFundingSources.Select(x => x.FundingSourceID).ToList();
+            PrimaryKeyID = primaryKeyID;
         }
 
         public void UpdateModel(List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
@@ -89,7 +93,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 projectGrantAllocationRequestsModified = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
             }
 
-            if (ForProject ?? false) // never null
+            if (ForProject) // never null
             {
                 if (project == null)
                 {
@@ -126,6 +130,20 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+
+            if (ForProject)
+            {
+                var project = HttpRequestStorage.DatabaseEntities.Projects.GetProject(PrimaryKeyID);
+                var projectIsLoa = project.CreateGisUploadAttemptID.HasValue &&
+                                   project.CreateGisUploadAttempt.GisUploadSourceOrganization
+                                       .GisUploadSourceOrganizationName.Contains("LOA",
+                                           StringComparison.InvariantCultureIgnoreCase);
+                if(projectIsLoa && (ProjectGrantAllocationRequests == null || !ProjectGrantAllocationRequests.Any()))
+                {
+                    yield return new ValidationResult("LOA Projects must have at least one Grant Allocation");
+                }
+            }
+
             if (ProjectGrantAllocationRequests == null)
             {
                 yield break;
