@@ -664,6 +664,7 @@
     <Compile Include="Models\ProjectFundingSourceUpdate.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\SqlBienniumTest.cs" />
+    <Compile Include="Models\Treatment.cs" />
     <Compile Include="Models\TreatmentModelExtensions.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
