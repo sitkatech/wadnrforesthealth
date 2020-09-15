@@ -257,6 +257,7 @@ namespace LtInfo.Common.DhtmlWrappers
             return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFormatType, dhtmlxGridColumnAggregationType, DhtmlxGridColumnAlignType.Right);
         }
 
+
         private ColumnSpec<T> Add(string columnName, Func<T, decimal> valueFunction, Func<T, string> cssClassFunction,
             int gridWidth, Func<T, string> titleFunction, DhtmlxGridColumnFormatType dhtmlxGridColumnFormatType,
             DhtmlxGridColumnAggregationType dhtmlxGridColumnAggregationType, DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType)
