@@ -36,19 +36,19 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class ProjectIndexGridSpec : GridSpec<Models.Project>
     {
-        public ProjectIndexGridSpec(Person currentPerson)
+        public ProjectIndexGridSpec(Person currentPerson, bool allowTaggingFunctionality, bool allowDeleteFunctionality)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
 
-            if (userHasTagManagePermissions)
+            if (userHasTagManagePermissions && allowTaggingFunctionality)
             {
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
                 AddCheckBoxColumn();
                 Add("ProjectID", x => x.ProjectID, 0);
             }
 
-            if (userHasDeletePermissions)
+            if (userHasDeletePermissions && allowDeleteFunctionality)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }

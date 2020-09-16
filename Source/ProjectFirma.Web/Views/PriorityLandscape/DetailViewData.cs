@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         public readonly Models.PriorityLandscape PriorityLandscape;
         public readonly bool UserHasPriorityLandscapeManagePermissions;
         public readonly string IndexUrl;
-        public readonly BasicProjectInfoGridSpec BasicProjectInfoGridSpec;
+        public readonly ProjectIndexGridSpec BasicProjectInfoGridSpec;
         public readonly string BasicProjectInfoGridName;
         public readonly string BasicProjectInfoGridDataUrl;
         public readonly MapInitJson MapInitJson;
@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
             IndexUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "priorityLandscapeProjectListGrid";
-            BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false)
+            BasicProjectInfoGridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false)
             {
                 ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()}",
                 ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()}",
