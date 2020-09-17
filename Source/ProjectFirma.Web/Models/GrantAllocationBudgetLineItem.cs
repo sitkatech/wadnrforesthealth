@@ -8,4 +8,5 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString => $"Grant Allocation Budget Line Item {this.GrantAllocationBudgetLineItemID} for Grant Allocation {(this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : string.Empty)}";
     }
+
 }

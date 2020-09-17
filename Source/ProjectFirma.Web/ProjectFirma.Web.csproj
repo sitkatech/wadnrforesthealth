@@ -640,6 +640,7 @@
     <Compile Include="Models\GrantAllocationAwardSuppliesLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationAwardTravelLineItem.cs" />
     <Compile Include="Models\GrantAllocationAwardTravelLineItemModelExtensions.cs" />
+    <Compile Include="Models\GrantAllocationBudgetLineItemForGrid.cs" />
     <Compile Include="Models\GrantAllocationBudgetLineItemTest.cs" />
     <Compile Include="Models\GrantAllocationChangeLog.cs" />
     <Compile Include="Models\GrantAllocationFileResource.cs" />
@@ -960,6 +961,7 @@
     <Compile Include="Views\GrantModification\EditGrantModificationViewModel.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetail.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetailViewData.cs" />
+    <Compile Include="Views\Grant\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\Grant\GrantDetail.cs" />
     <Compile Include="Views\Grant\GrantDetailViewData.cs" />
     <Compile Include="Views\Grant\EditGrantNote.cs" />
