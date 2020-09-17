@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected PriorityLandscape()
         {
+            this.PriorityLandscapeFileResources = new HashSet<PriorityLandscapeFileResource>();
             this.ProjectPriorityLandscapes = new HashSet<ProjectPriorityLandscape>();
             this.ProjectPriorityLandscapeUpdates = new HashSet<ProjectPriorityLandscapeUpdate>();
         }
@@ -65,7 +66,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectPriorityLandscapes.Any() || ProjectPriorityLandscapeUpdates.Any();
+            return PriorityLandscapeFileResources.Any() || ProjectPriorityLandscapes.Any() || ProjectPriorityLandscapeUpdates.Any();
         }
 
         /// <summary>
@@ -75,6 +76,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(PriorityLandscapeFileResources.Any())
+            {
+                dependentObjects.Add(typeof(PriorityLandscapeFileResource).Name);
+            }
+
             if(ProjectPriorityLandscapes.Any())
             {
                 dependentObjects.Add(typeof(ProjectPriorityLandscape).Name);
@@ -90,7 +96,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscape).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectPriorityLandscapeUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscape).Name, typeof(PriorityLandscapeFileResource).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectPriorityLandscapeUpdate).Name};
 
 
         /// <summary>
@@ -115,6 +121,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
+            foreach(var x in PriorityLandscapeFileResources.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectPriorityLandscapes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -133,6 +144,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeID; } set { PriorityLandscapeID = value; } }
 
+        public virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual ICollection<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual ICollection<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
 

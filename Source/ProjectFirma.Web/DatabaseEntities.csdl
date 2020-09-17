@@ -90,6 +90,7 @@
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.PersonStewardRegion" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.PriorityLandscape" />
+    <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.PriorityLandscapeFileResource" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
@@ -297,6 +298,10 @@
     <AssociationSet Name="FK_Organization_FileResource_LogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID">
       <End Role="LogoFileResource" EntitySet="FileResource" />
       <End Role="OrganizationsWhereYouAreTheLogoFileResource" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectDocument_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
@@ -894,6 +899,10 @@
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="ProjectPriorityLandscapes" EntitySet="ProjectPriorityLandscape" />
@@ -1375,6 +1384,7 @@
     <NavigationProperty Name="InteractionEventFileResources" Relationship="ProjectFirma.Web.Models.FK_InteractionEventFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="InteractionEventFileResources" />
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
+    <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImages" />
@@ -2448,8 +2458,21 @@
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
+    <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />
+  </EntityType>
+  <EntityType Name="PriorityLandscapeFileResource">
+    <Key>
+      <PropertyRef Name="PriorityLandscapeFileResourceID" />
+    </Key>
+    <Property Name="PriorityLandscapeFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_FileResource_FileResourceID" FromRole="PriorityLandscapeFileResources" ToRole="FileResource" />
+    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscapeFileResources" ToRole="PriorityLandscape" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -3810,6 +3833,20 @@
       </Principal>
       <Dependent Role="OrganizationsWhereYouAreTheLogoFileResource">
         <PropertyRef Name="LogoFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PriorityLandscapeFileResources" Type="ProjectFirma.Web.Models.PriorityLandscapeFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapeFileResources">
+        <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5598,6 +5635,18 @@
       </Principal>
       <Dependent Role="PersonStewardTaxonomyBranches">
         <PropertyRef Name="TaxonomyBranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
+    <End Role="PriorityLandscapeFileResources" Type="ProjectFirma.Web.Models.PriorityLandscapeFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapeFileResources">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

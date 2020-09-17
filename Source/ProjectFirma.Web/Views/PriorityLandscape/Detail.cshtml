@@ -27,6 +27,7 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Shared.FileResourceControls
 
 @inherits ProjectFirma.Web.Views.PriorityLandscape.Detail
 
@@ -117,6 +118,23 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h3>Files</h3>
+            </div>
+            <div class="panel-body">
+                @{ FileDetails.RenderPartialView(Html, ViewDataTyped.PriorityLandscapeFileDetailsViewData); }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 @*TODO Neutered Per WA DNR #1446. May decide to bring it back later
         <div role="tabpanel" class="tab-pane" id="performanceMeasures">
 
