@@ -1083,6 +1083,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PriorityLandscapeFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeFileResource">
+        <MappingFragment StoreEntitySet="PriorityLandscapeFileResource">
+          <ScalarProperty Name="PriorityLandscapeFileResourceID" ColumnName="PriorityLandscapeFileResourceID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProgramIndex">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramIndex">
         <MappingFragment StoreEntitySet="ProgramIndex">

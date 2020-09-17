@@ -90,6 +90,7 @@
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -750,6 +751,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_Project_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
@@ -2139,6 +2148,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="PriorityLandscapeLocation" Type="geometry" />
+  </EntityType>
+  <EntityType Name="PriorityLandscapeFileResource">
+    <Key>
+      <PropertyRef Name="PriorityLandscapeFileResourceID" />
+    </Key>
+    <Property Name="PriorityLandscapeFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -4658,6 +4677,32 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="PersonStewardTaxonomyBranches">
         <PropertyRef Name="TaxonomyBranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PriorityLandscapeFileResources" Type="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapeFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
+    <End Role="PriorityLandscapeFileResources" Type="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapeFileResources">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

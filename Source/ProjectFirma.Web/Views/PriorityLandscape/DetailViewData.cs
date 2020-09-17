@@ -30,20 +30,22 @@ using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Views.PriorityLandscape
 {
     public class DetailViewData : FirmaViewData
     {
-        public readonly Models.PriorityLandscape PriorityLandscape;
-        public readonly bool UserHasPriorityLandscapeManagePermissions;
-        public readonly string IndexUrl;
-        public readonly ProjectIndexGridSpec BasicProjectInfoGridSpec;
-        public readonly string BasicProjectInfoGridName;
-        public readonly string BasicProjectInfoGridDataUrl;
-        public readonly MapInitJson MapInitJson;
-        public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
-        public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
+        public Models.PriorityLandscape PriorityLandscape { get; }
+        public bool UserHasPriorityLandscapeManagePermissions { get; }
+        public string IndexUrl { get; }
+        public ProjectIndexGridSpec BasicProjectInfoGridSpec { get; }
+        public string BasicProjectInfoGridName { get; }
+    public string BasicProjectInfoGridDataUrl { get; }
+        public MapInitJson MapInitJson { get; }
+        public ViewGoogleChartViewData ViewGoogleChartViewData { get; }
+        public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
+        public FileDetailsViewData PriorityLandscapeFileDetailsViewData { get; set; }
 
         public DetailViewData(Person currentPerson, Models.PriorityLandscape priorityLandscape, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
         {
@@ -66,6 +68,13 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
             BasicProjectInfoGridDataUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(priorityLandscape));
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>priorityLandscape.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
+
+            PriorityLandscapeFileDetailsViewData = new FileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(priorityLandscape.PriorityLandscapeFileResources)),
+                SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(x => x.NewPriorityLandscapeFiles(priorityLandscape.PrimaryKey)),
+                UserHasPriorityLandscapeManagePermissions,
+                Models.FieldDefinition.PriorityLandscape
+            );
         }
 
         
