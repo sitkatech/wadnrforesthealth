@@ -41,9 +41,13 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantModificationGridDataUrl { get; }
         public FileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
-        public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
-        public string GrantAllocationGridName { get; }
-        public string GrantAllocationGridDataUrlTemplate { get; }
+        //public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
+        //public string GrantAllocationGridName { get; }
+        //public string GrantAllocationGridDataUrlTemplate { get; }
+
+        public GrantAllocationBudgetLineItemGridSpec GrantAllocationBudgetLineItemGridSpec { get; }
+        public string GrantAllocationBudgetLineItemGridName { get; }
+        public string GrantAllocationBudgetLineItemGridDataUrl { get; }
 
         public GrantDetailViewData(Person currentPerson,
                                     Models.Grant grant,
@@ -61,9 +65,13 @@ namespace ProjectFirma.Web.Views.Grant
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, grant);
-            GrantAllocationGridName = "grantAllocationsGridName";
-            GrantAllocationGridDataUrlTemplate = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(UrlTemplate.Parameter1Int));
+            //GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, grant);
+            //GrantAllocationGridName = "grantAllocationsGridName";
+            //GrantAllocationGridDataUrlTemplate = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(UrlTemplate.Parameter1Int));
+
+            GrantAllocationBudgetLineItemGridSpec = new GrantAllocationBudgetLineItemGridSpec();
+            GrantAllocationBudgetLineItemGridName = "grantAllocationBudgetLineItemsGridName";
+            GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationBudgetLineItemGridJsonDataByGrant(grant));
 
             GrantDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
