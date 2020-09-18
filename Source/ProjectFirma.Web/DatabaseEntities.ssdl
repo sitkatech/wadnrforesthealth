@@ -2148,6 +2148,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="PriorityLandscapeLocation" Type="geometry" />
+    <Property Name="PriorityLandscapeDescription" Type="varchar" MaxLength="3000" />
   </EntityType>
   <EntityType Name="PriorityLandscapeFileResource">
     <Key>

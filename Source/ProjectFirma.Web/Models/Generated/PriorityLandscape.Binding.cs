@@ -33,11 +33,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation) : this()
+        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation, string priorityLandscapeDescription) : this()
         {
             this.PriorityLandscapeID = priorityLandscapeID;
             this.PriorityLandscapeName = priorityLandscapeName;
             this.PriorityLandscapeLocation = priorityLandscapeLocation;
+            this.PriorityLandscapeDescription = priorityLandscapeDescription;
         }
 
         /// <summary>
@@ -141,6 +142,7 @@ namespace ProjectFirma.Web.Models
         public int PriorityLandscapeID { get; set; }
         public string PriorityLandscapeName { get; set; }
         public DbGeometry PriorityLandscapeLocation { get; set; }
+        public string PriorityLandscapeDescription { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeID; } set { PriorityLandscapeID = value; } }
 
@@ -151,6 +153,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int PriorityLandscapeName = 100;
+            public const int PriorityLandscapeDescription = 3000;
         }
     }
 }

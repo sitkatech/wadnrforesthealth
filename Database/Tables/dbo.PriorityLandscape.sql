@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[PriorityLandscape](
 	[PriorityLandscapeID] [int] NOT NULL,
 	[PriorityLandscapeName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[PriorityLandscapeLocation] [geometry] NULL,
+	[PriorityLandscapeDescription] [varchar](3000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_PriorityLandscape_PriorityLandscapeID] PRIMARY KEY CLUSTERED 
 (
 	[PriorityLandscapeID] ASC
