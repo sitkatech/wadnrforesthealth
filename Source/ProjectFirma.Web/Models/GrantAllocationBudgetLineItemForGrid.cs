@@ -25,8 +25,8 @@ namespace ProjectFirma.Web.Models
 
         public GrantAllocationBudgetLineItemForGrid(GrantAllocation grantAllocation)
         {
-            GrantModification = GrantAllocation.GrantModification;
-            GrantAllocation = GrantAllocation;
+            GrantModification = grantAllocation.GrantModification;
+            GrantAllocation = grantAllocation;
 
             //There are DB constraints that force one and only one Budget Line Item for each Cost Type for each Allocation, therefore the .First call should never crash.
             PersonnelAmount = grantAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Personnel.CostTypeID).GrantAllocationBudgetLineItemAmount;
