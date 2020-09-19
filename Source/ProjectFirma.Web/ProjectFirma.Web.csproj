@@ -1035,6 +1035,9 @@
     <Compile Include="Views\Job\JobIndexGridSpec.cs" />
     <Compile Include="Views\JsonApiManagement\JsonApiLandingPage.cs" />
     <Compile Include="Views\JsonApiManagement\JsonApiLandingPageViewData.cs" />
+    <Compile Include="Views\PriorityLandscape\EditPriorityLandscape.cs" />
+    <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeViewData.cs" />
+    <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeViewModel.cs" />
     <Compile Include="Views\ProgramIndex\TestBiennium.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
@@ -2282,6 +2285,7 @@
     <Content Include="Views\Shared\FileResourceControls\NewFile.cshtml" />
     <Content Include="Views\Shared\FileResourceControls\FileDetails.cshtml" />
     <Content Include="Views\Shared\FileResourceControls\EditFileResource.cshtml" />
+    <Content Include="Views\PriorityLandscape\EditPriorityLandscape.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

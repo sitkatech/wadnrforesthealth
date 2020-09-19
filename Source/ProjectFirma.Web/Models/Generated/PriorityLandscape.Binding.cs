@@ -144,6 +144,12 @@ namespace ProjectFirma.Web.Models
         public DbGeometry PriorityLandscapeLocation { get; set; }
         public string PriorityLandscapeDescription { get; set; }
         [NotMapped]
+        public HtmlString PriorityLandscapeDescriptionHtmlString
+        { 
+            get { return PriorityLandscapeDescription == null ? null : new HtmlString(PriorityLandscapeDescription); }
+            set { PriorityLandscapeDescription = value?.ToString(); }
+        }
+        [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeID; } set { PriorityLandscapeID = value; } }
 
         public virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
@@ -153,7 +159,6 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int PriorityLandscapeName = 100;
-            public const int PriorityLandscapeDescription = 3000;
         }
     }
 }

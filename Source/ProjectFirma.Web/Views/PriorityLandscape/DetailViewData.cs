@@ -41,11 +41,12 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         public string IndexUrl { get; }
         public ProjectIndexGridSpec BasicProjectInfoGridSpec { get; }
         public string BasicProjectInfoGridName { get; }
-    public string BasicProjectInfoGridDataUrl { get; }
+        public string BasicProjectInfoGridDataUrl { get; }
         public MapInitJson MapInitJson { get; }
         public ViewGoogleChartViewData ViewGoogleChartViewData { get; }
         public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
         public FileDetailsViewData PriorityLandscapeFileDetailsViewData { get; set; }
+        public string EditPriorityLandscapeBasicsUrl { get; set; }
 
         public DetailViewData(Person currentPerson, Models.PriorityLandscape priorityLandscape, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
         {
@@ -68,6 +69,8 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
             BasicProjectInfoGridDataUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(priorityLandscape));
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>priorityLandscape.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
+
+            EditPriorityLandscapeBasicsUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(plc => plc.EditPriorityLandscape(priorityLandscape));
 
             PriorityLandscapeFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(priorityLandscape.PriorityLandscapeFileResources)),
