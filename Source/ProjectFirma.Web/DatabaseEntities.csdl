@@ -2458,6 +2458,7 @@
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
+    <Property Name="PriorityLandscapeDescription" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />

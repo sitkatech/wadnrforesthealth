@@ -1080,6 +1080,7 @@
           <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
+          <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
