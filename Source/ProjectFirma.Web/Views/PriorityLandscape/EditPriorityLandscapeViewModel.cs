@@ -56,6 +56,7 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         {
             PriorityLandscapeName = priorityLandscape.PriorityLandscapeName;
             PriorityLandscapeDescription = priorityLandscape.PriorityLandscapeDescriptionHtmlString;
+            PriorityLandscapeID = priorityLandscape.PriorityLandscapeID;
         }
 
         public void UpdateModel(Models.PriorityLandscape priorityLandscape)
