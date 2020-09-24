@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[DataDeriveProjectStage] [bit] NOT NULL,
 	[DefaultLeadImplementerOrganizationID] [int] NOT NULL,
 	[RelationshipTypeForDefaultOrganizationID] [int] NOT NULL,
+	[ImportAsDetailedLocationInsteadOfTreatments] [bit] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC
