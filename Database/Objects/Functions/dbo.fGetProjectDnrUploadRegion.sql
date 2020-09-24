@@ -23,6 +23,26 @@ as return(
         ) x on x.TreatmentAreaID = ta.TreatmentAreaID
         join dbo.DNRUplandRegion region on  region.DNRUplandRegionLocation.STIntersects(ta.TreatmentAreaFeature) = 1
         where @piGisUploadAttemptID = x.CreateGisUploadAttemptID
+
+
+
+
+
+
+         union
+    
+     select distinct x.ProjectID, landscape.DNRUplandRegionID
+
+    from dbo.ProjectLocation ta
+        join (
+        select distinct p.CreateGisUploadAttemptID, p.ProjectID, pl.ProjectLocationID from dbo.ProjectLocation pl
+        join dbo.Project p on pl.ProjectID = p.ProjectID
+        ) x on x.ProjectLocationID = ta.ProjectLocationID
+        join dbo.DNRUplandRegion landscape on  landscape.DNRUplandRegionLocation.STIntersects(ta.ProjectLocationGeometry) = 1
+        where @piGisUploadAttemptID = x.CreateGisUploadAttemptID
+
+
+
         ) x
 
 )

@@ -351,6 +351,7 @@
           <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />
           <ScalarProperty Name="DefaultLeadImplementerOrganizationID" ColumnName="DefaultLeadImplementerOrganizationID" />
           <ScalarProperty Name="RelationshipTypeForDefaultOrganizationID" ColumnName="RelationshipTypeForDefaultOrganizationID" />
+          <ScalarProperty Name="ImportAsDetailedLocationInsteadOfTreatments" ColumnName="ImportAsDetailedLocationInsteadOfTreatments" />
           <ScalarProperty Name="ProjectDescriptionDefaultText" ColumnName="ProjectDescriptionDefaultText" />
         </MappingFragment>
       </EntityTypeMapping>
