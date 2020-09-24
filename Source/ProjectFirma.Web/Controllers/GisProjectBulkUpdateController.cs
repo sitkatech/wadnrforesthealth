@@ -174,6 +174,8 @@ namespace ProjectFirma.Web.Controllers
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
                 x.GisMetadataAttributeID == completionDateMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
+           
+
             var projectNameDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
                 x.GisMetadataAttributeID == projectNameMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
@@ -196,6 +198,7 @@ namespace ProjectFirma.Web.Controllers
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var projectList = new List<Project>();
+            var projectLocationList = new List<ProjectLocation>();
 
             var gisCrossWalkDefaultList = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.ToList();
 
@@ -212,10 +215,11 @@ namespace ProjectFirma.Web.Controllers
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
                 MakeProject(projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, ref currentCounter);
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, projectLocationList, ref currentCounter);
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
@@ -244,25 +248,30 @@ namespace ProjectFirma.Web.Controllers
             var broadcastBurnAcresMetadataAttributeID = viewModel.BroadcastBurnAcresMetadataAttributeID;
             var otherAcresMetadataAttributeID = viewModel.OtherAcresMetadataAttributeID;
 
-            ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID
-                , projectIdentifierMetadataAttributeID
-                , footprintAcresMetadataAttributeID
-                , treatedAcresMetadataAttributeID
-                , treatmentTypeMetadataAttributeID
-                , treatmentActivityTypeMetadataAttributeID
-                , sourceOrganization
-                , pruningAcresMetadataAttributeID
-                , thinningAcresMetadataAttributeID
-                , chippingAcresMetadataAttributeID
-                , masticationAcresMetadataAttributeID
-                , grazingAcresMetadataAttributeID
-                , lopScatAcresMetadataAttributeID
-                , biomassRemovalAcresMetadataAttributeID
-                , handPileAcresMetadataAttributeID
-                , handPileBurnAcresMetadataAttributeID
-                , machinePileBurnAcresMetadataAttributeID
-                , broadcastBurnAcresMetadataAttributeID
-                , otherAcresMetadataAttributeID);
+            if (!sourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
+            {
+                ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID
+                    , projectIdentifierMetadataAttributeID
+                    , footprintAcresMetadataAttributeID
+                    , treatedAcresMetadataAttributeID
+                    , treatmentTypeMetadataAttributeID
+                    , treatmentActivityTypeMetadataAttributeID
+                    , sourceOrganization
+                    , pruningAcresMetadataAttributeID
+                    , thinningAcresMetadataAttributeID
+                    , chippingAcresMetadataAttributeID
+                    , masticationAcresMetadataAttributeID
+                    , grazingAcresMetadataAttributeID
+                    , lopScatAcresMetadataAttributeID
+                    , biomassRemovalAcresMetadataAttributeID
+                    , handPileAcresMetadataAttributeID
+                    , handPileBurnAcresMetadataAttributeID
+                    , machinePileBurnAcresMetadataAttributeID
+                    , broadcastBurnAcresMetadataAttributeID
+                    , otherAcresMetadataAttributeID);
+            }
+
+           
 
             var projectPriorityLandscapesCalculated = HttpRequestStorage.DatabaseEntities.GetfGetProjectPriorityLandscapes(gisUploadAttempt.GisUploadAttemptID).ToList();
             var projectPriorityLandscapes = projectPriorityLandscapesCalculated
@@ -350,6 +359,7 @@ namespace ProjectFirma.Web.Controllers
             , int gisUploadAttemptID
             , List<Project> projectList
             , GisUploadSourceOrganization gisUploadSourceOrganization
+            , List<ProjectLocation> projectLocationList
             , ref int currentCounter)
         {
 
@@ -357,6 +367,8 @@ namespace ProjectFirma.Web.Controllers
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
                         StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+            
+
             var completionDateAttributes = gisFeaturesIdListWithProjectIdentifier
                 .Where(x => completionDateDictionary.ContainsKey(x))
                 .SelectMany(x => completionDateDictionary[x]).ToList();
@@ -431,10 +443,24 @@ namespace ProjectFirma.Web.Controllers
                 project.ProjectType = projectType;
             }
 
+            projectList.Add(project);
+
+            if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
+            {
+                var gisFeatures = gisUploadAttempt.GisFeatures
+                    .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
+                foreach (var gisFeature in gisFeatures)
+                {
+                    var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
+                        ProjectLocationType.ProjectArea, "Imported Project Area");
+                    projectLocationList.Add(newProjectLocation);
+                }
+            }
+
             currentCounter++;
 
             
-            projectList.Add(project);
+            
         }
 
         private static ProjectStage CalculateProjectStageIfNeeded(List<GisCrossWalkDefault> gisCrossWalkDefaultList,
