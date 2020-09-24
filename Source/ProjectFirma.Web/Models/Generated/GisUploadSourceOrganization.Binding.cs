@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID) : this()
+        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, string projectDescriptionDefaultText) : this()
         {
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
             this.DataDeriveProjectStage = dataDeriveProjectStage;
             this.DefaultLeadImplementerOrganizationID = defaultLeadImplementerOrganizationID;
             this.RelationshipTypeForDefaultOrganizationID = relationshipTypeForDefaultOrganizationID;
+            this.ProjectDescriptionDefaultText = projectDescriptionDefaultText;
         }
 
         /// <summary>
@@ -182,6 +183,7 @@ namespace ProjectFirma.Web.Models
         public bool DataDeriveProjectStage { get; set; }
         public int DefaultLeadImplementerOrganizationID { get; set; }
         public int RelationshipTypeForDefaultOrganizationID { get; set; }
+        public string ProjectDescriptionDefaultText { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
@@ -197,6 +199,7 @@ namespace ProjectFirma.Web.Models
             public const int GisUploadSourceOrganizationName = 100;
             public const int ProjectTypeDefaultName = 100;
             public const int TreatmentTypeDefaultName = 100;
+            public const int ProjectDescriptionDefaultText = 4000;
         }
     }
 }

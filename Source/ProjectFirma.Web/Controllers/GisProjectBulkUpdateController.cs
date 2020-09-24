@@ -415,6 +415,8 @@ namespace ProjectFirma.Web.Controllers
             var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
                 x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
 
+            var projectDescription = gisUploadAttempt.GisUploadSourceOrganization.ProjectDescriptionDefaultText;
+
             var project = new Project(otherProjectType.ProjectTypeID
                 , projectStage.ProjectStageID
                 , projectName
@@ -426,6 +428,7 @@ namespace ProjectFirma.Web.Controllers
             project.PlannedDate = startDate;
             project.CreateGisUploadAttemptID = gisUploadAttemptID;
             project.ProjectGisIdentifier = distinctGisValue;
+            project.ProjectDescription = projectDescription;
             if (projectType != null)
             {
                 project.ProjectType = projectType;
