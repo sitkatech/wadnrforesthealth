@@ -7,10 +7,11 @@ using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Views.PerformanceMeasure;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class PriorityLandscape : IAuditableEntity
+    public partial class PriorityLandscape : IAuditableEntity, ICanUploadNewFiles
     {
         public string DisplayName => PriorityLandscapeName;
 
@@ -71,6 +72,12 @@ namespace ProjectFirma.Web.Models
         {
             var projects = GetAssociatedProjects(currentPerson);
             return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
+        }
+
+        public void AddNewFileResource(FileResource fileResource, string displayName, string description)
+        {
+            var priorityLandscapeFileResource = new PriorityLandscapeFileResource(this, fileResource, displayName) { Description = description };
+            PriorityLandscapeFileResources.Add(priorityLandscapeFileResource);
         }
     }
 }

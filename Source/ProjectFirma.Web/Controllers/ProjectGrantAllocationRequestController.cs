@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Controllers
             var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
             Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
 
-            var viewModel = new EditProjectGrantAllocationRequestsViewModel(currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost, project.ProjectFundingSourceNotes, project.ProjectFundingSources.ToList());
+            var viewModel = new EditProjectGrantAllocationRequestsViewModel(project.ProjectID,currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost, project.ProjectFundingSourceNotes, project.ProjectFundingSources.ToList());
             return ViewEditProjectGrantAllocationRequests(project, viewModel);
         }
 
@@ -77,13 +77,6 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditProjectGrantAllocationRequests(GrantAllocation grantAllocation,
-                                                                       EditProjectGrantAllocationRequestsViewModel viewModel)
-        {
-            var allProjects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Select(x => new ProjectSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditProjectGrantAllocationRequestsViewData(new GrantAllocationSimple(grantAllocation), allProjects);
-            return RazorPartialView<EditProjectGrantAllocationRequests, EditProjectGrantAllocationRequestsViewData, EditProjectGrantAllocationRequestsViewModel>(viewData, viewModel);
-        }
 
         private PartialViewResult ViewEditProjectGrantAllocationRequests(Project project, EditProjectGrantAllocationRequestsViewModel viewModel)
         {

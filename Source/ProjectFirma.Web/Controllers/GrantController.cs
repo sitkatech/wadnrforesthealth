@@ -592,17 +592,16 @@ namespace ProjectFirma.Web.Controllers
         #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+        [GrantsViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationBudgetLineItemForGrid> GrantAllocationBudgetLineItemGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
+        {
+            var relevantGrant = grantPrimaryKey.EntityObject;
+            // Create button is irrelevant to this data-only usage
+            var gridSpec = new GrantAllocationBudgetLineItemGridSpec();
+            var grantAllocations = relevantGrant.GrantModifications.SelectMany(gm => gm.GrantAllocations).ToList();
+            var budgetLineItems = grantAllocations.Select(ga => new GrantAllocationBudgetLineItemForGrid(ga)).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationBudgetLineItemForGrid>(budgetLineItems, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
     }
 }

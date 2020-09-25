@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected PriorityLandscape()
         {
+            this.PriorityLandscapeFileResources = new HashSet<PriorityLandscapeFileResource>();
             this.ProjectPriorityLandscapes = new HashSet<ProjectPriorityLandscape>();
             this.ProjectPriorityLandscapeUpdates = new HashSet<ProjectPriorityLandscapeUpdate>();
         }
@@ -32,11 +33,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation) : this()
+        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation, string priorityLandscapeDescription) : this()
         {
             this.PriorityLandscapeID = priorityLandscapeID;
             this.PriorityLandscapeName = priorityLandscapeName;
             this.PriorityLandscapeLocation = priorityLandscapeLocation;
+            this.PriorityLandscapeDescription = priorityLandscapeDescription;
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectPriorityLandscapes.Any() || ProjectPriorityLandscapeUpdates.Any();
+            return PriorityLandscapeFileResources.Any() || ProjectPriorityLandscapes.Any() || ProjectPriorityLandscapeUpdates.Any();
         }
 
         /// <summary>
@@ -75,6 +77,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(PriorityLandscapeFileResources.Any())
+            {
+                dependentObjects.Add(typeof(PriorityLandscapeFileResource).Name);
+            }
+
             if(ProjectPriorityLandscapes.Any())
             {
                 dependentObjects.Add(typeof(ProjectPriorityLandscape).Name);
@@ -90,7 +97,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscape).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectPriorityLandscapeUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscape).Name, typeof(PriorityLandscapeFileResource).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectPriorityLandscapeUpdate).Name};
 
 
         /// <summary>
@@ -115,6 +122,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
+            foreach(var x in PriorityLandscapeFileResources.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectPriorityLandscapes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -130,9 +142,17 @@ namespace ProjectFirma.Web.Models
         public int PriorityLandscapeID { get; set; }
         public string PriorityLandscapeName { get; set; }
         public DbGeometry PriorityLandscapeLocation { get; set; }
+        public string PriorityLandscapeDescription { get; set; }
+        [NotMapped]
+        public HtmlString PriorityLandscapeDescriptionHtmlString
+        { 
+            get { return PriorityLandscapeDescription == null ? null : new HtmlString(PriorityLandscapeDescription); }
+            set { PriorityLandscapeDescription = value?.ToString(); }
+        }
         [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeID; } set { PriorityLandscapeID = value; } }
 
+        public virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual ICollection<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual ICollection<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
 

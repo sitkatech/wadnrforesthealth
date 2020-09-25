@@ -349,6 +349,10 @@
           <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
           <ScalarProperty Name="ProjectStageDefaultID" ColumnName="ProjectStageDefaultID" />
           <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />
+          <ScalarProperty Name="DefaultLeadImplementerOrganizationID" ColumnName="DefaultLeadImplementerOrganizationID" />
+          <ScalarProperty Name="RelationshipTypeForDefaultOrganizationID" ColumnName="RelationshipTypeForDefaultOrganizationID" />
+          <ScalarProperty Name="ImportAsDetailedLocationInsteadOfTreatments" ColumnName="ImportAsDetailedLocationInsteadOfTreatments" />
+          <ScalarProperty Name="ProjectDescriptionDefaultText" ColumnName="ProjectDescriptionDefaultText" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1078,6 +1082,18 @@
           <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
+          <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriorityLandscapeFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeFileResource">
+        <MappingFragment StoreEntitySet="PriorityLandscapeFileResource">
+          <ScalarProperty Name="PriorityLandscapeFileResourceID" ColumnName="PriorityLandscapeFileResourceID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -117,6 +117,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
+        public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
@@ -652,6 +653,9 @@ namespace ProjectFirma.Web.Models
 
                 case "PersonStewardTaxonomyBranch":
                     return PersonStewardTaxonomyBranches.GetPersonStewardTaxonomyBranch(primaryKey);
+
+                case "PriorityLandscapeFileResource":
+                    return PriorityLandscapeFileResources.GetPriorityLandscapeFileResource(primaryKey);
 
                 case "PriorityLandscape":
                     return PriorityLandscapes.GetPriorityLandscape(primaryKey);

@@ -1,1 +1,0 @@
-ALTER TABLE dbo.ProjectUpdate ALTER COLUMN ProjectDescription varchar(4000) null

@@ -58,9 +58,11 @@ Source code is available upon request via <support@sitkatech.com>.
 
             @using (Html.BeginForm())
             {
+                @Html.HiddenFor(m => m.PrimaryKeyID)
+                @Html.HiddenFor(m => m.ForProject)
                 if (!ViewDataTyped.FromGrantAllocation)
                 {
-                    @Html.HiddenFor(m => m.ForProject)
+
 
                     <div class="form-group row">
                         <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
@@ -70,14 +72,14 @@ Source code is available upon request via <support@sitkatech.com>.
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4" >@Html.LabelWithSugarFor(m => m.FundingSourceIDs)</div>
+                        <div class="col-md-4">@Html.LabelWithSugarFor(m => m.FundingSourceIDs)</div>
                         <div class="col-md-8">
                             @Html.CheckBoxListFor(m => m.FundingSourceIDs, ViewDataTyped.FundingSources, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols)
                             @Html.ValidationMessageFor(x => x.FundingSourceIDs)
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4" >@Html.LabelWithSugarFor(m => m.ProjectFundingSourceNotes)</div>
+                        <div class="col-md-4">@Html.LabelWithSugarFor(m => m.ProjectFundingSourceNotes)</div>
                         <div class="col-md-8">
                             @Html.TextAreaFor(m => m.ProjectFundingSourceNotes, new { @class = "form-control" })
                             @Html.ValidationMessageFor(x => x.ProjectFundingSourceNotes)
@@ -122,29 +124,41 @@ Source code is available upon request via <support@sitkatech.com>.
             }
             else
             {
-                <div class="form-group">
-                    <label class="control-label">Grant Allocation to Add:</label>
-                    <div class="input-group">
-                        <select ng-model="GrantAllocationIDToAdd"
-                                class="selectpicker"
-                                data-live-search="true"
-                                data-container="body"
-                                title="Select a Grant Allocation to Add"
-                                data-width="100%">
-                            <option value="null" disabled selected></option>
-                            <option ng-repeat="grantAllocation in filteredGrantAllocations()"
-                                    value="{{grantAllocation.GrantAllocationID}}"
-                                    ng-selected="GrantAllocationIDToAdd == grantAllocation.GrantAllocationID"
-                                    ng-bind="grantAllocation.DisplayName"
-                                    data-tokens="{{grantAllocation.DisplayName}}"></option>
-                        </select>
-                        <span class="input-group-btn">
-                            <button class="btn btn-firma" type="button" ng-click="addRow()">
-                                <span class="glyphicon glyphicon-plus"></span> Add
-                            </button>
-                        </span>
-                    </div>
-                    <br />
+                <div class="form-group row">
+                    <div class="col-md-offset-4 col-md-8" style="color: rgb(153, 153, 153)">For projects that were funded with federal funding through Washington DNR, please associate them to a grant allocation ID.</div>
+                </div>
+                <div class="form-group row">
+                 
+   
+                        <div class="col-md-4">
+                            <label class="control-label">Grant Allocation to Add:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <select ng-model="GrantAllocationIDToAdd"
+                                        class="selectpicker"
+                                        data-live-search="true"
+                                        data-container="body"
+                                        title="Select a Grant Allocation to Add"
+                                        data-width="100%">
+                                    <option value="null" disabled selected></option>
+                                    <option ng-repeat="grantAllocation in filteredGrantAllocations()"
+                                            value="{{grantAllocation.GrantAllocationID}}"
+                                            ng-selected="GrantAllocationIDToAdd == grantAllocation.GrantAllocationID"
+                                            ng-bind="grantAllocation.DisplayName"
+                                            data-tokens="{{grantAllocation.DisplayName}}"></option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-firma" type="button" ng-click="addRow()">
+                                        <span class="glyphicon glyphicon-plus"></span> Add
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    
+                    
+
+                    <br/>
                 </div>
             }
             <table class="dialogFormLayout" style="margin-top: 20px; table-layout: fixed" ng-show="AngularModel.ProjectGrantAllocationRequests.length > 0">

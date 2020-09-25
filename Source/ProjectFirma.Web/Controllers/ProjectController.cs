@@ -442,7 +442,7 @@ namespace ProjectFirma.Web.Controllers
         [ProjectsViewFullListFeature]
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
-            var gridSpec = new ProjectIndexGridSpec(CurrentPerson);
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true);
             var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests).Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;

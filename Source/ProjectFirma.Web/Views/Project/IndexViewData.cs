@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Project
         {
             PageTitle = $"Full {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} List";
 
-            GridSpec = new ProjectIndexGridSpec(currentPerson) {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
+            GridSpec = new ProjectIndexGridSpec(currentPerson, true, true) {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 
             if (new ProjectCreateNewFeature().HasPermissionByPerson(CurrentPerson))
             {
