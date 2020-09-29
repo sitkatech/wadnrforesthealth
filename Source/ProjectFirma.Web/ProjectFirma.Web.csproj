@@ -1155,13 +1155,78 @@
     <Compile Include="Models\ProjectCustomAttributeUpdate.cs" />
     <Compile Include="Models\ProjectCustomAttributeUpdateValue.cs" />
     <Compile Include="ScheduledJobs\ProjectUpdateNotificationHelper.cs" />
+    <Content Include="..\NuGetPackages\PhantomJS.2.0.0\tools\phantomjs\phantomjs.exe">
+      <Link>phantomjs.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.css" />
     <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.min.css">
       <DependentUpon>style-WashingtonDepartmentOfNaturalResources.css</DependentUpon>
     </Content>
+    <Content Include="Content\fancybox\blank.gif" />
+    <Content Include="Content\fancybox\fancybox_buttons.png" />
+    <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\img\SAW-logo.jpg" />
     <Content Include="Content\img\wadnr-logo-cropped.png" />
     <Content Include="Content\img\wadnr-logo.jpg" />
+    <None Include="Scripts\jquery-1.11.0.intellisense.js" />
+    <Content Include="Content\jquery.fancybox-buttons.css" />
+    <Content Include="Content\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\jquery.fancybox.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="phantomjs-license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery-1.11.0.js" />
+    <Content Include="Scripts\jquery-1.11.0.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\jquery.fancybox-media.js" />
+    <Content Include="Scripts\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\jquery.fancybox.js" />
+    <Content Include="Scripts\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
     <Content Include="Views\GrantModification\EditGrantModificationController.js" />
@@ -1178,6 +1243,8 @@
     <Content Include="Views\Agreement\Detail.cshtml" />
     <Content Include="Views\Agreement\EditAgreementPerson.cshtml" />
     <Content Include="pdf\WADNR_FHT_User_Guide-aba865.pdf" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.11.0.min.map" />
     <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
@@ -2286,7 +2353,7 @@
     <Content Include="Views\Shared\FileResourceControls\FileDetails.cshtml" />
     <Content Include="Views\Shared\FileResourceControls\EditFileResource.cshtml" />
     <Content Include="Views\PriorityLandscape\EditPriorityLandscape.cshtml" />
-    <Reference Include="Antlr3.Runtime">
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="ApprovalTests, Version=3.0.0.0, Culture=neutral, PublicKeyToken=11bd7d124fc62e0f, processorArchitecture=MSIL">
@@ -2299,7 +2366,7 @@
       <HintPath>..\NuGetPackages\ApprovalUtilities.3.0.13\lib\net45\ApprovalUtilities.Net45.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\Portable.BouncyCastle.1.8.1.3\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>..\NuGetPackages\Portable.BouncyCastle.1.8.1.4\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.76.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
@@ -2414,14 +2481,14 @@
     <Reference Include="Microsoft.IdentityModel.Xml, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Microsoft.IdentityModel.Xml.5.2.4\lib\net451\Microsoft.IdentityModel.Xml.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\Microsoft.Owin.Security.4.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
@@ -2454,11 +2521,11 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Sustainsys.Saml2, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\Sustainsys.Saml2.2.2.0\lib\net461\Sustainsys.Saml2.dll</HintPath>
+    <Reference Include="Sustainsys.Saml2, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\Sustainsys.Saml2.2.7.0\lib\net461\Sustainsys.Saml2.dll</HintPath>
     </Reference>
-    <Reference Include="Sustainsys.Saml2.Owin, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\Sustainsys.Saml2.Owin.2.2.0\lib\net461\Sustainsys.Saml2.Owin.dll</HintPath>
+    <Reference Include="Sustainsys.Saml2.Owin, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\Sustainsys.Saml2.Owin.2.7.0\lib\net461\Sustainsys.Saml2.Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -2481,6 +2548,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -2489,8 +2557,8 @@
     <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Cryptography.Xml, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\NuGetPackages\System.Security.Cryptography.Xml.4.4.2\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
+    <Reference Include="System.Security.Cryptography.Xml, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\System.Security.Cryptography.Xml.4.5.0\lib\net461\System.Security.Cryptography.Xml.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
@@ -2500,6 +2568,9 @@
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -2924,10 +2995,6 @@
     <Content Include="WebServices.svc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\NuGetPackages\PhantomJS.2.0.0\tools\phantomjs\phantomjs.exe">
-      <Link>phantomjs.exe</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Common\CkEditorExtensionTest.GenerateCkEditorInlineDivTest.approved.txt" />
     <Content Include="Common\CkEditorExtensionTest.GenerateCkEditorInlineForTest.approved.txt" />
     <Content Include="Common\CkEditorExtensionTest.GenerateJavascriptWithAllToolbarsTest.approved.txt" />
@@ -3033,47 +3100,12 @@
     <Content Include="Content\JQuery\jquery.ui.autocomplete.html.min.js">
       <DependentUpon>jquery.ui.autocomplete.html.js</DependentUpon>
     </Content>
-    <Content Include="Content\themes\base\accordion.css" />
-    <Content Include="Content\themes\base\all.css" />
-    <Content Include="Content\themes\base\autocomplete.css" />
-    <Content Include="Content\themes\base\base.css" />
-    <Content Include="Content\themes\base\button.css" />
-    <Content Include="Content\themes\base\core.css" />
-    <Content Include="Content\themes\base\datepicker.css" />
-    <Content Include="Content\themes\base\dialog.css" />
-    <Content Include="Content\themes\base\draggable.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\progressbar.css" />
-    <Content Include="Content\themes\base\resizable.css" />
-    <Content Include="Content\themes\base\selectable.css" />
-    <Content Include="Content\themes\base\selectmenu.css" />
-    <Content Include="Content\themes\base\slider.css" />
-    <Content Include="Content\themes\base\sortable.css" />
-    <Content Include="Content\themes\base\spinner.css" />
-    <Content Include="Content\themes\base\tabs.css" />
-    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Models\CheckPrimaryNaturalAndForeignKeysTest.AssureEachTableHasPrimaryKeyOrAlternateKey.approved.txt" />
     <Content Include="Models\CheckPrimaryNaturalAndForeignKeysTest.AssureNoMissingForeignKeys.approved.txt" />
     <Content Include="Models\CheckPrimaryNaturalAndForeignKeysTest.AssureThatForeignKeyNamesMatchNamingStandard.approved.txt" />
     <Content Include="Models\CheckPrimaryNaturalAndForeignKeysTest.AssureThatPrimaryAndAlternateKeyNamesMatchNamingStandard.approved.txt" />
     <Content Include="Models\CheckPrimaryNaturalAndForeignKeysTest.AssureThatPrimaryKeyColumnMatchNamingStandard.approved.txt" />
     <Content Include="Models\CheckPrimaryNaturalAndForeignKeysTest.AssureThatThereAreNoIndexesAlreadyDefinedByPrimaryOrAlternateKey.approved.txt" />
-    <Content Include="phantomjs-license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\css\ProjectFirmaPrint.css" />
     <Content Include="Content\dhtmlx\dhtmlxCalendar\codebase\dhtmlxcalendar.css" />
     <Content Include="Content\dhtmlx\dhtmlxCalendar\codebase\dhtmlxcalendar.js" />
@@ -3354,8 +3386,6 @@
     <Content Include="Content\terraformer\terraformer.min.js" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Offline\app_offline.htm" />
-    <Content Include="Scripts\jquery-ui-1.11.4.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Content\qtip\imagesloaded.pkg.min.js.map" />
     <Content Include="Content\qtip\jquery.qtip.min.js.map" />
     <Content Include="Content\angular\angular-animate.min.js.map" />
@@ -3480,8 +3510,6 @@
     <Content Include="Scripts\jquery.form.min.js">
       <DependentUpon>jquery.form.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map" />
     <Content Include="Content\Bootstrap\bootstrap-hover-dropdown.min.js.map" />
     <Content Include="Content\angular\directives\angular-nvd3.min.js.map" />
@@ -3729,9 +3757,6 @@
     </Content>
     <Content Include="Content\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
     <Content Include="Content\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js">
       <DependentUpon>jquery.validate.unobtrusive.js</DependentUpon>
     </Content>
@@ -3804,13 +3829,6 @@
     <Content Include="Content\dhtmlx\dhtmlxGrid\codebase\skins\dhtmlxgrid_dhx_skyblue.css" />
     <Content Include="Content\dhtmlx\dhtmlxGrid\codebase\skins\dhtmlxgrid_dhx_web.css" />
     <Content Include="Content\dhtmlx\dhtmlxGrid\readme.txt" />
-    <Content Include="Content\fancybox\blank.gif" />
-    <Content Include="Content\fancybox\fancybox_buttons.png" />
-    <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
-    <Content Include="Content\fancybox\fancybox_loading.gif" />
-    <Content Include="Content\fancybox\fancybox_overlay.png" />
-    <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
-    <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\fancybox\fancybox_buttons_ltinfo.png" />
     <Content Include="Content\img\button_icon_excel.png" />
     <Content Include="Content\img\checkbox.png" />
@@ -3818,16 +3836,10 @@
     <Content Include="Content\img\header_bg.png" />
     <Content Include="Content\img\table_summary_bg.png" />
     <Content Include="Content\img\undo.png" />
-    <Content Include="Content\jquery.fancybox-buttons.css" />
-    <Content Include="Content\jquery.fancybox-thumbs.css" />
-    <Content Include="Content\jquery.fancybox.css" />
     <Content Include="Content\qtip\jquery.qtip.css" />
     <Content Include="Content\qtip\jquery.qtip.js" />
     <Content Include="Content\qtip\jquery.qtip.validation.js" />
     <Content Include="Global.asax" />
-    <Content Include="packages.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
@@ -4050,13 +4062,7 @@
     <Content Include="Scripts\jssor.core.js" />
     <Content Include="Scripts\jssor.slider.js" />
     <Content Include="Scripts\jssor.utils.js" />
-    <Content Include="Scripts\jquery.fancybox-buttons.js" />
-    <Content Include="Scripts\jquery.fancybox-media.js" />
-    <Content Include="Scripts\jquery.fancybox-thumbs.js" />
-    <Content Include="Scripts\jquery.fancybox.js" />
-    <Content Include="Scripts\jquery.fancybox.pack.js" />
     <Content Include="Scripts\jquery.form.js" />
-    <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
     <EmbeddedResource Include="DatabaseEntities.csdl" />
     <EmbeddedResource Include="DatabaseEntities.msl" />
     <EmbeddedResource Include="DatabaseEntities.ssdl" />
@@ -4068,10 +4074,6 @@
     <Content Include="Scripts\ckeditor\plugins\wsc\README.md" />
     <Content Include="Scripts\ckeditor\README.md" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
-    <None Include="Scripts\jquery-1.11.0.intellisense.js" />
-    <Content Include="Scripts\jquery-1.11.0.js" />
-    <Content Include="Scripts\jquery-1.11.0.min.js" />
-    <Content Include="Scripts\jquery-1.11.0.min.map" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.BuildDhtmlxGridHeaderTest.approved.txt" />
     <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateArbitraryHtmlTest.approved.txt" />
@@ -4236,9 +4238,6 @@
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Help\" />
     <Folder Include="Views\ProjectGeospatialArea\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
