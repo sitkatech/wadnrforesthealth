@@ -163,6 +163,7 @@ namespace ProjectFirma.Web.Controllers
             var treatmentActivityTypeMetadataAttributeID = viewModel.TreatmentDetailedActivityTypeMetadataAttributeID;
             var treatedAcresMetadataAttributeID = viewModel.TreatedAcresMetadataAttributeID;
             var footprintAcresMetadataAttributeID = viewModel.FootprintAcresMetadataAttributeID;
+            var privateLandownerMetadataAttributeID = viewModel.PrivateLandownerMetadataAttributeID;
 
             var projectIdentifierMetadataAttribute =
                 gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
@@ -179,6 +180,10 @@ namespace ProjectFirma.Web.Controllers
             var projectNameDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
                 x.GisMetadataAttributeID == projectNameMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
+
+            var privateLandOwnerDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                gisFeatureIDs.Contains(x.GisFeatureID) &&
+                x.GisMetadataAttributeID == privateLandownerMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
 
             var startDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
                 gisFeatureIDs.Contains(x.GisFeatureID) &&
@@ -198,7 +203,10 @@ namespace ProjectFirma.Web.Controllers
                 string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var projectList = new List<Project>();
+            var newPersonList = new List<Person>();
+            var newProjectPersonList = new List<ProjectPerson>();
             var projectLocationList = new List<ProjectLocation>();
+            var existingPersons = HttpRequestStorage.DatabaseEntities.People.ToList();
 
             var gisCrossWalkDefaultList = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.ToList();
 
@@ -215,11 +223,14 @@ namespace ProjectFirma.Web.Controllers
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
                 MakeProject(projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, projectLocationList, ref currentCounter);
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, projectLocationList
+                    , privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList,ref currentCounter);
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
             HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
+            HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
+            HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(newProjectPersonList);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
@@ -359,7 +370,11 @@ namespace ProjectFirma.Web.Controllers
             , int gisUploadAttemptID
             , List<Project> projectList
             , GisUploadSourceOrganization gisUploadSourceOrganization
-            , List<ProjectLocation> projectLocationList
+            , List<ProjectLocation> projectLocationList,
+        Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandownerDictionary,
+            List<Person> existingPersonList,
+            List<Person> newPersonList,
+            List<ProjectPerson> newProjectPersonList
             , ref int currentCounter)
         {
 
@@ -389,6 +404,9 @@ namespace ProjectFirma.Web.Controllers
             var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
                 .SelectMany(x => startDateDictionary[x]).ToList();
 
+            var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => privateLandownerDictionary.ContainsKey(x))
+                .SelectMany(x => privateLandownerDictionary[x]).ToList();
+
             var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
                 .SelectMany(x => projectNameDictionary[x]).ToList();
 
@@ -400,6 +418,7 @@ namespace ProjectFirma.Web.Controllers
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+            var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
             
 
             
@@ -457,6 +476,54 @@ namespace ProjectFirma.Web.Controllers
                     var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
                         ProjectLocationType.ProjectArea, "Imported Project Area");
                     projectLocationList.Add(newProjectLocation);
+                }
+            }
+
+            if (landOwners.Any())
+            {
+                foreach (var landOwner in landOwners)
+                {
+                    var firstName = string.Empty;
+                    var lastName = "not set";
+                    var landownerSplit = landOwner.Split(',');
+                    if (landownerSplit.Length == 1 || landownerSplit.Length > 2)
+                    {
+                        firstName = landOwner.Trim();
+                    }
+
+                    if (landownerSplit.Length == 2)
+                    {
+                        firstName = landownerSplit[1].Trim();
+                        lastName = landownerSplit[0].Trim();
+                    }
+
+                    var existingPersons = existingPersonList.Where(x =>
+                        string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
+                        string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+                    var existingNewPersons = newPersonList.Where(x =>
+                        string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
+                        string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                     if (existingPersons.Count() == 1)
+                     {
+                         var projectPerson = new ProjectPerson(project, existingPersons.Single(),
+                             ProjectPersonRelationshipType.PrivateLandowner);
+                         newProjectPersonList.Add(projectPerson);
+                     }
+                     else if (existingNewPersons.Count() == 1)
+                     {
+                         var projectPerson = new ProjectPerson(project, existingNewPersons.Single(),
+                             ProjectPersonRelationshipType.PrivateLandowner);
+                         newProjectPersonList.Add(projectPerson);
+                     }
+                     else
+                     {
+                         var person = new Person(firstName, lastName, Role.Unassigned, DateTime.Now, false, false);
+                         newPersonList.Add(person);
+                         var projectPerson = new ProjectPerson(project, person,
+                             ProjectPersonRelationshipType.PrivateLandowner);
+                         newProjectPersonList.Add(projectPerson);
+                    }
                 }
             }
 

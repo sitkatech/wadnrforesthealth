@@ -47,6 +47,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> TreatedAcresGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> FootprintAcresGisMetadataAttributes { get; }
+        public IEnumerable<SelectListItem> PrivateLandownerMetadataAttributes { get; }
         public IEnumerable<SelectListItem> PruningAcresGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> ThinningAcresGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> ChippingAcresGisMetadataAttributes { get; }
@@ -83,6 +84,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             TreatmentDetailedActivityTypeGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             TreatedAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             FootprintAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
+            PrivateLandownerMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             PruningAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             ThinningAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             ChippingAcresGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);

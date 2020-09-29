@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Controllers
             ProjectPerson landownerProjectPerson = projectPersonPrimaryKey.EntityObject;
             Person landownerPerson = landownerProjectPerson.Person;
 
-            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.Landowner, $"Only expecting Landowner contacts here. {landownerProjectPerson.Person.FullNameFirstLast} is a {landownerProjectPerson.ProjectPersonRelationshipType} on Project {landownerProjectPerson.Project.DisplayName}.");
+            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.PrivateLandowner, $"Only expecting Landowner contacts here. {landownerProjectPerson.Person.FullNameFirstLast} is a {landownerProjectPerson.ProjectPersonRelationshipType} on Project {landownerProjectPerson.Project.DisplayName}.");
 
             using (var outputPdfFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".pdf"))
             {
