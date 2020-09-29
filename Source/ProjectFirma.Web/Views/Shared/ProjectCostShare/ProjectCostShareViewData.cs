@@ -21,7 +21,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectCostShare
             // Only offer links if user is authorized to see them
             if (new CostSharePDFFilledInFeature().HasPermissionByPerson(currentPerson))
             {
-                foreach (Models.ProjectPerson landowner in project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType.ToEnum == ProjectPersonRelationshipTypeEnum.Landowner))
+                foreach (Models.ProjectPerson landowner in project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType.ToEnum == ProjectPersonRelationshipTypeEnum.PrivateLandowner))
                 {
                     var urlString = SitkaRoute<PdfFormController>.BuildLinkFromExpression(c => c.CostShareAgreementPdf(landowner.PrimaryKey), $"Cost Share Agreement for {landowner.Person.FullNameFirstLast}").ToHTMLFormattedString();
                     CostShareAgreementLinks.Add(urlString);
