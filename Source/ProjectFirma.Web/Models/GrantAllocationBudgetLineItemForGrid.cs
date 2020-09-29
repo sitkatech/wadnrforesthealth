@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
             OtherAmount = grantAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Other.CostTypeID).GrantAllocationBudgetLineItemAmount;
             EquipmentAmount = grantAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Equipment.CostTypeID).GrantAllocationBudgetLineItemAmount;
 
-            TotalAmount = grantAllocation.GrantAllocationBudgetLineItems.Sum(bli => bli.GrantAllocationBudgetLineItemAmount);
+            TotalAmount = grantAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID != CostType.Other.CostTypeID && bli.CostTypeID != CostType.Equipment.CostTypeID).Sum(bli => bli.GrantAllocationBudgetLineItemAmount);
 
         }
     }
