@@ -31,9 +31,10 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Person Create()
             {
                 var organization = TestOrganization.Create();
-                var person = new Person(MakeTestName("firstName", Person.FieldLengths.FirstName),
-                    MakeTestName("lastName", Person.FieldLengths.LastName), Role.Normal, DateTime.Now, true, false)
+                var person = new Person(MakeTestName("firstName", Person.FieldLengths.FirstName)
+                    , Role.Normal, DateTime.Now, true, false)
                 {
+                    LastName = MakeTestName("lastName", Person.FieldLengths.LastName),
                     Organization = organization, Email = MakeTestEmail("email")
                 };
 

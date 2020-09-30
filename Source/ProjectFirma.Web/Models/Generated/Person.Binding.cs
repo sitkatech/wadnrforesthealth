@@ -105,13 +105,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
+        public Person(string firstName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.FirstName = firstName;
-            this.LastName = lastName;
             this.RoleID = roleID;
             this.CreateDate = createDate;
             this.IsActive = isActive;
@@ -121,12 +120,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
+        public Person(string firstName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.FirstName = firstName;
-            this.LastName = lastName;
             this.RoleID = role.RoleID;
             this.CreateDate = createDate;
             this.IsActive = isActive;
@@ -138,7 +136,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Person CreateNewBlank(Role role)
         {
-            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool));
+            return new Person(default(string), role, default(DateTime), default(bool), default(bool));
         }
 
         /// <summary>

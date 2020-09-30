@@ -484,7 +484,7 @@ namespace ProjectFirma.Web.Controllers
                 foreach (var landOwner in landOwners)
                 {
                     var firstName = string.Empty;
-                    var lastName = "not set";
+                    string lastName = null;
                     var landownerSplit = landOwner.Split(',');
                     if (landownerSplit.Length == 1 || landownerSplit.Length > 2)
                     {
@@ -499,11 +499,11 @@ namespace ProjectFirma.Web.Controllers
 
                     var existingPersons = existingPersonList.Where(x =>
                         string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
-                        string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) || (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
 
                     var existingNewPersons = newPersonList.Where(x =>
                         string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
-                        string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) || (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
                      if (existingPersons.Count() == 1)
                      {
                          var projectPerson = new ProjectPerson(project, existingPersons.Single(),
@@ -518,7 +518,7 @@ namespace ProjectFirma.Web.Controllers
                      }
                      else
                      {
-                         var person = new Person(firstName, lastName, Role.Unassigned, DateTime.Now, false, false);
+                         var person = new Person(firstName, Role.Unassigned, DateTime.Now, true, false){LastName = lastName};
                          newPersonList.Add(person);
                          var projectPerson = new ProjectPerson(project, person,
                              ProjectPersonRelationshipType.PrivateLandowner);
