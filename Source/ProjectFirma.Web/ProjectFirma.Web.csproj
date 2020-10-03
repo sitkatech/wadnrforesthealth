@@ -961,6 +961,9 @@
     <Compile Include="Views\GrantModification\EditGrantModificationViewModel.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetail.cs" />
     <Compile Include="Views\GrantModification\GrantModificationDetailViewData.cs" />
+    <Compile Include="Views\Grant\DuplicateGrant.cs" />
+    <Compile Include="Views\Grant\DuplicateGrantViewData.cs" />
+    <Compile Include="Views\Grant\DuplicateGrantViewModel.cs" />
     <Compile Include="Views\Grant\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\Grant\GrantDetail.cs" />
     <Compile Include="Views\Grant\GrantDetailViewData.cs" />
@@ -1752,6 +1755,7 @@
     <Content Include="Views\Grant\NewGrant.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\GisMetadata.cshtml" />
     <Content Include="Views\GisFeature\Detail.cshtml" />
+    <Content Include="Views\Grant\DuplicateGrant.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
