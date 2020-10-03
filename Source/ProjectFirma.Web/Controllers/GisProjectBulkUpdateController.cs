@@ -358,24 +358,24 @@ namespace ProjectFirma.Web.Controllers
             }
         }
 
-        private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute
-            , string distinctGisValue,
-            Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary
-            , Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary
-            , Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary,
-           Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
-        List<GisCrossWalkDefault> gisCrossWalkDefaultList,
-            GisUploadAttempt gisUploadAttempt
-            , ProjectType otherProjectType
-            , int gisUploadAttemptID
-            , List<Project> projectList
-            , GisUploadSourceOrganization gisUploadSourceOrganization
-            , List<ProjectLocation> projectLocationList,
-        Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandownerDictionary,
-            List<Person> existingPersonList,
-            List<Person> newPersonList,
-            List<ProjectPerson> newProjectPersonList
-            , ref int currentCounter)
+        private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute, 
+                                        string distinctGisValue, 
+                                        Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary, 
+                                        Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, 
+                                        Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary, 
+                                        Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary, 
+                                        List<GisCrossWalkDefault> gisCrossWalkDefaultList, 
+                                        GisUploadAttempt gisUploadAttempt, 
+                                        ProjectType otherProjectType, 
+                                        int gisUploadAttemptID, 
+                                        List<Project> projectList, 
+                                        GisUploadSourceOrganization gisUploadSourceOrganization, 
+                                        List<ProjectLocation> projectLocationList, 
+                                        Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandownerDictionary,
+                                        List<Person> existingPersonList, 
+                                        List<Person> newPersonList, 
+                                        List<ProjectPerson> newProjectPersonList, 
+                                        ref int currentCounter)
         {
 
             var gisFeaturesIdListWithProjectIdentifier =
@@ -421,7 +421,6 @@ namespace ProjectFirma.Web.Controllers
             var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
             
 
-            
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
 
             if (projectNames.Count > 1)
@@ -448,13 +447,14 @@ namespace ProjectFirma.Web.Controllers
 
             var projectDescription = gisUploadAttempt.GisUploadSourceOrganization.ProjectDescriptionDefaultText;
 
-            var project = new Project(otherProjectType.ProjectTypeID
-                , projectStage.ProjectStageID
-                , projectName
-                , false
-                , ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID
-                , ProjectApprovalStatus.Approved.ProjectApprovalStatusID
-                , projectNumber);
+            var project = new Project(otherProjectType.ProjectTypeID, 
+                                      projectStage.ProjectStageID, 
+                                      projectName, 
+                                      false, 
+                                      ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID, 
+                                      ProjectApprovalStatus.Approved.ProjectApprovalStatusID, 
+                                      projectNumber
+                                      );
             project.CompletionDate = completionDate;
             project.PlannedDate = startDate;
             project.CreateGisUploadAttemptID = gisUploadAttemptID;
@@ -528,9 +528,6 @@ namespace ProjectFirma.Web.Controllers
             }
 
             currentCounter++;
-
-            
-            
         }
 
         private static ProjectStage CalculateProjectStageIfNeeded(List<GisCrossWalkDefault> gisCrossWalkDefaultList,
@@ -1033,24 +1030,24 @@ namespace ProjectFirma.Web.Controllers
         }
 
         private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID
-            , int projectIdentifierMetadataAttributeID
-            , int? footprintAcresMetadataAttributeID
-            , int? treatedAcresMetadataAttributeID
-            , int? treatmentTypeMetadataAttributeID
-            , int? treatmentDetailedActivityTypeMetadataAttributeID
-            , GisUploadSourceOrganization gisUploadSourceOrganization
-            , int? pruningAcresMetadataAttributeID
-            , int? thinningAcresMetadataAttributeID
-            , int? chippingAcresMetadataAttributeID
-            , int? masticationAcresMetadataAttributeID
-            , int? grazingAcresMetadataAttributeID
-            , int? lopScatAcresMetadataAttributeID
-            , int? biomassRemovalAcresMetadataAttributeID
-            , int? handPileAcresMetadataAttributeID
-            , int? handPileBurnAcresMetadataAttributeID
-            , int? machinePileBurnAcresMetadataAttributeID
-            , int? broadcastBurnAcresMetadataAttributeID
-            , int? otherAcresMetadataAttributeID)
+                                                                , int projectIdentifierMetadataAttributeID
+                                                                , int? footprintAcresMetadataAttributeID
+                                                                , int? treatedAcresMetadataAttributeID
+                                                                , int? treatmentTypeMetadataAttributeID
+                                                                , int? treatmentDetailedActivityTypeMetadataAttributeID
+                                                                , GisUploadSourceOrganization gisUploadSourceOrganization
+                                                                , int? pruningAcresMetadataAttributeID
+                                                                , int? thinningAcresMetadataAttributeID
+                                                                , int? chippingAcresMetadataAttributeID
+                                                                , int? masticationAcresMetadataAttributeID
+                                                                , int? grazingAcresMetadataAttributeID
+                                                                , int? lopScatAcresMetadataAttributeID
+                                                                , int? biomassRemovalAcresMetadataAttributeID
+                                                                , int? handPileAcresMetadataAttributeID
+                                                                , int? handPileBurnAcresMetadataAttributeID
+                                                                , int? machinePileBurnAcresMetadataAttributeID
+                                                                , int? broadcastBurnAcresMetadataAttributeID
+                                                                , int? otherAcresMetadataAttributeID)
         {
 
 
