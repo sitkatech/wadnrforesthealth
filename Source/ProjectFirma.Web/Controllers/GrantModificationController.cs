@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditGrantModification(EditGrantModificationViewModel viewModel, EditGrantModificationType editGrantModificationType)
         {
             var grantModificationStatuses = HttpRequestStorage.DatabaseEntities.GrantModificationStatuses;
-            var grantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationPurposes;
+            var grantModificationPurposes = GrantModificationPurpose.All;
             
             var viewData = new EditGrantModificationViewData(grantModificationStatuses, grantModificationPurposes, editGrantModificationType);
             return RazorPartialView<EditGrantModification, EditGrantModificationViewData, EditGrantModificationViewModel>(viewData, viewModel);

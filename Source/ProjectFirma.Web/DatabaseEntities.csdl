@@ -55,7 +55,6 @@
     <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.GrantModificationFileResource" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantModificationNoteInternal" />
-    <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationPurpose" />
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.GrantModificationStatus" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.GrantNote" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.GrantNoteInternal" />
@@ -586,10 +585,6 @@
     <AssociationSet Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantModificationNoteInternals" EntitySet="GrantModificationNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" Association="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
-      <End Role="GrantModificationPurpose" EntitySet="GrantModificationPurpose" />
-      <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
       <End Role="CreatedByPerson" EntitySet="Person" />
@@ -1927,7 +1922,6 @@
     <Property Name="GrantModificationID" Type="Int32" Nullable="false" />
     <Property Name="GrantModificationPurposeID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" FromRole="GrantModificationGrantModificationPurposes" ToRole="GrantModification" />
-    <NavigationProperty Name="GrantModificationPurpose" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" FromRole="GrantModificationGrantModificationPurposes" ToRole="GrantModificationPurpose" />
   </EntityType>
   <EntityType Name="GrantModificationNoteInternal">
     <Key>
@@ -1943,14 +1937,6 @@
     <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" FromRole="GrantModificationNoteInternals" ToRole="GrantModification" />
     <NavigationProperty Name="CreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" ToRole="CreatedByPerson" />
     <NavigationProperty Name="LastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson" ToRole="LastUpdatedByPerson" />
-  </EntityType>
-  <EntityType Name="GrantModificationPurpose">
-    <Key>
-      <PropertyRef Name="GrantModificationPurposeID" />
-    </Key>
-    <Property Name="GrantModificationPurposeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantModificationPurposeName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="GrantModificationGrantModificationPurposes" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" FromRole="GrantModificationPurpose" ToRole="GrantModificationGrantModificationPurposes" />
   </EntityType>
   <EntityType Name="GrantModificationStatus">
     <Key>
@@ -4702,18 +4688,6 @@
       </Principal>
       <Dependent Role="GrantModificationNoteInternals">
         <PropertyRef Name="GrantModificationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
-    <End Role="GrantModificationPurpose" Type="ProjectFirma.Web.Models.GrantModificationPurpose" Multiplicity="1" />
-    <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModificationPurpose">
-        <PropertyRef Name="GrantModificationPurposeID" />
-      </Principal>
-      <Dependent Role="GrantModificationGrantModificationPurposes">
-        <PropertyRef Name="GrantModificationPurposeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
