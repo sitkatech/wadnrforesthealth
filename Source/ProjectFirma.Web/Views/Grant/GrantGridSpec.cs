@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (userHasCreatePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate this {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}"), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{x.GrantName}\" to New {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}"), 30, DhtmlxGridColumnFilterType.None);
             }
 
             //Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);

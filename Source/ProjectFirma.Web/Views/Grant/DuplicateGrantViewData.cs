@@ -31,13 +31,15 @@ namespace ProjectFirma.Web.Views.Grant
     public class DuplicateGrantViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> GrantStatuses { get; }
+        public IEnumerable<SelectListItem> GrantAllocations { get; }
 
         public Models.Grant GrantToDuplicate { get; set; }
 
-        public DuplicateGrantViewData(IEnumerable<Models.GrantStatus> grantStatuses)
+        public DuplicateGrantViewData(IEnumerable<Models.GrantStatus> grantStatuses, Models.Grant grantToDuplicate, List<Models.GrantAllocation> grantAllocations)
         {
-
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
+            GrantToDuplicate = grantToDuplicate;
+            GrantAllocations = grantAllocations.ToSelectList(x => x.GrantAllocationID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationName);
 
         }
     }

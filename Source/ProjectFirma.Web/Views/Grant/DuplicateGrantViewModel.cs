@@ -34,10 +34,6 @@ namespace ProjectFirma.Web.Views.Grant
     {
         public int GrantID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
-        [Required]
-        public int OrganizationID { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
         [Required]
         public int GrantStatusID { get; set; }
@@ -50,27 +46,21 @@ namespace ProjectFirma.Web.Views.Grant
         [Required]
         public string GrantName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantShortName)]
-        [StringLength(Models.Grant.FieldLengths.ShortName)]
-        public string GrantShortName { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
         [StringLength(Models.Grant.FieldLengths.GrantNumber)]
         public string GrantNumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
-        [StringLength(Models.Grant.FieldLengths.CFDANumber)]
-        public string CFDANumber { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
         [Required]
-        public Money? TotalAwardAmount { get; set; }
+        public Money? GrantModificationAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public DateTime? GrantStartDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
         public DateTime? GrantEndDate { get; set; }
+
+        public List<int> GrantAllocationsToDuplicate { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -79,30 +69,24 @@ namespace ProjectFirma.Web.Views.Grant
         {
         }
 
-        public DuplicateGrantViewModel(Models.Grant grant)
+        public DuplicateGrantViewModel(Models.Grant grantToDuplicate)
         {
-            GrantName = grant.GrantName;
-            GrantShortName = grant.ShortName;
-            OrganizationID = grant.OrganizationID;
-            GrantStatusID = grant.GrantStatusID;
-            GrantTypeID = grant.GrantTypeID;
-            GrantNumber = grant.GrantNumber;
-            CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.GetTotalAwardAmount();
-            GrantStartDate = grant.StartDate;
-            GrantEndDate = grant.EndDate;
+            GrantName = grantToDuplicate.GrantName;
+            GrantStatusID = grantToDuplicate.GrantStatusID;
+            GrantTypeID = grantToDuplicate.GrantTypeID;
+            GrantNumber = grantToDuplicate.GrantNumber;
+            GrantModificationAmount = grantToDuplicate.GetTotalAwardAmount();
+            GrantStartDate = grantToDuplicate.StartDate;
+            GrantEndDate = grantToDuplicate.EndDate;
             
         }
 
         public void UpdateModel(Models.Grant grant, Person currentPerson)
         {
             grant.GrantName = GrantName;
-            grant.ShortName = GrantShortName;
-            grant.OrganizationID = OrganizationID;
             grant.GrantStatusID = GrantStatusID;
             grant.GrantTypeID = GrantTypeID;
             grant.GrantNumber = GrantNumber;
-            grant.CFDANumber = CFDANumber;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
 
@@ -110,11 +94,12 @@ namespace ProjectFirma.Web.Views.Grant
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (OrganizationID == 0)
-            {
-                yield return new SitkaValidationResult<DuplicateGrantViewModel, int>(
-                    FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
-            }
+            //if (OrganizationID == 0)
+            //{
+            //    yield return new SitkaValidationResult<DuplicateGrantViewModel, int>(
+            //        FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
+            //}
+            return new List<ValidationResult>();
         }
     }
 }
