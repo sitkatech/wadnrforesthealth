@@ -1463,6 +1463,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="RelationshipTypeForDefaultOrganizationID" Type="int" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInsteadOfTreatments" Type="bit" Nullable="false" />
     <Property Name="ProjectDescriptionDefaultText" Type="varchar" MaxLength="4000" />
+    <Property Name="ApplyCompletedDateToProject" Type="bit" Nullable="false" />
+    <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
