@@ -92,8 +92,8 @@ INSERT INTO #tempTreatments
 select p.ProjectID
 , x.GisFeatureGeometry.MakeValid()
 , null --GrantAllocationAwardLandownerCostShareLineItemID
-, isnull(TRY_PARSE(x.StartDate AS DATETIME), null)  as TreatmentStartDate
-, isnull(TRY_PARSE(x.EndDate AS DATETIME), null)  as TreatmentEndDate
+, case when guso.ApplyStartDateToProject = 0 then isnull(TRY_PARSE(x.StartDate AS DATETIME), null) else null end as TreatmentStartDate
+, case when guso.ApplyCompletedDateToProject = 0 then isnull(TRY_PARSE(x.EndDate AS DATETIME), null) else null end as TreatmentEndDate
 , case  when @footprintAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
         else isnull(TRY_PARSE(x.FootprintAcres AS decimal(38,10)),0) end  as [TreatmentFootprintAcres]
 , case  when @treatedAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
@@ -156,11 +156,13 @@ join (
         left join dbo.GisFeatureMetadataAttribute gfmaMachineBurn on gfmaMachineBurn.GisFeatureID = gf.GisFeatureID and gfmaMachineBurn.GisMetadataAttributeID = @machineBurnAcresMetadataAttributeID
         left join dbo.GisFeatureMetadataAttribute gfmaBroadcastBurn on gfmaBroadcastBurn.GisFeatureID = gf.GisFeatureID and gfmaBroadcastBurn.GisMetadataAttributeID = @broadcastBurnAcresMetadataAttributeID
         left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @otherBurnAcresMetadataAttributeID
-        left join dbo.GisFeatureMetadataAttribute gfmaStartDate on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @startDateMetadataAttributeID
-        left join dbo.GisFeatureMetadataAttribute gfmaEndDate on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @EndDateMetadataAttributeID
+        left join dbo.GisFeatureMetadataAttribute gfmaStartDate on gfmaStartDate.GisFeatureID = gf.GisFeatureID and gfmaStartDate.GisMetadataAttributeID = @startDateMetadataAttributeID
+        left join dbo.GisFeatureMetadataAttribute gfmaEndDate on gfmaEndDate.GisFeatureID = gf.GisFeatureID and gfmaEndDate.GisMetadataAttributeID = @endDateMetadataAttributeID
         where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID 
         and gf.GisUploadAttemptID = @piGisUploadAttemptID)
    x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
+   join dbo.GisUploadAttempt as gua on gua.GisUploadAttemptID = p.CreateGisUploadAttemptID
+   join dbo.GisUploadSourceOrganization as guso on guso.GisUploadSourceOrganizationID = gua.GisUploadSourceOrganizationID
 where p.CreateGisUploadAttemptID = @piGisUploadAttemptID
   
 
