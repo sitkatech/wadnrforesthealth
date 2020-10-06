@@ -279,7 +279,9 @@ namespace ProjectFirma.Web.Controllers
                     , handPileBurnAcresMetadataAttributeID
                     , machinePileBurnAcresMetadataAttributeID
                     , broadcastBurnAcresMetadataAttributeID
-                    , otherAcresMetadataAttributeID);
+                    , otherAcresMetadataAttributeID
+                    , startDateMetadataAttributeID
+                    , completionDateMetadataAttributeID);
             }
 
            
@@ -403,25 +405,21 @@ namespace ProjectFirma.Web.Controllers
 
             var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
                 .SelectMany(x => startDateDictionary[x]).ToList();
+            var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
+                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+            var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?)null;
 
             var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => privateLandownerDictionary.ContainsKey(x))
                 .SelectMany(x => privateLandownerDictionary[x]).ToList();
+            var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
             var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
                 .SelectMany(x => projectNameDictionary[x]).ToList();
+            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
             var projectStageAttributes = gisFeaturesIdListWithProjectIdentifier
                 .Where(x => projectStageDictionary.ContainsKey(x))
                 .SelectMany(x => projectStageDictionary[x]).ToList();
-
-           
-            var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
-                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-            var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-            
-
-            var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
 
             if (projectNames.Count > 1)
             {
@@ -455,8 +453,17 @@ namespace ProjectFirma.Web.Controllers
                                       ProjectApprovalStatus.Approved.ProjectApprovalStatusID, 
                                       projectNumber
                                       );
-            project.CompletionDate = completionDate;
-            project.PlannedDate = startDate;
+
+            if (gisUploadSourceOrganization.ApplyCompletedDateToProject)
+            {
+                project.CompletionDate = completionDate;
+            }
+
+            if (gisUploadSourceOrganization.ApplyStartDateToProject)
+            {
+                project.PlannedDate = startDate;
+            }
+
             project.CreateGisUploadAttemptID = gisUploadAttemptID;
             project.ProjectGisIdentifier = distinctGisValue;
             project.ProjectDescription = projectDescription;
@@ -1047,7 +1054,10 @@ namespace ProjectFirma.Web.Controllers
                                                                 , int? handPileBurnAcresMetadataAttributeID
                                                                 , int? machinePileBurnAcresMetadataAttributeID
                                                                 , int? broadcastBurnAcresMetadataAttributeID
-                                                                , int? otherAcresMetadataAttributeID)
+                                                                , int? otherAcresMetadataAttributeID
+                                                                , int? startDateMetadataAttributeID
+                                                                , int? completedDateMetadataAttributeID
+                                                                )
         {
 
 
@@ -1076,6 +1086,10 @@ namespace ProjectFirma.Web.Controllers
             var machinePileBurnAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(machinePileBurnAcresMetadataAttributeID);
             var broadcastBurnAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(broadcastBurnAcresMetadataAttributeID);
             var otherAcresMetadataAttributeSqlID = GetMetadataAttributeSqlID(otherAcresMetadataAttributeID);
+
+            var startDateMetadataAttributeSqlID = GetMetadataAttributeSqlID(startDateMetadataAttributeID);
+            var completedDateMetadataAttributeSqlID = GetMetadataAttributeSqlID(completedDateMetadataAttributeID);
+
             var isFlattened = gisUploadSourceOrganization.ImportIsFlattened.HasValue
                 ? gisUploadSourceOrganization.ImportIsFlattened.Value
                 : false;
@@ -1120,6 +1134,8 @@ namespace ProjectFirma.Web.Controllers
                               $", @machineBurnAcresMetadataAttributeID = {machinePileBurnAcresMetadataAttributeSqlID}" +
                               $", @broadcastBurnAcresMetadataAttributeID = {broadcastBurnAcresMetadataAttributeSqlID}" +
                               $", @otherBurnAcresMetadataAttributeID = {otherAcresMetadataAttributeSqlID}" +
+                              $", @startDateMetadataAttributeID = {startDateMetadataAttributeSqlID}" +
+                              $", @endDateMetadataAttributeID = {completedDateMetadataAttributeSqlID}" +
                               $"";
             using (var command = new SqlCommand(sqlQueryOne))
             {

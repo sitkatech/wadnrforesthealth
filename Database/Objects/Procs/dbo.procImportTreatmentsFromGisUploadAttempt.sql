@@ -23,7 +23,9 @@ create procedure dbo.procImportTreatmentsFromGisUploadAttempt
     @handPileBurnAcresMetadataAttributeID int,
     @machineBurnAcresMetadataAttributeID int,
     @broadcastBurnAcresMetadataAttributeID int,
-    @otherBurnAcresMetadataAttributeID int
+    @otherBurnAcresMetadataAttributeID int,
+    @startDateMetadataAttributeID int,
+    @endDateMetadataAttributeID int
 )
 as
 
@@ -89,9 +91,9 @@ INSERT INTO #tempTreatments
 
 select p.ProjectID
 , x.GisFeatureGeometry.MakeValid()
-, null
-, null
-, null
+, null --GrantAllocationAwardLandownerCostShareLineItemID
+, isnull(TRY_PARSE(x.StartDate AS DATETIME), null)  as TreatmentStartDate
+, isnull(TRY_PARSE(x.EndDate AS DATETIME), null)  as TreatmentEndDate
 , case  when @footprintAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
         else isnull(TRY_PARSE(x.FootprintAcres AS decimal(38,10)),0) end  as [TreatmentFootprintAcres]
 , case  when @treatedAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
@@ -113,7 +115,6 @@ select p.ProjectID
 , isnull(TRY_PARSE(x.MachineBurnAcres AS decimal(38,10)),0)  as MachineBurnAcres
 , isnull(TRY_PARSE(x.BroadcastBurnAcres AS decimal(38,10)),0)  as BroadcastBurnAcres
 , isnull(TRY_PARSE(x.OtherAcres AS decimal(38,10)),0)  as OtherAcres
-
  from dbo.Project p
 join (
         select gf.GisFeatureGeometry
@@ -135,6 +136,8 @@ join (
         , gfmaMachineBurn.GisFeatureMetadataAttributeValue as MachineBurnAcres
         , gfmaBroadcastBurn.GisFeatureMetadataAttributeValue as BroadcastBurnAcres
         , gfmaOther.GisFeatureMetadataAttributeValue as OtherAcres
+        , gfmaStartDate.GisFeatureMetadataAttributeValue as StartDate
+        , gfmaEndDate.GisFeatureMetadataAttributeValue as EndDate
         from dbo.GisFeature gf
         join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID
         left join dbo.GisFeatureMetadataAttribute gfmaFootprint on gfmaFootprint.GisFeatureID = gf.GisFeatureID and gfmaFootprint.GisMetadataAttributeID = @footprintAcresMetadataAttributeID
@@ -153,6 +156,8 @@ join (
         left join dbo.GisFeatureMetadataAttribute gfmaMachineBurn on gfmaMachineBurn.GisFeatureID = gf.GisFeatureID and gfmaMachineBurn.GisMetadataAttributeID = @machineBurnAcresMetadataAttributeID
         left join dbo.GisFeatureMetadataAttribute gfmaBroadcastBurn on gfmaBroadcastBurn.GisFeatureID = gf.GisFeatureID and gfmaBroadcastBurn.GisMetadataAttributeID = @broadcastBurnAcresMetadataAttributeID
         left join dbo.GisFeatureMetadataAttribute gfmaOther on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @otherBurnAcresMetadataAttributeID
+        left join dbo.GisFeatureMetadataAttribute gfmaStartDate on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @startDateMetadataAttributeID
+        left join dbo.GisFeatureMetadataAttribute gfmaEndDate on gfmaOther.GisFeatureID = gf.GisFeatureID and gfmaOther.GisMetadataAttributeID = @EndDateMetadataAttributeID
         where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID 
         and gf.GisUploadAttemptID = @piGisUploadAttemptID)
    x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
