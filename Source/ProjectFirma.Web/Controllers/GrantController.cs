@@ -169,7 +169,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             // Copy original grant allocation to new view model, except for the grant mod and allocation amount
-            var viewModel = new DuplicateGrantViewModel(grantToDuplicate, grantAllocations);
+            var viewModel = new DuplicateGrantViewModel(grantToDuplicate);
             //viewModel.GrantModificationID = 0;
             //viewModel.AllocationAmount = null;
             //viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
