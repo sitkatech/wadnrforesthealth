@@ -159,14 +159,23 @@ namespace ProjectFirma.Web.Controllers
             var grantToDuplicate = grantPrimaryKey.EntityObject;
             Check.EnsureNotNull(grantToDuplicate);
 
+            var grantModifications = grantToDuplicate.GrantModifications;
+            var initialAwardGrantModPurpose = grantModifications.FirstOrDefault(x =>
+                x.GrantModificationGrantModificationPurposes.FirstOrDefault(gmp => gmp.GrantModificationPurposeID == GrantModificationPurpose.InitialAward.GrantModificationPurposeID) != null);
+            List<GrantAllocation> grantAllocations = new List<GrantAllocation>();
+            if (initialAwardGrantModPurpose != null)
+            {
+                grantAllocations = initialAwardGrantModPurpose.GrantAllocations.ToList();
+            }
+
             // Copy original grant allocation to new view model, except for the grant mod and allocation amount
-            var viewModel = new DuplicateGrantViewModel(grantToDuplicate);
+            var viewModel = new DuplicateGrantViewModel(grantToDuplicate, grantAllocations);
             //viewModel.GrantModificationID = 0;
             //viewModel.AllocationAmount = null;
             //viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
 
 
-            return DuplicateGrantViewEdit(viewModel, grantToDuplicate);
+            return DuplicateGrantViewEdit(viewModel, grantToDuplicate, grantAllocations);
         }
 
         [HttpPost]
@@ -195,11 +204,11 @@ namespace ProjectFirma.Web.Controllers
             //return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult DuplicateGrantViewEdit(DuplicateGrantViewModel viewModel, Grant grantToDuplicate)
+        private PartialViewResult DuplicateGrantViewEdit(DuplicateGrantViewModel viewModel, Grant grantToDuplicate, List<GrantAllocation> grantAllocations)
         {
             var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
-            var grantModifications = grantToDuplicate.GrantModifications;
-            var viewData = new DuplicateGrantViewData(grantStatuses, grantToDuplicate, new List<GrantAllocation>());
+            
+            var viewData = new DuplicateGrantViewData(grantStatuses, grantToDuplicate, grantAllocations);
             return RazorPartialView<DuplicateGrant, DuplicateGrantViewData, DuplicateGrantViewModel>(viewData, viewModel);
         }
 

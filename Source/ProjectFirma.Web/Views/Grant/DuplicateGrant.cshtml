@@ -89,10 +89,12 @@
         
         
         <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName's Initial Award @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
-        <fieldset>
-            <legend>Select the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() you wish to copy:</legend>
-            @Html.CheckBoxListFor(m => m.GrantAllocationsToDuplicate, ViewDataTyped.GrantAllocations)
-        </fieldset>
+        <div class="form-group">
+            <div class="col-xs-12"><p>Select the <strong>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</strong> you wish to copy:</p></div>
+            <div class="col-xs-12">
+                @Html.CheckBoxListFor(m => m.GrantAllocationsToDuplicate, ViewDataTyped.GrantAllocations, new { @class = "col-xs-3" })
+            </div>
+        </div>
         
         <p>On save you will be redirected to the @FieldDefinition.Grant.GetFieldDefinitionLabel() Detail page for this new @FieldDefinition.Grant.GetFieldDefinitionLabel().</p>
     </div>
