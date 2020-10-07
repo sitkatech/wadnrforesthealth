@@ -353,6 +353,8 @@
           <ScalarProperty Name="RelationshipTypeForDefaultOrganizationID" ColumnName="RelationshipTypeForDefaultOrganizationID" />
           <ScalarProperty Name="ImportAsDetailedLocationInsteadOfTreatments" ColumnName="ImportAsDetailedLocationInsteadOfTreatments" />
           <ScalarProperty Name="ProjectDescriptionDefaultText" ColumnName="ProjectDescriptionDefaultText" />
+          <ScalarProperty Name="ApplyCompletedDateToProject" ColumnName="ApplyCompletedDateToProject" />
+          <ScalarProperty Name="ApplyStartDateToProject" ColumnName="ApplyStartDateToProject" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

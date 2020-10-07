@@ -1551,6 +1551,8 @@
     <Property Name="RelationshipTypeForDefaultOrganizationID" Type="Int32" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInsteadOfTreatments" Type="Boolean" Nullable="false" />
     <Property Name="ProjectDescriptionDefaultText" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ApplyCompletedDateToProject" Type="Boolean" Nullable="false" />
+    <Property Name="ApplyStartDateToProject" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />

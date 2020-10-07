@@ -1458,6 +1458,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="RelationshipTypeForDefaultOrganizationID" Type="int" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInsteadOfTreatments" Type="bit" Nullable="false" />
     <Property Name="ProjectDescriptionDefaultText" Type="varchar" MaxLength="4000" />
+    <Property Name="ApplyCompletedDateToProject" Type="bit" Nullable="false" />
+    <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -5936,6 +5938,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     <Parameter Name="machineBurnAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="broadcastBurnAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="otherBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="startDateMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="endDateMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />
