@@ -27,6 +27,12 @@ namespace ProjectFirma.Web.Models
             return EditUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
         }
 
+        public static readonly UrlTemplate<int> DuplicateUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.Duplicate(UrlTemplate.Parameter1Int)));
+        public static string GetDuplicateUrl(this GrantModification grantModification)
+        {
+            return DuplicateUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        }
+
         public static HtmlString GetGrantModificationNameAsUrl(this GrantModification grantModification)
         {
             return grantModification != null ? UrlTemplate.MakeHrefString(grantModification.GetDetailUrl(), grantModification.GrantModificationName) : new HtmlString(null);

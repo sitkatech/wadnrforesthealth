@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -130,6 +131,94 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay($"{FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{grantModification.GrantModificationName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
+
+        [HttpGet]
+        [GrantModificationCreateFeature]
+        public PartialViewResult Duplicate(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        {
+            throw new NotImplementedException();
+            //var grantModificationToDuplicate = grantModificationPrimaryKey.EntityObject;
+            //Check.EnsureNotNull(grantModificationToDuplicate);
+
+            ////get the grant allocations for the initial award grant mod
+            //var grantModifications = grantModificationToDuplicate.GrantModifications;
+            //var initialAwardGrantMod = grantModifications.FirstOrDefault(x =>
+            //    x.GrantModificationGrantModificationPurposes.FirstOrDefault(gmp => gmp.GrantModificationPurposeID == GrantModificationPurpose.InitialAward.GrantModificationPurposeID) != null);
+            //List<GrantAllocation> grantAllocations = new List<GrantAllocation>();
+            //if (initialAwardGrantMod != null)
+            //{
+            //    grantAllocations = initialAwardGrantMod.GrantAllocations.ToList();
+            //}
+
+            //// Copy original grant allocation to new view model, except for the grant mod and allocation amount
+            //var viewModel = new DuplicateGrantModificationViewModel(grantModificationToDuplicate, initialAwardGrantMod?.GrantModificationID ?? -1);
+            //return DuplicateGrantModificationViewEdit(viewModel, grantModificationToDuplicate, grantAllocations);
+        }
+
+        [HttpPost]
+        [GrantModificationCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Duplicate(GrantModificationPrimaryKey grantModificationPrimaryKey, DuplicateGrantModificationViewModel viewModel)
+        {
+            throw new NotImplementedException();
+            //var originalGrant = grantPrimaryKey.EntityObject;
+            //Check.EnsureNotNull(originalGrant);
+
+            //var initialAwardGrantModificationForCopy = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.InitialAwardGrantModificationID);
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return DuplicateGrantViewEdit(viewModel, originalGrant, initialAwardGrantModificationForCopy.GrantAllocations.ToList());
+            //}
+
+            //var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(gs => gs.GrantStatusID == viewModel.GrantStatusID);
+            //var organization = originalGrant.Organization;
+            //var newGrant = Grant.CreateNewBlank(grantStatus, organization);
+            //viewModel.UpdateModel(newGrant);
+            //newGrant.CFDANumber = originalGrant.CFDANumber;
+            //newGrant.GrantTypeID = originalGrant.GrantTypeID;
+
+            //var newGrantModification = GrantModification.CreateNewBlank(newGrant, initialAwardGrantModificationForCopy.GrantModificationStatus);
+            //newGrantModification.GrantModificationAmount = viewModel.GrantModificationAmount ?? 0;
+            //newGrantModification.GrantModificationStartDate = viewModel.GrantStartDate ?? DateTime.Today;
+            //newGrantModification.GrantModificationEndDate = viewModel.GrantEndDate ?? DateTime.Today;
+            //newGrantModification.GrantModificationName = GrantModificationPurpose.InitialAward.GrantModificationPurposeName;
+            //var newGrantModificationPurpose = GrantModificationGrantModificationPurpose.CreateNewBlank(newGrantModification, GrantModificationPurpose.InitialAward);
+
+            //foreach (var allocationID in viewModel.GrantAllocationsToDuplicate)
+            //{
+            //    var allocationToCopy = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == allocationID);
+            //    var newAllocation = GrantAllocation.CreateNewBlank(newGrantModification);
+            //    newAllocation.GrantAllocationName = allocationToCopy.GrantAllocationName;
+            //    newAllocation.StartDate = allocationToCopy.StartDate;
+            //    newAllocation.EndDate = allocationToCopy.EndDate;
+
+            //    // 10/7/20 TK - not sure we wanna copy these but going for it anyways
+            //    newAllocation.FederalFundCodeID = allocationToCopy.FederalFundCodeID;
+            //    newAllocation.OrganizationID = allocationToCopy.OrganizationID;
+            //    newAllocation.DNRUplandRegionID = allocationToCopy.DNRUplandRegionID;
+            //    newAllocation.DivisionID = allocationToCopy.DivisionID;
+            //    newAllocation.GrantManagerID = allocationToCopy.GrantManagerID;
+
+            //    // 10/7/20 TK - make sure we setup the budgetLineItems for the new allocation
+            //    newAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+            //}
+
+            //SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{UrlTemplate.MakeHrefString(newGrant.GetDetailUrl(), newGrant.GrantName)}\" has been created.");
+            //return new ModalDialogFormJsonResult();
+            //return RedirectToAction(new SitkaRoute<GrantController>(gc => gc.GrantDetail(newGrant.GrantID)));
+        }
+
+        private PartialViewResult DuplicateGrantModificationViewEdit(DuplicateGrantModificationViewModel viewModel, GrantModification grantModificationToDuplicate, List<GrantAllocation> grantAllocations)
+        {
+            throw new NotImplementedException();
+            //var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+
+            //var viewData = new DuplicateGrantViewData(grantStatuses, grantToDuplicate, grantAllocations);
+            //return RazorPartialView<DuplicateGrant, DuplicateGrantViewData, DuplicateGrantViewModel>(viewData, viewModel);
+        }
+
+
 
         #region  FileResources
 
