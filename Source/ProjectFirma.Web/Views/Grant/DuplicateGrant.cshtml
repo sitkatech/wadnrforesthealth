@@ -88,7 +88,7 @@
         </div>
         
         
-        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName's Initial Award @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
+        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName's @GrantModificationPurpose.InitialAward.GrantModificationPurposeName @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
         <div class="form-group">
             <div class="col-xs-12"><p>Select the <strong>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</strong> you wish to copy:</p></div>
             <div class="col-xs-12">
@@ -99,4 +99,5 @@
         <p>On save you will be redirected to the @FieldDefinition.Grant.GetFieldDefinitionLabel() Detail page for this new @FieldDefinition.Grant.GetFieldDefinitionLabel().</p>
     </div>
     @Html.HiddenFor(m => m.GrantID)
+    @Html.HiddenFor(m => m.InitialAwardGrantModificationID)
 }

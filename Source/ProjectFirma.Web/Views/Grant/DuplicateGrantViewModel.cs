@@ -38,9 +38,6 @@ namespace ProjectFirma.Web.Views.Grant
         [Required]
         public int GrantStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
-        public int? GrantTypeID { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
         [StringLength(Models.Grant.FieldLengths.GrantName)]
         [Required]
@@ -62,6 +59,8 @@ namespace ProjectFirma.Web.Views.Grant
 
         public List<int> GrantAllocationsToDuplicate { get; set; }
 
+        public int InitialAwardGrantModificationID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -69,26 +68,24 @@ namespace ProjectFirma.Web.Views.Grant
         {
         }
 
-        public DuplicateGrantViewModel(Models.Grant grantToDuplicate)
+        public DuplicateGrantViewModel(Models.Grant grantToDuplicate, int initialAwardGrantModificationID)
         {
-            GrantName = grantToDuplicate.GrantName;
+            GrantName = $"{grantToDuplicate.GrantName} - Copy";
             GrantStatusID = grantToDuplicate.GrantStatusID;
-            GrantTypeID = grantToDuplicate.GrantTypeID;
             GrantNumber = grantToDuplicate.GrantNumber;
-            GrantModificationAmount = grantToDuplicate.GetTotalAwardAmount();
+            GrantModificationAmount = 0;
             GrantStartDate = grantToDuplicate.StartDate;
             GrantEndDate = grantToDuplicate.EndDate;
-            
+
+            InitialAwardGrantModificationID = initialAwardGrantModificationID;
         }
 
-        public void UpdateModel(Models.Grant grant, Person currentPerson)
+        public void UpdateModel(Models.Grant grant)
         {
-            grant.GrantName = GrantName;
-            grant.GrantStatusID = GrantStatusID;
-            grant.GrantTypeID = GrantTypeID;
             grant.GrantNumber = GrantNumber;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
+            grant.GrantName = GrantName;
 
         }
 

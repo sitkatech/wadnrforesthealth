@@ -155,53 +155,75 @@ namespace ProjectFirma.Web.Controllers
         [GrantCreateFeature]
         public PartialViewResult Duplicate(GrantPrimaryKey grantPrimaryKey)
         {
-            //throw new NotImplementedException();
             var grantToDuplicate = grantPrimaryKey.EntityObject;
             Check.EnsureNotNull(grantToDuplicate);
 
+            //get the grant allocations for the initial award grant mod
             var grantModifications = grantToDuplicate.GrantModifications;
-            var initialAwardGrantModPurpose = grantModifications.FirstOrDefault(x =>
+            var initialAwardGrantMod = grantModifications.FirstOrDefault(x =>
                 x.GrantModificationGrantModificationPurposes.FirstOrDefault(gmp => gmp.GrantModificationPurposeID == GrantModificationPurpose.InitialAward.GrantModificationPurposeID) != null);
             List<GrantAllocation> grantAllocations = new List<GrantAllocation>();
-            if (initialAwardGrantModPurpose != null)
+            if (initialAwardGrantMod != null)
             {
-                grantAllocations = initialAwardGrantModPurpose.GrantAllocations.ToList();
+                grantAllocations = initialAwardGrantMod.GrantAllocations.ToList();
             }
 
             // Copy original grant allocation to new view model, except for the grant mod and allocation amount
-            var viewModel = new DuplicateGrantViewModel(grantToDuplicate);
-            //viewModel.GrantModificationID = 0;
-            //viewModel.AllocationAmount = null;
-            //viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
-
-
+            var viewModel = new DuplicateGrantViewModel(grantToDuplicate, initialAwardGrantMod?.GrantModificationID ?? -1);
             return DuplicateGrantViewEdit(viewModel, grantToDuplicate, grantAllocations);
         }
 
         [HttpPost]
         [GrantCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Duplicate(GrantPrimaryKey grantPrimaryKey, EditGrantViewModel viewModel)
+        public ActionResult Duplicate(GrantPrimaryKey grantPrimaryKey, DuplicateGrantViewModel viewModel)
         {
-            throw new NotImplementedException();
-            //var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
-            //Check.EnsureNotNull(originalGrantAllocation);
-            //var relevantGrant = originalGrantAllocation.GrantModification.Grant;
-            //if (!ModelState.IsValid)
-            //{
-            //    // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
-            //    // a Grant Allocation that may have lost their "program manager" permissions
-            //    return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
-            //}
+            var originalGrant = grantPrimaryKey.EntityObject;
+            Check.EnsureNotNull(originalGrant);
 
-            //var grantModification = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.GrantModificationID);
-            //// Sanity check for alignment
-            //Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
-            //var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
-            //viewModel.UpdateModel(grantAllocation, CurrentPerson);
-            //grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
-            //SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
-            //return new ModalDialogFormJsonResult();
+            var initialAwardGrantModificationForCopy = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.InitialAwardGrantModificationID);
+
+            if (!ModelState.IsValid)
+            {
+                return DuplicateGrantViewEdit(viewModel, originalGrant, initialAwardGrantModificationForCopy.GrantAllocations.ToList());
+            }
+
+            var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(gs => gs.GrantStatusID == viewModel.GrantStatusID);
+            var organization = originalGrant.Organization;
+            var newGrant = Grant.CreateNewBlank(grantStatus, organization);
+            viewModel.UpdateModel(newGrant);
+            newGrant.CFDANumber = originalGrant.CFDANumber;
+            newGrant.GrantTypeID = originalGrant.GrantTypeID;
+
+            var newGrantModification = GrantModification.CreateNewBlank(newGrant, initialAwardGrantModificationForCopy.GrantModificationStatus);
+            newGrantModification.GrantModificationAmount = viewModel.GrantModificationAmount ?? 0;
+            newGrantModification.GrantModificationStartDate = viewModel.GrantStartDate ?? DateTime.Today;
+            newGrantModification.GrantModificationEndDate = viewModel.GrantEndDate ?? DateTime.Today;
+            newGrantModification.GrantModificationName = GrantModificationPurpose.InitialAward.GrantModificationPurposeName;
+            var newGrantModificationPurpose = GrantModificationGrantModificationPurpose.CreateNewBlank(newGrantModification, GrantModificationPurpose.InitialAward);
+
+            foreach (var allocationID in viewModel.GrantAllocationsToDuplicate)
+            {
+                var allocationToCopy = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == allocationID);
+                var newAllocation = GrantAllocation.CreateNewBlank(newGrantModification);
+                newAllocation.GrantAllocationName = allocationToCopy.GrantAllocationName;
+                newAllocation.StartDate = allocationToCopy.StartDate;
+                newAllocation.EndDate = allocationToCopy.EndDate;
+
+                // 10/7/20 TK - not sure we wanna copy these but going for it anyways
+                newAllocation.FederalFundCodeID = allocationToCopy.FederalFundCodeID;
+                newAllocation.OrganizationID = allocationToCopy.OrganizationID;
+                newAllocation.DNRUplandRegionID = allocationToCopy.DNRUplandRegionID;
+                newAllocation.DivisionID = allocationToCopy.DivisionID;
+                newAllocation.GrantManagerID = allocationToCopy.GrantManagerID;
+
+                // 10/7/20 TK - make sure we setup the budgetLineItems for the new allocation
+                newAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+            }
+
+            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{newGrant.GrantName}\" has been created.");
+            return new ModalDialogFormJsonResult();
+            //return RedirectToAction(new SitkaRoute<GrantController>(gc => gc.GrantDetail(newGrant.GrantID)));
         }
 
         private PartialViewResult DuplicateGrantViewEdit(DuplicateGrantViewModel viewModel, Grant grantToDuplicate, List<GrantAllocation> grantAllocations)
