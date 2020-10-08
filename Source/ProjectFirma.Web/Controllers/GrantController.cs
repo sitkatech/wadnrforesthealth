@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
@@ -221,7 +222,7 @@ namespace ProjectFirma.Web.Controllers
                 newAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             }
 
-            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{newGrant.GrantName}\" has been created.");
+            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{UrlTemplate.MakeHrefString(newGrant.GetDetailUrl(), newGrant.GrantName)}\" has been created.");
             return new ModalDialogFormJsonResult();
             //return RedirectToAction(new SitkaRoute<GrantController>(gc => gc.GrantDetail(newGrant.GrantID)));
         }
