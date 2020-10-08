@@ -31,5 +31,6 @@ namespace ProjectFirma.Web.Models
         {
             return grantModification != null ? UrlTemplate.MakeHrefString(grantModification.GetDetailUrl(), grantModification.GrantModificationName) : new HtmlString(null);
         }
+
     }
 }

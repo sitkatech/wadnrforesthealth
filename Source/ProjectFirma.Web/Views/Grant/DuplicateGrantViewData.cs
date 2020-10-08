@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DuplicateGrantViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -28,20 +28,19 @@ using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class EditGrantViewData : FirmaUserControlViewData
+    public class DuplicateGrantViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> Organizations { get; }
-        public IEnumerable<SelectListItem> GrantTypes { get; }
         public IEnumerable<SelectListItem> GrantStatuses { get; }
+        public IEnumerable<SelectListItem> GrantAllocations { get; }
 
-        public EditGrantType EditGrantType { get; set; }
+        public Models.Grant GrantToDuplicate { get; set; }
 
-        public EditGrantViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes)
+        public DuplicateGrantViewData(IEnumerable<Models.GrantStatus> grantStatuses, Models.Grant grantToDuplicate, List<Models.GrantAllocation> grantAllocations)
         {
-            Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
-            GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
-            EditGrantType = editGrantType;
+            GrantToDuplicate = grantToDuplicate;
+            GrantAllocations = grantAllocations.ToSelectList(x => x.GrantAllocationID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationName, true);
+
         }
     }
 }

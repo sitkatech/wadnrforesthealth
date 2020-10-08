@@ -1,5 +1,5 @@
 ﻿@*-----------------------------------------------------------------------
-    <copyright file="Detail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    <copyright file="GrantDetail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
     Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
     <author>Sitka Technology Group</author>
     </copyright>
@@ -63,121 +63,121 @@
 
 
 <div class="col-sm-12">
-   <div class="row">
-      <div class="col-sm-6">
-         <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-               <h3>
-                  @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
-                  Basics
-               </h3>
-            </div>
-            <div class="panel-body">
-               <div class="basicsLayout">
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantName)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="Name">@ViewDataTyped.Grant.GrantName</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
-                     </div>
-                  </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
+                        Basics
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="basicsLayout">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantName)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="Name">@ViewDataTyped.Grant.GrantName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
+                            </div>
+                        </div>
 
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.Organization)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantType)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.CFDA)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="Type">@ViewDataTyped.Grant.CFDANumber</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
-                     </div>
-                     <div class="col-sm-8">
-                        <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-sm-4">
-                        @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
-                     </div>
-                     <div class="col-sm-8">
-                        <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
-                     </div>
-                  </div>
-               </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.Organization)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantType)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.CFDA)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="Type">@ViewDataTyped.Grant.CFDANumber</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
+                            </div>
+                            <div class="col-sm-8">
+                                <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
+                            </div>
+                            <div class="col-sm-8">
+                                <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <div class="col-sm-6">
-         <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-               <h3>Files</h3>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>Files</h3>
+                </div>
+                <div class="panel-body">
+                    @{ FileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
+                </div>
             </div>
-            <div class="panel-body">
-               @{ FileDetails.RenderPartialView(Html, ViewDataTyped.GrantDetailsFileDetailsViewData); }
-            </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -195,7 +195,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
@@ -214,26 +214,26 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
-         <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-               <h3>
-                  Notes
-               </h3>
-            </div>
-            <div class="panel-body">
-               <div class="basicsLayout">
-                  <strong>Public Notes</strong>
-                  @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        Notes
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="basicsLayout">
+                        <strong>Public Notes</strong>
+                        @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
 
-                  @if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
-                  {
-                     <strong>Internal Notes</strong>
-                     EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantNotesViewData);
-                  }
-               </div>
+                        @if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+                        {
+                            <strong>Internal Notes</strong>
+                            EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantNotesViewData);
+                        }
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
