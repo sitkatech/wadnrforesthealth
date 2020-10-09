@@ -74,6 +74,11 @@ namespace ProjectFirma.Web.Views.Grant
                                                                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
             }
 
+            if (userHasCreatePermissions && grantToAssociate != null)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{x.GrantModificationName}\" to New {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}"), 30, DhtmlxGridColumnFilterType.None);
+            }
+
             Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.GrantModificationStartDate, 100, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.GrantModificationEndDate, 100, DhtmlxGridColumnFormatType.Date);

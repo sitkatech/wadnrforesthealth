@@ -1,5 +1,5 @@
 ﻿@*-----------------------------------------------------------------------
-    <copyright file="DuplicateGrant.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    <copyright file="DuplicateGrantModification.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
     Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
     <author>Sitka Technology Group</author>
     </copyright>
@@ -20,13 +20,13 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
-@inherits ProjectFirma.Web.Views.Grant.DuplicateGrant
+@inherits ProjectFirma.Web.Views.GrantModification.DuplicateGrantModification
 
 
 
-<h2>@FieldDefinition.Grant.GetFieldDefinitionLabel() Duplication</h2>
-<p>Saving this form will create a new @FieldDefinition.Grant.GetFieldDefinitionLabel(), an initial @FieldDefinition.GrantModification.GetFieldDefinitionLabel(), and @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() from the @ViewDataTyped.GrantToDuplicate.GrantName @FieldDefinition.Grant.GetFieldDefinitionLabel(). </p>
-<p>Contributing Organization, @FieldDefinition.GrantType.GetFieldDefinitionLabel(), and CFDA will be copied automatically.</p>
+<h2>@FieldDefinition.GrantModification.GetFieldDefinitionLabel() Duplication</h2>
+<p>Saving this form will create a new a @FieldDefinition.GrantModification.GetFieldDefinitionLabel() and @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() from the @ViewDataTyped.GrantModificationToDuplicate.GrantModificationName @FieldDefinition.GrantModification.GetFieldDefinitionLabel(). </p>
+<p>Start Date and End Date will be copied automatically.</p>
 
 @Html.ValidationSummary()
 
@@ -35,32 +35,32 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantName)
+                @Html.LabelWithSugarFor(m => m.GrantModificationName)
             </div>
             <div class="col-xs-8">
-                @Html.TextBoxFor(m => m.GrantName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantName)
+                @Html.TextBoxFor(m => m.GrantModificationName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationName)
             </div>
         </div>
+        
+        <div class="form-group">
+            <div class="col-xs-3 control-label">@Html.LabelWithSugarFor(m => m.GrantModificationPurpose)</div>
+            <div class="col-xs-8">
+                @Html.CheckBoxListFor(m => m.GrantModificationPurpose, ViewDataTyped.GrantModificationPurposes, new { @class = "col-xs-6" })
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantStatusID)
+                @Html.LabelWithSugarFor(m => m.GrantModificationStatusID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.GrantStatusID, ViewDataTyped.GrantStatuses, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantStatusID)
+                @Html.DropDownListFor(m => m.GrantModificationStatusID, ViewDataTyped.GrantModificationStatuses, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationStatusID)
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantNumber)
-            </div>
-            <div class="col-xs-8">
-                @Html.TextBoxFor(m => m.GrantNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantNumber)
-            </div>
-        </div>
-        <div class="form-group">
+
+        @*<div class="form-group">
             <div class="col-xs-3 control-label">
                 @Html.LabelWithSugarFor(m => m.GrantStartDate)
             </div>
@@ -75,7 +75,7 @@
                 @Html.EditorFor(m => m.GrantEndDate, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.GrantEndDate)
             </div>
-        </div>
+        </div>*@
         
         <div class="form-group">
             <div class="col-xs-3 control-label">
@@ -88,7 +88,7 @@
         </div>
         
         
-        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName's @GrantModificationPurpose.InitialAward.GrantModificationPurposeName @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
+        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantModificationToDuplicate.GrantModificationName @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
         <div class="form-group">
             <div class="col-xs-12"><p>Select the <strong>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</strong> you wish to copy:</p></div>
             <div class="col-xs-12">
@@ -99,7 +99,7 @@
                 }
                 else
                 {
-                    <p>There are no @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() associated to "@ViewDataTyped.GrantToDuplicate.GrantName" @FieldDefinition.Grant.GetFieldDefinitionLabel().</p>
+                <p>There are no @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() associated to "@ViewDataTyped.GrantModificationToDuplicate.GrantModificationName" @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
                 }
             </div>
         </div>
@@ -107,5 +107,5 @@
         <p>On save you will be redirected to the @FieldDefinition.Grant.GetFieldDefinitionLabel() Detail page for this new @FieldDefinition.Grant.GetFieldDefinitionLabel().</p>
     </div>
     @Html.HiddenFor(m => m.GrantID)
-    @Html.HiddenFor(m => m.InitialAwardGrantModificationID)
+    @Html.HiddenFor(m => m.GrantModificationID)
 }

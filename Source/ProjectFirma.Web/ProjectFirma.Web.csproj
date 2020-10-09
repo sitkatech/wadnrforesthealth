@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -952,6 +952,9 @@
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
+    <Compile Include="Views\GrantModification\DuplicateGrantModification.cs" />
+    <Compile Include="Views\GrantModification\DuplicateGrantModificationViewData.cs" />
+    <Compile Include="Views\GrantModification\DuplicateGrantModificationViewModel.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternal.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewData.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewModel.cs" />
@@ -1755,6 +1758,7 @@
     <Content Include="Views\GisProjectBulkUpdate\GisMetadata.cshtml" />
     <Content Include="Views\GisFeature\Detail.cshtml" />
     <Content Include="Views\Grant\DuplicateGrant.cshtml" />
+    <Content Include="Views\GrantModification\DuplicateGrantModification.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
