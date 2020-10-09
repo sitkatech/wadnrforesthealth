@@ -169,7 +169,6 @@ namespace ProjectFirma.Web.Controllers
                 grantAllocations = initialAwardGrantMod.GrantAllocations.ToList();
             }
 
-            // Copy original grant allocation to new view model, except for the grant mod and allocation amount
             var viewModel = new DuplicateGrantViewModel(grantToDuplicate, initialAwardGrantMod?.GrantModificationID ?? -1);
             return DuplicateGrantViewEdit(viewModel, grantToDuplicate, grantAllocations);
         }
@@ -203,25 +202,32 @@ namespace ProjectFirma.Web.Controllers
             newGrantModification.GrantModificationName = GrantModificationPurpose.InitialAward.GrantModificationPurposeName;
             var newGrantModificationPurpose = GrantModificationGrantModificationPurpose.CreateNewBlank(newGrantModification, GrantModificationPurpose.InitialAward);
 
-            foreach (var allocationID in viewModel.GrantAllocationsToDuplicate)
+            if (viewModel.GrantAllocationsToDuplicate != null && viewModel.GrantAllocationsToDuplicate.Any())
             {
-                var allocationToCopy = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == allocationID);
-                var newAllocation = GrantAllocation.CreateNewBlank(newGrantModification);
-                newAllocation.GrantAllocationName = allocationToCopy.GrantAllocationName;
-                newAllocation.StartDate = allocationToCopy.StartDate;
-                newAllocation.EndDate = allocationToCopy.EndDate;
+                foreach (var allocationID in viewModel.GrantAllocationsToDuplicate)
+                {
+                    var allocationToCopy =
+                        HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga =>
+                            ga.GrantAllocationID == allocationID);
+                    var newAllocation = GrantAllocation.CreateNewBlank(newGrantModification);
+                    newAllocation.GrantAllocationName = allocationToCopy.GrantAllocationName;
+                    newAllocation.StartDate = allocationToCopy.StartDate;
+                    newAllocation.EndDate = allocationToCopy.EndDate;
 
-                // 10/7/20 TK - not sure we wanna copy these but going for it anyways
-                newAllocation.FederalFundCodeID = allocationToCopy.FederalFundCodeID;
-                newAllocation.OrganizationID = allocationToCopy.OrganizationID;
-                newAllocation.DNRUplandRegionID = allocationToCopy.DNRUplandRegionID;
-                newAllocation.DivisionID = allocationToCopy.DivisionID;
-                newAllocation.GrantManagerID = allocationToCopy.GrantManagerID;
+                    // 10/7/20 TK - not sure we wanna copy these but going for it anyways
+                    newAllocation.FederalFundCodeID = allocationToCopy.FederalFundCodeID;
+                    newAllocation.OrganizationID = allocationToCopy.OrganizationID;
+                    newAllocation.DNRUplandRegionID = allocationToCopy.DNRUplandRegionID;
+                    newAllocation.DivisionID = allocationToCopy.DivisionID;
+                    newAllocation.GrantManagerID = allocationToCopy.GrantManagerID;
 
-                // 10/7/20 TK - make sure we setup the budgetLineItems for the new allocation
-                newAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+                    // 10/7/20 TK - make sure we setup the budgetLineItems for the new allocation
+                    newAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+                }
             }
 
+            //need to save changes here, because otherwise the MessageForDisplay will link to an item with a negative ID, causing errors
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{UrlTemplate.MakeHrefString(newGrant.GetDetailUrl(), newGrant.GrantName)}\" has been created.");
             return new ModalDialogFormJsonResult();
             //return RedirectToAction(new SitkaRoute<GrantController>(gc => gc.GrantDetail(newGrant.GrantID)));

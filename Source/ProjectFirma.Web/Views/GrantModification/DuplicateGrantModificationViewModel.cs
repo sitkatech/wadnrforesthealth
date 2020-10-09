@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.GrantModification
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
         [Required]
-        public Money? GrantModificationAmount { get; set; }
+        public Money GrantModificationAmount { get; set; }
 
         //[FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         //public DateTime? GrantStartDate { get; set; }
@@ -80,10 +80,13 @@ namespace ProjectFirma.Web.Views.GrantModification
 
         public void UpdateModel(Models.GrantModification grantModification)
         {
-            //grantModification.GrantNumber = GrantNumber;
-            //grantModification.StartDate = GrantStartDate;
-            //grantModification.EndDate = GrantEndDate;
-            //grantModification.GrantName = GrantName;
+            grantModification.GrantModificationName = GrantModificationName;
+            grantModification.GrantModificationAmount = GrantModificationAmount;
+            //because this is only used for duplication we can just create the GM-GMP without merging
+            foreach (var purpose in GrantModificationPurpose.Select(purposeID => Models.GrantModificationPurpose.All.Single(x => x.GrantModificationPurposeID == purposeID)))
+            {
+                GrantModificationGrantModificationPurpose.CreateNewBlank(grantModification, purpose);
+            }
 
         }
 
