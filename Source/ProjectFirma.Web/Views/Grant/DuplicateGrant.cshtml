@@ -92,7 +92,15 @@
         <div class="form-group">
             <div class="col-xs-12"><p>Select the <strong>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</strong> you wish to copy:</p></div>
             <div class="col-xs-12">
-                @Html.CheckBoxListFor(m => m.GrantAllocationsToDuplicate, ViewDataTyped.GrantAllocations, new { @class = "col-xs-3" })
+                @if(ViewDataTyped.GrantAllocations.Any())
+                {
+                    @Html.CheckBoxListFor(m => m.GrantAllocationsToDuplicate, ViewDataTyped.GrantAllocations, new {@class = "col-xs-3"})
+
+                }
+                else
+                {
+                    <p>There are no @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() associated to "@ViewDataTyped.GrantToDuplicate.GrantName" @FieldDefinition.Grant.GetFieldDefinitionLabel().</p>
+                }
             </div>
         </div>
         
