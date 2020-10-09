@@ -136,23 +136,15 @@ namespace ProjectFirma.Web.Controllers
         [GrantModificationCreateFeature]
         public PartialViewResult Duplicate(GrantModificationPrimaryKey grantModificationPrimaryKey)
         {
-            throw new NotImplementedException();
-            //var grantModificationToDuplicate = grantModificationPrimaryKey.EntityObject;
-            //Check.EnsureNotNull(grantModificationToDuplicate);
+            var grantModificationToDuplicate = grantModificationPrimaryKey.EntityObject;
+            Check.EnsureNotNull(grantModificationToDuplicate);
 
-            ////get the grant allocations for the initial award grant mod
-            //var grantModifications = grantModificationToDuplicate.GrantModifications;
-            //var initialAwardGrantMod = grantModifications.FirstOrDefault(x =>
-            //    x.GrantModificationGrantModificationPurposes.FirstOrDefault(gmp => gmp.GrantModificationPurposeID == GrantModificationPurpose.InitialAward.GrantModificationPurposeID) != null);
-            //List<GrantAllocation> grantAllocations = new List<GrantAllocation>();
-            //if (initialAwardGrantMod != null)
-            //{
-            //    grantAllocations = initialAwardGrantMod.GrantAllocations.ToList();
-            //}
+            //get the grant allocations for the  grant mod
+            var grantAllocations = grantModificationToDuplicate.GrantAllocations.ToList();
 
-            //// Copy original grant allocation to new view model, except for the grant mod and allocation amount
-            //var viewModel = new DuplicateGrantModificationViewModel(grantModificationToDuplicate, initialAwardGrantMod?.GrantModificationID ?? -1);
-            //return DuplicateGrantModificationViewEdit(viewModel, grantModificationToDuplicate, grantAllocations);
+            // Copy original grant allocation to new view model, except for the grant mod and allocation amount
+            var viewModel = new DuplicateGrantModificationViewModel(grantModificationToDuplicate);
+            return DuplicateGrantModificationViewEdit(viewModel, grantModificationToDuplicate, grantAllocations);
         }
 
         [HttpPost]
@@ -211,11 +203,11 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult DuplicateGrantModificationViewEdit(DuplicateGrantModificationViewModel viewModel, GrantModification grantModificationToDuplicate, List<GrantAllocation> grantAllocations)
         {
-            throw new NotImplementedException();
-            //var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantModificationStatuses = HttpRequestStorage.DatabaseEntities.GrantModificationStatuses;
+            var grantModificationPurposes = GrantModificationPurpose.All;
 
-            //var viewData = new DuplicateGrantViewData(grantStatuses, grantToDuplicate, grantAllocations);
-            //return RazorPartialView<DuplicateGrant, DuplicateGrantViewData, DuplicateGrantViewModel>(viewData, viewModel);
+            var viewData = new DuplicateGrantModificationViewData(grantModificationStatuses, grantModificationPurposes, grantModificationToDuplicate, grantAllocations);
+            return RazorPartialView<DuplicateGrantModification, DuplicateGrantModificationViewData, DuplicateGrantModificationViewModel>(viewData, viewModel);
         }
 
 
