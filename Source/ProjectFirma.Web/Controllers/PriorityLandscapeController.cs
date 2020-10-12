@@ -118,8 +118,9 @@ namespace ProjectFirma.Web.Controllers
         [PriorityLandscapeViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PriorityLandscapePrimaryKey priorityLandscapePrimaryKey)
         {
-            var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);
-            var projectPriorityLandscapes = priorityLandscapePrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false);
+            var priorityLandscape = priorityLandscapePrimaryKey.EntityObject;
+            var projectPriorityLandscapes = priorityLandscape.GetAssociatedProjects(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectPriorityLandscapes, gridSpec);
             return gridJsonNetJObjectResult;
         }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DuplicateGrantViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -30,41 +30,26 @@ using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class EditGrantViewModel : FormViewModel, IValidatableObject
+    public class DuplicateGrantViewModel : FormViewModel, IValidatableObject
     {
         public int GrantID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
-        [Required]
-        public int OrganizationID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
         [Required]
         public int GrantStatusID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
-        public int? GrantTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
         [StringLength(Models.Grant.FieldLengths.GrantName)]
         [Required]
         public string GrantName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantShortName)]
-        [StringLength(Models.Grant.FieldLengths.ShortName)]
-        public string GrantShortName { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
         [StringLength(Models.Grant.FieldLengths.GrantNumber)]
         public string GrantNumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
-        [StringLength(Models.Grant.FieldLengths.CFDANumber)]
-        public string CFDANumber { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
         [Required]
-        public Money? TotalAwardAmount { get; set; }
+        public Money? GrantModificationAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public DateTime? GrantStartDate { get; set; }
@@ -72,50 +57,46 @@ namespace ProjectFirma.Web.Views.Grant
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
         public DateTime? GrantEndDate { get; set; }
 
+        public List<int> GrantAllocationsToDuplicate { get; set; }
+
+        public int InitialAwardGrantModificationID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantViewModel()
+        public DuplicateGrantViewModel()
         {
         }
 
-        public EditGrantViewModel(Models.Grant grant)
+        public DuplicateGrantViewModel(Models.Grant grantToDuplicate, int initialAwardGrantModificationID)
         {
-            GrantName = grant.GrantName;
-            GrantShortName = grant.ShortName;
-            OrganizationID = grant.OrganizationID;
-            GrantStatusID = grant.GrantStatusID;
-            GrantTypeID = grant.GrantTypeID;
-            GrantNumber = grant.GrantNumber;
-            CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.GetTotalAwardAmount();
-            GrantStartDate = grant.StartDate;
-            GrantEndDate = grant.EndDate;
-            
+            GrantName = $"{grantToDuplicate.GrantName} - Copy";
+            GrantStatusID = grantToDuplicate.GrantStatusID;
+            GrantNumber = grantToDuplicate.GrantNumber;
+            GrantModificationAmount = 0;
+            GrantStartDate = grantToDuplicate.StartDate;
+            GrantEndDate = grantToDuplicate.EndDate;
+
+            InitialAwardGrantModificationID = initialAwardGrantModificationID;
         }
 
-        public void UpdateModel(Models.Grant grant, Person currentPerson)
+        public void UpdateModel(Models.Grant grant)
         {
-            grant.GrantName = GrantName;
-            grant.ShortName = GrantShortName;
-            grant.OrganizationID = OrganizationID;
-            grant.GrantStatusID = GrantStatusID;
-            grant.GrantTypeID = GrantTypeID;
             grant.GrantNumber = GrantNumber;
-            grant.CFDANumber = CFDANumber;
-            //grant.AwardedFunds = TotalAwardAmount;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
+            grant.GrantName = GrantName;
 
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (OrganizationID == 0)
-            {
-                yield return new SitkaValidationResult<EditGrantViewModel, int>(
-                    FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
-            }
+            //if (OrganizationID == 0)
+            //{
+            //    yield return new SitkaValidationResult<DuplicateGrantViewModel, int>(
+            //        FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
+            //}
+            return new List<ValidationResult>();
         }
     }
 }

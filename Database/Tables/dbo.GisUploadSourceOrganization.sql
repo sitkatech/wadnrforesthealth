@@ -16,6 +16,8 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[RelationshipTypeForDefaultOrganizationID] [int] NOT NULL,
 	[ImportAsDetailedLocationInsteadOfTreatments] [bit] NOT NULL,
 	[ProjectDescriptionDefaultText] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ApplyCompletedDateToProject] [bit] NOT NULL,
+	[ApplyStartDateToProject] [bit] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC

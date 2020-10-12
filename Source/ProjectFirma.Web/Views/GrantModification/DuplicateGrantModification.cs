@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantNoteViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DuplicateGrantModification.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,24 +18,14 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web.Mvc;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Models;
+
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.GrantModification
 {
-    public class EditGrantNoteViewData : FirmaUserControlViewData
+    public abstract class DuplicateGrantModification : TypedWebPartialViewPage<DuplicateGrantModificationViewData, DuplicateGrantModificationViewModel>
     {
-
-        public EditGrantNoteType EditGrantNoteType { get; set; }
-
-        public EditGrantNoteViewData(EditGrantNoteType editGrantNoteType)
-        {
-            EditGrantNoteType = editGrantNoteType;
-        }
     }
+
+    
 }
