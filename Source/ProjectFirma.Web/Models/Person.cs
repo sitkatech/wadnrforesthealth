@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DocumentFormat.OpenXml.Bibliography;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 
@@ -50,15 +51,32 @@ namespace ProjectFirma.Web.Models
 
         public bool IsAnonymousUser => PersonID == AnonymousPersonID;
 
-        public string FullNameFirstLast => $"{FirstName} {LastName}";
+        public string FullNameFirstLast 
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(LastName))
+                {
+                    return $"{FirstName} {LastName}";
+                }
+
+                return FirstName;
+
+            }
+
+        } 
 
         public string FullNameFirstLastAndOrg
         {
             get
             {
-                if (Organization != null)
+                if (Organization != null && !string.IsNullOrEmpty(LastName))
                 {
                     return $"{FirstName} {LastName} - {Organization.DisplayNameWithoutAbbreviation}";
+                }
+                else if (Organization != null)
+                {
+                    return $"{FirstName} - {Organization.DisplayNameWithoutAbbreviation}";
                 }
                 else return FullNameFirstLast;
             }
@@ -89,7 +107,18 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string FullNameLastFirst => $"{LastName}, {FirstName}";
+        public string FullNameLastFirst
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(LastName))
+                {
+                    return $"{LastName}, {FirstName}";
+                }
+
+                return FirstName;
+            }
+        }
 
         /// <summary>
         /// List of Projects for which this Person is the primary contact

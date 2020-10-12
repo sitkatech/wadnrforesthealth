@@ -66,6 +66,9 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
                 return s.ProjectPersonRelationshipTypeID === projectPersonProjectPersonRelationshipTypeID;
             });
 
+        console.log('chosen people');
+        console.log(chosenPersonSimples);
+
         var people = _.map(chosenPersonSimples,
             function(s) {
                 var person =
@@ -74,6 +77,10 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
                         s.PersonID);
                 return person;
             });
+
+        console.log('people to return');
+        console.log(people);
+
         return people;
     };
 

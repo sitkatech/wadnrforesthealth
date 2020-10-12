@@ -136,14 +136,14 @@ namespace ProjectFirma.Web.Controllers
                 SaveFiltersInCookie = true
             };
             const string basicProjectInfoGridName = "userProjectListGrid";
-            var basicProjectInfoGridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(person));
+            var projectInfoForUserDetailGridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.ProjectInfoForUserDetailGridJsonData(person));
             var activateInactivateUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.ActivateInactivatePerson(person));
             var agreements = GetAgreementsByPerson(person);
             var viewData = new DetailViewData(CurrentPerson,
                 person,
                 basicProjectInfoGridSpec,
                 basicProjectInfoGridName,
-                basicProjectInfoGridDataUrl,
+                projectInfoForUserDetailGridDataUrl,
                 userNotificationGridSpec,
                 "userNotifications",
                 userNotificationGridDataUrl,
@@ -153,13 +153,13 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [UserViewFeature]
-        public GridJsonNetJObjectResult<ProjectPersonRelationship> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
+        public GridJsonNetJObjectResult<ProjectPersonRelationship> ProjectInfoForUserDetailGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
             var gridSpec = new Views.Project.ProjectInfoForUserDetailGridSpec(CurrentPerson, person);
             var projectPersons = person.IsFullUser()
                 ? person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).Select(x=> new ProjectPersonRelationship(x, person, null)).ToList()
-                : person.ProjectPeople.Select(x=>new ProjectPersonRelationship(x)).ToList();
+                : person.ProjectPeople.Where(x => person.PersonID == CurrentPerson.PersonID || x.ProjectPersonRelationshipType.IsViewableByUser(CurrentPerson)).Select(x=>new ProjectPersonRelationship(x)).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectPersonRelationship>(projectPersons, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -325,12 +325,11 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var person = new Person(viewModel.FirstName, 
-                                         viewModel.LastName,
                                          Role.Unassigned.RoleID, 
                                          DateTime.Now, 
                                          true, 
                                          false)
-                { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
+                { LastName = viewModel.LastName, PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.People.Add(person);
 
             EditContactViewModel.SetAuthenticatorsForGivenEmailAddress(viewModel, person);

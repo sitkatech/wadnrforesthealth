@@ -666,6 +666,7 @@
     <Compile Include="Models\PriorityLandscapeFileResource.cs" />
     <Compile Include="Models\ProjectFundingSource.cs" />
     <Compile Include="Models\ProjectFundingSourceUpdate.cs" />
+    <Compile Include="Models\ProjectPersonRelationshipType.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\SqlBienniumTest.cs" />
     <Compile Include="Models\Treatment.cs" />
@@ -1095,6 +1096,7 @@
     <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
+    <Compile Include="Views\Project\ProjectInfoForUserDetailGridSpec.cs" />
     <Compile Include="Views\Shared\FileResourceControls\EditFileResource.cs" />
     <Compile Include="Views\Shared\FileResourceControls\EditFileResourceViewData.cs" />
     <Compile Include="Views\Shared\FileResourceControls\EditFileResourceViewModel.cs" />
