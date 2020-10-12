@@ -31,26 +31,33 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public StateProvince(int stateProvinceID, string stateProvinceName, string stateProvinceAbbreviation, DbGeometry stateProvinceFeature, DbGeometry stateProvinceFeatureForAnalysis) : this()
+        public StateProvince(int stateProvinceID, string stateProvinceAbbreviation, string stateProvinceName, bool isBpaRelevant, decimal? southWestLatitude, decimal? southWestLongitude, decimal? northEastLatitude, decimal? northEastLongitude, int? mapObjectID, DbGeometry stateProvinceFeature, int countryID) : this()
         {
             this.StateProvinceID = stateProvinceID;
-            this.StateProvinceName = stateProvinceName;
             this.StateProvinceAbbreviation = stateProvinceAbbreviation;
+            this.StateProvinceName = stateProvinceName;
+            this.IsBpaRelevant = isBpaRelevant;
+            this.SouthWestLatitude = southWestLatitude;
+            this.SouthWestLongitude = southWestLongitude;
+            this.NorthEastLatitude = northEastLatitude;
+            this.NorthEastLongitude = northEastLongitude;
+            this.MapObjectID = mapObjectID;
             this.StateProvinceFeature = stateProvinceFeature;
-            this.StateProvinceFeatureForAnalysis = stateProvinceFeatureForAnalysis;
+            this.CountryID = countryID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public StateProvince(string stateProvinceName, string stateProvinceAbbreviation, DbGeometry stateProvinceFeatureForAnalysis) : this()
+        public StateProvince(string stateProvinceAbbreviation, string stateProvinceName, bool isBpaRelevant, int countryID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.StateProvinceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.StateProvinceName = stateProvinceName;
             this.StateProvinceAbbreviation = stateProvinceAbbreviation;
-            this.StateProvinceFeatureForAnalysis = stateProvinceFeatureForAnalysis;
+            this.StateProvinceName = stateProvinceName;
+            this.IsBpaRelevant = isBpaRelevant;
+            this.CountryID = countryID;
         }
 
 
@@ -59,7 +66,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static StateProvince CreateNewBlank()
         {
-            return new StateProvince(default(string), default(string), default(DbGeometry));
+            return new StateProvince(default(string), default(string), default(bool), default(int));
         }
 
         /// <summary>
@@ -121,10 +128,16 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int StateProvinceID { get; set; }
-        public string StateProvinceName { get; set; }
         public string StateProvinceAbbreviation { get; set; }
+        public string StateProvinceName { get; set; }
+        public bool IsBpaRelevant { get; set; }
+        public decimal? SouthWestLatitude { get; set; }
+        public decimal? SouthWestLongitude { get; set; }
+        public decimal? NorthEastLatitude { get; set; }
+        public decimal? NorthEastLongitude { get; set; }
+        public int? MapObjectID { get; set; }
         public DbGeometry StateProvinceFeature { get; set; }
-        public DbGeometry StateProvinceFeatureForAnalysis { get; set; }
+        public int CountryID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return StateProvinceID; } set { StateProvinceID = value; } }
 
@@ -132,8 +145,8 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-            public const int StateProvinceName = 100;
             public const int StateProvinceAbbreviation = 2;
+            public const int StateProvinceName = 50;
         }
     }
 }
