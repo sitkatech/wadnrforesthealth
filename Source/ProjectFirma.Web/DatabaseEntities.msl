@@ -1691,10 +1691,16 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.StateProvince">
         <MappingFragment StoreEntitySet="StateProvince">
           <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
-          <ScalarProperty Name="StateProvinceName" ColumnName="StateProvinceName" />
           <ScalarProperty Name="StateProvinceAbbreviation" ColumnName="StateProvinceAbbreviation" />
+          <ScalarProperty Name="StateProvinceName" ColumnName="StateProvinceName" />
+          <ScalarProperty Name="IsBpaRelevant" ColumnName="IsBpaRelevant" />
+          <ScalarProperty Name="SouthWestLatitude" ColumnName="SouthWestLatitude" />
+          <ScalarProperty Name="SouthWestLongitude" ColumnName="SouthWestLongitude" />
+          <ScalarProperty Name="NorthEastLatitude" ColumnName="NorthEastLatitude" />
+          <ScalarProperty Name="NorthEastLongitude" ColumnName="NorthEastLongitude" />
+          <ScalarProperty Name="MapObjectID" ColumnName="MapObjectID" />
           <ScalarProperty Name="StateProvinceFeature" ColumnName="StateProvinceFeature" />
-          <ScalarProperty Name="StateProvinceFeatureForAnalysis" ColumnName="StateProvinceFeatureForAnalysis" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

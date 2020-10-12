@@ -2705,10 +2705,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="StateProvinceID" />
     </Key>
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
-    <Property Name="StateProvinceName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="StateProvinceAbbreviation" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="StateProvinceAbbreviation" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="StateProvinceName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsBpaRelevant" Type="bit" Nullable="false" />
+    <Property Name="SouthWestLatitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="SouthWestLongitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLatitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLongitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="MapObjectID" Type="int" />
     <Property Name="StateProvinceFeature" Type="geometry" />
-    <Property Name="StateProvinceFeatureForAnalysis" Type="geometry" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SupportRequestLog">
     <Key>

@@ -303,7 +303,7 @@ namespace ProjectFirma.Web.Models
             if (HasProjectLocationPoint)
             {
                 var stateProvince = stateProvinces.FirstOrDefault(x =>
-                    x.StateProvinceFeatureForAnalysis.Intersects(ProjectLocationPoint));
+                    x.StateProvinceFeature != null && x.StateProvinceFeature.Intersects(ProjectLocationPoint));
                 ProjectLocationStateProvince = stateProvince != null
                     ? stateProvince.StateProvinceAbbreviation
                     : ViewUtilities.NaString;

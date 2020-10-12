@@ -3161,10 +3161,16 @@
       <PropertyRef Name="StateProvinceID" />
     </Key>
     <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
-    <Property Name="StateProvinceName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="StateProvinceAbbreviation" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="StateProvinceAbbreviation" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="StateProvinceName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="IsBpaRelevant" Type="Boolean" Nullable="false" />
+    <Property Name="SouthWestLatitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="SouthWestLongitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLatitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLongitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="MapObjectID" Type="Int32" />
     <Property Name="StateProvinceFeature" Type="Geometry" />
-    <Property Name="StateProvinceFeatureForAnalysis" Type="Geometry" Nullable="false" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Counties" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="StateProvince" ToRole="Counties" />
   </EntityType>
   <EntityType Name="SupportRequestLog">
