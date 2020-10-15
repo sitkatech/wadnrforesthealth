@@ -45,3 +45,8 @@ insert into dbo.ProjectLocation (ProjectID, ProjectLocationTypeID, ProjectLocati
 select p.ProjectID, 1, x.GisFeatureGeometry, 'Imported Project Location Name'
 from #newProjectsToAdd x
 join dbo.Project p on x.GisFeatureMetadataAttributeValue = p.ProjectName and x.GisUploadAttemptID = p.CreateGisUploadAttemptID
+
+
+insert into dbo.ProjectOrganization (ProjectID, OrganizationID, RelationshipTypeID)
+select p.ProjectID, 4708, 33 from #newProjectsToAdd x
+join dbo.Project p on x.GisFeatureMetadataAttributeValue = p.ProjectName and x.GisUploadAttemptID = p.CreateGisUploadAttemptID
