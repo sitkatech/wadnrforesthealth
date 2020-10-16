@@ -11,7 +11,6 @@ namespace ProjectFirma.Web.Models
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            projectUpdateBatch.ProjectUpdate.PrimaryContactPersonID = project.PrimaryContactPersonID;
             projectUpdateBatch.ProjectPersonUpdates =
                 project.ProjectPeople.Select(
                     po => new ProjectPersonUpdate(projectUpdateBatch, po.Person, po.ProjectPersonRelationshipType)
