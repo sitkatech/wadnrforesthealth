@@ -129,7 +129,7 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
     {
         private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward) {}
-        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, true, false);
+        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, false, false);
     }
 
     public partial class ProjectPersonRelationshipTypePrivateLandowner : ProjectPersonRelationshipType

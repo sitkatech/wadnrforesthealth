@@ -181,7 +181,7 @@ Thank you,<br />
             var mailMessage = new MailMessage { Subject = subject, Body = message, IsBodyHtml = true };
             var emailsToSendTo = GetProjectStewardPeople(project).Select(x => x.Email).Distinct().ToList();
             var emailsToReplyTo = new List<string> { submitterPerson.Email };
-            var primaryContactPerson = project.PrimaryContactPerson;
+            var primaryContactPerson = project.GetPrimaryContact();
             if (primaryContactPerson != null && !string.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
                 emailsToReplyTo.Add(primaryContactPerson.Email);
@@ -238,7 +238,7 @@ Thank you,<br />
 
             var mailMessage = new MailMessage { Subject = subject, Body = message, IsBodyHtml = true };
             var emailsToSendTo = new List<string> { submitterPerson.Email };
-            var primaryContactPerson = project.PrimaryContactPerson;
+            var primaryContactPerson = project.GetPrimaryContact();
             if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
                 emailsToSendTo.Add(primaryContactPerson.Email);
@@ -256,7 +256,7 @@ Thank you,<br />
             NotificationType notificationType)
         {
             var submitterPerson = project.ProposingPerson;
-            var primaryContactPerson = project.PrimaryContactPerson;
+            var primaryContactPerson = project.GetPrimaryContact();
 
             var notificationPeople = new List<Person> { submitterPerson };
             if (primaryContactPerson != null && submitterPerson.PersonID != primaryContactPerson.PersonID)

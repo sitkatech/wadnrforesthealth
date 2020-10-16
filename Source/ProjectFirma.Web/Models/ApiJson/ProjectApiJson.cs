@@ -70,8 +70,11 @@ namespace ProjectFirma.Web.Models.ApiJson
             PlannedDate = project.PlannedDate;
             ProjectLocationSimpleTypeID = project.ProjectLocationSimpleTypeID;
             ProjectLocationSimpleTypeName = project.ProjectLocationSimpleType.ProjectLocationSimpleTypeName;
-            PrimaryContactPersonID = project.PrimaryContactPersonID;
-            PrimaryContactPersonName = project.PrimaryContactPerson?.FullNameFirstLastAndOrgShortName;
+
+            var primaryContact = project.GetPrimaryContact();
+            PrimaryContactPersonID = primaryContact?.PersonID;
+            PrimaryContactPersonName = primaryContact?.FullNameFirstLastAndOrgShortName;
+
             ProjectApprovalStatusID = project.ProjectApprovalStatusID;
             ProjectApprovalStatusName = project.ProjectApprovalStatus.ProjectApprovalStatusName;
             ProposingPersonID = project.ProposingPersonID;

@@ -125,13 +125,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public List<Project> GetPrimaryContactProjects(Person person)
         {
+            var projectsWhereYouAreThePrimaryContactPerson = person.ProjectPeople.Where(pp => 
+                                                                                        pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrimaryContact.ProjectPersonRelationshipTypeID)
+                                                                                 .Select(pprt => pprt.Project).ToList();
+
             var isPersonViewingThePrimaryContact = person.PersonID == PersonID;
             if (isPersonViewingThePrimaryContact)
             {
-                return ProjectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Cancelled).ToList();
+                
+                return projectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Cancelled).ToList();
             }
-            return ProjectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposals(person.CanViewProposals).ToList();
+            return projectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposals(person.CanViewProposals).ToList();
         }
+
 
         public List<Project> GetPrimaryContactUpdatableProjects(Person person)
         {

@@ -79,7 +79,6 @@ namespace ProjectFirma.Web.Models
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
-            project.PrimaryContactPersonID = PrimaryContactPersonID;
         }
 
         public void CommitSimpleLocationToProject(Project project)
