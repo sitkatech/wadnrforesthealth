@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[ProjectPersonRelationshipType](
 	[FieldDefinitionID] [int] NOT NULL,
 	[IsRequired] [bit] NOT NULL,
 	[IsRestrictedToAdminAndProjectSteward] [bit] NOT NULL,
+	[SortOrder] [int] NOT NULL,
  CONSTRAINT [PK_ProjectPersonRelationshipType_ProjectPersonRelationshipTypeID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectPersonRelationshipTypeID] ASC

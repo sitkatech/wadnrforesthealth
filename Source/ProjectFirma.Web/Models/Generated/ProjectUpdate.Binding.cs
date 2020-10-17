@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID, DateTime? expirationDate, string projectFundingSourceNotes) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? focusAreaID, DateTime? expirationDate, string projectFundingSourceNotes) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -43,7 +43,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectLocationNotes = projectLocationNotes;
             this.PlannedDate = plannedDate;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
-            this.PrimaryContactPersonID = primaryContactPersonID;
             this.FocusAreaID = focusAreaID;
             this.ExpirationDate = expirationDate;
             this.ProjectFundingSourceNotes = projectFundingSourceNotes;
@@ -136,7 +135,6 @@ namespace ProjectFirma.Web.Models
         public string ProjectLocationNotes { get; set; }
         public DateTime? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
-        public int? PrimaryContactPersonID { get; set; }
         public int? FocusAreaID { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public string ProjectFundingSourceNotes { get; set; }
@@ -146,7 +144,6 @@ namespace ProjectFirma.Web.Models
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public ProjectStage ProjectStage { get { return ProjectStage.AllLookupDictionary[ProjectStageID]; } }
         public ProjectLocationSimpleType ProjectLocationSimpleType { get { return ProjectLocationSimpleType.AllLookupDictionary[ProjectLocationSimpleTypeID]; } }
-        public virtual Person PrimaryContactPerson { get; set; }
         public virtual FocusArea FocusArea { get; set; }
 
         public static class FieldLengths

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using ApprovalUtilities.SimpleLogger;
+using log4net;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
@@ -11,6 +13,8 @@ namespace ProjectFirma.Web.Models
 {
     public partial class NotificationProject
     {
+        protected static readonly ILog Logger = LogManager.GetLogger(typeof(NotificationProject));
+
         private static void SendMessageAndLogNotificationForProjectUpdateTransition(ProjectUpdateBatch projectUpdateBatch,
             MailMessage mailMessage,
             List<string> emailsToSendTo,
@@ -46,7 +50,15 @@ namespace ProjectFirma.Web.Models
             var primaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
             if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
-                submitterEmails.Add(primaryContactPerson.Email);
+                if (string.IsNullOrEmpty(primaryContactPerson.Email))
+                {
+                    Logger.Warn($"Primary Contact is missing email address and will not get a Submitted Message. Primary Contact ID:{primaryContactPerson.PersonID} Primary Contact Name:{primaryContactPerson.FullNameFirstLast} Project Update Batch ID:{projectUpdateBatch.ProjectUpdateBatchID} ");
+                }
+                else
+                {
+                    submitterEmails.Add(primaryContactPerson.Email);
+                }
+                
             }
 
             var emailsToSendTo = peopleToNotify.Select(x => x.Email).ToList();
@@ -76,10 +88,18 @@ namespace ProjectFirma.Web.Models
 
             var personNames = submitterPerson.FullNameFirstLast;
             var primaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
-            if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
+            if (primaryContactPerson != null && 
+                !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
-                emailsToSendTo.Add(primaryContactPerson.Email);
-                personNames += $" and {primaryContactPerson.FullNameFirstLast}";
+                if (string.IsNullOrEmpty(primaryContactPerson.Email))
+                {
+                    Logger.Warn($"Primary Contact is missing email address and will not get an Approval Message. Primary Contact ID:{primaryContactPerson.PersonID} Primary Contact Name:{primaryContactPerson.FullNameFirstLast} Project Update Batch ID:{projectUpdateBatch.ProjectUpdateBatchID} ");
+                }
+                else
+                {
+                    emailsToSendTo.Add(primaryContactPerson.Email);
+                    personNames += $" and {primaryContactPerson.FullNameFirstLast}";
+                }
             }
 
             var approverPerson = projectUpdateBatch.LastUpdatePerson;
@@ -123,8 +143,16 @@ Thank you for keeping your {FieldDefinition.Project.GetFieldDefinitionLabel()} i
             var primaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
             if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
-                emailsToSendTo.Add(primaryContactPerson.Email);
-                personNames += $" and {primaryContactPerson.FullNameFirstLast}";
+                if (string.IsNullOrEmpty(primaryContactPerson.Email))
+                {
+                    Logger.Warn($"Primary Contact is missing email address and will not get a Returned Message. Primary Contact ID:{primaryContactPerson.PersonID} Primary Contact Name:{primaryContactPerson.FullNameFirstLast} Project Update Batch ID:{projectUpdateBatch.ProjectUpdateBatchID} ");
+                }
+                else
+                {
+                    emailsToSendTo.Add(primaryContactPerson.Email);
+                    personNames += $" and {primaryContactPerson.FullNameFirstLast}";
+                }
+                
             }
 
             var returnerPerson = projectUpdateBatch.LatestProjectUpdateHistoryReturned.UpdatePerson;
@@ -181,10 +209,17 @@ Thank you,<br />
             var mailMessage = new MailMessage { Subject = subject, Body = message, IsBodyHtml = true };
             var emailsToSendTo = GetProjectStewardPeople(project).Select(x => x.Email).Distinct().ToList();
             var emailsToReplyTo = new List<string> { submitterPerson.Email };
-            var primaryContactPerson = project.PrimaryContactPerson;
+            var primaryContactPerson = project.GetPrimaryContact();
             if (primaryContactPerson != null && !string.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
-                emailsToReplyTo.Add(primaryContactPerson.Email);
+                if (string.IsNullOrEmpty(primaryContactPerson.Email))
+                {
+                    Logger.Warn($"Primary Contact is missing email address and will not get a Submitted Message. Primary Contact ID:{primaryContactPerson.PersonID} Primary Contact Name:{primaryContactPerson.FullNameFirstLast} Project ID:{project.ProjectID} ");
+                }
+                else
+                {
+                    emailsToReplyTo.Add(primaryContactPerson.Email);
+                }
             }
             var emailsToCc = new List<string>();
             SendMessageAndLogNotification(project, mailMessage, emailsToSendTo, emailsToReplyTo, emailsToCc, NotificationType.ProjectSubmitted);
@@ -211,7 +246,14 @@ Thank you,<br />
             var primaryContactPerson = project.GetPrimaryContact();
             if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
-                emailsToSendTo.Add(primaryContactPerson.Email);
+                if (string.IsNullOrEmpty(primaryContactPerson.Email))
+                {
+                    Logger.Warn($"Primary Contact is missing email address and will not get an Approval Message. Primary Contact ID:{primaryContactPerson.PersonID} Primary Contact Name:{primaryContactPerson.FullNameFirstLast} Project ID:{project.ProjectID} ");
+                }
+                else
+                {
+                    emailsToSendTo.Add(primaryContactPerson.Email);
+                }
             }
 
             SendMessageAndLogNotification(project,
@@ -238,10 +280,17 @@ Thank you,<br />
 
             var mailMessage = new MailMessage { Subject = subject, Body = message, IsBodyHtml = true };
             var emailsToSendTo = new List<string> { submitterPerson.Email };
-            var primaryContactPerson = project.PrimaryContactPerson;
+            var primaryContactPerson = project.GetPrimaryContact();
             if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
             {
-                emailsToSendTo.Add(primaryContactPerson.Email);
+                if (string.IsNullOrEmpty(primaryContactPerson.Email))
+                {
+                    Logger.Warn($"Primary Contact is missing email address and will not get a Returned Message. Primary Contact ID:{primaryContactPerson.PersonID} Primary Contact Name:{primaryContactPerson.FullNameFirstLast} Project ID:{project.ProjectID} ");
+                }
+                else
+                {
+                    emailsToSendTo.Add(primaryContactPerson.Email);
+                }
             }
             var emailsToReplyTo = new List<string> { project.ReviewedByPerson.Email };
             var emailsToCc = GetProjectStewardPeople(project).Select(x => x.Email).ToList();
@@ -256,7 +305,7 @@ Thank you,<br />
             NotificationType notificationType)
         {
             var submitterPerson = project.ProposingPerson;
-            var primaryContactPerson = project.PrimaryContactPerson;
+            var primaryContactPerson = project.GetPrimaryContact();
 
             var notificationPeople = new List<Person> { submitterPerson };
             if (primaryContactPerson != null && submitterPerson.PersonID != primaryContactPerson.PersonID)
