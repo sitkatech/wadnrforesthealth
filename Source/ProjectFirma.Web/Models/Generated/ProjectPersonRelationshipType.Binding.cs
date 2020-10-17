@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward)
+        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder)
         {
             ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
             ProjectPersonRelationshipTypeName = projectPersonRelationshipTypeName;
@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
             FieldDefinitionID = fieldDefinitionID;
             IsRequired = isRequired;
             IsRestrictedToAdminAndProjectSteward = isRestrictedToAdminAndProjectSteward;
+            SortOrder = sortOrder;
         }
         public FieldDefinition FieldDefinition { get { return FieldDefinition.AllLookupDictionary[FieldDefinitionID]; } }
         [Key]
@@ -55,6 +56,7 @@ namespace ProjectFirma.Web.Models
         public int FieldDefinitionID { get; private set; }
         public bool IsRequired { get; private set; }
         public bool IsRestrictedToAdminAndProjectSteward { get; private set; }
+        public int SortOrder { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectPersonRelationshipTypeID; } }
 
@@ -128,19 +130,19 @@ namespace ProjectFirma.Web.Models
 
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward) {}
-        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, false, false);
+        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, false, false, 10);
     }
 
     public partial class ProjectPersonRelationshipTypePrivateLandowner : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePrivateLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward) {}
-        public static readonly ProjectPersonRelationshipTypePrivateLandowner Instance = new ProjectPersonRelationshipTypePrivateLandowner(2, @"PrivateLandowner", @"Private Landowner", 273, false, true);
+        private ProjectPersonRelationshipTypePrivateLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypePrivateLandowner Instance = new ProjectPersonRelationshipTypePrivateLandowner(2, @"PrivateLandowner", @"Private Landowner", 273, false, true, 30);
     }
 
     public partial class ProjectPersonRelationshipTypeContractor : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward) {}
-        public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false, false);
+        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false, false, 20);
     }
 }
