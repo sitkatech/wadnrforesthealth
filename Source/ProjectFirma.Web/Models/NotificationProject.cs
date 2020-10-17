@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
             var submitterPerson = latestProjectUpdateHistorySubmitted.UpdatePerson;
             var submitterEmails = new List<string> { submitterPerson.Email };
             var primaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
-            if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
+            if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(primaryContactPerson.Email))
             {
                 submitterEmails.Add(primaryContactPerson.Email);
             }
@@ -76,7 +76,9 @@ namespace ProjectFirma.Web.Models
 
             var personNames = submitterPerson.FullNameFirstLast;
             var primaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
-            if (primaryContactPerson != null && !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase))
+            if (primaryContactPerson != null && 
+                !String.Equals(primaryContactPerson.Email, submitterPerson.Email, StringComparison.InvariantCultureIgnoreCase) && 
+                !string.IsNullOrEmpty(primaryContactPerson.Email))
             {
                 emailsToSendTo.Add(primaryContactPerson.Email);
                 personNames += $" and {primaryContactPerson.FullNameFirstLast}";
