@@ -31,7 +31,7 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
 
     $scope.getAvailablePeopleForProjectPersonRelationshipType = function(projectPersonProjectPersonRelationshipType) {
         var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
-        if (projectPersonProjectPersonRelationshipType.IsRequired) {
+        if (projectPersonProjectPersonRelationshipType.IsRequired || projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID === $scope.AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID) {
             return peopleForProjectPersonRelationshipType;
         } else {
             var usedPeople = _.filter($scope.AngularModel.ProjectPersonSimples,
@@ -66,8 +66,8 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
                 return s.ProjectPersonRelationshipTypeID === projectPersonProjectPersonRelationshipTypeID;
             });
 
-        console.log('chosen people');
-        console.log(chosenPersonSimples);
+        //console.log('chosen people');
+        //console.log(chosenPersonSimples);
 
         var people = _.map(chosenPersonSimples,
             function(s) {
@@ -78,8 +78,8 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
                 return person;
             });
 
-        console.log('people to return');
-        console.log(people);
+        //console.log('people to return');
+        //console.log(people);
 
         return people;
     };
@@ -100,8 +100,8 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
     };
 
     $scope.selectionChanged = function(personID, projectPersonProjectPersonRelationshipType) {
-        // changing the dropdown selection for a one-and-only-one relationship type should update the model
-        if (projectPersonProjectPersonRelationshipType.IsRequired) {
+        // changing the dropdown selection for a one-and-only-one(IsRequired) relationship type should update the model and of the primary contact relationship type
+        if (projectPersonProjectPersonRelationshipType.IsRequired || projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID === $scope.AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID) {
             // if there's already a projectPersonSimple for this relationship type, just change the PersonID
             var projectPersonSimple =
                 Sitka.Methods.findElementInJsonArray($scope.AngularModel.ProjectPersonSimples,
@@ -124,14 +124,15 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
     };
 
     $scope.isOptionSelected = function(person, projectPersonProjectPersonRelationshipType) {
-        if (!projectPersonProjectPersonRelationshipType.IsRequired) {
-            return false;
+        if (projectPersonProjectPersonRelationshipType.IsRequired || projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID === $scope.AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID) {
+            return _.any($scope.AngularModel.ProjectPersonSimples,
+                function (pos) {
+                    return pos.PersonID == person.PersonID &&
+                        pos.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
+                });
+            
         }
-        return _.any($scope.AngularModel.ProjectPersonSimples,
-            function(pos) {
-                return pos.PersonID == person.PersonID &&
-                    pos.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
-            });
+        return false;
     };
 
     $scope.dropdownDefaultOption = function(projectPersonProjectPersonRelationshipType) {
@@ -195,6 +196,6 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
-    console.log($scope.AngularViewData);
+    //console.log($scope.AngularViewData);
     $scope.selectedPersonID = {};
 });
