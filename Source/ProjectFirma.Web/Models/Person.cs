@@ -123,19 +123,19 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// List of Projects for which this Person is the primary contact
         /// </summary>
-        public List<Project> GetPrimaryContactProjects(Person person)
+        public List<Project> GetPrimaryContactProjects(Person currentPerson)
         {
-            var projectsWhereYouAreThePrimaryContactPerson = person.ProjectPeople.Where(pp => 
+            var projectsWhereYouAreThePrimaryContactPerson = currentPerson.ProjectPeople.Where(pp => 
                                                                                         pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrimaryContact.ProjectPersonRelationshipTypeID)
                                                                                  .Select(pprt => pprt.Project).ToList();
 
-            var isPersonViewingThePrimaryContact = person.PersonID == PersonID;
+            var isPersonViewingThePrimaryContact = currentPerson.PersonID == PersonID;
             if (isPersonViewingThePrimaryContact)
             {
                 
                 return projectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Cancelled).ToList();
             }
-            return projectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposals(person.CanViewProposals).ToList();
+            return projectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson).ToList();
         }
 
 

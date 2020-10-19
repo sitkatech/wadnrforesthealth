@@ -50,6 +50,10 @@ namespace ProjectFirma.Web.Views.ProjectType
 
         public string ThemeColor { get; set; }
 
+        [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.LimitVisibilityToAdmin)]
+        public bool LimitVisibilityToAdmin { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -64,6 +68,7 @@ namespace ProjectFirma.Web.Views.ProjectType
             ProjectTypeDescription = projectType.ProjectTypeDescriptionHtmlString;
             TaxonomyBranchID = projectType.TaxonomyBranchID;
             ThemeColor = projectType.ThemeColor;
+            LimitVisibilityToAdmin = projectType.LimitVisibilityToAdmin;
         }
 
         public void UpdateModel(Models.ProjectType projectType, Person currentPerson)
@@ -75,6 +80,7 @@ namespace ProjectFirma.Web.Views.ProjectType
                 : HttpRequestStorage.DatabaseEntities.TaxonomyBranches.First().TaxonomyBranchID; // really should only be one
             ;
             projectType.ThemeColor = ThemeColor;
+            projectType.LimitVisibilityToAdmin = LimitVisibilityToAdmin;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

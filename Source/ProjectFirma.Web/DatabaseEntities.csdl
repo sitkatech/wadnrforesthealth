@@ -2984,6 +2984,7 @@
     <Property Name="ProjectTypeCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="ThemeColor" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
     <Property Name="ProjectTypeSortOrder" Type="Int32" />
+    <Property Name="LimitVisibilityToAdmin" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="Projects" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_ProjectType_TaxonomyBranch_TaxonomyBranchID" FromRole="ProjectTypes" ToRole="TaxonomyBranch" />
     <NavigationProperty Name="ProjectTypePerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="ProjectTypePerformanceMeasures" />

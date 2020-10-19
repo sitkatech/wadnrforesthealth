@@ -39,7 +39,8 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static ProjectType Create(DatabaseEntities dbContext)
             {
                 var taxonomyBranch = TestTaxonomyBranch.Create(dbContext);
-                var projectType = new ProjectType(taxonomyBranch, MakeTestName("Test Taxonomy Tier One", ProjectType.FieldLengths.ProjectTypeName));
+                string projectTypeTestName = MakeTestName("Test Taxonomy Tier One", ProjectType.FieldLengths.ProjectTypeName);
+                var projectType = new ProjectType(taxonomyBranch, projectTypeTestName, false);
                 var newProjectType = projectType;
                 dbContext.ProjectTypes.Add(newProjectType);
                 return newProjectType;

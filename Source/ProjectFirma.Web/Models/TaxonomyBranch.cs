@@ -44,9 +44,9 @@ namespace ProjectFirma.Web.Models
             get { return SitkaRoute<TaxonomyBranchController>.BuildUrlFromExpression(c => c.DeleteTaxonomyBranch(TaxonomyBranchID)); }
         }
 
-        public List<Project> GetAssociatedProjects(Person person)
+        public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
+            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
         public int TaxonomyTierID => TaxonomyBranchID;

@@ -57,17 +57,26 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(x => x.ThemeColor, "Theme Color")
-            </div>
-            <div class="col-sm-9">
-                <div id="themeColorPicker" class="input-group colorpicker-component">
-                    @Html.TextBoxFor(x => x.ThemeColor, new { @class = "form-control" })
-                    <span class="input-group-addon"><i></i></span>
-                    @Html.ValidationMessageFor(x => x.ThemeColor)
-                </div>
-            </div>
+           <div class="col-sm-3 control-label">
+              @Html.LabelWithSugarFor(x => x.ThemeColor, "Theme Color")
+           </div>
+           <div class="col-sm-9">
+              <div id="themeColorPicker" class="input-group colorpicker-component">
+                 @Html.TextBoxFor(x => x.ThemeColor, new { @class = "form-control" })
+                 <span class="input-group-addon"><i></i></span>
+                 @Html.ValidationMessageFor(x => x.ThemeColor)
+              </div>
+           </div>
         </div>
+        
+        <div class="form-group">
+           <div class="col-sm-3 control-label">@Html.LabelWithSugarFor(m => m.LimitVisibilityToAdmin)</div>
+           <div class="col-sm-9">
+              @Html.CheckBoxFor(m=>m.LimitVisibilityToAdmin)
+              @Html.ValidationMessageFor(m => m.LimitVisibilityToAdmin)
+           </div>
+        </div>
+
     </div>
     @Html.HiddenFor(m => m.ProjectTypeID)
 }

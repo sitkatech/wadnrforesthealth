@@ -108,9 +108,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             return projectStagesForMap;
         }
 
-        public static List<Models.Project> ProjectsForMap(bool showProposals)
+        public static List<Models.Project> ProjectsForMap(Person currentPerson)
         {
-            return new List<Models.Project>(HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsAndProposals(showProposals)).Where(x => x.ProjectStage.ShouldShowOnMap())
+            return new List<Models.Project>(HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson)).Where(x => x.ProjectStage.ShouldShowOnMap())
                 .OrderBy(x => x.ProjectStage.ProjectStageID).ToList();
         }
     }

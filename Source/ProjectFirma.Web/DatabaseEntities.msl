@@ -1553,6 +1553,7 @@
           <ScalarProperty Name="ProjectTypeCode" ColumnName="ProjectTypeCode" />
           <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
           <ScalarProperty Name="ProjectTypeSortOrder" ColumnName="ProjectTypeSortOrder" />
+          <ScalarProperty Name="LimitVisibilityToAdmin" ColumnName="LimitVisibilityToAdmin" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

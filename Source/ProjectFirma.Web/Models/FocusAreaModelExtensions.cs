@@ -57,9 +57,9 @@ namespace ProjectFirma.Web.Models
             return focusArea.Projects.ToList();
         }
 
-        public static List<Project> GetAllActiveProjects(this FocusArea focusArea, Person person)
+        public static List<Project> GetAllActiveProjects(this FocusArea focusArea, Person currentPerson)
         {
-            return focusArea.GetAllAssociatedProjects().GetActiveProjects();
+            return focusArea.GetAllAssociatedProjects().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public static List<Project> GetProposalsVisibleToUser(this FocusArea focusArea, Person person)

@@ -28,9 +28,9 @@ namespace ProjectFirma.Web.Models
 {
     public partial class Classification : IAuditableEntity, IHaveASortOrder
     {
-        public List<Project> GetAssociatedProjects(Person person)
+        public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectClassifications.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals).ToList();
+            return ProjectClassifications.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson).ToList();
         }
 
         public string KeyImageUrlLarge => KeyImageFileResource != null ? KeyImageFileResource.FileResourceUrlScaledForPrint : "http://placehold.it/280x210";
