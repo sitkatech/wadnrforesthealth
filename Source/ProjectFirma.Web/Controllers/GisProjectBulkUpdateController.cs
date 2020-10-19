@@ -484,6 +484,13 @@ namespace ProjectFirma.Web.Controllers
                         ProjectLocationType.ProjectArea, "Imported Project Area");
                     projectLocationList.Add(newProjectLocation);
                 }
+
+                var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
+                if (centroid != null)
+                {
+                    project.ProjectLocationPoint = centroid;
+                    project.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.PointOnMap.ProjectLocationSimpleTypeID;
+                }
             }
 
             if (landOwners.Any())
