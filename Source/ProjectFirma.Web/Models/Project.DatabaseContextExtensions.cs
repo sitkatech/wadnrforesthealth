@@ -41,35 +41,40 @@ namespace ProjectFirma.Web.Models
                     .ToList();
         }
 
-        public static List<Project> GetActiveProjectsAndProposals(this IList<Project> projects, bool showProposals)
+        public static List<Project> GetActiveProjectsAndProposalsVisibleToUser(this IList<Project> projects, Person currentPerson)
         {
-            var activeProjects = projects.GetActiveProjects();
-            var activeProposals = projects.GetActiveProposals(showProposals);
+            var activeProjects = projects.GetActiveProjectsVisibleToUser(currentPerson);
+            var activeProposals = projects.GetActiveProposalsVisibleToUser(currentPerson);
             return activeProjects.Union(activeProposals, new HavePrimaryKeyComparer<Project>()).OrderBy(x => x.DisplayName).ToList();
         }
 
-        public static List<Project> GetActiveProjects(this IList<Project> projects)
+        public static List<Project> GetActiveProjectsVisibleToUser(this IList<Project> projects, Person currentPerson)
         {
-            return projects.Where(x => x.IsActiveProject()).OrderBy(x => x.DisplayName).ToList();
+            var projectViewFeature = new ProjectViewFeature();
+            return projects.Where(x => x.IsActiveProject() && projectViewFeature.HasPermission(currentPerson, x).HasPermission).OrderBy(x => x.DisplayName).ToList();
         }
 
-        public static List<Project> GetActiveProposals(this IList<Project> projects, bool showProposals)
+        public static List<Project> GetActiveProposalsVisibleToUser(this IList<Project> projects, Person currentPerson)
         {
-            return showProposals
-                ? projects.Where(x => x.IsActiveProposal()).OrderBy(x => x.DisplayName).ToList()
+            var projectViewFeature = new ProjectViewFeature();
+            return currentPerson.CanViewProposals
+                ? projects.Where(x => x.IsActiveProposal() && projectViewFeature.HasPermission(currentPerson, x).HasPermission).OrderBy(x => x.DisplayName).ToList()
                 : new List<Project>();
         }
 
         public static List<Project> GetProposalsVisibleToUser(this IList<Project> projects, Person currentPerson)
         {
-            return projects.Where(x => x.IsProposal() && new ProjectViewFeature().HasPermission(currentPerson, x).HasPermission).ToList();
+            var projectViewFeature = new ProjectViewFeature();
+            return projects.Where(x => x.IsProposal() && projectViewFeature.HasPermission(currentPerson, x).HasPermission).ToList();
         }
 
-        public static List<Project> GetPendingProjects(this IList<Project> projects, bool showPendingProjects)
+        public static List<Project> GetPendingProjectsVisibleToUser(this IList<Project> projects, Person currentPerson)
         {
-            return showPendingProjects? projects.Where(x => x.IsPendingProject()).OrderBy(x => x.DisplayName).ToList() : new List<Project>();
+            var projectViewFeature = new ProjectViewFeature();
+            return currentPerson.CanViewPendingProjects ? projects.Where(p => p.IsPendingProject() && projectViewFeature.HasPermission(currentPerson, p).HasPermission).OrderBy(x => x.DisplayName).ToList() : new List<Project>();
         }
 
+        /*
         public static List<Project> GetUpdatableProjectsThatHaveNotBeenSubmitted(this IQueryable<Project> projects)
         {
             return projects.GetUpdatableProjects().Where(x => x.GetLatestUpdateState() != ProjectUpdateState.Submitted).ToList();
@@ -79,5 +84,6 @@ namespace ProjectFirma.Web.Models
         {
             return projects.Where(x => x.IsUpdateMandatory).ToList();
         }
+        */
     }
 }

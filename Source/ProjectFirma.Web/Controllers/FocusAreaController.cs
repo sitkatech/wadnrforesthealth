@@ -262,7 +262,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 
-        private static MapInitJson GetMapInitJsonWithProjects(FocusArea focusArea, out bool hasSpatialData, Person person)
+        private static MapInitJson GetMapInitJsonWithProjects(FocusArea focusArea, out bool hasSpatialData, Person currentPerson)
         {
             hasSpatialData = false;
 
@@ -276,7 +276,7 @@ namespace ProjectFirma.Web.Controllers
                     LayerInitialVisibility.Show));
             }
 
-            var allActiveProjectsAndProposals = focusArea.GetAllActiveProjects(person).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
+            var allActiveProjectsAndProposals = focusArea.GetAllActiveProjects(currentPerson).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
 
             var projectsAsSimpleLocations = allActiveProjectsAndProposals.Where(x => x.ProjectLocationSimpleType != ProjectLocationSimpleType.None).ToList();
             var projectSimpleLocationsFeatureCollection = new FeatureCollection();

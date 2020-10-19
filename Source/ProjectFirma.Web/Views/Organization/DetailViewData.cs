@@ -191,14 +191,14 @@ namespace ProjectFirma.Web.Views.Organization
                     tc => tc.PendingProjectsGridJsonData(organization));
 
             TenantHasCanStewardProjectsOrganizationRelationship = MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship();
-            var allAssociatedProjects = Organization.GetAllAssociatedProjects();
+            var allAssociatedProjects = Organization.GetAllAssociatedProjectsForOrgVisibleToUser(CurrentPerson);
             NumberOfStewardedProjects = allAssociatedProjects
                 .Distinct()
                 .Count(x => x.IsActiveProject() && x.GetCanStewardProjectsOrganization() == Organization);
             NumberOfLeadImplementedProjects = allAssociatedProjects
                 .Distinct()
                 .Count(x => x.IsActiveProject() && x.GetPrimaryContactOrganization() == Organization);
-            NumberOfProjectsContributedTo = allAssociatedProjects.Distinct().ToList().GetActiveProjects().Count;
+            NumberOfProjectsContributedTo = allAssociatedProjects.Distinct().ToList().GetActiveProjectsVisibleToUser(currentPerson).Count;
         }
     }
 }

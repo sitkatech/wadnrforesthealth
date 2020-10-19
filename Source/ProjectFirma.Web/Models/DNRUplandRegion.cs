@@ -35,9 +35,9 @@ namespace ProjectFirma.Web.Models
     {
         public string DisplayName => DNRUplandRegionName;
 
-        public List<Project> GetAssociatedProjects(Person person)
+        public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectRegions.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
+            return ProjectRegions.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
         public string AuditDescriptionString => DNRUplandRegionName;

@@ -143,7 +143,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Project> IndexGridJsonData(ProjectUpdateStatusGridSpec.ProjectUpdateStatusFilterTypeEnum projectUpdateStatusFilterType)
         {
             var gridSpec = new ProjectUpdateStatusGridSpec(projectUpdateStatusFilterType, CurrentPerson.IsApprover());
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Where(p => p.IsUpdatableViaProjectUpdateProcess);
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsVisibleToUser(CurrentPerson).Where(p => p.IsUpdatableViaProjectUpdateProcess);
 
             switch (projectUpdateStatusFilterType)
             {
@@ -1772,7 +1772,7 @@ namespace ProjectFirma.Web.Controllers
             var contactsReceivingReminderGridSpec = new PeopleReceivingReminderGridSpec(true, CurrentPerson) {ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true};
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ManageUpdateNotifications);
 
-            var projectsWithNoContactCount = GetProjectsWithNoContact().Count;
+            var projectsWithNoContactCount = GetProjectsWithNoContact(CurrentPerson).Count;
 
             var viewData = new ManageViewData(CurrentPerson,
                 firmaPage,
@@ -1786,9 +1786,9 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Manage, ManageViewData>(viewData);
         }
 
-        private static List<Project> GetProjectsWithNoContact()
+        private static List<Project> GetProjectsWithNoContact(Person currentPerson)
         {
-            var projectsRequiringUpdate = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Where(x => x.IsUpdatableViaProjectUpdateProcess).ToList();
+            var projectsRequiringUpdate = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsVisibleToUser(currentPerson).Where(x => x.IsUpdatableViaProjectUpdateProcess).ToList();
             return projectsRequiringUpdate.Where(x => x.GetPrimaryContact() == null).ToList();
         }
 
@@ -1797,7 +1797,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var gridSpec = new ProjectUpdateStatusGridSpec(ProjectUpdateStatusGridSpec.ProjectUpdateStatusFilterTypeEnum.AllProjects, CurrentPerson.IsApprover());
             var projects =
-                HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Where(x => x.IsUpdatableViaProjectUpdateProcess && x.IsEditableToThisPerson(CurrentPerson)).ToList();
+                HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsVisibleToUser(CurrentPerson).Where(x => x.IsUpdatableViaProjectUpdateProcess && x.IsEditableToThisPerson(CurrentPerson)).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -1806,8 +1806,8 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Person> PeopleReceivingReminderGridJsonData(bool showCheckbox)
         {
             var gridSpec = new PeopleReceivingReminderGridSpec(showCheckbox, CurrentPerson);
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Where(x => x.IsUpdatableViaProjectUpdateProcess && x.IsEditableToThisPerson(CurrentPerson)).ToList();
-            var people = projects.GetPrimaryContactPeople();            
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsVisibleToUser(CurrentPerson).Where(x => x.IsUpdatableViaProjectUpdateProcess && x.IsEditableToThisPerson(CurrentPerson)).ToList();
+            var people = projects.GetPrimaryContactPeople();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Person>(people, gridSpec);
             return gridJsonNetJObjectResult;
         }

@@ -6,6 +6,7 @@ using LtInfo.Common;
 using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
@@ -15,9 +16,10 @@ namespace ProjectFirma.Web.Models
     {
         public string DisplayName => PriorityLandscapeName;
 
-        public List<Project> GetAssociatedProjects(Person person)
+        public List<Project> GetAssociatedProjectsVisibleToUser(Person currentPerson)
         {
-            return ProjectPriorityLandscapes.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
+            var associatedProjectsVisibleToUser = ProjectPriorityLandscapes.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return associatedProjectsVisibleToUser;
         }
 
         public string AuditDescriptionString => PriorityLandscapeName;
@@ -70,7 +72,7 @@ namespace ProjectFirma.Web.Models
 
         public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
         {
-            var projects = GetAssociatedProjects(currentPerson);
+            var projects = GetAssociatedProjectsVisibleToUser(currentPerson);
             return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
         }
 

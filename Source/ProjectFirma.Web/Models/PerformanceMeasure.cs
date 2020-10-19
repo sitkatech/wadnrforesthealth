@@ -29,15 +29,15 @@ namespace ProjectFirma.Web.Models
 {
     public partial class PerformanceMeasure : IAuditableEntity, IHaveASortOrder
     {
-        public List<Project> GetAssociatedProjectsWithReportedValues(Person person)
+        public List<Project> GetAssociatedProjectsWithReportedValues(Person currentPerson)
         {
-            return PerformanceMeasureActuals.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
+            return PerformanceMeasureActuals.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
-        public List<Project> GetAssociatedProjectsWithExpectedValues(Person person)
+        public List<Project> GetAssociatedProjectsWithExpectedValues(Person currentPerson)
         {
-            return PerformanceMeasureExpecteds.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
-        }     
+            return PerformanceMeasureExpecteds.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+        }
 
         public int ReportedProjectsCount(Person currentPerson)
         {

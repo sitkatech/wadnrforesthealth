@@ -89,7 +89,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return Projects.ToList().GetActiveProjectsAndProposals(currentPerson.CanViewProposals);
+            return Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
         public List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
