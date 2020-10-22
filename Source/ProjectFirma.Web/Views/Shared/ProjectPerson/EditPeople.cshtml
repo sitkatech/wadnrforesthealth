@@ -95,7 +95,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     <div class="col-md-12">
                         <div class="input-group" style="width: 100%;">
                             <select class="selectpicker" id="todo{{AngularViewData.PrimaryContactProjectPersonRelationshipType.RelationshipTypeID}}" ng-model="selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID], AngularViewData.PrimaryContactProjectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
-                                <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactProjectPersonRelationshipType)">Select one</option>
+                                <option value="" selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactProjectPersonRelationshipType)">Select one</option>
                                 <option ng-repeat="person in getAvailablePeopleForProjectPersonRelationshipType(AngularViewData.PrimaryContactProjectPersonRelationshipType)"
                                         ng-bind="person.FullName"
                                         ng-value="person.PersonID"
