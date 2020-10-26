@@ -40,16 +40,10 @@ namespace ProjectFirma.Web.Views.Organization
             Add(Models.FieldDefinition.Organization.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.OrganizationName), 400, DhtmlxGridColumnFilterType.Html);
             Add("Short Name", a => a.OrganizationShortName, 100);
             Add(Models.FieldDefinition.OrganizationType.ToGridHeaderString(), a => a.OrganizationType?.OrganizationTypeName, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.OrganizationPrimaryContact.ToGridHeaderString(), a => userViewFeature.HasPermission(currentPerson, a.PrimaryContactPerson).HasPermission ? a.PrimaryContactPersonAsUrl : new HtmlString(a.PrimaryContactPersonAsString), 120);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetAllActiveProjects(currentPerson).Count, 90);
-            if (currentPerson.CanViewProposals)
-            {
-                Add($"# of {Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetProposalsVisibleToUser(currentPerson).Count, 90);
-            }
-            Add($"# of {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", a => a.GrantAllocations.Count, 90);
-            Add("# of Users", a => a.People.Count, 90);
+            Add($"# of {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()} in this system associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.Grants.Count, 90);
+            Add($"# of Forest Health Tracker User Accounts associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.People.Count, 90);
             Add("Is Active", a => a.IsActive.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Has Spatial Boundary", x => (x.OrganizationBoundary != null).ToCheckboxImageOrEmpty(), 70);
         }
     }
 }
