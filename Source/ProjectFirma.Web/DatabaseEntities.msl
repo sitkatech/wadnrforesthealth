@@ -1077,6 +1077,7 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
+          <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
