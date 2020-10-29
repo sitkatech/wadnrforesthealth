@@ -30,13 +30,3 @@ ALTER TABLE dbo.PriorityLandscape ADD PlanYear int
 
 
 
-
-
-ALTER TABLE [dbo].[PriorityLandscapeFileResource]  WITH CHECK ADD  CONSTRAINT [FK_PriorityLandscapeFileResource_FileResource_FileResourceID] FOREIGN KEY([FileResourceID])
-REFERENCES [dbo].[FileResource] ([FileResourceID])
-ON DELETE CASCADE
-GO
-
-ALTER TABLE [dbo].[PriorityLandscapeFileResource] CHECK CONSTRAINT [FK_PriorityLandscapeFileResource_FileResource_FileResourceID]
-GO
-
