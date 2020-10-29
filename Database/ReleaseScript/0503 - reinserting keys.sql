@@ -19,11 +19,9 @@ GO
 
 
 
-ALTER TABLE [dbo].[PriorityLandscapeFileResource]  WITH CHECK ADD  CONSTRAINT [FK_PriorityLandscapeFileResource_FileResource_FileResourceID] FOREIGN KEY([FileResourceID])
-REFERENCES [dbo].[FileResource] ([FileResourceID])
-ON DELETE CASCADE
+ALTER TABLE [dbo].[PriorityLandscapeFileResource]  WITH CHECK ADD  CONSTRAINT [FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID] FOREIGN KEY([PriorityLandscapeID])
+REFERENCES [dbo].[PriorityLandscape] ([PriorityLandscapeID])
 GO
 
-ALTER TABLE [dbo].[PriorityLandscapeFileResource] CHECK CONSTRAINT [FK_PriorityLandscapeFileResource_FileResource_FileResourceID]
+ALTER TABLE [dbo].[PriorityLandscapeFileResource] CHECK CONSTRAINT [FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID]
 GO
-

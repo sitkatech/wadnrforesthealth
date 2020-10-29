@@ -14,7 +14,7 @@ GO
 ALTER TABLE [dbo].[ProjectPriorityLandscapeUpdate] DROP CONSTRAINT [FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID]
 GO
 
-ALTER TABLE [dbo].[PriorityLandscapeFileResource] DROP CONSTRAINT [FK_PriorityLandscapeFileResource_FileResource_FileResourceID]
+ALTER TABLE [dbo].[PriorityLandscapeFileResource] DROP CONSTRAINT [FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID]
 GO
 
 
@@ -23,6 +23,11 @@ delete from dbo.PriorityLandscape
 
 
 ALTER TABLE dbo.PriorityLandscape ADD PlanYear int
+
+
+
+
+
 
 
 
