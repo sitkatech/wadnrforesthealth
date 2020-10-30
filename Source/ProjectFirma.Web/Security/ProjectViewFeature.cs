@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -59,11 +60,25 @@ namespace ProjectFirma.Web.Security
                 if (MultiTenantHelpers.ShowApplicationsToThePublic() && contextModelObject.ProjectApprovalStatus != ProjectApprovalStatus.PendingApproval)
                 {
                     return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
-                }                
+                }
+            }
+
+            // "should only be visible and accessible to the following roles: Program Manager, Admin, Sitka Admin."
+            var limitedVisibilityRoleIDs = new List<int> {Role.Admin.RoleID, Role.SitkaAdmin.RoleID, Role.ProjectSteward.RoleID};
+            bool projectCanOnlyBeSeenByAdmins = contextModelObject.ProjectType.LimitVisibilityToAdmin;
+            bool personHasAdminRole = limitedVisibilityRoleIDs.Contains(person.Role.RoleID);
+            if (projectCanOnlyBeSeenByAdmins && !personHasAdminRole)
+            {
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
             }
 
             // Allowed
             return PermissionCheckResult.MakeSuccessPermissionCheckResult();
+        }
+
+        public List<Project> FilterProjectListToThoseVisibleToUser(List<Project> projects, Person person)
+        {
+            return projects.Where(p => this.HasPermission(person, p).HasPermission).ToList();
         }
     }
 }

@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
 
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ProjectMap);
 
-            var projectsToShow = ProjectMapCustomization.ProjectsForMap(currentPersonCanViewProposals);
+            var projectsToShow = ProjectMapCustomization.ProjectsForMap(CurrentPerson);
 
             var initialCustomization =
                 new ProjectMapCustomization(projectLocationFilterType, filterValues, colorByValue);
@@ -185,7 +185,7 @@ namespace ProjectFirma.Web.Controllers
             var filterFunction =
                 projectLocationFilterTypeFromFilterPropertyName.GetFilterFunction(projectMapCustomization
                     .FilterPropertyValues);
-            var allProjectsForMap = ProjectMapCustomization.ProjectsForMap(CurrentPerson.CanViewProposals);
+            var allProjectsForMap = ProjectMapCustomization.ProjectsForMap(CurrentPerson);
             var filteredProjects = allProjectsForMap.Where(filterFunction.Compile())
                 .ToList();
 

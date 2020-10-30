@@ -81,7 +81,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantModificationFileResource> GrantModificationFileResources { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
-        public virtual DbSet<GrantModificationPurpose> GrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModification> GrantModifications { get; set; }
         public virtual DbSet<GrantModificationStatus> GrantModificationStatuses { get; set; }
         public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
@@ -497,7 +496,9 @@ namespace ProjectFirma.Web.Models
                     return GrantModificationNoteInternals.GetGrantModificationNoteInternal(primaryKey);
 
                 case "GrantModificationPurpose":
-                    return GrantModificationPurposes.GetGrantModificationPurpose(primaryKey);
+                    var grantModificationPurpose = GrantModificationPurpose.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(grantModificationPurpose, "GrantModificationPurpose", primaryKey);
+                    return grantModificationPurpose;
 
                 case "GrantModification":
                     return GrantModifications.GetGrantModification(primaryKey);

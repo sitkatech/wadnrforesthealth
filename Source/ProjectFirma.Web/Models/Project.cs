@@ -133,8 +133,16 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Person GetPrimaryContact() => PrimaryContactPerson ??
-                                             GetPrimaryContactOrganization()?.PrimaryContactPerson;
+        public Person GetPrimaryContact()
+        {
+            var primaryContact = this.ProjectPeople.SingleOrDefault(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrimaryContact.ProjectPersonRelationshipTypeID);
+            if (primaryContact != null)
+            {
+                return primaryContact.Person;
+            }
+
+            return GetPrimaryContactOrganization()?.PrimaryContactPerson;
+        }
 
         //public decimal? UnfundedNeed()
         //{
@@ -303,7 +311,7 @@ namespace ProjectFirma.Web.Models
             if (HasProjectLocationPoint)
             {
                 var stateProvince = stateProvinces.FirstOrDefault(x =>
-                    x.StateProvinceFeatureForAnalysis.Intersects(ProjectLocationPoint));
+                    x.StateProvinceFeature != null && x.StateProvinceFeature.Intersects(ProjectLocationPoint));
                 ProjectLocationStateProvince = stateProvince != null
                     ? stateProvince.StateProvinceAbbreviation
                     : ViewUtilities.NaString;

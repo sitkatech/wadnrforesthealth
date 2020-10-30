@@ -52,6 +52,8 @@ namespace ProjectFirma.Web.Views.ProjectType
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 90);
             Add($"# of {Models.FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized()}", a => a.ProjectTypePerformanceMeasures.Count, 90);
             Add("Sort Order", a => a.ProjectTypeSortOrder, 90, DhtmlxGridColumnFormatType.None);
+
+            Add($"{Models.FieldDefinition.LimitVisibilityToAdmin.GetFieldDefinitionLabel()}", a => a.LimitVisibilityToAdmin.ToYesNo(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

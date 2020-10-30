@@ -27,6 +27,7 @@ using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
 using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Models
 {
@@ -90,38 +91,40 @@ namespace ProjectFirma.Web.Models
             }).ToList();
         }
 
-        public static List<Project> GetAllAssociatedProjects(this Organization organization)
+        public static List<Project> GetAllAssociatedProjectsForOrgVisibleToUser(this Organization organization, Person currentPerson)
         {
-            return organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationRequests).Select(x => x.Project)
+            var allAsociatedProjects = organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationRequests).Select(x => x.Project)
                 .Union(organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures)
                     .Select(x => x.Project))
                 .Union(organization.ProjectOrganizations.Select(x => x.Project))
                 .ToList();
+            var projectViewFeature = new ProjectViewFeature();
+            return allAsociatedProjects.Where(p => projectViewFeature.HasPermission(currentPerson, p).HasPermission).ToList();
         }
 
-        public static  List<Project> GetAllActiveProjectsAndProposals(this Organization organization, Person person)
+        public static  List<Project> GetAllActiveProjectsAndProposals(this Organization organization, Person currentPerson)
         {
-            return organization.GetAllAssociatedProjects().GetActiveProjectsAndProposals(person.CanViewProposals);
+            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
-        public static List<Project> GetAllActiveProjects(this Organization organization, Person person)
+        public static List<Project> GetAllActiveProjects(this Organization organization, Person currentPerson)
         {
-            return organization.GetAllAssociatedProjects().GetActiveProjects();
+            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsVisibleToUser(currentPerson);
         }
 
-        public static List<Project> GetProposalsVisibleToUser(this Organization organization, Person person)
+        public static List<Project> GetProposalsVisibleToUser(this Organization organization, Person currentPerson)
         {
-            return organization.GetAllAssociatedProjects().GetProposalsVisibleToUser(person);
+            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetProposalsVisibleToUser(currentPerson);
         }
 
-        public static List<Project> GetAllPendingProjects(this Organization organization, Person person)
+        public static List<Project> GetAllPendingProjects(this Organization organization, Person currentPerson)
         {
-            return organization.GetAllAssociatedProjects().GetPendingProjects(person.CanViewPendingProjects);
+            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetPendingProjectsVisibleToUser(currentPerson);
         }
 
-        public static List<Project> GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(this Organization organization, Person person)
+        public static List<Project> GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(this Organization organization, Person currentPerson)
         {
-            var allActiveProjectsAndProposals = organization.GetAllAssociatedProjects().GetActiveProjectsAndProposals(person.CanViewProposals);
+            var allActiveProjectsAndProposals = organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
 
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {

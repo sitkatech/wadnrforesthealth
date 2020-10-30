@@ -40,7 +40,7 @@ public class FirmaSetupFixture
     {
         // This is a *partial* fix for some of the issues discovered when disabling TLS 1.0 as part of the following story: https://projects.sitkatech.com/projects/gemini/cards/4197
         // Allow multiple protocols so that we can connect to more than one endpoint, over time we may need to add Tls13 etc
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
 
         // This is necessary for tests to pass, since many will try to initialize a URL route, and we normally create the route table when the web app starts.
         // So we deliberately build the route table ahead of time.

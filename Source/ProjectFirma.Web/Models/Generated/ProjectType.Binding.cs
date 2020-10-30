@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectType(int projectTypeID, int taxonomyBranchID, string projectTypeName, string projectTypeDescription, string projectTypeCode, string themeColor, int? projectTypeSortOrder) : this()
+        public ProjectType(int projectTypeID, int taxonomyBranchID, string projectTypeName, string projectTypeDescription, string projectTypeCode, string themeColor, int? projectTypeSortOrder, bool limitVisibilityToAdmin) : this()
         {
             this.ProjectTypeID = projectTypeID;
             this.TaxonomyBranchID = taxonomyBranchID;
@@ -42,24 +42,26 @@ namespace ProjectFirma.Web.Models
             this.ProjectTypeCode = projectTypeCode;
             this.ThemeColor = themeColor;
             this.ProjectTypeSortOrder = projectTypeSortOrder;
+            this.LimitVisibilityToAdmin = limitVisibilityToAdmin;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectType(int taxonomyBranchID, string projectTypeName) : this()
+        public ProjectType(int taxonomyBranchID, string projectTypeName, bool limitVisibilityToAdmin) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.TaxonomyBranchID = taxonomyBranchID;
             this.ProjectTypeName = projectTypeName;
+            this.LimitVisibilityToAdmin = limitVisibilityToAdmin;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectType(TaxonomyBranch taxonomyBranch, string projectTypeName) : this()
+        public ProjectType(TaxonomyBranch taxonomyBranch, string projectTypeName, bool limitVisibilityToAdmin) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -67,6 +69,7 @@ namespace ProjectFirma.Web.Models
             this.TaxonomyBranch = taxonomyBranch;
             taxonomyBranch.ProjectTypes.Add(this);
             this.ProjectTypeName = projectTypeName;
+            this.LimitVisibilityToAdmin = limitVisibilityToAdmin;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProjectType CreateNewBlank(TaxonomyBranch taxonomyBranch)
         {
-            return new ProjectType(taxonomyBranch, default(string));
+            return new ProjectType(taxonomyBranch, default(string), default(bool));
         }
 
         /// <summary>
@@ -168,6 +171,7 @@ namespace ProjectFirma.Web.Models
         public string ProjectTypeCode { get; set; }
         public string ThemeColor { get; set; }
         public int? ProjectTypeSortOrder { get; set; }
+        public bool LimitVisibilityToAdmin { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectTypeID; } set { ProjectTypeID = value; } }
 

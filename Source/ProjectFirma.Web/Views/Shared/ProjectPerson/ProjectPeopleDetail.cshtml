@@ -32,7 +32,7 @@
             <th class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.ContactRelationshipType)</th>
             <th class="col-sm-9">@Html.LabelWithSugarFor(FieldDefinition.Contact)</th>
         </tr>
-        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.OrderByDescending(x=>x.IsRequired).ThenBy(x => x.ProjectPersonRelationshipTypeDisplayName))
+        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.Where(x => x.IsViewableByUser(ViewDataTyped.CurrentPerson)).OrderBy(x=>x.SortOrder))
         {
             var projectPeople = ViewDataTyped.AllProjectPeople.Where(x => x.ProjectPersonRelationshipType == relationshipType).OrderBy(x => x.Person.FullNameLastFirst).ToList();
             <tr>

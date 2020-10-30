@@ -1,8 +1,8 @@
 delete from dbo.ProjectPersonRelationshipType
 
 
-insert into dbo.ProjectPersonRelationshipType (ProjectPersonRelationshipTypeID,ProjectPersonRelationshipTypeName,ProjectPersonRelationshipTypeDisplayName, IsRequired, FieldDefinitionID)
+insert into dbo.ProjectPersonRelationshipType (ProjectPersonRelationshipTypeID,ProjectPersonRelationshipTypeName,ProjectPersonRelationshipTypeDisplayName, IsRequired, FieldDefinitionID, IsRestrictedToAdminAndProjectSteward, SortOrder)
 values
-(1, 'PrimaryContact', 'Primary Contact', 1, 275),
-(2,'Landowner','Landowner', 0, 273),
-(3,'Contractor','Contractor', 0, 272)
+(1, 'PrimaryContact', 'Primary Contact', 0, 275,0, 10),
+(2,'PrivateLandowner','Private Landowner', 0, 273,1, 30),
+(3,'Contractor','Contractor', 0, 272,0, 20)

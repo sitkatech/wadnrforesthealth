@@ -79,7 +79,6 @@ namespace ProjectFirma.Web.Models
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
-            project.PrimaryContactPersonID = PrimaryContactPersonID;
         }
 
         public void CommitSimpleLocationToProject(Project project)
@@ -154,7 +153,16 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.ProjectUpdates.Add(projectUpdate);
         }
 
-        public Person GetPrimaryContact() => PrimaryContactPerson ?? GetPrimaryContactOrganization()?.PrimaryContactPerson;
+        public Person GetPrimaryContact()
+        {
+            var primaryContact = this.ProjectUpdateBatch.ProjectPersonUpdates.SingleOrDefault(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrimaryContact.ProjectPersonRelationshipTypeID);
+            if (primaryContact != null)
+            {
+                return primaryContact.Person;
+            }
+
+            return GetPrimaryContactOrganization()?.PrimaryContactPerson;
+        }
 
         public Organization GetPrimaryContactOrganization()
         {

@@ -28,10 +28,10 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
     public class IndexGridSpec : GridSpec<Models.DNRUplandRegion>
     {
-        public IndexGridSpec(Person person)
+        public IndexGridSpec(Person currentPerson)
         {
             Add(Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DNRUplandRegionName), 300, DhtmlxGridColumnFilterType.Html);
-            Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
+            Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 65);
         }
     }
 }

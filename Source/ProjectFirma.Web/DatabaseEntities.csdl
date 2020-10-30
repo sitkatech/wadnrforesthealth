@@ -55,7 +55,6 @@
     <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.GrantModificationFileResource" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantModificationNoteInternal" />
-    <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationPurpose" />
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.GrantModificationStatus" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.GrantNote" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.GrantNoteInternal" />
@@ -587,10 +586,6 @@
       <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantModificationNoteInternals" EntitySet="GrantModificationNoteInternal" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" Association="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
-      <End Role="GrantModificationPurpose" EntitySet="GrantModificationPurpose" />
-      <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
       <End Role="CreatedByPerson" EntitySet="Person" />
       <End Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantModificationNoteInternal" />
@@ -823,10 +818,6 @@
       <End Role="Person" EntitySet="Person" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
     </AssociationSet>
-    <AssociationSet Name="FK_Project_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Project_Person_PrimaryContactPersonID_PersonID">
-      <End Role="PrimaryContactPerson" EntitySet="Person" />
-      <End Role="ProjectsWhereYouAreThePrimaryContactPerson" EntitySet="Project" />
-    </AssociationSet>
     <AssociationSet Name="FK_Project_Person_ProposingPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID">
       <End Role="ProposingPerson" EntitySet="Person" />
       <End Role="ProjectsWhereYouAreTheProposingPerson" EntitySet="Project" />
@@ -874,10 +865,6 @@
     <AssociationSet Name="FK_ProjectPersonUpdate_Person_PersonID" Association="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="ProjectPersonUpdates" EntitySet="ProjectPersonUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID">
-      <End Role="PrimaryContactPerson" EntitySet="Person" />
-      <End Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson" EntitySet="ProjectUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID">
       <End Role="LastUpdatePerson" EntitySet="Person" />
@@ -1556,6 +1543,8 @@
     <Property Name="RelationshipTypeForDefaultOrganizationID" Type="Int32" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInsteadOfTreatments" Type="Boolean" Nullable="false" />
     <Property Name="ProjectDescriptionDefaultText" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ApplyCompletedDateToProject" Type="Boolean" Nullable="false" />
+    <Property Name="ApplyStartDateToProject" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />
@@ -1927,7 +1916,6 @@
     <Property Name="GrantModificationID" Type="Int32" Nullable="false" />
     <Property Name="GrantModificationPurposeID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" FromRole="GrantModificationGrantModificationPurposes" ToRole="GrantModification" />
-    <NavigationProperty Name="GrantModificationPurpose" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" FromRole="GrantModificationGrantModificationPurposes" ToRole="GrantModificationPurpose" />
   </EntityType>
   <EntityType Name="GrantModificationNoteInternal">
     <Key>
@@ -1943,14 +1931,6 @@
     <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" FromRole="GrantModificationNoteInternals" ToRole="GrantModification" />
     <NavigationProperty Name="CreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" ToRole="CreatedByPerson" />
     <NavigationProperty Name="LastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson" ToRole="LastUpdatedByPerson" />
-  </EntityType>
-  <EntityType Name="GrantModificationPurpose">
-    <Key>
-      <PropertyRef Name="GrantModificationPurposeID" />
-    </Key>
-    <Property Name="GrantModificationPurposeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantModificationPurposeName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="GrantModificationGrantModificationPurposes" Relationship="ProjectFirma.Web.Models.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" FromRole="GrantModificationPurpose" ToRole="GrantModificationGrantModificationPurposes" />
   </EntityType>
   <EntityType Name="GrantModificationStatus">
     <Key>
@@ -2344,7 +2324,7 @@
     </Key>
     <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="Email" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="Phone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="RoleID" Type="Int32" Nullable="false" />
@@ -2395,7 +2375,6 @@
     <NavigationProperty Name="PersonStewardOrganizations" Relationship="ProjectFirma.Web.Models.FK_PersonStewardOrganization_Person_PersonID" FromRole="Person" ToRole="PersonStewardOrganizations" />
     <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Person_PersonID" FromRole="Person" ToRole="PersonStewardRegions" />
     <NavigationProperty Name="PersonStewardTaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="Person" ToRole="PersonStewardTaxonomyBranches" />
-    <NavigationProperty Name="ProjectsWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="ProjectsWhereYouAreThePrimaryContactPerson" />
     <NavigationProperty Name="ProjectsWhereYouAreTheProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProposingPerson" ToRole="ProjectsWhereYouAreTheProposingPerson" />
     <NavigationProperty Name="ProjectsWhereYouAreTheReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ReviewedByPerson" ToRole="ProjectsWhereYouAreTheReviewedByPerson" />
     <NavigationProperty Name="ProjectInternalNotesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectInternalNote_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="ProjectInternalNotesWhereYouAreTheCreatePerson" />
@@ -2408,7 +2387,6 @@
     <NavigationProperty Name="ProjectNoteUpdatesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectNoteUpdate_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="ProjectNoteUpdatesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="ProjectPeople" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Person_PersonID" FromRole="Person" ToRole="ProjectPeople" />
     <NavigationProperty Name="ProjectPersonUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_Person_PersonID" FromRole="Person" ToRole="ProjectPersonUpdates" />
-    <NavigationProperty Name="ProjectUpdatesWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="LastUpdatePerson" ToRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" />
     <NavigationProperty Name="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="SupportRequestLogsWhereYouAreTheRequestPerson" Relationship="ProjectFirma.Web.Models.FK_SupportRequestLog_Person_RequestPersonID_PersonID" FromRole="RequestPerson" ToRole="SupportRequestLogsWhereYouAreTheRequestPerson" />
@@ -2461,6 +2439,7 @@
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="PriorityLandscapeDescription" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="PlanYear" Type="Int32" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />
@@ -2508,7 +2487,6 @@
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
-    <Property Name="PrimaryContactPersonID" Type="Int32" />
     <Property Name="ProjectApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="ProposingPersonID" Type="Int32" />
     <Property Name="ProposingDate" Type="DateTime" />
@@ -2535,7 +2513,6 @@
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
     <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
-    <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectsWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProjectsWhereYouAreTheProposingPerson" ToRole="ProposingPerson" />
     <NavigationProperty Name="ReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ProjectsWhereYouAreTheReviewedByPerson" ToRole="ReviewedByPerson" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="Projects" ToRole="ProjectType" />
@@ -3008,6 +2985,7 @@
     <Property Name="ProjectTypeCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="ThemeColor" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
     <Property Name="ProjectTypeSortOrder" Type="Int32" />
+    <Property Name="LimitVisibilityToAdmin" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="Projects" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_ProjectType_TaxonomyBranch_TaxonomyBranchID" FromRole="ProjectTypes" ToRole="TaxonomyBranch" />
     <NavigationProperty Name="ProjectTypePerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="ProjectTypePerformanceMeasures" />
@@ -3048,12 +3026,10 @@
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
-    <Property Name="PrimaryContactPersonID" Type="Int32" />
     <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="ExpirationDate" Type="DateTime" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
-    <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
@@ -3173,10 +3149,16 @@
       <PropertyRef Name="StateProvinceID" />
     </Key>
     <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
-    <Property Name="StateProvinceName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="StateProvinceAbbreviation" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="StateProvinceAbbreviation" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="StateProvinceName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="IsBpaRelevant" Type="Boolean" Nullable="false" />
+    <Property Name="SouthWestLatitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="SouthWestLongitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLatitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLongitude" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="MapObjectID" Type="Int32" />
     <Property Name="StateProvinceFeature" Type="Geometry" />
-    <Property Name="StateProvinceFeatureForAnalysis" Type="Geometry" Nullable="false" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Counties" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="StateProvince" ToRole="Counties" />
   </EntityType>
   <EntityType Name="SupportRequestLog">
@@ -4705,18 +4687,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
-    <End Role="GrantModificationPurpose" Type="ProjectFirma.Web.Models.GrantModificationPurpose" Multiplicity="1" />
-    <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModificationPurpose">
-        <PropertyRef Name="GrantModificationPurposeID" />
-      </Principal>
-      <Dependent Role="GrantModificationGrantModificationPurposes">
-        <PropertyRef Name="GrantModificationPurposeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
     <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
     <End Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.GrantModificationNoteInternal" Multiplicity="*" />
@@ -5413,18 +5383,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Project_Person_PrimaryContactPersonID_PersonID">
-    <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="ProjectsWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PrimaryContactPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="ProjectsWhereYouAreThePrimaryContactPerson">
-        <PropertyRef Name="PrimaryContactPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Project_Person_ProposingPersonID_PersonID">
     <End Role="ProposingPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
     <End Role="ProjectsWhereYouAreTheProposingPerson" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
@@ -5566,18 +5524,6 @@
       </Principal>
       <Dependent Role="ProjectPersonUpdates">
         <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID">
-    <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.ProjectUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PrimaryContactPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson">
-        <PropertyRef Name="PrimaryContactPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

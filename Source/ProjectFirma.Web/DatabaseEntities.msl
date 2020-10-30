@@ -353,6 +353,8 @@
           <ScalarProperty Name="RelationshipTypeForDefaultOrganizationID" ColumnName="RelationshipTypeForDefaultOrganizationID" />
           <ScalarProperty Name="ImportAsDetailedLocationInsteadOfTreatments" ColumnName="ImportAsDetailedLocationInsteadOfTreatments" />
           <ScalarProperty Name="ProjectDescriptionDefaultText" ColumnName="ProjectDescriptionDefaultText" />
+          <ScalarProperty Name="ApplyCompletedDateToProject" ColumnName="ApplyCompletedDateToProject" />
+          <ScalarProperty Name="ApplyStartDateToProject" ColumnName="ApplyStartDateToProject" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -681,14 +683,6 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantModificationPurpose">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationPurpose">
-        <MappingFragment StoreEntitySet="GrantModificationPurpose">
-          <ScalarProperty Name="GrantModificationPurposeID" ColumnName="GrantModificationPurposeID" />
-          <ScalarProperty Name="GrantModificationPurposeName" ColumnName="GrantModificationPurposeName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1083,6 +1077,7 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
+          <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1127,7 +1122,6 @@
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="ProjectApprovalStatusID" ColumnName="ProjectApprovalStatusID" />
           <ScalarProperty Name="ProposingPersonID" ColumnName="ProposingPersonID" />
           <ScalarProperty Name="ProposingDate" ColumnName="ProposingDate" />
@@ -1560,6 +1554,7 @@
           <ScalarProperty Name="ProjectTypeCode" ColumnName="ProjectTypeCode" />
           <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
           <ScalarProperty Name="ProjectTypeSortOrder" ColumnName="ProjectTypeSortOrder" />
+          <ScalarProperty Name="LimitVisibilityToAdmin" ColumnName="LimitVisibilityToAdmin" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1595,7 +1590,6 @@
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
@@ -1697,10 +1691,16 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.StateProvince">
         <MappingFragment StoreEntitySet="StateProvince">
           <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
-          <ScalarProperty Name="StateProvinceName" ColumnName="StateProvinceName" />
           <ScalarProperty Name="StateProvinceAbbreviation" ColumnName="StateProvinceAbbreviation" />
+          <ScalarProperty Name="StateProvinceName" ColumnName="StateProvinceName" />
+          <ScalarProperty Name="IsBpaRelevant" ColumnName="IsBpaRelevant" />
+          <ScalarProperty Name="SouthWestLatitude" ColumnName="SouthWestLatitude" />
+          <ScalarProperty Name="SouthWestLongitude" ColumnName="SouthWestLongitude" />
+          <ScalarProperty Name="NorthEastLatitude" ColumnName="NorthEastLatitude" />
+          <ScalarProperty Name="NorthEastLongitude" ColumnName="NorthEastLongitude" />
+          <ScalarProperty Name="MapObjectID" ColumnName="MapObjectID" />
           <ScalarProperty Name="StateProvinceFeature" ColumnName="StateProvinceFeature" />
-          <ScalarProperty Name="StateProvinceFeatureForAnalysis" ColumnName="StateProvinceFeatureForAnalysis" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -50,6 +50,12 @@ namespace ProjectFirma.Web.Models
             return EditUrlTemplate.ParameterReplace(grant.GrantID);
         }
 
+        public static readonly UrlTemplate<int> DuplicateUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.Duplicate(UrlTemplate.Parameter1Int)));
+        public static string GetDuplicateUrl(this Grant grant)
+        {
+            return DuplicateUrlTemplate.ParameterReplace(grant.GrantID);
+        }
+
         public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.NewGrantNote(UrlTemplate.Parameter1Int)));
         public static string GetNewNoteUrl(this Grant grant)
         {

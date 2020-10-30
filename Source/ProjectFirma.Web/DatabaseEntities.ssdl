@@ -55,7 +55,6 @@
     <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantModificationFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.Store.GrantModificationStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
@@ -492,10 +491,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
-      <End Role="GrantModificationPurpose" EntitySet="GrantModificationPurpose" />
-      <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantModificationNoteInternals" EntitySet="GrantModificationNoteInternal" />
@@ -771,10 +766,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="LastUpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" EntitySet="Project" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Project_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Project_Person_PrimaryContactPersonID_PersonID">
-      <End Role="PrimaryContactPerson" EntitySet="Person" />
-      <End Role="ProjectsWhereYouAreThePrimaryContactPerson" EntitySet="Project" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_Person_ProposingPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Project_Person_ProposingPersonID_PersonID">
       <End Role="ProposingPerson" EntitySet="Person" />
@@ -1075,10 +1066,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID">
-      <End Role="PrimaryContactPerson" EntitySet="Person" />
-      <End Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson" EntitySet="ProjectUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1463,6 +1450,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="RelationshipTypeForDefaultOrganizationID" Type="int" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInsteadOfTreatments" Type="bit" Nullable="false" />
     <Property Name="ProjectDescriptionDefaultText" Type="varchar" MaxLength="4000" />
+    <Property Name="ApplyCompletedDateToProject" Type="bit" Nullable="false" />
+    <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -1769,13 +1758,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="LastUpdatedByPersonID" Type="int" />
     <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantModificationPurpose">
-    <Key>
-      <PropertyRef Name="GrantModificationPurposeID" />
-    </Key>
-    <Property Name="GrantModificationPurposeID" Type="int" Nullable="false" />
-    <Property Name="GrantModificationPurposeName" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="GrantModificationStatus">
     <Key>
@@ -2093,7 +2075,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="PersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
     <Property Name="Email" Type="varchar" MaxLength="255" />
     <Property Name="Phone" Type="varchar" MaxLength="30" />
     <Property Name="RoleID" Type="int" Nullable="false" />
@@ -2151,6 +2133,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="PriorityLandscapeLocation" Type="geometry" />
     <Property Name="PriorityLandscapeDescription" Type="varchar(max)" />
+    <Property Name="PlanYear" Type="int" />
   </EntityType>
   <EntityType Name="PriorityLandscapeFileResource">
     <Key>
@@ -2192,7 +2175,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
-    <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="ProjectApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="ProposingPersonID" Type="int" />
     <Property Name="ProposingDate" Type="datetime" />
@@ -2587,6 +2569,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectTypeCode" Type="varchar" MaxLength="10" />
     <Property Name="ThemeColor" Type="varchar" MaxLength="7" />
     <Property Name="ProjectTypeSortOrder" Type="int" />
+    <Property Name="LimitVisibilityToAdmin" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectTypePerformanceMeasure">
     <Key>
@@ -2619,7 +2602,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
-    <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="FocusAreaID" Type="int" />
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
@@ -2715,10 +2697,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="StateProvinceID" />
     </Key>
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
-    <Property Name="StateProvinceName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="StateProvinceAbbreviation" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="StateProvinceAbbreviation" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="StateProvinceName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsBpaRelevant" Type="bit" Nullable="false" />
+    <Property Name="SouthWestLatitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="SouthWestLongitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLatitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="NorthEastLongitude" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="MapObjectID" Type="int" />
     <Property Name="StateProvinceFeature" Type="geometry" />
-    <Property Name="StateProvinceFeatureForAnalysis" Type="geometry" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SupportRequestLog">
     <Key>
@@ -3901,18 +3889,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
-    <End Role="GrantModificationPurpose" Type="ProjectFirma.Web.Models.Store.GrantModificationPurpose" Multiplicity="1" />
-    <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModificationPurpose">
-        <PropertyRef Name="GrantModificationPurposeID" />
-      </Principal>
-      <Dependent Role="GrantModificationGrantModificationPurposes">
-        <PropertyRef Name="GrantModificationPurposeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
     <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
     <End Role="GrantModificationNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
@@ -4742,18 +4718,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt">
         <PropertyRef Name="LastUpdateGisUploadAttemptID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Project_Person_PrimaryContactPersonID_PersonID">
-    <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="ProjectsWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PrimaryContactPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="ProjectsWhereYouAreThePrimaryContactPerson">
-        <PropertyRef Name="PrimaryContactPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5657,18 +5621,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID">
-    <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PrimaryContactPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson">
-        <PropertyRef Name="PrimaryContactPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="*" />
@@ -5960,6 +5912,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     <Parameter Name="machineBurnAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="broadcastBurnAcresMetadataAttributeID" Type="int" Mode="In" />
     <Parameter Name="otherBurnAcresMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="startDateMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="endDateMetadataAttributeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

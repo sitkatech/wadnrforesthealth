@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="IndexGridSpec.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="GrantModificationGridSpec.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -72,6 +72,11 @@ namespace ProjectFirma.Web.Views.Grant
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
                                                                     new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.GrantModificationName}"),
                                                                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
+            }
+
+            if (userHasCreatePermissions && grantToAssociate != null)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{x.GrantModificationName}\" to New {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}"), 30, DhtmlxGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);

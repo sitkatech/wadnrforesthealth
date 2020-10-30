@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
             var priorityLandscape = priorityLandscapePrimaryKey.EntityObject;
             var mapDivID = $"priorityLandscape_{priorityLandscape.PriorityLandscapeID}_Map";
 
-            var associatedProjects = priorityLandscape.GetAssociatedProjects(CurrentPerson);
+            var associatedProjects = priorityLandscape.GetAssociatedProjectsVisibleToUser(CurrentPerson);
             var layers = PriorityLandscape.GetPriorityLandscapeAndAssociatedProjectLayers(priorityLandscape, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(priorityLandscape.PriorityLandscapeLocation));
 
@@ -118,8 +118,9 @@ namespace ProjectFirma.Web.Controllers
         [PriorityLandscapeViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PriorityLandscapePrimaryKey priorityLandscapePrimaryKey)
         {
-            var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);
-            var projectPriorityLandscapes = priorityLandscapePrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false);
+            var priorityLandscape = priorityLandscapePrimaryKey.EntityObject;
+            var projectPriorityLandscapes = priorityLandscape.GetAssociatedProjectsVisibleToUser(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectPriorityLandscapes, gridSpec);
             return gridJsonNetJObjectResult;
         }

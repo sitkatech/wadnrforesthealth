@@ -1,0 +1,1 @@
+ALTER TABLE dbo.Person ALTER COLUMN LastName varchar(100) null

@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Models
     public abstract partial class ProjectPersonRelationshipType : IHavePrimaryKey
     {
         public static readonly ProjectPersonRelationshipTypePrimaryContact PrimaryContact = ProjectPersonRelationshipTypePrimaryContact.Instance;
-        public static readonly ProjectPersonRelationshipTypeLandowner Landowner = ProjectPersonRelationshipTypeLandowner.Instance;
+        public static readonly ProjectPersonRelationshipTypePrivateLandowner PrivateLandowner = ProjectPersonRelationshipTypePrivateLandowner.Instance;
         public static readonly ProjectPersonRelationshipTypeContractor Contractor = ProjectPersonRelationshipTypeContractor.Instance;
 
         public static readonly List<ProjectPersonRelationshipType> All;
@@ -31,20 +31,22 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectPersonRelationshipType()
         {
-            All = new List<ProjectPersonRelationshipType> { PrimaryContact, Landowner, Contractor };
+            All = new List<ProjectPersonRelationshipType> { PrimaryContact, PrivateLandowner, Contractor };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectPersonRelationshipType>(All.ToDictionary(x => x.ProjectPersonRelationshipTypeID));
         }
 
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired)
+        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder)
         {
             ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
             ProjectPersonRelationshipTypeName = projectPersonRelationshipTypeName;
             ProjectPersonRelationshipTypeDisplayName = projectPersonRelationshipTypeDisplayName;
             FieldDefinitionID = fieldDefinitionID;
             IsRequired = isRequired;
+            IsRestrictedToAdminAndProjectSteward = isRestrictedToAdminAndProjectSteward;
+            SortOrder = sortOrder;
         }
         public FieldDefinition FieldDefinition { get { return FieldDefinition.AllLookupDictionary[FieldDefinitionID]; } }
         [Key]
@@ -53,6 +55,8 @@ namespace ProjectFirma.Web.Models
         public string ProjectPersonRelationshipTypeDisplayName { get; private set; }
         public int FieldDefinitionID { get; private set; }
         public bool IsRequired { get; private set; }
+        public bool IsRestrictedToAdminAndProjectSteward { get; private set; }
+        public int SortOrder { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectPersonRelationshipTypeID; } }
 
@@ -107,10 +111,10 @@ namespace ProjectFirma.Web.Models
             {
                 case ProjectPersonRelationshipTypeEnum.Contractor:
                     return Contractor;
-                case ProjectPersonRelationshipTypeEnum.Landowner:
-                    return Landowner;
                 case ProjectPersonRelationshipTypeEnum.PrimaryContact:
                     return PrimaryContact;
+                case ProjectPersonRelationshipTypeEnum.PrivateLandowner:
+                    return PrivateLandowner;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -120,25 +124,25 @@ namespace ProjectFirma.Web.Models
     public enum ProjectPersonRelationshipTypeEnum
     {
         PrimaryContact = 1,
-        Landowner = 2,
+        PrivateLandowner = 2,
         Contractor = 3
     }
 
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired) {}
-        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, true);
+        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, false, false, 10);
     }
 
-    public partial class ProjectPersonRelationshipTypeLandowner : ProjectPersonRelationshipType
+    public partial class ProjectPersonRelationshipTypePrivateLandowner : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired) {}
-        public static readonly ProjectPersonRelationshipTypeLandowner Instance = new ProjectPersonRelationshipTypeLandowner(2, @"Landowner", @"Landowner", 273, false);
+        private ProjectPersonRelationshipTypePrivateLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypePrivateLandowner Instance = new ProjectPersonRelationshipTypePrivateLandowner(2, @"PrivateLandowner", @"Private Landowner", 273, false, true, 30);
     }
 
     public partial class ProjectPersonRelationshipTypeContractor : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired) {}
-        public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false);
+        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false, false, 20);
     }
 }

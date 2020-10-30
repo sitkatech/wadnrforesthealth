@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
             var projectType = projectTypePrimaryKey.EntityObject;
             var currentPersonCanViewProposals = CurrentPerson.CanViewProposals;
 
-            var projectTypeProjects = projectType.Projects.ToList().GetActiveProjectsAndProposals(currentPersonCanViewProposals).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
+            var projectTypeProjects = projectType.Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(CurrentPerson).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
 
             var projectMapCustomization = new ProjectMapCustomization(ProjectLocationFilterType.ProjectType,
                 new List<int> {projectType.ProjectTypeID}, ProjectColorByType.ProjectStage);
@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewNew(viewModel);
             }
 
-            var projectType = new ProjectType(viewModel.TaxonomyBranchID, string.Empty);
+            var projectType = new ProjectType(viewModel.TaxonomyBranchID, string.Empty, false);
             viewModel.UpdateModel(projectType, CurrentPerson);
             HttpRequestStorage.DatabaseEntities.ProjectTypes.Add(projectType);
 

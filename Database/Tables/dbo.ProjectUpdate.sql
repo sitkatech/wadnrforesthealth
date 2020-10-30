@@ -13,7 +13,6 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[ProjectLocationNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
-	[PrimaryContactPersonID] [int] NULL,
 	[FocusAreaID] [int] NULL,
 	[ExpirationDate] [datetime] NULL,
 	[ProjectFundingSourceNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -32,11 +31,6 @@ ALTER TABLE [dbo].[ProjectUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectUpdate_
 REFERENCES [dbo].[FocusArea] ([FocusAreaID])
 GO
 ALTER TABLE [dbo].[ProjectUpdate] CHECK CONSTRAINT [FK_ProjectUpdate_FocusArea_FocusAreaID]
-GO
-ALTER TABLE [dbo].[ProjectUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID] FOREIGN KEY([PrimaryContactPersonID])
-REFERENCES [dbo].[Person] ([PersonID])
-GO
-ALTER TABLE [dbo].[ProjectUpdate] CHECK CONSTRAINT [FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID]
 GO
 ALTER TABLE [dbo].[ProjectUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectUpdate_ProjectLocationSimpleType_ProjectLocationSimpleTypeID] FOREIGN KEY([ProjectLocationSimpleTypeID])
 REFERENCES [dbo].[ProjectLocationSimpleType] ([ProjectLocationSimpleTypeID])

@@ -18,6 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Common
@@ -38,30 +39,39 @@ Source code is available upon request via <support@sitkatech.com>.
 </style>
 
 <div id="taxonomyBasicsPanel">
-    @{
+   @{
 
-        if (ViewDataTyped.ProjectType != null)
-        {
-            <div class="row taxonomyRow">
-                <div class="col-sm-3 taxonomyBasicsPanelLabel">
-                    @Html.LabelWithSugarFor(FieldDefinition.ProjectType, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
-                </div>
-                <div class="col-sm-9">
-                    <span class="taxonomyLink@(ViewDataTyped.IsProjectType ? " selected" : string.Empty)">@(ViewDataTyped.IsProjectType ? new HtmlString(ViewDataTyped.ProjectType.DisplayName) : ViewDataTyped.ProjectType.GetDisplayNameAsUrl())</span>
-                </div>
+      if (ViewDataTyped.ProjectType != null)
+      {
+         <div class="row taxonomyRow">
+            <div class="col-sm-3 taxonomyBasicsPanelLabel">
+               @Html.LabelWithSugarFor(FieldDefinition.ProjectType, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
             </div>
-        }
+            <div class="col-sm-9">
+               <span class="taxonomyLink@(ViewDataTyped.IsProjectType ? " selected" : string.Empty)">@(ViewDataTyped.IsProjectType ? new HtmlString(ViewDataTyped.ProjectType.DisplayName) : ViewDataTyped.ProjectType.GetDisplayNameAsUrl())</span>
+            </div>
+         </div>
 
-        if (ViewDataTyped.Project != null)
-        {
-            <div class="row taxonomyRow">
-                <div class="col-sm-3 taxonomyBasicsPanelLabel">
-                    @Html.LabelWithSugarFor(FieldDefinition.Project, string.Format("{0}", FieldDefinition.ProjectName.GetFieldDefinitionLabel()))
-                </div>
-                <div class="col-sm-9">
-                    <span class="taxonomyLink selected">@ViewDataTyped.Project.DisplayName</span>
-                </div>
+         <div class="row taxonomyRow">
+            <div class="col-sm-3 taxonomyBasicsPanelLabel">
+               @Html.LabelWithSugarFor(FieldDefinition.LimitVisibilityToAdmin, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
             </div>
-        }
-    }
+            <div class="col-sm-9">
+               <span class="taxonomyLink selected">@ViewDataTyped.ProjectType.LimitVisibilityToAdmin.ToYesNo()</span>
+            </div>
+         </div>
+      }
+
+      if (ViewDataTyped.Project != null)
+      {
+         <div class="row taxonomyRow">
+            <div class="col-sm-3 taxonomyBasicsPanelLabel">
+               @Html.LabelWithSugarFor(FieldDefinition.Project, string.Format("{0}", FieldDefinition.ProjectName.GetFieldDefinitionLabel()))
+            </div>
+            <div class="col-sm-9">
+               <span class="taxonomyLink selected">@ViewDataTyped.Project.DisplayName</span>
+            </div>
+         </div>
+      }
+   }
 </div>

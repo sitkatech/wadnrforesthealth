@@ -61,8 +61,6 @@ namespace ProjectFirma.Web.Models
             this.GrantModification = grantModification;
             grantModification.GrantModificationGrantModificationPurposes.Add(this);
             this.GrantModificationPurposeID = grantModificationPurpose.GrantModificationPurposeID;
-            this.GrantModificationPurpose = grantModificationPurpose;
-            grantModificationPurpose.GrantModificationGrantModificationPurposes.Add(this);
         }
 
         /// <summary>
@@ -123,7 +121,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantModificationGrantModificationPurposeID; } set { GrantModificationGrantModificationPurposeID = value; } }
 
         public virtual GrantModification GrantModification { get; set; }
-        public virtual GrantModificationPurpose GrantModificationPurpose { get; set; }
+        public GrantModificationPurpose GrantModificationPurpose { get { return GrantModificationPurpose.AllLookupDictionary[GrantModificationPurposeID]; } }
 
         public static class FieldLengths
         {

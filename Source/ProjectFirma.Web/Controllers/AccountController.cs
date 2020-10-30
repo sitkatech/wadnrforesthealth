@@ -155,8 +155,9 @@ namespace ProjectFirma.Web.Controllers
                 // new user - initially provision with limited Role.Unassigned
                 SitkaHttpApplication.Logger.Info($"In {nameof(ProcessLogin)} - Creating new Person. [{userDetailsStringForLogging}]");
                 
-                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false)
+                person = new Person(firstName, Role.Unassigned.RoleID, DateTime.Now, true, false)
                 {
+                    LastName = lastName,
                     Email = email,
                     OrganizationID = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization().OrganizationID
                 };

@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[Project](
 	[ProjectLocationNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
-	[PrimaryContactPersonID] [int] NULL,
 	[ProjectApprovalStatusID] [int] NOT NULL,
 	[ProposingPersonID] [int] NULL,
 	[ProposingDate] [datetime] NULL,
@@ -61,11 +60,6 @@ REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID]
 GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_PersonID] FOREIGN KEY([PrimaryContactPersonID])
-REFERENCES [dbo].[Person] ([PersonID])
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_PersonID]
-GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_ProposingPersonID_PersonID] FOREIGN KEY([ProposingPersonID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
@@ -95,10 +89,6 @@ ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_ProjectType_
 REFERENCES [dbo].[ProjectType] ([ProjectTypeID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_ProjectType_ProjectTypeID]
-GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation] CHECK  ((([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionDate] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4))))
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ProjectCannotHaveProjectStageProposalAndApprovalStatusApproved] CHECK  (([ProjectStageID]<>(1) OR [ProjectApprovalStatusID]<>(3)))
 GO

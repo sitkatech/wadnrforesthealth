@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[ProjectType](
 	[ProjectTypeCode] [varchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ThemeColor] [varchar](7) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectTypeSortOrder] [int] NULL,
+	[LimitVisibilityToAdmin] [bit] NOT NULL,
  CONSTRAINT [PK_ProjectType_ProjectTypeID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectTypeID] ASC
