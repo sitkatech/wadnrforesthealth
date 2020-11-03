@@ -313,6 +313,14 @@ namespace LtInfo.Common
             // note - this is set to allow maximum precision, there are no more fractions available
             return (dateTime.HasValue) ? dateTime.Value.ToString("MM/dd/yyyy HH:mm:ss.fffffff") : String.Empty;
         }
+        public static string ToStringDateTimeForFileName(this DateTime dateTime)
+        {
+            return ((DateTime?)dateTime).ToStringDateTimeForFileName();
+        }
+        public static string ToStringDateTimeForFileName(this DateTime? dateTime)
+        {
+            return (dateTime.HasValue) ? dateTime.Value.ToString("MM.dd.yyyy-h.mmtt") : String.Empty;
+        }
 
         public static bool TryParsePhoneNumber(string input, out string phoneNumber)
         {
