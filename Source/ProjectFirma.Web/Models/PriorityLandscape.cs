@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Models
         public Feature MakeFeatureWithRelevantProperties()
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(PriorityLandscapeLocation);
-            feature.Properties.Add("PriorityLandscape", GetDisplayNameAsUrl().ToString());
+            feature.Properties.Add("Priority Landscape", GetDisplayNameAsUrl().ToString());
             return feature;
         }
 
