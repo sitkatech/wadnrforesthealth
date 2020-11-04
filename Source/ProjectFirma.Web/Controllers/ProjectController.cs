@@ -532,7 +532,7 @@ namespace ProjectFirma.Web.Controllers
                 "Pending Projects");
         }
 
-        private ExcelResult FullDatabaseExcelDownloadImpl(List<Project> projects, string workbookTitle)
+        private ExcelResult FullDatabaseExcelDownloadImpl(List<Project> projects, string workbookTitleWithoutDate)
         {
             var projectsSpec = new ProjectExcelSpec();
             var wsProjects = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", projectsSpec, projects);
@@ -588,7 +588,7 @@ namespace ProjectFirma.Web.Controllers
             var wbm = new ExcelWorkbookMaker(workSheets);
             var excelWorkbook = wbm.ToXLWorkbook();
 
-            return new ExcelResult(excelWorkbook, workbookTitle);
+            return new ExcelResult(excelWorkbook, $"{workbookTitleWithoutDate}-{DateTime.Now.ToStringDateTimeForFileName()}");
         }
 
         [HttpGet]
