@@ -17,11 +17,11 @@ insert into dbo.GisUploadSourceOrganization (GisUploadSourceOrganizationName
 
 
 select 'WA State Parks'
+, 'Integrated forest health project'
 , null
-, null
 , 0
 , 0
-, 0
+, 1
 , 3
 , 1
 , 5793

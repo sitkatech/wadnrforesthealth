@@ -36,6 +36,7 @@ namespace ProjectFirma.Web.Models
         public static readonly TreatmentDetailedActivityTypeMachinePile MachinePile = TreatmentDetailedActivityTypeMachinePile.Instance;
         public static readonly TreatmentDetailedActivityTypeFuelBreak FuelBreak = TreatmentDetailedActivityTypeFuelBreak.Instance;
         public static readonly TreatmentDetailedActivityTypePlanting Planting = TreatmentDetailedActivityTypePlanting.Instance;
+        public static readonly TreatmentDetailedActivityTypeBrushControl BrushControl = TreatmentDetailedActivityTypeBrushControl.Instance;
 
         public static readonly List<TreatmentDetailedActivityType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentDetailedActivityType> AllLookupDictionary;
@@ -45,7 +46,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentDetailedActivityType()
         {
-            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile, FuelBreak, Planting };
+            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile, FuelBreak, Planting, BrushControl };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentDetailedActivityType>(All.ToDictionary(x => x.TreatmentDetailedActivityTypeID));
         }
 
@@ -119,6 +120,8 @@ namespace ProjectFirma.Web.Models
                     return BiomassRemoval;
                 case TreatmentDetailedActivityTypeEnum.BroadcastBurn:
                     return BroadcastBurn;
+                case TreatmentDetailedActivityTypeEnum.BrushControl:
+                    return BrushControl;
                 case TreatmentDetailedActivityTypeEnum.Chipping:
                     return Chipping;
                 case TreatmentDetailedActivityTypeEnum.FuelBreak:
@@ -173,7 +176,8 @@ namespace ProjectFirma.Web.Models
         JackpotBurn = 14,
         MachinePile = 15,
         FuelBreak = 16,
-        Planting = 17
+        Planting = 17,
+        BrushControl = 18
     }
 
     public partial class TreatmentDetailedActivityTypeChipping : TreatmentDetailedActivityType
@@ -276,5 +280,11 @@ namespace ProjectFirma.Web.Models
     {
         private TreatmentDetailedActivityTypePlanting(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
         public static readonly TreatmentDetailedActivityTypePlanting Instance = new TreatmentDetailedActivityTypePlanting(17, @"Planting", @"Planting");
+    }
+
+    public partial class TreatmentDetailedActivityTypeBrushControl : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypeBrushControl(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypeBrushControl Instance = new TreatmentDetailedActivityTypeBrushControl(18, @"BrushControl", @"Brush Control");
     }
 }
