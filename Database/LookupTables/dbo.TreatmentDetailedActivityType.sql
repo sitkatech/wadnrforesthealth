@@ -19,4 +19,5 @@ values
 (14, 'JackpotBurn', 'Jackpot Burn'),
 (15, 'MachinePile', 'Machine Pile'),
 (16, 'FuelBreak', 'Fuel Break'),
-(17, 'Planting', 'Planting')
+(17, 'Planting', 'Planting'),
+(18, 'BrushControl', 'Brush Control')
