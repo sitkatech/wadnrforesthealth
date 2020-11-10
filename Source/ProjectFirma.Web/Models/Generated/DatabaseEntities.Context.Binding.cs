@@ -40,6 +40,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
         public virtual DbSet<CostTypeDatamartMapping> CostTypeDatamartMappings { get; set; }
         public virtual DbSet<County> Counties { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
         public virtual DbSet<DNRUplandRegion> DNRUplandRegions { get; set; }
@@ -301,6 +302,9 @@ namespace ProjectFirma.Web.Models
 
                 case "County":
                     return Counties.GetCounty(primaryKey);
+
+                case "Country":
+                    return Countries.GetCountry(primaryKey);
 
                 case "CustomPageDisplayType":
                     var customPageDisplayType = CustomPageDisplayType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

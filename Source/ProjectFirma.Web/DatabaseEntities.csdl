@@ -11,6 +11,7 @@
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
     <EntitySet Name="CostTypeDatamartMapping" EntityType="ProjectFirma.Web.Models.CostTypeDatamartMapping" />
+    <EntitySet Name="Country" EntityType="ProjectFirma.Web.Models.Country" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
@@ -213,6 +214,10 @@
     <AssociationSet Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
       <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.FK_StateProvince_Country_CountryID">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="StateProvinces" EntitySet="StateProvince" />
     </AssociationSet>
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
@@ -1268,6 +1273,15 @@
     <Property Name="DatamartObjectName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="DatamartSubObjectCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="DatamartSubObjectName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CountryName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="CountryAbbrev" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="StateProvinces" Relationship="ProjectFirma.Web.Models.FK_StateProvince_Country_CountryID" FromRole="Country" ToRole="StateProvinces" />
   </EntityType>
   <EntityType Name="County">
     <Key>
@@ -3159,6 +3173,7 @@
     <Property Name="MapObjectID" Type="Int32" />
     <Property Name="StateProvinceFeature" Type="Geometry" />
     <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Country" Relationship="ProjectFirma.Web.Models.FK_StateProvince_Country_CountryID" FromRole="StateProvinces" ToRole="Country" />
     <NavigationProperty Name="Counties" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="StateProvince" ToRole="Counties" />
   </EntityType>
   <EntityType Name="SupportRequestLog">
@@ -3562,6 +3577,18 @@
       </Principal>
       <Dependent Role="ClassificationPerformanceMeasures">
         <PropertyRef Name="PerformanceMeasureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StateProvince_Country_CountryID">
+    <End Role="Country" Type="ProjectFirma.Web.Models.Country" Multiplicity="1" />
+    <End Role="StateProvinces" Type="ProjectFirma.Web.Models.StateProvince" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="StateProvinces">
+        <PropertyRef Name="CountryID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

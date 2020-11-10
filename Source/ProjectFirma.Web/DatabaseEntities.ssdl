@@ -11,6 +11,7 @@
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ClassificationPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.Store.ClassificationSystem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CostTypeDatamartMapping" EntityType="ProjectFirma.Web.Models.Store.CostTypeDatamartMapping" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Country" EntityType="ProjectFirma.Web.Models.Store.Country" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
@@ -1087,6 +1088,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdateHistories" EntitySet="ProjectUpdateHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.Store.FK_StateProvince_Country_CountryID">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="StateProvinces" EntitySet="StateProvince" />
+    </AssociationSet>
     <AssociationSet Name="FK_SupportRequestLog_Person_RequestPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_SupportRequestLog_Person_RequestPersonID_PersonID">
       <End Role="RequestPerson" EntitySet="Person" />
       <End Role="SupportRequestLogsWhereYouAreTheRequestPerson" EntitySet="SupportRequestLog" />
@@ -1238,6 +1243,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="DatamartObjectName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="DatamartSubObjectCode" Type="varchar" Nullable="false" MaxLength="10" />
     <Property Name="DatamartSubObjectName" Type="varchar" Nullable="false" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="CountryAbbrev" Type="varchar" Nullable="false" MaxLength="2" />
   </EntityType>
   <EntityType Name="County">
     <Key>
@@ -5678,6 +5691,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="ProjectUpdateHistories">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StateProvince_Country_CountryID">
+    <End Role="Country" Type="ProjectFirma.Web.Models.Store.Country" Multiplicity="1" />
+    <End Role="StateProvinces" Type="ProjectFirma.Web.Models.Store.StateProvince" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="StateProvinces">
+        <PropertyRef Name="CountryID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
