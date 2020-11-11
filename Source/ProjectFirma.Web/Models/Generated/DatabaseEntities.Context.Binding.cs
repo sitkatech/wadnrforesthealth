@@ -183,6 +183,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
+        public virtual DbSet<vTotalTreatedAcresByProject> vTotalTreatedAcresByProjects { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
         public virtual DbSet<fGetProjectDnrUploadRegion_Result> fGetProjectDnrUploadRegionResults { get; set; }
         public virtual DbSet<fGetProjectPriorityLandscape_Result> fGetProjectPriorityLandscapeResults { get; set; }

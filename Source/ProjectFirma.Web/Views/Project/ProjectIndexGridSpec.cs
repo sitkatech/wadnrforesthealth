@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class ProjectIndexGridSpec : GridSpec<Models.Project>
     {
-        public ProjectIndexGridSpec(Person currentPerson, bool allowTaggingFunctionality, bool allowDeleteFunctionality)
+        public ProjectIndexGridSpec(Person currentPerson, bool allowTaggingFunctionality, bool allowDeleteFunctionality, Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
@@ -61,7 +62,7 @@ namespace ProjectFirma.Web.Views.Project
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => x.TotalTreatedAcres, 100, DhtmlxGridColumnFormatType.Decimal );
+            Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, DhtmlxGridColumnFormatType.Decimal );
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.Text);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
@@ -75,6 +76,15 @@ namespace ProjectFirma.Web.Views.Project
             }
 
             return new HtmlString(string.Empty);
+        }
+
+        private decimal TotalTreatedAcres(Models.Project project,
+            Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)
+        {
+            var total = totalTreatedAcresByProjectDictionary.ContainsKey(project.ProjectID) && totalTreatedAcresByProjectDictionary[project.ProjectID].TotalTreatedAcres.HasValue
+                ?  totalTreatedAcresByProjectDictionary[project.ProjectID].TotalTreatedAcres.Value
+                : (decimal) 0.0;
+           return Math.Round(total, 2);
         }
     }
 }

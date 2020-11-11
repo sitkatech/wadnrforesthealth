@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
@@ -40,7 +41,8 @@ namespace ProjectFirma.Web.Views.Project
         {
             PageTitle = $"Full {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} List";
 
-            GridSpec = new ProjectIndexGridSpec(currentPerson, true, true) {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
+            GridSpec = new ProjectIndexGridSpec(currentPerson, true, true, new Dictionary<int, vTotalTreatedAcresByProject>()) 
+                {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 
             if (new ProjectCreateNewFeature().HasPermissionByPerson(CurrentPerson))
             {

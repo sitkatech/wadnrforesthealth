@@ -176,6 +176,12 @@ FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</Defin
 [vSocrataDataMartRawJsonImportIndex].[RawJsonStringLength] AS [RawJsonStringLength]
 FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImportIndex]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vTotalTreatedAcresByProject" EntityType="ProjectFirma.Web.Models.Store.vTotalTreatedAcresByProject" store:Type="Views" store:Schema="dbo" store:Name="vTotalTreatedAcresByProject">
+      <DefiningQuery>SELECT 
+[vTotalTreatedAcresByProject].[ProjectID] AS [ProjectID], 
+[vTotalTreatedAcresByProject].[TotalTreatedAcres] AS [TotalTreatedAcres]
+FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -2951,6 +2957,16 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     <Property Name="JsonImportStatusTypeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="JsonImportDate" Type="datetime" />
     <Property Name="RawJsonStringLength" Type="bigint" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProject' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vTotalTreatedAcresByProject">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="TotalTreatedAcres" Type="decimal" Precision="38" Scale="10" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
     <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.Store.AgreementStatus" Multiplicity="0..1" />

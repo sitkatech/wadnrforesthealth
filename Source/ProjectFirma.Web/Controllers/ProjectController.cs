@@ -442,7 +442,9 @@ namespace ProjectFirma.Web.Controllers
         [ProjectsViewFullListFeature]
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
-            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true);
+            var treatmentTotals = HttpRequestStorage.DatabaseEntities.vTotalTreatedAcresByProjects.ToList();
+            var treatmentDictionary = treatmentTotals.ToDictionary(x => x.ProjectID, y => y);
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true, treatmentDictionary);
             var allProjectsVisibleToUser = GetListOfActiveProjectsVisibleToUser(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(allProjectsVisibleToUser, gridSpec);
             return gridJsonNetJObjectResult;
@@ -456,6 +458,7 @@ namespace ProjectFirma.Web.Controllers
                 .Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
                 .Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsVisibleToUser(currentPerson);
+           
             //var allProjectsVisibleToUser = allActiveProjectsWithIncludes.Where(p => viewProjectFeature.HasPermission(currentPerson, p).HasPermission).ToList();
             return allActiveProjectsWithIncludes;
         }
