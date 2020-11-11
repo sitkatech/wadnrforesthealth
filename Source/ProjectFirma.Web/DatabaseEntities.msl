@@ -1928,6 +1928,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vTotalTreatedAcresByProject">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vTotalTreatedAcresByProject">
+        <MappingFragment StoreEntitySet="vTotalTreatedAcresByProject">
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="TotalTreatedAcres" ColumnName="TotalTreatedAcres" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetColumnNamesForTable" FunctionImportName="fGetColumnNamesForTable">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetColumnNamesForTable_Result">

@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 // SAML providers usually POST the data into this var
                 samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
-                if (samlResponse.IsValid())
+                if (!samlResponse.IsValid())
                 {
                     var firstName = samlResponse.GetFirstName();
                     var lastName = samlResponse.GetLastName();
