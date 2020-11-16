@@ -56,6 +56,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFullInvoiceList FullInvoiceList = FirmaPageTypeFullInvoiceList.Instance;
         public static readonly FirmaPageTypeInteractionEventList InteractionEventList = FirmaPageTypeInteractionEventList.Instance;
         public static readonly FirmaPageTypeGisUploadAttemptInstructions GisUploadAttemptInstructions = FirmaPageTypeGisUploadAttemptInstructions.Instance;
+        public static readonly FirmaPageTypeDNRCostShareTreatments DNRCostShareTreatments = FirmaPageTypeDNRCostShareTreatments.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -65,7 +66,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -141,6 +142,8 @@ namespace ProjectFirma.Web.Models
                     return CustomFooter;
                 case FirmaPageTypeEnum.DemoScript:
                     return DemoScript;
+                case FirmaPageTypeEnum.DNRCostShareTreatments:
+                    return DNRCostShareTreatments;
                 case FirmaPageTypeEnum.EnterHistoricProjectInstructions:
                     return EnterHistoricProjectInstructions;
                 case FirmaPageTypeEnum.FactSheetCustomText:
@@ -255,7 +258,8 @@ namespace ProjectFirma.Web.Models
         FullAgreementList = 60,
         FullInvoiceList = 61,
         InteractionEventList = 62,
-        GisUploadAttemptInstructions = 63
+        GisUploadAttemptInstructions = 63,
+        DNRCostShareTreatments = 64
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -478,5 +482,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeGisUploadAttemptInstructions(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeGisUploadAttemptInstructions Instance = new FirmaPageTypeGisUploadAttemptInstructions(63, @"GisUploadAttemptInstructions", @"GIS Upload Attempt Instructions", 1);
+    }
+
+    public partial class FirmaPageTypeDNRCostShareTreatments : FirmaPageType
+    {
+        private FirmaPageTypeDNRCostShareTreatments(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeDNRCostShareTreatments Instance = new FirmaPageTypeDNRCostShareTreatments(64, @"DNRCostShareTreatments", @"DNR Cost Share Treatments", 1);
     }
 }

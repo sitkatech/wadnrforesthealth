@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -684,6 +684,7 @@
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
     <Compile Include="Security\ContactCreateAndViewFeature.cs" />
+    <Compile Include="Security\FirmaNormalUserAndAboveFeature.cs" />
     <Compile Include="Security\GisFeatureViewFeature.cs" />
     <Compile Include="Security\GisUploadAttemptCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardContractorInvoiceCreateFeature.cs" />
@@ -1169,10 +1170,6 @@
     <Content Include="..\NuGetPackages\PhantomJS.2.0.0\tools\phantomjs\phantomjs.exe">
       <Link>phantomjs.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.css" />
-    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.min.css">
-      <DependentUpon>style-WashingtonDepartmentOfNaturalResources.css</DependentUpon>
     </Content>
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
