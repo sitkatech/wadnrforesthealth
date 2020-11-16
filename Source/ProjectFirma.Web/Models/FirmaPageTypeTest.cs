@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
@@ -17,17 +16,15 @@ namespace ProjectFirma.Web.Models
         {
             var allFirmaPageTypes = FirmaPageType.All.ToList();
             HttpRequestStorage.DatabaseEntities.FirmaPages.Load();
-            List<int> allFirmaPageTypeIDPresentInFirmaPages = HttpRequestStorage.DatabaseEntities.FirmaPages.Local.Select(fp => fp.FirmaPageTypeID).Distinct().ToList();
-
-            string missingPageTypes = string.Empty;
+            var allFirmaPageTypeIDPresentInFirmaPages = HttpRequestStorage.DatabaseEntities.FirmaPages.Local.Select(fp => fp.FirmaPageTypeID).Distinct().ToList();
+            var missingPageTypes = string.Empty;
             foreach (var firmaPageType in allFirmaPageTypes)
             {
                 var pageTypeIsPresent = allFirmaPageTypeIDPresentInFirmaPages.Contains(firmaPageType.FirmaPageTypeID);
                 if (!pageTypeIsPresent)
                 {
-                    missingPageTypes += $"Could Not find Firma Page Type '{firmaPageType.FirmaPageTypeName}'({firmaPageType.FirmaPageTypeID}) in Firma Pages\n\r";
+                    missingPageTypes += $"Could Not find Firma Page Type '{firmaPageType.FirmaPageTypeName}'({firmaPageType.FirmaPageTypeID}) in Firma Pages\r\n";
                 }
-
             }
             Approvals.Verify(missingPageTypes);
         }
