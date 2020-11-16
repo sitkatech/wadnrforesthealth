@@ -18,7 +18,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
         public ViewResult Index()
         {
-            var viewData = new IndexViewData(CurrentPerson);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.DNRCostShareTreatments);
+            var viewData = new IndexViewData(CurrentPerson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
