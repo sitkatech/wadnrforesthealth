@@ -2,13 +2,13 @@
   font-family: 'PT Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('PT Sans'), local('PTSans-Regular'), url(https://fonts.gstatic.com/s/ptsans/v9/jizaRExUiTo99u79D0KEwA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/ptsans/v12/jizaRExUiTo99u79D0KEwA.ttf) format('truetype');
 }
 @font-face {
   font-family: 'PT Sans';
   font-style: normal;
   font-weight: 700;
-  src: local('PT Sans Bold'), local('PTSans-Bold'), url(https://fonts.gstatic.com/s/ptsans/v9/jizfRExUiTo99u79B_mh0O6tKA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/ptsans/v12/jizfRExUiTo99u79B_mh0O6tKA.ttf) format('truetype');
 }
 html,
 body {
@@ -62,6 +62,7 @@ a:hover,
 }
 .header {
   background-color: #003D6B;
+  height: 91px;
 }
 .header .optionalContainer {
   padding-right: 15px;
@@ -122,6 +123,7 @@ a:hover,
   border: none;
   border-radius: 0;
   margin-bottom: 0;
+  height: 54px;
 }
 .navbar .optionalContainer {
   padding-right: 15px;
@@ -155,7 +157,7 @@ a:hover,
   font-stretch: condensed;
   font-size: 17px;
   text-transform: uppercase;
-  line-height: 23px;
+  line-height: 24px;
 }
 .projectFirmaNavbar .nav li a:hover,
 .projectFirmaNavbar .nav li a:focus,
@@ -567,4 +569,12 @@ a.disabled {
   .main-text h1 {
     font-size: 32px;
   }
+}
+.no-margin-top,
+.form-group.no-margin-top {
+  margin-top: 0;
+}
+.project-firma-loading-bar:after {
+  border: 5px solid #DBDBDB;
+  border-top: 5px solid #9A610A;
 }

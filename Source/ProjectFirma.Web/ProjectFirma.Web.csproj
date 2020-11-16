@@ -1171,10 +1171,6 @@
       <Link>phantomjs.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.css" />
-    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.min.css">
-      <DependentUpon>style-WashingtonDepartmentOfNaturalResources.css</DependentUpon>
-    </Content>
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
