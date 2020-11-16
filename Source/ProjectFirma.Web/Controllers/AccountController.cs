@@ -82,28 +82,25 @@ namespace ProjectFirma.Web.Controllers
             {
                 // SAML providers usually POST the data into this var
                 samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
-                if (!samlResponse.IsValid())
+                if (!samlResponse.IsValid(userDisplayableValidationErrorMessage: out var userDisplayableValidationErrorMessage))
                 {
                     var firstName = samlResponse.GetFirstName();
                     var lastName = samlResponse.GetLastName();
                     var email = samlResponse.GetEmail();
                     var roleGroups = samlResponse.GetRoleGroups();
                     var sawAuthenticator = samlResponse.GetWhichSawAuthenticator();
-
                     ProcessLogin(firstName, lastName, email, roleGroups, sawAuthenticator);
                 }
                 else
                 {
-                    SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, SAML Response is invalid.");
-                    SetErrorForDisplay($"There was an error trying to log into your account. Please try again in a couple minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
+                    SitkaHttpApplication.Logger.Error($"During SAW login, got invalid SAML Response. Validation error: {userDisplayableValidationErrorMessage}, SAML XML:\r\n{samlResponse.GetSamlAsPrettyPrintXml()}");
+                    SetErrorForDisplay($"There was a SAW validation problem while trying to log into your account. {userDisplayableValidationErrorMessage} Please try again in a couple minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
                 }
                 return new RedirectResult(HomeUrl);
             }
             catch (Exception ex)
             {
-                var newMessage = $"Problem in SAW Login: {ex.Message}. SAML XML:\n\r{samlResponse.GetSamlAsPrettyPrintXml()}";
-                var newException = new Exception(newMessage, ex);
-                throw newException;
+                throw new Exception($"Exception during SAW Login, see inner exception for details. SAML XML:\r\n{samlResponse.GetSamlAsPrettyPrintXml()}", ex);
             }
         }
 
