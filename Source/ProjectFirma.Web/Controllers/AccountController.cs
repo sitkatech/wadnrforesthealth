@@ -93,14 +93,14 @@ namespace ProjectFirma.Web.Controllers
                 }
                 else
                 {
-                    SitkaHttpApplication.Logger.Error($"Processing SAW login, SAML Response invalid. Validation error: {userDisplayableValidationErrorMessage}, SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}");
-                    SetErrorForDisplay($"There was a SAW validation problem while trying to log into your account. {userDisplayableValidationErrorMessage} Please try again in a couple minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
+                    SitkaHttpApplication.Logger.Error($"Processing SAW login, SAML Response invalid. Validation error: {userDisplayableValidationErrorMessage}, SAW SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}");
+                    SetErrorForDisplay($"There was a SAW validation problem while trying to log into your account. {userDisplayableValidationErrorMessage} Please try again in a few minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
                 }
                 return new RedirectResult(HomeUrl);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Exception during SAW Login, see inner exception for details. SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}", ex);
+                throw new ApplicationException($"Exception during SAW Login, see inner exception for details. SAW SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}", ex);
             }
         }
 
@@ -126,9 +126,7 @@ namespace ProjectFirma.Web.Controllers
             }
             catch (Exception ex)
             {
-                var newMessage = $"Problem in ADFS Login: {ex.Message}. SAML XML:\n\r{adfsSamlResponse.GetSamlAsPrettyPrintXml()}";
-                var newException = new Exception(newMessage, ex);
-                throw newException;
+                throw new ApplicationException($"Exception during ADFS Login, see inner exception for details. ADFS SAML XML:\n\r{adfsSamlResponse.GetSamlAsPrettyPrintXml()}", ex);
             }
         }
 

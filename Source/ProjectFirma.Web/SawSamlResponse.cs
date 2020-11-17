@@ -36,7 +36,7 @@ namespace ProjectFirma.Web
             LoadXmlFromString(xmlStringSawSamlResponse);
         }
 
-        public void LoadXmlFromString(string xmlStringSawSamlResponse)
+        internal void LoadXmlFromString(string xmlStringSawSamlResponse)
         {
             _originalDecodedResponse = xmlStringSawSamlResponse;
             _xmlDoc = new XmlDocument { PreserveWhitespace = true, XmlResolver = null };
