@@ -33,8 +33,13 @@ namespace ProjectFirma.Web
         {
             var utf8Encoding = new UTF8Encoding();
             var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64SawSamlResponse));
+            LoadXmlFromString(xmlStringSawSamlResponse);
+        }
+
+        public void LoadXmlFromString(string xmlStringSawSamlResponse)
+        {
             _originalDecodedResponse = xmlStringSawSamlResponse;
-            _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
+            _xmlDoc = new XmlDocument { PreserveWhitespace = true, XmlResolver = null };
             _xmlDoc.LoadXml(xmlStringSawSamlResponse);
             _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
         }
@@ -61,7 +66,7 @@ namespace ProjectFirma.Web
                 userDisplayableValidationErrorMessage = "SAW xml signature is invalid.";
             }
             var isResponseStillWithinValidTimePeriod = IsResponseStillWithinValidTimePeriod();
-            if (isResponseStillWithinValidTimePeriod)
+            if (!isResponseStillWithinValidTimePeriod)
             {
                 userDisplayableValidationErrorMessage = "Current time is past the expiration time for the SAW xml response.";
             }
@@ -148,13 +153,21 @@ namespace ProjectFirma.Web
 
         private bool IsResponseStillWithinValidTimePeriod()
         {
+            var dateTimeOffsetNow = DateTimeOffset.Now;
+            return IsResponseStillWithinValidTimePeriod(dateTimeOffsetNow);
+        }
+
+        internal bool IsResponseStillWithinValidTimePeriod(DateTimeOffset dateTimeOffsetNow)
+        {
             var expirationDateTimeOffset = DateTimeOffset.MaxValue;
-            var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:Subject/saml:SubjectConfirmation/saml:SubjectConfirmationData", _xmlNameSpaceManager);
+            var node = _xmlDoc.SelectSingleNode(
+                "/samlp:Response/saml:Assertion/saml:Subject/saml:SubjectConfirmation/saml:SubjectConfirmationData",
+                _xmlNameSpaceManager);
             if (node?.Attributes?["NotOnOrAfter"] != null)
             {
                 DateTimeOffset.TryParse(node.Attributes["NotOnOrAfter"].Value, out expirationDateTimeOffset);
             }
-            return DateTimeOffset.Now < expirationDateTimeOffset;
+            return dateTimeOffsetNow < expirationDateTimeOffset;
         }
 
         private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
@@ -184,5 +197,6 @@ namespace ProjectFirma.Web
                 return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {_originalDecodedResponse}";
             }
         }
+
     }
 }

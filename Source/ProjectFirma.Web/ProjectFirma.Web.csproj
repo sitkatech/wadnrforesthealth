@@ -676,6 +676,7 @@
     <Compile Include="Models\Treatment.cs" />
     <Compile Include="Models\TreatmentModelExtensions.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
+    <Compile Include="SawSamlResponseTest.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProgramIndexImportHangfireBackgroundJob.cs" />
