@@ -676,6 +676,7 @@
     <Compile Include="Models\Treatment.cs" />
     <Compile Include="Models\TreatmentModelExtensions.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
+    <Compile Include="SawSamlResponseTest.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProgramIndexImportHangfireBackgroundJob.cs" />
@@ -1170,10 +1171,6 @@
     <Content Include="..\NuGetPackages\PhantomJS.2.0.0\tools\phantomjs\phantomjs.exe">
       <Link>phantomjs.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.css" />
-    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.min.css">
-      <DependentUpon>style-WashingtonDepartmentOfNaturalResources.css</DependentUpon>
     </Content>
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
