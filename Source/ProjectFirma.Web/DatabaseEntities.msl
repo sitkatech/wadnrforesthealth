@@ -364,6 +364,7 @@
           <ScalarProperty Name="ProjectDescriptionDefaultText" ColumnName="ProjectDescriptionDefaultText" />
           <ScalarProperty Name="ApplyCompletedDateToProject" ColumnName="ApplyCompletedDateToProject" />
           <ScalarProperty Name="ApplyStartDateToProject" ColumnName="ApplyStartDateToProject" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1098,6 +1099,22 @@
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Program">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Program">
+        <MappingFragment StoreEntitySet="Program">
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+          <ScalarProperty Name="ProgramShortName" ColumnName="ProgramShortName" />
+          <ScalarProperty Name="ProgramPrimaryContactPersonID" ColumnName="ProgramPrimaryContactPersonID" />
+          <ScalarProperty Name="ProgramIsActive" ColumnName="ProgramIsActive" />
+          <ScalarProperty Name="ProgramCreateDate" ColumnName="ProgramCreateDate" />
+          <ScalarProperty Name="ProgramCreatePersonID" ColumnName="ProgramCreatePersonID" />
+          <ScalarProperty Name="ProgramLastUpdatedDate" ColumnName="ProgramLastUpdatedDate" />
+          <ScalarProperty Name="ProgramLastUpdatedByPersonID" ColumnName="ProgramLastUpdatedByPersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

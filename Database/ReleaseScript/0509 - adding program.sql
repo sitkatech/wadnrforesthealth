@@ -22,7 +22,7 @@ CREATE TABLE [dbo].[Program](
 (
 	[ProgramShortName], OrganizationID ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY] 
 GO
 
 ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
@@ -30,18 +30,18 @@ REFERENCES [dbo].[Organization] ([OrganizationID])
 GO
 
 
-ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_ProgramPrimaryContactPersonID_PersonIDID] FOREIGN KEY([ProgramPrimaryContactPersonID])
+ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_ProgramPrimaryContactPersonID_PersonID] FOREIGN KEY([ProgramPrimaryContactPersonID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 
 
-ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_ProgramCreatePersonID_PersonIDID] FOREIGN KEY([ProgramCreatePersonID])
+ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_ProgramCreatePersonID_PersonID] FOREIGN KEY([ProgramCreatePersonID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 
 
 
-ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_ProgramLastUpdatedByPersonID_PersonIDID] FOREIGN KEY([ProgramLastUpdatedByPersonID])
+ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID] FOREIGN KEY([ProgramLastUpdatedByPersonID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 
@@ -50,7 +50,7 @@ go
 
 ALTER TABLE dbo.GisUploadSourceOrganization ADD ProgramID int
 
-ALTER TABLE [dbo].[GisUploadSourceOrganizationID]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_Program_ProgramID] FOREIGN KEY([ProgramID])
+ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_Program_ProgramID] FOREIGN KEY([ProgramID])
 REFERENCES [dbo].[Program] ([ProgramID])
 GO
 

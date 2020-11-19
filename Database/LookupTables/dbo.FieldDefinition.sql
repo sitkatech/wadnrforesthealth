@@ -293,6 +293,7 @@ VALUES
 (471, N'FundingSource', 'Funding Source', N'<p>The funding source for the expected funding.</p>'),
 (472, N'FundingSourceNote', 'Funding Source Note', N'<p>A note about the funding source(s) selected.</p>'),
 (473, N'ProjectTotalCompletedTreatmentAcres', 'Completed Treatment Acres', 'Sum of Treated Acres on all completed Treatments under a Project.'),
-(474, N'LimitVisibilityToAdmin', N'Project Type Visibility Limited To Admin', 'Limit Visibility of this Project Type to just Administrators (Program Manager, Admin, Sitka Admin)')
+(474, N'LimitVisibilityToAdmin', N'Project Type Visibility Limited To Admin', 'Limit Visibility of this Project Type to just Administrators (Program Manager, Admin, Sitka Admin)'),
+(475, N'Program', N'Program', 'Program')
 
 
