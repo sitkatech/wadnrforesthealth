@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.Program
         [DisplayName("Short Name")]
         public string ProgramShortName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
+        [DisplayName("Parent Organization")]
         [Required]
         public int? OrganizationID { get; set; }
 
