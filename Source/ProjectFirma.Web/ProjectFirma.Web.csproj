@@ -620,6 +620,7 @@
     <Compile Include="Controllers\GisProjectBulkUpdateController.cs" />
     <Compile Include="Controllers\GrantAllocationAwardLandownerCostShareLineItemController.cs" />
     <Compile Include="Controllers\GrantAllocationAwardController.cs" />
+    <Compile Include="Models\GeometryTest.cs" />
     <Compile Include="Models\GisFeature.cs" />
     <Compile Include="Models\GisFeatureMetadataAttribute.cs" />
     <Compile Include="Models\GisFeatureModelExtensions.cs" />
