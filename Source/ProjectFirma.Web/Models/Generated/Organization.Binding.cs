@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Models
             this.OrganizationBoundaryStagings = new HashSet<OrganizationBoundaryStaging>();
             this.People = new HashSet<Person>();
             this.PersonStewardOrganizations = new HashSet<PersonStewardOrganization>();
+            this.Programs = new HashSet<Program>();
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectOrganizationUpdates = new HashSet<ProjectOrganizationUpdate>();
         }
@@ -100,7 +101,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Agreements.Any() || GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.Any() || Grants.Any() || GrantAllocations.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
+            return Agreements.Any() || GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.Any() || Grants.Any() || GrantAllocations.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || Programs.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
         }
 
         /// <summary>
@@ -145,6 +146,11 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(PersonStewardOrganization).Name);
             }
 
+            if(Programs.Any())
+            {
+                dependentObjects.Add(typeof(Program).Name);
+            }
+
             if(ProjectOrganizations.Any())
             {
                 dependentObjects.Add(typeof(ProjectOrganization).Name);
@@ -160,7 +166,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(GisUploadSourceOrganization).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(GisUploadSourceOrganization).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(Program).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
 
 
         /// <summary>
@@ -220,6 +226,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in Programs.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectOrganizations.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -254,6 +265,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
         public virtual ICollection<Person> People { get; set; }
         public virtual ICollection<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
+        public virtual ICollection<Program> Programs { get; set; }
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get; set; }
         public virtual Person PrimaryContactPerson { get; set; }

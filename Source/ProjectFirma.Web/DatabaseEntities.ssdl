@@ -91,6 +91,7 @@
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -321,6 +322,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID">
       <End Role="DefaultLeadImplementerOrganization" EntitySet="Organization" />
       <End Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization" EntitySet="GisUploadSourceOrganization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadSourceOrganization_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="GisUploadSourceOrganizations" EntitySet="GisUploadSourceOrganization" />
     </AssociationSet>
     <AssociationSet Name="FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID">
       <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
@@ -761,6 +766,22 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Program_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="Programs" EntitySet="Program" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Person_ProgramCreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Program_Person_ProgramCreatePersonID_PersonID">
+      <End Role="ProgramCreatePerson" EntitySet="Person" />
+      <End Role="ProgramsWhereYouAreTheProgramCreatePerson" EntitySet="Program" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID">
+      <End Role="ProgramLastUpdatedByPerson" EntitySet="Person" />
+      <End Role="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" EntitySet="Program" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Person_ProgramPrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Program_Person_ProgramPrimaryContactPersonID_PersonID">
+      <End Role="ProgramPrimaryContactPerson" EntitySet="Person" />
+      <End Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson" EntitySet="Program" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_Project_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
@@ -1471,6 +1492,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectDescriptionDefaultText" Type="varchar" MaxLength="4000" />
     <Property Name="ApplyCompletedDateToProject" Type="bit" Nullable="false" />
     <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -2163,6 +2185,21 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Program">
+    <Key>
+      <PropertyRef Name="ProgramID" />
+    </Key>
+    <Property Name="ProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="ProgramName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="ProgramShortName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ProgramPrimaryContactPersonID" Type="int" />
+    <Property Name="ProgramIsActive" Type="bit" Nullable="false" />
+    <Property Name="ProgramCreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ProgramCreatePersonID" Type="int" Nullable="false" />
+    <Property Name="ProgramLastUpdatedDate" Type="datetime" />
+    <Property Name="ProgramLastUpdatedByPersonID" Type="int" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -3385,6 +3422,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization">
         <PropertyRef Name="DefaultLeadImplementerOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadSourceOrganization_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
+    <End Role="GisUploadSourceOrganizations" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="GisUploadSourceOrganizations">
+        <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4711,6 +4760,54 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="PriorityLandscapeFileResources">
         <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="Programs" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="Programs">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Person_ProgramCreatePersonID_PersonID">
+    <End Role="ProgramCreatePerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="ProgramsWhereYouAreTheProgramCreatePerson" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramCreatePerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramCreatePerson">
+        <PropertyRef Name="ProgramCreatePersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID">
+    <End Role="ProgramLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramLastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramLastUpdatedByPerson">
+        <PropertyRef Name="ProgramLastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Person_ProgramPrimaryContactPersonID_PersonID">
+    <End Role="ProgramPrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramPrimaryContactPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson">
+        <PropertyRef Name="ProgramPrimaryContactPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
