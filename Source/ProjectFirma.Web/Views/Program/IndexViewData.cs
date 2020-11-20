@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Views.Program
 {
     public class IndexViewData : FirmaViewData
     {
-        public IndexGridSpec GridSpec { get; }
+        public ProgramGridSpec GridSpec { get; }
         public string GridName { get; }
         public string GridDataUrl { get; }
 
@@ -37,8 +37,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             PageTitle = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
 
-            var hasProgramManagePermissions = new ProgramManageFeature().HasPermissionByPerson(currentPerson);
-            GridSpec = new IndexGridSpec(currentPerson, hasProgramManagePermissions)
+            GridSpec = new ProgramGridSpec(currentPerson, null)
             {
                 ObjectNameSingular = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()}",
                 ObjectNamePlural = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}",

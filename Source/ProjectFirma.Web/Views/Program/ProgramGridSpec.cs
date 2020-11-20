@@ -24,16 +24,34 @@ using ProjectFirma.Web.Security;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
+using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Program
 {
     public class ProgramGridSpec : GridSpec<Models.Program>
     {
-        public ProgramGridSpec(Person currentPerson, bool hasDeletePermissions)
+        public ProgramGridSpec(Person currentPerson, Models.Organization organization)
         {
+            var hasProgramManagePermissions = new ProgramManageFeature().HasPermissionByPerson(currentPerson);
+
+            if (hasProgramManagePermissions)
+            {
+                var contentUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(t => t.New());
+
+                if (organization != null)
+                {
+                    contentUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(t => t.NewProgram(organization.OrganizationID));
+                }
+
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new {Models.FieldDefinition.Program.GetFieldDefinitionLabel()}");
+            }
+
+
             var userViewFeature = new UserViewFeature();
-            if (hasDeletePermissions)
+            if (hasProgramManagePermissions)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
