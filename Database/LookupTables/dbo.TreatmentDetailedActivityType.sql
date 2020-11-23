@@ -20,4 +20,5 @@ values
 (15, 'MachinePile', 'Machine Pile'),
 (16, 'FuelBreak', 'Fuel Break'),
 (17, 'Planting', 'Planting'),
-(18, 'BrushControl', 'Brush Control')
+(18, 'BrushControl', 'Brush Control'),
+(19, 'Mowing', 'Mowing')

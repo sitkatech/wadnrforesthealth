@@ -1493,6 +1493,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ApplyCompletedDateToProject" Type="bit" Nullable="false" />
     <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
     <Property Name="ProgramID" Type="int" Nullable="false" />
+    <Property Name="ImportAsDetailedLocationInAdditionToTreatments" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>

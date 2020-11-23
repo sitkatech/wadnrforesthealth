@@ -365,6 +365,7 @@
           <ScalarProperty Name="ApplyCompletedDateToProject" ColumnName="ApplyCompletedDateToProject" />
           <ScalarProperty Name="ApplyStartDateToProject" ColumnName="ApplyStartDateToProject" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ImportAsDetailedLocationInAdditionToTreatments" ColumnName="ImportAsDetailedLocationInAdditionToTreatments" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
