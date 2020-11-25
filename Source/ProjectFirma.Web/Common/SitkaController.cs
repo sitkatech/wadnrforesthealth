@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Xml;
 using DHTMLX.Export.Excel;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
