@@ -92,7 +92,9 @@ namespace ProjectFirma.Web.Views.Program
                 program.ProgramLastUpdatedDate = DateTime.Now;
                 program.ProgramLastUpdatedByPersonID = currentPerson.PersonID;
             }
-           
+
+            program.ProgramPrimaryContactPersonID = PrimaryContactPersonID;
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

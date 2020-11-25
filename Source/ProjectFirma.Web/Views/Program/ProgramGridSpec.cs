@@ -49,11 +49,9 @@ namespace ProjectFirma.Web.Views.Program
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new {Models.FieldDefinition.Program.GetFieldDefinitionLabel()}");
             }
 
-
-            var userViewFeature = new UserViewFeature();
             if (hasProgramManagePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None, true);
             }
             Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramName), 400, DhtmlxGridColumnFilterType.Html);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => UrlTemplate.MakeHrefString(a.Organization.GetDetailUrl(), a.Organization.OrganizationName), 400, DhtmlxGridColumnFilterType.Html);

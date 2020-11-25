@@ -109,6 +109,8 @@ namespace LtInfo.Common.DhtmlWrappers
         
         Sitka.{0}.buildWithArguments(null, {6}, columnFilterList, {7}, {8}, {9});
 
+        Sitka.{0}.grid.setSerializableColumns(""{14}""); 
+
         // Show loading bar
         jQuery(""#{0}LoadingBar"").show();
 
@@ -167,6 +169,8 @@ namespace LtInfo.Common.DhtmlWrappers
                 ? GenerateVerticallyResizableFunction(gridName) 
                 : string.Empty;
 
+            var columnsToHideString = BuildGridColumnHiddens(gridSpec);
+
             var result = String.Format(GridJavascriptDocumentReady,
                 gridName,
                 Skin,
@@ -181,7 +185,8 @@ namespace LtInfo.Common.DhtmlWrappers
                 gridSpec.ShowFilterBar.ToString().ToLower(),
                 gridSpec.GridInstructionsWhenEmpty,
                 verticalResizeFunction,
-                resizeGridFunction);
+                resizeGridFunction,
+                columnsToHideString);
 
             return result;
         }
@@ -502,6 +507,19 @@ namespace LtInfo.Common.DhtmlWrappers
                             }"", ""{column.DhtmlxGridColumnSortType.SortingType}"", ""{
                                 column.DhtmlxGridColumnFilterType
                             }"", {$"\"{column.DhtmlxGridColumnFormatType.ColumnFormatType}\""})"));
+        }
+
+        /// <summary>
+        /// Builds the javascript for adding the columns to the sitkaGrid
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="gridSpec"></param>
+        /// <param name="indent"></param>
+        /// <returns></returns>
+        public static string BuildGridColumnHiddens<T>(IEnumerable<ColumnSpec<T>> gridSpec)
+        {
+            return String.Join(",", gridSpec.Select((column, i) => column.HiddenColumnForCsv ? "false" : "true"));
+
         }
 
         /// <summary>
