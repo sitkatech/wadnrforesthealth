@@ -146,6 +146,13 @@ a:hover,
     width: 1170px;
   }
 }
+@media (max-width: 768px) {
+  .projectFirmaNavbar #firma-collapse-navbar {
+    background-color: #DBDBDB;
+    position: absolute;
+    z-index: 999;
+  }
+}
 .projectFirmaNavbar .nav li {
   font-weight: 600;
 }
@@ -204,6 +211,9 @@ a:hover,
 }
 .projectFirmaNavbar .glyphicon-menu-hamburger {
   color: #023467;
+}
+.projectFirmaNavbar .navbar-header {
+  position: relative;
 }
 footer#footer {
   position: relative;

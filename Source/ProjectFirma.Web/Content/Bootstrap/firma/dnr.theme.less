@@ -237,6 +237,14 @@ a:hover, .glyphicon-trash:hover {
 
 
 .projectFirmaNavbar {
+    @media (max-width: 768px) {
+        #firma-collapse-navbar {
+            background-color: @firma-navBackground-color;
+            position: absolute;
+            z-index: 999;
+        }
+    }
+
     .nav li {
         font-weight: 600;
 
@@ -302,6 +310,10 @@ a:hover, .glyphicon-trash:hover {
 
     .glyphicon-menu-hamburger {
         color: @firma-navText-color;
+    }
+
+    .navbar-header {
+        position: relative;
     }
 }
 
