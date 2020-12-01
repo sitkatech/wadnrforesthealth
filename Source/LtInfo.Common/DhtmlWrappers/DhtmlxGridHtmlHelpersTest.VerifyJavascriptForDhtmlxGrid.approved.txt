@@ -25,6 +25,8 @@
         
         Sitka.testGridName.buildWithArguments(null, null, columnFilterList, "TestController/ListGridDataXml", false, null);
 
+        Sitka.testGridName.grid.setSerializableColumns("true,true,true,true,true"); 
+
         // Show loading bar
         jQuery("#testGridNameLoadingBar").show();
 
