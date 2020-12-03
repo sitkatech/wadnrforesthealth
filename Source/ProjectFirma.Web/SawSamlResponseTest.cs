@@ -88,14 +88,16 @@ namespace ProjectFirma.Web
   </saml:Assertion>
 </samlp:Response>
 ";
-            var sawSamlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromUri(FirmaWebConfiguration.SAWEndPoint));
-            sawSamlResponse.LoadXmlFromString(samlXml);
-            Console.Write(DateTimeOffset.Now);
-            //  NotOnOrAfter=""2020-11-17T00:12:59Z"" 
-            var now = DateTimeOffset.Parse("11/16/2020 4:11:59 PM -08:00");
-            var isResponseStillWithinValidTimePeriod = sawSamlResponse.IsResponseStillWithinValidTimePeriod(now);
-            Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(now), Is.True, "Should be valid date");
-            Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(now.AddMinutes(5)), Is.False, "Should be invalid date too old");
+            using (var sawSamlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromUri(FirmaWebConfiguration.SAWEndPoint)))
+            {
+                sawSamlResponse.LoadXmlFromString(samlXml);
+                Console.Write(DateTimeOffset.Now);
+                //  NotOnOrAfter=""2020-11-17T00:12:59Z"" 
+                var now = DateTimeOffset.Parse("11/16/2020 4:11:59 PM -08:00");
+                var isResponseStillWithinValidTimePeriod = sawSamlResponse.IsResponseStillWithinValidTimePeriod(now);
+                Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(now), Is.True, "Should be valid date");
+                Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(now.AddMinutes(5)), Is.False, "Should be invalid date too old");
+            }
         }
     }
 }

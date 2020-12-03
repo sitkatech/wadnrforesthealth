@@ -17,7 +17,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web
 {
-    public class SawSamlResponse
+    public class SawSamlResponse : IDisposable
     {
         private string _originalDecodedResponse;
         private XmlDocument _xmlDoc;
@@ -198,5 +198,9 @@ namespace ProjectFirma.Web
             }
         }
 
+        public void Dispose()
+        {
+            _certificate.Dispose();
+        }
     }
 }
