@@ -40,7 +40,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string ClassificationDisplayNamePluralized { get; private set; }
 
         public HtmlString DisplayNameAsUrlBlankTarget { get; set; }
-        public HtmlString DisplayNameAsUrl { get; set; }
         public Models.ProjectImage KeyPhoto { get; set; }
         public string Duration { get; set; }
         public ProjectStage ProjectStage { get; set; }
@@ -57,7 +56,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         {
             //Project = project;
             DisplayNameAsUrlBlankTarget = project.DisplayNameAsUrlBlankTarget;
-            DisplayNameAsUrl = project.DisplayNameAsUrl;
             KeyPhoto = project.KeyPhoto;
             Duration = project.Duration;
             ProjectStage = project.ProjectStage;
@@ -66,7 +64,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             var leadImplementerOrg =
                 project.ProjectOrganizations.FirstOrDefault(po => po.RelationshipTypeID == 33);
             LeadImplementerOrganizationName =
-                leadImplementerOrg != null ? leadImplementerOrg.Organization.GetDisplayNameAsUrl() : new HtmlString(string.Empty);
+                leadImplementerOrg != null ? leadImplementerOrg.Organization.GetDisplayNameAsUrlBlankTarget() : new HtmlString(string.Empty);
 
             var dict = new Dictionary<Models.ClassificationSystem, string>();
             MoreEnumerable.ForEach(project.ProjectClassifications.Select(x => x.Classification.ClassificationSystem).Distinct(), x => dict.Add(x, string.Join(", ", project.ProjectClassifications.Select(y => y.Classification).Where(y => y.ClassificationSystem == x).Select(y => y.DisplayName).ToList())));
