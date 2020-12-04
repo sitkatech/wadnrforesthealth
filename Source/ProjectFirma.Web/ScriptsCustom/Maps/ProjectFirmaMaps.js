@@ -144,7 +144,12 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
 
     wmsLayer.on("click", function (e) { self.getFeatureInfo(e); });
 
-    overlayLayers[currentLayer.LayerName] = layerGroup;
+    if (currentLayer.LayerIconImageLocation != undefined && currentLayer.LayerIconImageLocation != null && currentLayer.LayerIconImageLocation != "") {
+        overlayLayers["<img src=\"" + currentLayer.LayerIconImageLocation+"\" />" + currentLayer.LayerName] =
+            layerGroup;
+    } else {
+        overlayLayers[currentLayer.LayerName] = layerGroup;
+    }
     this.vectorLayers.push(wmsLayer);
 };
 

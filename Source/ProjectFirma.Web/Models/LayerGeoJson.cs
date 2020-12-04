@@ -42,6 +42,7 @@ namespace ProjectFirma.Web.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public readonly LayerGeoJsonType LayerType;
         public readonly bool HasCustomPopups;
+        public string LayerIconImageLocation;
 
         /// <summary>
         /// Constructor for LayerGeoJson with Vector Type
@@ -70,6 +71,24 @@ namespace ProjectFirma.Web.Models
             LayerType = LayerGeoJsonType.Wms;
         }
 
+        /// <summary>
+        /// Constructor for LayerGeoJson with WMS Type
+        /// </summary>
+        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string mapLayerIconImageLocation)
+        {
+            LayerName = layerName;
+            MapServerUrl = mapServerUrl;
+            MapServerLayerName = mapServerLayerName;
+            LayerColor = layerColor;
+            LayerOpacity = layerOpacity;
+            LayerInitialVisibility = layerInitialVisibility;
+            LayerType = LayerGeoJsonType.Wms;
+            LayerIconImageLocation = mapLayerIconImageLocation;
+        }
+
+
+
+        
         public string GetGeoJsonFeatureCollectionAsJsonString()
         {
             return JsonTools.SerializeObject(GeoJsonFeatureCollection);
