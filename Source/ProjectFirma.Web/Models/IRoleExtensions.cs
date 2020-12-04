@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
@@ -49,7 +50,8 @@ namespace ProjectFirma.Web.Models
         {
             var featurePermissions = new List<FeaturePermission>();
 
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseFeatureType.IsAssignableFrom(p) && p.Name != baseFeatureType.Name && !p.IsAbstract);
+            var types = Assembly.GetExecutingAssembly().GetTypes().Where(p => baseFeatureType.IsAssignableFrom(p) && p.Name != baseFeatureType.Name && !p.IsAbstract);
+
             foreach (var type in types)
             {                                           
                 string featureDisplayName = FirmaBaseFeatureHelpers.GetDisplayName(type);
