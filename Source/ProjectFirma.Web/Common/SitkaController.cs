@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Xml;
 using DHTMLX.Export.Excel;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
@@ -337,7 +338,7 @@ namespace ProjectFirma.Web.Common
             xml = Server.UrlDecode(xml);
             xml = xml.Replace("<![CDATA[$", "<![CDATA["); // RL 7/11/2015 Poor man's hack to remove currency and allow for total rows
             var stream = generator.Generate(xml);
-            return File(stream.ToArray(), generator.ContentType, string.Format("{0}.xlsx", gridName));
+            return File(stream.ToArray(), generator.ContentType, $"{gridName}-{DateTime.Now.ToStringDateTimeForFileName()}.xlsx");
         }
 
         /// <summary>

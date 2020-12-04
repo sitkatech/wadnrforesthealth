@@ -27,6 +27,7 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.PerformanceMeasure;
+using ProjectFirma.Web.Views.Program;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Views.Organization
@@ -42,6 +43,10 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
         public readonly string ProjectOrganizationsGridName;
         public readonly string ProjectOrganizationsGridDataUrl;
+
+        public readonly ProgramGridSpec ProgramGridSpec;
+        public readonly string ProgramGridName;
+        public readonly string ProgramGridDataUrl;
 
         public readonly AgreementGridSpec AgreementOrganizationsGridSpec;
         public readonly string AgreementOrganizationsGridName;
@@ -174,6 +179,20 @@ namespace ProjectFirma.Web.Views.Organization
             ProposalsGridDataUrl =
                 SitkaRoute<OrganizationController>.BuildUrlFromExpression(
                     tc => tc.ProposalsGridJsonData(organization));
+
+
+            ProgramGridSpec =
+                new ProgramGridSpec(CurrentPerson, organization)
+                {
+                    ObjectNameSingular = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()}",
+                    ObjectNamePlural = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
+                    SaveFiltersInCookie = true
+                };
+
+            ProgramGridName = "organizationProgramGrid";
+            ProgramGridDataUrl =
+                SitkaRoute<ProgramController>.BuildUrlFromExpression(
+                    tc => tc.ProgramGridJsonData(organization));
 
             ShowPendingProjects = currentPerson.CanViewPendingProjects;
 

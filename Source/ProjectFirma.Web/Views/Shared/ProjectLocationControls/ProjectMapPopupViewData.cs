@@ -39,12 +39,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string ProjectTypeDisplayName { get; private set; }
         public string ClassificationDisplayNamePluralized { get; private set; }
 
-        public HtmlString DisplayNameAsUrl { get; set; }
+        public HtmlString DisplayNameAsUrlBlankTarget { get; set; }
         public Models.ProjectImage KeyPhoto { get; set; }
         public string Duration { get; set; }
         public ProjectStage ProjectStage { get; set; }
         public Models.ProjectType ProjectType { get; set; }
         public string EstimatedTotalCost { get; set; }
+        public HtmlString LeadImplementerOrganizationName { get; set; }
         public Dictionary<Models.ClassificationSystem, string> ClassificationsBySystem { get; set; }
         public string FactSheetUrl { get; set; }
         public TaxonomyLevel TaxonomyLevel { get; }
@@ -54,19 +55,23 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public ProjectMapPopupViewData(Models.Project project, bool showDetailedInformation)
         {
             //Project = project;
-            DisplayNameAsUrl = project.DisplayNameAsUrl;
+            DisplayNameAsUrlBlankTarget = project.DisplayNameAsUrlBlankTarget;
             KeyPhoto = project.KeyPhoto;
             Duration = project.Duration;
             ProjectStage = project.ProjectStage;
             ProjectType = project.ProjectType;
             EstimatedTotalCost = project.EstimatedTotalCost.HasValue ? project.EstimatedTotalCost.ToStringCurrency() : "Unknown";
-            
+            var leadImplementerOrg =
+                project.ProjectOrganizations.FirstOrDefault(po => po.RelationshipTypeID == 33);
+            LeadImplementerOrganizationName =
+                leadImplementerOrg != null ? leadImplementerOrg.Organization.GetDisplayNameAsUrlBlankTarget() : new HtmlString(string.Empty);
+
             var dict = new Dictionary<Models.ClassificationSystem, string>();
             MoreEnumerable.ForEach(project.ProjectClassifications.Select(x => x.Classification.ClassificationSystem).Distinct(), x => dict.Add(x, string.Join(", ", project.ProjectClassifications.Select(y => y.Classification).Where(y => y.ClassificationSystem == x).Select(y => y.DisplayName).ToList())));
             ClassificationsBySystem = dict;
 
             FactSheetUrl = project.GetFactSheetUrl();
-            DetailLinkDescriptor = project.IsProposal() ? $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is a proposal. For description and expected results, see the" : $"For {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} expenditures & results, see the";
+            DetailLinkDescriptor = project.IsProposal() ? $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is a proposal. For description and expected results, see the" : $"For {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} information & results, see the";
             InitializeDisplayNames();
             TaxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
 

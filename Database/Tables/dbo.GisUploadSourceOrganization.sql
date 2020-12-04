@@ -18,6 +18,8 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[ProjectDescriptionDefaultText] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ApplyCompletedDateToProject] [bit] NOT NULL,
 	[ApplyStartDateToProject] [bit] NOT NULL,
+	[ProgramID] [int] NOT NULL,
+	[ImportAsDetailedLocationInAdditionToTreatments] [bit] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC
@@ -29,6 +31,11 @@ ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_
 REFERENCES [dbo].[Organization] ([OrganizationID])
 GO
 ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID]
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_Program_ProgramID] FOREIGN KEY([ProgramID])
+REFERENCES [dbo].[Program] ([ProgramID])
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_Program_ProgramID]
 GO
 ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_ProjectStage_ProjectStageDefaultID_ProjectStageID] FOREIGN KEY([ProjectStageDefaultID])
 REFERENCES [dbo].[ProjectStage] ([ProjectStageID])

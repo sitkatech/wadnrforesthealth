@@ -17,7 +17,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web
 {
-    public class SawSamlResponse
+    public class SawSamlResponse : IDisposable
     {
         private string _originalDecodedResponse;
         private XmlDocument _xmlDoc;
@@ -33,18 +33,24 @@ namespace ProjectFirma.Web
         {
             var utf8Encoding = new UTF8Encoding();
             var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64SawSamlResponse));
+            LoadXmlFromString(xmlStringSawSamlResponse);
+        }
+
+        internal void LoadXmlFromString(string xmlStringSawSamlResponse)
+        {
             _originalDecodedResponse = xmlStringSawSamlResponse;
-            _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
+            _xmlDoc = new XmlDocument { PreserveWhitespace = true, XmlResolver = null };
             _xmlDoc.LoadXml(xmlStringSawSamlResponse);
             _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
         }
 
-        public bool IsValid()
+        public bool IsValid(out string userDisplayableValidationErrorMessage)
         {
+            userDisplayableValidationErrorMessage = string.Empty;
             var nodeList = _xmlDoc.SelectNodes("//ds:Signature", _xmlNameSpaceManager);
             if (nodeList == null || nodeList.Count == 0)
             {
-                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, could not find signature node in xml response.");
+                userDisplayableValidationErrorMessage = "Could not find signature node in SAW xml response.";
                 return false;
             }
             var signedXml = new SignedXml(_xmlDoc);
@@ -52,17 +58,17 @@ namespace ProjectFirma.Web
             var hasValidSignatureReference = HasValidSignatureReference(signedXml);
             if (!hasValidSignatureReference)
             {
-                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, could not validate SignatureReference.");
+                userDisplayableValidationErrorMessage = "Could not validate SignatureReference in SAW xml response.";
             }
             var checkSignature = signedXml.CheckSignature(_certificate, true);
             if (!checkSignature)
             {
-                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, xml signature is invalid.");
+                userDisplayableValidationErrorMessage = "SAW xml signature is invalid.";
             }
             var isResponseStillWithinValidTimePeriod = IsResponseStillWithinValidTimePeriod();
-            if (isResponseStillWithinValidTimePeriod)
+            if (!isResponseStillWithinValidTimePeriod)
             {
-                SitkaHttpApplication.Logger.Error("Error during SAW Login attempt, current time is past the expiration time for the response.");
+                userDisplayableValidationErrorMessage = "Current time is past the expiration time for the SAW xml response.";
             }
             return hasValidSignatureReference && checkSignature && isResponseStillWithinValidTimePeriod;
         }
@@ -147,13 +153,21 @@ namespace ProjectFirma.Web
 
         private bool IsResponseStillWithinValidTimePeriod()
         {
+            var dateTimeOffsetNow = DateTimeOffset.Now;
+            return IsResponseStillWithinValidTimePeriod(dateTimeOffsetNow);
+        }
+
+        internal bool IsResponseStillWithinValidTimePeriod(DateTimeOffset dateTimeOffsetNow)
+        {
             var expirationDateTimeOffset = DateTimeOffset.MaxValue;
-            var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:Subject/saml:SubjectConfirmation/saml:SubjectConfirmationData", _xmlNameSpaceManager);
+            var node = _xmlDoc.SelectSingleNode(
+                "/samlp:Response/saml:Assertion/saml:Subject/saml:SubjectConfirmation/saml:SubjectConfirmationData",
+                _xmlNameSpaceManager);
             if (node?.Attributes?["NotOnOrAfter"] != null)
             {
                 DateTimeOffset.TryParse(node.Attributes["NotOnOrAfter"].Value, out expirationDateTimeOffset);
             }
-            return DateTimeOffset.Now < expirationDateTimeOffset;
+            return dateTimeOffsetNow < expirationDateTimeOffset;
         }
 
         private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
@@ -175,7 +189,6 @@ namespace ProjectFirma.Web
                 var xmlTextWriter = new XmlTextWriter(stringWriter);
                 xmlTextWriter.Formatting = Formatting.Indented;
                 _xmlDoc.WriteTo(xmlTextWriter);
-
                 return stringWriter.ToString();
             }
             catch (Exception e)
@@ -183,6 +196,11 @@ namespace ProjectFirma.Web
                 // At least show something if we have problems here
                 return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {_originalDecodedResponse}";
             }
+        }
+
+        public void Dispose()
+        {
+            _certificate.Dispose();
         }
     }
 }

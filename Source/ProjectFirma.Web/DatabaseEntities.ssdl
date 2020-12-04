@@ -11,6 +11,7 @@
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ClassificationPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.Store.ClassificationSystem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CostTypeDatamartMapping" EntityType="ProjectFirma.Web.Models.Store.CostTypeDatamartMapping" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Country" EntityType="ProjectFirma.Web.Models.Store.Country" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
@@ -90,6 +91,7 @@
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -174,6 +176,12 @@ FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</Defin
 [vSocrataDataMartRawJsonImportIndex].[JsonImportDate] AS [JsonImportDate], 
 [vSocrataDataMartRawJsonImportIndex].[RawJsonStringLength] AS [RawJsonStringLength]
 FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImportIndex]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vTotalTreatedAcresByProject" EntityType="ProjectFirma.Web.Models.Store.vTotalTreatedAcresByProject" store:Type="Views" store:Schema="dbo" store:Name="vTotalTreatedAcresByProject">
+      <DefiningQuery>SELECT 
+[vTotalTreatedAcresByProject].[ProjectID] AS [ProjectID], 
+[vTotalTreatedAcresByProject].[TotalTreatedAcres] AS [TotalTreatedAcres]
+FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
@@ -314,6 +322,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID">
       <End Role="DefaultLeadImplementerOrganization" EntitySet="Organization" />
       <End Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization" EntitySet="GisUploadSourceOrganization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadSourceOrganization_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="GisUploadSourceOrganizations" EntitySet="GisUploadSourceOrganization" />
     </AssociationSet>
     <AssociationSet Name="FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID">
       <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
@@ -755,6 +767,22 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Program_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Program_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="Programs" EntitySet="Program" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Person_ProgramCreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Program_Person_ProgramCreatePersonID_PersonID">
+      <End Role="ProgramCreatePerson" EntitySet="Person" />
+      <End Role="ProgramsWhereYouAreTheProgramCreatePerson" EntitySet="Program" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID">
+      <End Role="ProgramLastUpdatedByPerson" EntitySet="Person" />
+      <End Role="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" EntitySet="Program" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Program_Person_ProgramPrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Program_Person_ProgramPrimaryContactPersonID_PersonID">
+      <End Role="ProgramPrimaryContactPerson" EntitySet="Person" />
+      <End Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson" EntitySet="Program" />
+    </AssociationSet>
     <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_Project_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="Projects" EntitySet="Project" />
@@ -1087,6 +1115,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdateHistories" EntitySet="ProjectUpdateHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.Store.FK_StateProvince_Country_CountryID">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="StateProvinces" EntitySet="StateProvince" />
+    </AssociationSet>
     <AssociationSet Name="FK_SupportRequestLog_Person_RequestPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_SupportRequestLog_Person_RequestPersonID_PersonID">
       <End Role="RequestPerson" EntitySet="Person" />
       <End Role="SupportRequestLogsWhereYouAreTheRequestPerson" EntitySet="SupportRequestLog" />
@@ -1238,6 +1270,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="DatamartObjectName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="DatamartSubObjectCode" Type="varchar" Nullable="false" MaxLength="10" />
     <Property Name="DatamartSubObjectName" Type="varchar" Nullable="false" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="CountryAbbrev" Type="varchar" Nullable="false" MaxLength="2" />
   </EntityType>
   <EntityType Name="County">
     <Key>
@@ -1452,6 +1492,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="ProjectDescriptionDefaultText" Type="varchar" MaxLength="4000" />
     <Property Name="ApplyCompletedDateToProject" Type="bit" Nullable="false" />
     <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
+    <Property Name="ImportAsDetailedLocationInAdditionToTreatments" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -2144,6 +2186,21 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Program">
+    <Key>
+      <PropertyRef Name="ProgramID" />
+    </Key>
+    <Property Name="ProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="ProgramName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="ProgramShortName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ProgramPrimaryContactPersonID" Type="int" />
+    <Property Name="ProgramIsActive" Type="bit" Nullable="false" />
+    <Property Name="ProgramCreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ProgramCreatePersonID" Type="int" Nullable="false" />
+    <Property Name="ProgramLastUpdatedDate" Type="datetime" />
+    <Property Name="ProgramLastUpdatedByPersonID" Type="int" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -2939,6 +2996,16 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     <Property Name="JsonImportDate" Type="datetime" />
     <Property Name="RawJsonStringLength" Type="bigint" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProject' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vTotalTreatedAcresByProject">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="TotalTreatedAcres" Type="decimal" Precision="38" Scale="10" />
+  </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
     <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.Store.AgreementStatus" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
@@ -3356,6 +3423,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization">
         <PropertyRef Name="DefaultLeadImplementerOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadSourceOrganization_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
+    <End Role="GisUploadSourceOrganizations" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="GisUploadSourceOrganizations">
+        <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4685,6 +4764,54 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Program_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="Programs" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="Programs">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Person_ProgramCreatePersonID_PersonID">
+    <End Role="ProgramCreatePerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="ProgramsWhereYouAreTheProgramCreatePerson" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramCreatePerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramCreatePerson">
+        <PropertyRef Name="ProgramCreatePersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID">
+    <End Role="ProgramLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramLastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramLastUpdatedByPerson">
+        <PropertyRef Name="ProgramLastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_Person_ProgramPrimaryContactPersonID_PersonID">
+    <End Role="ProgramPrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramPrimaryContactPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson">
+        <PropertyRef Name="ProgramPrimaryContactPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Project_FocusArea_FocusAreaID">
     <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
@@ -5678,6 +5805,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="ProjectUpdateHistories">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StateProvince_Country_CountryID">
+    <End Role="Country" Type="ProjectFirma.Web.Models.Store.Country" Multiplicity="1" />
+    <End Role="StateProvinces" Type="ProjectFirma.Web.Models.Store.StateProvince" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="StateProvinces">
+        <PropertyRef Name="CountryID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -60,13 +60,27 @@ namespace ProjectFirma.Web.Models
             this.CountryID = countryID;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public StateProvince(string stateProvinceAbbreviation, string stateProvinceName, bool isBpaRelevant, Country country) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.StateProvinceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.StateProvinceAbbreviation = stateProvinceAbbreviation;
+            this.StateProvinceName = stateProvinceName;
+            this.IsBpaRelevant = isBpaRelevant;
+            this.CountryID = country.CountryID;
+            this.Country = country;
+            country.StateProvinces.Add(this);
+        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static StateProvince CreateNewBlank()
+        public static StateProvince CreateNewBlank(Country country)
         {
-            return new StateProvince(default(string), default(string), default(bool), default(int));
+            return new StateProvince(default(string), default(string), default(bool), country);
         }
 
         /// <summary>
@@ -142,6 +156,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return StateProvinceID; } set { StateProvinceID = value; } }
 
         public virtual ICollection<County> Counties { get; set; }
+        public virtual Country Country { get; set; }
 
         public static class FieldLengths
         {

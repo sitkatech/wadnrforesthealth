@@ -31,9 +31,9 @@ namespace ProjectFirma.Web.Views.GrantAllocationAwardLandownerCostShareLineItem
         public readonly string GridName;
         public readonly string GridDataUrl;
 
-        public IndexViewData(Person currentPerson) : base(currentPerson)
+        public IndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = "Treatments";
+            PageTitle = "DNR Cost Share Treatments";
             GridSpec = new LandownerCostShareIndexGridSpec(currentPerson)
             {
                 ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel(),

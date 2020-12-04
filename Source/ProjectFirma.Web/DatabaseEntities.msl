@@ -122,6 +122,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryAbbrev" ColumnName="CountryAbbrev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="County">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.County">
         <MappingFragment StoreEntitySet="County">
@@ -355,6 +364,8 @@
           <ScalarProperty Name="ProjectDescriptionDefaultText" ColumnName="ProjectDescriptionDefaultText" />
           <ScalarProperty Name="ApplyCompletedDateToProject" ColumnName="ApplyCompletedDateToProject" />
           <ScalarProperty Name="ApplyStartDateToProject" ColumnName="ApplyStartDateToProject" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ImportAsDetailedLocationInAdditionToTreatments" ColumnName="ImportAsDetailedLocationInAdditionToTreatments" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1089,6 +1100,22 @@
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Program">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Program">
+        <MappingFragment StoreEntitySet="Program">
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+          <ScalarProperty Name="ProgramShortName" ColumnName="ProgramShortName" />
+          <ScalarProperty Name="ProgramPrimaryContactPersonID" ColumnName="ProgramPrimaryContactPersonID" />
+          <ScalarProperty Name="ProgramIsActive" ColumnName="ProgramIsActive" />
+          <ScalarProperty Name="ProgramCreateDate" ColumnName="ProgramCreateDate" />
+          <ScalarProperty Name="ProgramCreatePersonID" ColumnName="ProgramCreatePersonID" />
+          <ScalarProperty Name="ProgramLastUpdatedDate" ColumnName="ProgramLastUpdatedDate" />
+          <ScalarProperty Name="ProgramLastUpdatedByPersonID" ColumnName="ProgramLastUpdatedByPersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1916,6 +1943,14 @@
           <ScalarProperty Name="JsonImportStatusTypeName" ColumnName="JsonImportStatusTypeName" />
           <ScalarProperty Name="JsonImportDate" ColumnName="JsonImportDate" />
           <ScalarProperty Name="RawJsonStringLength" ColumnName="RawJsonStringLength" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vTotalTreatedAcresByProject">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vTotalTreatedAcresByProject">
+        <MappingFragment StoreEntitySet="vTotalTreatedAcresByProject">
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="TotalTreatedAcres" ColumnName="TotalTreatedAcres" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

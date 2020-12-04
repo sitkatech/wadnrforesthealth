@@ -176,6 +176,7 @@ namespace ProjectFirma.Web.Views
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectStewardOrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.ProjectStewardOrganizationDisplayName.GetFieldDefinitionLabelPluralized()}", "Group3"));
             }
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", "Group3"));
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}", "Group3"));
 
             MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.ProgramInfo).ForEach(x =>
             {
@@ -263,7 +264,12 @@ namespace ProjectFirma.Web.Views
             });
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Proposed()), currentPerson, $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()}", "Group3"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Pending()), currentPerson, $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", "Group3"));
-            projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantAllocationAwardLandownerCostShareLineItemController>(tac => tac.Index()),currentPerson, "Treatments", "Group4"));
+
+            if (new GrantAllocationAwardLandownerCostShareLineItemViewFeature().HasPermissionByPerson(currentPerson))
+            {
+                projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantAllocationAwardLandownerCostShareLineItemController>(tac => tac.Index()), currentPerson, "DNR Cost Share Treatments", "Group4"));
+            }
+
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InteractionEventController>(iec => iec.Index()), currentPerson, $"Full {Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()} List", "Group5"));
 
             MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.Projects).ForEach(x =>

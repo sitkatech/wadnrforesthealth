@@ -30,8 +30,8 @@
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="/Content/fancytree/jquery.fancytree-all.min.js"></script>
-    <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
-    <link rel="stylesheet" href="/Content/fancytree/skin-bootstrap/ui.fancytree.min.css" type="text/css" />
+    <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/Content/fancytree/skin-bootstrap/ui.fancytree.min.css" type="text/css"/>
 
     <style>
         .selectedRow {
@@ -140,7 +140,7 @@
 
         span.fancytree-title
         {
-            margin-left:0;
+            margin-left: 0;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -150,6 +150,11 @@
             display: inline-block;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .mapGridContainer
+        {
+            margin-top: 15px;
         }
     </style>
 }
@@ -200,25 +205,28 @@
     <label><span class="glyphicon glyphicon-map-marker"></span> Cluster @FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized():</label><input style="margin-left: 5px" type="checkbox" id="ClusterLocations" />
 </div>
 
-<div id="showBasinwideProjectsToast">
-    <a class="btn pull-right" title="@String.Format("{0} that are not represented by a point on the map are listed here.", FieldDefinition.Project.GetFieldDefinitionLabelPluralized())">
-        <span class="glyphicon glyphicon-chevron-left"></span>Show @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() with no Simple Location
-    </a>
-</div>
-<div id="hideBasinwideProjectsToast" style="display: none">
-    <a class="btn pull-right">
-        Hide @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() with no Simple Location<span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-</div>
 
-<div style="margin-top: 10px">To zoom, hold down Shift and drag a rectangle.</div>
+
+
 <div ng-controller="ProjectMapController">
     <div class="row" style="vertical-align: top;">
         <div class="col-md-12" id="mapPanel">
             @{ ProjectLocationsMap.RenderPartialView(Html, ViewDataTyped.ProjectLocationsMapViewData); }
+            
+            <div id="showBasinwideProjectsToast">
+                <a class="btn pull-right" style="clear: left;" title="@String.Format("{0} that are not represented by a point on the map are listed here.", FieldDefinition.Project.GetFieldDefinitionLabelPluralized())">
+                    <span class="glyphicon glyphicon-chevron-left"></span>Show @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() with no Simple Location
+                </a>
+            </div>
+            <div id="hideBasinwideProjectsToast" style="display: none">
+                <a class="btn pull-right">
+                    Hide @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() with no Simple Location<span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+            <div>To zoom, hold down Shift and drag a rectangle.</div>
 
 
-                <div class="mapGridContainer">
+            <div class="mapGridContainer">
                     <table class="table table-bordered table-projectMapLocations">
                         <thead>
                             <tr>

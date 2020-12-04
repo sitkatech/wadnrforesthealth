@@ -30,6 +30,7 @@
 
     #mapLegend {
         margin-top: 10px;
+        display: inline-block;
     }
 
     .mapLegendElement {
@@ -48,18 +49,20 @@
 
     #mapLegendTitle {
         font-weight: bold;
+        display: inline-block;
+        margin-right: 20px;
     }
 </style>
 
 
 
-
-<div id="@ViewDataTyped.MapDivID"></div>
 <div class="mapLegendContainer">
-    <span id="mapLegendTitle">@ViewDataTyped.LegendTitle</span>
+    <div id="mapLegendTitle">@ViewDataTyped.LegendTitle</div>
     <div id="mapLegend">
     </div>
 </div>
+<div id="@ViewDataTyped.MapDivID"></div>
+
     
 
 

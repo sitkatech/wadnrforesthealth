@@ -123,34 +123,34 @@
                                         </div>
                                     }
 
-                                        <div class="@ViewDataTyped.Organization.LogoFileResource != null ? col-xs-11 : col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
-                                                <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationName</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-6 fieldLabel text-right">@Html.Label("Short Name")</div>
-                                                <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationShortName</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationType)</div>
-                                                <div class="col-xs-6">@(ViewDataTyped.Organization.OrganizationType != null ? ViewDataTyped.Organization.OrganizationType.OrganizationTypeName : string.Empty)</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationPrimaryContact)</div>
-                                                <div class="col-xs-6">@(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, ViewDataTyped.Organization.PrimaryContactPerson).HasPermission ? ViewDataTyped.Organization.PrimaryContactPersonWithOrgAsUrl : ViewDataTyped.Organization.PrimaryContactPersonAsStringAndOrgAsUrl)</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-6 fieldLabel text-right">@Html.Label("Vendor")</div>
-                                                <div class="col-xs-6">@ViewDataTyped.Organization.Vendor.GetVendorNameWithFullStatewideVendorNumber()</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-6 fieldLabel text-right">@Html.Label("Home Page")</div>
-                                                <div class="col-xs-6">
-                                                    <a class="wrapLongString" href="@ViewDataTyped.Organization.OrganizationUrl">@ViewDataTyped.Organization.OrganizationUrl</a>
-                                                </div>
+                                    <div class="@ViewDataTyped.Organization.LogoFileResource != null ? col-xs-11 : col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
+                                            <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Short Name")</div>
+                                            <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationShortName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationType)</div>
+                                            <div class="col-xs-6">@(ViewDataTyped.Organization.OrganizationType != null ? ViewDataTyped.Organization.OrganizationType.OrganizationTypeName : string.Empty)</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationPrimaryContact)</div>
+                                            <div class="col-xs-6">@(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, ViewDataTyped.Organization.PrimaryContactPerson).HasPermission ? ViewDataTyped.Organization.PrimaryContactPersonWithOrgAsUrl : ViewDataTyped.Organization.PrimaryContactPersonAsStringAndOrgAsUrl)</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Vendor")</div>
+                                            <div class="col-xs-6">@ViewDataTyped.Organization.Vendor.GetVendorNameWithFullStatewideVendorNumber()</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Home Page")</div>
+                                            <div class="col-xs-6">
+                                                <a class="wrapLongString" href="@ViewDataTyped.Organization.OrganizationUrl">@ViewDataTyped.Organization.OrganizationUrl</a>
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -162,8 +162,8 @@
                                 <a href="@ViewDataTyped.ManageGrantAllocationsUrl">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</a>
 
                                 @*<span class="pull-right">
-                                    @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewGrantAllocationUrl, string.Format("Create a new {0}", FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()), new List<string>(), ViewDataTyped.CanCreateNewGrantAllocation)
-                                </span>*@
+                            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewGrantAllocationUrl, string.Format("Create a new {0}", FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()), new List<string>(), ViewDataTyped.CanCreateNewGrantAllocation)
+                        </span>*@
                             </div>
                             <div class="panel-body">
                                 @if (ViewDataTyped.Organization.GrantAllocations.Any())
@@ -181,6 +181,18 @@
                                 {
                                     <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() set for this @FieldDefinition.Organization.GetFieldDefinitionLabel().</p>
                                 }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
+                            </div>
+                            <div class="panel-body">
+                                @Html.DhtmlxGrid(ViewDataTyped.ProgramGridSpec, ViewDataTyped.ProgramGridName, ViewDataTyped.ProgramGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>
                     </div>
@@ -286,9 +298,9 @@
                             </div>
                             <div class="panel-body">
                                 <p>
-                                    @ViewDataTyped.Organization.OrganizationName is associated with the following @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() 
+                                    @ViewDataTyped.Organization.OrganizationName is associated with the following @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()
                                 </p>
-                                
+
                                 @Html.DhtmlxGrid(ViewDataTyped.AgreementOrganizationsGridSpec, ViewDataTyped.AgreementOrganizationsGridName, ViewDataTyped.AgreementOrganizationsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>

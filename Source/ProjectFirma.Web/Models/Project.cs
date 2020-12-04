@@ -50,6 +50,7 @@ namespace ProjectFirma.Web.Models
         public string DisplayName => ProjectName;
 
         public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(this.GetDetailUrl(), DisplayName);
+        public HtmlString DisplayNameAsUrlBlankTarget => UrlTemplate.MakeHrefStringBlankTarget(this.GetDetailUrl(), DisplayName);
 
         public static bool IsProjectNameUnique(IEnumerable<Project> projects, string projectName, int? currentProjectID)
         {

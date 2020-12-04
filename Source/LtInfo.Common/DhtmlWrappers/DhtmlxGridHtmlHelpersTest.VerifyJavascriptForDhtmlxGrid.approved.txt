@@ -1,6 +1,6 @@
 ﻿
-<div id ="testGridNameContainerDivID">
-    <div id="testGridNameLoadingBar" style="display:none"></div>
+<div id ="testGridNameContainerDivID" style="position:relative;">
+    <div id="testGridNameLoadingBar" class="project-firma-loading-bar" style="display:none"></div>
     <div id="testGridNameMetaDivID" class="DhtmlxGridMeta"></div>
     <div id="testGridNameDivID" style="height:250px;"></div>
     <script type="text/javascript">
@@ -24,6 +24,8 @@
         Sitka.testGridName.grid.attachFooter(",,,,{#stat_total}", ["","","","","text-align:right"]);
         
         Sitka.testGridName.buildWithArguments(null, null, columnFilterList, "TestController/ListGridDataXml", false, null);
+
+        Sitka.testGridName.grid.setSerializableColumns("true,true,true,true,true"); 
 
         // Show loading bar
         jQuery("#testGridNameLoadingBar").show();

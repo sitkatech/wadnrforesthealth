@@ -474,7 +474,7 @@ namespace ProjectFirma.Web.Controllers
 
             projectList.Add(project);
 
-            if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
+            if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments || gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments)
             {
                 var gisFeatures = gisUploadAttempt.GisFeatures
                     .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();

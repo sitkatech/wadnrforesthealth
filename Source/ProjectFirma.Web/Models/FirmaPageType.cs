@@ -80,6 +80,12 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<OrganizationController>.BuildUrlFromExpression(x => x.Index());
     }
 
+    public partial class FirmaPageTypeProgramsList
+    {
+        public override string GetViewUrl() => SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.Index());
+    }
+
+    
     public partial class FirmaPageTypeTaxonomyBranchList
     {
         public override string GetViewUrl() => SitkaRoute<TaxonomyBranchController>.BuildUrlFromExpression(x => x.Index());
@@ -212,5 +218,10 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeGisUploadAttemptInstructions
     {
         public override string GetViewUrl() => string.Empty;
+    }
+
+    public partial class FirmaPageTypeDNRCostShareTreatments
+    {
+        public override string GetViewUrl() => SitkaRoute<GrantAllocationAwardLandownerCostShareLineItemController>.BuildUrlFromExpression(c => c.Index());
     }
 }

@@ -610,6 +610,13 @@ namespace LtInfo.Common
             return MakeHrefString(url, linkText, null, null);
         }
 
+        public static HtmlString MakeHrefStringBlankTarget(string url, string linkText)
+        {
+            var dictionary = new Dictionary<string, string>();
+            dictionary.Add("target", "_blank");
+            return MakeHrefString(url, linkText, null, dictionary);
+        }
+
         public static HtmlString MakeHrefString(string url, string linkText, string titleText)
         {
             return MakeHrefString(url, linkText, titleText, null);

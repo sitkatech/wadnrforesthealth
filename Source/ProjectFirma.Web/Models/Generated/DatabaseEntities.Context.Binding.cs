@@ -40,6 +40,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
         public virtual DbSet<CostTypeDatamartMapping> CostTypeDatamartMappings { get; set; }
         public virtual DbSet<County> Counties { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
         public virtual DbSet<DNRUplandRegion> DNRUplandRegions { get; set; }
@@ -119,6 +120,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
+        public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
         public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
@@ -182,6 +184,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
+        public virtual DbSet<vTotalTreatedAcresByProject> vTotalTreatedAcresByProjects { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
         public virtual DbSet<fGetProjectDnrUploadRegion_Result> fGetProjectDnrUploadRegionResults { get; set; }
         public virtual DbSet<fGetProjectPriorityLandscape_Result> fGetProjectPriorityLandscapeResults { get; set; }
@@ -301,6 +304,9 @@ namespace ProjectFirma.Web.Models
 
                 case "County":
                     return Counties.GetCounty(primaryKey);
+
+                case "Country":
+                    return Countries.GetCountry(primaryKey);
 
                 case "CustomPageDisplayType":
                     var customPageDisplayType = CustomPageDisplayType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -663,6 +669,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
+
+                case "Program":
+                    return Programs.GetProgram(primaryKey);
 
                 case "ProjectApprovalStatus":
                     var projectApprovalStatus = ProjectApprovalStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
