@@ -19,7 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Text;
 using System.Web;
 
 namespace LtInfo.Common
@@ -75,7 +78,26 @@ namespace LtInfo.Common
 
         public override string ToString()
         {
-            return string.Format("Unhandled Exception: {0}{1}{0}{0}{2}{0}{0}{3}{0}", Environment.NewLine, OriginalException, SessionInfo, DebugInfo );
+            var originalExceptionDetails = OriginalException.ToString();
+            if (OriginalException is ReflectionTypeLoadException reflectionTypeLoadException)
+            {
+                var sb = new StringBuilder();
+                foreach (var exSub in reflectionTypeLoadException.LoaderExceptions)
+                {
+                    sb.AppendLine(exSub.Message);
+                    if (exSub is FileNotFoundException exFileNotFound)
+                    {
+                        if (!string.IsNullOrEmpty(exFileNotFound.FusionLog))
+                        {
+                            sb.AppendLine("Fusion Log:");
+                            sb.AppendLine(exFileNotFound.FusionLog);
+                        }
+                    }
+                    sb.AppendLine();
+                }
+                originalExceptionDetails += sb.ToString();
+            }
+            return string.Format("Unhandled Exception: {0}{1}{0}{0}{2}{0}{0}{3}{0}", Environment.NewLine, originalExceptionDetails, SessionInfo, DebugInfo );
         }
     }
     

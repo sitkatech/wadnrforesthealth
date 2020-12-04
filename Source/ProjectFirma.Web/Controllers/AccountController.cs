@@ -77,30 +77,32 @@ namespace ProjectFirma.Web.Controllers
         // ReSharper disable once InconsistentNaming
         public ActionResult SAWPost(string returnUrl)
         {
-            var sawSamlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromUri(FirmaWebConfiguration.SAWEndPoint));
-            try
+            using (var sawSamlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromUri(FirmaWebConfiguration.SAWEndPoint)))
             {
-                // SAML providers usually POST the data into this var
-                sawSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
-                if (sawSamlResponse.IsValid(userDisplayableValidationErrorMessage: out var userDisplayableValidationErrorMessage))
+                try
                 {
-                    var firstName = sawSamlResponse.GetFirstName();
-                    var lastName = sawSamlResponse.GetLastName();
-                    var email = sawSamlResponse.GetEmail();
-                    var roleGroups = sawSamlResponse.GetRoleGroups();
-                    var sawAuthenticator = sawSamlResponse.GetWhichSawAuthenticator();
-                    ProcessLogin(firstName, lastName, email, roleGroups, sawAuthenticator);
+                    // SAML providers usually POST the data into this var
+                    sawSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
+                    if (sawSamlResponse.IsValid(userDisplayableValidationErrorMessage: out var userDisplayableValidationErrorMessage))
+                    {
+                        var firstName = sawSamlResponse.GetFirstName();
+                        var lastName = sawSamlResponse.GetLastName();
+                        var email = sawSamlResponse.GetEmail();
+                        var roleGroups = sawSamlResponse.GetRoleGroups();
+                        var sawAuthenticator = sawSamlResponse.GetWhichSawAuthenticator();
+                        ProcessLogin(firstName, lastName, email, roleGroups, sawAuthenticator);
+                    }
+                    else
+                    {
+                        SitkaHttpApplication.Logger.Error($"Processing SAW login, SAML Response invalid. Validation error: {userDisplayableValidationErrorMessage}, SAW SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}");
+                        SetErrorForDisplay($"There was a SAW validation problem while trying to log into your account. {userDisplayableValidationErrorMessage} Please try again in a few minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
+                    }
+                    return new RedirectResult(HomeUrl);
                 }
-                else
+                catch (Exception ex)
                 {
-                    SitkaHttpApplication.Logger.Error($"Processing SAW login, SAML Response invalid. Validation error: {userDisplayableValidationErrorMessage}, SAW SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}");
-                    SetErrorForDisplay($"There was a SAW validation problem while trying to log into your account. {userDisplayableValidationErrorMessage} Please try again in a few minutes. If this issue keeps happening, please contact support: <a href=\"mailto:{FirmaWebConfiguration.SitkaSupportEmail}\">{FirmaWebConfiguration.SitkaSupportEmail}</a>");
+                    throw new ApplicationException($"Exception during SAW Login, see inner exception for details. SAW SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}", ex);
                 }
-                return new RedirectResult(HomeUrl);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException($"Exception during SAW Login, see inner exception for details. SAW SAML XML:\r\n{sawSamlResponse.GetSamlAsPrettyPrintXml()}", ex);
             }
         }
 
