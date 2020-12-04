@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
         {
             return new LayerGeoJson("All DNR Upland Regions", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetDNRUplandRegionWmsLayerName(), layerColor, layerOpacity,
-                layerInitialVisibility);
+                layerInitialVisibility, "/Content/leaflet/images/washington_upland_region.png");
         }
 
         public static List<LayerGeoJson> GetRegionAndAssociatedProjectLayers(DNRUplandRegion dnrUplandRegion, List<Project> projects)

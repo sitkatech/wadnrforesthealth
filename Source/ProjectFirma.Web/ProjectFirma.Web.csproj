@@ -1207,6 +1207,11 @@
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
     <Content Include="Content\leaflet\images\washington_county.png" />
+    <Content Include="Content\leaflet\images\washington_legislative_district.png" />
+    <Content Include="Content\leaflet\images\washington_location_detailed.png" />
+    <Content Include="Content\leaflet\images\washington_priority_landscape.png" />
+    <Content Include="Content\leaflet\images\washington_project_treatment.png" />
+    <Content Include="Content\leaflet\images\washington_upland_region.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
