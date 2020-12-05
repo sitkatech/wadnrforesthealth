@@ -1167,6 +1167,7 @@
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

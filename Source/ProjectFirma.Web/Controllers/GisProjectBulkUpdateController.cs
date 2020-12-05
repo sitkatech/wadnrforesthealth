@@ -127,7 +127,8 @@ namespace ProjectFirma.Web.Controllers
             var metadataAttributes =
                 HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
                     gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
-            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes.ToList(), gisMetadataPostUrl, projectIndexUrl);
+            var programs = HttpRequestStorage.DatabaseEntities.Programs.ToList();
+            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes.ToList(), gisMetadataPostUrl, projectIndexUrl, programs);
             return RazorView<GisMetadata, GisMetadataViewData, GisMetadataViewModel>(viewData, gisMetadataViewModel);
         }
 
@@ -164,6 +165,7 @@ namespace ProjectFirma.Web.Controllers
             var treatedAcresMetadataAttributeID = viewModel.TreatedAcresMetadataAttributeID;
             var footprintAcresMetadataAttributeID = viewModel.FootprintAcresMetadataAttributeID;
             var privateLandownerMetadataAttributeID = viewModel.PrivateLandownerMetadataAttributeID;
+            var programID = viewModel.ProgramID;
 
             var projectIdentifierMetadataAttribute =
                 gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
@@ -224,7 +226,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 MakeProject(projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
                     projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, projectLocationList
-                    , privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList,ref currentCounter);
+                    , privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList, programID,ref currentCounter);
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
@@ -377,6 +379,7 @@ namespace ProjectFirma.Web.Controllers
                                         List<Person> existingPersonList, 
                                         List<Person> newPersonList, 
                                         List<ProjectPerson> newProjectPersonList, 
+                                        int programID, 
                                         ref int currentCounter)
         {
 

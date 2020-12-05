@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected Program()
         {
             this.GisUploadSourceOrganizations = new HashSet<GisUploadSourceOrganization>();
+            this.Projects = new HashSet<Project>();
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any();
+            return GisUploadSourceOrganizations.Any() || Projects.Any();
         }
 
         /// <summary>
@@ -108,13 +109,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
             }
+
+            if(Projects.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(Project).Name};
 
 
         /// <summary>
@@ -143,6 +149,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in Projects.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -160,6 +171,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProgramID; } set { ProgramID = value; } }
 
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Person ProgramCreatePerson { get; set; }
         public virtual Person ProgramLastUpdatedByPerson { get; set; }

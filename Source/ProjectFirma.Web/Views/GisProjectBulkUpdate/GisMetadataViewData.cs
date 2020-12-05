@@ -38,6 +38,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public readonly string ProjectIndexUrl;
 
         public GisRecordGridSpec GisRecordGridSpec { get; set; }
+        public IEnumerable<SelectListItem> ProgramSelectList { get; }
         public IEnumerable<SelectListItem> ProjectIDGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> ProjectNameGisMetadataAttributes { get; }
         public IEnumerable<SelectListItem> TreatmentTypeGisMetadataAttributes { get; }
@@ -69,12 +70,14 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             , GisRecordGridSpec gisRecordGridSpec
             , List<Models.GisMetadataAttribute> gisMetadataAttributes
             , string gisMetadataPostUrl
-            , string projectIndexUrl)
+            , string projectIndexUrl
+            , List<Models.Program> programsForSelectList)
             : base(currentPerson, gisUploadAttempt, GisUploadAttemptWorkflowSection.ValidateMetadata.GisUploadAttemptWorkflowSectionDisplayName, gisImportSectionStatus)
         {
             GisRecordGridSpec = gisRecordGridSpec;
             GridDataUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(tc => tc.GisRecordGridJsonData(gisUploadAttempt.GisUploadAttemptID));
             GridName = "GisRecordGrid";
+            ProgramSelectList = programsForSelectList.ToSelectList(x => x.ProgramID.ToString(CultureInfo.InvariantCulture), y => y.ProgramName);
             ProjectIDGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             ProjectNameGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
             TreatmentTypeGisMetadataAttributes = gisMetadataAttributes.ToSelectListWithEmptyFirstRow(x => x.GisMetadataAttributeID.ToString(CultureInfo.InvariantCulture), y => y.GisMetadataAttributeName);
