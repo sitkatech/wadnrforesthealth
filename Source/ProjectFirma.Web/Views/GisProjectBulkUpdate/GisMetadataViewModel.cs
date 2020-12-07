@@ -34,7 +34,6 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {
     public class GisMetadataViewModel : FormViewModel, IValidatableObject
     {
-
         [Required]
         [DisplayName("Project Identifier Column")]
         public int ProjectIdentifierMetadataAttributeID { get; set; }

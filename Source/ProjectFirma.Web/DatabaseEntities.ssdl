@@ -803,6 +803,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ReviewedByPerson" EntitySet="Person" />
       <End Role="ProjectsWhereYouAreTheReviewedByPerson" EntitySet="Project" />
     </AssociationSet>
+    <AssociationSet Name="FK_Project_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_Project_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="Projects" EntitySet="Project" />
+    </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="Projects" EntitySet="Project" />
@@ -2250,6 +2254,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
+    <Property Name="ProgramID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -4869,6 +4874,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectsWhereYouAreTheReviewedByPerson">
         <PropertyRef Name="ReviewedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
+    <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
