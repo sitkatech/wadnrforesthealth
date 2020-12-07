@@ -127,8 +127,8 @@ namespace ProjectFirma.Web.Controllers
             var metadataAttributes =
                 HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
                     gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
-            var programs = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes.ToList(), gisMetadataPostUrl, projectIndexUrl, programs);
+
+            var viewData = new GisMetadataViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, gridSpec, metadataAttributes.ToList(), gisMetadataPostUrl, projectIndexUrl);
             return RazorView<GisMetadata, GisMetadataViewData, GisMetadataViewModel>(viewData, gisMetadataViewModel);
         }
 
@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Controllers
             var treatedAcresMetadataAttributeID = viewModel.TreatedAcresMetadataAttributeID;
             var footprintAcresMetadataAttributeID = viewModel.FootprintAcresMetadataAttributeID;
             var privateLandownerMetadataAttributeID = viewModel.PrivateLandownerMetadataAttributeID;
-            var programID = viewModel.ProgramID;
+            var programID = sourceOrganization.ProgramID;
 
             var projectIdentifierMetadataAttribute =
                 gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>

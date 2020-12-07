@@ -34,9 +34,6 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {
     public class GisMetadataViewModel : FormViewModel, IValidatableObject
     {
-        [DisplayName("Program")]
-        public int ProgramID { get; set; }
-
         [Required]
         [DisplayName("Project Identifier Column")]
         public int ProjectIdentifierMetadataAttributeID { get; set; }
@@ -116,7 +113,6 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         {
             var organization = gisUploadAttempt.GisUploadSourceOrganization;
             var defaults = organization.GisDefaultMappings;
-            ProgramID = gisUploadAttempt.GisUploadSourceOrganization.ProgramID;
             ProjectIdentifierMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectIdentifier) ?? 0;
             ProjectNameMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectName) ?? 0;
             TreatmentTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentType);
