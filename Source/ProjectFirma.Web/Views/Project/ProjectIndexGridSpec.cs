@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Views.Project
 
             Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, DhtmlxGridColumnFormatType.Decimal );
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.Program.DisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => Program(x), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
 
@@ -76,6 +76,17 @@ namespace ProjectFirma.Web.Views.Project
                 return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString());
             }
 
+            return new HtmlString(string.Empty);
+        }
+
+        private static HtmlString Program(Models.Project project)
+        {
+            if (project.Program != null)
+            {
+                return UrlTemplate.MakeHrefString(
+                    project.Program.GetDetailUrl(),
+                    project.Program.DisplayName);
+            }
             return new HtmlString(string.Empty);
         }
 
