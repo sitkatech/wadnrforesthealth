@@ -50,5 +50,120 @@ namespace ProjectFirma.Web.Views.Program
             return null;
 
         }
+
+        public string RequireCompletionDate()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.RequireCompletionDate.ToYesNo();
+            }
+            return null;
+        }
+
+        public string AdjustProjectTypeBasedOnTreatmentTypes()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.AdjustProjectTypeBasedOnTreatmentTypes.ToYesNo();
+            }
+            return null;
+        }
+
+        public string DataDeriveProjectStage()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.DataDeriveProjectStage.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ImportAsDetailedLocationInsteadOfTreatments()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ApplyCompletedDateToProject()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ApplyCompletedDateToProject.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ApplyStartDateToProject()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ApplyStartDateToProject.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ImportAsDetailedLocationInAdditionToTreatments()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments.ToYesNo();
+            }
+            return null;
+        }
+
+
+        public string ProjectDescriptionDefaultText()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ProjectDescriptionDefaultText;
+            }
+            return null;
+        }
+
+        public string ProjectStageDefault()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                
+                var projectStageDefaultID =  GisUploadSourceOrganization.ProjectStageDefaultID;
+                var projectStageDisplayName = ProjectStage.AllLookupDictionary.ContainsKey(projectStageDefaultID)
+                    ? ProjectStage.AllLookupDictionary[projectStageDefaultID].ProjectStageDisplayName
+                    : null;
+                return projectStageDisplayName;
+            }
+            return null;
+        }
+
+        public string DefaultLeadImplementerOrganization()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+
+                var defaultLeadImplementerOrganizationID = GisUploadSourceOrganization.DefaultLeadImplementerOrganizationID;
+                var organization =
+                    HttpRequestStorage.DatabaseEntities.Organizations.SingleOrDefault(x =>
+                        x.OrganizationID == defaultLeadImplementerOrganizationID);
+                return organization != null ? organization.DisplayName : null;
+            }
+            return null;
+        }
+
+        public string RelationshipTypeForDefaultOrganization()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+
+                var relationshipTypeForDefaultOrganizationID = GisUploadSourceOrganization.RelationshipTypeForDefaultOrganizationID;
+                var relationshipType =
+                    HttpRequestStorage.DatabaseEntities.RelationshipTypes.SingleOrDefault(x =>
+                        x.RelationshipTypeID == relationshipTypeForDefaultOrganizationID);
+                return relationshipType != null ? relationshipType.RelationshipTypeName : null;
+            }
+            return null;
+        }
     }
 }
