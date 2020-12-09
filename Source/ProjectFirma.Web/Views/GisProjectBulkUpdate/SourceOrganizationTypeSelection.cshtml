@@ -34,7 +34,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <div class="radio">
                 <label>
                     @Html.RadioButtonFor(m => m.SourceOrganizationID, sourceOrganization.GisUploadSourceOrganizationID)
-                    <strong>@sourceOrganization.GisUploadSourceOrganizationName</strong>
+                    <strong>@sourceOrganization.Program.DisplayName</strong>
                 </label>
             </div>
         }
