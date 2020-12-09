@@ -58,15 +58,6 @@ namespace ProjectFirma.Web.Views.Program
             return false;
         }
 
-        public string RequireCompletionDate()
-        {
-            if (GisUploadSourceOrganization != null)
-            {
-                return GisUploadSourceOrganization.RequireCompletionDate.ToYesNo();
-            }
-            return null;
-        }
-
         public string AdjustProjectTypeBasedOnTreatmentTypes()
         {
             if (GisUploadSourceOrganization != null)
