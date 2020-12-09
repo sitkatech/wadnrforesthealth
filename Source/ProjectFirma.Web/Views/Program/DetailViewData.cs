@@ -20,6 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -32,6 +35,7 @@ namespace ProjectFirma.Web.Views.Program
 {
     public class DetailViewData : ProgramViewData
     {
+        private ICollection<GisDefaultMapping> Defaults { get; set; }
 
         public DetailViewData(Person currentPerson,
                                     Models.Program program
@@ -40,7 +44,158 @@ namespace ProjectFirma.Web.Views.Program
         {
             PageTitle = program.ProgramName;
             BreadCrumbTitle = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()} Detail";
+            Defaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisDefaultMappings : new List<GisDefaultMapping>();
 
         }
+        private string GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition fieldDefinition)
+        {
+            var projectIdentifierDefault =
+                Defaults.SingleOrDefault(x => x.FieldDefinition == fieldDefinition);
+            if (projectIdentifierDefault != null)
+            {
+                return projectIdentifierDefault.GisDefaultMappingColumnName;
+            }
+
+            return null;
+        }
+
+        public string ProjectIdentifierColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.ProjectIdentifier);
+            }
+
+            return null;
+        }
+
+        public string ProjectNameColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.ProjectName);
+            }
+
+            return null;
+        }
+
+        public string TreatmentTypeColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.TreatmentType);
+            }
+
+            return null;
+        }
+
+        public string CompletionDateColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.CompletionDate);
+            }
+
+            return null;
+        }
+
+
+        public string StartDateColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.PlannedDate);
+            }
+
+            return null;
+        }
+
+        public string ProjectStageColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.ProjectStage);
+            }
+
+            return null;
+        }
+
+
+        public string FootprintAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.FootprintAcres);
+            }
+
+            return null;
+        }
+
+        public string PrivateLandownerColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.Landowner);
+            }
+
+            return null;
+        }
+
+        public string TreatmentDetailedActivityTypeColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.TreatmentDetailedActivityType);
+            }
+
+            return null;
+        }
+
+        public string TreatedAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.TreatedAcres);
+            }
+
+            return null;
+        }
+
+
+        [DisplayName("Pruning Acres Column")]
+        public int? PruningAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Thinning Acres Column")]
+        public int? ThinningAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Chipping Acres Column")]
+        public int? ChippingAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Mastication Acres Column")]
+        public int? MasticationAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Grazing Acres Column")]
+        public int? GrazingAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Lop and Scatter Acres Column")]
+        public int? LopScatAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Biomass Removal Acres Column")]
+        public int? BiomassRemovalAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Hand Pile Acres Column")]
+        public int? HandPileAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Hand Pile Burn Acres Column")]
+        public int? HandPileBurnAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Machine Pile Burn Acres Column")]
+        public int? MachinePileBurnAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Broadcast Burn Acres Column")]
+        public int? BroadcastBurnAcresMetadataAttributeID { get; set; }
+
+        [DisplayName("Other Acres Column")]
+        public int? OtherAcresMetadataAttributeID { get; set; }
     }
 }

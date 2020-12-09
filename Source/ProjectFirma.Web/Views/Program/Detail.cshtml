@@ -153,7 +153,7 @@
                                 Import Is Flattened
                             </div>
                             <div class="col-xs-9">
-                                <span id="ImportIsFlattened">@ViewDataTyped.ImportIsFlattened()</span>
+                                <span id="ImportIsFlattened">@ViewDataTyped.ImportIsFlattenedString()</span>
                             </div>
                         </div>
 
@@ -264,3 +264,112 @@
     </div>
 
 </div>
+
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        GDB Import Default Mappings
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="basicsLayout">
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Project Identifier Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="ProjectIdentifierColumnMapping">@ViewDataTyped.ProjectIdentifierColumnMapping()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Project Name Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="ProjectNameColumnMapping">@ViewDataTyped.ProjectNameColumnMapping()</span>
+                            </div>
+                        </div>
+                        @if (!ViewDataTyped.ImportIsFlattened())
+                        {
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">
+                                    Treatment Type Column
+                                </div>
+                                <div class="col-xs-9">
+                                    <span id="TreatmentTypeColumnMapping">@ViewDataTyped.TreatmentTypeColumnMapping()</span>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Completion Date Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="CompletionDateColumnMapping">@ViewDataTyped.CompletionDateColumnMapping()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Start Date Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="StartDateColumnMapping">@ViewDataTyped.StartDateColumnMapping()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Project Stage Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="ProjectStageColumnMapping">@ViewDataTyped.ProjectStageColumnMapping()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Footprint Acres Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="FootprintAcresColumnMapping">@ViewDataTyped.FootprintAcresColumnMapping()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Private Landowner Column
+                            </div>
+                            <div class="col-xs-9">
+                                <span id="PrivateLandownerColumnMapping">@ViewDataTyped.PrivateLandownerColumnMapping()</span>
+                            </div>
+                        </div>
+                        @if (!ViewDataTyped.ImportIsFlattened())
+                        {
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">
+                                    Treatment Detailed Activity Type Column
+                                </div>
+                                <div class="col-xs-9">
+                                    <span id="TreatmentDetailedActivityTypeColumnMapping">@ViewDataTyped.TreatmentDetailedActivityTypeColumnMapping()</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">
+                                    Treated Acres Column
+                                </div>
+                                <div class="col-xs-9">
+                                    <span id="TreatedAcresColumnMapping">@ViewDataTyped.TreatedAcresColumnMapping()</span>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
