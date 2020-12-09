@@ -40,15 +40,22 @@ namespace ProjectFirma.Web.Views.Program
             return GisUploadSourceOrganization?.TreatmentTypeDefaultName;
         }
 
-        public string ImportIsFlattened()
+        public string ImportIsFlattenedString()
         {
             if (GisUploadSourceOrganization != null)
             {
                 return GisUploadSourceOrganization.ImportIsFlattened.ToYesNo(null);
             }
-
             return null;
+        }
 
+        public bool ImportIsFlattened()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportIsFlattened ?? false;
+            }
+            return false;
         }
 
         public string RequireCompletionDate()
