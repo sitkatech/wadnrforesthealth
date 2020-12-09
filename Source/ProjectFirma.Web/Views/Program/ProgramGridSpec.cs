@@ -53,10 +53,11 @@ namespace ProjectFirma.Web.Views.Program
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None, true);
             }
-            Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramName), 400, DhtmlxGridColumnFilterType.Html);
+            Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramNameDisplay), 400, DhtmlxGridColumnFilterType.Html);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => UrlTemplate.MakeHrefString(a.Organization.GetDetailUrl(), a.Organization.OrganizationName), 400, DhtmlxGridColumnFilterType.Html);
             Add("Short Name", a => a.ProgramShortName, 100);
             Add("Is Active", a => a.ProgramIsActive.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Is Default for Bulk Import Only", a => a.IsDefaultProgramForImportOnly.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

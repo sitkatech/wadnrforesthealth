@@ -2196,14 +2196,15 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="ProgramName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="ProgramShortName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ProgramName" Type="varchar" MaxLength="200" />
+    <Property Name="ProgramShortName" Type="varchar" MaxLength="200" />
     <Property Name="ProgramPrimaryContactPersonID" Type="int" />
     <Property Name="ProgramIsActive" Type="bit" Nullable="false" />
     <Property Name="ProgramCreateDate" Type="datetime" Nullable="false" />
     <Property Name="ProgramCreatePersonID" Type="int" Nullable="false" />
     <Property Name="ProgramLastUpdatedDate" Type="datetime" />
     <Property Name="ProgramLastUpdatedByPersonID" Type="int" />
+    <Property Name="IsDefaultProgramForImportOnly" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>

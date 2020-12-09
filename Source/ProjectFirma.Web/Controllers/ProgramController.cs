@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, null, organization);
             }
             
-            var program = new Program(organization, String.Empty, String.Empty, true, DateTime.Now, CurrentPerson);
+            var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.Controllers
             var organization = HttpRequestStorage.DatabaseEntities.Organizations.Single(x =>
                 x.OrganizationID == organizationID);
 
-            var program = new Program(organization, String.Empty, String.Empty, true, DateTime.Now, CurrentPerson);
+            var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();

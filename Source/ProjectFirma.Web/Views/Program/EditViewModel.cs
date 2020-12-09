@@ -38,12 +38,10 @@ namespace ProjectFirma.Web.Views.Program
     {
         public int ProgramID { get; set; }
 
-        [Required]
         [StringLength(Models.Program.FieldLengths.ProgramName)]
         [DisplayName("Name")]
         public string ProgramName { get; set; }
 
-        [Required]
         [StringLength(Models.Organization.FieldLengths.OrganizationShortName)]
         [DisplayName("Short Name")]
         public string ProgramShortName { get; set; }
@@ -57,6 +55,9 @@ namespace ProjectFirma.Web.Views.Program
 
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
+
+        [DisplayName("Is Default for Bulk Import Only")]
+        public bool IsDefaultForBulkImportOnly { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -73,15 +74,16 @@ namespace ProjectFirma.Web.Views.Program
             OrganizationID = program.OrganizationID;
             PrimaryContactPersonID = program.ProgramPrimaryContactPerson?.PersonID;
             IsActive = program.ProgramIsActive;
+            IsDefaultForBulkImportOnly = program.IsDefaultProgramForImportOnly;
         }
 
         public void UpdateModel(Models.Program program, Person currentPerson, bool isNew)
         {
-            program.ProgramName = ProgramName;
-            program.ProgramShortName = ProgramShortName;
+            program.ProgramName = IsDefaultForBulkImportOnly ? null : ProgramName;
+            program.ProgramShortName = IsDefaultForBulkImportOnly ? null : ProgramShortName;
             program.OrganizationID = OrganizationID.GetValueOrDefault();
             program.ProgramIsActive = IsActive;
-            program.ProgramIsActive = IsActive;
+            program.IsDefaultProgramForImportOnly = IsDefaultForBulkImportOnly;
             if (isNew)
             {
                 program.ProgramCreateDate = DateTime.Now;
@@ -99,24 +101,42 @@ namespace ProjectFirma.Web.Views.Program
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-           
 
-            // Get org name and short name
-            var existingProgramsWithSameName = HttpRequestStorage.DatabaseEntities.Programs.Where(o => o.OrganizationID == OrganizationID && o.ProgramName == ProgramName && o.ProgramID != ProgramID).ToList();
-            if (existingProgramsWithSameName.Any())
+
+            if (!IsDefaultForBulkImportOnly)
             {
-                var errorMessage = $"This {Models.FieldDefinition.Program.GetFieldDefinitionLabel()} name {ProgramName} is taken already.";
-                yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
-                    x => x.ProgramName);
+                if (string.IsNullOrEmpty(ProgramName))
+                {
+                    var errorMessage = $"Program Name is required when this program is not set to default for bulk import only";
+                    yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
+                        x => x.ProgramName);
+                }
+
+                if (string.IsNullOrEmpty(ProgramShortName))
+                {
+                    var errorMessage = $"Program Short Name is required when this program is not set to default for bulk import only";
+                    yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
+                        x => x.ProgramShortName);
+                }
+
+                // Get org name and short name
+                var existingProgramsWithSameName = HttpRequestStorage.DatabaseEntities.Programs.Where(o => o.OrganizationID == OrganizationID && o.ProgramName == ProgramName && o.ProgramID != ProgramID).ToList();
+                if (existingProgramsWithSameName.Any())
+                {
+                    var errorMessage = $"This {Models.FieldDefinition.Program.GetFieldDefinitionLabel()} name {ProgramName} is taken already.";
+                    yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
+                        x => x.ProgramName);
+                }
+                // Get org ShortName and short ShortName
+                var existingProgramsWithSameShortName = HttpRequestStorage.DatabaseEntities.Programs.Where(o => o.OrganizationID == OrganizationID && o.ProgramShortName == ProgramShortName && o.ProgramID != ProgramID).ToList();
+                if (existingProgramsWithSameShortName.Any())
+                {
+                    var errorMessage = $"This {Models.FieldDefinition.Program.GetFieldDefinitionLabel()} short name {ProgramShortName} is taken already.";
+                    yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
+                        x => x.ProgramShortName);
+                }
             }
-            // Get org ShortName and short ShortName
-            var existingProgramsWithSameShortName = HttpRequestStorage.DatabaseEntities.Programs.Where(o => o.OrganizationID == OrganizationID && o.ProgramShortName == ProgramShortName && o.ProgramID != ProgramID).ToList();
-            if (existingProgramsWithSameShortName.Any())
-            {
-                var errorMessage = $"This {Models.FieldDefinition.Program.GetFieldDefinitionLabel()} short name {ProgramShortName} is taken already.";
-                yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
-                    x => x.ProgramShortName);
-            }
+            
         }
     }
 }

@@ -2508,14 +2508,15 @@
     </Key>
     <Property Name="ProgramID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="ProgramName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="ProgramShortName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramName" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramShortName" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="ProgramPrimaryContactPersonID" Type="Int32" />
     <Property Name="ProgramIsActive" Type="Boolean" Nullable="false" />
     <Property Name="ProgramCreateDate" Type="DateTime" Nullable="false" />
     <Property Name="ProgramCreatePersonID" Type="Int32" Nullable="false" />
     <Property Name="ProgramLastUpdatedDate" Type="DateTime" />
     <Property Name="ProgramLastUpdatedByPersonID" Type="Int32" />
+    <Property Name="IsDefaultProgramForImportOnly" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisUploadSourceOrganizations" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Program_ProgramID" FromRole="Program" ToRole="GisUploadSourceOrganizations" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Program_Organization_OrganizationID" FromRole="Programs" ToRole="Organization" />
     <NavigationProperty Name="ProgramCreatePerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramCreatePersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramCreatePerson" ToRole="ProgramCreatePerson" />

@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Program(int programID, int organizationID, string programName, string programShortName, int? programPrimaryContactPersonID, bool programIsActive, DateTime programCreateDate, int programCreatePersonID, DateTime? programLastUpdatedDate, int? programLastUpdatedByPersonID) : this()
+        public Program(int programID, int organizationID, string programName, string programShortName, int? programPrimaryContactPersonID, bool programIsActive, DateTime programCreateDate, int programCreatePersonID, DateTime? programLastUpdatedDate, int? programLastUpdatedByPersonID, bool isDefaultProgramForImportOnly) : this()
         {
             this.ProgramID = programID;
             this.OrganizationID = organizationID;
@@ -44,41 +44,40 @@ namespace ProjectFirma.Web.Models
             this.ProgramCreatePersonID = programCreatePersonID;
             this.ProgramLastUpdatedDate = programLastUpdatedDate;
             this.ProgramLastUpdatedByPersonID = programLastUpdatedByPersonID;
+            this.IsDefaultProgramForImportOnly = isDefaultProgramForImportOnly;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Program(int organizationID, string programName, string programShortName, bool programIsActive, DateTime programCreateDate, int programCreatePersonID) : this()
+        public Program(int organizationID, bool programIsActive, DateTime programCreateDate, int programCreatePersonID, bool isDefaultProgramForImportOnly) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProgramID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.OrganizationID = organizationID;
-            this.ProgramName = programName;
-            this.ProgramShortName = programShortName;
             this.ProgramIsActive = programIsActive;
             this.ProgramCreateDate = programCreateDate;
             this.ProgramCreatePersonID = programCreatePersonID;
+            this.IsDefaultProgramForImportOnly = isDefaultProgramForImportOnly;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Program(Organization organization, string programName, string programShortName, bool programIsActive, DateTime programCreateDate, Person programCreatePerson) : this()
+        public Program(Organization organization, bool programIsActive, DateTime programCreateDate, Person programCreatePerson, bool isDefaultProgramForImportOnly) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProgramID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
             organization.Programs.Add(this);
-            this.ProgramName = programName;
-            this.ProgramShortName = programShortName;
             this.ProgramIsActive = programIsActive;
             this.ProgramCreateDate = programCreateDate;
             this.ProgramCreatePersonID = programCreatePerson.PersonID;
             this.ProgramCreatePerson = programCreatePerson;
             programCreatePerson.ProgramsWhereYouAreTheProgramCreatePerson.Add(this);
+            this.IsDefaultProgramForImportOnly = isDefaultProgramForImportOnly;
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Program CreateNewBlank(Organization organization, Person programCreatePerson)
         {
-            return new Program(organization, default(string), default(string), default(bool), default(DateTime), programCreatePerson);
+            return new Program(organization, default(bool), default(DateTime), programCreatePerson, default(bool));
         }
 
         /// <summary>
@@ -167,6 +166,7 @@ namespace ProjectFirma.Web.Models
         public int ProgramCreatePersonID { get; set; }
         public DateTime? ProgramLastUpdatedDate { get; set; }
         public int? ProgramLastUpdatedByPersonID { get; set; }
+        public bool IsDefaultProgramForImportOnly { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProgramID; } set { ProgramID = value; } }
 
@@ -180,7 +180,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int ProgramName = 200;
-            public const int ProgramShortName = 50;
+            public const int ProgramShortName = 200;
         }
     }
 }
