@@ -82,7 +82,10 @@ namespace ProjectFirma.Web.Controllers
                 try
                 {
                     // SAML providers usually POST the data into this var
-                    sawSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
+                    var base64SawSamlResponse = Request.Form["SAMLResponse"];
+                    Logger.Debug($"SAML Debugging - SAWPost Received Base64 Encoded Form Variable SAMLResponse: {base64SawSamlResponse}");
+
+                    sawSamlResponse.LoadXmlFromBase64(base64SawSamlResponse);
                     if (sawSamlResponse.IsValid(userDisplayableValidationErrorMessage: out var userDisplayableValidationErrorMessage))
                     {
                         var firstName = sawSamlResponse.GetFirstName();
@@ -115,7 +118,10 @@ namespace ProjectFirma.Web.Controllers
             try
             {
                 // SAML providers usually POST the data into this var
-                adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
+                var base64AdfsSamlResponse = Request.Form["SAMLResponse"];
+                Logger.Debug($"SAML Debugging - ADFSPost Received Base64 Encoded Form Variable SAMLResponse: {base64AdfsSamlResponse}");
+
+                adfsSamlResponse.LoadXmlFromBase64(base64AdfsSamlResponse);
                 adfsSamlResponse.Decrypt();
 
                 var firstName = adfsSamlResponse.GetFirstName();
