@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.Project
 
         private static HtmlString Program(Models.Project project)
         {
-            if (project.Program != null)
+            if (project.Program != null && !project.Program.IsDefaultProgramForImportOnly)
             {
                 return UrlTemplate.MakeHrefString(
                     project.Program.GetDetailUrl(),
