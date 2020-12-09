@@ -159,15 +159,6 @@
 
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
-                                Require Completion Date
-                            </div>
-                            <div class="col-xs-9">
-                                <span id="RequireCompletionDate">@ViewDataTyped.RequireCompletionDate()</span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
                                 Adjust Project Type Based On Treatment Types
                             </div>
                             <div class="col-xs-9">
@@ -481,5 +472,98 @@
         </div>
     </div>
 
+</div>
+
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        GDB Import Crosswalk Values
+                    </h3>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="basicsLayout">
+                    @if (!ViewDataTyped.ImportIsFlattened())
+                    {
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Treatment Type
+                            </div>
+                            <div class="col-xs-9">
+                                @foreach (var crosswalk in ViewDataTyped.TreatmentTypeCrosswalks())
+                                {
+                                    <div class="col-xs-4 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue =>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Treatment Detailed Activity Type
+                            </div>
+                            <div class="col-xs-9">
+                                @foreach (var crosswalk in ViewDataTyped.TreatmentDetailedActivityTypeCrosswalks())
+                                {
+                                    <div class="col-xs-4 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue =>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                    }
+
+                    <div class="row">
+                        <div class="col-xs-3 fieldLabel text-right">
+                            Project Type
+                        </div>
+                        <div class="col-xs-9">
+                            @foreach (var crosswalk in ViewDataTyped.ProjectTypeCrosswalks())
+                            {
+                                <div class="col-xs-4 col-xs-offset-2">
+                                    @crosswalk.GisCrossWalkSourceValue =>
+                                </div>
+                                <div class="col-xs-6">
+                                    @crosswalk.GisCrossWalkMappedValue
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-xs-3 fieldLabel text-right">
+                            Project Stage
+                        </div>
+                        <div class="col-xs-9">
+                            @foreach (var crosswalk in ViewDataTyped.ProjectStageCrosswalks())
+                            {
+                                <div class="col-xs-4 col-xs-offset-2">
+                                    @crosswalk.GisCrossWalkSourceValue =>
+                                </div>
+                                <div class="col-xs-6">
+                                    @crosswalk.GisCrossWalkMappedValue
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

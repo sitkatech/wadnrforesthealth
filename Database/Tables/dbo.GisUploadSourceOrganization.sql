@@ -8,7 +8,6 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[ProjectTypeDefaultName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TreatmentTypeDefaultName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ImportIsFlattened] [bit] NULL,
-	[RequireCompletionDate] [bit] NOT NULL,
 	[AdjustProjectTypeBasedOnTreatmentTypes] [bit] NOT NULL,
 	[ProjectStageDefaultID] [int] NOT NULL,
 	[DataDeriveProjectStage] [bit] NOT NULL,
