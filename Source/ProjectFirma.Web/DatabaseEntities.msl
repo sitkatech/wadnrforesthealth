@@ -354,7 +354,6 @@
           <ScalarProperty Name="ProjectTypeDefaultName" ColumnName="ProjectTypeDefaultName" />
           <ScalarProperty Name="TreatmentTypeDefaultName" ColumnName="TreatmentTypeDefaultName" />
           <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
-          <ScalarProperty Name="RequireCompletionDate" ColumnName="RequireCompletionDate" />
           <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
           <ScalarProperty Name="ProjectStageDefaultID" ColumnName="ProjectStageDefaultID" />
           <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />

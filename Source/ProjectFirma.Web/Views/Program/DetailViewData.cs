@@ -36,6 +36,7 @@ namespace ProjectFirma.Web.Views.Program
     public class DetailViewData : ProgramViewData
     {
         private ICollection<GisDefaultMapping> Defaults { get; set; }
+        private ICollection<GisCrossWalkDefault> CrosswalkDefaults { get; set; }
 
         public DetailViewData(Person currentPerson,
                                     Models.Program program
@@ -45,6 +46,7 @@ namespace ProjectFirma.Web.Views.Program
             PageTitle = program.ProgramName;
             BreadCrumbTitle = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()} Detail";
             Defaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisDefaultMappings : new List<GisDefaultMapping>();
+            CrosswalkDefaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisCrossWalkDefaults : new List<GisCrossWalkDefault>();
 
         }
         private string GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition fieldDefinition)
@@ -57,6 +59,27 @@ namespace ProjectFirma.Web.Views.Program
             }
 
             return null;
+        }
+
+
+        public List<GisCrossWalkDefault> TreatmentTypeCrosswalks()
+        {
+            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.TreatmentType).ToList();
+        }
+
+        public List<GisCrossWalkDefault> TreatmentDetailedActivityTypeCrosswalks()
+        {
+            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.TreatmentDetailedActivityType).ToList();
+        }
+
+        public List<GisCrossWalkDefault> ProjectTypeCrosswalks()
+        {
+            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.ProjectType).ToList();
+        }
+
+        public List<GisCrossWalkDefault> ProjectStageCrosswalks()
+        {
+            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.ProjectStage).ToList();
         }
 
         public string ProjectIdentifierColumnMapping()

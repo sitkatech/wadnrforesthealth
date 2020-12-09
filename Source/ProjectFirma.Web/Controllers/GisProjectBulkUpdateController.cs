@@ -396,7 +396,7 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?)null;
 
-            if (gisUploadAttempt.GisUploadSourceOrganization.RequireCompletionDate && !completionDate.HasValue)
+            if (gisUploadAttempt.GisUploadSourceOrganization.RequiresCompletionDate() && !completionDate.HasValue)
             {
                 return;
             }
@@ -456,6 +456,8 @@ namespace ProjectFirma.Web.Controllers
                                       ProjectApprovalStatus.Approved.ProjectApprovalStatusID, 
                                       projectNumber
                                       );
+            project.Program = gisUploadAttempt.GisUploadSourceOrganization.Program;
+            project.ProgramID = gisUploadAttempt.GisUploadSourceOrganization.ProgramID;
 
             if (gisUploadSourceOrganization.ApplyCompletedDateToProject)
             {
@@ -564,13 +566,7 @@ namespace ProjectFirma.Web.Controllers
                     x.FieldDefinitionID == FieldDefinition.ProjectStage.FieldDefinitionID &&
                     x.GisUploadSourceOrganizationID == gisUploadAttempt.GisUploadSourceOrganizationID);
 
-                if (!completionDate.HasValue && gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
-                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value)
-                {
-                    projectStage = ProjectStage.Planned;
-                }
-
-                else if (!completionDate.HasValue)
+                if (!completionDate.HasValue)
                 {
                     projectStage = ProjectStage.Planned;
                 }

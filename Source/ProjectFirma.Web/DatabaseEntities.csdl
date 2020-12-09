@@ -1575,7 +1575,6 @@
     <Property Name="ProjectTypeDefaultName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="TreatmentTypeDefaultName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="ImportIsFlattened" Type="Boolean" />
-    <Property Name="RequireCompletionDate" Type="Boolean" Nullable="false" />
     <Property Name="AdjustProjectTypeBasedOnTreatmentTypes" Type="Boolean" Nullable="false" />
     <Property Name="ProjectStageDefaultID" Type="Int32" Nullable="false" />
     <Property Name="DataDeriveProjectStage" Type="Boolean" Nullable="false" />

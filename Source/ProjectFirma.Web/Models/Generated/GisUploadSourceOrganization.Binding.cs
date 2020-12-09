@@ -33,14 +33,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, bool importAsDetailedLocationInsteadOfTreatments, string projectDescriptionDefaultText, bool applyCompletedDateToProject, bool applyStartDateToProject, int programID, bool importAsDetailedLocationInAdditionToTreatments) : this()
+        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, bool importAsDetailedLocationInsteadOfTreatments, string projectDescriptionDefaultText, bool applyCompletedDateToProject, bool applyStartDateToProject, int programID, bool importAsDetailedLocationInAdditionToTreatments) : this()
         {
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
             this.ProjectTypeDefaultName = projectTypeDefaultName;
             this.TreatmentTypeDefaultName = treatmentTypeDefaultName;
             this.ImportIsFlattened = importIsFlattened;
-            this.RequireCompletionDate = requireCompletionDate;
             this.AdjustProjectTypeBasedOnTreatmentTypes = adjustProjectTypeBasedOnTreatmentTypes;
             this.ProjectStageDefaultID = projectStageDefaultID;
             this.DataDeriveProjectStage = dataDeriveProjectStage;
@@ -57,13 +56,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, bool importAsDetailedLocationInsteadOfTreatments, bool applyCompletedDateToProject, bool applyStartDateToProject, int programID, bool importAsDetailedLocationInAdditionToTreatments) : this()
+        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, bool importAsDetailedLocationInsteadOfTreatments, bool applyCompletedDateToProject, bool applyStartDateToProject, int programID, bool importAsDetailedLocationInAdditionToTreatments) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GisUploadSourceOrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
-            this.RequireCompletionDate = requireCompletionDate;
             this.AdjustProjectTypeBasedOnTreatmentTypes = adjustProjectTypeBasedOnTreatmentTypes;
             this.ProjectStageDefaultID = projectStageDefaultID;
             this.DataDeriveProjectStage = dataDeriveProjectStage;
@@ -79,12 +77,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool requireCompletionDate, bool adjustProjectTypeBasedOnTreatmentTypes, ProjectStage projectStageDefault, bool dataDeriveProjectStage, Organization defaultLeadImplementerOrganization, RelationshipType relationshipTypeForDefaultOrganization, bool importAsDetailedLocationInsteadOfTreatments, bool applyCompletedDateToProject, bool applyStartDateToProject, Program program, bool importAsDetailedLocationInAdditionToTreatments) : this()
+        public GisUploadSourceOrganization(string gisUploadSourceOrganizationName, bool adjustProjectTypeBasedOnTreatmentTypes, ProjectStage projectStageDefault, bool dataDeriveProjectStage, Organization defaultLeadImplementerOrganization, RelationshipType relationshipTypeForDefaultOrganization, bool importAsDetailedLocationInsteadOfTreatments, bool applyCompletedDateToProject, bool applyStartDateToProject, Program program, bool importAsDetailedLocationInAdditionToTreatments) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GisUploadSourceOrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
-            this.RequireCompletionDate = requireCompletionDate;
             this.AdjustProjectTypeBasedOnTreatmentTypes = adjustProjectTypeBasedOnTreatmentTypes;
             this.ProjectStageDefaultID = projectStageDefault.ProjectStageID;
             this.DataDeriveProjectStage = dataDeriveProjectStage;
@@ -108,7 +105,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GisUploadSourceOrganization CreateNewBlank(ProjectStage projectStageDefault, Organization defaultLeadImplementerOrganization, RelationshipType relationshipTypeForDefaultOrganization, Program program)
         {
-            return new GisUploadSourceOrganization(default(string), default(bool), default(bool), projectStageDefault, default(bool), defaultLeadImplementerOrganization, relationshipTypeForDefaultOrganization, default(bool), default(bool), default(bool), program, default(bool));
+            return new GisUploadSourceOrganization(default(string), default(bool), projectStageDefault, default(bool), defaultLeadImplementerOrganization, relationshipTypeForDefaultOrganization, default(bool), default(bool), default(bool), program, default(bool));
         }
 
         /// <summary>
@@ -194,7 +191,6 @@ namespace ProjectFirma.Web.Models
         public string ProjectTypeDefaultName { get; set; }
         public string TreatmentTypeDefaultName { get; set; }
         public bool? ImportIsFlattened { get; set; }
-        public bool RequireCompletionDate { get; set; }
         public bool AdjustProjectTypeBasedOnTreatmentTypes { get; set; }
         public int ProjectStageDefaultID { get; set; }
         public bool DataDeriveProjectStage { get; set; }
