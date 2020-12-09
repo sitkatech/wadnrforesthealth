@@ -161,41 +161,125 @@ namespace ProjectFirma.Web.Views.Program
             return null;
         }
 
+        public string PruningAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres);
+            }
 
-        [DisplayName("Pruning Acres Column")]
-        public int? PruningAcresMetadataAttributeID { get; set; }
+            return null;
+        }
 
-        [DisplayName("Thinning Acres Column")]
-        public int? ThinningAcresMetadataAttributeID { get; set; }
+        public string ThinningAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres);
+            }
 
-        [DisplayName("Chipping Acres Column")]
-        public int? ChippingAcresMetadataAttributeID { get; set; }
+            return null;
+        }
 
-        [DisplayName("Mastication Acres Column")]
-        public int? MasticationAcresMetadataAttributeID { get; set; }
+        public string ChippingAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres);
+            }
 
-        [DisplayName("Grazing Acres Column")]
-        public int? GrazingAcresMetadataAttributeID { get; set; }
+            return null;
+        }
 
-        [DisplayName("Lop and Scatter Acres Column")]
-        public int? LopScatAcresMetadataAttributeID { get; set; }
+        public string MasticationAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres);
+            }
 
-        [DisplayName("Biomass Removal Acres Column")]
-        public int? BiomassRemovalAcresMetadataAttributeID { get; set; }
+            return null;
+        }
 
-        [DisplayName("Hand Pile Acres Column")]
-        public int? HandPileAcresMetadataAttributeID { get; set; }
+        public string GrazingAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres);
+            }
 
-        [DisplayName("Hand Pile Burn Acres Column")]
-        public int? HandPileBurnAcresMetadataAttributeID { get; set; }
+            return null;
+        }
 
-        [DisplayName("Machine Pile Burn Acres Column")]
-        public int? MachinePileBurnAcresMetadataAttributeID { get; set; }
+        public string LopAndScatterAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres);
+            }
 
-        [DisplayName("Broadcast Burn Acres Column")]
-        public int? BroadcastBurnAcresMetadataAttributeID { get; set; }
+            return null;
+        }
 
-        [DisplayName("Other Acres Column")]
-        public int? OtherAcresMetadataAttributeID { get; set; }
+        public string BiomassRemovalAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres);
+            }
+
+            return null;
+        }
+
+        public string HandPileAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres);
+            }
+
+            return null;
+        }
+
+        public string HandPileBurnAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres);
+            }
+
+            return null;
+        }
+
+        public string MachinePileBurnAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres);
+            }
+
+            return null;
+        }
+
+        public string BroadcastBurnAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres);
+            }
+
+            return null;
+        }
+
+        public string OtherAcresColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres);
+            }
+
+            return null;
+        }
+
     }
 }
