@@ -1115,6 +1115,7 @@
           <ScalarProperty Name="ProgramCreatePersonID" ColumnName="ProgramCreatePersonID" />
           <ScalarProperty Name="ProgramLastUpdatedDate" ColumnName="ProgramLastUpdatedDate" />
           <ScalarProperty Name="ProgramLastUpdatedByPersonID" ColumnName="ProgramLastUpdatedByPersonID" />
+          <ScalarProperty Name="IsDefaultProgramForImportOnly" ColumnName="IsDefaultProgramForImportOnly" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
