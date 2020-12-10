@@ -14,6 +14,8 @@ namespace ProjectFirma.Web.Models
 
         public string ProgramNameDisplay => IsDefaultProgramForImportOnly ? "(default)" : ProgramName;
 
+        public string GdbImportDisplayName => IsDefaultProgramForImportOnly ? Organization.DisplayName : DisplayName;
+
 
 
         public static bool IsProgramNameUnique(IEnumerable<Program> programs, string programName, int currentProgramID, int currentOrganizationID)
