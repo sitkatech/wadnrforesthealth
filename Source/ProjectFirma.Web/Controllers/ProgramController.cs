@@ -173,7 +173,9 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteProgram(Program program, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = "Are you sure you want to delete this Program?";
+            string optionalProjectCountString = program.Projects.Any() ? $"will delete {program.Projects.Count} Projects and" : string.Empty;
+            string projectNumberAndDurationWarning = $"This {optionalProjectCountString} may take several minutes to complete.";
+            var confirmMessage = $"Are you sure you want to delete Program \"{program.ProgramNameDisplay}\" with Parent Organization {program.Organization.DisplayName}? <br/><br/>{projectNumberAndDurationWarning}";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -184,11 +186,16 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult DeleteProgram(ProgramPrimaryKey programPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var program = programPrimaryKey.EntityObject;
+
+            string programName = program.ProgramNameDisplay;
+            string parentOrganizationName = program.Organization.DisplayName;
+            string projectsDeletedCountString = program.Projects.Any() ? $"{program.Projects.Count} Projects deleted." : string.Empty;
+
             if (!ModelState.IsValid)
             {
                 return ViewDeleteProgram(program, viewModel);
             }
-            var message = $"Program \"{program.ProgramName}\" successfully deleted.";
+            var message = $"Program \"{programName}\" with Parent Organization {parentOrganizationName} successfully deleted. {projectsDeletedCountString}";
             program.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
 

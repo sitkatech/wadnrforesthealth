@@ -17,9 +17,14 @@ namespace ProjectFirma.Web.Models
                 var projectCustomAttributeType = ProjectCustomAttributeType ??
                                                  HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes
                                                      .GetProjectCustomAttributeType(ProjectCustomAttributeTypeID);
-                return
-                    $"Custom Attribute (type: {projectCustomAttributeType?.ProjectCustomAttributeTypeName ?? "<Type Not Found>"}, " +
-                    $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {projectUpdateBatch?.ProjectUpdate.DisplayName ?? $"<{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update Not Found>"})";
+
+                string projectCustomAttributeTypeName = projectCustomAttributeType?.ProjectCustomAttributeTypeName ?? "<Type Not Found>";
+                string fieldDefinitionLabel = FieldDefinition.Project.GetFieldDefinitionLabel();
+                string projectUpdateDisplayName = projectUpdateBatch?.ProjectUpdate?.DisplayName ?? $"<{fieldDefinitionLabel} Update Not Found>";
+
+                string auditDescriptionString = $"Custom Attribute (type: {projectCustomAttributeTypeName}, {fieldDefinitionLabel} Update: {projectUpdateDisplayName})";
+
+                return auditDescriptionString;
             }
         }
 
