@@ -18,10 +18,13 @@ namespace ProjectFirma.Web.Models
                                                      .GetProjectCustomAttributeType(
                                                          projectCustomAttribute?.ProjectCustomAttributeTypeID ??
                                                          ModelObjectHelpers.NotYetAssignedID);
-                return
-                    $"Custom Attribute Value (type: {projectCustomAttributeType?.ProjectCustomAttributeTypeName ?? "<Type Not Found>"}, " +
-                    $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update: {projectUpdateBatch?.ProjectUpdate.DisplayName ?? "<{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update Not Found>"}, " +
-                    $"value = \"{AttributeValue}\")";
+                string projectCustomAttributeTypeName = projectCustomAttributeType?.ProjectCustomAttributeTypeName ?? "<Type Not Found>";
+                string fieldDefinitionLabel = FieldDefinition.Project.GetFieldDefinitionLabel();
+                string projectUpdateBatchDisplayName = projectUpdateBatch?.ProjectUpdate?.DisplayName ?? $"<{fieldDefinitionLabel} Update Not Found>";
+
+                string auditDescriptionString = $"Custom Attribute Value (type: {projectCustomAttributeTypeName}, {fieldDefinitionLabel} update: {projectUpdateBatchDisplayName}, value = \"{AttributeValue}\")";
+
+                return auditDescriptionString;
             }
         }
 
