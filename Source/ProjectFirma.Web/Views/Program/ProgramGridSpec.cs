@@ -56,6 +56,7 @@ namespace ProjectFirma.Web.Views.Program
             Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramNameDisplay), 400, DhtmlxGridColumnFilterType.Html);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => UrlTemplate.MakeHrefString(a.Organization.GetDetailUrl(), a.Organization.OrganizationName), 400, DhtmlxGridColumnFilterType.Html);
             Add("Short Name", a => a.ProgramShortName, 100);
+            Add("Project Count", a => a.Projects.Count, 60);
             Add("Is Active", a => a.ProgramIsActive.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Is Default for Bulk Import Only", a => a.IsDefaultProgramForImportOnly.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }

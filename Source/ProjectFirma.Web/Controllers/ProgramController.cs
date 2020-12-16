@@ -174,7 +174,9 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewDeleteProgram(Program program, ConfirmDialogFormViewModel viewModel)
         {
             string optionalProjectCountString = program.Projects.Any() ? $"will delete {program.Projects.Count} Projects and" : string.Empty;
-            string projectNumberAndDurationWarning = $"This {optionalProjectCountString} may take several minutes to complete.";
+            string projectNumberAndDurationWarning = $"<b>This {optionalProjectCountString} may take several minutes to complete.</b>";
+            // For now, only show duration warning when ProjectCount > 0. Request by DAL.
+            projectNumberAndDurationWarning = program.Projects.Any() ? projectNumberAndDurationWarning : string.Empty;
             var confirmMessage = $"Are you sure you want to delete Program \"{program.ProgramNameDisplay}\" with Parent Organization {program.Organization.DisplayName}? <br/><br/>{projectNumberAndDurationWarning}";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
