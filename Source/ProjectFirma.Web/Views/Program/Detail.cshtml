@@ -499,9 +499,24 @@
                     {
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
-                                Treatment Type
+                                Forest Health Tracker Field
                             </div>
                             <div class="col-xs-9">
+                                <div class="col-xs-4 col-xs-offset-2">
+                                    <label>Source Value</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label>Forest Health Tracker Value</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Treatment Type:
+                            </div>
+                            <div class="col-xs-9">
+
                                 @foreach (var crosswalk in ViewDataTyped.TreatmentTypeCrosswalks())
                                 {
                                     <div class="col-xs-4 col-xs-offset-2">
@@ -513,11 +528,11 @@
                                 }
                             </div>
                         </div>
-                        <br/>
-                        <hr/>
+                        <br />
+                        <hr />
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
-                                Treatment Detailed Activity Type
+                                Treatment Detailed Activity Type:
                             </div>
                             <div class="col-xs-9">
                                 @foreach (var crosswalk in ViewDataTyped.TreatmentDetailedActivityTypeCrosswalks())
@@ -531,45 +546,45 @@
                                 }
                             </div>
                         </div>
-                        <br/>
-                        <hr/>
-                    }
+                        <br />
+                        <hr />
+                        }
 
-                    <div class="row">
-                        <div class="col-xs-3 fieldLabel text-right">
-                            Project Type
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Project Type:
+                            </div>
+                            <div class="col-xs-9">
+                                @foreach (var crosswalk in ViewDataTyped.ProjectTypeCrosswalks())
+                                {
+                                    <div class="col-xs-4 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue =>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
+                                    </div>
+                                }
+                            </div>
                         </div>
-                        <div class="col-xs-9">
-                            @foreach (var crosswalk in ViewDataTyped.ProjectTypeCrosswalks())
-                            {
-                                <div class="col-xs-4 col-xs-offset-2">
-                                    @crosswalk.GisCrossWalkSourceValue =>
-                                </div>
-                                <div class="col-xs-6">
-                                    @crosswalk.GisCrossWalkMappedValue
-                                </div>
-                            }
+                        <br />
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Project Stage:
+                            </div>
+                            <div class="col-xs-9">
+                                @foreach (var crosswalk in ViewDataTyped.ProjectStageCrosswalks())
+                                {
+                                    <div class="col-xs-4 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue =>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
-                    <br/>
-                    <hr/>
-                    <div class="row">
-                        <div class="col-xs-3 fieldLabel text-right">
-                            Project Stage
-                        </div>
-                        <div class="col-xs-9">
-                            @foreach (var crosswalk in ViewDataTyped.ProjectStageCrosswalks())
-                            {
-                                <div class="col-xs-4 col-xs-offset-2">
-                                    @crosswalk.GisCrossWalkSourceValue =>
-                                </div>
-                                <div class="col-xs-6">
-                                    @crosswalk.GisCrossWalkMappedValue
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
