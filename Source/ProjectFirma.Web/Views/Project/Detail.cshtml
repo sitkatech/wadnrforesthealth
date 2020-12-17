@@ -374,7 +374,7 @@
 
                         <br />
 
-                        @if (ViewDataTyped.Project.Treatments.Any())
+                        @if (ViewDataTyped.Project.Treatments.Any() && new GrantAllocationAwardLandownerCostShareLineItemViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
                         {
                             <div>
                                 <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
