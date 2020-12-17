@@ -357,43 +357,44 @@
                     </div>
                 </div>
 
-
-                <h2 class="sectionHeader">Activities</h2>
-                <div class="panel panelFirma">
-                    <div class="panel-heading panelTitle">
-                        <h3 data-toc-skip="true">
-                            Activities
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h4>Treatments</h4>
-                            </div>
+                @if(new GrantAllocationAwardLandownerCostShareLineItemViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson)) { 
+                    <h2 class="sectionHeader">Activities</h2>
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            <h3 data-toc-skip="true">
+                                Activities
+                            </h3>
                         </div>
-
-                        <br />
-
-                        @if (ViewDataTyped.Project.Treatments.Any() && new GrantAllocationAwardLandownerCostShareLineItemViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
-                        {
-                            <div>
-                                <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h4>Treatments</h4>
+                                </div>
                             </div>
+
+                            <br />
+
+                            @if (ViewDataTyped.Project.Treatments.Any())
+                            {
+                                <div>
+                                    <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
+                                </div>
                             
-                            <div class="panel-body" id="treatmentGridNonFlattened">
-                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                            </div>
+                                <div class="panel-body" id="treatmentGridNonFlattened">
+                                    @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                </div>
 
-                            <div class="panel-body" id="treatmentGridFlattened">
-                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentAreaGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                            </div>
-                        }
-                        else
-                        {
-                            <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
-                        }
+                                <div class="panel-body" id="treatmentGridFlattened">
+                                    @Html.DhtmlxGrid(ViewDataTyped.TreatmentAreaGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                            }
+                        </div>
                     </div>
-                </div>
+                }
 
                 <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()</h2>
                 <div class="panel panelFirma">
