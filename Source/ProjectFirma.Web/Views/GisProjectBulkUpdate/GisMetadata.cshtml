@@ -279,13 +279,12 @@
         </div>
     </div>
 </form>
+<div id="gisMetadataSaving" style="min-height:100px"></div>
 
 <div class="pull-right">
     @*<a class="btn btn-xs btn-firma" href="@ViewDataTyped.GisMetadataUrl">Continue <span class='glyphicon glyphicon-chevron-right'></span></a>*@
     <button id="uploadAdvance" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Create Projects</button>
 </div>
-
-<div id="gisMetadataSaving" style="min-height:100px"></div>
 
 <script type="text/javascript">
 
@@ -306,7 +305,7 @@
                 type: this.method,
                 beforeSubmit: function ()
                 {
-                    gisUploadResults.html("<div style='padding-top: 50%'><div class='progress'><div class='progress-bar progress-bar-info progress-bar-striped active' role='progressbar' style='width:100%'>Creating Projects</div></div></div>");
+                    gisUploadResults.html("<div><div class='progress'><div class='progress-bar progress-bar-info progress-bar-striped active' role='progressbar' style='width:100%'>Creating Projects</div></div></div>");
                 },
                 success: function (result, textStatus, jqXhr) {
                     jQuery(".progress").hide();

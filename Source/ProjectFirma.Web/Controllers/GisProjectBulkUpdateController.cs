@@ -305,6 +305,7 @@ namespace ProjectFirma.Web.Controllers
             UpdateProjectTypesIfNeeded(gisUploadAttempt);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
+            SetMessageForDisplay($"Successfully imported {projectList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
         }
