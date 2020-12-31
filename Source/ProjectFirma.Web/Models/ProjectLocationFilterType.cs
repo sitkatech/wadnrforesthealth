@@ -80,5 +80,25 @@ namespace ProjectFirma.Web.Models
 
         public override string DisplayName => FieldDefinition.ProjectStage.GetFieldDefinitionLabel();
     }
-  
+
+    public partial class ProjectLocationFilterTypeLeadImplementerOrganization
+    {
+        public override Expression<Func<Project, bool>> GetFilterFunction(List<int> filterValues)
+        {
+            return project => filterValues.Intersect(project.ProjectOrganizations.Select(x => x.RelationshipTypeID)).Any();
+        }
+
+        public override string DisplayName => "Lead Implementer";
+    }
+
+    public partial class ProjectLocationFilterTypeProgram
+    {
+        public override Expression<Func<Project, bool>> GetFilterFunction(List<int> filterValues)
+        {
+            return project => filterValues.Contains(project.ProgramID ?? -1);
+        }
+
+        public override string DisplayName => FieldDefinition.Program.GetFieldDefinitionLabel();
+    }
+
 }
