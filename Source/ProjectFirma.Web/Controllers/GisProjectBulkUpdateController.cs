@@ -153,56 +153,18 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
-            var sourceOrganization = gisUploadAttempt.GisUploadSourceOrganization;
-            var gisUploadAttemptID = gisUploadAttempt.GisUploadAttemptID;
-            var projectIdentifierMetadataAttributeID = viewModel.ProjectIdentifierMetadataAttributeID;
-            var projectNameMetadataAttributeID = viewModel.ProjectNameMetadataAttributeID;
-            var completionDateMetadataAttributeID = viewModel.CompletionDateMetadataAttributeID;
-            var startDateMetadataAttributeID = viewModel.StartDateMetadataAttributeID;
-            var projectStageMetadataAttributeID = viewModel.ProjectStageMetadataAttributeID;
-            var treatmentTypeMetadataAttributeID = viewModel.TreatmentTypeMetadataAttributeID;
-            var treatmentActivityTypeMetadataAttributeID = viewModel.TreatmentDetailedActivityTypeMetadataAttributeID;
-            var treatedAcresMetadataAttributeID = viewModel.TreatedAcresMetadataAttributeID;
-            var footprintAcresMetadataAttributeID = viewModel.FootprintAcresMetadataAttributeID;
-            var privateLandownerMetadataAttributeID = viewModel.PrivateLandownerMetadataAttributeID;
-            var programID = sourceOrganization.ProgramID;
+            var projectIdentifierMetadataAttribute = GenerateSingleMetadataAttribute(gisUploadAttempt, viewModel.ProjectIdentifierMetadataAttributeID);
+            var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID).ToList();
 
-            var projectIdentifierMetadataAttribute =
-                gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
-                    x.GisMetadataAttributeID == projectIdentifierMetadataAttributeID).GisMetadataAttribute;
+            var completionDateDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.CompletionDateMetadataAttributeID);
+            var projectNameDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectNameMetadataAttributeID);
+            var privateLandOwnerDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.PrivateLandownerMetadataAttributeID);
+            var startDateDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.StartDateMetadataAttributeID);
+            var projectStageDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectStageMetadataAttributeID);
 
-            var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID);
+            var distinctProjectIdentifiers = GetDistinctProjectIdentifiers(projectIdentifierMetadataAttribute, gisFeatureIDs);
 
-            var completionDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
-                gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == completionDateMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-
-           
-
-            var projectNameDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
-                gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == projectNameMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-
-            var privateLandOwnerDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
-                gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == privateLandownerMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-
-            var startDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
-                gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == startDateMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-
-            var projectStageDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
-                gisFeatureIDs.Contains(x.GisFeatureID) &&
-                x.GisMetadataAttributeID == projectStageMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID).ToDictionary(y => y.Key, x => x.ToList());
-            
-
-            var projectIdentifierValues =
-                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue)
-                .Where(y => !string.IsNullOrWhiteSpace(y)).Distinct().OrderBy(x => x).ToList();
-
-            var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x =>
-                string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
+            var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x => string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var projectList = new List<Project>();
             var newPersonList = new List<Person>();
@@ -212,25 +174,37 @@ namespace ProjectFirma.Web.Controllers
 
             var gisCrossWalkDefaultList = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.ToList();
 
-            var currentCounter = 1;
-            var lastProjectCreatedThisYear = HttpRequestStorage.DatabaseEntities.Projects.Where(p => p.FhtProjectNumber.Contains(DateTime.Now.Year.ToString())).OrderByDescending(p => p.FhtProjectNumber).ToList().FirstOrDefault(p => p.FhtProjectNumber.StartsWith($"FHT-{DateTime.Now.Year}"));
-            if (lastProjectCreatedThisYear != null)
-            {
-                var splitFhtProjectNumber = lastProjectCreatedThisYear.FhtProjectNumber.Split('-');
-                Int32.TryParse(splitFhtProjectNumber[2], out currentCounter);
-                currentCounter++;
+            var currentCounter = CalculateNextProjectNumberForThisYear();
 
-            }
+            var existingProjects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
+
 
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
-                MakeProject(projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttemptID, projectList, sourceOrganization, projectLocationList
-                    , privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList, programID,ref currentCounter);
+                MakeProject(existingProjects,projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, projectLocationList
+                    , gisUploadAttempt.GisUploadSourceOrganization.ProgramID, ref currentCounter);
             }
-
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
             HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var existingProjectsAfterSave = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
+
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                var project = existingProjectsAfterSave.Single(x => string.Equals(x.ProjectGisIdentifier,
+                    distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
+                var gisFeaturesIdListWithProjectIdentifier =
+                    projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                        string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
+                            StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => privateLandOwnerDictionary.ContainsKey(x))
+                    .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
+                var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+                GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
+            }
+            
             HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
             HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(newProjectPersonList);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
@@ -247,43 +221,29 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizations);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
-
-            var pruningAcresMetadataAttributeID = viewModel.PruningAcresMetadataAttributeID;
-            var thinningAcresMetadataAttributeID = viewModel.ThinningAcresMetadataAttributeID;
-            var chippingAcresMetadataAttributeID = viewModel.ChippingAcresMetadataAttributeID;
-            var masticationAcresMetadataAttributeID = viewModel.MasticationAcresMetadataAttributeID;
-            var grazingAcresMetadataAttributeID = viewModel.GrazingAcresMetadataAttributeID;
-            var lopScatAcresMetadataAttributeID = viewModel.LopScatAcresMetadataAttributeID;
-            var biomassRemovalAcresMetadataAttributeID = viewModel.BiomassRemovalAcresMetadataAttributeID;
-            var handPileAcresMetadataAttributeID = viewModel.HandPileAcresMetadataAttributeID;
-            var handPileBurnAcresMetadataAttributeID = viewModel.HandPileBurnAcresMetadataAttributeID;
-            var machinePileBurnAcresMetadataAttributeID = viewModel.MachinePileBurnAcresMetadataAttributeID;
-            var broadcastBurnAcresMetadataAttributeID = viewModel.BroadcastBurnAcresMetadataAttributeID;
-            var otherAcresMetadataAttributeID = viewModel.OtherAcresMetadataAttributeID;
-
-            if (!sourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
+            if (!gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
             {
-                ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttemptID
-                    , projectIdentifierMetadataAttributeID
-                    , footprintAcresMetadataAttributeID
-                    , treatedAcresMetadataAttributeID
-                    , treatmentTypeMetadataAttributeID
-                    , treatmentActivityTypeMetadataAttributeID
-                    , sourceOrganization
-                    , pruningAcresMetadataAttributeID
-                    , thinningAcresMetadataAttributeID
-                    , chippingAcresMetadataAttributeID
-                    , masticationAcresMetadataAttributeID
-                    , grazingAcresMetadataAttributeID
-                    , lopScatAcresMetadataAttributeID
-                    , biomassRemovalAcresMetadataAttributeID
-                    , handPileAcresMetadataAttributeID
-                    , handPileBurnAcresMetadataAttributeID
-                    , machinePileBurnAcresMetadataAttributeID
-                    , broadcastBurnAcresMetadataAttributeID
-                    , otherAcresMetadataAttributeID
-                    , startDateMetadataAttributeID
-                    , completionDateMetadataAttributeID);
+                ExecProcImportTreatmentsFromGisUploadAttempt(gisUploadAttempt.GisUploadAttemptID
+                    , viewModel.ProjectIdentifierMetadataAttributeID
+                    , viewModel.FootprintAcresMetadataAttributeID
+                    , viewModel.TreatedAcresMetadataAttributeID
+                    , viewModel.TreatmentTypeMetadataAttributeID
+                    , viewModel.TreatmentDetailedActivityTypeMetadataAttributeID
+                    , gisUploadAttempt.GisUploadSourceOrganization
+                    , viewModel.PruningAcresMetadataAttributeID
+                    , viewModel.ThinningAcresMetadataAttributeID
+                    , viewModel.ChippingAcresMetadataAttributeID
+                    , viewModel.MasticationAcresMetadataAttributeID
+                    , viewModel.GrazingAcresMetadataAttributeID
+                    , viewModel.LopScatAcresMetadataAttributeID
+                    , viewModel.BiomassRemovalAcresMetadataAttributeID
+                    , viewModel.HandPileAcresMetadataAttributeID
+                    , viewModel.HandPileBurnAcresMetadataAttributeID
+                    , viewModel.MachinePileBurnAcresMetadataAttributeID
+                    , viewModel.BroadcastBurnAcresMetadataAttributeID
+                    , viewModel.OtherAcresMetadataAttributeID
+                    , viewModel.StartDateMetadataAttributeID
+                    , viewModel.CompletionDateMetadataAttributeID);
             }
 
            
@@ -307,6 +267,53 @@ namespace ProjectFirma.Web.Controllers
 
 
             return new ModalDialogFormJsonResult();
+        }
+
+        private static List<string> GetDistinctProjectIdentifiers(GisMetadataAttribute projectIdentifierMetadataAttribute,
+            List<int> gisFeatureIDs)
+        {
+            var projectIdentifierValues =
+                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                    gisFeatureIDs.Contains(x.GisFeatureID));
+            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue)
+                .Where(y => !string.IsNullOrWhiteSpace(y)).Distinct().OrderBy(x => x).ToList();
+            return distinctProjectIdentifiers;
+        }
+
+        private static GisMetadataAttribute GenerateSingleMetadataAttribute(GisUploadAttempt gisUploadAttempt,
+            int viewModelProjectIdentifierMetadataAttributeID)
+        {
+            var projectIdentifierMetadataAttribute =
+                gisUploadAttempt.GisUploadAttemptGisMetadataAttributes.Single(x =>
+                    x.GisMetadataAttributeID == viewModelProjectIdentifierMetadataAttributeID).GisMetadataAttribute;
+            return projectIdentifierMetadataAttribute;
+        }
+
+        private static Dictionary<int, List<GisFeatureMetadataAttribute>> GenerateMetadataValueDictionary(IEnumerable<int> gisFeatureIDs,
+            int? completionDateMetadataAttributeID)
+        {
+            var completionDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
+                    gisFeatureIDs.Contains(x.GisFeatureID) &&
+                    x.GisMetadataAttributeID == completionDateMetadataAttributeID).ToList().GroupBy(y => y.GisFeatureID)
+                .ToDictionary(y => y.Key, x => x.ToList());
+            return completionDateDictionary;
+        }
+
+        private static int CalculateNextProjectNumberForThisYear()
+        {
+            var currentCounter = 1;
+            var lastProjectCreatedThisYear = HttpRequestStorage.DatabaseEntities.Projects
+                .Where(p => p.FhtProjectNumber.Contains(DateTime.Now.Year.ToString()))
+                .OrderByDescending(p => p.FhtProjectNumber).ToList()
+                .FirstOrDefault(p => p.FhtProjectNumber.StartsWith($"FHT-{DateTime.Now.Year}"));
+            if (lastProjectCreatedThisYear != null)
+            {
+                var splitFhtProjectNumber = lastProjectCreatedThisYear.FhtProjectNumber.Split('-');
+                Int32.TryParse(splitFhtProjectNumber[2], out currentCounter);
+                currentCounter++;
+            }
+
+            return currentCounter;
         }
 
         private static void UpdateProjectTypesIfNeeded(GisUploadAttempt gisUploadAttempt)
@@ -362,7 +369,8 @@ namespace ProjectFirma.Web.Controllers
             }
         }
 
-        private static void MakeProject(GisMetadataAttribute projectIdentifierMetadataAttribute, 
+        private static void MakeProject(List<Project> existingProjects,
+                                        GisMetadataAttribute projectIdentifierMetadataAttribute, 
                                         string distinctGisValue, 
                                         Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary, 
                                         Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, 
@@ -374,11 +382,7 @@ namespace ProjectFirma.Web.Controllers
                                         int gisUploadAttemptID, 
                                         List<Project> projectList, 
                                         GisUploadSourceOrganization gisUploadSourceOrganization, 
-                                        List<ProjectLocation> projectLocationList, 
-                                        Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandownerDictionary,
-                                        List<Person> existingPersonList, 
-                                        List<Person> newPersonList, 
-                                        List<ProjectPerson> newProjectPersonList, 
+                                        List<ProjectLocation> projectLocationList,
                                         int programID, 
                                         ref int currentCounter)
         {
@@ -387,75 +391,52 @@ namespace ProjectFirma.Web.Controllers
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
                         StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
-            
 
-            var completionDateAttributes = gisFeaturesIdListWithProjectIdentifier
-                .Where(x => completionDateDictionary.ContainsKey(x))
-                .SelectMany(x => completionDateDictionary[x]).ToList();
-            var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
-                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-            var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?)null;
+            var completionDate = CalculateCompletionDate(completionDateDictionary, gisFeaturesIdListWithProjectIdentifier);
 
             if (gisUploadAttempt.GisUploadSourceOrganization.RequiresCompletionDate() && !completionDate.HasValue)
             {
                 return;
             }
 
+            var project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, distinctGisValue));
+
+            var projectAlreadyExists = project != null;
+
+            
+
 
             var projectNumber = $"FHT-{DateTime.Now.Year}-{currentCounter:00000}";
-
-
-
-            var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
-                .SelectMany(x => startDateDictionary[x]).ToList();
-            var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
-                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
-            var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?)null;
-
-            var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => privateLandownerDictionary.ContainsKey(x))
-                .SelectMany(x => privateLandownerDictionary[x]).ToList();
-            var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-
-            var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
-                .SelectMany(x => projectNameDictionary[x]).ToList();
-            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-
-            var projectStageAttributes = gisFeaturesIdListWithProjectIdentifier
-                .Where(x => projectStageDictionary.ContainsKey(x))
-                .SelectMany(x => projectStageDictionary[x]).ToList();
-
-            if (projectNames.Count > 1)
-            {
-                var projectNameLower = projectNames.Select(x => x.ToLowerInvariant()).Distinct().ToList();
-                if (projectNameLower.Count == 1)
-                {
-                    projectNames = projectNames.Take(1).ToList();
-                }
-            }
-
-            var projectName = projectNames.SingleOrDefault();
-            if (string.IsNullOrEmpty(projectName))
-            {
-                projectName = "Default Project Name";
-            }
-            
-            ProjectStage projectStage = gisUploadAttempt.GisUploadSourceOrganization.ProjectStageDefault;
-            projectStage = CalculateProjectStageIfNeeded(gisCrossWalkDefaultList, gisUploadAttempt, projectStageAttributes, completionDate, projectStage);
-
-            var projectTypeMappedString = string.IsNullOrEmpty(gisUploadSourceOrganization.ProjectTypeDefaultName) ? string.Empty : gisUploadSourceOrganization.ProjectTypeDefaultName;
-            var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
-                x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
-
+            var startDate = CalculateStartDate(startDateDictionary, gisFeaturesIdListWithProjectIdentifier);
+            var projectName = CalculateProjectName(projectNameDictionary, gisFeaturesIdListWithProjectIdentifier);
+            var projectStage = CalculateProjectStage(projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, gisFeaturesIdListWithProjectIdentifier, completionDate);
+            var projectType = CalculateProjectType(gisUploadSourceOrganization);
             var projectDescription = gisUploadAttempt.GisUploadSourceOrganization.ProjectDescriptionDefaultText;
 
-            var project = new Project(otherProjectType.ProjectTypeID, 
-                                      projectStage.ProjectStageID, 
-                                      projectName, 
-                                      false, 
-                                      ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID, 
-                                      ProjectApprovalStatus.Approved.ProjectApprovalStatusID, 
-                                      projectNumber
-                                      );
+
+            if (projectAlreadyExists)
+            {
+                project.ProjectType = otherProjectType;
+                project.ProjectTypeID = otherProjectType.ProjectTypeID;
+                project.ProjectStageID = projectStage.ProjectStageID;
+                project.ProjectName = projectName;
+                project.LastUpdateGisUploadAttemptID = gisUploadAttemptID;
+            }
+            else
+            {
+                project = new Project(otherProjectType.ProjectTypeID,
+                    projectStage.ProjectStageID,
+                    projectName,
+                    false,
+                    ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
+                    ProjectApprovalStatus.Approved.ProjectApprovalStatusID,
+                    projectNumber
+                );
+                project.CreateGisUploadAttemptID = gisUploadAttemptID;
+                project.ProjectGisIdentifier = distinctGisValue;
+            }
+
+            
             project.Program = gisUploadAttempt.GisUploadSourceOrganization.Program;
             project.ProgramID = gisUploadAttempt.GisUploadSourceOrganization.ProgramID;
 
@@ -469,15 +450,18 @@ namespace ProjectFirma.Web.Controllers
                 project.PlannedDate = startDate;
             }
 
-            project.CreateGisUploadAttemptID = gisUploadAttemptID;
-            project.ProjectGisIdentifier = distinctGisValue;
+            
             project.ProjectDescription = projectDescription;
             if (projectType != null)
             {
                 project.ProjectType = projectType;
             }
 
-            projectList.Add(project);
+            if (!projectAlreadyExists)
+            {
+                projectList.Add(project);
+                currentCounter++;
+            }
 
             if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments || gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments)
             {
@@ -498,55 +482,150 @@ namespace ProjectFirma.Web.Controllers
                 }
             }
 
+            
+        }
+
+        private static ProjectType CalculateProjectType(GisUploadSourceOrganization gisUploadSourceOrganization)
+        {
+            var projectTypeMappedString = string.IsNullOrEmpty(gisUploadSourceOrganization.ProjectTypeDefaultName)
+                ? string.Empty
+                : gisUploadSourceOrganization.ProjectTypeDefaultName;
+            var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
+                x.ProjectTypeName.Equals(projectTypeMappedString, StringComparison.InvariantCultureIgnoreCase));
+            return projectType;
+        }
+
+        private static ProjectStage CalculateProjectStage(Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary, List<GisCrossWalkDefault> gisCrossWalkDefaultList,
+            GisUploadAttempt gisUploadAttempt, List<int> gisFeaturesIdListWithProjectIdentifier, DateTime? completionDate)
+        {
+            var projectStageAttributes = gisFeaturesIdListWithProjectIdentifier
+                .Where(x => projectStageDictionary.ContainsKey(x))
+                .SelectMany(x => projectStageDictionary[x]).ToList();
+            ProjectStage projectStage = gisUploadAttempt.GisUploadSourceOrganization.ProjectStageDefault;
+            projectStage = CalculateProjectStageIfNeeded(gisCrossWalkDefaultList, gisUploadAttempt, projectStageAttributes,
+                completionDate, projectStage);
+            return projectStage;
+        }
+
+        private static string CalculateProjectName(Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary,
+            List<int> gisFeaturesIdListWithProjectIdentifier)
+        {
+            var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
+                .SelectMany(x => projectNameDictionary[x]).ToList();
+            var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+
+            if (projectNames.Count > 1)
+            {
+                var projectNameLower = projectNames.Select(x => x.ToLowerInvariant()).Distinct().ToList();
+                if (projectNameLower.Count == 1)
+                {
+                    projectNames = projectNames.Take(1).ToList();
+                }
+            }
+
+            var projectName = projectNames.SingleOrDefault();
+            if (string.IsNullOrEmpty(projectName))
+            {
+                projectName = "Default Project Name";
+            }
+
+            return projectName;
+        }
+
+        private static void GenerateProjectPersonList(List<Person> existingPersonList, List<Person> newPersonList, List<ProjectPerson> newProjectPersonList,
+            List<string> landOwners, Project project)
+        {
             if (landOwners.Any())
             {
                 foreach (var landOwner in landOwners)
                 {
-                    var firstName = string.Empty;
-                    string lastName = null;
-                    var landownerSplit = landOwner.Split(',');
-                    if (landownerSplit.Length == 1 || landownerSplit.Length > 2)
-                    {
-                        firstName = landOwner.Trim();
-                    }
-
-                    if (landownerSplit.Length == 2)
-                    {
-                        firstName = landownerSplit[1].Trim();
-                        lastName = landownerSplit[0].Trim();
-                    }
+                    var firstName = ExtractFirstName(landOwner);
+                    var lastName = ExtractLastName(landOwner);
 
                     var existingPersons = existingPersonList.Where(x =>
                         string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
-                        (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) || (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
+                        (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) ||
+                         (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
 
                     var existingNewPersons = newPersonList.Where(x =>
                         string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
-                        (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) || (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
-                     if (existingPersons.Count() == 1)
-                     {
-                         var projectPerson = new ProjectPerson(project, existingPersons.Single(),
-                             ProjectPersonRelationshipType.PrivateLandowner);
-                         newProjectPersonList.Add(projectPerson);
-                     }
-                     else if (existingNewPersons.Count() == 1)
-                     {
-                         var projectPerson = new ProjectPerson(project, existingNewPersons.Single(),
-                             ProjectPersonRelationshipType.PrivateLandowner);
-                         newProjectPersonList.Add(projectPerson);
-                     }
-                     else
-                     {
-                         var person = new Person(firstName, Role.Unassigned, DateTime.Now, true, false){LastName = lastName};
-                         newPersonList.Add(person);
-                         var projectPerson = new ProjectPerson(project, person,
-                             ProjectPersonRelationshipType.PrivateLandowner);
-                         newProjectPersonList.Add(projectPerson);
+                        (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) ||
+                         (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
+                    if (existingPersons.Count() == 1)
+                    {
+                        var projectPerson = new ProjectPerson(project, existingPersons.Single(),
+                            ProjectPersonRelationshipType.PrivateLandowner);
+                        newProjectPersonList.Add(projectPerson);
+                    }
+                    else if (existingNewPersons.Count() == 1)
+                    {
+                        var projectPerson = new ProjectPerson(project, existingNewPersons.Single(),
+                            ProjectPersonRelationshipType.PrivateLandowner);
+                        newProjectPersonList.Add(projectPerson);
+                    }
+                    else
+                    {
+                        var person = new Person(firstName, Role.Unassigned, DateTime.Now, true, false) {LastName = lastName};
+                        newPersonList.Add(person);
+                        var projectPerson = new ProjectPerson(project, person,
+                            ProjectPersonRelationshipType.PrivateLandowner);
+                        newProjectPersonList.Add(projectPerson);
                     }
                 }
             }
+        }
 
-            currentCounter++;
+        private static string ExtractLastName(string landOwner)
+        {
+            var landownerSplit = landOwner.Split(',');
+            string lastName = null;
+            if (landownerSplit.Length == 2)
+            {
+                lastName = landownerSplit[0].Trim();
+            }
+
+            return lastName;
+        }
+
+        private static string ExtractFirstName(string landOwner)
+        {
+            var landownerSplit = landOwner.Split(',');
+            var firstName = string.Empty;
+            if (landownerSplit.Length == 1 || landownerSplit.Length > 2)
+            {
+                firstName = landOwner.Trim();
+            }
+
+            if (landownerSplit.Length == 2)
+            {
+                firstName = landownerSplit[1].Trim();
+            }
+
+            return firstName;
+        }
+
+        private static DateTime? CalculateStartDate(Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, List<int> gisFeaturesIdListWithProjectIdentifier)
+        {
+            var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
+                .SelectMany(x => startDateDictionary[x]).ToList();
+            var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
+                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+            var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?) null;
+            return startDate;
+        }
+
+        private static DateTime? CalculateCompletionDate(Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary,
+            List<int> gisFeaturesIdListWithProjectIdentifier)
+        {
+            var completionDateAttributes = gisFeaturesIdListWithProjectIdentifier
+                .Where(x => completionDateDictionary.ContainsKey(x))
+                .SelectMany(x => completionDateDictionary[x]).ToList();
+
+            var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
+                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+
+            var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?) null;
+            return completionDate;
         }
 
         private static ProjectStage CalculateProjectStageIfNeeded(List<GisCrossWalkDefault> gisCrossWalkDefaultList,
