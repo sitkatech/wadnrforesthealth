@@ -76,7 +76,6 @@ namespace ProjectFirma.Web.Controllers
             if (!IsCurrentUserAnonymous())
             {
                 CurrentPerson.LastActivityDate = DateTime.Now;
-                HttpRequestStorage.DatabaseEntities.ChangeTracker.DetectChanges();
                 HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
             }
         }
