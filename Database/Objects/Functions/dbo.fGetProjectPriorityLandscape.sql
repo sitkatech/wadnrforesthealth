@@ -3,7 +3,9 @@ drop function dbo.fGetProjectPriorityLandscape
 GO
 CREATE FUNCTION dbo.fGetProjectPriorityLandscape
 (
-    @piGisUploadAttemptID int
+       @piGisUploadAttemptID int,
+       @piGisMetadataAttributeID int,
+       @programID int
 )
 returns table
 as return(
@@ -20,12 +22,21 @@ from (
     
     from dbo.TreatmentArea ta
         join (
-        select distinct p.CreateGisUploadAttemptID, p.ProjectID, ta.TreatmentAreaID from dbo.Treatment t
+       select distinct p.CreateGisUploadAttemptID
+        , p.LastUpdateGisUploadAttemptID
+        , p.ProjectID
+        , ta.TreatmentAreaID 
+        , p.ProjectGisIdentifier
+        , p.ProgramID
+         from dbo.Treatment t
         join dbo.TreatmentArea ta on t.TreatmentAreaID = ta.TreatmentAreaID
         join dbo.Project p on t.ProjectID = p.ProjectID
         ) x on x.TreatmentAreaID = ta.TreatmentAreaID
         join dbo.PriorityLandscape landscape on  landscape.PriorityLandscapeLocation.STIntersects(ta.TreatmentAreaFeature) = 1
-        where @piGisUploadAttemptID = x.CreateGisUploadAttemptID
+         where  x.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
+                        join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
+                        where gfma.GisMetadataAttributeID = @piGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
+               and x.ProgramID = @programID
         
 
 
@@ -36,11 +47,19 @@ from (
 
     from dbo.ProjectLocation ta
         join (
-        select distinct p.CreateGisUploadAttemptID, p.ProjectID, pl.ProjectLocationID from dbo.ProjectLocation pl
+        select distinct p.CreateGisUploadAttemptID
+        , p.ProjectID
+        , pl.ProjectLocationID 
+        , p.ProjectGisIdentifier
+        , p.ProgramID
+        from dbo.ProjectLocation pl
         join dbo.Project p on pl.ProjectID = p.ProjectID
         ) x on x.ProjectLocationID = ta.ProjectLocationID
         join dbo.PriorityLandscape landscape on  landscape.PriorityLandscapeLocation.STIntersects(ta.ProjectLocationGeometry) = 1
-        where @piGisUploadAttemptID = x.CreateGisUploadAttemptID
+         where  x.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
+                        join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
+                        where gfma.GisMetadataAttributeID = @piGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
+               and x.ProgramID = @programID 
         ) x
 
         )

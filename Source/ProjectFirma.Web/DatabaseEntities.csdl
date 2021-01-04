@@ -1142,9 +1142,13 @@
     </FunctionImport>
     <FunctionImport Name="fGetProjectDnrUploadRegion" ReturnType="Collection(ProjectFirma.Web.Models.fGetProjectDnrUploadRegion_Result)" IsComposable="true">
       <Parameter Name="piGisUploadAttemptID" Type="Int32" />
+      <Parameter Name="piGisMetadataAttributeID" Type="Int32" />
+      <Parameter Name="programID" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="fGetProjectPriorityLandscape" ReturnType="Collection(ProjectFirma.Web.Models.fGetProjectPriorityLandscape_Result)" IsComposable="true">
       <Parameter Name="piGisUploadAttemptID" Type="Int32" />
+      <Parameter Name="piGisMetadataAttributeID" Type="Int32" />
+      <Parameter Name="programID" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
       <Parameter Name="stringToSplit" Type="String" />

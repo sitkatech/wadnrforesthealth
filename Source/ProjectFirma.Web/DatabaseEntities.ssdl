@@ -5977,6 +5977,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="fGetProjectDnrUploadRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <Parameter Name="piGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="programID" Type="int" Mode="In" />
     <ReturnType>
       <CollectionType>
         <RowType>
@@ -5989,6 +5991,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="fGetProjectPriorityLandscape" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <Parameter Name="piGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="programID" Type="int" Mode="In" />
     <ReturnType>
       <CollectionType>
         <RowType>
