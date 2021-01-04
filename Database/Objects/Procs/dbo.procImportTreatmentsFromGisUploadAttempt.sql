@@ -30,6 +30,29 @@ create procedure dbo.procImportTreatmentsFromGisUploadAttempt
 as
 
 
+declare @programID int;
+set @programID = (select giuso.ProgramID from dbo.GisUploadAttempt gia join dbo.GisUploadSourceOrganization giuso on giuso.GisUploadSourceOrganizationID = gia.GisUploadSourceOrganizationID where gia.GisUploadAttemptID = @piGisUploadAttemptID);
+
+
+if object_id('tempdb.dbo.#tempTreatmentsForDelete') is not null drop table #tempTreatmentsForDelete
+select p.ProjectID, t.TreatmentID, ta.TreatmentAreaID 
+into #tempTreatmentsForDelete
+from dbo.Project p
+join dbo.Treatment t on t.ProjectID = p.ProjectID
+join dbo.TreatmentArea ta on t.TreatmentAreaID = ta.TreatmentAreaID
+where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
+                        join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
+                        where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
+               and p.ProgramID = @programID
+
+
+delete from dbo.Treatment where TreatmentID in (select TreatmentID from #tempTreatmentsForDelete)
+
+delete from dbo.TreatmentArea where TreatmentAreaID in (select TreatmentAreaID from #tempTreatmentsForDelete)
+
+
+
+
 if object_id('tempdb.dbo.#tempTreatments') is not null drop table #tempTreatments
 
 CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT NULL,
@@ -163,8 +186,10 @@ join (
    x on x.GisFeatureMetadataAttributeValue = p.ProjectGisIdentifier
    join dbo.GisUploadAttempt as gua on gua.GisUploadAttemptID = p.CreateGisUploadAttemptID
    join dbo.GisUploadSourceOrganization as guso on guso.GisUploadSourceOrganizationID = gua.GisUploadSourceOrganizationID
-where p.CreateGisUploadAttemptID = @piGisUploadAttemptID
-  
+where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
+                        join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
+                        where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
+               and p.ProgramID = @programID
 
 
 

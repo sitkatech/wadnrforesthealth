@@ -179,80 +179,15 @@ namespace ProjectFirma.Web.Controllers
             var existingProjects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
 
 
-            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
-            {
-                MakeProject(existingProjects,projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, ref currentCounter);
-            }
-            HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, currentCounter);
 
-            var existingProjectsAfterSaveWithProjectLocations = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.ProjectLocations)
-                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
-                .ToList()
-                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,StringComparer.InvariantCultureIgnoreCase))
-                .ToList();
-            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
-            {
-                if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments || gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments)
-                {
-                    var project = existingProjectsAfterSaveWithProjectLocations.Single(x => string.Equals(x.ProjectGisIdentifier,
-                        distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
-                    project.ProjectLocations.Where(x => x.ProjectLocationType == ProjectLocationType.ProjectArea).ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
-                    var gisFeaturesIdListWithProjectIdentifier =
-                        projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
-                            string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
-                                StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
-                    var gisFeatures = gisUploadAttempt.GisFeatures
-                        .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
-                    foreach (var gisFeature in gisFeatures)
-                    {
-                        var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
-                            ProjectLocationType.ProjectArea, "Imported Project Area");
-                        projectLocationList.Add(newProjectLocation);
-                    }
-
-                    var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
-                    if (centroid != null)
-                    {
-                        project.ProjectLocationPoint = centroid;
-                        project.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.PointOnMap.ProjectLocationSimpleTypeID;
-                    }
-                }
-            }
-
-            HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList);
 
 
-
-            var existingProjectsAfterSaveWithProjectPeople = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.ProjectPeople)
-                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
-                .ToList()
-                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
-                .ToList();
-            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
-            {
-                var project = existingProjectsAfterSaveWithProjectPeople.Single(x => string.Equals(x.ProjectGisIdentifier,
-                    distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
-                var gisFeaturesIdListWithProjectIdentifier =
-                    projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
-                        string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
-                            StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
-                var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => privateLandOwnerDictionary.ContainsKey(x))
-                    .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
-                var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-                GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
-            }
-
-            HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
-            HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(newProjectPersonList);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            MakeProjectPeopleAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList);
 
 
-            var projectOrganizationsToAdd = UpdateProjectOrganizationRecords(gisUploadAttempt, distinctProjectIdentifiers);
-            HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizationsToAdd);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            MakeProjectOrganizationsAndSave(gisUploadAttempt, distinctProjectIdentifiers);
 
             if (!gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
             {
@@ -292,6 +227,109 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay($"Successfully imported {projectList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
+        }
+
+        private static void MakeProjectOrganizationsAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers)
+        {
+            var projectOrganizationsToAdd = UpdateProjectOrganizationRecords(gisUploadAttempt, distinctProjectIdentifiers);
+            HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizationsToAdd);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+        }
+
+        private static void MakeProjectPeopleAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers,
+            GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandOwnerDictionary,
+            List<Person> existingPersons, List<Person> newPersonList, List<ProjectPerson> newProjectPersonList)
+        {
+            var existingProjectsAfterSaveWithProjectPeople = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectPeople)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,
+                    StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                var project = existingProjectsAfterSaveWithProjectPeople.Single(x => string.Equals(x.ProjectGisIdentifier,
+                    distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
+                var gisFeaturesIdListWithProjectIdentifier =
+                    projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                        string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
+                            StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier
+                    .Where(x => privateLandOwnerDictionary.ContainsKey(x))
+                    .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
+                var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+                GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
+            }
+
+            HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
+            HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(newProjectPersonList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+        }
+
+        private static void MakeProjectLocationsAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers,
+            GisMetadataAttribute projectIdentifierMetadataAttribute, List<ProjectLocation> projectLocationList)
+        {
+            var existingProjectsAfterSaveWithProjectLocations = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectLocations)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,
+                    StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments || gisUploadAttempt
+                    .GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments)
+                {
+                    var project = existingProjectsAfterSaveWithProjectLocations.Single(x =>
+                        string.Equals(x.ProjectGisIdentifier,
+                            distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
+                    project.ProjectLocations.Where(x => x.ProjectLocationType == ProjectLocationType.ProjectArea)
+                        .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+                    var gisFeaturesIdListWithProjectIdentifier =
+                        projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                            string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
+                                StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                    var gisFeatures = gisUploadAttempt.GisFeatures
+                        .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
+                    foreach (var gisFeature in gisFeatures)
+                    {
+                        var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
+                            ProjectLocationType.ProjectArea, "Imported Project Area");
+                        projectLocationList.Add(newProjectLocation);
+                    }
+
+                    var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
+                    if (centroid != null)
+                    {
+                        project.ProjectLocationPoint = centroid;
+                        project.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.PointOnMap.ProjectLocationSimpleTypeID;
+                    }
+                }
+            }
+
+            HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+        }
+
+        private static void MakeProjectsAndSave(List<string> distinctProjectIdentifiers, List<Project> existingProjects,
+            GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary,
+            Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
+            List<GisCrossWalkDefault> gisCrossWalkDefaultList, GisUploadAttempt gisUploadAttempt, ProjectType otherProjectType, List<Project> projectList,
+            int currentCounter)
+        {
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                MakeProject(existingProjects, projectIdentifierMetadataAttribute, distinctProjectIdentifier,
+                    completionDateDictionary, startDateDictionary, projectNameDictionary,
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType,
+                    gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization,
+                    ref currentCounter);
+            }
+
+            HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
         private static void UpdateProjectRegions(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt,int? gisMetadataAttributeIdentier)
