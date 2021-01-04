@@ -182,18 +182,58 @@ namespace ProjectFirma.Web.Controllers
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
                 MakeProject(existingProjects,projectIdentifierMetadataAttribute, distinctProjectIdentifier, completionDateDictionary, startDateDictionary, projectNameDictionary, 
-                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, projectLocationList
-                    , gisUploadAttempt.GisUploadSourceOrganization.ProgramID, ref currentCounter);
+                    projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, ref currentCounter);
             }
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var existingProjectsAfterSaveWithProjectLocations = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.ProjectLocations)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+            foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
+            {
+                if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments || gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments)
+                {
+                    var project = existingProjectsAfterSaveWithProjectLocations.Single(x => string.Equals(x.ProjectGisIdentifier,
+                        distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
+                    project.ProjectLocations.Where(x => x.ProjectLocationType == ProjectLocationType.ProjectArea).ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+                    var gisFeaturesIdListWithProjectIdentifier =
+                        projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                            string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
+                                StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                    var gisFeatures = gisUploadAttempt.GisFeatures
+                        .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
+                    foreach (var gisFeature in gisFeatures)
+                    {
+                        var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
+                            ProjectLocationType.ProjectArea, "Imported Project Area");
+                        projectLocationList.Add(newProjectLocation);
+                    }
+
+                    var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
+                    if (centroid != null)
+                    {
+                        project.ProjectLocationPoint = centroid;
+                        project.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.PointOnMap.ProjectLocationSimpleTypeID;
+                    }
+                }
+            }
+
             HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
-            var existingProjectsAfterSave = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
 
+
+            var existingProjectsAfterSaveWithProjectPeople = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.ProjectPeople)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
-                var project = existingProjectsAfterSave.Single(x => string.Equals(x.ProjectGisIdentifier,
+                var project = existingProjectsAfterSaveWithProjectPeople.Single(x => string.Equals(x.ProjectGisIdentifier,
                     distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
                 var gisFeaturesIdListWithProjectIdentifier =
                     projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
@@ -204,21 +244,14 @@ namespace ProjectFirma.Web.Controllers
                 var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
                 GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
             }
-            
+
             HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
             HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(newProjectPersonList);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
-            var leadImplementerOrganization =
-                gisUploadAttempt.GisUploadSourceOrganization.DefaultLeadImplementerOrganization;
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => x.CreateGisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).ToList();
-            var relationshipType = gisUploadAttempt.GisUploadSourceOrganization.RelationshipTypeForDefaultOrganization;
-
-            var projectOrganizations = projects
-                .Select(x => new ProjectOrganization(x, leadImplementerOrganization, relationshipType)).ToList();
-
-            HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizations);
+            var projectOrganizationsToAdd = UpdateProjectOrganizationRecords(gisUploadAttempt, distinctProjectIdentifiers);
+            HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizationsToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             if (!gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments)
@@ -246,28 +279,84 @@ namespace ProjectFirma.Web.Controllers
                     , viewModel.CompletionDateMetadataAttributeID);
             }
 
-           
-
-            var projectPriorityLandscapesCalculated = HttpRequestStorage.DatabaseEntities.GetfGetProjectPriorityLandscapes(gisUploadAttempt.GisUploadAttemptID).ToList();
-            var projectPriorityLandscapes = projectPriorityLandscapesCalculated
-                .Select(x => new ProjectPriorityLandscape(x.ProjectID, x.PriorityLandscapeID)).ToList();
-            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 180;
-            var projectUplandDnrRegionsCalculated = HttpRequestStorage.DatabaseEntities.GetfGetProjectDnrUploadRegions(gisUploadAttempt.GisUploadAttemptID).ToList();
-            var projectRegions = projectUplandDnrRegionsCalculated
-                .Select(x => new ProjectRegion(x.ProjectID, x.DNRUplandRegionID)).ToList();
-
-            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapes);
-            HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectRegions);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
-            
+            UpdateProjectPriorityLandscapes(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
+
+            UpdateProjectRegions(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
+
+
             UpdateProjectTypesIfNeeded(gisUploadAttempt);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             SetMessageForDisplay($"Successfully imported {projectList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
+        }
+
+        private static void UpdateProjectRegions(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt,int? gisMetadataAttributeIdentier)
+        {
+            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 180;
+            var projectUplandDnrRegionsCalculated = HttpRequestStorage.DatabaseEntities
+                .GetfGetProjectDnrUploadRegions(gisUploadAttempt.GisUploadAttemptID, gisMetadataAttributeIdentier, gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
+            var projectRegions = projectUplandDnrRegionsCalculated
+                .Select(x => new ProjectRegion(x.ProjectID, x.DNRUplandRegionID)).ToList();
+
+            var projectsWithUplandDnrRegions = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectRegions)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+            projectsWithUplandDnrRegions.SelectMany(x => x.ProjectRegions)
+                .ToList()
+                .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+
+            HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectRegions);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+        }
+
+        private static void UpdateProjectPriorityLandscapes(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
+        {
+            var projectPriorityLandscapesCalculated = HttpRequestStorage.DatabaseEntities
+                .GetfGetProjectPriorityLandscapes(gisUploadAttempt.GisUploadAttemptID, gisMetadataAttributeIdentier, gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
+            var projectPriorityLandscapes = projectPriorityLandscapesCalculated
+                .Select(x => new ProjectPriorityLandscape(x.ProjectID, x.PriorityLandscapeID)).ToList();
+            var projectsWithPriorityLandscapes = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectPriorityLandscapes)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+            projectsWithPriorityLandscapes.SelectMany(x => x.ProjectPriorityLandscapes)
+                .ToList()
+                .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapes);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+        }
+
+        private static List<ProjectOrganization> UpdateProjectOrganizationRecords(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt)
+        {
+            var leadImplementerOrganization = gisUploadAttempt.GisUploadSourceOrganization.DefaultLeadImplementerOrganization;
+            var projectsWithOrganization = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectOrganizations)
+                .Where(x => x.ProgramID.HasValue && x.ProgramID.Value == gisUploadAttempt.GisUploadSourceOrganization.ProgramID)
+                .ToList()
+                .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+            var relationshipType = gisUploadAttempt.GisUploadSourceOrganization.RelationshipTypeForDefaultOrganization;
+
+            projectsWithOrganization.SelectMany(x => x.ProjectOrganizations)
+                .Where(x => x.RelationshipTypeID == gisUploadAttempt.GisUploadSourceOrganization
+                    .RelationshipTypeForDefaultOrganizationID)
+                .ToList()
+                .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+
+            var projectOrganizationsToAdd = projectsWithOrganization
+                .Select(x => new ProjectOrganization(x, leadImplementerOrganization, relationshipType)).ToList();
+            return projectOrganizationsToAdd;
+
+
         }
 
         private static List<string> GetDistinctProjectIdentifiers(GisMetadataAttribute projectIdentifierMetadataAttribute,
@@ -277,7 +366,7 @@ namespace ProjectFirma.Web.Controllers
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     gisFeatureIDs.Contains(x.GisFeatureID));
             var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue)
-                .Where(y => !string.IsNullOrWhiteSpace(y)).Distinct().OrderBy(x => x).ToList();
+                .Where(y => !string.IsNullOrWhiteSpace(y)).Select(x => x.ToUpperInvariant()).Distinct().OrderBy(x => x).ToList();
             return distinctProjectIdentifiers;
         }
 
@@ -382,9 +471,7 @@ namespace ProjectFirma.Web.Controllers
                                         ProjectType otherProjectType, 
                                         int gisUploadAttemptID, 
                                         List<Project> projectList, 
-                                        GisUploadSourceOrganization gisUploadSourceOrganization, 
-                                        List<ProjectLocation> projectLocationList,
-                                        int programID, 
+                                        GisUploadSourceOrganization gisUploadSourceOrganization,
                                         ref int currentCounter)
         {
 
@@ -456,6 +543,7 @@ namespace ProjectFirma.Web.Controllers
             if (projectType != null)
             {
                 project.ProjectType = projectType;
+                project.ProjectTypeID = projectType.ProjectTypeID;
             }
 
             if (!projectAlreadyExists)
@@ -463,27 +551,6 @@ namespace ProjectFirma.Web.Controllers
                 projectList.Add(project);
                 currentCounter++;
             }
-
-            if (gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments || gisUploadAttempt.GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments)
-            {
-                var gisFeatures = gisUploadAttempt.GisFeatures
-                    .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
-                foreach (var gisFeature in gisFeatures)
-                {
-                    var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
-                        ProjectLocationType.ProjectArea, "Imported Project Area");
-                    projectLocationList.Add(newProjectLocation);
-                }
-
-                var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
-                if (centroid != null)
-                {
-                    project.ProjectLocationPoint = centroid;
-                    project.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.PointOnMap.ProjectLocationSimpleTypeID;
-                }
-            }
-
-            
         }
 
         private static ProjectType CalculateProjectType(GisUploadSourceOrganization gisUploadSourceOrganization)
@@ -517,7 +584,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (projectNames.Count > 1)
             {
-                var projectNameLower = projectNames.Select(x => x.ToLowerInvariant()).Distinct().ToList();
+                var projectNameLower = projectNames.Select(x => x.ToUpperInvariant()).Distinct().ToList();
                 if (projectNameLower.Count == 1)
                 {
                     projectNames = projectNames.Take(1).ToList();
@@ -538,6 +605,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (landOwners.Any())
             {
+                project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType == ProjectPersonRelationshipType.PrivateLandowner).ToList().ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
                 foreach (var landOwner in landOwners)
                 {
                     var firstName = ExtractFirstName(landOwner);
