@@ -10,11 +10,12 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString => ProgramName;
 
-        public string DisplayName =>  $"{ProgramName}{(!String.IsNullOrWhiteSpace(ProgramShortName) ? $" ({ProgramShortName})" : String.Empty)}{(!ProgramIsActive ? " (Inactive)" : String.Empty)}";
+        public string InternalDisplayName =>  $"{ProgramName}{(!String.IsNullOrWhiteSpace(ProgramShortName) ? $" ({ProgramShortName})" : String.Empty)}{(!ProgramIsActive ? " (Inactive)" : String.Empty)}";
+        public string DisplayName => $"{(IsDefaultProgramForImportOnly ? Organization.DisplayName : InternalDisplayName)}";
 
         public string ProgramNameDisplay => IsDefaultProgramForImportOnly ? "(default)" : ProgramName;
 
-        public string GdbImportDisplayName => IsDefaultProgramForImportOnly ? Organization.DisplayName : DisplayName;
+        
 
 
 

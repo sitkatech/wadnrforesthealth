@@ -160,14 +160,12 @@ namespace ProjectFirma.Web.Controllers
             var projectStageFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectStage);
             projectLocationFilterTypesAndValues.Add(projectStageFilterSimple, projectStagesAsSelectListItems);
 
-            var programsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Programs.Where(x => !x.IsDefaultProgramForImportOnly).AsEnumerable().ToSelectList(x => x.ProgramID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            var programsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Programs.AsEnumerable().ToSelectList(x => x.ProgramID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             var programFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Program);
             projectLocationFilterTypesAndValues.Add(programFilterSimple, programsAsSelectListItems);
 
-            //todo: LeadImplementerID
-            //1/4/2021 TK - LeadImplementor relationship type ID is 33. This is not a lookup table, the relationship type table is editable by SitkaAdmins. There is probably a better way to grab this ID but I am just trying to get this working right now.
-            var leadImplementorsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.ProjectOrganizations.Any(po => po.RelationshipTypeID == 33)).AsEnumerable().ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            var leadImplementerFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.LeadImplementerOrganization);
+            var leadImplementorsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.ProjectOrganizations.Any(po => po.RelationshipTypeID == RelationshipType.LeadImplementerID)).AsEnumerable().ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            var leadImplementerFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.LeadImplementer);
             projectLocationFilterTypesAndValues.Add(leadImplementerFilterSimple, leadImplementorsAsSelectListItems);
 
             return projectLocationFilterTypesAndValues;

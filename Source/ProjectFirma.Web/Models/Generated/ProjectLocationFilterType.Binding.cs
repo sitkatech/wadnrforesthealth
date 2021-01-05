@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectLocationFilterTypeProjectType ProjectType = ProjectLocationFilterTypeProjectType.Instance;
         public static readonly ProjectLocationFilterTypeClassification Classification = ProjectLocationFilterTypeClassification.Instance;
         public static readonly ProjectLocationFilterTypeProjectStage ProjectStage = ProjectLocationFilterTypeProjectStage.Instance;
-        public static readonly ProjectLocationFilterTypeLeadImplementerOrganization LeadImplementerOrganization = ProjectLocationFilterTypeLeadImplementerOrganization.Instance;
+        public static readonly ProjectLocationFilterTypeLeadImplementer LeadImplementer = ProjectLocationFilterTypeLeadImplementer.Instance;
         public static readonly ProjectLocationFilterTypeProgram Program = ProjectLocationFilterTypeProgram.Instance;
 
         public static readonly List<ProjectLocationFilterType> All;
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectLocationFilterType()
         {
-            All = new List<ProjectLocationFilterType> { TaxonomyTrunk, TaxonomyBranch, ProjectType, Classification, ProjectStage, LeadImplementerOrganization, Program };
+            All = new List<ProjectLocationFilterType> { TaxonomyTrunk, TaxonomyBranch, ProjectType, Classification, ProjectStage, LeadImplementer, Program };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectLocationFilterType>(All.ToDictionary(x => x.ProjectLocationFilterTypeID));
         }
 
@@ -113,8 +113,8 @@ namespace ProjectFirma.Web.Models
             {
                 case ProjectLocationFilterTypeEnum.Classification:
                     return Classification;
-                case ProjectLocationFilterTypeEnum.LeadImplementerOrganization:
-                    return LeadImplementerOrganization;
+                case ProjectLocationFilterTypeEnum.LeadImplementer:
+                    return LeadImplementer;
                 case ProjectLocationFilterTypeEnum.Program:
                     return Program;
                 case ProjectLocationFilterTypeEnum.ProjectStage:
@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Models
         ProjectType = 3,
         Classification = 4,
         ProjectStage = 5,
-        LeadImplementerOrganization = 6,
+        LeadImplementer = 6,
         Program = 7
     }
 
@@ -172,10 +172,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectLocationFilterTypeProjectStage Instance = new ProjectLocationFilterTypeProjectStage(5, @"ProjectStage", @"ProjectStageID", @"Project Stage", 50, 3);
     }
 
-    public partial class ProjectLocationFilterTypeLeadImplementerOrganization : ProjectLocationFilterType
+    public partial class ProjectLocationFilterTypeLeadImplementer : ProjectLocationFilterType
     {
-        private ProjectLocationFilterTypeLeadImplementerOrganization(int projectLocationFilterTypeID, string projectLocationFilterTypeName, string projectLocationFilterTypeNameWithIdentifier, string projectLocationFilterTypeDisplayName, int sortOrder, int displayGroup) : base(projectLocationFilterTypeID, projectLocationFilterTypeName, projectLocationFilterTypeNameWithIdentifier, projectLocationFilterTypeDisplayName, sortOrder, displayGroup) {}
-        public static readonly ProjectLocationFilterTypeLeadImplementerOrganization Instance = new ProjectLocationFilterTypeLeadImplementerOrganization(6, @"LeadImplementerOrganization", @"LeadImplementerOrganizationID", @"Lead Implementer Organization", 60, 4);
+        private ProjectLocationFilterTypeLeadImplementer(int projectLocationFilterTypeID, string projectLocationFilterTypeName, string projectLocationFilterTypeNameWithIdentifier, string projectLocationFilterTypeDisplayName, int sortOrder, int displayGroup) : base(projectLocationFilterTypeID, projectLocationFilterTypeName, projectLocationFilterTypeNameWithIdentifier, projectLocationFilterTypeDisplayName, sortOrder, displayGroup) {}
+        public static readonly ProjectLocationFilterTypeLeadImplementer Instance = new ProjectLocationFilterTypeLeadImplementer(6, @"LeadImplementer", @"LeadImplementerID", @"Lead Implementer", 60, 4);
     }
 
     public partial class ProjectLocationFilterTypeProgram : ProjectLocationFilterType

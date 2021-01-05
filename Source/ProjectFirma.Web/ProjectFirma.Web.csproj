@@ -680,6 +680,7 @@
     <Compile Include="Models\ProjectFundingSource.cs" />
     <Compile Include="Models\ProjectFundingSourceUpdate.cs" />
     <Compile Include="Models\ProjectPersonRelationshipType.cs" />
+    <Compile Include="Models\RelationshipTypeTest.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\SqlBienniumTest.cs" />
     <Compile Include="Models\Treatment.cs" />
