@@ -6,4 +6,6 @@ insert dbo.ProjectLocationFilterType (ProjectLocationFilterTypeID, ProjectLocati
 (2, 'TaxonomyBranch', 'Taxonomy Branch', 'TaxonomyBranchID', 20, 1),
 (3, 'ProjectType', 'Project Type', 'ProjectTypeID', 30, 1),
 (4, 'Classification', 'Classification', 'ClassificationID', 40, 3),
-(5, 'ProjectStage', 'Project Stage', 'ProjectStageID', 50, 3)
+(5, 'ProjectStage', 'Project Stage', 'ProjectStageID', 50, 3),
+(6, 'LeadImplementerOrganization', 'Lead Implementer Organization', 'LeadImplementerOrganizationID', 60, 4),
+(7, 'Program', 'Program', 'ProgramID', 70, 4)

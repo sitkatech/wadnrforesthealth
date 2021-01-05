@@ -133,33 +133,42 @@ namespace ProjectFirma.Web.Controllers
 
             if (MultiTenantHelpers.IsTaxonomyLevelTrunk())
             {
-                var taxonomyTrunksAsSelectListItems =
-                    HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.AsEnumerable().ToSelectList(
-                        x => x.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
-                projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.TaxonomyTrunk),
-                    taxonomyTrunksAsSelectListItems);
+                var taxonomyTrunksAsSelectListItems = HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.AsEnumerable().ToSelectList(
+                                                    x => x.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
+                var taxonomyTrunkFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.TaxonomyTrunk);
+                projectLocationFilterTypesAndValues.Add(taxonomyTrunkFilterSimple, taxonomyTrunksAsSelectListItems);
             }
 
             if (!MultiTenantHelpers.IsTaxonomyLevelLeaf())
             {
-                var taxonomyBranchesAsSelectListItems =
-                    HttpRequestStorage.DatabaseEntities.TaxonomyBranches.AsEnumerable().ToSelectList(
-                        x => x.TaxonomyBranchID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
-                projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.TaxonomyBranch),
-                    taxonomyBranchesAsSelectListItems);
+                var taxonomyBranchesAsSelectListItems = HttpRequestStorage.DatabaseEntities.TaxonomyBranches.AsEnumerable().ToSelectList(
+                                                        x => x.TaxonomyBranchID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
+                var taxonomyBranchFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.TaxonomyBranch);
+                projectLocationFilterTypesAndValues.Add(taxonomyBranchFilterSimple, taxonomyBranchesAsSelectListItems);
             }
 
-            var projectTypesAsSelectListItems =
-                HttpRequestStorage.DatabaseEntities.ProjectTypes.AsEnumerable().ToSelectList(
-                    x => x.ProjectTypeID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
-            projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectType),
-                projectTypesAsSelectListItems);
+            var projectTypesAsSelectListItems = HttpRequestStorage.DatabaseEntities.ProjectTypes.AsEnumerable().ToSelectList(
+                                                x => x.ProjectTypeID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
+            var projectTypeFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectType);
+            projectLocationFilterTypesAndValues.Add(projectTypeFilterSimple, projectTypesAsSelectListItems);
 
             var classificationsAsSelectList = MultiTenantHelpers.GetClassificationSystems().SelectMany(x => x.Classifications).ToSelectList(x => x.ClassificationID.ToString(CultureInfo.InvariantCulture), x => MultiTenantHelpers.GetClassificationSystems().Count > 1 ? $"{x.ClassificationSystem.ClassificationSystemName} - {x.DisplayName}" : x.DisplayName);
-            projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Classification, string.Join(" & ", MultiTenantHelpers.GetClassificationSystems().Select(x => x.ClassificationSystemName).ToList())), classificationsAsSelectList);
+            var classificationFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Classification, string.Join(" & ", MultiTenantHelpers.GetClassificationSystems().Select(x => x.ClassificationSystemName).ToList()));
+            projectLocationFilterTypesAndValues.Add(classificationFilterSimple, classificationsAsSelectList);
 
             var projectStagesAsSelectListItems = ProjectMapCustomization.GetProjectStagesForMap(showProposals).ToSelectList(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), x => x.ProjectStageDisplayName);
-            projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectStage), projectStagesAsSelectListItems);
+            var projectStageFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectStage);
+            projectLocationFilterTypesAndValues.Add(projectStageFilterSimple, projectStagesAsSelectListItems);
+
+            var programsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Programs.Where(x => !x.IsDefaultProgramForImportOnly).AsEnumerable().ToSelectList(x => x.ProgramID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            var programFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Program);
+            projectLocationFilterTypesAndValues.Add(programFilterSimple, programsAsSelectListItems);
+
+            //todo: LeadImplementerID
+            //1/4/2021 TK - LeadImplementor relationship type ID is 33. This is not a lookup table, the relationship type table is editable by SitkaAdmins. There is probably a better way to grab this ID but I am just trying to get this working right now.
+            var leadImplementorsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.ProjectOrganizations.Any(po => po.RelationshipTypeID == 33)).AsEnumerable().ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            var leadImplementerFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.LeadImplementerOrganization);
+            projectLocationFilterTypesAndValues.Add(leadImplementerFilterSimple, leadImplementorsAsSelectListItems);
 
             return projectLocationFilterTypesAndValues;
         }
