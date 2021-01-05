@@ -9,6 +9,11 @@ namespace ProjectFirma.Web.Models
 {
     public partial class RelationshipType : IAuditableEntity
     {
+        /// <summary>
+        /// 1/5/21 TK - Creating this constant to grab the lead implementer instances when only that type is needed. If this starts getting more use we should look into other options.
+        /// </summary>
+        public static readonly int LeadImplementerID = 33;
+
         public bool CanDelete()
         {
             return !ProjectOrganizations.Any();

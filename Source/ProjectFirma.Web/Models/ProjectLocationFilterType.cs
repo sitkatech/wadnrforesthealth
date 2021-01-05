@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Models
         public override string DisplayName => FieldDefinition.ProjectStage.GetFieldDefinitionLabel();
     }
 
-    public partial class ProjectLocationFilterTypeLeadImplementerOrganization
+    public partial class ProjectLocationFilterTypeLeadImplementer
     {
         public override Expression<Func<Project, bool>> GetFilterFunction(List<int> filterValues)
         {
