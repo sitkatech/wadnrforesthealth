@@ -164,7 +164,9 @@ namespace ProjectFirma.Web.Controllers
             var programFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Program);
             projectLocationFilterTypesAndValues.Add(programFilterSimple, programsAsSelectListItems);
 
-            var leadImplementorsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Programs.Where(x => !x.IsDefaultProgramForImportOnly).AsEnumerable().ToSelectList(x => x.ProgramID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            //todo: LeadImplementerID
+            //1/4/2021 TK - LeadImplementor relationship type ID is 33. This is not a lookup table, the relationship type table is editable by SitkaAdmins. There is probably a better way to grab this ID but I am just trying to get this working right now.
+            var leadImplementorsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.ProjectOrganizations.Any(po => po.RelationshipTypeID == 33)).AsEnumerable().ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             var leadImplementerFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.LeadImplementerOrganization);
             projectLocationFilterTypesAndValues.Add(leadImplementerFilterSimple, leadImplementorsAsSelectListItems);
 
