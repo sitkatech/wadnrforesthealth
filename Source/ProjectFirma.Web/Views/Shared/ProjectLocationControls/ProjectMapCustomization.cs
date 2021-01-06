@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -110,7 +111,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public static List<Models.Project> ProjectsForMap(Person currentPerson)
         {
-            return new List<Models.Project>(HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson)).Where(x => x.ProjectStage.ShouldShowOnMap())
+            return new List<Models.Project>(HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson)).Where(x => x.ProjectStage.ShouldShowOnMap())
                 .OrderBy(x => x.ProjectStage.ProjectStageID).ToList();
         }
     }
