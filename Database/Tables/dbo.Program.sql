@@ -5,14 +5,15 @@ GO
 CREATE TABLE [dbo].[Program](
 	[ProgramID] [int] IDENTITY(1,1) NOT NULL,
 	[OrganizationID] [int] NOT NULL,
-	[ProgramName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ProgramShortName] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProgramName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProgramShortName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProgramPrimaryContactPersonID] [int] NULL,
 	[ProgramIsActive] [bit] NOT NULL,
 	[ProgramCreateDate] [datetime] NOT NULL,
 	[ProgramCreatePersonID] [int] NOT NULL,
 	[ProgramLastUpdatedDate] [datetime] NULL,
 	[ProgramLastUpdatedByPersonID] [int] NULL,
+	[IsDefaultProgramForImportOnly] [bit] NOT NULL,
  CONSTRAINT [PK_Program_ProgramID] PRIMARY KEY CLUSTERED 
 (
 	[ProgramID] ASC

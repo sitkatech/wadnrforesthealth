@@ -477,8 +477,7 @@ namespace ProjectFirma.Web.Models
             return featureCollection;
         }
 
-        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint,
-            bool addProjectProperties, bool useDetailedCustomPopup)
+        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint, bool addProjectProperties, bool useDetailedCustomPopup)
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(projectLocationPoint);
             feature.Properties.Add("TaxonomyTrunkID",
@@ -513,6 +512,10 @@ namespace ProjectFirma.Web.Models
                 {
                     feature.Properties.Add("PopupUrl", this.GetProjectSimpleMapPopupUrl());
                 }
+
+                feature.Properties.Add("ProgramID", this.ProgramID?.ToString(CultureInfo.InvariantCulture) ?? (-1).ToString(CultureInfo.InvariantCulture));
+                feature.Properties.Add("LeadImplementerID", this.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID)?.OrganizationID.ToString(CultureInfo.InvariantCulture) ?? (-1).ToString(CultureInfo.InvariantCulture));
+
             }
 
             return feature;

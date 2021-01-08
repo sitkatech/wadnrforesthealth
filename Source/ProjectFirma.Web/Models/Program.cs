@@ -8,12 +8,16 @@ namespace ProjectFirma.Web.Models
 {
     public partial class Program : IAuditableEntity
     {
-        public const string ProgramUnknown = "(Unknown or Unspecified Organization)";
         public string AuditDescriptionString => ProgramName;
 
-        public string DisplayName => IsUnknown ? "Unknown or unspecified" : $"{ProgramName}{(!String.IsNullOrWhiteSpace(ProgramShortName) ? $" ({ProgramShortName})" : String.Empty)}{(!ProgramIsActive ? " (Inactive)" : String.Empty)}";
+        public string InternalDisplayName =>  $"{ProgramName}{(!String.IsNullOrWhiteSpace(ProgramShortName) ? $" ({ProgramShortName})" : String.Empty)}{(!ProgramIsActive ? " (Inactive)" : String.Empty)}";
+        public string DisplayName => $"{(IsDefaultProgramForImportOnly ? Organization.DisplayName : InternalDisplayName)}";
 
-        public bool IsUnknown => !String.IsNullOrWhiteSpace(ProgramName) && ProgramName.Equals(ProgramUnknown, StringComparison.InvariantCultureIgnoreCase);
+        public string ProgramNameDisplay => IsDefaultProgramForImportOnly ? "(default)" : ProgramName;
+
+        
+
+
 
         public static bool IsProgramNameUnique(IEnumerable<Program> programs, string programName, int currentProgramID, int currentOrganizationID)
         {

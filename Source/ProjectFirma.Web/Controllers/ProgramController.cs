@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, null, organization);
             }
             
-            var program = new Program(organization, String.Empty, String.Empty, true, DateTime.Now, CurrentPerson);
+            var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.Controllers
             var organization = HttpRequestStorage.DatabaseEntities.Organizations.Single(x =>
                 x.OrganizationID == organizationID);
 
-            var program = new Program(organization, String.Empty, String.Empty, true, DateTime.Now, CurrentPerson);
+            var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -173,9 +173,11 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteProgram(Program program, ConfirmDialogFormViewModel viewModel)
         {
-            string optionalProjectCountString = string.Empty;
-            string projectNumberAndDurationWarning = $"This {optionalProjectCountString} may take several minutes to complete.";
-            var confirmMessage = $"Are you sure you want to delete Program \"{program.ProgramName}\" with Parent Organization {program.Organization.DisplayName}? <br/><br/>{projectNumberAndDurationWarning}";
+            string optionalProjectCountString = program.Projects.Any() ? $"will delete {program.Projects.Count} Projects and" : string.Empty;
+            string projectNumberAndDurationWarning = $"<b>This {optionalProjectCountString} may take several minutes to complete.</b>";
+            // For now, only show duration warning when ProjectCount > 0. Request by DAL.
+            projectNumberAndDurationWarning = program.Projects.Any() ? projectNumberAndDurationWarning : string.Empty;
+            var confirmMessage = $"Are you sure you want to delete Program \"{program.ProgramNameDisplay}\" with Parent Organization {program.Organization.DisplayName}? <br/><br/>{projectNumberAndDurationWarning}";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -187,9 +189,9 @@ namespace ProjectFirma.Web.Controllers
         {
             var program = programPrimaryKey.EntityObject;
 
-            string programName = program.ProgramName;
+            string programName = program.ProgramNameDisplay;
             string parentOrganizationName = program.Organization.DisplayName;
-            string projectsDeletedCountString = string.Empty;
+            string projectsDeletedCountString = program.Projects.Any() ? $"{program.Projects.Count} Projects deleted." : string.Empty;
 
             if (!ModelState.IsValid)
             {

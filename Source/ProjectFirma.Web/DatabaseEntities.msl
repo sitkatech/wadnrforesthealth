@@ -354,7 +354,6 @@
           <ScalarProperty Name="ProjectTypeDefaultName" ColumnName="ProjectTypeDefaultName" />
           <ScalarProperty Name="TreatmentTypeDefaultName" ColumnName="TreatmentTypeDefaultName" />
           <ScalarProperty Name="ImportIsFlattened" ColumnName="ImportIsFlattened" />
-          <ScalarProperty Name="RequireCompletionDate" ColumnName="RequireCompletionDate" />
           <ScalarProperty Name="AdjustProjectTypeBasedOnTreatmentTypes" ColumnName="AdjustProjectTypeBasedOnTreatmentTypes" />
           <ScalarProperty Name="ProjectStageDefaultID" ColumnName="ProjectStageDefaultID" />
           <ScalarProperty Name="DataDeriveProjectStage" ColumnName="DataDeriveProjectStage" />
@@ -1116,6 +1115,7 @@
           <ScalarProperty Name="ProgramCreatePersonID" ColumnName="ProgramCreatePersonID" />
           <ScalarProperty Name="ProgramLastUpdatedDate" ColumnName="ProgramLastUpdatedDate" />
           <ScalarProperty Name="ProgramLastUpdatedByPersonID" ColumnName="ProgramLastUpdatedByPersonID" />
+          <ScalarProperty Name="IsDefaultProgramForImportOnly" ColumnName="IsDefaultProgramForImportOnly" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1167,6 +1167,7 @@
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

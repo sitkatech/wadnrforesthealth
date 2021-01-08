@@ -61,6 +61,7 @@ namespace ProjectFirma.Web.Models
 
         public int SaveChangesWithNoAuditing()
         {
+            ChangeTracker.DetectChanges();
             return base.SaveChanges();
         }
 
@@ -68,6 +69,8 @@ namespace ProjectFirma.Web.Models
 
         private int SaveChangesImpl(Person person, TransactionScope scope)
         {
+            // We have Configuration.AutoDetectChangesEnabled turned off by default instead of it being true out of the box
+            // We only need to detect changes when we know we are saving
             ChangeTracker.DetectChanges();
 
             var dbEntityEntries = ChangeTracker.Entries().ToList();

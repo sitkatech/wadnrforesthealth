@@ -41,7 +41,12 @@ namespace ProjectFirma.Web.Security
         }
 
         public PermissionCheckResult HasPermission(Person person, CustomPage contextModelObject)
-        {           
+        {
+            if (contextModelObject == null)
+            {
+                return PermissionCheckResult.MakeFailurePermissionCheckResult("custom page is null/invalid");
+            }
+
             var isVisible = contextModelObject.CustomPageDisplayType == CustomPageDisplayType.Public ||
                             (!person.IsAnonymousUser &&
                              contextModelObject.CustomPageDisplayType == CustomPageDisplayType.Protected);

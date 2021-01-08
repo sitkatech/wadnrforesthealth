@@ -83,6 +83,16 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.ValidationMessageFor(m => m.IsActive)
                 </div>
             </div>
+            
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.IsDefaultForBulkImportOnly)
+                </div>
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(m => m.IsDefaultForBulkImportOnly)
+                    @Html.ValidationMessageFor(m => m.IsDefaultForBulkImportOnly)
+                </div>
+            </div>
            
         </div>
     @Html.HiddenFor(m => m.ProgramID)
@@ -94,5 +104,30 @@ Source code is available upon request via <support@sitkatech.com>.
     jQuery(document).ready(function ()
     {
         HookupCheckIfFormIsDirty(undefined, ".submitProject");
+
+        function setName() {
+            var isChecked = jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").prop('checked');
+            if (isChecked) {
+                jQuery("#@Html.IdFor(x => x.ProgramName)").prop('disabled', true);
+                jQuery("#@Html.IdFor(x => x.ProgramName)").text('(default)');
+                jQuery("#@Html.IdFor(x => x.ProgramName)").val('(default)');
+                jQuery("#@Html.IdFor(x => x.ProgramShortName)").prop('disabled', true);
+                jQuery("#@Html.IdFor(x => x.ProgramShortName)").text('');
+                jQuery("#@Html.IdFor(x => x.ProgramShortName)").val('');
+            } else {
+                jQuery("#@Html.IdFor(x => x.ProgramName)").prop('disabled', false);
+                jQuery("#@Html.IdFor(x => x.ProgramName)").text('');
+                jQuery("#@Html.IdFor(x => x.ProgramName)").val('');
+                jQuery("#@Html.IdFor(x => x.ProgramShortName)").prop('disabled', false);
+                jQuery("#@Html.IdFor(x => x.ProgramShortName)").text('');
+                jQuery("#@Html.IdFor(x => x.ProgramShortName)").val('');
+            }
+        }
+
+        setName();
+
+        jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").change(function() {
+            setName();
+        });
     });
 </script>

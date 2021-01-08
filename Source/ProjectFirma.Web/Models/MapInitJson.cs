@@ -102,28 +102,28 @@ namespace ProjectFirma.Web.Models
         {
             return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Detail", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "orange", .2m,
-                LayerInitialVisibility.Hide);
+                LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_location_detailed.png");
         }
 
         public static LayerGeoJson GetAllProjectTreatments()
         {
             return new LayerGeoJson($"All Project Treatment Areas", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectTreatmentAreasWmsLayerName(), "orange", .2m,
-                LayerInitialVisibility.Hide);
+                LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_project_treatment.png");
         }
 
         public static LayerGeoJson GetWashingtonCountyLayer()
         {
             return new LayerGeoJson($"Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), "orange", .2m,
-                LayerInitialVisibility.Hide);
+                LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_county.png");
         }
 
         public static LayerGeoJson GetWashingtonLegislativeDistrictLayer()
         {
             return new LayerGeoJson($"Washington Legislative Districts", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetWashingtonLegislativeDistrictWmsLayerName(), "orange", .2m,
-                LayerInitialVisibility.Hide);
+                LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_legislative_district.png");
         }
 
         public static List<LayerGeoJson> GetProjectLocationSimpleMapLayer(IProject project)

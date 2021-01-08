@@ -203,27 +203,47 @@ namespace ProjectFirma.Web.Models
         }
 
         [DbFunction("DatabaseEntities", "fGetProjectDnrUploadRegion")]
-        public virtual IQueryable<fGetProjectDnrUploadRegion_Result> GetfGetProjectDnrUploadRegions(int? piGisUploadAttemptIDParameter)
+        public virtual IQueryable<fGetProjectDnrUploadRegion_Result> GetfGetProjectDnrUploadRegions(int? piGisUploadAttemptIDParameter, int? piGisMetadataAttributeIDParameter, int? programIDParameter)
         {
             
             var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
             {
                 Value = piGisUploadAttemptIDParameter
             };
+
+            var piGisMetadataAttributeID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisMetadataAttributeID", typeof(int?))
+            {
+                Value = piGisMetadataAttributeIDParameter
+            };
+
+            var programID = new System.Data.Entity.Core.Objects.ObjectParameter("programID", typeof(int?))
+            {
+                Value = programIDParameter
+            };
             return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
-                  .CreateQuery<fGetProjectDnrUploadRegion_Result>("DatabaseEntities.fGetProjectDnrUploadRegion(@piGisUploadAttemptID)",piGisUploadAttemptID);
+                  .CreateQuery<fGetProjectDnrUploadRegion_Result>("DatabaseEntities.fGetProjectDnrUploadRegion(@piGisUploadAttemptID, @piGisMetadataAttributeID, @programID)",piGisUploadAttemptID, piGisMetadataAttributeID, programID);
         }
 
         [DbFunction("DatabaseEntities", "fGetProjectPriorityLandscape")]
-        public virtual IQueryable<fGetProjectPriorityLandscape_Result> GetfGetProjectPriorityLandscapes(int? piGisUploadAttemptIDParameter)
+        public virtual IQueryable<fGetProjectPriorityLandscape_Result> GetfGetProjectPriorityLandscapes(int? piGisUploadAttemptIDParameter, int? piGisMetadataAttributeIDParameter, int? programIDParameter)
         {
             
             var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
             {
                 Value = piGisUploadAttemptIDParameter
             };
+
+            var piGisMetadataAttributeID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisMetadataAttributeID", typeof(int?))
+            {
+                Value = piGisMetadataAttributeIDParameter
+            };
+
+            var programID = new System.Data.Entity.Core.Objects.ObjectParameter("programID", typeof(int?))
+            {
+                Value = programIDParameter
+            };
             return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
-                  .CreateQuery<fGetProjectPriorityLandscape_Result>("DatabaseEntities.fGetProjectPriorityLandscape(@piGisUploadAttemptID)",piGisUploadAttemptID);
+                  .CreateQuery<fGetProjectPriorityLandscape_Result>("DatabaseEntities.fGetProjectPriorityLandscape(@piGisUploadAttemptID, @piGisMetadataAttributeID, @programID)",piGisUploadAttemptID, piGisMetadataAttributeID, programID);
         }
 
         [DbFunction("DatabaseEntities", "fnSplitString")]

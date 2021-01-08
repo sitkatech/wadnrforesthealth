@@ -79,17 +79,17 @@ namespace ProjectFirma.Web.Views.Project
             return new HtmlString(string.Empty);
         }
 
-
         private static HtmlString Program(Models.Project project)
         {
-            if (project.CreateGisUploadAttempt?.GisUploadSourceOrganization?.Program != null)
+            if (project.Program != null && !project.Program.IsDefaultProgramForImportOnly)
             {
                 return UrlTemplate.MakeHrefString(
-                    project.CreateGisUploadAttempt.GisUploadSourceOrganization.Program.GetDetailUrl(),
-                    project.CreateGisUploadAttempt?.GisUploadSourceOrganization?.Program.DisplayName);
+                    project.Program.GetDetailUrl(),
+                    project.Program.DisplayName);
             }
             return new HtmlString(string.Empty);
         }
+
 
         private decimal TotalTreatedAcres(Models.Project project,
             Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)

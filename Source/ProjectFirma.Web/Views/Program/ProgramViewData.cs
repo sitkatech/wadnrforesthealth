@@ -1,4 +1,6 @@
-﻿using ProjectFirma.Web.Common;
+﻿using System.Linq;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
@@ -8,6 +10,7 @@ namespace ProjectFirma.Web.Views.Program
     public abstract class ProgramViewData : FirmaViewData
     {
         public Models.Program Program { get; }
+        public Models.GisUploadSourceOrganization GisUploadSourceOrganization { get; }
         public string EditProgramUrl { get; set; }
         public bool UserHasEditProgramPermissions { get; set; }
 
@@ -24,6 +27,141 @@ namespace ProjectFirma.Web.Views.Program
             UserHasEditProgramPermissions = new ProgramEditFeature().HasPermissionByPerson(currentPerson);
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
+            GisUploadSourceOrganization = program.GisUploadSourceOrganizations.FirstOrDefault();
+        }
+
+        public string ProjectTypeDefaultName()
+        {
+            return GisUploadSourceOrganization?.ProjectTypeDefaultName;
+        }
+
+        public string TreatmentTypeDefaultName()
+        {
+            return GisUploadSourceOrganization?.TreatmentTypeDefaultName;
+        }
+
+        public string ImportIsFlattenedString()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportIsFlattened.ToYesNo(null);
+            }
+            return null;
+        }
+
+        public bool ImportIsFlattened()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportIsFlattened ?? false;
+            }
+            return false;
+        }
+
+        public string AdjustProjectTypeBasedOnTreatmentTypes()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.AdjustProjectTypeBasedOnTreatmentTypes.ToYesNo();
+            }
+            return null;
+        }
+
+        public string DataDeriveProjectStage()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.DataDeriveProjectStage.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ImportAsDetailedLocationInsteadOfTreatments()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ApplyCompletedDateToProject()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ApplyCompletedDateToProject.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ApplyStartDateToProject()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ApplyStartDateToProject.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ImportAsDetailedLocationInAdditionToTreatments()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments.ToYesNo();
+            }
+            return null;
+        }
+
+
+        public string ProjectDescriptionDefaultText()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ProjectDescriptionDefaultText;
+            }
+            return null;
+        }
+
+        public string ProjectStageDefault()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                
+                var projectStageDefaultID =  GisUploadSourceOrganization.ProjectStageDefaultID;
+                var projectStageDisplayName = ProjectStage.AllLookupDictionary.ContainsKey(projectStageDefaultID)
+                    ? ProjectStage.AllLookupDictionary[projectStageDefaultID].ProjectStageDisplayName
+                    : null;
+                return projectStageDisplayName;
+            }
+            return null;
+        }
+
+        public string DefaultLeadImplementerOrganization()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+
+                var defaultLeadImplementerOrganizationID = GisUploadSourceOrganization.DefaultLeadImplementerOrganizationID;
+                var organization =
+                    HttpRequestStorage.DatabaseEntities.Organizations.SingleOrDefault(x =>
+                        x.OrganizationID == defaultLeadImplementerOrganizationID);
+                return organization != null ? organization.DisplayName : null;
+            }
+            return null;
+        }
+
+        public string RelationshipTypeForDefaultOrganization()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+
+                var relationshipTypeForDefaultOrganizationID = GisUploadSourceOrganization.RelationshipTypeForDefaultOrganizationID;
+                var relationshipType =
+                    HttpRequestStorage.DatabaseEntities.RelationshipTypes.SingleOrDefault(x =>
+                        x.RelationshipTypeID == relationshipTypeForDefaultOrganizationID);
+                return relationshipType != null ? relationshipType.RelationshipTypeName : null;
+            }
+            return null;
         }
     }
 }

@@ -803,6 +803,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ReviewedByPerson" EntitySet="Person" />
       <End Role="ProjectsWhereYouAreTheReviewedByPerson" EntitySet="Project" />
     </AssociationSet>
+    <AssociationSet Name="FK_Project_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_Project_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="Projects" EntitySet="Project" />
+    </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="Projects" EntitySet="Project" />
@@ -1482,7 +1486,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectTypeDefaultName" Type="varchar" MaxLength="100" />
     <Property Name="TreatmentTypeDefaultName" Type="varchar" MaxLength="100" />
     <Property Name="ImportIsFlattened" Type="bit" />
-    <Property Name="RequireCompletionDate" Type="bit" Nullable="false" />
     <Property Name="AdjustProjectTypeBasedOnTreatmentTypes" Type="bit" Nullable="false" />
     <Property Name="ProjectStageDefaultID" Type="int" Nullable="false" />
     <Property Name="DataDeriveProjectStage" Type="bit" Nullable="false" />
@@ -2193,14 +2196,15 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="ProgramName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="ProgramShortName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ProgramName" Type="varchar" MaxLength="200" />
+    <Property Name="ProgramShortName" Type="varchar" MaxLength="200" />
     <Property Name="ProgramPrimaryContactPersonID" Type="int" />
     <Property Name="ProgramIsActive" Type="bit" Nullable="false" />
     <Property Name="ProgramCreateDate" Type="datetime" Nullable="false" />
     <Property Name="ProgramCreatePersonID" Type="int" Nullable="false" />
     <Property Name="ProgramLastUpdatedDate" Type="datetime" />
     <Property Name="ProgramLastUpdatedByPersonID" Type="int" />
+    <Property Name="IsDefaultProgramForImportOnly" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -2250,6 +2254,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
+    <Property Name="ProgramID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -4872,6 +4877,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Project_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
+    <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Project_ProjectType_ProjectTypeID">
     <End Role="ProjectType" Type="ProjectFirma.Web.Models.Store.ProjectType" Multiplicity="1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
@@ -5960,6 +5977,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="fGetProjectDnrUploadRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <Parameter Name="piGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="programID" Type="int" Mode="In" />
     <ReturnType>
       <CollectionType>
         <RowType>
@@ -5972,6 +5991,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="fGetProjectPriorityLandscape" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <Parameter Name="piGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="programID" Type="int" Mode="In" />
     <ReturnType>
       <CollectionType>
         <RowType>
