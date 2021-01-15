@@ -453,7 +453,14 @@ namespace ProjectFirma.Web.Controllers
                     x.CreateGisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).Include(x => x.Treatments).ToList();
                 foreach (var project in projects)
                 {
-                    var treatments = project.Treatments;
+                    var treatments = project.Treatments.ToList();
+
+                    if (gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
+                        gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value)
+                    {
+                        treatments = treatments.Where(x => x.TreatmentTreatedAcres > 0).ToList();
+                    }
+
                     var distinctTreatmentTypes = treatments.Select(x => x.TreatmentTypeID).Distinct().ToList();
                     if (distinctTreatmentTypes.Count == 1)
                     {
