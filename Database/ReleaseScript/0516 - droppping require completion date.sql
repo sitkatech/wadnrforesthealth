@@ -1,1 +1,0 @@
-alter table dbo.GisUploadSourceOrganization DROP COLUMN RequireCompletionDate
