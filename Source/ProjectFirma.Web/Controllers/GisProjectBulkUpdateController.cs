@@ -840,6 +840,9 @@ namespace ProjectFirma.Web.Controllers
             
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
+            gisUploadAttempt.ImportedToGeoJson = true;
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
             SaveGisUploadToNormalizedFieldsUsingGeoJson(gisUploadAttempt, featureCollection);
             
 
@@ -893,6 +896,8 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.GisFeatures.AddRange(gisFeatures);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+            gisUploadAttempt.FeaturesSaved = true;
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel()
                 .SelectMany(y => y.Properties.Where(z => !string.Equals(z.Key, "GisFeature"))
@@ -903,6 +908,8 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.AddRange(
                 listOfGisFeatureMetadataAttributesToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+            gisUploadAttempt.AttributesSaved = true;
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
 
@@ -927,6 +934,9 @@ namespace ProjectFirma.Web.Controllers
                 }
             }
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+            gisUploadAttempt.AreaCalculationComplete = true;
+            gisUploadAttempt.FileUploadSuccessful = true;
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 
         }
