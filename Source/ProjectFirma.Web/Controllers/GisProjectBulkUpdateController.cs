@@ -285,7 +285,7 @@ namespace ProjectFirma.Web.Controllers
                     var project = existingProjectsAfterSaveWithProjectLocations.Single(x =>
                         string.Equals(x.ProjectGisIdentifier,
                             distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
-                    project.ProjectLocations.Where(x => x.ProjectLocationType == ProjectLocationType.ProjectArea)
+                    project.ProjectLocations.Where(x => x.ProjectLocationType == ProjectLocationType.ProjectArea).ToList()
                         .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
                     var gisFeaturesIdListWithProjectIdentifier =
                         projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
@@ -293,11 +293,13 @@ namespace ProjectFirma.Web.Controllers
                                 StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
                     var gisFeatures = gisUploadAttempt.GisFeatures
                         .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
+                    var importedProjectAreaIndex = 1;
                     foreach (var gisFeature in gisFeatures)
                     {
                         var newProjectLocation = new ProjectLocation(project, gisFeature.GisFeatureGeometry,
-                            ProjectLocationType.ProjectArea, "Imported Project Area");
+                            ProjectLocationType.ProjectArea, $"Imported Project Area {importedProjectAreaIndex}");
                         projectLocationList.Add(newProjectLocation);
+                        importedProjectAreaIndex++;
                     }
 
                     var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
@@ -356,6 +358,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static void UpdateProjectPriorityLandscapes(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
         {
+            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 180;
             var projectPriorityLandscapesCalculated = HttpRequestStorage.DatabaseEntities
                 .GetfGetProjectPriorityLandscapes(gisUploadAttempt.GisUploadAttemptID, gisMetadataAttributeIdentier, gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
             var projectPriorityLandscapes = projectPriorityLandscapesCalculated
@@ -636,7 +639,7 @@ namespace ProjectFirma.Web.Controllers
                 }
             }
 
-            var projectName = projectNames.SingleOrDefault();
+            var projectName = projectNames.Where(x => x!= "(PALS)EAST FORK HUMPTULIPS VEGETATION MANAGEMENT PROJECT").SingleOrDefault();
             if (string.IsNullOrEmpty(projectName))
             {
                 projectName = "Default Project Name";
@@ -837,6 +840,9 @@ namespace ProjectFirma.Web.Controllers
             
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
+            gisUploadAttempt.ImportedToGeoJson = true;
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
             SaveGisUploadToNormalizedFieldsUsingGeoJson(gisUploadAttempt, featureCollection);
             
 
@@ -889,6 +895,8 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.GisFeatures.AddRange(gisFeatures);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+            gisUploadAttempt.FeaturesSaved = true;
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel()
@@ -899,6 +907,8 @@ namespace ProjectFirma.Web.Controllers
                     ));
             HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.AddRange(
                 listOfGisFeatureMetadataAttributesToAdd);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+            gisUploadAttempt.AttributesSaved = true;
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
@@ -923,6 +933,9 @@ namespace ProjectFirma.Web.Controllers
                     gisFeature.CalculatedArea = (decimal)areaInAcres;
                 }
             }
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+            gisUploadAttempt.AreaCalculationComplete = true;
+            gisUploadAttempt.FileUploadSuccessful = true;
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
 

@@ -333,6 +333,11 @@
           <ScalarProperty Name="GisUploadAttemptCreatePersonID" ColumnName="GisUploadAttemptCreatePersonID" />
           <ScalarProperty Name="GisUploadAttemptCreateDate" ColumnName="GisUploadAttemptCreateDate" />
           <ScalarProperty Name="ImportTableName" ColumnName="ImportTableName" />
+          <ScalarProperty Name="FileUploadSuccessful" ColumnName="FileUploadSuccessful" />
+          <ScalarProperty Name="FeaturesSaved" ColumnName="FeaturesSaved" />
+          <ScalarProperty Name="AttributesSaved" ColumnName="AttributesSaved" />
+          <ScalarProperty Name="AreaCalculationComplete" ColumnName="AreaCalculationComplete" />
+          <ScalarProperty Name="ImportedToGeoJson" ColumnName="ImportedToGeoJson" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

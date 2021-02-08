@@ -65,6 +65,11 @@ namespace ProjectFirma.Web.Models
             return base.SaveChanges();
         }
 
+        public int SaveChangesWithNoAuditingInsertOnly()
+        {
+            return base.SaveChanges();
+        }
+
         // private so I didn't have to write the warning above twice.
 
         private int SaveChangesImpl(Person person, TransactionScope scope)
