@@ -430,8 +430,7 @@
 
     jQuery(document).ready(function() {
         //debugger;
-        var projectLocationsMapInitJson =
-            @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectLocationsMapInitJson).ToString(Formatting.None));
+        var projectLocationsMapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectLocationsMapInitJson).ToString(Formatting.None));
         if (!projectFirmaMap) {
             projectFirmaMap = new ProjectFirmaMaps.Map(projectLocationsMapInitJson);
         }
