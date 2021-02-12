@@ -338,7 +338,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static void UpdateProjectRegions(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt,int? gisMetadataAttributeIdentier)
         {
-            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 180;
+            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 500;
             var projectUplandDnrRegionsCalculated = HttpRequestStorage.DatabaseEntities
                 .GetfGetProjectDnrUploadRegions(gisUploadAttempt.GisUploadAttemptID, gisMetadataAttributeIdentier, gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
             var projectRegions = projectUplandDnrRegionsCalculated
@@ -360,7 +360,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static void UpdateProjectPriorityLandscapes(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
         {
-            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 180;
+            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 500;
             var projectPriorityLandscapesCalculated = HttpRequestStorage.DatabaseEntities
                 .GetfGetProjectPriorityLandscapes(gisUploadAttempt.GisUploadAttemptID, gisMetadataAttributeIdentier, gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
             var projectPriorityLandscapes = projectPriorityLandscapesCalculated
