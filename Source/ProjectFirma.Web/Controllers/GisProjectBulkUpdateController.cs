@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Spatial;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -9,6 +10,7 @@ using System.IO;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
@@ -799,6 +801,21 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<UploadGisFile, UploadGisFileViewData, UploadGisFileViewModel>(viewData, viewModel);
         }
 
+
+
+
+
+        /// <summary>
+        /// Dummy get signature so that it can find the post action
+        /// </summary>
+        [HttpGet]
+        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        public ActionResult CheckStatusOfGisUploadAttempt(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
+        {
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
+            return Json(new GisUploadAttemptJson(gisUploadAttempt), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
@@ -851,6 +868,26 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+        private DatabaseEntities AddToContext(DatabaseEntities context,
+            GisFeatureMetadataAttribute entity, int count, int commitCount, bool recreateContext)
+        {
+            context.Set<GisFeatureMetadataAttribute>().Add(entity);
+            var connectionString = context.Database.Connection.ConnectionString;
+
+            if (count % commitCount == 0)
+            {
+                context.SaveChangesWithNoAuditing();
+                if (recreateContext)
+                {
+                    context.Dispose();
+                    context = new DatabaseEntities(connectionString);
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                }
+            }
+
+            return context;
+        }
+
         private void SaveGisUploadToNormalizedFieldsUsingGeoJson(GisUploadAttempt gisUploadAttempt, FeatureCollection featureCollection)
         {
             var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
@@ -898,33 +935,84 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
             gisUploadAttempt.FeaturesSaved = true;
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            var listOfAllAttributesAboutToBeAdded = new List<GisFeatureMetadataAttribute>();
 
-            var listOfGisFeatureMetadataAttributesToAdd = features.AsParallel()
-                .SelectMany(y => y.Properties.Where(z => !string.Equals(z.Key, "GisFeature"))
-                    .AsParallel().Select(x => new GisFeatureMetadataAttribute(((GisFeature) y.Properties["GisFeature"]).GisFeatureID
-                        , attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID) 
-                        { GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null }
-                    ));
-            HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.AddRange(
-                listOfGisFeatureMetadataAttributesToAdd);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
-            gisUploadAttempt.AttributesSaved = true;
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+
+            for (int i = 0; i < features.Count; i++)
+            {
+                var feature = features[i];
+                var gisFeature = ((GisFeature)feature.Properties["GisFeature"]);
+                var gisFeatureID = gisFeature.GisFeatureID;
+                var featureProperties = feature.Properties.Where(z => !string.Equals(z.Key, "GisFeature"));
+                var gisFeatureMetadataAttributes = featureProperties.Select(x =>
+                    new GisFeatureMetadataAttribute(gisFeatureID,
+                        attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID)
+                    {
+                        GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null
+                    }).ToList();
+                listOfAllAttributesAboutToBeAdded.AddRange(gisFeatureMetadataAttributes);
+            }
+
 
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
 
-            var sqlQuery =
-                $"select * from dbo.GisFeature where GisUploadAttemptID = {gisUploadAttempt.GisUploadAttemptID}";
+            var concattedSqlStatement = string.Empty;
+            for (int index = 0; index < listOfAllAttributesAboutToBeAdded.Count; index++)
+            {
+                var attributeToAdd = listOfAllAttributesAboutToBeAdded[index];
+                var sqlStatement = attributeToAdd.MakeSqlInsertStatement();
+
+                concattedSqlStatement = $"{concattedSqlStatement} \r\n {sqlStatement}";
+
+                if (index % 1000 == 0)
+                {
+                    using (var command = new SqlCommand(concattedSqlStatement))
+                    {
+                        var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                        using (var conn = sqlConnection)
+                        {
+                            command.Connection = conn;
+                            ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+
+                        }
+                    }
+
+                    concattedSqlStatement = string.Empty;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(concattedSqlStatement))
+            {
+                using (var command = new SqlCommand(concattedSqlStatement))
+                {
+                    var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                    using (var conn = sqlConnection)
+                    {
+                        command.Connection = conn;
+                        ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+
+                    }
+                }
+            }
+
+            gisUploadAttempt.AttributesSaved = true;
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+
+            var sqlQuery = $"select * from dbo.GisFeature where GisUploadAttemptID = {gisUploadAttempt.GisUploadAttemptID}";
 
             var reprojectedFeatureCollection = ImportSqlToGeoJson(sqlQuery, 2927, sqlDatabaseConnectionString);
             var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
                 .Where(x => x.GisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).ToList();
-            foreach (var gisFeature in gisFeatureList)
-            {
-                
+            var dictionaryReprojectedFeatures =
+                reprojectedFeatureCollection.Features.ToDictionary(x =>
+                    int.Parse(x.Properties["GisImportFeatureKey"].ToString()));
 
-                var geojsonFeature = reprojectedFeatureCollection.Features.Single(x =>
-                   int.Parse(x.Properties["GisImportFeatureKey"].ToString())  == gisFeature.GisImportFeatureKey);
+            for (var gisFeatureIndex = 0; gisFeatureIndex < gisFeatureList.Count; gisFeatureIndex++)
+            {
+                var gisFeature = gisFeatureList[gisFeatureIndex];
+                var geojsonFeature = dictionaryReprojectedFeatures[gisFeature.GisImportFeatureKey];
                 var reprojectedGeom = geojsonFeature.ToSqlGeometry();
                 if (reprojectedGeom.STIsValid())
                 {
@@ -933,7 +1021,8 @@ namespace ProjectFirma.Web.Controllers
                     gisFeature.CalculatedArea = (decimal)areaInAcres;
                 }
             }
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditingInsertOnly();
+
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
             gisUploadAttempt.AreaCalculationComplete = true;
             gisUploadAttempt.FileUploadSuccessful = true;
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();

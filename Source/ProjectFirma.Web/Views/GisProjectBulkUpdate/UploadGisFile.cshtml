@@ -18,6 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Mvc
@@ -87,6 +88,27 @@ Source code is available upon request via <support@sitkatech.com>.
             uploadGisFile(false);
         }
 
+
+        function checkStatus() {
+            SitkaAjax.ajax({
+                type: "GET",
+                url: @Html.Raw(ViewDataTyped.CheckInfoUrl.ToJS()),
+                dataType: "json",
+                async: false
+            }, function(newTag) {
+                console.log(newTag);
+                timeoutCheckStatus();
+            }, function()
+            {
+                alert("There was an error adding the tag");
+            });
+        }
+
+
+        function timeoutCheckStatus() {
+            setTimeout(checkStatus, 10000);
+        }
+
     function uploadGisFile(refresh) {
         var form = jQuery("#uploadGisForm");
         if (form.valid()) {
@@ -95,8 +117,8 @@ Source code is available upon request via <support@sitkatech.com>.
             form.ajaxForm({
                 url: this.action,
                 type: this.method,
-                beforeSubmit: function ()
-                {
+                beforeSubmit: function () {
+                    timeoutCheckStatus();
                     gisUploadResults.html("<div><div class='progress'><div class='progress-bar progress-bar-info progress-bar-striped active' role='progressbar' style='width:100%'>Uploading</div></div></div>");
                 },
                 success: function (result, textStatus, jqXhr) {

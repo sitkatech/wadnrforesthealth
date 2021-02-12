@@ -39,4 +39,19 @@ namespace ProjectFirma.Web.Models
         {
         }
     }
+
+
+    public class GisUploadAttemptJson
+    {
+        public bool FeaturesDone;
+        public bool AttributesDone;
+        public bool GeoJsonDone;
+
+        public GisUploadAttemptJson(GisUploadAttempt gisUploadAttempt)
+        {
+            FeaturesDone = gisUploadAttempt.FeaturesSaved ?? false;
+            AttributesDone = gisUploadAttempt.AttributesSaved ?? false;
+            GeoJsonDone = gisUploadAttempt.ImportedToGeoJson ?? false;
+        }
+    }
 }
