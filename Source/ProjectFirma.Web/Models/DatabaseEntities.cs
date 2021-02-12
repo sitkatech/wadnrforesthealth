@@ -35,6 +35,18 @@ namespace ProjectFirma.Web.Models
 {
     public partial class DatabaseEntities : SitkaController.ISitkaDbContext
     {
+
+        public Database GetDatabase()
+        {
+            return this.GetDbContext().Database;
+        }
+
+        public DatabaseEntities(string connectionString)
+            : base("name=DatabaseEntities")
+        {
+            this.Database.Connection.ConnectionString = connectionString;
+        }
+
         public int SaveChanges(IPrincipal userPrincipal)
         {
             var person = HttpRequestStorage.Person;

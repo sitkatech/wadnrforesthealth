@@ -25,12 +25,14 @@ using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {
     public class UploadGisFileViewData : GisImportViewData
     {
         public string UploadUrl { get; set; }
+        public string CheckInfoUrl { get; set; }
 
 		public UploadGisFileViewData(Person currentPerson,
             GisUploadAttempt gisUploadAttempt
@@ -39,6 +41,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             : base(currentPerson, gisUploadAttempt, GisUploadAttemptWorkflowSection.UploadGisFile.GisUploadAttemptWorkflowSectionDisplayName, gisImportSectionStatus)
         {
             UploadUrl = uploadUrl;
+            CheckInfoUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(c => c.CheckStatusOfGisUploadAttempt(gisUploadAttempt.GisUploadAttemptID));
         }
 
 
