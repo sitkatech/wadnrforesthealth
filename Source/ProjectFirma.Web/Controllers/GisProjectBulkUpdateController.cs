@@ -588,8 +588,12 @@ namespace ProjectFirma.Web.Controllers
                 project.PlannedDate = startDate;
             }
 
-            
-            project.ProjectDescription = projectDescription;
+            var existingProjectDescription = project.ProjectDescription;
+            if (string.IsNullOrEmpty(existingProjectDescription))
+            {
+                project.ProjectDescription = projectDescription;
+            }
+
             if (projectType != null)
             {
                 project.ProjectType = projectType;
