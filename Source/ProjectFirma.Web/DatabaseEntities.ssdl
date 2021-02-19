@@ -1467,6 +1467,11 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="GisUploadAttemptCreatePersonID" Type="int" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="datetime" Nullable="false" />
     <Property Name="ImportTableName" Type="varchar" MaxLength="100" />
+    <Property Name="FileUploadSuccessful" Type="bit" />
+    <Property Name="FeaturesSaved" Type="bit" />
+    <Property Name="AttributesSaved" Type="bit" />
+    <Property Name="AreaCalculationComplete" Type="bit" />
+    <Property Name="ImportedToGeoJson" Type="bit" />
   </EntityType>
   <EntityType Name="GisUploadAttemptGisMetadataAttribute">
     <Key>
@@ -1497,6 +1502,8 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ApplyStartDateToProject" Type="bit" Nullable="false" />
     <Property Name="ProgramID" Type="int" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInAdditionToTreatments" Type="bit" Nullable="false" />
+    <Property Name="ApplyStartDateToTreatments" Type="bit" Nullable="false" />
+    <Property Name="ApplyEndDateToTreatments" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>

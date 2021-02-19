@@ -1550,6 +1550,11 @@
     <Property Name="GisUploadAttemptCreatePersonID" Type="Int32" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="DateTime" Nullable="false" />
     <Property Name="ImportTableName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="FileUploadSuccessful" Type="Boolean" />
+    <Property Name="FeaturesSaved" Type="Boolean" />
+    <Property Name="AttributesSaved" Type="Boolean" />
+    <Property Name="AreaCalculationComplete" Type="Boolean" />
+    <Property Name="ImportedToGeoJson" Type="Boolean" />
     <NavigationProperty Name="GisFeatures" Relationship="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttempt" ToRole="GisFeatures" />
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadAttempts" ToRole="GisUploadSourceOrganization" />
     <NavigationProperty Name="GisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" ToRole="GisUploadAttemptCreatePerson" />
@@ -1590,6 +1595,8 @@
     <Property Name="ApplyStartDateToProject" Type="Boolean" Nullable="false" />
     <Property Name="ProgramID" Type="Int32" Nullable="false" />
     <Property Name="ImportAsDetailedLocationInAdditionToTreatments" Type="Boolean" Nullable="false" />
+    <Property Name="ApplyStartDateToTreatments" Type="Boolean" Nullable="false" />
+    <Property Name="ApplyEndDateToTreatments" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />

@@ -19,6 +19,8 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[ApplyStartDateToProject] [bit] NOT NULL,
 	[ProgramID] [int] NOT NULL,
 	[ImportAsDetailedLocationInAdditionToTreatments] [bit] NOT NULL,
+	[ApplyStartDateToTreatments] [bit] NOT NULL,
+	[ApplyEndDateToTreatments] [bit] NOT NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC

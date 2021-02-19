@@ -102,6 +102,23 @@ namespace ProjectFirma.Web.Views.Program
             }
             return null;
         }
+        public string ApplyStartDateToTreatments()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ApplyStartDateToTreatments.ToYesNo();
+            }
+            return null;
+        }
+
+        public string ApplyEndDateToTreatments()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GisUploadSourceOrganization.ApplyEndDateToTreatments.ToYesNo();
+            }
+            return null;
+        }
 
         public string ImportAsDetailedLocationInAdditionToTreatments()
         {

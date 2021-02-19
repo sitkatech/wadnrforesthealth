@@ -36,13 +36,18 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadAttempt(int gisUploadAttemptID, int gisUploadSourceOrganizationID, int gisUploadAttemptCreatePersonID, DateTime gisUploadAttemptCreateDate, string importTableName) : this()
+        public GisUploadAttempt(int gisUploadAttemptID, int gisUploadSourceOrganizationID, int gisUploadAttemptCreatePersonID, DateTime gisUploadAttemptCreateDate, string importTableName, bool? fileUploadSuccessful, bool? featuresSaved, bool? attributesSaved, bool? areaCalculationComplete, bool? importedToGeoJson) : this()
         {
             this.GisUploadAttemptID = gisUploadAttemptID;
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadAttemptCreatePersonID = gisUploadAttemptCreatePersonID;
             this.GisUploadAttemptCreateDate = gisUploadAttemptCreateDate;
             this.ImportTableName = importTableName;
+            this.FileUploadSuccessful = fileUploadSuccessful;
+            this.FeaturesSaved = featuresSaved;
+            this.AttributesSaved = attributesSaved;
+            this.AreaCalculationComplete = areaCalculationComplete;
+            this.ImportedToGeoJson = importedToGeoJson;
         }
 
         /// <summary>
@@ -195,6 +200,11 @@ namespace ProjectFirma.Web.Models
         public int GisUploadAttemptCreatePersonID { get; set; }
         public DateTime GisUploadAttemptCreateDate { get; set; }
         public string ImportTableName { get; set; }
+        public bool? FileUploadSuccessful { get; set; }
+        public bool? FeaturesSaved { get; set; }
+        public bool? AttributesSaved { get; set; }
+        public bool? AreaCalculationComplete { get; set; }
+        public bool? ImportedToGeoJson { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadAttemptID; } set { GisUploadAttemptID = value; } }
 

@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             ObjectNamePlural = $"GIS Records";
             SaveFiltersInCookie = false;
             var gisFeatureIDs = gisFeatures.Select(x => x.GisFeatureID);
-            var allAttributesOnGisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID));
+            var allAttributesOnGisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x => gisFeatureIDs.Contains(x.GisFeatureID)).ToList();
             var dictionary = allAttributesOnGisUploadAttempt.GroupBy(x => x.GisMetadataAttributeID).ToDictionary(x => x.Key, y => y.ToList());
             var columnsOrdered = columns
                 .Where(x =>! string.Equals(x.GisMetadataAttribute.GisMetadataAttributeName, "Shape", StringComparison.InvariantCultureIgnoreCase))

@@ -8,6 +8,11 @@ CREATE TABLE [dbo].[GisUploadAttempt](
 	[GisUploadAttemptCreatePersonID] [int] NOT NULL,
 	[GisUploadAttemptCreateDate] [datetime] NOT NULL,
 	[ImportTableName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[FileUploadSuccessful] [bit] NULL,
+	[FeaturesSaved] [bit] NULL,
+	[AttributesSaved] [bit] NULL,
+	[AreaCalculationComplete] [bit] NULL,
+	[ImportedToGeoJson] [bit] NULL,
  CONSTRAINT [PK_GisUploadAttempt_GisUploadAttemptID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadAttemptID] ASC
