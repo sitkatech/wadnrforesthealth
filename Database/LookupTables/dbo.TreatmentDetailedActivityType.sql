@@ -21,4 +21,5 @@ values
 (16, 'FuelBreak', 'Fuel Break'),
 (17, 'Planting', 'Planting'),
 (18, 'BrushControl', 'Brush Control'),
-(19, 'Mowing', 'Mowing')
+(19, 'Mowing', 'Mowing'),
+(20, 'Regen', 'Regen')
