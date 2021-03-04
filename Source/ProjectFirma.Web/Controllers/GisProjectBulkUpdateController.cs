@@ -158,6 +158,13 @@ namespace ProjectFirma.Web.Controllers
             var projectIdentifierMetadataAttribute = GenerateSingleMetadataAttribute(gisUploadAttempt, viewModel.ProjectIdentifierMetadataAttributeID);
             var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID).ToList();
 
+            var gisExcludeIncludeList = gisUploadAttempt.GisUploadSourceOrganization.GisExcludeIncludeColumns.ToList();
+            if (gisExcludeIncludeList.Any())
+            {
+                gisFeatureIDs = FilterListBasedOnIncludeExcludeCriteria(gisExcludeIncludeList, gisFeatureIDs);
+            }
+            
+
             var completionDateDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.CompletionDateMetadataAttributeID);
             var projectNameDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectNameMetadataAttributeID);
             var privateLandOwnerDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.PrivateLandownerMetadataAttributeID);
@@ -229,6 +236,47 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay($"Successfully imported {projectList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
+        }
+
+        private static List<int> FilterListBasedOnIncludeExcludeCriteria(List<GisExcludeIncludeColumn> gisExcludeIncludeList, List<int> gisFeatureIDs)
+        {
+            foreach (var gisExcludeIncludeColumn in gisExcludeIncludeList)
+            {
+                var gisMetadataAttribute = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.SingleOrDefault(
+                    x => string.Equals(x.GisMetadataAttributeName,
+                        gisExcludeIncludeColumn.GisDefaultMappingColumnName));
+                if (gisMetadataAttribute != null)
+                {
+                    var includeExcludeValues = gisExcludeIncludeColumn.GisExcludeIncludeColumnValues.ToList();
+                    var excludeIncludeList = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes
+                        .Where(x => gisFeatureIDs.Contains(x.GisFeatureID) &&
+                                    x.GisMetadataAttributeID == gisMetadataAttribute.GisMetadataAttributeID).ToList();
+                    var filteredIncludeExcludeList = new List<GisFeatureMetadataAttribute>();
+                    foreach (var gisExcludeIncludeColumnValue in includeExcludeValues)
+                    {
+                        var listToAdd = excludeIncludeList.Where(x =>
+                            string.Equals(x.GisFeatureMetadataAttributeValue,
+                                gisExcludeIncludeColumnValue.GisExcludeIncludeColumnValueForFiltering)).ToList();
+                        filteredIncludeExcludeList.AddRange(listToAdd);
+                    }
+
+                    if (gisExcludeIncludeColumn.IsWhitelist)
+                    {
+                        var listOfGisFeaturesToKeep = filteredIncludeExcludeList.Select(x => x.GisFeatureID).ToList();
+                        var distinctListOfFeaturesToKeep = listOfGisFeaturesToKeep.Distinct().ToList();
+                        gisFeatureIDs = distinctListOfFeaturesToKeep;
+                    }
+
+                    if (!gisExcludeIncludeColumn.IsWhitelist)
+                    {
+                        var listOfGisFeaturesToNix = filteredIncludeExcludeList.Select(x => x.GisFeatureID).ToList();
+                        var distinctListOfFeaturesToNix = listOfGisFeaturesToNix.Distinct().ToList();
+                        gisFeatureIDs = gisFeatureIDs.Where(x => !distinctListOfFeaturesToNix.Contains(x)).ToList();
+                    }
+                }
+            }
+
+            return gisFeatureIDs;
         }
 
         private static void MakeProjectOrganizationsAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers)
