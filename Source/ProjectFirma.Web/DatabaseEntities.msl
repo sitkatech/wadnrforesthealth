@@ -294,6 +294,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisExcludeIncludeColumn">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisExcludeIncludeColumn">
+        <MappingFragment StoreEntitySet="GisExcludeIncludeColumn">
+          <ScalarProperty Name="GisExcludeIncludeColumnID" ColumnName="GisExcludeIncludeColumnID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="GisDefaultMappingColumnName" ColumnName="GisDefaultMappingColumnName" />
+          <ScalarProperty Name="IsWhitelist" ColumnName="IsWhitelist" />
+          <ScalarProperty Name="IsBlacklist" ColumnName="IsBlacklist" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GisExcludeIncludeColumnValue">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisExcludeIncludeColumnValue">
+        <MappingFragment StoreEntitySet="GisExcludeIncludeColumnValue">
+          <ScalarProperty Name="GisExcludeIncludeColumnValueID" ColumnName="GisExcludeIncludeColumnValueID" />
+          <ScalarProperty Name="GisExcludeIncludeColumnID" ColumnName="GisExcludeIncludeColumnID" />
+          <ScalarProperty Name="GisExcludeIncludeColumnValueForFiltering" ColumnName="GisExcludeIncludeColumnValueForFiltering" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisFeature">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisFeature">
         <MappingFragment StoreEntitySet="GisFeature">

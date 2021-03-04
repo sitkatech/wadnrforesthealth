@@ -28,6 +28,8 @@
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.Store.GisDefaultMapping" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisExcludeIncludeColumnValue" EntityType="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumnValue" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.Store.GisFeature" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisFeatureMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisMetadataAttribute" store:Type="Tables" Schema="dbo" />
@@ -290,6 +292,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisDefaultMappings" EntitySet="GisDefaultMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisExcludeIncludeColumns" EntitySet="GisExcludeIncludeColumn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID" Association="ProjectFirma.Web.Models.Store.FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID">
+      <End Role="GisExcludeIncludeColumn" EntitySet="GisExcludeIncludeColumn" />
+      <End Role="GisExcludeIncludeColumnValues" EntitySet="GisExcludeIncludeColumnValue" />
     </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
@@ -1429,6 +1439,24 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
     <Property Name="FieldDefinitionID" Type="int" Nullable="false" />
     <Property Name="GisDefaultMappingColumnName" Type="varchar" Nullable="false" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="GisExcludeIncludeColumn">
+    <Key>
+      <PropertyRef Name="GisExcludeIncludeColumnID" />
+    </Key>
+    <Property Name="GisExcludeIncludeColumnID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
+    <Property Name="GisDefaultMappingColumnName" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="IsWhitelist" Type="bit" Nullable="false" />
+    <Property Name="IsBlacklist" Type="bit" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="GisExcludeIncludeColumnValue">
+    <Key>
+      <PropertyRef Name="GisExcludeIncludeColumnValueID" />
+    </Key>
+    <Property Name="GisExcludeIncludeColumnValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisExcludeIncludeColumnID" Type="int" Nullable="false" />
+    <Property Name="GisExcludeIncludeColumnValueForFiltering" Type="varchar" Nullable="false" MaxLength="200" />
   </EntityType>
   <EntityType Name="GisFeature">
     <Key>
@@ -3339,6 +3367,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GisDefaultMappings">
         <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisExcludeIncludeColumns" Type="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisExcludeIncludeColumns">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID">
+    <End Role="GisExcludeIncludeColumn" Type="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" Multiplicity="1" />
+    <End Role="GisExcludeIncludeColumnValues" Type="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumnValue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisExcludeIncludeColumn">
+        <PropertyRef Name="GisExcludeIncludeColumnID" />
+      </Principal>
+      <Dependent Role="GisExcludeIncludeColumnValues">
+        <PropertyRef Name="GisExcludeIncludeColumnID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
