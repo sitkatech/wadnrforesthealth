@@ -693,7 +693,8 @@ namespace ProjectFirma.Web.Controllers
                 }
             }
 
-            var projectName = projectNames.Where(x => x!= "(PALS)EAST FORK HUMPTULIPS VEGETATION MANAGEMENT PROJECT").SingleOrDefault();
+            //GUT SHOT from USFS Silvitculture is bad SMILEY WOOD I also bad
+            var projectName = projectNames.Where(x =>x!= "SMILEY WOOD I" && x!= "(PALS)EAST FORK HUMPTULIPS VEGETATION MANAGEMENT PROJECT" && x!="GUT SHOT").SingleOrDefault();
             if (string.IsNullOrEmpty(projectName))
             {
                 projectName = "Default Project Name";

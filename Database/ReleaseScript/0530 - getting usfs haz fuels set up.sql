@@ -22,4 +22,3 @@ where GisUploadSourceOrganizationID = 2
 go
 
 delete from dbo.GisDefaultMapping where GisDefaultMappingID = 9
-
