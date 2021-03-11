@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Models
         public static readonly TreatmentDetailedActivityTypeBrushControl BrushControl = TreatmentDetailedActivityTypeBrushControl.Instance;
         public static readonly TreatmentDetailedActivityTypeMowing Mowing = TreatmentDetailedActivityTypeMowing.Instance;
         public static readonly TreatmentDetailedActivityTypeRegen Regen = TreatmentDetailedActivityTypeRegen.Instance;
+        public static readonly TreatmentDetailedActivityTypePileBurn PileBurn = TreatmentDetailedActivityTypePileBurn.Instance;
 
         public static readonly List<TreatmentDetailedActivityType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentDetailedActivityType> AllLookupDictionary;
@@ -48,7 +49,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentDetailedActivityType()
         {
-            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile, FuelBreak, Planting, BrushControl, Mowing, Regen };
+            All = new List<TreatmentDetailedActivityType> { Chipping, Pruning, Thinning, Mastication, Grazing, LopAndScatter, BiomassRemoval, HandPile, BroadcastBurn, HandPileBurn, MachinePileBurn, Slash, Other, JackpotBurn, MachinePile, FuelBreak, Planting, BrushControl, Mowing, Regen, PileBurn };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentDetailedActivityType>(All.ToDictionary(x => x.TreatmentDetailedActivityTypeID));
         }
 
@@ -148,6 +149,8 @@ namespace ProjectFirma.Web.Models
                     return Mowing;
                 case TreatmentDetailedActivityTypeEnum.Other:
                     return Other;
+                case TreatmentDetailedActivityTypeEnum.PileBurn:
+                    return PileBurn;
                 case TreatmentDetailedActivityTypeEnum.Planting:
                     return Planting;
                 case TreatmentDetailedActivityTypeEnum.Pruning:
@@ -185,7 +188,8 @@ namespace ProjectFirma.Web.Models
         Planting = 17,
         BrushControl = 18,
         Mowing = 19,
-        Regen = 20
+        Regen = 20,
+        PileBurn = 21
     }
 
     public partial class TreatmentDetailedActivityTypeChipping : TreatmentDetailedActivityType
@@ -306,5 +310,11 @@ namespace ProjectFirma.Web.Models
     {
         private TreatmentDetailedActivityTypeRegen(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
         public static readonly TreatmentDetailedActivityTypeRegen Instance = new TreatmentDetailedActivityTypeRegen(20, @"Regen", @"Regen");
+    }
+
+    public partial class TreatmentDetailedActivityTypePileBurn : TreatmentDetailedActivityType
+    {
+        private TreatmentDetailedActivityTypePileBurn(int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeName, string treatmentDetailedActivityTypeDisplayName) : base(treatmentDetailedActivityTypeID, treatmentDetailedActivityTypeName, treatmentDetailedActivityTypeDisplayName) {}
+        public static readonly TreatmentDetailedActivityTypePileBurn Instance = new TreatmentDetailedActivityTypePileBurn(21, @"PileBurn", @"Pile Burn");
     }
 }
