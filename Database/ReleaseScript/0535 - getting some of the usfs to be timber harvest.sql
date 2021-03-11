@@ -1,5 +1,5 @@
  update dbo.Project 
- set ProgramID = (select ProgramID from dbo.Program p where p.ProgramName = 'USFS Hazardous Fuels')
+ set ProgramID = (select ProgramID from dbo.Program p where p.ProgramName = 'USFS Timber Harvest')
  where ProjectID in (12735
 ,12732
 ,12731
