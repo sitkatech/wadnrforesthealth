@@ -537,11 +537,13 @@
 
                                 @foreach (var crosswalk in ViewDataTyped.TreatmentTypeCrosswalks())
                                 {
-                                    <div class="col-xs-4 col-xs-offset-2">
-                                        @crosswalk.GisCrossWalkSourceValue =>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        @crosswalk.GisCrossWalkMappedValue
+                                    <div class="row">
+                                        <div class="col-xs-4 col-xs-offset-2">
+                                            @crosswalk.GisCrossWalkSourceValue =>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            @crosswalk.GisCrossWalkMappedValue
+                                        </div>
                                     </div>
                                 }
                             </div>
@@ -555,11 +557,13 @@
                             <div class="col-xs-9">
                                 @foreach (var crosswalk in ViewDataTyped.TreatmentDetailedActivityTypeCrosswalks())
                                 {
-                                    <div class="col-xs-4 col-xs-offset-2">
-                                        @crosswalk.GisCrossWalkSourceValue =>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        @crosswalk.GisCrossWalkMappedValue
+                                    <div class="row">
+                                        <div class="col-xs-4 col-xs-offset-2">
+                                            @crosswalk.GisCrossWalkSourceValue =>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            @crosswalk.GisCrossWalkMappedValue
+                                        </div>
                                     </div>
                                 }
                             </div>

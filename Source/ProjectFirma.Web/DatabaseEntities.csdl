@@ -28,6 +28,8 @@
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.GisCrossWalkDefault" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.GisDefaultMapping" />
+    <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.GisExcludeIncludeColumn" />
+    <EntitySet Name="GisExcludeIncludeColumnValue" EntityType="ProjectFirma.Web.Models.GisExcludeIncludeColumnValue" />
     <EntitySet Name="GisFeature" EntityType="ProjectFirma.Web.Models.GisFeature" />
     <EntitySet Name="GisFeatureMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisFeatureMetadataAttribute" />
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisMetadataAttribute" />
@@ -360,6 +362,14 @@
     <AssociationSet Name="FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisDefaultMappings" EntitySet="GisDefaultMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisExcludeIncludeColumns" EntitySet="GisExcludeIncludeColumn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID" Association="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID">
+      <End Role="GisExcludeIncludeColumn" EntitySet="GisExcludeIncludeColumn" />
+      <End Role="GisExcludeIncludeColumnValues" EntitySet="GisExcludeIncludeColumnValue" />
     </AssociationSet>
     <AssociationSet Name="FK_GisFeature_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_GisFeature_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
@@ -1507,6 +1517,27 @@
     <Property Name="GisDefaultMappingColumnName" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisDefaultMappings" ToRole="GisUploadSourceOrganization" />
   </EntityType>
+  <EntityType Name="GisExcludeIncludeColumn">
+    <Key>
+      <PropertyRef Name="GisExcludeIncludeColumnID" />
+    </Key>
+    <Property Name="GisExcludeIncludeColumnID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="GisDefaultMappingColumnName" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
+    <Property Name="IsWhitelist" Type="Boolean" Nullable="false" />
+    <Property Name="IsBlacklist" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisExcludeIncludeColumns" ToRole="GisUploadSourceOrganization" />
+    <NavigationProperty Name="GisExcludeIncludeColumnValues" Relationship="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID" FromRole="GisExcludeIncludeColumn" ToRole="GisExcludeIncludeColumnValues" />
+  </EntityType>
+  <EntityType Name="GisExcludeIncludeColumnValue">
+    <Key>
+      <PropertyRef Name="GisExcludeIncludeColumnValueID" />
+    </Key>
+    <Property Name="GisExcludeIncludeColumnValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisExcludeIncludeColumnID" Type="Int32" Nullable="false" />
+    <Property Name="GisExcludeIncludeColumnValueForFiltering" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisExcludeIncludeColumn" Relationship="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID" FromRole="GisExcludeIncludeColumnValues" ToRole="GisExcludeIncludeColumn" />
+  </EntityType>
   <EntityType Name="GisFeature">
     <Key>
       <PropertyRef Name="GisFeatureID" />
@@ -1599,6 +1630,7 @@
     <Property Name="ApplyEndDateToTreatments" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
+    <NavigationProperty Name="GisExcludeIncludeColumns" Relationship="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisExcludeIncludeColumns" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />
     <NavigationProperty Name="DefaultLeadImplementerOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" FromRole="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization" ToRole="DefaultLeadImplementerOrganization" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Program_ProgramID" FromRole="GisUploadSourceOrganizations" ToRole="Program" />
@@ -4089,6 +4121,30 @@
       </Principal>
       <Dependent Role="GisDefaultMappings">
         <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisExcludeIncludeColumns" Type="ProjectFirma.Web.Models.GisExcludeIncludeColumn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisExcludeIncludeColumns">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisExcludeIncludeColumnValue_GisExcludeIncludeColumn_GisExcludeIncludeColumnID">
+    <End Role="GisExcludeIncludeColumn" Type="ProjectFirma.Web.Models.GisExcludeIncludeColumn" Multiplicity="1" />
+    <End Role="GisExcludeIncludeColumnValues" Type="ProjectFirma.Web.Models.GisExcludeIncludeColumnValue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisExcludeIncludeColumn">
+        <PropertyRef Name="GisExcludeIncludeColumnID" />
+      </Principal>
+      <Dependent Role="GisExcludeIncludeColumnValues">
+        <PropertyRef Name="GisExcludeIncludeColumnID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

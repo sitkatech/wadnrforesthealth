@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -161,6 +161,12 @@
     <Compile Include="Models\Generated\GisDefaultMapping.Binding.cs" />
     <Compile Include="Models\Generated\GisDefaultMapping.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisDefaultMappingPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GisExcludeIncludeColumn.Binding.cs" />
+    <Compile Include="Models\Generated\GisExcludeIncludeColumn.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GisExcludeIncludeColumnPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GisExcludeIncludeColumnValue.Binding.cs" />
+    <Compile Include="Models\Generated\GisExcludeIncludeColumnValue.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GisExcludeIncludeColumnValuePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisFeature.Binding.cs" />
     <Compile Include="Models\Generated\GisFeature.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisFeatureMetadataAttribute.Binding.cs" />
