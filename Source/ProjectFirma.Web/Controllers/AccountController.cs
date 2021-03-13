@@ -124,6 +124,8 @@ namespace ProjectFirma.Web.Controllers
                 adfsSamlResponse.LoadXmlFromBase64(base64AdfsSamlResponse);
                 adfsSamlResponse.Decrypt();
 
+                Logger.Debug($"SAML Debugging - ADFSPost Received Decrypted: {adfsSamlResponse.GetSamlAsPrettyPrintXml()}");
+
                 var firstName = adfsSamlResponse.GetFirstName();
                 var lastName = adfsSamlResponse.GetLastName();
                 var email = adfsSamlResponse.GetEmail();

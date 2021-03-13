@@ -56,6 +56,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
+        public virtual DbSet<GisExcludeIncludeColumn> GisExcludeIncludeColumns { get; set; }
+        public virtual DbSet<GisExcludeIncludeColumnValue> GisExcludeIncludeColumnValues { get; set; }
         public virtual DbSet<GisFeatureMetadataAttribute> GisFeatureMetadataAttributes { get; set; }
         public virtual DbSet<GisFeature> GisFeatures { get; set; }
         public virtual DbSet<GisMetadataAttribute> GisMetadataAttributes { get; set; }
@@ -417,6 +419,12 @@ namespace ProjectFirma.Web.Models
 
                 case "GisDefaultMapping":
                     return GisDefaultMappings.GetGisDefaultMapping(primaryKey);
+
+                case "GisExcludeIncludeColumn":
+                    return GisExcludeIncludeColumns.GetGisExcludeIncludeColumn(primaryKey);
+
+                case "GisExcludeIncludeColumnValue":
+                    return GisExcludeIncludeColumnValues.GetGisExcludeIncludeColumnValue(primaryKey);
 
                 case "GisFeatureMetadataAttribute":
                     return GisFeatureMetadataAttributes.GetGisFeatureMetadataAttribute(primaryKey);
