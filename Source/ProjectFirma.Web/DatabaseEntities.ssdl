@@ -2525,6 +2525,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="PayAmount" Type="money" />
   </EntityType>
   <EntityType Name="ProjectImage">
     <Key>

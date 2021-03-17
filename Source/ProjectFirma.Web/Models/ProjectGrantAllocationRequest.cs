@@ -40,5 +40,9 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public bool IsMatchAndPayRelevant
+        {
+            get { return true; }
+        }
     }
 }

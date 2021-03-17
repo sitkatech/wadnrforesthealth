@@ -35,7 +35,9 @@ namespace ProjectFirma.Web.Models
                 pgar =>
                     new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.GrantAllocation)
                     {
-                        TotalAmount = pgar.TotalAmount
+                        TotalAmount = pgar.TotalAmount,
+                        MatchAmount = pgar.MatchAmount,
+                        PayAmount = pgar.PayAmount
                     }
             ).ToList();
         }
@@ -48,6 +50,8 @@ namespace ProjectFirma.Web.Models
                 .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
                     {
                         TotalAmount = x.TotalAmount,
+                        PayAmount = x.PayAmount,
+                        MatchAmount = x.MatchAmount
                     }
                 ).ToList();
             project.ProjectGrantAllocationRequests.Merge(projectGrantAllocationExpectedFundingFromProjectUpdate,
@@ -56,6 +60,8 @@ namespace ProjectFirma.Web.Models
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
+                    x.MatchAmount = y.MatchAmount;
+                    x.PayAmount = y.PayAmount;
                 });
         }
 
@@ -67,6 +73,11 @@ namespace ProjectFirma.Web.Models
                 string grantAllocationName = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "none";
                 return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} TotalAmount: {this.TotalAmount}";
             }
+        }
+
+        public bool IsMatchAndPayRelevant
+        {
+            get { return true; }
         }
     }
 }

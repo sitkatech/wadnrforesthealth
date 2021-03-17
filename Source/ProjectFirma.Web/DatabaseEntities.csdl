@@ -2880,6 +2880,8 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>

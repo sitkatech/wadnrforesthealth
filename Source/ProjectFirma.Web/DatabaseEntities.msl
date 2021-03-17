@@ -1410,6 +1410,8 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
