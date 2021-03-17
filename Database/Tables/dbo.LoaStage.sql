@@ -1,0 +1,23 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LoaStage](
+	[LoaStageID] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectIdentifier] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProjectStatus] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[GrantNumber] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[FocusAreaName] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectExpirationDate] [datetime] NULL,
+	[LetterDate] [datetime] NULL,
+	[MatchAmount] [money] NULL,
+	[PayAmount] [money] NULL,
+	[ProgramIndex] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectCode] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[IsNortheast] [bit] NOT NULL,
+	[IsSoutheast]  AS (CONVERT([bit],case when [IsNortheast]=(1) then (0) else (1) end)) PERSISTED NOT NULL,
+ CONSTRAINT [PK_LoaStage_LoaStageID] PRIMARY KEY CLUSTERED 
+(
+	[LoaStageID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

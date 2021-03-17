@@ -98,6 +98,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
         public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<LoaStage> LoaStages { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -185,6 +186,11 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
+        public virtual DbSet<vLoaStageGrantAllocationAward> vLoaStageGrantAllocationAwards { get; set; }
+        public virtual DbSet<vLoaStageGrantAllocationByProgramIndexProjectCode> vLoaStageGrantAllocationByProgramIndexProjectCodes { get; set; }
+        public virtual DbSet<vLoaStageGrantAllocation> vLoaStageGrantAllocations { get; set; }
+        public virtual DbSet<vLoaStageProjectGrantAllocation> vLoaStageProjectGrantAllocations { get; set; }
+        public virtual DbSet<vSingularGrantAllocation> vSingularGrantAllocations { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<vTotalTreatedAcresByProject> vTotalTreatedAcresByProjects { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
@@ -600,6 +606,9 @@ namespace ProjectFirma.Web.Models
                     var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(landownerCostShareLineItemStatus, "LandownerCostShareLineItemStatus", primaryKey);
                     return landownerCostShareLineItemStatus;
+
+                case "LoaStage":
+                    return LoaStages.GetLoaStage(primaryKey);
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

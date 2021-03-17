@@ -1,27 +1,27 @@
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND OBJECT_ID = OBJECT_ID('dbo.pImportLoaNortheastTabularData'))
-    DROP PROCEDURE dbo.pImportLoaNortheastTabularData
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND OBJECT_ID = OBJECT_ID('dbo.pImportLoaTabularData'))
+    DROP PROCEDURE dbo.pImportLoaTabularData
 GO
 
-CREATE PROCEDURE dbo.pImportLoaNortheastTabularData
+CREATE PROCEDURE dbo.pImportLoaTabularData
 AS
 begin
               if object_id('tempdb.dbo.#projectGrantAllocation') is not null drop table #projectGrantAllocation
               select x.ProjectID
               , x.GrantAllocationID
-              , x.Match
-              , x.Pay
+              , x.MatchAmount
+              , x.PayAmount
               , x.LetterDate
               , x.ProjectExpirationDate
-              , x.Status
+              , x.ProjectStatus
               into #projectGrantAllocation
-              from dbo.vLoaNortheastProjectGrantAllocation x
+              from dbo.vLoaStageProjectGrantAllocation x
 
               if object_id('tempdb.dbo.#projectGrantAllocationRequestPart') is not null drop table #projectGrantAllocationRequestPart
               select x.ProjectID,
                      x.GrantAllocationID
-                     , x.Match + x.Pay as TotalAmount
-                     , x.Match as MatchAmount
-                     , x.Pay as PayAmount
+                     , x.MatchAmount + x.PayAmount as TotalAmount
+                     , x.MatchAmount as MatchAmount
+                     , x.PayAmount as PayAmount
                      into #projectGrantAllocationRequestPart
                       from #projectGrantAllocation x where x.GrantAllocationID is not null
 
