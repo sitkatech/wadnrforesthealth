@@ -16,6 +16,28 @@ begin
               into #projectGrantAllocation
               from dbo.vLoaStageProjectGrantAllocation x
 
+
+              if object_id('tempdb.dbo.#projectFocusArea') is not null drop table #projectFocusArea
+              select distinct p.ProjectID, fa.FocusAreaID
+              into #projectFocusArea
+              from dbo.LoaStage x
+              join dbo.FocusArea fa on (fa.FocusAreaName like '%'+ x.FocusAreaName + '%') or (len(x.FocusAreaName) > 5 and fa.FocusAreaName like '%' +LEFT(x.FocusAreaName, LEN(x.FocusAreaName)-5) + '%' and x.IsSoutheast = 1)
+              join dbo.Project p on p.ProjectGisIdentifier = x.ProjectIdentifier
+              where x.FocusAreaName is not null 
+
+              if object_id('tempdb.dbo.#projectFocusAreaForUpdate') is not null drop table #projectFocusAreaForUpdate
+              select distinct x.ProjectID, min(x.FocusAreaID) as FocusAreaID
+              into #projectFocusAreaForUpdate
+              from #projectFocusArea x
+              group by x.ProjectID having count(*) =1
+
+
+              update dbo.Project
+              set FocusAreaID = pfa.FocusAreaID
+              from dbo.Project p
+              join #projectFocusAreaForUpdate pfa on pfa.ProjectID = p.ProjectID
+
+
               if object_id('tempdb.dbo.#projectGrantAllocationRequestPart') is not null drop table #projectGrantAllocationRequestPart
               select x.ProjectID,
                      x.GrantAllocationID
@@ -55,7 +77,7 @@ begin
                 ,   ExpirationDate = y.ExpirationDate
                 from dbo.Project p
                 join (select x.ProjectID
-                , sum(x.Match) + sum(x.Pay) as EstimatedTotalCost
+                , sum(x.MatchAmount) + sum(x.PayAmount) as EstimatedTotalCost
                 , min(x.LetterDate) as Letterdate
                 , max(x.ProjectExpirationDate) as ExpirationDate
                   from  #projectGrantAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
@@ -64,6 +86,6 @@ end
 
 /*
 
-exec dbo.pImportLoaNortheastTabularData
+exec dbo.pImportLoaTabularData
 
 */

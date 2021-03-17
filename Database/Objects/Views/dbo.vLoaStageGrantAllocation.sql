@@ -24,12 +24,9 @@ y on x.LoaStageID = y.LoaStageID
 
 union
 
-select x.LoaStageID, x.GrantID,x.GrantAllocationID from dbo.vLoaStageGrantAllocationByProgramIndexProjectCode x
-join (
-select x.LoaStageID 
+select x.LoaStageID, min(x.GrantID), min(x.GrantAllocationID)
 from dbo.vLoaStageGrantAllocationByProgramIndexProjectCode x
-group by x.LoaStageID having count(*) = 1)
-y on x.LoaStageID = y.LoaStageID
+group by x.LoaStageID having count(*) = 1
 
 
 go
@@ -38,3 +35,5 @@ go
 select * from dbo.vLoaStageGrantAllocation
 
 */
+
+

@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public vLoaStageGrantAllocationByProgramIndexProjectCode(int loaStageID, int grantAllocationID, int grantID) : this()
+        public vLoaStageGrantAllocationByProgramIndexProjectCode(int loaStageID, int? grantAllocationID, int? grantID) : this()
         {
             this.LoaStageID = loaStageID;
             this.GrantAllocationID = grantAllocationID;
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Models
         partial void CallAfterConstructor(vLoaStageGrantAllocationByProgramIndexProjectCode vLoaStageGrantAllocationByProgramIndexProjectCode);
 
         public int LoaStageID { get; set; }
-        public int GrantAllocationID { get; set; }
-        public int GrantID { get; set; }
+        public int? GrantAllocationID { get; set; }
+        public int? GrantID { get; set; }
     }
 }

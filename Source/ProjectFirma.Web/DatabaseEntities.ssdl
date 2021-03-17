@@ -3079,12 +3079,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocation' 
   <EntityType Name="vLoaStageGrantAllocation">
     <Key>
       <PropertyRef Name="LoaStageID" />
-      <PropertyRef Name="GrantID" />
-      <PropertyRef Name="GrantAllocationID" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" />
+    <Property Name="GrantAllocationID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationAward' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3107,12 +3105,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationBy
   <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
     <Key>
       <PropertyRef Name="LoaStageID" />
-      <PropertyRef Name="GrantAllocationID" />
-      <PropertyRef Name="GrantID" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="GrantID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

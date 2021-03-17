@@ -3508,12 +3508,10 @@
   <EntityType Name="vLoaStageGrantAllocation">
     <Key>
       <PropertyRef Name="LoaStageID" />
-      <PropertyRef Name="GrantID" />
-      <PropertyRef Name="GrantAllocationID" />
     </Key>
     <Property Name="LoaStageID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="GrantID" Type="Int32" />
+    <Property Name="GrantAllocationID" Type="Int32" />
   </EntityType>
   <EntityType Name="vLoaStageGrantAllocationAward">
     <Key>
@@ -3530,12 +3528,10 @@
   <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
     <Key>
       <PropertyRef Name="LoaStageID" />
-      <PropertyRef Name="GrantAllocationID" />
-      <PropertyRef Name="GrantID" />
     </Key>
     <Property Name="LoaStageID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="Int32" />
+    <Property Name="GrantID" Type="Int32" />
   </EntityType>
   <EntityType Name="vLoaStageProjectGrantAllocation">
     <Key>
