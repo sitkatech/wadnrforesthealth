@@ -94,6 +94,8 @@ Source code is available upon request via <support@sitkatech.com>.
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.GrantAllocationID}}" />
                     @*<input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].UnsecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.UnsecuredAmount}}" />*@
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].TotalAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.TotalAmount}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].PayAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.PayAmount}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].MatchAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.MatchAmount}}" />
                 </div>
             }
             @if (ViewDataTyped.FromGrantAllocation)
@@ -171,6 +173,11 @@ Source code is available upon request via <support@sitkatech.com>.
                     <tr>
                         <th></th>
                         <th style="white-space: nowrap">@Html.Raw(ViewDataTyped.FromGrantAllocation ? Html.LabelWithSugarFor(FieldDefinition.Project) : Html.LabelWithSugarFor(FieldDefinition.GrantAllocation))</th>
+                        @if (ViewDataTyped.IsMatchAndPayRelevant)
+                        {
+                            <th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestMatchAmount)</th>
+                            <th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestPayAmount)</th>
+                        }
                         <th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestTotalAmount)</th>
                     </tr>
                     <tr ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequests | orderBy:[getGrantAllocationName, getProjectName]" style="padding-bottom: 2px;">
@@ -178,6 +185,17 @@ Source code is available upon request via <support@sitkatech.com>.
                             <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectGrantAllocationRequest)" style="cursor: pointer"></span>
                         </td>
                         <td ng-bind="@(ViewDataTyped.FromGrantAllocation ? "getProjectName(projectGrantAllocationRequest)" : "getGrantAllocationName(projectGrantAllocationRequest)")">
+                        @if (ViewDataTyped.IsMatchAndPayRelevant)
+                        {
+                            <td style="text-align: right; padding-right: 17px;">
+                                <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.MatchAmount" class="sitkaCurrency form-control" ng-currency />
+                            </td>
+                            <td style="text-align: right; padding-right: 17px;">
+                                <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.PayAmount" class="sitkaCurrency form-control" ng-currency />
+                            </td>
+                        }
+                        
+
                         <td style="text-align: right; padding-right: 17px;">
                             <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.TotalAmount" class="sitkaCurrency form-control" ng-currency />
                         </td>

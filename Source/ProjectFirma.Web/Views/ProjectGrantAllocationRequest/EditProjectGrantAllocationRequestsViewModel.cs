@@ -124,6 +124,8 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
+                    x.MatchAmount = y.MatchAmount;
+                    x.PayAmount = y.PayAmount;
                 });
             
         }
