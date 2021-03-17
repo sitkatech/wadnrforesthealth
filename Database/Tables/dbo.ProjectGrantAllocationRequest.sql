@@ -7,6 +7,8 @@ CREATE TABLE [dbo].[ProjectGrantAllocationRequest](
 	[ProjectID] [int] NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[TotalAmount] [money] NULL,
+	[MatchAmount] [money] NULL,
+	[PayAmount] [money] NULL,
  CONSTRAINT [PK_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectGrantAllocationRequestID] ASC

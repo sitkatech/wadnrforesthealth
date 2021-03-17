@@ -856,6 +856,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="LoaStage">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.LoaStage">
+        <MappingFragment StoreEntitySet="LoaStage">
+          <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
+          <ScalarProperty Name="ProjectIdentifier" ColumnName="ProjectIdentifier" />
+          <ScalarProperty Name="ProjectStatus" ColumnName="ProjectStatus" />
+          <ScalarProperty Name="GrantNumber" ColumnName="GrantNumber" />
+          <ScalarProperty Name="FocusAreaName" ColumnName="FocusAreaName" />
+          <ScalarProperty Name="ProjectExpirationDate" ColumnName="ProjectExpirationDate" />
+          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+          <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
+          <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Notification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Notification">
         <MappingFragment StoreEntitySet="Notification">
@@ -1379,6 +1398,8 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1389,6 +1410,8 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1955,6 +1978,55 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vLoaStageGrantAllocation">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vLoaStageGrantAllocation">
+        <MappingFragment StoreEntitySet="vLoaStageGrantAllocation">
+          <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vLoaStageGrantAllocationAward">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vLoaStageGrantAllocationAward">
+        <MappingFragment StoreEntitySet="vLoaStageGrantAllocationAward">
+          <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
+          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vLoaStageGrantAllocationByProgramIndexProjectCode">
+        <MappingFragment StoreEntitySet="vLoaStageGrantAllocationByProgramIndexProjectCode">
+          <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vLoaStageProjectGrantAllocation">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vLoaStageProjectGrantAllocation">
+        <MappingFragment StoreEntitySet="vLoaStageProjectGrantAllocation">
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+          <ScalarProperty Name="ProjectStatus" ColumnName="ProjectStatus" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
+          <ScalarProperty Name="ProjectExpirationDate" ColumnName="ProjectExpirationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vSingularGrantAllocation">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vSingularGrantAllocation">
+        <MappingFragment StoreEntitySet="vSingularGrantAllocation">
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

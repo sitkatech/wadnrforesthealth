@@ -70,6 +70,7 @@
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.InteractionEventType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
     <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.InvoiceLineItem" />
+    <EntitySet Name="LoaStage" EntityType="ProjectFirma.Web.Models.LoaStage" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -157,6 +158,11 @@
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
+    <EntitySet Name="vLoaStageGrantAllocation" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocation" />
+    <EntitySet Name="vLoaStageGrantAllocationAward" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocationAward" />
+    <EntitySet Name="vLoaStageGrantAllocationByProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocationByProgramIndexProjectCode" />
+    <EntitySet Name="vLoaStageProjectGrantAllocation" EntityType="ProjectFirma.Web.Models.vLoaStageProjectGrantAllocation" />
+    <EntitySet Name="vSingularGrantAllocation" EntityType="ProjectFirma.Web.Models.vSingularGrantAllocation" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <EntitySet Name="vTotalTreatedAcresByProject" EntityType="ProjectFirma.Web.Models.vTotalTreatedAcresByProject" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
@@ -2164,6 +2170,24 @@
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="InvoiceLineItems" ToRole="GrantAllocation" />
     <NavigationProperty Name="Invoice" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID" FromRole="InvoiceLineItems" ToRole="Invoice" />
   </EntityType>
+  <EntityType Name="LoaStage">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+    </Key>
+    <Property Name="LoaStageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectIdentifier" Type="String" Nullable="false" MaxLength="600" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectStatus" Type="String" MaxLength="600" Unicode="false" FixedLength="false" />
+    <Property Name="GrantNumber" Type="String" MaxLength="600" Unicode="false" FixedLength="false" />
+    <Property Name="FocusAreaName" Type="String" MaxLength="600" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectExpirationDate" Type="DateTime" />
+    <Property Name="LetterDate" Type="DateTime" />
+    <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ProgramIndex" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
+    <Property Name="IsSoutheast" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+  </EntityType>
   <EntityType Name="Notification">
     <Key>
       <PropertyRef Name="NotificationID" />
@@ -2843,6 +2867,8 @@
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequests" ToRole="GrantAllocation" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="ProjectGrantAllocationRequests" ToRole="Project" />
   </EntityType>
@@ -2854,6 +2880,8 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
@@ -3478,6 +3506,54 @@
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
+  </EntityType>
+  <EntityType Name="vLoaStageGrantAllocation">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+    </Key>
+    <Property Name="LoaStageID" Type="Int32" Nullable="false" />
+    <Property Name="GrantID" Type="Int32" />
+    <Property Name="GrantAllocationID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vLoaStageGrantAllocationAward">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="GrantAllocationAwardID" />
+      <PropertyRef Name="GrantAllocationID" />
+      <PropertyRef Name="GrantID" />
+    </Key>
+    <Property Name="LoaStageID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="GrantID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+    </Key>
+    <Property Name="LoaStageID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="Int32" />
+    <Property Name="GrantID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vLoaStageProjectGrantAllocation">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ProjectStatus" Type="String" MaxLength="600" Unicode="false" FixedLength="false" />
+    <Property Name="GrantAllocationID" Type="Int32" />
+    <Property Name="LetterDate" Type="DateTime" />
+    <Property Name="ProjectExpirationDate" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="vSingularGrantAllocation">
+    <Key>
+      <PropertyRef Name="GrantID" />
+      <PropertyRef Name="GrantAllocationID" />
+    </Key>
+    <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="vSocrataDataMartRawJsonImportIndex">
     <Key>

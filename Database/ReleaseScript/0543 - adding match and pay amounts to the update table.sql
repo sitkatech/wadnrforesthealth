@@ -1,0 +1,2 @@
+alter table ProjectGrantAllocationRequestUpdate add MatchAmount money
+alter table ProjectGrantAllocationRequestUpdate add PayAmount money

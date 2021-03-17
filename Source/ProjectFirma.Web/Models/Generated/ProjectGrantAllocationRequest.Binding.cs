@@ -31,12 +31,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int grantAllocationID, decimal? totalAmount) : this()
+        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int grantAllocationID, decimal? totalAmount, decimal? matchAmount, decimal? payAmount) : this()
         {
             this.ProjectGrantAllocationRequestID = projectGrantAllocationRequestID;
             this.ProjectID = projectID;
             this.GrantAllocationID = grantAllocationID;
             this.TotalAmount = totalAmount;
+            this.MatchAmount = matchAmount;
+            this.PayAmount = payAmount;
         }
 
         /// <summary>
@@ -121,6 +123,8 @@ namespace ProjectFirma.Web.Models
         public int ProjectID { get; set; }
         public int GrantAllocationID { get; set; }
         public decimal? TotalAmount { get; set; }
+        public decimal? MatchAmount { get; set; }
+        public decimal? PayAmount { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectGrantAllocationRequestID; } set { ProjectGrantAllocationRequestID = value; } }
 
