@@ -174,6 +174,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
         public virtual DbSet<SystemAttribute> SystemAttributes { get; set; }
+        public virtual DbSet<TabularDataImport> TabularDataImports { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TaxonomyBranch> TaxonomyBranches { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
@@ -954,6 +955,14 @@ namespace ProjectFirma.Web.Models
 
                 case "SystemAttribute":
                     return SystemAttributes.GetSystemAttribute(primaryKey);
+
+                case "TabularDataImport":
+                    return TabularDataImports.GetTabularDataImport(primaryKey);
+
+                case "TabularDataImportTableType":
+                    var tabularDataImportTableType = TabularDataImportTableType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(tabularDataImportTableType, "TabularDataImportTableType", primaryKey);
+                    return tabularDataImportTableType;
 
                 case "Tag":
                     return Tags.GetTag(primaryKey);

@@ -32,9 +32,15 @@ namespace ProjectFirma.Web.Models
             PayAmount = projectGrantAllocationRequestUpdate.PayAmount;
         }
 
-        public ProjectGrantAllocationRequest ToProjectGrantAllocationRequest()
+        public ProjectGrantAllocationRequest ToProjectGrantAllocationRequest(DateTime createDate, DateTime? updateDate, bool importedFromTabularData)
         {
-            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID) { TotalAmount = TotalAmount, MatchAmount = MatchAmount, PayAmount = PayAmount };
+            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, createDate, importedFromTabularData)
+            {
+                TotalAmount = TotalAmount
+                , MatchAmount = MatchAmount
+                , PayAmount = PayAmount
+                , UpdateDate = updateDate
+            };
         }
 
         public int ProjectID { get; set; }
@@ -49,9 +55,23 @@ namespace ProjectFirma.Web.Models
         [ValidateMoneyInRangeForSqlServer]
         public decimal? PayAmount { get; set; }
 
-        public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate()
+        public DateTime CreateDate { get; set; }
+
+        public DateTime? UpdateDate { get; set; }
+
+        public bool ImportedFromTabularData { get; set; }
+
+      
+
+        public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate(DateTime createDate, DateTime? updateDate, bool importedFromTabularData)
         {
-            return new ProjectGrantAllocationRequestUpdate(ProjectID, GrantAllocationID) {TotalAmount = TotalAmount, MatchAmount = MatchAmount, PayAmount = PayAmount};
+            return new ProjectGrantAllocationRequestUpdate(ProjectID, GrantAllocationID, createDate, importedFromTabularData)
+            {
+                TotalAmount = TotalAmount
+                , MatchAmount = MatchAmount
+                , PayAmount = PayAmount
+                , UpdateDate = updateDate
+            };
         }
 
         //public bool AreBothValuesZero()

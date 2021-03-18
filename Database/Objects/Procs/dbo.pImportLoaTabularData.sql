@@ -60,6 +60,12 @@ begin
 
 
 
+              delete from dbo.ProjectGrantAllocationRequest where ProjectGrantAllocationRequestID in (select ProjectGrantAllocationRequestID 
+                                                                                                      from 
+                                                                                                      dbo.ProjectGrantAllocationRequest pgar
+                                                                                                      join dbo.Project p on pgar.ProjectID = p.ProjectID
+                                                                                                      where p.ProgramID = 3 -- LoaProgram)
+                                                                                                      )
 
               insert into dbo.ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, TotalAmount, MatchAmount, PayAmount)
 

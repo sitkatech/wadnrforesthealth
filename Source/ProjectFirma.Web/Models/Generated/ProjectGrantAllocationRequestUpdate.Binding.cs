@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGrantAllocationRequestUpdate(int projectGrantAllocationRequestUpdateID, int projectUpdateBatchID, int grantAllocationID, decimal? totalAmount, decimal? matchAmount, decimal? payAmount) : this()
+        public ProjectGrantAllocationRequestUpdate(int projectGrantAllocationRequestUpdateID, int projectUpdateBatchID, int grantAllocationID, decimal? totalAmount, decimal? matchAmount, decimal? payAmount, DateTime createDate, DateTime? updateDate, bool importedFromTabularData) : this()
         {
             this.ProjectGrantAllocationRequestUpdateID = projectGrantAllocationRequestUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -39,24 +39,29 @@ namespace ProjectFirma.Web.Models
             this.TotalAmount = totalAmount;
             this.MatchAmount = matchAmount;
             this.PayAmount = payAmount;
+            this.CreateDate = createDate;
+            this.UpdateDate = updateDate;
+            this.ImportedFromTabularData = importedFromTabularData;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGrantAllocationRequestUpdate(int projectUpdateBatchID, int grantAllocationID) : this()
+        public ProjectGrantAllocationRequestUpdate(int projectUpdateBatchID, int grantAllocationID, DateTime createDate, bool importedFromTabularData) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectGrantAllocationRequestUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.GrantAllocationID = grantAllocationID;
+            this.CreateDate = createDate;
+            this.ImportedFromTabularData = importedFromTabularData;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectGrantAllocationRequestUpdate(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation) : this()
+        public ProjectGrantAllocationRequestUpdate(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation, DateTime createDate, bool importedFromTabularData) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectGrantAllocationRequestUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -66,6 +71,8 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.ProjectGrantAllocationRequestUpdates.Add(this);
+            this.CreateDate = createDate;
+            this.ImportedFromTabularData = importedFromTabularData;
         }
 
         /// <summary>
@@ -73,7 +80,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProjectGrantAllocationRequestUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation)
         {
-            return new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, grantAllocation);
+            return new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, grantAllocation, default(DateTime), default(bool));
         }
 
         /// <summary>
@@ -125,6 +132,9 @@ namespace ProjectFirma.Web.Models
         public decimal? TotalAmount { get; set; }
         public decimal? MatchAmount { get; set; }
         public decimal? PayAmount { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public bool ImportedFromTabularData { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectGrantAllocationRequestUpdateID; } set { ProjectGrantAllocationRequestUpdateID = value; } }
 

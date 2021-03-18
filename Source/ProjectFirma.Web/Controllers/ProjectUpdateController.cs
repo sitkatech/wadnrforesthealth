@@ -657,14 +657,14 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Load();
-            var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
+            var currentProjectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
             var allProjectGrantAllocationExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Local;
 
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.Load();
             var projectFundingSourceUpdates = projectUpdateBatch.ProjectFundingSourceUpdates.ToList();
             var allProjectFundingSourceUpdates = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.Local;
 
-            viewModel.UpdateModel(projectUpdateBatch, projectGrantAllocationRequestUpdates, allProjectGrantAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate, projectFundingSourceUpdates, allProjectFundingSourceUpdates);
+            viewModel.UpdateModel(projectUpdateBatch, currentProjectGrantAllocationRequestUpdates, allProjectGrantAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate, projectFundingSourceUpdates, allProjectFundingSourceUpdates);
 
             if (projectUpdateBatch.IsSubmitted)
             {

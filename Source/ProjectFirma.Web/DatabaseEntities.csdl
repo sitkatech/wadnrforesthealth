@@ -146,6 +146,7 @@
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
     <EntitySet Name="SystemAttribute" EntityType="ProjectFirma.Web.Models.SystemAttribute" />
+    <EntitySet Name="TabularDataImport" EntityType="ProjectFirma.Web.Models.TabularDataImport" />
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Tag" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.TaxonomyBranch" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
@@ -924,6 +925,14 @@
     <AssociationSet Name="FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="SystemAttributesWhereYouAreThePrimaryContactPerson" EntitySet="SystemAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TabularDataImport_Person_LastProcessedPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_TabularDataImport_Person_LastProcessedPersonID_PersonID">
+      <End Role="LastProcessedPerson" EntitySet="Person" />
+      <End Role="TabularDataImportsWhereYouAreTheLastProcessedPerson" EntitySet="TabularDataImport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TabularDataImport_Person_UploadPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_TabularDataImport_Person_UploadPersonID_PersonID">
+      <End Role="UploadPerson" EntitySet="Person" />
+      <End Role="TabularDataImportsWhereYouAreTheUploadPerson" EntitySet="TabularDataImport" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
@@ -2504,6 +2513,8 @@
     <NavigationProperty Name="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="SupportRequestLogsWhereYouAreTheRequestPerson" Relationship="ProjectFirma.Web.Models.FK_SupportRequestLog_Person_RequestPersonID_PersonID" FromRole="RequestPerson" ToRole="SupportRequestLogsWhereYouAreTheRequestPerson" />
     <NavigationProperty Name="SystemAttributesWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="SystemAttributesWhereYouAreThePrimaryContactPerson" />
+    <NavigationProperty Name="TabularDataImportsWhereYouAreTheLastProcessedPerson" Relationship="ProjectFirma.Web.Models.FK_TabularDataImport_Person_LastProcessedPersonID_PersonID" FromRole="LastProcessedPerson" ToRole="TabularDataImportsWhereYouAreTheLastProcessedPerson" />
+    <NavigationProperty Name="TabularDataImportsWhereYouAreTheUploadPerson" Relationship="ProjectFirma.Web.Models.FK_TabularDataImport_Person_UploadPersonID_PersonID" FromRole="UploadPerson" ToRole="TabularDataImportsWhereYouAreTheUploadPerson" />
   </EntityType>
   <EntityType Name="PersonAllowedAuthenticator">
     <Key>
@@ -2869,6 +2880,9 @@
     <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" />
+    <Property Name="ImportedFromTabularData" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequests" ToRole="GrantAllocation" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="ProjectGrantAllocationRequests" ToRole="Project" />
   </EntityType>
@@ -2882,6 +2896,9 @@
     <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" />
+    <Property Name="ImportedFromTabularData" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
@@ -3341,6 +3358,19 @@
     <NavigationProperty Name="BannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" ToRole="BannerLogoFileResource" />
     <NavigationProperty Name="SquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" ToRole="SquareLogoFileResource" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="SystemAttributesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
+  </EntityType>
+  <EntityType Name="TabularDataImport">
+    <Key>
+      <PropertyRef Name="TabularDataImportID" />
+    </Key>
+    <Property Name="TabularDataImportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TabularDataImportTableTypeID" Type="Int32" Nullable="false" />
+    <Property Name="UploadDate" Type="DateTime" />
+    <Property Name="UploadPersonID" Type="Int32" />
+    <Property Name="LastProcessedDate" Type="DateTime" />
+    <Property Name="LastProcessedPersonID" Type="Int32" />
+    <NavigationProperty Name="LastProcessedPerson" Relationship="ProjectFirma.Web.Models.FK_TabularDataImport_Person_LastProcessedPersonID_PersonID" FromRole="TabularDataImportsWhereYouAreTheLastProcessedPerson" ToRole="LastProcessedPerson" />
+    <NavigationProperty Name="UploadPerson" Relationship="ProjectFirma.Web.Models.FK_TabularDataImport_Person_UploadPersonID_PersonID" FromRole="TabularDataImportsWhereYouAreTheUploadPerson" ToRole="UploadPerson" />
   </EntityType>
   <EntityType Name="Tag">
     <Key>
@@ -5865,6 +5895,30 @@
       </Principal>
       <Dependent Role="SystemAttributesWhereYouAreThePrimaryContactPerson">
         <PropertyRef Name="PrimaryContactPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TabularDataImport_Person_LastProcessedPersonID_PersonID">
+    <End Role="LastProcessedPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="TabularDataImportsWhereYouAreTheLastProcessedPerson" Type="ProjectFirma.Web.Models.TabularDataImport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastProcessedPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="TabularDataImportsWhereYouAreTheLastProcessedPerson">
+        <PropertyRef Name="LastProcessedPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TabularDataImport_Person_UploadPersonID_PersonID">
+    <End Role="UploadPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="TabularDataImportsWhereYouAreTheUploadPerson" Type="ProjectFirma.Web.Models.TabularDataImport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UploadPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="TabularDataImportsWhereYouAreTheUploadPerson">
+        <PropertyRef Name="UploadPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

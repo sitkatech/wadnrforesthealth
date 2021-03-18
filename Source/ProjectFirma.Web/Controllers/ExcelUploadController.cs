@@ -297,12 +297,13 @@ namespace ProjectFirma.Web.Controllers
             var elapsedTime = endTime - startTime;
             string importTimeString = GetTaskTimeString("Import", elapsedTime);
 
-            //// Record that we uploaded
-            //var newImpProcessingForFbms = new ImpProcessing(ImpProcessingTableType.FBMS);
-            //newImpProcessingForFbms.UploadDate = endTime;
-            //newImpProcessingForFbms.UploadPerson = this.CurrentFirmaSession.Person;
-            //HttpRequestStorage.DatabaseEntities.ImpProcessings.Add(newImpProcessingForFbms);
-            //HttpRequestStorage.DatabaseEntities.SaveChanges(this.CurrentFirmaSession);
+            // Record that we uploaded
+            var tabularDataImportTableTypeID = isNortheast ? TabularDataImportTableType.LoaNortheast.TabularDataImportTableTypeID : TabularDataImportTableType.LoaSoutheast.TabularDataImportTableTypeID;
+            var newTabularDataImport = new TabularDataImport(tabularDataImportTableTypeID);
+            newTabularDataImport.UploadDate = endTime;
+            newTabularDataImport.UploadPerson = CurrentPerson;
+            HttpRequestStorage.DatabaseEntities.TabularDataImports.Add(newTabularDataImport);
+            HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
 
             SetMessageForDisplay($"{countAdded.ToGroupedNumeric()} LOA records were successfully imported to database. </br>{importTimeString}.");
             SetInfoForDisplay(string.Join("<br>",errorList));
