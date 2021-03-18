@@ -7,34 +7,34 @@ namespace ProjectFirma.Web.Models.ExcelUpload
 {
     public static class ExcelColumnHelper
     {
-        public static string GetStringDataValueForColumnName(DataRow dr, int rowIndex, Dictionary<string, string> columnNameToLetterDict, string humanReadableNameOfColumn)
+        public static string GetStringDataValueForColumnName(DataRow dr, int rowIndex, string humanReadableNameOfColumn, Dictionary<string, int> columnNameToIndexDict)
         {
-            string columnKeyLetterName = columnNameToLetterDict[humanReadableNameOfColumn];
+            int columnIndex = columnNameToIndexDict[humanReadableNameOfColumn];
 
             string dataValue;
             try
             {
-                dataValue = string.IsNullOrWhiteSpace(dr[columnKeyLetterName].ToString())
+                dataValue = string.IsNullOrWhiteSpace(dr[columnIndex].ToString())
                     ? null
-                    : dr[columnKeyLetterName].ToString();
+                    : dr[columnIndex].ToString();
             }
             catch (Exception e)
             {
-                throw new ExcelImportBadCellException(columnKeyLetterName, rowIndex,
-                    dr[columnKeyLetterName].ToString(),
+                throw new ExcelImportBadCellException(columnIndex.ToString(), rowIndex,
+                    dr[columnIndex].ToString(),
                     $"Problem parsing Source {humanReadableNameOfColumn}", e);
             }
 
             return dataValue;
         }
 
-        public static double? GetDoubleDataValueForColumnName(DataRow dr, int rowIndex, Dictionary<string, string> columnNameToLetterDict, string humanReadableNameOfColumn)
+        public static double? GetDoubleDataValueForColumnName(DataRow dr, int rowIndex, string humanReadableNameOfColumn, Dictionary<string, int> columnNameToIndexDict)
         {
-            string columnKeyLetterName = columnNameToLetterDict[humanReadableNameOfColumn];
+            int columnIndex = columnNameToIndexDict[humanReadableNameOfColumn];
             double? returnValue = null;
             try
             {
-                if (double.TryParse(dr[columnKeyLetterName].ToString(), out double dataValueAsDouble))
+                if (double.TryParse(dr[columnIndex].ToString(), out double dataValueAsDouble))
                 {
                     returnValue = dataValueAsDouble;
                 }
@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
             }
             catch (Exception e)
             {
-                throw new ExcelImportBadCellException(columnKeyLetterName, rowIndex, dr[columnKeyLetterName].ToString(), $"Problem parsing {humanReadableNameOfColumn}", e);
+                throw new ExcelImportBadCellException(columnIndex.ToString(), rowIndex, dr[columnIndex].ToString(), $"Problem parsing {humanReadableNameOfColumn}", e);
             }
 
             return returnValue;
@@ -60,48 +60,64 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         }
 
         public static DateTime? GetDateTimeDataValueForColumnName(DataRow dr,
-                                                                  int rowIndex,
-                                                                  Dictionary<string, string> columnNameToLetterDict,
-                                                                  string humanReadableNameOfColumn,
-                                                                  ExcelDateTimeCellType excelDateTimeCellType)
+            int rowIndex,
+            Dictionary<string, int> columnNameToIndexDict,
+            string humanReadableNameOfColumn,
+            bool allowNullable)
         {
-            string columnKeyLetterName = columnNameToLetterDict[humanReadableNameOfColumn];
+            int columnIndex = columnNameToIndexDict[humanReadableNameOfColumn];
             DateTime? returnValue = null;
             string cellValue = "(cell value not set yet)";
             try
             {
-                cellValue = dr[columnKeyLetterName].ToString();
+                cellValue = dr[columnIndex].ToString();
                 // Turn "#" into a null
                 if (cellValue == "#")
                 {
                     returnValue = null;
                 }
-                // string: "05/05/2009"
-                else switch (excelDateTimeCellType)
-                    {
-                        // double: 39938
-                        case ExcelDateTimeCellType.StringWithDateTime:
-                            {
-                                if (DateTime.TryParse(cellValue, out DateTime dataValueAsDateTime))
-                                {
-                                    returnValue = dataValueAsDateTime;
-                                }
 
-                                break;
-                            }
-                        case ExcelDateTimeCellType.SerialDateTimeValue:
-                            {
-                                double cellValueAsDouble = double.Parse(cellValue);
-                                returnValue = DateTime.FromOADate(cellValueAsDouble);
-                                break;
-                            }
-                        default:
-                            throw new SitkaDisplayErrorException($"Unknown ExcelDateTimeCellType cell type: {excelDateTimeCellType}");
+                else if (string.IsNullOrEmpty(cellValue) && allowNullable)
+                {
+                    returnValue = null;
+                }
+                else
+                {
+                    try
+                    {
+                        double cellValueAsDouble = double.Parse(cellValue);
+                        returnValue = DateTime.FromOADate(cellValueAsDouble);
                     }
+                    catch (Exception e)
+                    {
+                        var tryParse = DateTime.TryParse(cellValue, out DateTime dataValueAsDateTime);
+                        if (tryParse)
+                        {
+                            returnValue = dataValueAsDateTime;
+                        }
+                        else
+                        {
+                            var updatedCellValue = cellValue.Replace(",", ", ");
+                            var updatedTryParse = DateTime.TryParse(updatedCellValue, out DateTime updatedDataValueAsDateTime);
+                            if (updatedTryParse)
+                            {
+                                returnValue = updatedDataValueAsDateTime;
+                            }
+                            else
+                            {
+                                throw new ExcelImportBadCellException(columnIndex.ToString(), rowIndex, cellValue,
+                                    $"Problem parsing {humanReadableNameOfColumn}", e);
+                            }
+                        }
+
+                    }
+                }
+               
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new ExcelImportBadCellException(columnKeyLetterName, rowIndex, cellValue, $"Problem parsing {humanReadableNameOfColumn}", e);
+                throw new ExcelImportBadCellException(columnIndex.ToString(), rowIndex, cellValue,
+                    $"Problem parsing {humanReadableNameOfColumn}", ex);
             }
 
             return returnValue;

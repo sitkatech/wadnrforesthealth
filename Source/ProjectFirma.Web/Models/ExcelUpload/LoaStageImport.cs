@@ -28,64 +28,73 @@ namespace ProjectFirma.Web.Models.ExcelUpload
 {
     public class LoaStageImport
     {
-        public readonly string BusinessArea;
-        public readonly string FABudgetActivity;
-        public readonly string FunctionalArea;
-        public readonly string ObligationNumber;
-        public readonly string ObligationItem;
-        public readonly string Fund;
-        public readonly string WbsElement;
-        public readonly string WbsElementDescription;
-        public readonly string BudgetObjectClass;
-        public readonly string Vendor;
-        public readonly string VendorName;
-        public readonly DateTime? PostingDatePerSpl;
-        public readonly double? UnexpendedBalance;
+        public readonly string ProjectID;
+        public readonly string Status;
+        public readonly DateTime? LetterDate;
+        public readonly DateTime? ProjectExpirationDate;
+        public readonly string GrantNumber;
+        public readonly string FocusArea;
+        public readonly string ProjectCode;
+        public readonly string ProgramIndex;
+        public readonly double? MatchAmount;
+        public readonly double? PayAmount;
 
-        public LoaStageImport(KeyValuePair<int, DataRow> keyValuePair)
+        public LoaStageImport(KeyValuePair<int, DataRow> keyValuePair, Dictionary<string,int> columnMappingDictionary, List<string> problemList)
         {
             var rowIndex = keyValuePair.Key;
             var dr = keyValuePair.Value;
-            var columnNameToLetterDict = LoaStageImports.GetBudgetColumnNameToColumnLetterDictionary();
 
-            // Column - Business Area Key
-            BusinessArea = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.BusinessAreaKey);
+            // Column - Project ID Key
+            ProjectID = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.ProjectIDKey, columnMappingDictionary);
 
-            // Column - FA Budget Activity Key
-            FABudgetActivity = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.FaBudgetActivityKey);
+            if (!string.IsNullOrEmpty(ProjectID))
+            {
+                // Column - Status Key
+                Status = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.StatusKey, columnMappingDictionary);
 
-            // Column - Functional Area Text
-            FunctionalArea = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.FunctionalAreaText);
+                try
+                {
+                    // Column - Letter Date Key
+                    LetterDate = ExcelColumnHelper.GetDateTimeDataValueForColumnName(dr, rowIndex,
+                        columnMappingDictionary, LoaStageImports.LetterDateKey, true);
+                }
+                catch (ExcelImportBadCellException e)
+                {
+                    problemList.Add(e.Message);
+                }
 
-            // Column - Obligation Number Key
-            ObligationNumber = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.ObligationNumberKey);
+                try
+                {
+                    // Column - Project Expiration Date Key
+                    ProjectExpirationDate = ExcelColumnHelper.GetDateTimeDataValueForColumnName(dr, rowIndex, columnMappingDictionary, LoaStageImports.ProjectExpirationDateKey, true);
+                }
 
-            // Column - Obligation Item Key
-            ObligationItem = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.ObligationItemKey);
+                catch (ExcelImportBadCellException e)
+                {
+                    problemList.Add(e.Message);
+                }
+               
 
-            // Column - Fund Key
-            Fund = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.FundKey);
+                // Column - Grant Number Key
+                GrantNumber = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.GrantNumberKey, columnMappingDictionary);
 
-            // Column - WBS Element Key
-            WbsElement = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.WbsElementKey);
+                // Column - Grant Key
+                FocusArea = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.GrantKey, columnMappingDictionary);
 
-            // Column - Funded Program (Really an alternate name for the Name of the WBS element. It's named this because of reporting engine limitations on Dorothy's side.)
-            WbsElementDescription = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.FundedProgramKey);
+                // Column - Code Key
+                ProjectCode = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.CodeKey, columnMappingDictionary);
 
-            // Column - Budget Object Class Key
-            BudgetObjectClass = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.BudgetObjectClassKey);
+                // Column - Index Key
+                ProgramIndex = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.IndexKey, columnMappingDictionary);
 
-            // Column - Vendor Key
-            Vendor = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.VendorKey);
+                // Column - Match Key
+                MatchAmount = ExcelColumnHelper.GetDoubleDataValueForColumnName(dr, rowIndex, LoaStageImports.MatchKey, columnMappingDictionary);
 
-            // Column - Vendor Key
-            VendorName = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.VendorNameText);
+                // Column - Pay Key
+                PayAmount = ExcelColumnHelper.GetDoubleDataValueForColumnName(dr, rowIndex, LoaStageImports.PayKey, columnMappingDictionary);
+            }
 
-            // Column - Posting Date (Per SPL) - Key
-            PostingDatePerSpl = ExcelColumnHelper.GetDateTimeDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.PostingDatePerSplKey, ExcelColumnHelper.ExcelDateTimeCellType.SerialDateTimeValue);
-
-            // Column - Unexpended Balance
-            UnexpendedBalance = ExcelColumnHelper.GetDoubleDataValueForColumnName(dr, rowIndex, columnNameToLetterDict, LoaStageImports.UnexpendedBalanceValue);
+          
         }
 
 

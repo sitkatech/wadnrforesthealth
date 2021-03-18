@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Models.ExcelUpload;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.UnitTestCommon;
 using ProjectFirma.Web.Views.ExcelUpload;
 
 namespace ProjectFirma.Web.Controllers
@@ -16,9 +21,125 @@ namespace ProjectFirma.Web.Controllers
     public class ExcelUploadController : FirmaBaseController
     {
 
+
+        [CrossAreaRoute]
         [HttpGet]
         [FirmaAdminFeature]
-        public PartialViewResult ImportLoaExcelFile()
+        public ViewResult ManageExcelUploadsAndEtl()
+        {
+            return ViewManageExcelUploadsAndEtl_Impl();
+        }
+
+        private ViewResult ViewManageExcelUploadsAndEtl_Impl()
+        {
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.UploadLoaTabularDataExcel);
+            var loaUploadFormID = GenerateUploadLoaFileUploadFormId();
+
+            var newLoaNortheastExcelFileUpload = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaNortheastExcelFile());
+            var newLoaSoutheastExcelFileUpload = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaSoutheastExcelFile());
+            var doPublishingProcessingPostUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.DoPublishingProcessing(null));
+
+            var viewData = new ManageExcelUploadsAndEtlViewData(CurrentPerson,
+                firmaPage,
+                newLoaNortheastExcelFileUpload,
+                newLoaSoutheastExcelFileUpload,
+                doPublishingProcessingPostUrl,
+                loaUploadFormID);
+            var viewModel = new ManageExcelUploadsAndEtlViewModel();
+            return RazorView<ManageExcelUploadsAndEtl, ManageExcelUploadsAndEtlViewData, ManageExcelUploadsAndEtlViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [FirmaAdminFeature]
+        public ActionResult DoPublishingProcessing()
+        {
+            throw new NotImplementedException("Just here to provide signature; do not call.");
+        }
+
+        [HttpPost]
+        [FirmaAdminFeature]
+        public ActionResult DoPublishingProcessing(ManageExcelUploadsAndEtlViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new SitkaDisplayErrorException("Not expecting model state to be bad; not running publishing processing.");
+            }
+
+            bool wasErrorDuringProcessing = false;
+            DateTime startTime = DateTime.Now;
+            try
+            {
+                DoPublishingSql();
+
+                //var processedDateTime = DateTime.Now;
+                //var latestImportProcessingForFbms = ImpProcessing.GetLatestImportProcessingForGivenType(HttpRequestStorage.DatabaseEntities, ImpProcessingTableType.FBMS);
+                //var latestImportProcessingForPnBudget = ImpProcessing.GetLatestImportProcessingForGivenType(HttpRequestStorage.DatabaseEntities, ImpProcessingTableType.PNBudget);
+                //if (latestImportProcessingForFbms == null || latestImportProcessingForPnBudget == null)
+                //{
+                //    // We don't expect this to really happen once things are running smoothly, but in the short
+                //    // term I want to know about it.
+                //    SetErrorForDisplay($"Could not find processing records for last upload (ImpProcessing)");
+                //}
+                //else
+                //{
+                //    latestImportProcessingForFbms.LastProcessedDate = processedDateTime;
+                //    latestImportProcessingForFbms.LastProcessedPerson = CurrentFirmaSession.Person;
+                //    latestImportProcessingForPnBudget.LastProcessedDate = processedDateTime;
+                //    latestImportProcessingForPnBudget.LastProcessedPerson = CurrentFirmaSession.Person;
+                //    HttpRequestStorage.DatabaseEntities.SaveChanges(this.CurrentFirmaSession);
+                //}
+            }
+            catch (Exception e)
+            {
+                SetErrorForDisplay($"Problem executing Publishing: {e.Message}");
+                wasErrorDuringProcessing = true;
+            }
+
+            DateTime endTime = DateTime.Now;
+            var elapsedTime = endTime - startTime;
+            string processingTimeString = GetTaskTimeString("Publishing", elapsedTime);
+
+            if (!wasErrorDuringProcessing)
+            {
+                SetMessageForDisplay($"Publishing Processing completed Successfully.<br/>{processingTimeString}");
+            }
+            else
+            {
+                // Apparently at the moment we can only have one error/warning, so since I want TWO messages, resorting to 
+                // an error and a warning.
+                SetErrorForDisplay($"Publishing Processing had problems.<br/>{processingTimeString}");
+            }
+            return RedirectToAction(new SitkaRoute<ExcelUploadController>(x => x.ManageExcelUploadsAndEtl()));
+        }
+
+        public static void DoPublishingSql()
+        {
+            try
+            {
+                var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+                var sqlQueryOne = $"dbo.pImportLoaTabularData";
+                using (var command = new SqlCommand(sqlQueryOne))
+                {
+                    var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                    using (var conn = sqlConnection)
+                    {
+                        command.Connection = conn;
+                        command.CommandTimeout = 400;
+                        ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new SitkaDisplayErrorException($"Problem calling SQL: {e.Message}");
+            }
+        }
+
+        [HttpGet]
+        [FirmaAdminFeature]
+        public PartialViewResult ImportLoaNortheastExcelFile()
         {
             var viewModel = new ImportLoaExcelFileViewModel();
             return ViewImportLoaExcelFile(viewModel);
@@ -27,7 +148,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [FirmaAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult ImportLoaExcelFile(ImportLoaExcelFileViewModel viewModel)
+        public ActionResult ImportLoaNortheastExcelFile(ImportLoaExcelFileViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -36,21 +157,45 @@ namespace ProjectFirma.Web.Controllers
 
             var httpPostedFileBase = viewModel.FileResourceData;
 
-            return DoLoaExcelImportForHttpPostedFile(httpPostedFileBase);
+            return DoLoaExcelImportForHttpPostedFile(httpPostedFileBase, true);
+        }
+
+
+        [HttpGet]
+        [FirmaAdminFeature]
+        public PartialViewResult ImportLoaSoutheastExcelFile()
+        {
+            var viewModel = new ImportLoaExcelFileViewModel();
+            return ViewImportLoaExcelFile(viewModel);
+        }
+
+        [HttpPost]
+        [FirmaAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult ImportLoaSoutheastExcelFile(ImportLoaExcelFileViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewImportLoaExcelFile(viewModel);
+            }
+
+            var httpPostedFileBase = viewModel.FileResourceData;
+
+            return DoLoaExcelImportForHttpPostedFile(httpPostedFileBase, false);
         }
 
         private PartialViewResult ViewImportLoaExcelFile(ImportLoaExcelFileViewModel viewModel)
         {
             var fmbsExcelFileUploadFormID = GenerateUploadLoaFileUploadFormId();
-            var newGisUploadUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaExcelFile(null));
+            var newGisUploadUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaNortheastExcelFile(null));
             var viewData = new ImportLoaExcelFileViewData(fmbsExcelFileUploadFormID, newGisUploadUrl);
             return RazorPartialView<ImportLoaExcelFile, ImportLoaExcelFileViewData, ImportLoaExcelFileViewModel>(viewData, viewModel);
         }
 
         [FirmaAdminFeature]
-        private ActionResult DoLoaExcelImportForHttpPostedFile(HttpPostedFileBase httpPostedFileBase)
+        private ActionResult DoLoaExcelImportForHttpPostedFile(HttpPostedFileBase httpPostedFileBase, bool isNortheast)
         {
-            return DoLoaExcelImportForFileStream(httpPostedFileBase.InputStream, httpPostedFileBase.FileName);
+            return DoLoaExcelImportForFileStream(httpPostedFileBase.InputStream, httpPostedFileBase.FileName, isNortheast);
         }
 
         public static string GenerateUploadLoaFileUploadFormId()
@@ -93,27 +238,55 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        public const int FbmsExcelFileHeaderRowOffset = 2;
+        public const int LoaNortheastExcelFileHeaderRowOffset = 0;
 
         [FirmaAdminFeature]
-        private ActionResult DoLoaExcelImportForFileStream(Stream excelFileAsStream, string optionalOriginalFilename)
+        private ActionResult DoLoaExcelImportForFileStream(Stream excelFileAsStream, string optionalOriginalFilename, bool isNortheast)
         {
             DateTime startTime = DateTime.Now;
-
+            var errorList = new List<string>();
             List<LoaStageImport> loaStages;
             try
             {
-                loaStages = LoaStageImportsHelper.LoadLoaStagesFromXlsFile(excelFileAsStream, FbmsExcelFileHeaderRowOffset);
+                loaStages = LoaStageImportsHelper.LoadLoaStagesFromXlsFile(excelFileAsStream, LoaNortheastExcelFileHeaderRowOffset, errorList);
             }
             catch (Exception ex)
             {
                 return Common_LoadFromXls_ExceptionHandler(excelFileAsStream, optionalOriginalFilename, ex);
             }
 
-            //LoadFbmsRecordsFromExcelFileObjectsIntoPairedStagingTables(budgetStageImports, out var countAddedBudgets, this.CurrentFirmaSession);
-            //DateTime endTime = DateTime.Now;
-            //var elapsedTime = endTime - startTime;
-            //string importTimeString = GetTaskTimeString("Import", elapsedTime);
+            if (isNortheast)
+            {
+                var previousLoaStagesFromNortheast =
+                    HttpRequestStorage.DatabaseEntities.LoaStages.Where(x => x.IsNortheast);
+                previousLoaStagesFromNortheast.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            }
+            else
+            {
+                var previousLoaStagesFromSoutheast =
+                    HttpRequestStorage.DatabaseEntities.LoaStages.Where(x => x.IsSoutheast);
+                previousLoaStagesFromSoutheast.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            }
+
+
+
+            var countAdded = 0;
+            foreach (var loaStageImport in loaStages)
+            {
+                if (!string.IsNullOrEmpty(loaStageImport.ProjectID))
+                {
+                    var loaStage = new LoaStage(loaStageImport, isNortheast);
+                    countAdded = countAdded + 1;
+                    HttpRequestStorage.DatabaseEntities.LoaStages.Add(loaStage);
+                }
+            }
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
+
+            
+            DateTime endTime = DateTime.Now;
+            var elapsedTime = endTime - startTime;
+            string importTimeString = GetTaskTimeString("Import", elapsedTime);
 
             //// Record that we uploaded
             //var newImpProcessingForFbms = new ImpProcessing(ImpProcessingTableType.FBMS);
@@ -122,7 +295,8 @@ namespace ProjectFirma.Web.Controllers
             //HttpRequestStorage.DatabaseEntities.ImpProcessings.Add(newImpProcessingForFbms);
             //HttpRequestStorage.DatabaseEntities.SaveChanges(this.CurrentFirmaSession);
 
-            //SetMessageForDisplay($"{countAddedBudgets.ToGroupedNumeric()} FBMS records were successfully imported to database. </br>{importTimeString}.");
+            SetMessageForDisplay($"{countAdded.ToGroupedNumeric()} LOA records were successfully imported to database. </br>{importTimeString}.");
+            SetInfoForDisplay(string.Join("<br>",errorList));
             // This is the right thing to return, since this starts off in a modal dialog
             return new ModalDialogFormJsonResult();
         }

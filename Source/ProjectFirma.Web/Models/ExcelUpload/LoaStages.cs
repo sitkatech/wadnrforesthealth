@@ -35,9 +35,10 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         /// </summary>
         public const bool UseExistingSheetNameIfSingleSheetFound = true;
 
-        public static LoaStageImports LoadFromXlsFile(DataTable dataTable)
+        public static LoaStageImports LoadFromXlsFile(DataTable dataTable, List<string> errorList)
         {
-            EnsureWorksheetHasCorrectShape(dataTable);
+            
+            var columnMappingDictionary = EnsureWorksheetHasCorrectShape(dataTable);
 
             // Create index-to-row dictionary. This is generally discouraged, but we don't have any other way to get the exact cell address, which 
             // can save the user a great deal of time.
@@ -67,27 +68,33 @@ namespace ProjectFirma.Web.Models.ExcelUpload
             }
 
             // Turn all valid rows into PayRecV3s (Unexpended Balance version)
-            List<LoaStageImport> fbmsBudgetStageImportPayrecV3UnexpendedBalances = indexToRowDict.Select(kvp => new LoaStageImport(kvp)).ToList();
-            return new LoaStageImports(fbmsBudgetStageImportPayrecV3UnexpendedBalances);
+            List<LoaStageImport> loaStageImports = indexToRowDict.Select(kvp => new LoaStageImport(kvp, columnMappingDictionary, errorList)).ToList();
+            return new LoaStageImports(loaStageImports);
         }
 
         public LoaStageImports(IEnumerable<LoaStageImport> collection) : base(collection)
         {
         }
 
-        private static void EnsureWorksheetHasCorrectShape(DataTable dataTable)
+        private static Dictionary<string,int> EnsureWorksheetHasCorrectShape(DataTable dataTable)
         {
             var columnNames = GetBudgetColumnLetterToColumnNameDictionary();
 
             var dataRow = dataTable.Rows[0];
             var expectedColumns = columnNames.Values.ToList();
             var actualColumns = dataTable.Columns.Cast<DataColumn>().Select(c => (string)dataRow[c]).ToList();
-
+            var dictionary = new Dictionary<string, int>();
+            for (int index = 0; index < actualColumns.Count; index++)
+            {
+                var actualColumn = actualColumns[index];
+                dictionary.Add(actualColumn,index);
+            }
+            
             var missingColumns = expectedColumns.Except(actualColumns).ToList();
             Check.RequireThrowUserDisplayable(!missingColumns.Any(),
                                               string.Format("Expected columns [{0}]\n\nBut got columns [{1}].\n\nThese columns were missing: [{2}]", string.Join(", ", expectedColumns),
                                                             string.Join(", ", actualColumns), string.Join(", ", missingColumns)));
-
+            return dictionary;
         }
 
         /*
@@ -100,39 +107,33 @@ Renamed: "Vendor Name" => "Name"
          */
 
 
-        public const string BusinessAreaKey = "Business area";
-        public const string FaBudgetActivityKey = "FA Budget Activity";
-        public const string FunctionalAreaText = "Functional area";
-        public const string ObligationNumberKey = "Obligation Number";
-        public const string ObligationItemKey = "Obligation Item";
-        public const string FundKey = "Fund";
-        public const string WbsElementKey = "WBS Element";
-        // "Funded Program" would be better named "WBS Description", but there's limitations on Dorothy's side in her reporting engine.
-        public const string FundedProgramKey = "Funded Program";
-        public const string BudgetObjectClassKey = "Budget Object Class";
-        public const string VendorKey = "Vendor";
-        // We'd like this to say "Vendor Name", but that's tough for Dorothy.
-        public const string VendorNameText = "Name";
-        public const string PostingDatePerSplKey = "Posting Date (Per SPL)";
-        public const string UnexpendedBalanceValue = "Unexpended Balance";
+        public const string ProjectIDKey = "Project ID";
+        public const string LetterDateKey = "Letter Date";
+        public const string ProjectExpirationDateKey = "Project Expiration Date";
+        public const string GrantNumberKey = "Grant #";
+        public const string GrantKey = "Grant";
+        public const string CodeKey = "Code";
+        public const string IndexKey = "Index";
+        public const string MatchKey = "Match";
+        public const string PayKey = "Pay";
+        public const string StatusKey = "Status";
+       
 
         public static Dictionary<string, string> GetBudgetColumnLetterToColumnNameDictionary()
         {
             return new Dictionary<string, string>
             {
-                {"A", BusinessAreaKey},
-                {"B", FaBudgetActivityKey},
-                {"C", FunctionalAreaText},
-                {"D", ObligationNumberKey},
-                {"E", ObligationItemKey},
-                {"F", FundKey},
-                {"G", WbsElementKey},
-                {"H", FundedProgramKey},
-                {"I", BudgetObjectClassKey},
-                {"J", VendorKey},
-                {"K", VendorNameText},
-                {"L", PostingDatePerSplKey },
-                {"M", UnexpendedBalanceValue }
+                {"A", ProjectIDKey},
+                {"K", StatusKey},
+                {"M", LetterDateKey},
+                {"N", ProjectExpirationDateKey},
+                {"AZ", GrantNumberKey},
+                {"BE", GrantKey},
+                {"BF", CodeKey},
+                {"BG", IndexKey},
+                {"BJ", MatchKey},
+                {"BK", PayKey},
+
             };
         }
 

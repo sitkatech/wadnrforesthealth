@@ -58,6 +58,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeGisUploadAttemptInstructions GisUploadAttemptInstructions = FirmaPageTypeGisUploadAttemptInstructions.Instance;
         public static readonly FirmaPageTypeDNRCostShareTreatments DNRCostShareTreatments = FirmaPageTypeDNRCostShareTreatments.Instance;
         public static readonly FirmaPageTypeProgramsList ProgramsList = FirmaPageTypeProgramsList.Instance;
+        public static readonly FirmaPageTypeUploadLoaTabularDataExcel UploadLoaTabularDataExcel = FirmaPageTypeUploadLoaTabularDataExcel.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -67,7 +68,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -217,6 +218,8 @@ namespace ProjectFirma.Web.Models
                     return TaxonomyTrunkList;
                 case FirmaPageTypeEnum.Training:
                     return Training;
+                case FirmaPageTypeEnum.UploadLoaTabularDataExcel:
+                    return UploadLoaTabularDataExcel;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -263,7 +266,8 @@ namespace ProjectFirma.Web.Models
         InteractionEventList = 62,
         GisUploadAttemptInstructions = 63,
         DNRCostShareTreatments = 64,
-        ProgramsList = 65
+        ProgramsList = 65,
+        UploadLoaTabularDataExcel = 66
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -498,5 +502,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeProgramsList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeProgramsList Instance = new FirmaPageTypeProgramsList(65, @"ProgramsList", @"Programs List", 1);
+    }
+
+    public partial class FirmaPageTypeUploadLoaTabularDataExcel : FirmaPageType
+    {
+        private FirmaPageTypeUploadLoaTabularDataExcel(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeUploadLoaTabularDataExcel Instance = new FirmaPageTypeUploadLoaTabularDataExcel(66, @"UploadLoaTabularDataExcel", @"Upload Loa Tabular Data", 1);
     }
 }

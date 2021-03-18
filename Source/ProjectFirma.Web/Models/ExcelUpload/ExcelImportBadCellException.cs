@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         public int RowIndex;
         public string CellValue;
 
-        public ExcelImportBadCellException(string columnName, int rowIndex, string cellValue, string errorMessage, Exception innerException) : base(string.Format("{0} - Cell {1}{2} - Cell Value \"{3}\"", errorMessage, columnName, rowIndex + 1, cellValue), innerException)
+        public ExcelImportBadCellException(string columnName, int rowIndex, string cellValue, string errorMessage, Exception innerException) : base(string.Format("{0} - Cell [{2}][{1}] - Cell Value \"{3}\"", errorMessage, columnName, rowIndex + 1, cellValue), innerException)
         {
             ColumnName = columnName;
             CellValue = cellValue;
