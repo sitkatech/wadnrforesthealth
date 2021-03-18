@@ -233,6 +233,8 @@ namespace ProjectFirma.Web.Controllers
             UpdateProjectTypesIfNeeded(gisUploadAttempt);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
+            ExecPClearGisImportTables();
+
             SetMessageForDisplay($"Successfully imported {projectList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
@@ -1187,6 +1189,24 @@ namespace ProjectFirma.Web.Controllers
             Check.Assert(goodFeatures.Count != 0, "Number of usable Feature Classes in uploaded file must be greater than 0.");
 
             return goodFeatures.First();
+        }
+
+
+        private void ExecPClearGisImportTables()
+        {
+            var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
+            var sqlQueryOne = $"dbo.pClearGisImportTables";
+            using (var command = new SqlCommand(sqlQueryOne))
+            {
+                var sqlConnection = new SqlConnection(sqlDatabaseConnectionString);
+                using (var conn = sqlConnection)
+                {
+                    command.Connection = conn;
+                    command.CommandTimeout = 400;
+                    ProjectFirmaSqlDatabase.ExecuteSqlCommand(command);
+                }
+            }
+
         }
 
         private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID

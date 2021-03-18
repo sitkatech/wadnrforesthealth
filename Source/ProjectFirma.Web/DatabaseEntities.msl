@@ -1400,6 +1400,9 @@
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
           <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
           <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="ImportedFromTabularData" ColumnName="ImportedFromTabularData" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1412,6 +1415,9 @@
           <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
           <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
           <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="ImportedFromTabularData" ColumnName="ImportedFromTabularData" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1816,6 +1822,18 @@
           <ScalarProperty Name="EnableAccomplishmentsDashboard" ColumnName="EnableAccomplishmentsDashboard" />
           <ScalarProperty Name="ProjectStewardshipAreaTypeID" ColumnName="ProjectStewardshipAreaTypeID" />
           <ScalarProperty Name="SocrataAppToken" ColumnName="SocrataAppToken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TabularDataImport">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TabularDataImport">
+        <MappingFragment StoreEntitySet="TabularDataImport">
+          <ScalarProperty Name="TabularDataImportID" ColumnName="TabularDataImportID" />
+          <ScalarProperty Name="TabularDataImportTableTypeID" ColumnName="TabularDataImportTableTypeID" />
+          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+          <ScalarProperty Name="UploadPersonID" ColumnName="UploadPersonID" />
+          <ScalarProperty Name="LastProcessedDate" ColumnName="LastProcessedDate" />
+          <ScalarProperty Name="LastProcessedPersonID" ColumnName="LastProcessedPersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

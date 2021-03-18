@@ -26,7 +26,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-CREATE NONCLUSTERED INDEX [<Name of Missing Index, sysname,>] ON [dbo].[LoaStage]
+CREATE NONCLUSTERED INDEX [IDX_LoaStageGrantNumber] ON [dbo].[LoaStage]
 (
 	[GrantNumber] ASC
 )

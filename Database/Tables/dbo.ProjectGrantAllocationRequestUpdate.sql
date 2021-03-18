@@ -9,6 +9,9 @@ CREATE TABLE [dbo].[ProjectGrantAllocationRequestUpdate](
 	[TotalAmount] [money] NULL,
 	[MatchAmount] [money] NULL,
 	[PayAmount] [money] NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[ImportedFromTabularData] [bit] NOT NULL,
  CONSTRAINT [PK_ProjectGrantAllocationRequestUpdate_ProjectGrantAllocationRequestUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectGrantAllocationRequestUpdateID] ASC

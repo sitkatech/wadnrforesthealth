@@ -69,18 +69,45 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                                 IList<ProjectFundingSource> allProjectFundingSources)
         {
             //Update the ProjectGrantAllocationRequests
+            var dateNow = DateTime.Now;
             var projectGrantAllocationRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequestSimples != null)
             {
-                // Completely rebuild the list
-                projectGrantAllocationRequestsUpdated = ProjectGrantAllocationRequestSimples
-                    .Select(x => x.ToProjectGrantAllocationRequest()).ToList();
+
+                foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequestSimples)
+                {
+                    var existingCurrentOne = currentProjectGrantAllocationRequests.SingleOrDefault(x =>
+                        x.ProjectID == projectGrantAllocationRequestSimple.ProjectID &&
+                        x.GrantAllocationID == projectGrantAllocationRequestSimple.GrantAllocationID);
+                    if (existingCurrentOne != null)
+                    {
+                        var projectGrantAllocationRequestToAdd =
+                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                                existingCurrentOne.CreateDate, dateNow, existingCurrentOne.ImportedFromTabularData);
+                        projectGrantAllocationRequestsUpdated.Add(projectGrantAllocationRequestToAdd);
+                    }
+                    else
+                    {
+                        var projectGrantAllocationRequestToAdd =
+                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                                dateNow, null, false);
+                        projectGrantAllocationRequestsUpdated.Add(projectGrantAllocationRequestToAdd);
+                    }
+                }
             }
 
             currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsUpdated,
                 allProjectGrantAllocationRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
-                (x, y) => { x.TotalAmount = y.TotalAmount; });
+                (x, y) =>
+                {
+                    x.TotalAmount = y.TotalAmount;
+                    x.MatchAmount = y.MatchAmount;
+                    x.PayAmount = y.PayAmount;
+                    x.UpdateDate = y.UpdateDate;
+                    x.CreateDate = y.CreateDate;
+                    x.ImportedFromTabularData = y.ImportedFromTabularData;
+                });
 
             //Update the ProjectFundingSources
             var projectFundingSourcesUpdated = new List<Models.ProjectFundingSource>();

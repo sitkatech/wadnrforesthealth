@@ -85,7 +85,12 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.Index());
     }
 
-    
+    public partial class FirmaPageTypeUploadLoaTabularDataExcel 
+    {
+        public override string GetViewUrl() => SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ManageExcelUploadsAndEtl());
+    }
+
+
     public partial class FirmaPageTypeTaxonomyBranchList
     {
         public override string GetViewUrl() => SitkaRoute<TaxonomyBranchController>.BuildUrlFromExpression(x => x.Index());
