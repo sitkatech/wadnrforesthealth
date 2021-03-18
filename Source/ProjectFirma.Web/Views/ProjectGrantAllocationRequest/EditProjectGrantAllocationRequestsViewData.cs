@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
@@ -35,10 +36,12 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         public int? GrantAllocationID { get; }
         public bool FromGrantAllocation { get; }
         public List<SelectListItem> FundingSources { get; }
+        public bool IsMatchAndPayRelevant { get; }
 
         private EditProjectGrantAllocationRequestsViewData(List<ProjectSimple> allProjects,
             List<GrantAllocationSimple> allGrantAllocations,
             int? projectID,
+            int? projectProgramID,
             int? grantAllocationID)
         {
             AllGrantAllocations = allGrantAllocations;
@@ -49,11 +52,19 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 
             var displayMode = GrantAllocationID.HasValue ? EditorDisplayMode.FromGrantAllocation : EditorDisplayMode.FromProject;
             FromGrantAllocation = displayMode == EditorDisplayMode.FromGrantAllocation;
+            IsMatchAndPayRelevant = false;
+            if (displayMode == EditorDisplayMode.FromProject)
+            {
+                if (projectProgramID == ProjectController.LoaProgramID)
+                {
+                    IsMatchAndPayRelevant = true;
+                }
+            }
         }
 
         public EditProjectGrantAllocationRequestsViewData(ProjectSimple project,
             List<GrantAllocationSimple> allGrantAllocations)
-            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID, null)
+            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID,project.ProgramID, null)
         {
         }
 

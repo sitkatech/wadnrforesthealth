@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectNotificationGridName { get; }
         public string ProjectNotificationGridDataUrl { get; }
 
-        public TreatmentAreaGridSpec TreatmentAreaGridSpec { get; }
+        public TreatmentGroupGridSpec TreatmentGroupGridSpec { get; }
         public string TreatmentAreaGrid { get; }
         public string TreatmentAreaGridDataUrl { get; }
 
@@ -152,7 +152,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData,
             List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            TreatmentAreaGridSpec treatmentAreaGridSpec,
+            TreatmentGroupGridSpec treatmentGroupGridSpec,
             string treatmentAreaGridDataUrl
             , TreatmentGridSpec treatmentGridSpec
             , string treatmentGridDataUrl
@@ -371,7 +371,7 @@ namespace ProjectFirma.Web.Views.Project
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
 
-            TreatmentAreaGridSpec = treatmentAreaGridSpec;
+            TreatmentGroupGridSpec = treatmentGroupGridSpec;
             TreatmentAreaGrid = "treatmentAreaGrid";
             TreatmentAreaGridDataUrl = treatmentAreaGridDataUrl;
 

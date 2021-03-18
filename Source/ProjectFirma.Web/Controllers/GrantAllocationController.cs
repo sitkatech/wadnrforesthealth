@@ -31,6 +31,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Views.FocusArea;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
@@ -369,8 +370,9 @@ namespace ProjectFirma.Web.Controllers
             };
 
             var grantAllocationExpendituresGridSpec = new GrantAllocationExpendituresGridSpec();
+            var grantAllocationAwardsGridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, grantAllocation);
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec, grantAllocationAwardsGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
@@ -751,6 +753,16 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationExpenditures = grantAllocation.GrantAllocationExpenditures.ToList();
             var gridSpec = new GrantAllocationExpendituresGridSpec();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationExpenditure>(grantAllocationExpenditures, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAward> GrantAllocationAwardsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationAwards = grantAllocation.GrantAllocationAwards.ToList();
+            var gridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, grantAllocation);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAward>(grantAllocationAwards, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

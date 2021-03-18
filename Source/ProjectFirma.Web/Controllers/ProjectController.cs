@@ -218,7 +218,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
 
-            var treatmentAreaGridSpec = new TreatmentAreaGridSpec(CurrentPerson);
+            var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson);
             var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
             var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
@@ -268,7 +268,7 @@ namespace ProjectFirma.Web.Controllers
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID
                 , projectPeopleDetailViewData
-                , treatmentAreaGridSpec
+                , treatmentGroupGridSpec
                 , treatmentAreaGridDataUrl
                 , treatmentGridSpec
                 , treatmentGridDataUrl

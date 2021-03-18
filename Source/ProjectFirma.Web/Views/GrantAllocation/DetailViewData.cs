@@ -27,6 +27,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.FocusArea;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
@@ -55,8 +56,13 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public GrantAllocationBudgetVsActualsViewData GrantAllocationBudgetVsActualsViewData { get; }
 
         public GrantAllocationExpendituresGridSpec GrantAllocationExpendituresGridSpec { get; }
+        
         public string GrantAllocationExpendituresGridName { get; }
         public string GrantAllocationExpendituresGridDataUrl { get; }
+
+        public GrantAllocationAwardGridSpec GrantAllocationAwardGridSpec { get; }
+        public string GrantAllocationAwardGridName { get; }
+        public string GrantAllocationAwardGridDataUrl { get; }
         public FileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
@@ -65,7 +71,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             , EntityNotesViewData grantAllocationNoteInternalsViewData
             , ViewGoogleChartViewData viewGoogleChartViewData
             , GridSpec<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequestsGridSpec
-            , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec)
+            , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec
+            , GrantAllocationAwardGridSpec grantAllocationAwardGridSpec)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
@@ -99,6 +106,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationExpendituresGridSpec = grantAllocationExpendituresGridSpec;
             GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
             GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(grantAllocation));
+
+
+            GrantAllocationAwardGridSpec = grantAllocationAwardGridSpec;
+            GrantAllocationAwardGridName = "grantAllocationAwardsGrid";
+            GrantAllocationAwardGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationAwardsGridJsonData(grantAllocation));
 
             GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation, grantAllocation.GrantAllocationBudgetLineItems.ToList());
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
