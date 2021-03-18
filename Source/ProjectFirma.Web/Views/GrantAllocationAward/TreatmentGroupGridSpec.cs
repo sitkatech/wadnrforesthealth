@@ -10,9 +10,9 @@ using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
-    public class TreatmentAreaGridSpec : GridSpec<Models.TreatmentArea>
+    public class TreatmentGroupGridSpec : GridSpec<Models.TreatmentGroup>
     {
-        public TreatmentAreaGridSpec(Person currentPerson)
+        public TreatmentGroupGridSpec(Person currentPerson)
         {
             bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             int buttonGridWidth = 30;

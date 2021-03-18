@@ -698,6 +698,7 @@
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\SqlBienniumTest.cs" />
     <Compile Include="Models\Treatment.cs" />
+    <Compile Include="Models\TreatmentGroup.cs" />
     <Compile Include="Models\TreatmentModelExtensions.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
     <Compile Include="ADFSSamlResponseTest.cs" />
@@ -963,7 +964,7 @@
     <Compile Include="Views\GrantAllocationAward\ContractorInvoiceItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\TravelLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\SuppliesLineItemGridSpec.cs" />
-    <Compile Include="Views\GrantAllocationAward\TreatmentAreaGridSpec.cs" />
+    <Compile Include="Views\GrantAllocationAward\TreatmentGroupGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\TreatmentGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsViewData.cs" />

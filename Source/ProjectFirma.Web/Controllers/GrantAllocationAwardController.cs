@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
@@ -540,12 +541,18 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
-        public GridJsonNetJObjectResult<TreatmentArea> TreatmentAreaProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        public GridJsonNetJObjectResult<TreatmentGroup> TreatmentAreaProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var treatmentAreas = project.Treatments.Select(x => x.TreatmentArea).GroupBy(x => x.TreatmentAreaID).Select(x => x.ToList().First());
-            var gridSpec = new TreatmentAreaGridSpec(CurrentPerson);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentArea>(treatmentAreas.ToList(), gridSpec);
+            var treatmentAreas = project.Treatments.Where(x => x.TreatmentAreaID.HasValue).Select(x => x.TreatmentArea).GroupBy(x => x.TreatmentAreaID).Select(x => x.ToList().First()).ToList();
+            var grantAllocationAwardLandownerCostShareLineItems = project.Treatments.Where(x => x.GrantAllocationAwardLandownerCostShareLineItemID.HasValue).Select(x => x.GrantAllocationAwardLandownerCostShareLineItem).GroupBy(x => x.GrantAllocationAwardLandownerCostShareLineItemID).Select(x => x.ToList().First());
+            var treatmentGroups = new List<TreatmentGroup>();
+            var treatmentAreaToTreatmentGroups = treatmentAreas.Select(x => new TreatmentGroup(x)).ToList();
+            var grantAllocationAwardLandownerCostShareLineItemsToTreatmentGroups = grantAllocationAwardLandownerCostShareLineItems.Select(x => new TreatmentGroup(x)).ToList();
+            treatmentGroups.AddRange(treatmentAreaToTreatmentGroups);
+            treatmentGroups.AddRange(grantAllocationAwardLandownerCostShareLineItemsToTreatmentGroups);
+            var gridSpec = new TreatmentGroupGridSpec(CurrentPerson);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentGroup>(treatmentGroups, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
