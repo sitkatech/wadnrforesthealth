@@ -1,4 +1,5 @@
-﻿using ProjectFirma.Web.Common;
+﻿using System.Collections.Generic;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirmaModels.Models;
 
@@ -16,64 +17,61 @@ namespace ProjectFirma.Web.Views.ExcelUpload
         {
             get
             {
-                //bool fbmsProcessingIsNeeded = LatestImportProcessingForFbms?.LastProcessedDate == null;
-                //bool pnBudgetProcessingIsNeeded = LatestImportProcessingForPnBudget?.LastProcessedDate == null;
+                bool fbmsProcessingIsNeeded = LatestTabularDataImportForLoaNortheast?.LastProcessedDate == null;
+                bool pnBudgetProcessingIsNeeded = LatestTabularDataImportForLoaSoutheast?.LastProcessedDate == null;
 
-                //bool publishingProcessingIsNeeded = fbmsProcessingIsNeeded || pnBudgetProcessingIsNeeded;
-                //return publishingProcessingIsNeeded;
-                return true;
+                bool publishingProcessingIsNeeded = fbmsProcessingIsNeeded || pnBudgetProcessingIsNeeded;
+                return publishingProcessingIsNeeded;
             }
         }
 
-        //public ImpProcessing LatestImportProcessingForFbms;
-        //public ImpProcessing LatestImportProcessingForPnBudget;
+        public TabularDataImport LatestTabularDataImportForLoaNortheast;
+        public TabularDataImport LatestTabularDataImportForLoaSoutheast;
 
         public ManageExcelUploadsAndEtlViewData(Person currentPerson,
                                        Models.FirmaPage firmaPage,
                                        string uploadLoaNortheastSpreadSheetUrl,
                                        string uploadLoaSoutheastSpreadSheetUrl,
                                        string doPublishingProcessingPostUrl,
-                                       string uploadLoaFormID
+                                       string uploadLoaFormID,
+                                       List<TabularDataImport> tabularDataImports
                                        ) : base(currentPerson, firmaPage)
         {
-            PageTitle = $"Upload Budget and Invoice Data";
+            PageTitle = $"Upload Loa Tabular Data";
             UploadLoaNortheastSpreadSheetUrl = uploadLoaNortheastSpreadSheetUrl;
             UploadLoaSoutheastSpreadSheetUrl = uploadLoaSoutheastSpreadSheetUrl;
             UploadLoaFormID = uploadLoaFormID;
             DoPublishingProcessingPostUrl = doPublishingProcessingPostUrl;
 
-            //LatestImportProcessingForFbms = ImpProcessing.GetLatestImportProcessingForGivenType(HttpRequestStorage.DatabaseEntities, ImpProcessingTableType.FBMS);
-            //LatestImportProcessingForPnBudget = ImpProcessing.GetLatestImportProcessingForGivenType(HttpRequestStorage.DatabaseEntities, ImpProcessingTableType.PNBudget);
+            LatestTabularDataImportForLoaNortheast = TabularDataImport.GetLatestImportProcessingForGivenType(tabularDataImports, TabularDataImportTableType.LoaNortheast);
+            LatestTabularDataImportForLoaSoutheast = TabularDataImport.GetLatestImportProcessingForGivenType(tabularDataImports, TabularDataImportTableType.LoaSoutheast);
         }
 
         public string GetLastLoaNortheastUploadedDateAndPersonString()
         {
-            //var lastFbmsUploadDate = LatestImportProcessingForFbms?.UploadDate;
-            //return lastFbmsUploadDate != null ? $"{lastFbmsUploadDate.ToString()} - {LatestImportProcessingForFbms.UploadPerson.GetFullNameFirstLast()}" : "Unknown";
-            return string.Empty;
+            var lastLoaNortheastUploadDate = LatestTabularDataImportForLoaNortheast?.UploadDate;
+            return lastLoaNortheastUploadDate != null ? $"{lastLoaNortheastUploadDate} - {LatestTabularDataImportForLoaNortheast.UploadPerson.FullNameFirstLast}" : "Unknown";
         }
 
         public string GetLastLoaSoutheastUploadedDateAndPersonString()
         {
-            //var lastFbmsUploadDate = LatestImportProcessingForFbms?.UploadDate;
-            //return lastFbmsUploadDate != null ? $"{lastFbmsUploadDate.ToString()} - {LatestImportProcessingForFbms.UploadPerson.GetFullNameFirstLast()}" : "Unknown";
-            return string.Empty;
+            var lastLoaSoutheastUploadDate = LatestTabularDataImportForLoaSoutheast?.UploadDate;
+            return lastLoaSoutheastUploadDate != null ? $"{lastLoaSoutheastUploadDate} - {LatestTabularDataImportForLoaNortheast.UploadPerson.FullNameFirstLast}" : "Unknown";
         }
 
 
 
         public string GetLastLoaNortheastLastProcessedDateAndPersonString()
         {
-            //var lastFbmsProcessedDate = LatestImportProcessingForFbms?.LastProcessedDate;
-            //return lastFbmsProcessedDate != null ? $"{lastFbmsProcessedDate.ToString()} - {LatestImportProcessingForFbms.LastProcessedPerson.GetFullNameFirstLast()}" : "Unknown";
-            return string.Empty;
+            var lastNortheastProcessedDate = LatestTabularDataImportForLoaNortheast?.LastProcessedDate;
+            return lastNortheastProcessedDate != null ? $"{lastNortheastProcessedDate.ToString()} - {LatestTabularDataImportForLoaNortheast.LastProcessedPerson.FullNameFirstLast}" : "Unknown";
         }
 
         public string GetLastLoaSoutheastLastProcessedDateAndPersonString()
         {
-            //var lastFbmsProcessedDate = LatestImportProcessingForFbms?.LastProcessedDate;
-            //return lastFbmsProcessedDate != null ? $"{lastFbmsProcessedDate.ToString()} - {LatestImportProcessingForFbms.LastProcessedPerson.GetFullNameFirstLast()}" : "Unknown";
-            return string.Empty;
+            var lastSoutheastProcessedDate = LatestTabularDataImportForLoaSoutheast?.LastProcessedDate;
+            return lastSoutheastProcessedDate != null ? $"{lastSoutheastProcessedDate.ToString()} - {LatestTabularDataImportForLoaSoutheast.LastProcessedPerson.FullNameFirstLast}" : "Unknown";
+
         }
 
     }

@@ -38,13 +38,14 @@ namespace ProjectFirma.Web.Controllers
             var newLoaNortheastExcelFileUpload = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaNortheastExcelFile());
             var newLoaSoutheastExcelFileUpload = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaSoutheastExcelFile());
             var doPublishingProcessingPostUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.DoPublishingProcessing(null));
-
+            var listOfTabularDataImports = HttpRequestStorage.DatabaseEntities.TabularDataImports.ToList();
             var viewData = new ManageExcelUploadsAndEtlViewData(CurrentPerson,
                 firmaPage,
                 newLoaNortheastExcelFileUpload,
                 newLoaSoutheastExcelFileUpload,
                 doPublishingProcessingPostUrl,
-                loaUploadFormID);
+                loaUploadFormID,
+                listOfTabularDataImports);
             var viewModel = new ManageExcelUploadsAndEtlViewModel();
             return RazorView<ManageExcelUploadsAndEtl, ManageExcelUploadsAndEtlViewData, ManageExcelUploadsAndEtlViewModel>(viewData, viewModel);
         }
@@ -71,28 +72,27 @@ namespace ProjectFirma.Web.Controllers
             try
             {
                 DoPublishingSql();
+                var tabularImports = HttpRequestStorage.DatabaseEntities.TabularDataImports.ToList();
+                var processedDateTime = DateTime.Now;
+                var latestImportForNortheast = TabularDataImport.GetLatestImportProcessingForGivenType(tabularImports, TabularDataImportTableType.LoaNortheast);
+                var latestImportForSoutheast = TabularDataImport.GetLatestImportProcessingForGivenType(tabularImports, TabularDataImportTableType.LoaSoutheast);
+                if (latestImportForSoutheast != null)
+                {
+                    latestImportForSoutheast.LastProcessedDate = processedDateTime;
+                    latestImportForSoutheast.LastProcessedPerson = CurrentPerson;
+                }
 
-                //var processedDateTime = DateTime.Now;
-                //var latestImportProcessingForFbms = ImpProcessing.GetLatestImportProcessingForGivenType(HttpRequestStorage.DatabaseEntities, ImpProcessingTableType.FBMS);
-                //var latestImportProcessingForPnBudget = ImpProcessing.GetLatestImportProcessingForGivenType(HttpRequestStorage.DatabaseEntities, ImpProcessingTableType.PNBudget);
-                //if (latestImportProcessingForFbms == null || latestImportProcessingForPnBudget == null)
-                //{
-                //    // We don't expect this to really happen once things are running smoothly, but in the short
-                //    // term I want to know about it.
-                //    SetErrorForDisplay($"Could not find processing records for last upload (ImpProcessing)");
-                //}
-                //else
-                //{
-                //    latestImportProcessingForFbms.LastProcessedDate = processedDateTime;
-                //    latestImportProcessingForFbms.LastProcessedPerson = CurrentFirmaSession.Person;
-                //    latestImportProcessingForPnBudget.LastProcessedDate = processedDateTime;
-                //    latestImportProcessingForPnBudget.LastProcessedPerson = CurrentFirmaSession.Person;
-                //    HttpRequestStorage.DatabaseEntities.SaveChanges(this.CurrentFirmaSession);
-                //}
+                if (latestImportForNortheast != null)
+                {
+                    latestImportForNortheast.LastProcessedDate = processedDateTime;
+                    latestImportForNortheast.LastProcessedPerson = CurrentPerson;
+                }
+                HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
+                
             }
             catch (Exception e)
             {
-                SetErrorForDisplay($"Problem executing Publishing: {e.Message}");
+                SetInfoForDisplay($"Problem executing Publishing: {e.Message}");
                 wasErrorDuringProcessing = true;
             }
 
@@ -306,7 +306,11 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChanges(CurrentPerson);
 
             SetMessageForDisplay($"{countAdded.ToGroupedNumeric()} LOA records were successfully imported to database. </br>{importTimeString}.");
-            SetInfoForDisplay(string.Join("<br>",errorList));
+            if (errorList.Any())
+            {
+                SetInfoForDisplay(string.Join("<br>", errorList));
+            }
+            
             // This is the right thing to return, since this starts off in a modal dialog
             return new ModalDialogFormJsonResult();
         }

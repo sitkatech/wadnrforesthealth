@@ -21,7 +21,8 @@ begin
               select distinct p.ProjectID, fa.FocusAreaID
               into #projectFocusArea
               from dbo.LoaStage x
-              join dbo.FocusArea fa on (fa.FocusAreaName like '%'+ x.FocusAreaName + '%') or (len(x.FocusAreaName) > 5 and fa.FocusAreaName like '%' +LEFT(x.FocusAreaName, LEN(x.FocusAreaName)-5) + '%' and x.IsSoutheast = 1)
+              join dbo.FocusArea fa on (fa.FocusAreaName like '%'+ x.FocusAreaName + '%') or 
+                                       ((fa.FocusAreaName like '%'+(case when LEN(x.FocusAreaName) > 5 then LEFT(x.FocusAreaName, LEN(x.FocusAreaName)-5) else x.FocusAreaName end) + '%') and x.IsSoutheast = 1)
               join dbo.Project p on p.ProjectGisIdentifier = x.ProjectIdentifier
               where x.FocusAreaName is not null 
 
@@ -67,13 +68,15 @@ begin
                                                                                                       where p.ProgramID = 3 -- LoaProgram)
                                                                                                       )
 
-              insert into dbo.ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, TotalAmount, MatchAmount, PayAmount)
+              insert into dbo.ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, TotalAmount, MatchAmount, PayAmount, CreateDate, ImportedFromTabularData)
 
               select x.ProjectID,
                      x.GrantAllocationID
                      , x.TotalAmount
                      , x.MatchAmount
                      , x.PayAmount
+                     , getdate()
+                     , 1
                       from #projectGrantAllocationRequest x 
 
 
