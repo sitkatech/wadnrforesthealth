@@ -142,7 +142,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult ImportLoaNortheastExcelFile()
         {
             var viewModel = new ImportLoaExcelFileViewModel();
-            return ViewImportLoaExcelFile(viewModel);
+            return ViewImportLoaExcelFile(viewModel, true);
         }
 
         [HttpPost]
@@ -152,7 +152,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewImportLoaExcelFile(viewModel);
+                return ViewImportLoaExcelFile(viewModel, true);
             }
 
             var httpPostedFileBase = viewModel.FileResourceData;
@@ -166,7 +166,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult ImportLoaSoutheastExcelFile()
         {
             var viewModel = new ImportLoaExcelFileViewModel();
-            return ViewImportLoaExcelFile(viewModel);
+            return ViewImportLoaExcelFile(viewModel, false);
         }
 
         [HttpPost]
@@ -176,7 +176,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewImportLoaExcelFile(viewModel);
+                return ViewImportLoaExcelFile(viewModel, false);
             }
 
             var httpPostedFileBase = viewModel.FileResourceData;
@@ -184,10 +184,19 @@ namespace ProjectFirma.Web.Controllers
             return DoLoaExcelImportForHttpPostedFile(httpPostedFileBase, false);
         }
 
-        private PartialViewResult ViewImportLoaExcelFile(ImportLoaExcelFileViewModel viewModel)
+        private PartialViewResult ViewImportLoaExcelFile(ImportLoaExcelFileViewModel viewModel, bool isNortheast)
         {
             var fmbsExcelFileUploadFormID = GenerateUploadLoaFileUploadFormId();
-            var newGisUploadUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaNortheastExcelFile(null));
+            string newGisUploadUrl = string.Empty;
+            if (isNortheast)
+            {
+                newGisUploadUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaNortheastExcelFile(null));
+            }
+            else
+            {
+                newGisUploadUrl = SitkaRoute<ExcelUploadController>.BuildUrlFromExpression(x => x.ImportLoaSoutheastExcelFile(null));
+            }
+            
             var viewData = new ImportLoaExcelFileViewData(fmbsExcelFileUploadFormID, newGisUploadUrl);
             return RazorPartialView<ImportLoaExcelFile, ImportLoaExcelFileViewData, ImportLoaExcelFileViewModel>(viewData, viewModel);
         }
@@ -258,13 +267,13 @@ namespace ProjectFirma.Web.Controllers
             if (isNortheast)
             {
                 var previousLoaStagesFromNortheast =
-                    HttpRequestStorage.DatabaseEntities.LoaStages.Where(x => x.IsNortheast);
+                    HttpRequestStorage.DatabaseEntities.LoaStages.Where(x => x.IsNortheast).ToList();
                 previousLoaStagesFromNortheast.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
             }
             else
             {
                 var previousLoaStagesFromSoutheast =
-                    HttpRequestStorage.DatabaseEntities.LoaStages.Where(x => x.IsSoutheast);
+                    HttpRequestStorage.DatabaseEntities.LoaStages.Where(x => x.IsSoutheast).ToList();
                 previousLoaStagesFromSoutheast.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
             }
 

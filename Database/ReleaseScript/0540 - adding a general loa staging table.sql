@@ -1,5 +1,4 @@
 
-
 CREATE TABLE [dbo].[LoaStage](
 	[LoaStageID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectIdentifier] varchar(600) NOT NULL,
@@ -24,33 +23,33 @@ CREATE TABLE [dbo].[LoaStage](
 
 go
 
-insert into dbo.LoaStage(ProjectIdentifier, ProjectStatus, GrantNumber, FocusAreaName, ProjectExpirationDate, LetterDate, MatchAmount, PayAmount, ProgramIndex, ProjectCode, IsNortheast)
-select x.[Project ID],
-       x.[Status],
-       x.[Grant #],
-       x.[Grant],
-       x.[Project Expiration Date],
-       x.[Letter Date],
-       x.[Match],
-       x.Pay,
-       x.[Index],
-       x.Code,
-       1
- from dbo.LoaRawNortheast x
- where x.[Project ID] is not null
+--insert into dbo.LoaStage(ProjectIdentifier, ProjectStatus, GrantNumber, FocusAreaName, ProjectExpirationDate, LetterDate, MatchAmount, PayAmount, ProgramIndex, ProjectCode, IsNortheast)
+--select x.[Project ID],
+--       x.[Status],
+--       x.[Grant #],
+--       x.[Grant],
+--       x.[Project Expiration Date],
+--       x.[Letter Date],
+--       x.[Match],
+--       x.Pay,
+--       x.[Index],
+--       x.Code,
+--       1
+-- from dbo.LoaRawNortheast x
+-- where x.[Project ID] is not null
 
 
- insert into dbo.LoaStage(ProjectIdentifier, ProjectStatus, GrantNumber, FocusAreaName, ProjectExpirationDate, LetterDate, MatchAmount, PayAmount, ProgramIndex, ProjectCode, IsNortheast)
-select x.[Project ID],
-       x.[Status],
-       x.[Grant #],
-       x.[Grant],
-       case when TRY_PARSE(x.[Project Expiration Date] AS DATE) IS NOT NULL then parse(x.[Project Expiration Date] as datetime) else null end as ExpirationDate,
-        case when TRY_PARSE(x.[Letter Date] AS DATE) IS NOT NULL then parse(x.[Letter Date] as datetime) else null end as LetterDate,
-       x.[Match],
-       x.Pay,
-       x.[Index],
-       x.Code,
-       0 as IsNortheast
- from dbo.LoaRawSoutheast x
- WHERE  x.[Project ID] is not null
+-- insert into dbo.LoaStage(ProjectIdentifier, ProjectStatus, GrantNumber, FocusAreaName, ProjectExpirationDate, LetterDate, MatchAmount, PayAmount, ProgramIndex, ProjectCode, IsNortheast)
+--select x.[Project ID],
+--       x.[Status],
+--       x.[Grant #],
+--       x.[Grant],
+--       case when TRY_PARSE(x.[Project Expiration Date] AS DATE) IS NOT NULL then parse(x.[Project Expiration Date] as datetime) else null end as ExpirationDate,
+--        case when TRY_PARSE(x.[Letter Date] AS DATE) IS NOT NULL then parse(x.[Letter Date] as datetime) else null end as LetterDate,
+--       x.[Match],
+--       x.Pay,
+--       x.[Index],
+--       x.Code,
+--       0 as IsNortheast
+-- from dbo.LoaRawSoutheast x
+-- WHERE  x.[Project ID] is not null
