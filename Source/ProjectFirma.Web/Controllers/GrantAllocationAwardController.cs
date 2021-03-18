@@ -98,6 +98,34 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
+        [GrantAllocationAwardCreateFeature]
+        public PartialViewResult NewForAGrantAllocation(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardViewModel()
+            {
+                GrantAllocationID = grantAllocation.GrantAllocationID
+            };
+            return GrantAllocationAwardViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewForAGrantAllocation(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationAwardViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardViewEdit(viewModel);
+            }
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == viewModel.GrantAllocationID);
+            var focusArea = HttpRequestStorage.DatabaseEntities.FocusAreas.Single(fa => fa.FocusAreaID == viewModel.FocusAreaID);
+            var grantAllocationAward = GrantAllocationAward.CreateNewBlank(grantAllocation, focusArea);
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
         [GrantAllocationAwardEditAsAdminFeature]
         public PartialViewResult Edit(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
         {

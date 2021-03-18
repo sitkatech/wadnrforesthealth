@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Views.FocusArea
     public class GrantAllocationAwardGridSpec : GridSpec<Models.GrantAllocationAward>
     {
         public GrantAllocationAwardGridSpec(Person currentPerson, Models.FocusArea focusArea)
+        : this(currentPerson)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized()} associated with {focusArea.FocusAreaName}";
@@ -47,6 +48,28 @@ namespace ProjectFirma.Web.Views.FocusArea
                 var contentUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.NewForAFocusArea(focusArea));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {ObjectNameSingular}");
             }
+        }
+
+
+        public GrantAllocationAwardGridSpec(Person currentPerson, Models.GrantAllocation grantAllocation)
+            : this(currentPerson)
+        {
+            ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized()} associated with {grantAllocation.DisplayName}";
+
+            var userHasCreatePermissions = new GrantAllocationAwardCreateFeature().HasPermissionByPerson(currentPerson);
+            if (userHasCreatePermissions)
+            {
+                var contentUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.NewForAGrantAllocation(grantAllocation));
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {ObjectNameSingular}");
+            }
+        }
+
+        public GrantAllocationAwardGridSpec(Person currentPerson)
+        {
+
+            ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized()}";
 
             var userHasDeletePermissions = new GrantAllocationAwardDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
@@ -54,16 +77,15 @@ namespace ProjectFirma.Web.Views.FocusArea
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasDeletePermissions, x.CanGrantAllocationAwardBeDeleted(), true), 30, DhtmlxGridColumnFilterType.None);
             }
 
-
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.GrantModification.Grant.GrantNumber, 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.GrantModification.Grant.GetGrantNumberAsUrl(), 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FocusArea.ToGridHeaderString(), x => x.FocusArea.GetDisplayNameAsUrl(), 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardAmount.ToGridHeaderString(), x => x.GrantAllocationAwardAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Spent Amount", x => x.SpentAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Remaining Amount", x => x.Balance, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardExpirationDate.ToGridHeaderString(), x => x.GrantAllocationAwardExpirationDate, 90, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-
         }
     }
 }
