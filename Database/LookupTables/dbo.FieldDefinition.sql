@@ -294,6 +294,8 @@ VALUES
 (472, N'FundingSourceNote', 'Funding Source Note', N'<p>A note about the funding source(s) selected.</p>'),
 (473, N'ProjectTotalCompletedTreatmentAcres', 'Completed Treatment Acres', 'Sum of Treated Acres on all completed Treatments under a Project.'),
 (474, N'LimitVisibilityToAdmin', N'Project Type Visibility Limited To Admin', 'Limit Visibility of this Project Type to just Administrators (Program Manager, Admin, Sitka Admin)'),
-(475, N'Program', N'Program', 'Program')
+(475, N'Program', N'Program', 'Program'),
+(476, N'ProjectGrantAllocationRequestMatchAmount', N'MatchAmount', N'<p>Funding that has been acquired for a project.</p>'),
+(477, N'ProjectGrantAllocationRequestPayAmount', N'PayAmount', N'<p>Funding that has been acquired for a project.</p>')
 
 

@@ -41,7 +41,7 @@ values
 (62, 'InteractionEventList', 'Interaction/Event List', 1),
 (63, 'GisUploadAttemptInstructions', 'GIS Upload Attempt Instructions', 1),
 (64, 'DNRCostShareTreatments', 'DNR Cost Share Treatments', 1),
-(65, 'ProgramsList', 'Programs List', 1)
-
+(65, 'ProgramsList', 'Programs List', 1),
+(66, 'UploadLoaTabularDataExcel', 'Upload Loa Tabular Data', 1)
 
 

@@ -70,6 +70,7 @@
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.Store.InvoiceLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LoaStage" EntityType="ProjectFirma.Web.Models.Store.LoaStage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -145,6 +146,7 @@
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.Store.StateProvince" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.Store.SupportRequestLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SystemAttribute" EntityType="ProjectFirma.Web.Models.Store.SystemAttribute" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TabularDataImport" EntityType="ProjectFirma.Web.Models.Store.TabularDataImport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Store.Tag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
@@ -164,6 +166,45 @@
 [vGeoServerPriorityLandscape].[PriorityLandscapeLocation] AS [PriorityLandscapeLocation], 
 [vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry]
 FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vLoaStageGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocation">
+      <DefiningQuery>SELECT 
+[vLoaStageGrantAllocation].[LoaStageID] AS [LoaStageID], 
+[vLoaStageGrantAllocation].[GrantID] AS [GrantID], 
+[vLoaStageGrantAllocation].[GrantAllocationID] AS [GrantAllocationID]
+FROM [dbo].[vLoaStageGrantAllocation] AS [vLoaStageGrantAllocation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vLoaStageGrantAllocationAward" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocationAward" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocationAward">
+      <DefiningQuery>SELECT 
+[vLoaStageGrantAllocationAward].[LoaStageID] AS [LoaStageID], 
+[vLoaStageGrantAllocationAward].[GrantAllocationAwardID] AS [GrantAllocationAwardID], 
+[vLoaStageGrantAllocationAward].[GrantAllocationID] AS [GrantAllocationID], 
+[vLoaStageGrantAllocationAward].[GrantID] AS [GrantID]
+FROM [dbo].[vLoaStageGrantAllocationAward] AS [vLoaStageGrantAllocationAward]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vLoaStageGrantAllocationByProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocationByProgramIndexProjectCode" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
+      <DefiningQuery>SELECT 
+[vLoaStageGrantAllocationByProgramIndexProjectCode].[LoaStageID] AS [LoaStageID], 
+[vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantAllocationID] AS [GrantAllocationID], 
+[vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantID] AS [GrantID]
+FROM [dbo].[vLoaStageGrantAllocationByProgramIndexProjectCode] AS [vLoaStageGrantAllocationByProgramIndexProjectCode]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vLoaStageProjectGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageProjectGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageProjectGrantAllocation">
+      <DefiningQuery>SELECT 
+[vLoaStageProjectGrantAllocation].[ProjectID] AS [ProjectID], 
+[vLoaStageProjectGrantAllocation].[MatchAmount] AS [MatchAmount], 
+[vLoaStageProjectGrantAllocation].[PayAmount] AS [PayAmount], 
+[vLoaStageProjectGrantAllocation].[ProjectStatus] AS [ProjectStatus], 
+[vLoaStageProjectGrantAllocation].[GrantAllocationID] AS [GrantAllocationID], 
+[vLoaStageProjectGrantAllocation].[LetterDate] AS [LetterDate], 
+[vLoaStageProjectGrantAllocation].[ProjectExpirationDate] AS [ProjectExpirationDate]
+FROM [dbo].[vLoaStageProjectGrantAllocation] AS [vLoaStageProjectGrantAllocation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vSingularGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vSingularGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vSingularGrantAllocation">
+      <DefiningQuery>SELECT 
+[vSingularGrantAllocation].[GrantID] AS [GrantID], 
+[vSingularGrantAllocation].[GrantAllocationID] AS [GrantAllocationID]
+FROM [dbo].[vSingularGrantAllocation] AS [vSingularGrantAllocation]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
       <DefiningQuery>SELECT 
@@ -1149,6 +1190,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="SystemAttributesWhereYouAreThePrimaryContactPerson" EntitySet="SystemAttribute" />
     </AssociationSet>
+    <AssociationSet Name="FK_TabularDataImport_Person_LastProcessedPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TabularDataImport_Person_LastProcessedPersonID_PersonID">
+      <End Role="LastProcessedPerson" EntitySet="Person" />
+      <End Role="TabularDataImportsWhereYouAreTheLastProcessedPerson" EntitySet="TabularDataImport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TabularDataImport_Person_UploadPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TabularDataImport_Person_UploadPersonID_PersonID">
+      <End Role="UploadPerson" EntitySet="Person" />
+      <End Role="TabularDataImportsWhereYouAreTheUploadPerson" EntitySet="TabularDataImport" />
+    </AssociationSet>
     <AssociationSet Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" Association="ProjectFirma.Web.Models.Store.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
@@ -1960,6 +2009,24 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="InvoiceLineItemAmount" Type="money" Nullable="false" />
     <Property Name="InvoiceLineItemNote" Type="varchar" />
   </EntityType>
+  <EntityType Name="LoaStage">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+    </Key>
+    <Property Name="LoaStageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectIdentifier" Type="varchar" Nullable="false" MaxLength="600" />
+    <Property Name="ProjectStatus" Type="varchar" MaxLength="600" />
+    <Property Name="GrantNumber" Type="varchar" MaxLength="600" />
+    <Property Name="FocusAreaName" Type="varchar" MaxLength="600" />
+    <Property Name="ProjectExpirationDate" Type="datetime" />
+    <Property Name="LetterDate" Type="datetime" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="PayAmount" Type="money" />
+    <Property Name="ProgramIndex" Type="varchar" MaxLength="50" />
+    <Property Name="ProjectCode" Type="varchar" MaxLength="50" />
+    <Property Name="IsNortheast" Type="bit" Nullable="false" />
+    <Property Name="IsSoutheast" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+  </EntityType>
   <EntityType Name="Notification">
     <Key>
       <PropertyRef Name="NotificationID" />
@@ -2456,6 +2523,11 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="PayAmount" Type="money" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="ImportedFromTabularData" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationRequestUpdate">
     <Key>
@@ -2465,6 +2537,11 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="PayAmount" Type="money" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="ImportedFromTabularData" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectImage">
     <Key>
@@ -2840,6 +2917,17 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectStewardshipAreaTypeID" Type="int" />
     <Property Name="SocrataAppToken" Type="varchar" Nullable="false" MaxLength="200" />
   </EntityType>
+  <EntityType Name="TabularDataImport">
+    <Key>
+      <PropertyRef Name="TabularDataImportID" />
+    </Key>
+    <Property Name="TabularDataImportID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TabularDataImportTableTypeID" Type="int" Nullable="false" />
+    <Property Name="UploadDate" Type="datetime" />
+    <Property Name="UploadPersonID" Type="int" />
+    <Property Name="LastProcessedDate" Type="datetime" />
+    <Property Name="LastProcessedPersonID" Type="int" />
+  </EntityType>
   <EntityType Name="Tag">
     <Key>
       <PropertyRef Name="TagID" />
@@ -3013,6 +3101,69 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonCounty
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonLegislativeDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vLoaStageGrantAllocation">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+    </Key>
+    <Property Name="LoaStageID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" />
+    <Property Name="GrantAllocationID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationAward' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vLoaStageGrantAllocationAward">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="GrantAllocationAwardID" />
+      <PropertyRef Name="GrantAllocationID" />
+      <PropertyRef Name="GrantID" />
+    </Key>
+    <Property Name="LoaStageID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationByProgramIndexProjectCode' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
+    <Key>
+      <PropertyRef Name="LoaStageID" />
+    </Key>
+    <Property Name="LoaStageID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="GrantID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vLoaStageProjectGrantAllocation">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="PayAmount" Type="money" />
+    <Property Name="ProjectStatus" Type="varchar" MaxLength="600" />
+    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="LetterDate" Type="datetime" />
+    <Property Name="ProjectExpirationDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSingularGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vSingularGrantAllocation">
+    <Key>
+      <PropertyRef Name="GrantID" />
+      <PropertyRef Name="GrantAllocationID" />
+    </Key>
+    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -5944,6 +6095,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TabularDataImport_Person_LastProcessedPersonID_PersonID">
+    <End Role="LastProcessedPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="TabularDataImportsWhereYouAreTheLastProcessedPerson" Type="ProjectFirma.Web.Models.Store.TabularDataImport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastProcessedPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="TabularDataImportsWhereYouAreTheLastProcessedPerson">
+        <PropertyRef Name="LastProcessedPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TabularDataImport_Person_UploadPersonID_PersonID">
+    <End Role="UploadPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="TabularDataImportsWhereYouAreTheUploadPerson" Type="ProjectFirma.Web.Models.Store.TabularDataImport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UploadPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="TabularDataImportsWhereYouAreTheUploadPerson">
+        <PropertyRef Name="UploadPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
     <End Role="TaxonomyTrunk" Type="ProjectFirma.Web.Models.Store.TaxonomyTrunk" Multiplicity="1" />
     <End Role="TaxonomyBranches" Type="ProjectFirma.Web.Models.Store.TaxonomyBranch" Multiplicity="*" />
@@ -6081,6 +6256,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
   <Function Name="pClearAuditLogTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pClearGisImportTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearGrantAllocationExpenditureTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="bienniumFiscalYear" Type="int" Mode="In" />
   </Function>
@@ -6092,6 +6268,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
   </Function>
+  <Function Name="pImportLoaTabularData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Mode="In" />
     <Parameter Name="OptionalBienniumFiscalYear" Type="int" Mode="In" />

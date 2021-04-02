@@ -33,9 +33,12 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectGrantAllocationRequestUpdates = project.ProjectGrantAllocationRequests.Select(
                 pgar =>
-                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.GrantAllocation)
+                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.GrantAllocation, pgar.CreateDate, pgar.ImportedFromTabularData)
                     {
-                        TotalAmount = pgar.TotalAmount
+                        TotalAmount = pgar.TotalAmount,
+                        MatchAmount = pgar.MatchAmount,
+                        PayAmount = pgar.PayAmount,
+                        UpdateDate = pgar.UpdateDate
                     }
             ).ToList();
         }
@@ -45,9 +48,12 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             var projectGrantAllocationExpectedFundingFromProjectUpdate = projectUpdateBatch
                 .ProjectGrantAllocationRequestUpdates
-                .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
+                .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID, x.CreateDate, x.ImportedFromTabularData)
                     {
                         TotalAmount = x.TotalAmount,
+                        PayAmount = x.PayAmount,
+                        MatchAmount = x.MatchAmount,
+                        UpdateDate = x.UpdateDate
                     }
                 ).ToList();
             project.ProjectGrantAllocationRequests.Merge(projectGrantAllocationExpectedFundingFromProjectUpdate,
@@ -56,6 +62,11 @@ namespace ProjectFirma.Web.Models
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
+                    x.MatchAmount = y.MatchAmount;
+                    x.PayAmount = y.PayAmount;
+                    x.CreateDate = y.CreateDate;
+                    x.UpdateDate = y.UpdateDate;
+                    x.ImportedFromTabularData = y.ImportedFromTabularData;
                 });
         }
 
@@ -67,6 +78,11 @@ namespace ProjectFirma.Web.Models
                 string grantAllocationName = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "none";
                 return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} TotalAmount: {this.TotalAmount}";
             }
+        }
+
+        public bool IsMatchAndPayRelevant
+        {
+            get { return true; }
         }
     }
 }

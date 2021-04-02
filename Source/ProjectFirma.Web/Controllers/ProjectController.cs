@@ -58,6 +58,8 @@ namespace ProjectFirma.Web.Controllers
 {
     public class ProjectController : FirmaBaseController
     {
+        public const int LoaProgramID = 3;
+
         [HttpGet]
         [ProjectEditAsAdminFeature]
         public PartialViewResult Edit(ProjectPrimaryKey projectPrimaryKey)
@@ -187,7 +189,8 @@ namespace ProjectFirma.Web.Controllers
             var performanceMeasureExpectedsSummaryViewData = new PerformanceMeasureExpectedSummaryViewData(new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.OrderBy(x=>x.PerformanceMeasure.PerformanceMeasureSortOrder)));
             var performanceMeasureReportedValuesGroupedViewData = BuildPerformanceMeasureReportedValuesGroupedViewData(project);
             var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
-            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests));
+            var projectIsLoa = project.ProgramID == LoaProgramID;
+            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
             var imageGalleryViewData = BuildImageGalleryViewData(project, CurrentPerson);
             var projectNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(project.ProjectNotes)),
@@ -215,7 +218,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
 
-            var treatmentAreaGridSpec = new TreatmentAreaGridSpec(CurrentPerson);
+            var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson);
             var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
             var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
@@ -265,7 +268,7 @@ namespace ProjectFirma.Web.Controllers
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID
                 , projectPeopleDetailViewData
-                , treatmentAreaGridSpec
+                , treatmentGroupGridSpec
                 , treatmentAreaGridDataUrl
                 , treatmentGridSpec
                 , treatmentGridDataUrl

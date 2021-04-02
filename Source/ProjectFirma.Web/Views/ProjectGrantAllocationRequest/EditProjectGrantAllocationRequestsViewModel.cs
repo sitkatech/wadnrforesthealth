@@ -86,11 +86,31 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                                 List<ProjectFundingSource> currentProjectFundingSources,
                                 IList<ProjectFundingSource> allProjectFundingSources)
         {
+            var dateNow = DateTime.Now;
             var projectGrantAllocationRequestsModified = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequests != null)
             {
-                // Completely rebuild the list
-                projectGrantAllocationRequestsModified = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
+
+                foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequests)
+                {
+                    var existingCurrentOne = currentProjectGrantAllocationRequests.SingleOrDefault(x =>
+                        x.ProjectID == projectGrantAllocationRequestSimple.ProjectID &&
+                        x.GrantAllocationID == projectGrantAllocationRequestSimple.GrantAllocationID);
+                    if (existingCurrentOne != null)
+                    {
+                        var projectGrantAllocationRequestToAdd =
+                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                                existingCurrentOne.CreateDate, dateNow, existingCurrentOne.ImportedFromTabularData);
+                        projectGrantAllocationRequestsModified.Add(projectGrantAllocationRequestToAdd);
+                    }
+                    else
+                    {
+                        var projectGrantAllocationRequestToAdd =
+                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                                dateNow, null, false);
+                        projectGrantAllocationRequestsModified.Add(projectGrantAllocationRequestToAdd);
+                    }
+                }
             }
 
             if (ForProject) // never null
@@ -124,6 +144,11 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
+                    x.MatchAmount = y.MatchAmount;
+                    x.PayAmount = y.PayAmount;
+                    x.UpdateDate = y.UpdateDate;
+                    x.CreateDate = y.CreateDate;
+                    x.ImportedFromTabularData = y.ImportedFromTabularData;
                 });
             
         }

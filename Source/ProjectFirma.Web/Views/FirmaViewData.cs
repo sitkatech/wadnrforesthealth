@@ -231,7 +231,8 @@ namespace ProjectFirma.Web.Views
             // Group 4 - Other
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.InternalSetupNotes()), currentPerson, "Internal Setup Notes", "Group4"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.StyleGuide()), currentPerson, "Style Guide", "Group4"));
-            
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ExcelUploadController>(c => c.ManageExcelUploadsAndEtl()), currentPerson, $"Upload Excel Files / ETL", "Group4"));
+
             // Group 5 - Organizations
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationAndRelationshipTypeController>(c => c.Index()), currentPerson, Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabelPluralized(), "Group5"));
 

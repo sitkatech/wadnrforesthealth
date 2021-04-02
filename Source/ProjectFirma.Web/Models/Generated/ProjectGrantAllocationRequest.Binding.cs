@@ -31,30 +31,37 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int grantAllocationID, decimal? totalAmount) : this()
+        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int grantAllocationID, decimal? totalAmount, decimal? matchAmount, decimal? payAmount, DateTime createDate, DateTime? updateDate, bool importedFromTabularData) : this()
         {
             this.ProjectGrantAllocationRequestID = projectGrantAllocationRequestID;
             this.ProjectID = projectID;
             this.GrantAllocationID = grantAllocationID;
             this.TotalAmount = totalAmount;
+            this.MatchAmount = matchAmount;
+            this.PayAmount = payAmount;
+            this.CreateDate = createDate;
+            this.UpdateDate = updateDate;
+            this.ImportedFromTabularData = importedFromTabularData;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGrantAllocationRequest(int projectID, int grantAllocationID) : this()
+        public ProjectGrantAllocationRequest(int projectID, int grantAllocationID, DateTime createDate, bool importedFromTabularData) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectGrantAllocationRequestID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
             this.GrantAllocationID = grantAllocationID;
+            this.CreateDate = createDate;
+            this.ImportedFromTabularData = importedFromTabularData;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectGrantAllocationRequest(Project project, GrantAllocation grantAllocation) : this()
+        public ProjectGrantAllocationRequest(Project project, GrantAllocation grantAllocation, DateTime createDate, bool importedFromTabularData) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectGrantAllocationRequestID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -64,6 +71,8 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.ProjectGrantAllocationRequests.Add(this);
+            this.CreateDate = createDate;
+            this.ImportedFromTabularData = importedFromTabularData;
         }
 
         /// <summary>
@@ -71,7 +80,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProjectGrantAllocationRequest CreateNewBlank(Project project, GrantAllocation grantAllocation)
         {
-            return new ProjectGrantAllocationRequest(project, grantAllocation);
+            return new ProjectGrantAllocationRequest(project, grantAllocation, default(DateTime), default(bool));
         }
 
         /// <summary>
@@ -121,6 +130,11 @@ namespace ProjectFirma.Web.Models
         public int ProjectID { get; set; }
         public int GrantAllocationID { get; set; }
         public decimal? TotalAmount { get; set; }
+        public decimal? MatchAmount { get; set; }
+        public decimal? PayAmount { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public bool ImportedFromTabularData { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectGrantAllocationRequestID; } set { ProjectGrantAllocationRequestID = value; } }
 

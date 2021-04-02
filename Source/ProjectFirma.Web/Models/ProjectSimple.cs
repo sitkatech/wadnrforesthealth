@@ -24,17 +24,20 @@ namespace ProjectFirma.Web.Models
     {
         public int ProjectID { get; set; }
         public string DisplayName { get; set; }
+        public int? ProgramID { get; set; }
 
         public ProjectSimple(Project project)
         {
             ProjectID = project.ProjectID;
             DisplayName = project.DisplayName;
+            ProgramID = project.ProgramID;
         }
 
-        public ProjectSimple(int projectID, string displayName)
+        public ProjectSimple(int projectID, string displayName, int? programID)
         {
             ProjectID = projectID;
             DisplayName = displayName;
+            ProgramID = programID;
         }
     }
 }
