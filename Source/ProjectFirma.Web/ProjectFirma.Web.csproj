@@ -524,6 +524,9 @@
     <Compile Include="Models\Generated\ProjectPriorityLandscapeUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectPriorityLandscapeUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectPriorityLandscapeUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectProgram.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectProgram.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectProgramPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectRegion.Binding.cs" />
     <Compile Include="Models\Generated\ProjectRegion.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectRegionPrimaryKey.Binding.cs" />

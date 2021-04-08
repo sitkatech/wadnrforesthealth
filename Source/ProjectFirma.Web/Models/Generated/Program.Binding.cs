@@ -27,6 +27,8 @@ namespace ProjectFirma.Web.Models
         {
             this.GisUploadSourceOrganizations = new HashSet<GisUploadSourceOrganization>();
             this.Projects = new HashSet<Project>();
+            this.ProjectPrograms = new HashSet<ProjectProgram>();
+            this.Treatments = new HashSet<Treatment>();
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any() || Projects.Any();
+            return GisUploadSourceOrganizations.Any() || Projects.Any() || ProjectPrograms.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -113,13 +115,23 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(Project).Name);
             }
+
+            if(ProjectPrograms.Any())
+            {
+                dependentObjects.Add(typeof(ProjectProgram).Name);
+            }
+
+            if(Treatments.Any())
+            {
+                dependentObjects.Add(typeof(Treatment).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(Project).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(Project).Name, typeof(ProjectProgram).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -153,6 +165,16 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in ProjectPrograms.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in Treatments.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -172,6 +194,8 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<ProjectProgram> ProjectPrograms { get; set; }
+        public virtual ICollection<Treatment> Treatments { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Person ProgramCreatePerson { get; set; }
         public virtual Person ProgramLastUpdatedByPerson { get; set; }

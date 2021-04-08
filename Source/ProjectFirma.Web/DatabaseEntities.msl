@@ -1601,6 +1601,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectProgram">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectProgram">
+        <MappingFragment StoreEntitySet="ProjectProgram">
+          <ScalarProperty Name="ProjectProgramID" ColumnName="ProjectProgramID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProjectRegion">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectRegion">
         <MappingFragment StoreEntitySet="ProjectRegion">
@@ -1930,6 +1939,8 @@
           <ScalarProperty Name="UpdateGisUploadAttemptID" ColumnName="UpdateGisUploadAttemptID" />
           <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
           <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

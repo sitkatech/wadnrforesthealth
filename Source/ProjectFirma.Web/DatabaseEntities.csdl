@@ -131,6 +131,7 @@
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.ProjectPersonUpdate" />
     <EntitySet Name="ProjectPriorityLandscape" EntityType="ProjectFirma.Web.Models.ProjectPriorityLandscape" />
     <EntitySet Name="ProjectPriorityLandscapeUpdate" EntityType="ProjectFirma.Web.Models.ProjectPriorityLandscapeUpdate" />
+    <EntitySet Name="ProjectProgram" EntityType="ProjectFirma.Web.Models.ProjectProgram" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.ProjectRegion" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.ProjectRegionUpdate" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.ProjectTag" />
@@ -954,6 +955,14 @@
       <End Role="Program" EntitySet="Program" />
       <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="Projects" EntitySet="Project" />
@@ -1021,6 +1030,10 @@
     <AssociationSet Name="FK_ProjectPriorityLandscape_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectPriorityLandscapes" EntitySet="ProjectPriorityLandscape" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectProgram_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -2601,6 +2614,8 @@
     <NavigationProperty Name="ProgramLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" ToRole="ProgramLastUpdatedByPerson" />
     <NavigationProperty Name="ProgramPrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramPrimaryContactPersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramPrimaryContactPerson" ToRole="ProgramPrimaryContactPerson" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_Program_ProgramID" FromRole="Program" ToRole="Projects" />
+    <NavigationProperty Name="ProjectPrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID" FromRole="Program" ToRole="ProjectPrograms" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Program" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -2680,6 +2695,7 @@
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_Project_ProjectID" FromRole="Project" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectPeople" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Project_ProjectID" FromRole="Project" ToRole="ProjectPeople" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_Project_ProjectID" FromRole="Project" ToRole="ProjectPriorityLandscapes" />
+    <NavigationProperty Name="ProjectPrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Project_ProjectID" FromRole="Project" ToRole="ProjectPrograms" />
     <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="Project" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
@@ -3102,6 +3118,16 @@
     <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="ProjectPriorityLandscapeUpdates" ToRole="PriorityLandscape" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectPriorityLandscapeUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
+  <EntityType Name="ProjectProgram">
+    <Key>
+      <PropertyRef Name="ProjectProgramID" />
+    </Key>
+    <Property Name="ProjectProgramID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="ProgramID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID" FromRole="ProjectPrograms" ToRole="Program" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Project_ProjectID" FromRole="ProjectPrograms" ToRole="Project" />
+  </EntityType>
   <EntityType Name="ProjectRegion">
     <Key>
       <PropertyRef Name="ProjectRegionID" />
@@ -3465,9 +3491,12 @@
     <Property Name="UpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="TreatmentDetailedActivityTypeID" Type="Int32" Nullable="false" />
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramID" Type="Int32" />
+    <Property Name="ImportedFromGis" Type="Boolean" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="UpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" ToRole="UpdateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Treatments" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
     <NavigationProperty Name="TreatmentArea" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="Treatments" ToRole="TreatmentArea" />
   </EntityType>
@@ -5982,6 +6011,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectProgram_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Project_ProjectType_ProjectTypeID">
     <End Role="ProjectType" Type="ProjectFirma.Web.Models.ProjectType" Multiplicity="1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
@@ -6182,6 +6235,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectPriorityLandscapes">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectProgram_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

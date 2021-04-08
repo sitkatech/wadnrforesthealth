@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, int? treatmentAreaID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText) : this()
+        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, int? treatmentAreaID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis) : this()
         {
             this.TreatmentID = treatmentID;
             this.ProjectID = projectID;
@@ -48,6 +48,8 @@ namespace ProjectFirma.Web.Models
             this.UpdateGisUploadAttemptID = updateGisUploadAttemptID;
             this.TreatmentDetailedActivityTypeID = treatmentDetailedActivityTypeID;
             this.TreatmentDetailedActivityTypeImportedText = treatmentDetailedActivityTypeImportedText;
+            this.ProgramID = programID;
+            this.ImportedFromGis = importedFromGis;
         }
 
         /// <summary>
@@ -145,6 +147,8 @@ namespace ProjectFirma.Web.Models
         public int? UpdateGisUploadAttemptID { get; set; }
         public int TreatmentDetailedActivityTypeID { get; set; }
         public string TreatmentDetailedActivityTypeImportedText { get; set; }
+        public int? ProgramID { get; set; }
+        public bool? ImportedFromGis { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentID; } set { TreatmentID = value; } }
 
@@ -155,6 +159,7 @@ namespace ProjectFirma.Web.Models
         public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
         public virtual GisUploadAttempt UpdateGisUploadAttempt { get; set; }
         public TreatmentDetailedActivityType TreatmentDetailedActivityType { get { return TreatmentDetailedActivityType.AllLookupDictionary[TreatmentDetailedActivityTypeID]; } }
+        public virtual Program Program { get; set; }
 
         public static class FieldLengths
         {

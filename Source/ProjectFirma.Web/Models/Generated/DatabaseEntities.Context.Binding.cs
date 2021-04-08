@@ -158,6 +158,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectPersonUpdate> ProjectPersonUpdates { get; set; }
         public virtual DbSet<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual DbSet<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
+        public virtual DbSet<ProjectProgram> ProjectPrograms { get; set; }
         public virtual DbSet<ProjectRegion> ProjectRegions { get; set; }
         public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
@@ -867,6 +868,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectPriorityLandscapeUpdate":
                     return ProjectPriorityLandscapeUpdates.GetProjectPriorityLandscapeUpdate(primaryKey);
+
+                case "ProjectProgram":
+                    return ProjectPrograms.GetProjectProgram(primaryKey);
 
                 case "ProjectRegion":
                     return ProjectRegions.GetProjectRegion(primaryKey);

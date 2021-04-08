@@ -131,6 +131,7 @@
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPersonUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPriorityLandscapeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityLandscapeUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectProgram" EntityType="ProjectFirma.Web.Models.Store.ProjectProgram" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.Store.ProjectRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.Store.ProjectTag" store:Type="Tables" Schema="dbo" />
@@ -1102,6 +1103,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPriorityLandscapeUpdates" EntitySet="ProjectPriorityLandscapeUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectProgram_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectProgram_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
       <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
       <End Role="ProjectRegions" EntitySet="ProjectRegion" />
@@ -1212,6 +1221,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
       <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_Project_ProjectID">
@@ -2708,6 +2721,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ProjectProgram">
+    <Key>
+      <PropertyRef Name="ProjectProgramID" />
+    </Key>
+    <Property Name="ProjectProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ProjectRegion">
     <Key>
       <PropertyRef Name="ProjectRegionID" />
@@ -3016,6 +3037,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="UpdateGisUploadAttemptID" Type="int" />
     <Property Name="TreatmentDetailedActivityTypeID" Type="int" Nullable="false" />
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
+    <Property Name="ProgramID" Type="int" />
+    <Property Name="ImportedFromGis" Type="bit" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -5831,6 +5854,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectProgram_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.Store.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectProgram_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.Store.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
     <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="1" />
     <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.Store.ProjectRegion" Multiplicity="*" />
@@ -6164,6 +6211,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
