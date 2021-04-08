@@ -65,7 +65,8 @@ begin
                                                                                                       from 
                                                                                                       dbo.ProjectGrantAllocationRequest pgar
                                                                                                       join dbo.Project p on pgar.ProjectID = p.ProjectID
-                                                                                                      where p.ProgramID = 3 -- LoaProgram)
+                                                                                                      join dbo.ProjectProgram pp on p.ProjectID = pp.ProjectID
+                                                                                                      where pp.ProgramID = 3 -- LoaProgram)
                                                                                                       )
 
               insert into dbo.ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, TotalAmount, MatchAmount, PayAmount, CreateDate, ImportedFromTabularData)

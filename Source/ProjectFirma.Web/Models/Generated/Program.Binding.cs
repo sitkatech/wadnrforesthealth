@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Models
         protected Program()
         {
             this.GisUploadSourceOrganizations = new HashSet<GisUploadSourceOrganization>();
-            this.Projects = new HashSet<Project>();
+            this.ProjectLocations = new HashSet<ProjectLocation>();
             this.ProjectPrograms = new HashSet<ProjectProgram>();
             this.Treatments = new HashSet<Treatment>();
         }
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any() || Projects.Any() || ProjectPrograms.Any() || Treatments.Any();
+            return GisUploadSourceOrganizations.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
             }
 
-            if(Projects.Any())
+            if(ProjectLocations.Any())
             {
-                dependentObjects.Add(typeof(Project).Name);
+                dependentObjects.Add(typeof(ProjectLocation).Name);
             }
 
             if(ProjectPrograms.Any())
@@ -131,7 +131,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(Project).Name, typeof(ProjectProgram).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in Projects.ToList())
+            foreach(var x in ProjectLocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -193,7 +193,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProgramID; } set { ProgramID = value; } }
 
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }
         public virtual ICollection<ProjectProgram> ProjectPrograms { get; set; }
         public virtual ICollection<Treatment> Treatments { get; set; }
         public virtual Organization Organization { get; set; }

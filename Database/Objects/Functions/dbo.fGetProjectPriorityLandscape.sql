@@ -27,10 +27,11 @@ from (
         , p.ProjectID
         , ta.TreatmentAreaID 
         , p.ProjectGisIdentifier
-        , p.ProgramID
+        , pp.ProgramID
          from dbo.Treatment t
         join dbo.TreatmentArea ta on t.TreatmentAreaID = ta.TreatmentAreaID
         join dbo.Project p on t.ProjectID = p.ProjectID
+        join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
         ) x on x.TreatmentAreaID = ta.TreatmentAreaID
         join dbo.PriorityLandscape landscape on  landscape.PriorityLandscapeLocation.STIntersects(ta.TreatmentAreaFeature) = 1
          where  x.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
@@ -51,9 +52,10 @@ from (
         , p.ProjectID
         , pl.ProjectLocationID 
         , p.ProjectGisIdentifier
-        , p.ProgramID
+        , pp.ProgramID
         from dbo.ProjectLocation pl
         join dbo.Project p on pl.ProjectID = p.ProjectID
+        join dbo.ProjectProgram pp on p.ProjectID = pp.ProjectID
         ) x on x.ProjectLocationID = ta.ProjectLocationID
         join dbo.PriorityLandscape landscape on  landscape.PriorityLandscapeLocation.STIntersects(ta.ProjectLocationGeometry) = 1
          where  x.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 

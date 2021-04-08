@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID) : this()
+        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID, int? programID, bool? importedFromGisUpload) : this()
         {
             this.ProjectLocationID = projectLocationID;
             this.ProjectID = projectID;
@@ -41,6 +41,8 @@ namespace ProjectFirma.Web.Models
             this.ProjectLocationName = projectLocationName;
             this.ArcGisObjectID = arcGisObjectID;
             this.ArcGisGlobalID = arcGisGlobalID;
+            this.ProgramID = programID;
+            this.ImportedFromGisUpload = importedFromGisUpload;
         }
 
         /// <summary>
@@ -131,11 +133,14 @@ namespace ProjectFirma.Web.Models
         public string ProjectLocationName { get; set; }
         public int? ArcGisObjectID { get; set; }
         public string ArcGisGlobalID { get; set; }
+        public int? ProgramID { get; set; }
+        public bool? ImportedFromGisUpload { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationID; } set { ProjectLocationID = value; } }
 
         public virtual Project Project { get; set; }
         public ProjectLocationType ProjectLocationType { get { return ProjectLocationType.AllLookupDictionary[ProjectLocationTypeID]; } }
+        public virtual Program Program { get; set; }
 
         public static class FieldLengths
         {
