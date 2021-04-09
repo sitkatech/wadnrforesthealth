@@ -512,7 +512,7 @@ namespace ProjectFirma.Web.Models
                 {
                     feature.Properties.Add("PopupUrl", this.GetProjectSimpleMapPopupUrl());
                 }
-
+                feature.Properties.Add("ProgramID", string.Join(",", ProjectPrograms.Select(x => x.ProgramID)));
                 feature.Properties.Add("LeadImplementerID", this.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID)?.OrganizationID.ToString(CultureInfo.InvariantCulture) ?? (-1).ToString(CultureInfo.InvariantCulture));
 
             }
@@ -648,6 +648,9 @@ namespace ProjectFirma.Web.Models
 
         public ICollection<IEntityClassification> ProjectClassificationsForMap =>
             new List<IEntityClassification>(ProjectClassifications);
+
+        public ICollection<IEntityProgram> ProjectProgramsForMap =>
+            new List<IEntityProgram>(ProjectPrograms);
 
         public int FancyTreeNodeKey => ProjectID;
 
