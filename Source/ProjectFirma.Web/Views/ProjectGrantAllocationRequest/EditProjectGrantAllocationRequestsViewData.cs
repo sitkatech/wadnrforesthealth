@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         private EditProjectGrantAllocationRequestsViewData(List<ProjectSimple> allProjects,
             List<GrantAllocationSimple> allGrantAllocations,
             int? projectID,
-            int? projectProgramID,
+            bool isLoa,
             int? grantAllocationID)
         {
             AllGrantAllocations = allGrantAllocations;
@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
             IsMatchAndPayRelevant = false;
             if (displayMode == EditorDisplayMode.FromProject)
             {
-                if (projectProgramID == ProjectController.LoaProgramID)
+                if (isLoa)
                 {
                     IsMatchAndPayRelevant = true;
                 }
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 
         public EditProjectGrantAllocationRequestsViewData(ProjectSimple project,
             List<GrantAllocationSimple> allGrantAllocations)
-            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID,project.ProgramID, null)
+            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID,project.IsLoa, null)
         {
         }
 

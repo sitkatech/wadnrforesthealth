@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.Project
         {
             PageTitle = $"Full {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} List";
 
-            GridSpec = new ProjectIndexGridSpec(currentPerson, true, true, new Dictionary<int, vTotalTreatedAcresByProject>()) 
+            GridSpec = new ProjectIndexGridSpec(currentPerson, true, true, new Dictionary<int, vTotalTreatedAcresByProject>(), new Dictionary<int, List<Models.Program>>()) 
                 {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 
             if (new ProjectCreateNewFeature().HasPermissionByPerson(CurrentPerson))

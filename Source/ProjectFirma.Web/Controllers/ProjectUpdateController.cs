@@ -685,7 +685,7 @@ namespace ProjectFirma.Web.Controllers
                 allGrantAllocations,
                 estimatedTotalCost 
                 );
-            var isLoa = projectUpdateBatch.Project.ProgramID == ProjectController.LoaProgramID;
+            var isLoa = projectUpdateBatch.Project.ProjectPrograms.Any(x => x.ProgramID == ProjectController.LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates), isLoa);
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, projectFundingDetailViewData, GetUpdateStatus(projectUpdateBatch), expectedFundingValidationResult);

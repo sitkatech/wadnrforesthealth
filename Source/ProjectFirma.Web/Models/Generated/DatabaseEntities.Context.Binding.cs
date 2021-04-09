@@ -63,6 +63,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GisMetadataAttribute> GisMetadataAttributes { get; set; }
         public virtual DbSet<GisUploadAttemptGisMetadataAttribute> GisUploadAttemptGisMetadataAttributes { get; set; }
         public virtual DbSet<GisUploadAttempt> GisUploadAttempts { get; set; }
+        public virtual DbSet<GisUploadProgramMergeGrouping> GisUploadProgramMergeGroupings { get; set; }
         public virtual DbSet<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
         public virtual DbSet<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
@@ -158,6 +159,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectPersonUpdate> ProjectPersonUpdates { get; set; }
         public virtual DbSet<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual DbSet<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
+        public virtual DbSet<ProjectProgram> ProjectPrograms { get; set; }
         public virtual DbSet<ProjectRegion> ProjectRegions { get; set; }
         public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
@@ -457,6 +459,9 @@ namespace ProjectFirma.Web.Models
                     var gisUploadAttemptWorkflowSection = GisUploadAttemptWorkflowSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(gisUploadAttemptWorkflowSection, "GisUploadAttemptWorkflowSection", primaryKey);
                     return gisUploadAttemptWorkflowSection;
+
+                case "GisUploadProgramMergeGrouping":
+                    return GisUploadProgramMergeGroupings.GetGisUploadProgramMergeGrouping(primaryKey);
 
                 case "GisUploadSourceOrganization":
                     return GisUploadSourceOrganizations.GetGisUploadSourceOrganization(primaryKey);
@@ -867,6 +872,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectPriorityLandscapeUpdate":
                     return ProjectPriorityLandscapeUpdates.GetProjectPriorityLandscapeUpdate(primaryKey);
+
+                case "ProjectProgram":
+                    return ProjectPrograms.GetProjectProgram(primaryKey);
 
                 case "ProjectRegion":
                     return ProjectRegions.GetProjectRegion(primaryKey);

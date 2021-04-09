@@ -21,12 +21,18 @@ CREATE TABLE [dbo].[GisUploadSourceOrganization](
 	[ImportAsDetailedLocationInAdditionToTreatments] [bit] NOT NULL,
 	[ApplyStartDateToTreatments] [bit] NOT NULL,
 	[ApplyEndDateToTreatments] [bit] NOT NULL,
+	[GisUploadProgramMergeGroupingID] [int] NULL,
  CONSTRAINT [PK_GisUploadSourceOrganization_GisUploadSourceOrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[GisUploadSourceOrganizationID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID] FOREIGN KEY([GisUploadProgramMergeGroupingID])
+REFERENCES [dbo].[GisUploadProgramMergeGrouping] ([GisUploadProgramMergeGroupingID])
+GO
+ALTER TABLE [dbo].[GisUploadSourceOrganization] CHECK CONSTRAINT [FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID]
 GO
 ALTER TABLE [dbo].[GisUploadSourceOrganization]  WITH CHECK ADD  CONSTRAINT [FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID] FOREIGN KEY([DefaultLeadImplementerOrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])

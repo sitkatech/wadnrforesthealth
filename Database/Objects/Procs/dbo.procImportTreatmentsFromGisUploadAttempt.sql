@@ -43,7 +43,7 @@ join dbo.TreatmentArea ta on t.TreatmentAreaID = ta.TreatmentAreaID
 where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
                         join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
                         where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
-               and p.ProgramID = @programID
+               and t.ProgramID = @programID
 
 
 delete from dbo.Treatment where TreatmentID in (select TreatmentID from #tempTreatmentsForDelete)
@@ -139,6 +139,7 @@ select p.ProjectID
 , isnull(TRY_PARSE(x.BroadcastBurnAcres AS decimal(38,10)),0)  as BroadcastBurnAcres
 , isnull(TRY_PARSE(x.OtherAcres AS decimal(38,10)),0)  as OtherAcres
  from dbo.Project p
+ join dbo.ProjectProgram pp on p.ProjectID = pp.ProjectID
 join (
         select gf.GisFeatureGeometry
         , gf.CalculatedArea
@@ -189,7 +190,7 @@ join (
 where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
                         join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
                         where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
-               and p.ProgramID = @programID
+               and pp.ProgramID = @programID
 
 
 
@@ -206,6 +207,8 @@ begin
 
 
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -222,6 +225,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -244,6 +249,8 @@ begin
 
     ----Pruning--------------------------------------------------------------------------------
      insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -260,6 +267,8 @@ begin
     select 
 
                  x.ProjectID
+               , @programID
+               , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -279,6 +288,8 @@ begin
 
     ----Thinning--------------------------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -295,6 +306,8 @@ begin
     select 
 
                  x.ProjectID
+                , @programID
+                , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -315,6 +328,8 @@ begin
 
     --Chipping-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+      , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -331,6 +346,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -350,6 +367,8 @@ begin
 
     --Mastication-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -366,6 +385,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -384,6 +405,8 @@ begin
 
     --Grazing-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -400,6 +423,8 @@ begin
     select 
 
                  x.ProjectID
+               , @programID
+               , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -419,6 +444,8 @@ begin
 
     --Lop and Scatter-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -435,6 +462,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -453,6 +482,8 @@ begin
 
     --Biomass Removal-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -469,6 +500,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -487,6 +520,8 @@ begin
 
     --Hand Pile-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -503,6 +538,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -522,6 +559,8 @@ begin
 
     --Hand Pile Burn-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -538,6 +577,8 @@ begin
     select 
 
                  x.ProjectID
+                 ,@programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -557,6 +598,8 @@ begin
 
     --Machine Burn-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -573,6 +616,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -592,6 +637,8 @@ begin
 
     --Broadcast Burn-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -608,6 +655,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
@@ -627,6 +676,8 @@ begin
 
     --Other-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
+               , [ProgramID]
+               , ImportedFromGis
                ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
@@ -643,6 +694,8 @@ begin
     select 
 
                  x.ProjectID
+                 , @programID
+                 , 1
                , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate

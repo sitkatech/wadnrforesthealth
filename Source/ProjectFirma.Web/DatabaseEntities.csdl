@@ -35,6 +35,7 @@
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisMetadataAttribute" />
     <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.GisUploadAttempt" />
     <EntitySet Name="GisUploadAttemptGisMetadataAttribute" EntityType="ProjectFirma.Web.Models.GisUploadAttemptGisMetadataAttribute" />
+    <EntitySet Name="GisUploadProgramMergeGrouping" EntityType="ProjectFirma.Web.Models.GisUploadProgramMergeGrouping" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.GisUploadSourceOrganization" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
@@ -131,6 +132,7 @@
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.ProjectPersonUpdate" />
     <EntitySet Name="ProjectPriorityLandscape" EntityType="ProjectFirma.Web.Models.ProjectPriorityLandscape" />
     <EntitySet Name="ProjectPriorityLandscapeUpdate" EntityType="ProjectFirma.Web.Models.ProjectPriorityLandscapeUpdate" />
+    <EntitySet Name="ProjectProgram" EntityType="ProjectFirma.Web.Models.ProjectProgram" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.ProjectRegion" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.ProjectRegionUpdate" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.ProjectTag" />
@@ -421,6 +423,10 @@
     <AssociationSet Name="FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="UpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID" Association="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID">
+      <End Role="GisUploadProgramMergeGrouping" EntitySet="GisUploadProgramMergeGrouping" />
+      <End Role="GisUploadSourceOrganizations" EntitySet="GisUploadSourceOrganization" />
     </AssociationSet>
     <AssociationSet Name="FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" Association="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID">
       <End Role="DefaultLeadImplementerOrganization" EntitySet="Organization" />
@@ -950,9 +956,17 @@
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="ProjectPriorityLandscapeUpdates" EntitySet="ProjectPriorityLandscapeUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_Project_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Project_Program_ProgramID">
+    <AssociationSet Name="FK_ProjectLocation_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
-      <End Role="Projects" EntitySet="Project" />
+      <End Role="ProjectLocations" EntitySet="ProjectLocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
@@ -1021,6 +1035,10 @@
     <AssociationSet Name="FK_ProjectPriorityLandscape_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectPriorityLandscapes" EntitySet="ProjectPriorityLandscape" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectProgram_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -1621,6 +1639,14 @@
     <NavigationProperty Name="GisMetadataAttribute" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisMetadataAttribute_GisMetadataAttributeID" FromRole="GisUploadAttemptGisMetadataAttributes" ToRole="GisMetadataAttribute" />
     <NavigationProperty Name="GisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttemptGisMetadataAttributes" ToRole="GisUploadAttempt" />
   </EntityType>
+  <EntityType Name="GisUploadProgramMergeGrouping">
+    <Key>
+      <PropertyRef Name="GisUploadProgramMergeGroupingID" />
+    </Key>
+    <Property Name="GisUploadProgramMergeGroupingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadProgramMergeGroupingName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisUploadSourceOrganizations" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID" FromRole="GisUploadProgramMergeGrouping" ToRole="GisUploadSourceOrganizations" />
+  </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
       <PropertyRef Name="GisUploadSourceOrganizationID" />
@@ -1643,10 +1669,12 @@
     <Property Name="ImportAsDetailedLocationInAdditionToTreatments" Type="Boolean" Nullable="false" />
     <Property Name="ApplyStartDateToTreatments" Type="Boolean" Nullable="false" />
     <Property Name="ApplyEndDateToTreatments" Type="Boolean" Nullable="false" />
+    <Property Name="GisUploadProgramMergeGroupingID" Type="Int32" />
     <NavigationProperty Name="GisCrossWalkDefaults" Relationship="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisCrossWalkDefaults" />
     <NavigationProperty Name="GisDefaultMappings" Relationship="ProjectFirma.Web.Models.FK_GisDefaultMapping_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisDefaultMappings" />
     <NavigationProperty Name="GisExcludeIncludeColumns" Relationship="ProjectFirma.Web.Models.FK_GisExcludeIncludeColumn_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisExcludeIncludeColumns" />
     <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />
+    <NavigationProperty Name="GisUploadProgramMergeGrouping" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID" FromRole="GisUploadSourceOrganizations" ToRole="GisUploadProgramMergeGrouping" />
     <NavigationProperty Name="DefaultLeadImplementerOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" FromRole="GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization" ToRole="DefaultLeadImplementerOrganization" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Program_ProgramID" FromRole="GisUploadSourceOrganizations" ToRole="Program" />
     <NavigationProperty Name="RelationshipTypeForDefaultOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID" FromRole="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" ToRole="RelationshipTypeForDefaultOrganization" />
@@ -2600,7 +2628,9 @@
     <NavigationProperty Name="ProgramCreatePerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramCreatePersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramCreatePerson" ToRole="ProgramCreatePerson" />
     <NavigationProperty Name="ProgramLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" ToRole="ProgramLastUpdatedByPerson" />
     <NavigationProperty Name="ProgramPrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramPrimaryContactPersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramPrimaryContactPerson" ToRole="ProgramPrimaryContactPerson" />
-    <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_Program_ProgramID" FromRole="Program" ToRole="Projects" />
+    <NavigationProperty Name="ProjectLocations" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID" FromRole="Program" ToRole="ProjectLocations" />
+    <NavigationProperty Name="ProjectPrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID" FromRole="Program" ToRole="ProjectPrograms" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Program" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -2651,7 +2681,6 @@
     <Property Name="LastUpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="ProgramID" Type="Int32" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
@@ -2662,7 +2691,6 @@
     <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
     <NavigationProperty Name="ProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProjectsWhereYouAreTheProposingPerson" ToRole="ProposingPerson" />
     <NavigationProperty Name="ReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ProjectsWhereYouAreTheReviewedByPerson" ToRole="ReviewedByPerson" />
-    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_Project_Program_ProgramID" FromRole="Projects" ToRole="Program" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="Projects" ToRole="ProjectType" />
     <NavigationProperty Name="ProjectClassifications" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="Project" ToRole="ProjectClassifications" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID" FromRole="Project" ToRole="ProjectCustomAttributes" />
@@ -2680,6 +2708,7 @@
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_Project_ProjectID" FromRole="Project" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectPeople" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Project_ProjectID" FromRole="Project" ToRole="ProjectPeople" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_Project_ProjectID" FromRole="Project" ToRole="ProjectPriorityLandscapes" />
+    <NavigationProperty Name="ProjectPrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Project_ProjectID" FromRole="Project" ToRole="ProjectPrograms" />
     <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="Project" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
@@ -2962,6 +2991,9 @@
     <Property Name="ProjectLocationName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="ArcGisObjectID" Type="Int32" />
     <Property Name="ArcGisGlobalID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramID" Type="Int32" />
+    <Property Name="ImportedFromGisUpload" Type="Boolean" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID" FromRole="ProjectLocations" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="ProjectLocations" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
@@ -3101,6 +3133,16 @@
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="ProjectPriorityLandscapeUpdates" ToRole="PriorityLandscape" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectPriorityLandscapeUpdates" ToRole="ProjectUpdateBatch" />
+  </EntityType>
+  <EntityType Name="ProjectProgram">
+    <Key>
+      <PropertyRef Name="ProjectProgramID" />
+    </Key>
+    <Property Name="ProjectProgramID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="ProgramID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID" FromRole="ProjectPrograms" ToRole="Program" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Project_ProjectID" FromRole="ProjectPrograms" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectRegion">
     <Key>
@@ -3465,9 +3507,12 @@
     <Property Name="UpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="TreatmentDetailedActivityTypeID" Type="Int32" Nullable="false" />
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramID" Type="Int32" />
+    <Property Name="ImportedFromGis" Type="Boolean" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="UpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" ToRole="UpdateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Treatments" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
     <NavigationProperty Name="TreatmentArea" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="Treatments" ToRole="TreatmentArea" />
   </EntityType>
@@ -4383,6 +4428,18 @@
       </Principal>
       <Dependent Role="TreatmentsWhereYouAreTheUpdateGisUploadAttempt">
         <PropertyRef Name="UpdateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID">
+    <End Role="GisUploadProgramMergeGrouping" Type="ProjectFirma.Web.Models.GisUploadProgramMergeGrouping" Multiplicity="0..1" />
+    <End Role="GisUploadSourceOrganizations" Type="ProjectFirma.Web.Models.GisUploadSourceOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadProgramMergeGrouping">
+        <PropertyRef Name="GisUploadProgramMergeGroupingID" />
+      </Principal>
+      <Dependent Role="GisUploadSourceOrganizations">
+        <PropertyRef Name="GisUploadProgramMergeGroupingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5970,14 +6027,38 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Project_Program_ProgramID">
+  <Association Name="FK_ProjectLocation_Program_ProgramID">
     <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="0..1" />
-    <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
+    <End Role="ProjectLocations" Type="ProjectFirma.Web.Models.ProjectLocation" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Program">
         <PropertyRef Name="ProgramID" />
       </Principal>
-      <Dependent Role="Projects">
+      <Dependent Role="ProjectLocations">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectProgram_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="Treatments">
         <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
@@ -6182,6 +6263,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectPriorityLandscapes">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectProgram_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

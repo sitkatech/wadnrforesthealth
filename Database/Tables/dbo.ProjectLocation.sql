@@ -11,6 +11,8 @@ CREATE TABLE [dbo].[ProjectLocation](
 	[ProjectLocationName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ArcGisObjectID] [int] NULL,
 	[ArcGisGlobalID] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProgramID] [int] NULL,
+	[ImportedFromGisUpload] [bit] NULL,
  CONSTRAINT [PK_ProjectLocation_ProjectLocationID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectLocationID] ASC
@@ -22,6 +24,11 @@ CREATE TABLE [dbo].[ProjectLocation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[ProjectLocation]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocation_Program_ProgramID] FOREIGN KEY([ProgramID])
+REFERENCES [dbo].[Program] ([ProgramID])
+GO
+ALTER TABLE [dbo].[ProjectLocation] CHECK CONSTRAINT [FK_ProjectLocation_Program_ProgramID]
 GO
 ALTER TABLE [dbo].[ProjectLocation]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocation_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])

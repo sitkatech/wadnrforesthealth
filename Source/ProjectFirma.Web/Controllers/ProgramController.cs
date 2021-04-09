@@ -173,10 +173,10 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteProgram(Program program, ConfirmDialogFormViewModel viewModel)
         {
-            string optionalProjectCountString = program.Projects.Any() ? $"will delete {program.Projects.Count} Projects and" : string.Empty;
+            string optionalProjectCountString = program.ProjectPrograms.Any() ? $"will delete {program.ProjectPrograms.Count} Projects and" : string.Empty;
             string projectNumberAndDurationWarning = $"<b>This {optionalProjectCountString} may take several minutes to complete.</b>";
             // For now, only show duration warning when ProjectCount > 0. Request by DAL.
-            projectNumberAndDurationWarning = program.Projects.Any() ? projectNumberAndDurationWarning : string.Empty;
+            projectNumberAndDurationWarning = program.ProjectPrograms.Any() ? projectNumberAndDurationWarning : string.Empty;
             var confirmMessage = $"Are you sure you want to delete Program \"{program.ProgramNameDisplay}\" with Parent Organization {program.Organization.DisplayName}? <br/><br/>{projectNumberAndDurationWarning}";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
@@ -191,7 +191,7 @@ namespace ProjectFirma.Web.Controllers
 
             string programName = program.ProgramNameDisplay;
             string parentOrganizationName = program.Organization.DisplayName;
-            string projectsDeletedCountString = program.Projects.Any() ? $"{program.Projects.Count} Projects deleted." : string.Empty;
+            string projectsDeletedCountString = program.ProjectPrograms.Any() ? $"{program.ProjectPrograms.Count} Projects deleted." : string.Empty;
 
             if (!ModelState.IsValid)
             {

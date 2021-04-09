@@ -15,7 +15,8 @@ select p.ProjectID
 from dbo.vLoaStageGrantAllocation x
 join dbo.LoaStage lan on x.LoaStageID = lan.LoaStageID
 join dbo.Project p on p.ProjectGisIdentifier = lan.ProjectIdentifier
-where p.ProgramID = 3
+join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
+where pp.ProgramID = 3
 
 
 
@@ -30,9 +31,10 @@ p.ProjectID
 , lan.LetterDate as LetterDate
 , lan.ProjectExpirationDate as ProjectExpirationDate
  from dbo.Project p
+ join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
 join dbo.LoaStage lan on lan.ProjectIdentifier = p.ProjectGisIdentifier
 left join dbo.vLoaStageGrantAllocation x on x.LoaStageID = lan.LoaStageID
-where p.ProgramID = 3 and x.LoaStageID is null
+where pp.ProgramID = 3 and x.LoaStageID is null
 
 go
 

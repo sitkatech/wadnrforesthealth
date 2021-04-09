@@ -371,6 +371,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisUploadProgramMergeGrouping">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadProgramMergeGrouping">
+        <MappingFragment StoreEntitySet="GisUploadProgramMergeGrouping">
+          <ScalarProperty Name="GisUploadProgramMergeGroupingID" ColumnName="GisUploadProgramMergeGroupingID" />
+          <ScalarProperty Name="GisUploadProgramMergeGroupingName" ColumnName="GisUploadProgramMergeGroupingName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisUploadSourceOrganization">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadSourceOrganization">
         <MappingFragment StoreEntitySet="GisUploadSourceOrganization">
@@ -392,6 +400,7 @@
           <ScalarProperty Name="ImportAsDetailedLocationInAdditionToTreatments" ColumnName="ImportAsDetailedLocationInAdditionToTreatments" />
           <ScalarProperty Name="ApplyStartDateToTreatments" ColumnName="ApplyStartDateToTreatments" />
           <ScalarProperty Name="ApplyEndDateToTreatments" ColumnName="ApplyEndDateToTreatments" />
+          <ScalarProperty Name="GisUploadProgramMergeGroupingID" ColumnName="GisUploadProgramMergeGroupingID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1213,7 +1222,6 @@
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
-          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1474,6 +1482,8 @@
           <ScalarProperty Name="ProjectLocationName" ColumnName="ProjectLocationName" />
           <ScalarProperty Name="ArcGisObjectID" ColumnName="ArcGisObjectID" />
           <ScalarProperty Name="ArcGisGlobalID" ColumnName="ArcGisGlobalID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ImportedFromGisUpload" ColumnName="ImportedFromGisUpload" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1598,6 +1608,15 @@
           <ScalarProperty Name="ProjectPriorityLandscapeUpdateID" ColumnName="ProjectPriorityLandscapeUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectProgram">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectProgram">
+        <MappingFragment StoreEntitySet="ProjectProgram">
+          <ScalarProperty Name="ProjectProgramID" ColumnName="ProjectProgramID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1930,6 +1949,8 @@
           <ScalarProperty Name="UpdateGisUploadAttemptID" ColumnName="UpdateGisUploadAttemptID" />
           <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
           <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

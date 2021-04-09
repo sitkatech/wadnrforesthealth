@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using GeoJSON.Net.Feature;
@@ -120,7 +121,10 @@ namespace ProjectFirma.Web.Controllers
         {
             var treatmentTotals = HttpRequestStorage.DatabaseEntities.vTotalTreatedAcresByProjects.ToList();
             var treatmentDictionary = treatmentTotals.ToDictionary(x => x.ProjectID, y => y);
-            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false, treatmentDictionary);
+            var programProjectDictionary = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Include(x => x.Program)
+                .ToList()
+                .GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, x => x.ToList().Select(y => y.Program).ToList());
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false, treatmentDictionary, programProjectDictionary);
             var priorityLandscape = priorityLandscapePrimaryKey.EntityObject;
             var projectPriorityLandscapes = priorityLandscape.GetAssociatedProjectsVisibleToUser(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectPriorityLandscapes, gridSpec);
