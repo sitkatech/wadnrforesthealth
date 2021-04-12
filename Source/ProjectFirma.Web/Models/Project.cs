@@ -827,5 +827,44 @@ namespace ProjectFirma.Web.Models
         // read-only Helper accessors
         public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
         public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
+
+
+        public HtmlString ProgramListDisplay
+        {
+            get
+            {
+                var programsDictionary = this.ProjectPrograms.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList().Select(x => x.Program).ToList());
+                return ProgramListDisplayHelper(programsDictionary);
+            }
+        }
+
+        public HtmlString ProgramListDisplayHelper(Dictionary<int, List<Models.Program>> programsByProject)
+        {
+            var programs = new List<Models.Program>();
+            if (programsByProject.ContainsKey(ProjectID))
+            {
+                programs = programsByProject[ProjectID];
+            }
+            var listOfStrings = new List<string>();
+            foreach (var program in programs)
+            {
+                if (!program.IsDefaultProgramForImportOnly)
+                {
+                    var stringReturn = UrlTemplate.MakeHrefString(
+                        program.GetDetailUrl(),
+                        program.DisplayName).ToString();
+                    listOfStrings.Add(stringReturn);
+                }
+            }
+
+            var returnList = string.Join(", ", listOfStrings);
+            if (listOfStrings.Any())
+            {
+                return new HtmlString(returnList);
+            }
+
+            return new HtmlString(string.Empty);
+        }
+
     }
 }

@@ -85,30 +85,7 @@ namespace ProjectFirma.Web.Views.Project
 
         private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
         {
-            var programs = new List<Models.Program>();
-            if (programsByProject.ContainsKey(project.ProjectID))
-            {
-                programs = programsByProject[project.ProjectID];
-            }
-            var listOfStrings = new List<string>();
-            foreach (var program in programs)
-            {
-                if (!program.IsDefaultProgramForImportOnly)
-                {
-                    var stringReturn = UrlTemplate.MakeHrefString(
-                        program.GetDetailUrl(),
-                        program.DisplayName).ToString();
-                    listOfStrings.Add(stringReturn);
-                }
-            }
-
-            var returnList = string.Join(", ", listOfStrings);
-            if (listOfStrings.Any())
-            {
-                return new HtmlString(returnList);
-            }
-
-            return new HtmlString(string.Empty);
+            return project.ProgramListDisplayHelper(programsByProject);
         }
 
 
