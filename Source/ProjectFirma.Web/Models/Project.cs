@@ -421,35 +421,50 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityLandscapes.Select(x => x.PriorityLandscape);
         }
 
-        public void AutoAssignProjectPriorityLandscapes(ICollection<DbGeometry> projectLocations)
+        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegions()
         {
-            if (!projectLocations.Any())
-            {
-                return;
-            }
+            var detailedProjectLocations = ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList();
+            var projectHasDetailedLocations = HasProjectLocationDetail;
+            var detailedProjectLocationsAggregated = HasProjectLocationDetail ? detailedProjectLocations.Aggregate((x, y) => x.Union(y)) : null;
+            var detailedProjectLocationsAggregatedMadeValid = HasProjectLocationDetail ? (detailedProjectLocationsAggregated.IsValid ? detailedProjectLocationsAggregated : detailedProjectLocationsAggregated.ToSqlGeometry().MakeValid().ToDbGeometryWithCoordinateSystem()) : null;
 
-            var projectLocation = projectLocations.Aggregate((x, y) => x.Union(y));
-
-            AutoAssignProjectPriorityLandscapes(projectLocation);
-        }
-
-        public void AutoAssignProjectPriorityLandscapes(DbGeometry projectLocation)
-        {
-            var geometry = projectLocation.IsValid ? projectLocation : projectLocation.ToSqlGeometry().MakeValid().ToDbGeometryWithCoordinateSystem();
+            var projectLocationPoint = this.ProjectLocationPoint;
+            var projectLocationPointExists = this.HasProjectLocationPoint;
 
             var updatedProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.PriorityLandscapes
-                .Where(x => x.PriorityLandscapeLocation.Intersects(geometry))
+                .Where(x => (projectHasDetailedLocations && x.PriorityLandscapeLocation.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.PriorityLandscapeLocation.Intersects(projectLocationPoint)))
                 .ToList()
                 .Select(x => new ProjectPriorityLandscape(ProjectID, x.PriorityLandscapeID))
                 .ToList();
 
+            if (!updatedProjectPriorityLandscapes.Any())
+            {
+                NoPriorityLandscapesExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any Priority Landscape.";
+            }
+            else
+            {
+                NoPriorityLandscapesExplanation = null;
+            }
+
+
             ProjectPriorityLandscapes.Merge(updatedProjectPriorityLandscapes, HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local, (x, y) => x.ProjectID == y.ProjectID && x.PriorityLandscapeID == y.PriorityLandscapeID);
 
             var updatedProjectRegions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions
-                .Where(x => x.DNRUplandRegionLocation.Intersects(geometry))
+                .Where(x => (projectHasDetailedLocations && x.DNRUplandRegionLocation.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.DNRUplandRegionLocation.Intersects(projectLocationPoint)))
                 .ToList()
                 .Select(x => new ProjectRegion(ProjectID, x.DNRUplandRegionID))
                 .ToList();
+
+            if (!updatedProjectRegions.Any())
+            {
+                NoRegionsExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any DNR Upland Region.";
+            }
+            else
+            {
+                NoRegionsExplanation = null;
+            }
 
             ProjectRegions.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegions.Local, (x, y) => x.ProjectID == y.ProjectID && x.DNRUplandRegionID == y.DNRUplandRegionID);
         }

@@ -671,12 +671,9 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(project);
 
-            if (project.HasProjectLocationPoint)
-            {
-                project.AutoAssignProjectPriorityLandscapes(project.ProjectLocationPoint);
-            }
+           project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
 
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Location successfully saved.");
+           SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Simple Location successfully saved.. Priority Landscapes and DNR Upland Regions were automatically updated based on the Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationSimple.ProjectCreateSectionDisplayName);
         }
 
@@ -739,6 +736,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEditLocationDetailed(project, viewModel);
             }
             SaveDetailedLocations(viewModel, project);
+            SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes and DNR Upland Regions were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationDetailed.ProjectCreateSectionDisplayName);
         }
 
@@ -831,6 +829,7 @@ namespace ProjectFirma.Web.Controllers
             }
             SaveDetailedLocations(viewModel, project);
             DbSpatialHelper.Reduce(new List<IHaveSqlGeometry>(project.ProjectLocations.ToList()));
+            SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes and DNR Upland Regions were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
             return new ModalDialogFormJsonResult();
         }
 
@@ -865,7 +864,7 @@ namespace ProjectFirma.Web.Controllers
                 matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
 
-            project.AutoAssignProjectPriorityLandscapes(project.ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList());
+            project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)
