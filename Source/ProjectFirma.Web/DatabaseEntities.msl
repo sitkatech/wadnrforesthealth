@@ -1171,6 +1171,8 @@
           <ScalarProperty Name="ProgramLastUpdatedDate" ColumnName="ProgramLastUpdatedDate" />
           <ScalarProperty Name="ProgramLastUpdatedByPersonID" ColumnName="ProgramLastUpdatedByPersonID" />
           <ScalarProperty Name="IsDefaultProgramForImportOnly" ColumnName="IsDefaultProgramForImportOnly" />
+          <ScalarProperty Name="ProgramFileResourceID" ColumnName="ProgramFileResourceID" />
+          <ScalarProperty Name="ProgramNotes" ColumnName="ProgramNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

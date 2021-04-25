@@ -24,9 +24,11 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using GeoJSON.Net.Feature;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using LtInfo.Common;
+using LtInfo.Common.DbSpatial;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 
@@ -699,6 +701,61 @@ namespace ProjectFirma.Web.Models
         public List<ProjectSectionSimple> GetApplicableWizardSections(bool ignoreStatus)
         {
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectUpdateSections(this, null, ignoreStatus)).OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
+        }
+
+        public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()
+        {
+            return ProjectLocationUpdates.ToGeoJsonFeatureCollection();
+        }
+
+        public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
+
+        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegions()
+        {
+            var detailedProjectLocations = ProjectLocationUpdates.Select(x => x.ProjectLocationGeometry).ToList();
+            var projectHasDetailedLocations = HasProjectLocationDetail;
+            var detailedProjectLocationsAggregated = HasProjectLocationDetail ? detailedProjectLocations.Aggregate((x, y) => x.Union(y)) : null;
+            var detailedProjectLocationsAggregatedMadeValid = HasProjectLocationDetail ? (detailedProjectLocationsAggregated.IsValid ? detailedProjectLocationsAggregated : detailedProjectLocationsAggregated.ToSqlGeometry().MakeValid().ToDbGeometryWithCoordinateSystem()) : null;
+
+            var projectLocationPoint = this.ProjectUpdate.ProjectLocationPoint;
+            var projectLocationPointExists = this.ProjectUpdate.HasProjectLocationPoint;
+
+            var updatedProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.PriorityLandscapes
+                .Where(x => (projectHasDetailedLocations && x.PriorityLandscapeLocation.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.PriorityLandscapeLocation.Intersects(projectLocationPoint)))
+                .ToList()
+                .Select(x => new ProjectPriorityLandscapeUpdate(ProjectUpdateBatchID, x.PriorityLandscapeID))
+                .ToList();
+
+            if (!updatedProjectPriorityLandscapes.Any())
+            {
+                NoPriorityLandscapesExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any Priority Landscape.";
+            }
+            else
+            {
+                NoPriorityLandscapesExplanation = null;
+            }
+
+
+            ProjectPriorityLandscapeUpdates.Merge(updatedProjectPriorityLandscapes, HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapeUpdates.Local, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.PriorityLandscapeID == y.PriorityLandscapeID);
+
+            var updatedProjectRegions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions
+                .Where(x => (projectHasDetailedLocations && x.DNRUplandRegionLocation.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.DNRUplandRegionLocation.Intersects(projectLocationPoint)))
+                .ToList()
+                .Select(x => new ProjectRegionUpdate(ProjectUpdateBatchID, x.DNRUplandRegionID))
+                .ToList();
+
+            if (!updatedProjectRegions.Any())
+            {
+                NoRegionsExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any DNR Upland Region.";
+            }
+            else
+            {
+                NoRegionsExplanation = null;
+            }
+
+            ProjectRegionUpdates.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.Local, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.DNRUplandRegionID == y.DNRUplandRegionID);
         }
     }
 }

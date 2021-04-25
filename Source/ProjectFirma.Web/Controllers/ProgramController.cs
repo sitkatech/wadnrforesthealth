@@ -82,6 +82,13 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            if (viewModel.ProgramFileResourceData != null)
+            {
+
+                program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
+
             SetMessageForDisplay($"{FieldDefinition.Program.GetFieldDefinitionLabel()} {program.DisplayName} successfully created.");
             return new ModalDialogFormJsonResult();
         }
@@ -114,6 +121,11 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
+            if (viewModel.ProgramFileResourceData != null)
+            {
+
+                program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
             SetMessageForDisplay($"{FieldDefinition.Program.GetFieldDefinitionLabel()} {program.DisplayName} successfully created.");
             return new ModalDialogFormJsonResult();
         }
@@ -158,6 +170,18 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, program.ProgramPrimaryContactPerson, null);
             }
             viewModel.UpdateModel(program, CurrentPerson, false);
+            if (viewModel.ProgramFileResourceData != null)
+            {
+                var currentAgreementFileResource = program.ProgramFileResource;
+                program.ProgramFileResource = null;
+                // Delete old Agreement file, if present
+                if (currentAgreementFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                }
+                program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
             return new ModalDialogFormJsonResult();
         }
 

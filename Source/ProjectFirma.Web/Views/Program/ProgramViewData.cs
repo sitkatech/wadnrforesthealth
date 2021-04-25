@@ -18,6 +18,8 @@ namespace ProjectFirma.Web.Views.Program
 
         public string ProgramsListUrl { get; set; }
 
+        public bool ShowDownload { get; set; }
+
         protected ProgramViewData(Person currentPerson, Models.Program program) : base(currentPerson, null)
         {
             Program = program;
@@ -28,6 +30,7 @@ namespace ProjectFirma.Web.Views.Program
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
             GisUploadSourceOrganization = program.GisUploadSourceOrganizations.FirstOrDefault();
+            ShowDownload = program.ProgramFileResource != null;
         }
 
         public string ProjectTypeDefaultName()

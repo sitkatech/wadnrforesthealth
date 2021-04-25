@@ -673,7 +673,7 @@ namespace ProjectFirma.Web.Controllers
 
            project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
 
-           SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Simple Location successfully saved.. Priority Landscapes and DNR Upland Regions were automatically updated based on the Detailed Location and the Simple Location. Please review both sections to verify.");
+           SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Simple Location successfully saved. Priority Landscapes and DNR Upland Regions were automatically updated based on the Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationSimple.ProjectCreateSectionDisplayName);
         }
 

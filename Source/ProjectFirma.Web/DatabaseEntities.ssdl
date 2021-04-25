@@ -824,6 +824,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
+      <End Role="ProgramFileResource" EntitySet="FileResource" />
+      <End Role="ProgramsWhereYouAreTheProgramFileResource" EntitySet="Program" />
+    </AssociationSet>
     <AssociationSet Name="FK_Program_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Program_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Programs" EntitySet="Program" />
@@ -2333,6 +2337,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramLastUpdatedDate" Type="datetime" />
     <Property Name="ProgramLastUpdatedByPersonID" Type="int" />
     <Property Name="IsDefaultProgramForImportOnly" Type="bit" Nullable="false" />
+    <Property Name="ProgramFileResourceID" Type="int" />
+    <Property Name="ProgramNotes" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -5025,6 +5031,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="PriorityLandscapeFileResources">
         <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
+    <End Role="ProgramFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramFileResource" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramFileResource">
+        <PropertyRef Name="ProgramFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

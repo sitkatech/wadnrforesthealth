@@ -320,6 +320,10 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
+      <End Role="ProgramFileResource" EntitySet="FileResource" />
+      <End Role="ProgramsWhereYouAreTheProgramFileResource" EntitySet="Program" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectDocument_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
@@ -1459,6 +1463,7 @@
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="PriorityLandscapeFileResources" />
+    <NavigationProperty Name="ProgramsWhereYouAreTheProgramFileResource" Relationship="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramFileResourceID_FileResourceID" FromRole="ProgramFileResource" ToRole="ProgramsWhereYouAreTheProgramFileResource" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImages" />
@@ -2623,6 +2628,9 @@
     <Property Name="ProgramLastUpdatedDate" Type="DateTime" />
     <Property Name="ProgramLastUpdatedByPersonID" Type="Int32" />
     <Property Name="IsDefaultProgramForImportOnly" Type="Boolean" Nullable="false" />
+    <Property Name="ProgramFileResourceID" Type="Int32" />
+    <Property Name="ProgramNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="ProgramFileResource" Relationship="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramFileResourceID_FileResourceID" FromRole="ProgramsWhereYouAreTheProgramFileResource" ToRole="ProgramFileResource" />
     <NavigationProperty Name="GisUploadSourceOrganizations" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Program_ProgramID" FromRole="Program" ToRole="GisUploadSourceOrganizations" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Program_Organization_OrganizationID" FromRole="Programs" ToRole="Organization" />
     <NavigationProperty Name="ProgramCreatePerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramCreatePersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramCreatePerson" ToRole="ProgramCreatePerson" />
@@ -4116,6 +4124,18 @@
       </Principal>
       <Dependent Role="PriorityLandscapeFileResources">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
+    <End Role="ProgramFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramFileResource" Type="ProjectFirma.Web.Models.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramFileResource">
+        <PropertyRef Name="ProgramFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

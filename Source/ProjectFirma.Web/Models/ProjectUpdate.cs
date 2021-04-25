@@ -192,5 +192,6 @@ namespace ProjectFirma.Web.Models
         {
             return ExpirationDate?.ToShortDateString();
         }
+
     }
 }
