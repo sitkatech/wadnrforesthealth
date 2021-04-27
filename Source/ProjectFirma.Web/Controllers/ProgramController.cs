@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
@@ -20,6 +21,42 @@ namespace ProjectFirma.Web.Controllers
 {
     public class ProgramController : FirmaBaseController
     {
+
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult DeleteProgramDocument(FileResourcePrimaryKey fileResourcePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(fileResourcePrimaryKey.PrimaryKeyValue);
+            return ViewProgramDocument(fileResourcePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewProgramDocument(FileResource fileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this Program Document '{fileResource.OriginalCompleteFileName}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteProgramDocument(FileResourcePrimaryKey fileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var document = fileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewProgramDocument(document, viewModel);
+            }
+
+            document.ProgramsWhereYouAreTheProgramFileResource.ForEach(x => x.ProgramFileResource = null);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            document.Delete(HttpRequestStorage.DatabaseEntities);
+            var message = $"Program Document '{document.OriginalCompleteFileName}' successfully deleted.";
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
 
         [ProgramViewFeature]
         public ViewResult Detail(ProgramPrimaryKey programPrimaryKey)

@@ -61,7 +61,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 
             foreach (var fGetColumnNamesForTableResult in columnsOrdered)
             {
-                Add(fGetColumnNamesForTableResult.GisMetadataAttribute.GisMetadataAttributeName, x => x.GisFeatureMetadataAttributes.Single(y => y.GisMetadataAttributeID == fGetColumnNamesForTableResult.GisMetadataAttributeID).GisFeatureMetadataAttributeValue, 90, DhtmlxGridColumnFilterType.Text);
+                Add(fGetColumnNamesForTableResult.GisMetadataAttribute.GisMetadataAttributeName
+                    , x => x.GisFeatureMetadataAttributes.SingleOrDefault(y => y.GisMetadataAttributeID == fGetColumnNamesForTableResult.GisMetadataAttributeID)?.GisFeatureMetadataAttributeValue, 90, DhtmlxGridColumnFilterType.Text);
             }
 
         }

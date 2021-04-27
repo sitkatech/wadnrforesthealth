@@ -137,6 +137,8 @@
                                 <span>
                                     @if (ViewDataTyped.ShowDownload)
                                     {
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+
                                         <a href="@ViewDataTyped.Program.ProgramFileResource.FileResourceUrl" target="_blank">
                                             @ViewDataTyped.Program.ProgramFileResource.OriginalCompleteFileName
                                         </a>

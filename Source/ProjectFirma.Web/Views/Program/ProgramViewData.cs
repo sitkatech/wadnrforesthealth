@@ -12,6 +12,7 @@ namespace ProjectFirma.Web.Views.Program
         public Models.Program Program { get; }
         public Models.GisUploadSourceOrganization GisUploadSourceOrganization { get; }
         public string EditProgramUrl { get; set; }
+        public string DeleteDocumentUrl { get; set; }
         public bool UserHasEditProgramPermissions { get; set; }
 
         public string BackToProgramsText { get; set; }
@@ -26,6 +27,7 @@ namespace ProjectFirma.Web.Views.Program
             HtmlPageTitle = program.ProgramName;
             EntityName = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()}";
             EditProgramUrl = program.GetEditUrl();
+            DeleteDocumentUrl = program.GetDeleteDocumentUrl();
             UserHasEditProgramPermissions = new ProgramEditFeature().HasPermissionByPerson(currentPerson);
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
