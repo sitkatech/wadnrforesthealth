@@ -16,6 +16,10 @@ CREATE TABLE [dbo].[LoaStage](
 	[ProjectCode] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[IsNortheast] [bit] NOT NULL,
 	[IsSoutheast]  AS (CONVERT([bit],case when [IsNortheast]=(1) then (0) else (1) end)) PERSISTED NOT NULL,
+	[ForesterLastName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ForesterFirstName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ForesterPhone] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ForesterEmail] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_LoaStage_LoaStageID] PRIMARY KEY CLUSTERED 
 (
 	[LoaStageID] ASC

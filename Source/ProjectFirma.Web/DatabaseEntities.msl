@@ -881,6 +881,10 @@
           <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
           <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
           <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
+          <ScalarProperty Name="ForesterLastName" ColumnName="ForesterLastName" />
+          <ScalarProperty Name="ForesterFirstName" ColumnName="ForesterFirstName" />
+          <ScalarProperty Name="ForesterPhone" ColumnName="ForesterPhone" />
+          <ScalarProperty Name="ForesterEmail" ColumnName="ForesterEmail" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1096,6 +1100,8 @@
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
           <ScalarProperty Name="IsProgramManager" ColumnName="IsProgramManager" />
+          <ScalarProperty Name="CreatedAsPartOfBulkImport" ColumnName="CreatedAsPartOfBulkImport" />
+          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1582,6 +1588,8 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="ProjectPersonRelationshipTypeID" ColumnName="ProjectPersonRelationshipTypeID" />
+          <ScalarProperty Name="CreatedAsPartOfBulkImport" ColumnName="CreatedAsPartOfBulkImport" />
+          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

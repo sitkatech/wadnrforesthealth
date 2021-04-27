@@ -36,6 +36,9 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         public readonly string FocusArea;
         public readonly string ProjectCode;
         public readonly string ProgramIndex;
+        public readonly string Forester;
+        public readonly string ForesterPhone;
+        public readonly string ForesterEmail;
         public readonly double? MatchAmount;
         public readonly double? PayAmount;
 
@@ -92,6 +95,11 @@ namespace ProjectFirma.Web.Models.ExcelUpload
 
                 // Column - Pay Key
                 PayAmount = ExcelColumnHelper.GetDoubleDataValueForColumnName(dr, rowIndex, LoaStageImports.PayKey, columnMappingDictionary);
+
+                // Column - Forester Key
+                Forester = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.ForesterKey, columnMappingDictionary);
+                ForesterPhone = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.ForesterPhoneKey, columnMappingDictionary);
+                ForesterEmail = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.ForesterEmailKey, columnMappingDictionary);
             }
 
           
@@ -105,7 +113,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         /// <returns></returns>
         public static bool RowIsBlank(DataRow dr)
         {
-            var columnsToCheck = LoaStageImports.GetBudgetColumnLetterToColumnNameDictionary().Keys.ToList();
+            var columnsToCheck = LoaStageImports.GetColumnLetterToColumnNameDictionary().Keys.ToList();
             var allColumnsBlank = columnsToCheck.All(col => String.IsNullOrWhiteSpace(dr[col].ToString()));
             return allColumnsBlank;
         }

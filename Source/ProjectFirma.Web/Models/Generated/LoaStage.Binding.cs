@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public LoaStage(int loaStageID, string projectIdentifier, string projectStatus, string grantNumber, string focusAreaName, DateTime? projectExpirationDate, DateTime? letterDate, decimal? matchAmount, decimal? payAmount, string programIndex, string projectCode, bool isNortheast, bool isSoutheast) : this()
+        public LoaStage(int loaStageID, string projectIdentifier, string projectStatus, string grantNumber, string focusAreaName, DateTime? projectExpirationDate, DateTime? letterDate, decimal? matchAmount, decimal? payAmount, string programIndex, string projectCode, bool isNortheast, bool isSoutheast, string foresterLastName, string foresterFirstName, string foresterPhone, string foresterEmail) : this()
         {
             this.LoaStageID = loaStageID;
             this.ProjectIdentifier = projectIdentifier;
@@ -46,6 +46,10 @@ namespace ProjectFirma.Web.Models
             this.ProjectCode = projectCode;
             this.IsNortheast = isNortheast;
             this.IsSoutheast = isSoutheast;
+            this.ForesterLastName = foresterLastName;
+            this.ForesterFirstName = foresterFirstName;
+            this.ForesterPhone = foresterPhone;
+            this.ForesterEmail = foresterEmail;
         }
 
         /// <summary>
@@ -125,6 +129,10 @@ namespace ProjectFirma.Web.Models
         public string ProjectCode { get; set; }
         public bool IsNortheast { get; set; }
         public bool IsSoutheast { get; private set; }
+        public string ForesterLastName { get; set; }
+        public string ForesterFirstName { get; set; }
+        public string ForesterPhone { get; set; }
+        public string ForesterEmail { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return LoaStageID; } set { LoaStageID = value; } }
 
@@ -138,6 +146,10 @@ namespace ProjectFirma.Web.Models
             public const int FocusAreaName = 600;
             public const int ProgramIndex = 50;
             public const int ProjectCode = 50;
+            public const int ForesterLastName = 200;
+            public const int ForesterFirstName = 200;
+            public const int ForesterPhone = 200;
+            public const int ForesterEmail = 200;
         }
     }
 }

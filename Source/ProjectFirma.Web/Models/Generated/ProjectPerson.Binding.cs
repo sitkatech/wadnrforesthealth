@@ -31,12 +31,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectPerson(int projectPersonID, int projectID, int personID, int projectPersonRelationshipTypeID) : this()
+        public ProjectPerson(int projectPersonID, int projectID, int personID, int projectPersonRelationshipTypeID, bool? createdAsPartOfBulkImport, int? createGisUploadAttemptID) : this()
         {
             this.ProjectPersonID = projectPersonID;
             this.ProjectID = projectID;
             this.PersonID = personID;
             this.ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
+            this.CreatedAsPartOfBulkImport = createdAsPartOfBulkImport;
+            this.CreateGisUploadAttemptID = createGisUploadAttemptID;
         }
 
         /// <summary>
@@ -123,12 +125,15 @@ namespace ProjectFirma.Web.Models
         public int ProjectID { get; set; }
         public int PersonID { get; set; }
         public int ProjectPersonRelationshipTypeID { get; set; }
+        public bool? CreatedAsPartOfBulkImport { get; set; }
+        public int? CreateGisUploadAttemptID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectPersonID; } set { ProjectPersonID = value; } }
 
         public virtual Project Project { get; set; }
         public virtual Person Person { get; set; }
         public ProjectPersonRelationshipType ProjectPersonRelationshipType { get { return ProjectPersonRelationshipType.AllLookupDictionary[ProjectPersonRelationshipTypeID]; } }
+        public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
 
         public static class FieldLengths
         {

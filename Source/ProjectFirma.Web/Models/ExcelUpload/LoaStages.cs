@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
 
         private static Dictionary<string,int> EnsureWorksheetHasCorrectShape(DataTable dataTable)
         {
-            var columnNames = GetBudgetColumnLetterToColumnNameDictionary();
+            var columnNames = GetColumnLetterToColumnNameDictionary();
 
             var dataRow = dataTable.Rows[0];
             var expectedColumns = columnNames.Values.ToList();
@@ -116,10 +116,13 @@ Renamed: "Vendor Name" => "Name"
         public const string IndexKey = "Index";
         public const string MatchKey = "Match";
         public const string PayKey = "Pay";
+        public const string ForesterKey = "Forester";
+        public const string ForesterPhoneKey = "Forester Phone";
+        public const string ForesterEmailKey = "Forester email";
         public const string StatusKey = "Status";
        
 
-        public static Dictionary<string, string> GetBudgetColumnLetterToColumnNameDictionary()
+        public static Dictionary<string, string> GetColumnLetterToColumnNameDictionary()
         {
             return new Dictionary<string, string>
             {
@@ -133,15 +136,11 @@ Renamed: "Vendor Name" => "Name"
                 {"BG", IndexKey},
                 {"BJ", MatchKey},
                 {"BK", PayKey},
+                {"G", ForesterKey},
+                {"H", ForesterPhoneKey},
+                {"I", ForesterEmailKey},
 
             };
-        }
-
-        public static Dictionary<string, string> GetBudgetColumnNameToColumnLetterDictionary()
-        {
-            var forwardDict = GetBudgetColumnLetterToColumnNameDictionary();
-            var reverseDict = forwardDict.ToDictionary(g => g.Value, g => g.Key);
-            return reverseDict;
         }
 
     }
