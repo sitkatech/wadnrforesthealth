@@ -168,21 +168,20 @@ namespace ProjectFirma.Web.Controllers
                 };
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
-                var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
-                HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
                 shouldSendNewUserCreatedMessage = true;
             }
             else
             {
-                //person exists and was created as a contact without authenticators setup. need to add them
-                if (!person.PersonAllowedAuthenticators.Any())
-                {
-                    var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
-                    HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
-                }
                 // existing user - sync values
                 SitkaHttpApplication.Logger.InfoFormat($"In {nameof(ProcessLogin)} - user record already exists -- syncing local profile. [{userDetailsStringForLogging}]");
                 Check.RequireThrowUserDisplayable(person.IsActive, $"User account for {email} is not active and cannot login at this time. Contact support for more information.");
+            }
+
+            //if person needs authenticators setup, lets add them
+            if (!person.PersonAllowedAuthenticators.Any())
+            {
+                var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
+                HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
             }
 
             person.FirstName = firstName;
