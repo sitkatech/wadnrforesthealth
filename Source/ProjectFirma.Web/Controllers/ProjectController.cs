@@ -189,7 +189,7 @@ namespace ProjectFirma.Web.Controllers
             var performanceMeasureExpectedsSummaryViewData = new PerformanceMeasureExpectedSummaryViewData(new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.OrderBy(x=>x.PerformanceMeasure.PerformanceMeasureSortOrder)));
             var performanceMeasureReportedValuesGroupedViewData = BuildPerformanceMeasureReportedValuesGroupedViewData(project);
             var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
-            var projectIsLoa = project.ProgramID == LoaProgramID;
+            var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
             var imageGalleryViewData = BuildImageGalleryViewData(project, CurrentPerson);
             var projectNotesViewData = new EntityNotesViewData(
@@ -447,7 +447,9 @@ namespace ProjectFirma.Web.Controllers
         {
             var treatmentTotals = HttpRequestStorage.DatabaseEntities.vTotalTreatedAcresByProjects.ToList();
             var treatmentDictionary = treatmentTotals.ToDictionary(x => x.ProjectID, y => y);
-            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true, treatmentDictionary);
+            var programProjectDictionary = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Include(x => x.Program).ToList()
+                .GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, x => x.ToList().Select(y => y.Program).ToList());
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true, treatmentDictionary, programProjectDictionary);
             var allProjectsVisibleToUser = GetListOfActiveProjectsVisibleToUser(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(allProjectsVisibleToUser, gridSpec);
             return gridJsonNetJObjectResult;

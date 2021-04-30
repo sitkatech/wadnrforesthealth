@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectPeople = new HashSet<ProjectPerson>();
             this.ProjectPriorityLandscapes = new HashSet<ProjectPriorityLandscape>();
+            this.ProjectPrograms = new HashSet<ProjectProgram>();
             this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectTags = new HashSet<ProjectTag>();
             this.ProjectUpdateBatches = new HashSet<ProjectUpdateBatch>();
@@ -55,7 +56,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, int? programID) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -88,7 +89,6 @@ namespace ProjectFirma.Web.Models
             this.LastUpdateGisUploadAttemptID = lastUpdateGisUploadAttemptID;
             this.ProjectGisIdentifier = projectGisIdentifier;
             this.ProjectFundingSourceNotes = projectFundingSourceNotes;
-            this.ProgramID = programID;
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
+            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -255,6 +255,11 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(ProjectPriorityLandscape).Name);
             }
 
+            if(ProjectPrograms.Any())
+            {
+                dependentObjects.Add(typeof(ProjectProgram).Name);
+            }
+
             if(ProjectRegions.Any())
             {
                 dependentObjects.Add(typeof(ProjectRegion).Name);
@@ -280,7 +285,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -410,6 +415,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in ProjectPrograms.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectRegions.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -463,7 +473,6 @@ namespace ProjectFirma.Web.Models
         public int? LastUpdateGisUploadAttemptID { get; set; }
         public string ProjectGisIdentifier { get; set; }
         public string ProjectFundingSourceNotes { get; set; }
-        public int? ProgramID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -488,6 +497,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectPerson> ProjectPeople { get; set; }
         public virtual ICollection<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
+        public virtual ICollection<ProjectProgram> ProjectPrograms { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
         public virtual ICollection<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
@@ -501,7 +511,6 @@ namespace ProjectFirma.Web.Models
         public virtual FocusArea FocusArea { get; set; }
         public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
         public virtual GisUploadAttempt LastUpdateGisUploadAttempt { get; set; }
-        public virtual Program Program { get; set; }
 
         public static class FieldLengths
         {

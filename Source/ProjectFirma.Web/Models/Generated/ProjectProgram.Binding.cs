@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProjectPerson]
+//  Source Table: [dbo].[ProjectProgram]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,14 +16,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectPerson] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProjectPerson]")]
-    public partial class ProjectPerson : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectProgram] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectProgram]")]
+    public partial class ProjectProgram : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProjectPerson()
+        protected ProjectProgram()
         {
 
         }
@@ -31,51 +31,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectPerson(int projectPersonID, int projectID, int personID, int projectPersonRelationshipTypeID, bool? createdAsPartOfBulkImport, int? createGisUploadAttemptID) : this()
+        public ProjectProgram(int projectProgramID, int projectID, int programID) : this()
         {
-            this.ProjectPersonID = projectPersonID;
+            this.ProjectProgramID = projectProgramID;
             this.ProjectID = projectID;
-            this.PersonID = personID;
-            this.ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
-            this.CreatedAsPartOfBulkImport = createdAsPartOfBulkImport;
-            this.CreateGisUploadAttemptID = createGisUploadAttemptID;
+            this.ProgramID = programID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectPerson(int projectID, int personID, int projectPersonRelationshipTypeID) : this()
+        public ProjectProgram(int projectID, int programID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectPersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectProgramID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
-            this.PersonID = personID;
-            this.ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
+            this.ProgramID = programID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectPerson(Project project, Person person, ProjectPersonRelationshipType projectPersonRelationshipType) : this()
+        public ProjectProgram(Project project, Program program) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectPersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectProgramID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectID = project.ProjectID;
             this.Project = project;
-            project.ProjectPeople.Add(this);
-            this.PersonID = person.PersonID;
-            this.Person = person;
-            person.ProjectPeople.Add(this);
-            this.ProjectPersonRelationshipTypeID = projectPersonRelationshipType.ProjectPersonRelationshipTypeID;
+            project.ProjectPrograms.Add(this);
+            this.ProgramID = program.ProgramID;
+            this.Program = program;
+            program.ProjectPrograms.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectPerson CreateNewBlank(Project project, Person person, ProjectPersonRelationshipType projectPersonRelationshipType)
+        public static ProjectProgram CreateNewBlank(Project project, Program program)
         {
-            return new ProjectPerson(project, person, projectPersonRelationshipType);
+            return new ProjectProgram(project, program);
         }
 
         /// <summary>
@@ -100,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectPerson).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectProgram).Name};
 
 
         /// <summary>
@@ -108,7 +103,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.ProjectPeople.Remove(this);
+            dbContext.ProjectPrograms.Remove(this);
         }
         
         /// <summary>
@@ -121,19 +116,14 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int ProjectPersonID { get; set; }
+        public int ProjectProgramID { get; set; }
         public int ProjectID { get; set; }
-        public int PersonID { get; set; }
-        public int ProjectPersonRelationshipTypeID { get; set; }
-        public bool? CreatedAsPartOfBulkImport { get; set; }
-        public int? CreateGisUploadAttemptID { get; set; }
+        public int ProgramID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectPersonID; } set { ProjectPersonID = value; } }
+        public int PrimaryKey { get { return ProjectProgramID; } set { ProjectProgramID = value; } }
 
         public virtual Project Project { get; set; }
-        public virtual Person Person { get; set; }
-        public ProjectPersonRelationshipType ProjectPersonRelationshipType { get { return ProjectPersonRelationshipType.AllLookupDictionary[ProjectPersonRelationshipTypeID]; } }
-        public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
+        public virtual Program Program { get; set; }
 
         public static class FieldLengths
         {

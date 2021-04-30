@@ -22,6 +22,8 @@ CREATE TABLE [dbo].[Person](
 	[AddedByPersonID] [int] NULL,
 	[VendorID] [int] NULL,
 	[IsProgramManager] [bit] NULL,
+	[CreatedAsPartOfBulkImport] [bit] NULL,
+	[CreateGisUploadAttemptID] [int] NULL,
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC
@@ -38,6 +40,11 @@ CREATE UNIQUE NONCLUSTERED INDEX [IX_Person_Email_UniqueWhenNotNull] ON [dbo].[P
 )
 WHERE ([Email] IS NOT NULL)
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID] FOREIGN KEY([CreateGisUploadAttemptID])
+REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
+GO
+ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID]
 GO
 ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])

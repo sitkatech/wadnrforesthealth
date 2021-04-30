@@ -25,6 +25,22 @@ namespace ProjectFirma.Web.Models
             this.ProgramIndex = loaStageImport.ProgramIndex;
             this.ProjectCode = loaStageImport.ProjectCode;
             this.IsNortheast = isNortheast;
+
+            var foresterSplit = loaStageImport.Forester.Split(' ');
+            if (foresterSplit.Length > 1)
+            {
+                this.ForesterFirstName = foresterSplit[0];
+                this.ForesterLastName = foresterSplit[1];
+                for (int index = 2; index < foresterSplit.Length; index++)
+                {
+                    this.ForesterLastName += foresterSplit[index];
+                }
+
+                this.ForesterEmail = loaStageImport.ForesterEmail;
+                this.ForesterPhone = loaStageImport.ForesterPhone;
+
+            }
+
         }
     }
 }

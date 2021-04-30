@@ -65,7 +65,8 @@ begin
                                                                                                       from 
                                                                                                       dbo.ProjectGrantAllocationRequest pgar
                                                                                                       join dbo.Project p on pgar.ProjectID = p.ProjectID
-                                                                                                      where p.ProgramID = 3 -- LoaProgram)
+                                                                                                      join dbo.ProjectProgram pp on p.ProjectID = pp.ProjectID
+                                                                                                      where pp.ProgramID = 3 -- LoaProgram)
                                                                                                       )
 
               insert into dbo.ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, TotalAmount, MatchAmount, PayAmount, CreateDate, ImportedFromTabularData)
@@ -90,6 +91,61 @@ begin
                 , min(x.LetterDate) as Letterdate
                 , max(x.ProjectExpirationDate) as ExpirationDate
                   from  #projectGrantAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
+
+
+
+              if object_id('tempdb.dbo.#projectForesterInfo') is not null drop table #projectForesterInfo
+              select distinct p.ProjectID, person.PersonID, x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, pp.ProjectPersonID, ppOld.ProjectPersonID as OldProjectPersonID
+              into #projectForesterInfo
+              from dbo.LoaStage x
+              join dbo.Project p on p.ProjectGisIdentifier = x.ProjectIdentifier
+              left join dbo.Person person on person.FirstName = x.ForesterFirstName and person.LastName = x.ForesterLastName
+              left join dbo.ProjectPerson pp on pp.PersonID = person.PersonID and pp.ProjectID = p.ProjectID and pp.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+              left join dbo.ProjectPerson ppOld on ppOld.ProjectID = p.ProjectID and ppOld.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+
+                delete from dbo.ProjectPerson where ProjectPersonID in 
+                (select x.OldProjectPersonID from #projectForesterInfo x where (x.ProjectPersonID is not null and x.OldProjectPersonID is not null and x.ProjectPersonID != x.OldProjectPersonID) or 
+                                                                                          (x.ProjectPersonID is null and x.OldProjectPersonID is not null and x.ForesterFirstName is not null and x.ForesterLastName is not null) )
+
+              insert into dbo.ProjectPerson(ProjectID, PersonID, ProjectPersonRelationshipTypeID, CreatedAsPartOfBulkImport)
+              select 
+              x.ProjectID
+              , x.PersonID
+              , (select top 1 y.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType y where y.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+              , 1
+              from #projectForesterInfo x
+              where x.PersonID is not null and x.ProjectPersonID is null
+
+
+              insert into dbo.Person (FirstName, LastName, Phone, Email, CreatedAsPartOfBulkImport, RoleID, CreateDate, IsActive, ReceiveSupportEmails)
+              select distinct x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, 1, 7, GETDATE(), 1, 0
+              from #projectForesterInfo x
+              where x.ForesterFirstName is not null and x.ForesterLastName is not null and x.PersonID is null
+
+
+              if object_id('tempdb.dbo.#projectForesterInfoRoundTwo') is not null drop table #projectForesterInfoRoundTwo
+              select distinct p.ProjectID, person.PersonID, x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, pp.ProjectPersonID, ppOld.ProjectPersonID as OldProjectPersonID
+              into #projectForesterInfoRoundTwo
+              from dbo.LoaStage x
+              join dbo.Project p on p.ProjectGisIdentifier = x.ProjectIdentifier
+              left join dbo.Person person on person.FirstName = x.ForesterFirstName and person.LastName = x.ForesterLastName
+              left join dbo.ProjectPerson pp on pp.PersonID = person.PersonID and pp.ProjectID = p.ProjectID and pp.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+              left join dbo.ProjectPerson ppOld on ppOld.ProjectID = p.ProjectID and ppOld.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+
+
+              delete from dbo.ProjectPerson where ProjectPersonID in 
+                (select x.OldProjectPersonID from #projectForesterInfoRoundTwo x where (x.ProjectPersonID is not null and x.OldProjectPersonID is not null and x.ProjectPersonID != x.OldProjectPersonID) or 
+                                                                                          (x.ProjectPersonID is null and x.OldProjectPersonID is not null and x.ForesterFirstName is not null and x.ForesterLastName is not null) )
+
+              insert into dbo.ProjectPerson(ProjectID, PersonID, ProjectPersonRelationshipTypeID, CreatedAsPartOfBulkImport)
+              select 
+              x.ProjectID
+              , x.PersonID
+              , (select top 1 y.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType y where y.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+              , 1
+              from #projectForesterInfoRoundTwo x
+              where x.PersonID is not null and x.ProjectPersonID is null
+
 
 end
 

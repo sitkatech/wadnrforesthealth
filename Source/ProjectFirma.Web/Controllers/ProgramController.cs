@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
@@ -20,6 +21,42 @@ namespace ProjectFirma.Web.Controllers
 {
     public class ProgramController : FirmaBaseController
     {
+
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult DeleteProgramDocument(FileResourcePrimaryKey fileResourcePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(fileResourcePrimaryKey.PrimaryKeyValue);
+            return ViewProgramDocument(fileResourcePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewProgramDocument(FileResource fileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this Program Document '{fileResource.OriginalCompleteFileName}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteProgramDocument(FileResourcePrimaryKey fileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var document = fileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewProgramDocument(document, viewModel);
+            }
+
+            document.ProgramsWhereYouAreTheProgramFileResource.ForEach(x => x.ProgramFileResource = null);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            document.Delete(HttpRequestStorage.DatabaseEntities);
+            var message = $"Program Document '{document.OriginalCompleteFileName}' successfully deleted.";
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
 
         [ProgramViewFeature]
         public ViewResult Detail(ProgramPrimaryKey programPrimaryKey)
@@ -82,6 +119,13 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            if (viewModel.ProgramFileResourceData != null)
+            {
+
+                program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
+
             SetMessageForDisplay($"{FieldDefinition.Program.GetFieldDefinitionLabel()} {program.DisplayName} successfully created.");
             return new ModalDialogFormJsonResult();
         }
@@ -114,6 +158,11 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
+            if (viewModel.ProgramFileResourceData != null)
+            {
+
+                program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
             SetMessageForDisplay($"{FieldDefinition.Program.GetFieldDefinitionLabel()} {program.DisplayName} successfully created.");
             return new ModalDialogFormJsonResult();
         }
@@ -158,6 +207,18 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, program.ProgramPrimaryContactPerson, null);
             }
             viewModel.UpdateModel(program, CurrentPerson, false);
+            if (viewModel.ProgramFileResourceData != null)
+            {
+                var currentAgreementFileResource = program.ProgramFileResource;
+                program.ProgramFileResource = null;
+                // Delete old Agreement file, if present
+                if (currentAgreementFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                }
+                program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
             return new ModalDialogFormJsonResult();
         }
 
@@ -173,10 +234,10 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteProgram(Program program, ConfirmDialogFormViewModel viewModel)
         {
-            string optionalProjectCountString = program.Projects.Any() ? $"will delete {program.Projects.Count} Projects and" : string.Empty;
+            string optionalProjectCountString = program.ProjectPrograms.Any() ? $"will delete {program.ProjectPrograms.Count} Projects and" : string.Empty;
             string projectNumberAndDurationWarning = $"<b>This {optionalProjectCountString} may take several minutes to complete.</b>";
             // For now, only show duration warning when ProjectCount > 0. Request by DAL.
-            projectNumberAndDurationWarning = program.Projects.Any() ? projectNumberAndDurationWarning : string.Empty;
+            projectNumberAndDurationWarning = program.ProjectPrograms.Any() ? projectNumberAndDurationWarning : string.Empty;
             var confirmMessage = $"Are you sure you want to delete Program \"{program.ProgramNameDisplay}\" with Parent Organization {program.Organization.DisplayName}? <br/><br/>{projectNumberAndDurationWarning}";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
@@ -191,7 +252,7 @@ namespace ProjectFirma.Web.Controllers
 
             string programName = program.ProgramNameDisplay;
             string parentOrganizationName = program.Organization.DisplayName;
-            string projectsDeletedCountString = program.Projects.Any() ? $"{program.Projects.Count} Projects deleted." : string.Empty;
+            string projectsDeletedCountString = program.ProjectPrograms.Any() ? $"{program.ProjectPrograms.Count} Projects deleted." : string.Empty;
 
             if (!ModelState.IsValid)
             {

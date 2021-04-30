@@ -197,6 +197,11 @@ namespace LtInfo.Common.ModalDialog
             return userHasDeletePermission ? ModalDialogFormLink(linkText, deleteDialogUrl, "Confirm Delete", 500, "Delete", "Cancel", extraCssClasses, null, null) : new HtmlString(string.Empty);
         }
 
+        public static HtmlString MakeDeleteIconLink(string deleteDialogUrl, bool userHasDeletePermission)
+        {
+            return userHasDeletePermission ? ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue").ToString(), deleteDialogUrl, "Confirm Delete", 500, "Delete", "Cancel", new List<string>(), null, null) : new HtmlString(string.Empty);
+        }
+
         public static HtmlString MakeEditIconLink(string dialogUrl, string dialogTitle, bool hasPermission)
         {
             return MakeEditIconLink(dialogUrl, dialogTitle, DefaultDialogWidth, hasPermission);

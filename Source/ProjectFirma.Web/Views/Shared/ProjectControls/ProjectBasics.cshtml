@@ -116,4 +116,24 @@ Source code is available upon request via <support@sitkatech.com>.
             @ViewDataTyped.Project.GetCompletionDateFormatted()
         </div>
     </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.Program)
+        </div>
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.ProgramListDisplay
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.Label("Program Identifier")
+        </div>
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.ProjectGisIdentifier
+        </div>
+    </div>
+
 </div>

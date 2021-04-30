@@ -7,12 +7,19 @@ CREATE TABLE [dbo].[ProjectPerson](
 	[ProjectID] [int] NOT NULL,
 	[PersonID] [int] NOT NULL,
 	[ProjectPersonRelationshipTypeID] [int] NOT NULL,
+	[CreatedAsPartOfBulkImport] [bit] NULL,
+	[CreateGisUploadAttemptID] [int] NULL,
  CONSTRAINT [PK_ProjectPerson_ProjectPersonID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectPersonID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[ProjectPerson]  WITH CHECK ADD  CONSTRAINT [FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID] FOREIGN KEY([CreateGisUploadAttemptID])
+REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
+GO
+ALTER TABLE [dbo].[ProjectPerson] CHECK CONSTRAINT [FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID]
 GO
 ALTER TABLE [dbo].[ProjectPerson]  WITH CHECK ADD  CONSTRAINT [FK_ProjectPerson_Person_PersonID] FOREIGN KEY([PersonID])
 REFERENCES [dbo].[Person] ([PersonID])

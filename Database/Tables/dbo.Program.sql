@@ -14,6 +14,8 @@ CREATE TABLE [dbo].[Program](
 	[ProgramLastUpdatedDate] [datetime] NULL,
 	[ProgramLastUpdatedByPersonID] [int] NULL,
 	[IsDefaultProgramForImportOnly] [bit] NOT NULL,
+	[ProgramFileResourceID] [int] NULL,
+	[ProgramNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Program_ProgramID] PRIMARY KEY CLUSTERED 
 (
 	[ProgramID] ASC
@@ -28,8 +30,13 @@ CREATE TABLE [dbo].[Program](
 	[ProgramShortName] ASC,
 	[OrganizationID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_FileResource_ProgramFileResourceID_FileResourceID] FOREIGN KEY([ProgramFileResourceID])
+REFERENCES [dbo].[FileResource] ([FileResourceID])
+GO
+ALTER TABLE [dbo].[Program] CHECK CONSTRAINT [FK_Program_FileResource_ProgramFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])

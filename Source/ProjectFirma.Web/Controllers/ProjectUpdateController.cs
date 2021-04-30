@@ -685,7 +685,7 @@ namespace ProjectFirma.Web.Controllers
                 allGrantAllocations,
                 estimatedTotalCost 
                 );
-            var isLoa = projectUpdateBatch.Project.ProgramID == ProjectController.LoaProgramID;
+            var isLoa = projectUpdateBatch.Project.ProjectPrograms.Any(x => x.ProgramID == ProjectController.LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates), isLoa);
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, projectFundingDetailViewData, GetUpdateStatus(projectUpdateBatch), expectedFundingValidationResult);
@@ -810,6 +810,8 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.LocationSimpleComment = viewModel.Comments;
             }
 
+            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
                 ProjectUpdateSection.LocationSimple.ProjectUpdateSectionDisplayName);
         }
@@ -907,7 +909,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectUpdateBatch.LocationDetailedComment = viewModel.Comments;
             }
-
+            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.LocationDetailed.ProjectUpdateSectionDisplayName);
         }
 

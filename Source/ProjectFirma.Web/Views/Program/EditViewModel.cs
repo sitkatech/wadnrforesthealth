@@ -59,6 +59,13 @@ namespace ProjectFirma.Web.Views.Program
         [DisplayName("Is Default for Bulk Import Only")]
         public bool IsDefaultForBulkImportOnly { get; set; }
 
+        [DisplayName("Program Notes")]
+        public string ProgramNotes { get; set; }
+
+        [DisplayName("Program File Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase ProgramFileResourceData { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -75,6 +82,7 @@ namespace ProjectFirma.Web.Views.Program
             PrimaryContactPersonID = program.ProgramPrimaryContactPerson?.PersonID;
             IsActive = program.ProgramIsActive;
             IsDefaultForBulkImportOnly = program.IsDefaultProgramForImportOnly;
+            ProgramNotes = program.ProgramNotes;
         }
 
         public void UpdateModel(Models.Program program, Person currentPerson, bool isNew)
@@ -96,6 +104,7 @@ namespace ProjectFirma.Web.Views.Program
             }
 
             program.ProgramPrimaryContactPersonID = PrimaryContactPersonID;
+            program.ProgramNotes = ProgramNotes;
 
         }
 

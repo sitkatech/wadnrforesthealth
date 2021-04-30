@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, bool importAsDetailedLocationInsteadOfTreatments, string projectDescriptionDefaultText, bool applyCompletedDateToProject, bool applyStartDateToProject, int programID, bool importAsDetailedLocationInAdditionToTreatments, bool applyStartDateToTreatments, bool applyEndDateToTreatments) : this()
+        public GisUploadSourceOrganization(int gisUploadSourceOrganizationID, string gisUploadSourceOrganizationName, string projectTypeDefaultName, string treatmentTypeDefaultName, bool? importIsFlattened, bool adjustProjectTypeBasedOnTreatmentTypes, int projectStageDefaultID, bool dataDeriveProjectStage, int defaultLeadImplementerOrganizationID, int relationshipTypeForDefaultOrganizationID, bool importAsDetailedLocationInsteadOfTreatments, string projectDescriptionDefaultText, bool applyCompletedDateToProject, bool applyStartDateToProject, int programID, bool importAsDetailedLocationInAdditionToTreatments, bool applyStartDateToTreatments, bool applyEndDateToTreatments, int? gisUploadProgramMergeGroupingID) : this()
         {
             this.GisUploadSourceOrganizationID = gisUploadSourceOrganizationID;
             this.GisUploadSourceOrganizationName = gisUploadSourceOrganizationName;
@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
             this.ImportAsDetailedLocationInAdditionToTreatments = importAsDetailedLocationInAdditionToTreatments;
             this.ApplyStartDateToTreatments = applyStartDateToTreatments;
             this.ApplyEndDateToTreatments = applyEndDateToTreatments;
+            this.GisUploadProgramMergeGroupingID = gisUploadProgramMergeGroupingID;
         }
 
         /// <summary>
@@ -221,6 +222,7 @@ namespace ProjectFirma.Web.Models
         public bool ImportAsDetailedLocationInAdditionToTreatments { get; set; }
         public bool ApplyStartDateToTreatments { get; set; }
         public bool ApplyEndDateToTreatments { get; set; }
+        public int? GisUploadProgramMergeGroupingID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GisUploadSourceOrganizationID; } set { GisUploadSourceOrganizationID = value; } }
 
@@ -232,6 +234,7 @@ namespace ProjectFirma.Web.Models
         public virtual Organization DefaultLeadImplementerOrganization { get; set; }
         public virtual RelationshipType RelationshipTypeForDefaultOrganization { get; set; }
         public virtual Program Program { get; set; }
+        public virtual GisUploadProgramMergeGrouping GisUploadProgramMergeGrouping { get; set; }
 
         public static class FieldLengths
         {

@@ -93,6 +93,27 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.ValidationMessageFor(m => m.IsDefaultForBulkImportOnly)
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.ProgramNotes)
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.ProgramNotes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProgramNotes)
+                </div>
+            </div>
+            <div class="form-group form-group-tight">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(x => x.ProgramFileResourceData)
+                </div>
+                <div class="col-sm-9">
+                    @Html.EditorFor(x => x.ProgramFileResourceData)
+                    @*<span class="smallExplanationText">
+                                Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                            </span>*@
+                    @Html.ValidationMessageFor(x => x.ProgramFileResourceData)
+                </div>
+            </div>
            
         </div>
     @Html.HiddenFor(m => m.ProgramID)
@@ -105,7 +126,7 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         HookupCheckIfFormIsDirty(undefined, ".submitProject");
 
-        function setName() {
+        function setName(isFirstLoad) {
             var isChecked = jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").prop('checked');
             if (isChecked) {
                 jQuery("#@Html.IdFor(x => x.ProgramName)").prop('disabled', true);
@@ -114,7 +135,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 jQuery("#@Html.IdFor(x => x.ProgramShortName)").prop('disabled', true);
                 jQuery("#@Html.IdFor(x => x.ProgramShortName)").text('');
                 jQuery("#@Html.IdFor(x => x.ProgramShortName)").val('');
-            } else {
+            } else if(!isFirstLoad) {
                 jQuery("#@Html.IdFor(x => x.ProgramName)").prop('disabled', false);
                 jQuery("#@Html.IdFor(x => x.ProgramName)").text('');
                 jQuery("#@Html.IdFor(x => x.ProgramName)").val('');
@@ -124,10 +145,10 @@ Source code is available upon request via <support@sitkatech.com>.
             }
         }
 
-        setName();
+        setName(true);
 
         jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").change(function() {
-            setName();
+            setName(false);
         });
     });
 </script>

@@ -121,6 +121,35 @@
                                 <span>@ViewDataTyped.Program.IsDefaultProgramForImportOnly.ToYesNo()</span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-6 fieldLabel text-right">
+                                Program Notes
+                            </div>
+                            <div class="col-xs-6">
+                                <span>@ViewDataTyped.Program.ProgramNotes</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 fieldLabel text-right">
+                                Program File
+                            </div>
+                            <div class="col-xs-6">
+                                <span>
+                                    @if (ViewDataTyped.ShowDownload)
+                                    {
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+
+                                        <a href="@ViewDataTyped.Program.ProgramFileResource.FileResourceUrl" target="_blank">
+                                            @ViewDataTyped.Program.ProgramFileResource.OriginalCompleteFileName
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span>No documents uploaded yet.</span>
+                                    }
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

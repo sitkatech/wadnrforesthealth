@@ -18,26 +18,30 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Linq;
+using ProjectFirma.Web.Controllers;
+
 namespace ProjectFirma.Web.Models
 {
     public class ProjectSimple
     {
         public int ProjectID { get; set; }
         public string DisplayName { get; set; }
-        public int? ProgramID { get; set; }
+        public bool IsLoa { get; set; }
 
         public ProjectSimple(Project project)
         {
             ProjectID = project.ProjectID;
             DisplayName = project.DisplayName;
-            ProgramID = project.ProgramID;
+            IsLoa = project.ProjectPrograms.Any(x=>x.ProgramID == ProjectController.LoaProgramID);
         }
 
-        public ProjectSimple(int projectID, string displayName, int? programID)
+        public ProjectSimple(int projectID, string displayName, bool isLoa)
         {
             ProjectID = projectID;
             DisplayName = displayName;
-            ProgramID = programID;
+            IsLoa = isLoa;
         }
     }
 }

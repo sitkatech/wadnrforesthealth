@@ -37,7 +37,11 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class ProjectIndexGridSpec : GridSpec<Models.Project>
     {
-        public ProjectIndexGridSpec(Person currentPerson, bool allowTaggingFunctionality, bool allowDeleteFunctionality, Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)
+        public ProjectIndexGridSpec(Person currentPerson
+            , bool allowTaggingFunctionality
+            , bool allowDeleteFunctionality
+            , Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary
+            , Dictionary<int, List<Models.Program>> programsByProject)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
@@ -64,7 +68,7 @@ namespace ProjectFirma.Web.Views.Project
 
             Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, DhtmlxGridColumnFormatType.Decimal );
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => Program(x), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 90, DhtmlxGridColumnFilterType.Html);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
 
@@ -79,15 +83,9 @@ namespace ProjectFirma.Web.Views.Project
             return new HtmlString(string.Empty);
         }
 
-        private static HtmlString Program(Models.Project project)
+        private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
         {
-            if (project.Program != null && !project.Program.IsDefaultProgramForImportOnly)
-            {
-                return UrlTemplate.MakeHrefString(
-                    project.Program.GetDetailUrl(),
-                    project.Program.DisplayName);
-            }
-            return new HtmlString(string.Empty);
+            return project.ProgramListDisplayHelper(programsByProject);
         }
 
 

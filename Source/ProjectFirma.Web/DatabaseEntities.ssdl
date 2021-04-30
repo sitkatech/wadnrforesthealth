@@ -35,6 +35,7 @@
     <EntitySet Name="GisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttempt" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadAttemptGisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttemptGisMetadataAttribute" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GisUploadProgramMergeGrouping" EntityType="ProjectFirma.Web.Models.Store.GisUploadProgramMergeGrouping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
@@ -131,6 +132,7 @@
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPersonUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPriorityLandscapeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityLandscapeUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectProgram" EntityType="ProjectFirma.Web.Models.Store.ProjectProgram" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.Store.ProjectRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.Store.ProjectTag" store:Type="Tables" Schema="dbo" />
@@ -369,6 +371,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID">
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID">
+      <End Role="GisUploadProgramMergeGrouping" EntitySet="GisUploadProgramMergeGrouping" />
+      <End Role="GisUploadSourceOrganizations" EntitySet="GisUploadSourceOrganization" />
     </AssociationSet>
     <AssociationSet Name="FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_Organization_DefaultLeadImplementerOrganizationID_OrganizationID">
       <End Role="DefaultLeadImplementerOrganization" EntitySet="Organization" />
@@ -770,6 +776,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
       <End Role="PerformanceMeasureSubcategoryOptions" EntitySet="PerformanceMeasureSubcategoryOption" />
     </AssociationSet>
+    <AssociationSet Name="FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="PeopleWhereYouAreTheCreateGisUploadAttempt" EntitySet="Person" />
+    </AssociationSet>
     <AssociationSet Name="FK_Person_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Person_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="People" EntitySet="Person" />
@@ -818,6 +828,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
+      <End Role="ProgramFileResource" EntitySet="FileResource" />
+      <End Role="ProgramsWhereYouAreTheProgramFileResource" EntitySet="Program" />
+    </AssociationSet>
     <AssociationSet Name="FK_Program_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Program_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Programs" EntitySet="Program" />
@@ -853,10 +867,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_Project_Person_ReviewedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Project_Person_ReviewedByPersonID_PersonID">
       <End Role="ReviewedByPerson" EntitySet="Person" />
       <End Role="ProjectsWhereYouAreTheReviewedByPerson" EntitySet="Project" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Project_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_Project_Program_ProgramID">
-      <End Role="Program" EntitySet="Program" />
-      <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
@@ -998,6 +1008,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectInternalNotes" EntitySet="ProjectInternalNote" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectLocation_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocation_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectLocations" EntitySet="ProjectLocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectLocation_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocation_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectLocations" EntitySet="ProjectLocation" />
@@ -1070,6 +1084,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="RelationshipType" EntitySet="RelationshipType" />
       <End Role="ProjectOrganizationUpdates" EntitySet="ProjectOrganizationUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" EntitySet="ProjectPerson" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="ProjectPeople" EntitySet="ProjectPerson" />
@@ -1101,6 +1119,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPriorityLandscapeUpdates" EntitySet="ProjectPriorityLandscapeUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectProgram_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectProgram_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectProgram_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
       <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
@@ -1212,6 +1238,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
       <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_Project_ProjectID">
@@ -1559,6 +1589,13 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="GisMetadataAttributeID" Type="int" Nullable="false" />
     <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="GisUploadProgramMergeGrouping">
+    <Key>
+      <PropertyRef Name="GisUploadProgramMergeGroupingID" />
+    </Key>
+    <Property Name="GisUploadProgramMergeGroupingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadProgramMergeGroupingName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
       <PropertyRef Name="GisUploadSourceOrganizationID" />
@@ -1581,6 +1618,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ImportAsDetailedLocationInAdditionToTreatments" Type="bit" Nullable="false" />
     <Property Name="ApplyStartDateToTreatments" Type="bit" Nullable="false" />
     <Property Name="ApplyEndDateToTreatments" Type="bit" Nullable="false" />
+    <Property Name="GisUploadProgramMergeGroupingID" Type="int" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -2026,6 +2064,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectCode" Type="varchar" MaxLength="50" />
     <Property Name="IsNortheast" Type="bit" Nullable="false" />
     <Property Name="IsSoutheast" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+    <Property Name="ForesterLastName" Type="varchar" MaxLength="200" />
+    <Property Name="ForesterFirstName" Type="varchar" MaxLength="200" />
+    <Property Name="ForesterPhone" Type="varchar" MaxLength="200" />
+    <Property Name="ForesterEmail" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2239,6 +2281,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="AddedByPersonID" Type="int" />
     <Property Name="VendorID" Type="int" />
     <Property Name="IsProgramManager" Type="bit" />
+    <Property Name="CreatedAsPartOfBulkImport" Type="bit" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
   </EntityType>
   <EntityType Name="PersonAllowedAuthenticator">
     <Key>
@@ -2307,6 +2351,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramLastUpdatedDate" Type="datetime" />
     <Property Name="ProgramLastUpdatedByPersonID" Type="int" />
     <Property Name="IsDefaultProgramForImportOnly" Type="bit" Nullable="false" />
+    <Property Name="ProgramFileResourceID" Type="int" />
+    <Property Name="ProgramNotes" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -2356,7 +2402,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
-    <Property Name="ProgramID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -2594,6 +2639,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="ArcGisObjectID" Type="int" />
     <Property Name="ArcGisGlobalID" Type="varchar" MaxLength="50" />
+    <Property Name="ProgramID" Type="int" />
+    <Property Name="ImportedFromGisUpload" Type="bit" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>
@@ -2682,6 +2729,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="ProjectPersonRelationshipTypeID" Type="int" Nullable="false" />
+    <Property Name="CreatedAsPartOfBulkImport" Type="bit" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectPersonUpdate">
     <Key>
@@ -2707,6 +2756,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectPriorityLandscapeUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectProgram">
+    <Key>
+      <PropertyRef Name="ProjectProgramID" />
+    </Key>
+    <Property Name="ProjectProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectRegion">
     <Key>
@@ -3016,6 +3073,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="UpdateGisUploadAttemptID" Type="int" />
     <Property Name="TreatmentDetailedActivityTypeID" Type="int" Nullable="false" />
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
+    <Property Name="ProgramID" Type="int" />
+    <Property Name="ImportedFromGis" Type="bit" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -3626,6 +3685,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GisUploadAttemptGisMetadataAttributes">
         <PropertyRef Name="GisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadSourceOrganization_GisUploadProgramMergeGrouping_GisUploadProgramMergeGroupingID">
+    <End Role="GisUploadProgramMergeGrouping" Type="ProjectFirma.Web.Models.Store.GisUploadProgramMergeGrouping" Multiplicity="0..1" />
+    <End Role="GisUploadSourceOrganizations" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadProgramMergeGrouping">
+        <PropertyRef Name="GisUploadProgramMergeGroupingID" />
+      </Principal>
+      <Dependent Role="GisUploadSourceOrganizations">
+        <PropertyRef Name="GisUploadProgramMergeGroupingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4833,6 +4904,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="PeopleWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="PeopleWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
@@ -4979,6 +5062,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
+    <End Role="ProgramFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramFileResource" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramFileResource">
+        <PropertyRef Name="ProgramFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Program_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
     <End Role="Programs" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
@@ -5084,18 +5179,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectsWhereYouAreTheReviewedByPerson">
         <PropertyRef Name="ReviewedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Project_Program_ProgramID">
-    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
-    <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Program">
-        <PropertyRef Name="ProgramID" />
-      </Principal>
-      <Dependent Role="Projects">
-        <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5519,6 +5602,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectLocation_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
+    <End Role="ProjectLocations" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectLocations">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectLocation_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
     <End Role="ProjectLocations" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="*" />
@@ -5735,6 +5830,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.ProjectPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectPerson_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="ProjectPeople" Type="ProjectFirma.Web.Models.Store.ProjectPerson" Multiplicity="*" />
@@ -5828,6 +5935,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectPriorityLandscapeUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectProgram_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.Store.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectProgram_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="ProjectPrograms" Type="ProjectFirma.Web.Models.Store.ProjectProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectPrograms">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -6164,6 +6295,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
