@@ -173,8 +173,8 @@
       <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0"/>
     </dependentAssembly>
     <dependentAssembly>
-      <assemblyIdentity name="DocumentFormat.OpenXml" publicKeyToken="31BF3856AD364E35" culture="neutral"/>
-      <bindingRedirect oldVersion="0.0.0.0-2.5.5631.0" newVersion="2.5.5631.0"/>
+      <assemblyIdentity name="DocumentFormat.OpenXml" publicKeyToken="8fb06cb64d019a17" culture="neutral"/>
+      <bindingRedirect oldVersion="0.0.0.0-2.12.3.0" newVersion="2.12.3.0"/>
     </dependentAssembly>
     <dependentAssembly>
       <assemblyIdentity name="Antlr3.Runtime" publicKeyToken="EB42632606E9261F" culture="neutral"/>
