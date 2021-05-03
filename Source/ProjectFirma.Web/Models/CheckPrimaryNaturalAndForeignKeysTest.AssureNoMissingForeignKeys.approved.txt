@@ -11,6 +11,8 @@ JobParameter	Id
 JobQueue	Id					
 JobQueue	JobId					
 List	Id					
+LoaRawNortheast	Project ID					
+LoaRawSoutheast	Project ID					
 ProjectLocation	ArcGisGlobalID					
 ProjectLocationUpdate	ArcGisGlobalID					
 Server	Id					
