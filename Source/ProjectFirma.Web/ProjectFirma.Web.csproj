@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,6 +47,48 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\DhtmlxExcelDownload\CellFormulaProxy.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\CellProxy.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\DocumentSharedStrings.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\DocumentStyles.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelAddress.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelBorder.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelBorderStyleValues.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCell.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCells.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelColumn.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelColumns.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelConstraints.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCreator\Cell.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCreator\Column.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCreator\ExcelWriter.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCreator\ExcelXmlParser.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCreator\RGBColor.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelCreator\Row.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelDocument.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelFill.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelFont.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelFormula.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelNumberFormat.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelRange.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelRow.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelRows.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelStyle.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelWorkbook.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelWorksheet.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ExcelWorksheets.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\IStylable.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\Parser.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ParseTree.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\RangeComponents.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\RowColumn.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\Scanner.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\SchemaInfo.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\SheetChange.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\Token.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\TokenType.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
+    <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Agreement.Binding.cs" />
@@ -2466,9 +2508,6 @@
     </Reference>
     <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DHTMLX.Export.Excel">
-      <HintPath>..\Libraries\DhtmlxGrid\DHTMLX.Export.Excel.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.12.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\DocumentFormat.OpenXml.2.12.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
