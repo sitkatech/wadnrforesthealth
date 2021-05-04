@@ -30,11 +30,10 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Xml;
-using DHTMLX.Export.Excel;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Models.DhtmlxExcelDownload.ExcelCreator;
 
 namespace ProjectFirma.Web.Common
 {
@@ -329,14 +328,38 @@ namespace ProjectFirma.Web.Common
             return new RedirectResult(route.BuildUrlFromExpression());
         }
 
-        protected FileResult ExportGridToExcelImpl(string gridName, bool printFooter)
+        protected FileResult ExportGridToExcelImpl(string gridName)
         {
+            Check.EnsureNotNull(gridName);
+            // In DHTMLX Grid 4.2 Formulas don't work so PrintFooter true is not very useful, leaving off for now
             var generator = new ExcelWriter { PrintFooter = false };
             var xml = Request.Form["grid_xml"];
+            Check.EnsureNotNull(xml, "Could not find 'grid_xml' form element in form POST. Is this a properly formed POST request?");
             xml = Server.UrlDecode(xml);
-            xml = xml.Replace("<![CDATA[$", "<![CDATA["); // RL 7/11/2015 Poor man's hack to remove currency and allow for total rows
+            xml = xml?.Replace("<![CDATA[$", "<![CDATA["); // RL 7/11/2015 Poor man's hack to remove currency and allow for total rows
+            xml = BlankRowFixup(xml);
+            Check.EnsureNotNull(xml);
             var stream = generator.Generate(xml);
             return File(stream.ToArray(), generator.ContentType, $"{gridName}-{DateTime.Now.ToStringDateTimeForFileName()}.xlsx");
+        }
+
+        // There is an arguable bug in DHTMLX.Export.Excel that causes a crash when a grid being downloaded has NO rows.
+        // It would probably be best to fix the bug in the actual library (it IS open source and has a git repo), but this
+        // only took a few minutes in the meantime. 
+        private string BlankRowFixup(string xml)
+        {
+            // No existing rows? Fake them up.
+            if (!xml.Contains("<row>"))
+            {
+                const string blankCellXml = "<cell><![CDATA[ ]]></cell>";
+                int rowInsertPosition = xml.IndexOf("</rows>");
+                // We seem to be able to get away with only having ONE cell be inserted. It's gross, but it does work, so we 
+                // thought it good enough. -- SLG & TK 3/6/2020
+                string rowXml = $"<row>{blankCellXml}</row>";
+                xml = xml.Insert(rowInsertPosition, rowXml);
+            }
+
+            return xml;
         }
 
         /// <summary>
