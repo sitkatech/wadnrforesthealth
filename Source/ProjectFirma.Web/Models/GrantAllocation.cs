@@ -115,7 +115,12 @@ namespace ProjectFirma.Web.Models
             const string yearMatchPattern = @"^(?<year>[1-9][0-9][0-9][0-9])-";
 
             var grantYearRegex = new Regex(yearMatchPattern);
-            MatchCollection matches = grantYearRegex.Matches(ga.GrantModification.Grant.GrantNumber);
+            var grantNumber = ga.GrantModification.Grant.GrantNumber;
+            if (string.IsNullOrEmpty(grantNumber))
+            {
+                return null;
+            }
+            MatchCollection matches = grantYearRegex.Matches(grantNumber);
             if (matches.Count > 0)
             {
                 var firstMatch = matches[0];
