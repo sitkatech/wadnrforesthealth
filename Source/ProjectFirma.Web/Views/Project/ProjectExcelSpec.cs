@@ -29,9 +29,23 @@ namespace ProjectFirma.Web.Views.Project
     {
         public ProjectExcelSpec()
         {
+            var organizationFieldDefinitionLabelSingle = Models.FieldDefinition.Organization.GetFieldDefinitionLabel();
             AddColumn(Models.FieldDefinition.ProjectName.GetFieldDefinitionLabel(), x => x.ProjectName);
-            AddColumn($"Non-Lead Implementing {Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}",
-                x => string.Join(",", x.GetAssociatedOrganizations().Select(pio => pio.Organization.DisplayName)));
+            var organizationFieldDefinitionLabelPluralized = Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
+
+            var allProjectGrantAllocationExpenditures =
+                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
+            AddColumn($"Non-Lead Implementing {organizationFieldDefinitionLabelPluralized}",
+                x =>
+                {
+                    
+                    return string.Join(",",
+                        x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
+                            organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict)
+                        .Select(pio => pio.Organization.DisplayName));
+                });
             AddColumn(Models.FieldDefinition.ProjectStage.GetFieldDefinitionLabel(), x => x.ProjectStage.ProjectStageDisplayName);
             MultiTenantHelpers.GetClassificationSystems().ForEach(y =>
                 {
