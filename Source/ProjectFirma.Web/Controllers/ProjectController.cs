@@ -500,10 +500,22 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new PendingGridSpec(CurrentPerson);
             var pendingProjects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetPendingProjectsVisibleToUser(CurrentPerson);
             List<Project> filteredProposals;
+            var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
+            var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
+
+            var allProjectGrantAllocationExpenditures =
+                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
             if (CurrentPerson.Role == Role.Normal)
             {
                 filteredProposals = pendingProjects.Where(x =>
-                        x.GetAssociatedOrganizations().Select(y => y.Organization).Contains(CurrentPerson.Organization))
+                    {
+                        
+                        return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
+                                organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(y => y.Organization)
+                            .Contains(CurrentPerson.Organization);
+                    })
                     .ToList();
             }
             else
@@ -556,8 +568,19 @@ namespace ProjectFirma.Web.Controllers
             workSheets.Add(wsProjectDescriptions);
 
             var organizationsSpec = new ProjectImplementingOrganizationOrProjectFundingOrganizationExcelSpec();
-            var projectOrganizations = projects.SelectMany(p => p.GetAssociatedOrganizations()).ToList();
-            var wsOrganizations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", organizationsSpec, projectOrganizations);
+            var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
+            var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
+            var allProjectGrantAllocationExpenditures =
+                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
+            var projectOrganizations = projects.SelectMany(p =>
+            {
+                
+                return p.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
+                        organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict);
+            }).ToList();
+            var wsOrganizations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {organizationFieldDefinitionLabelPluralized}", organizationsSpec, projectOrganizations);
             workSheets.Add(wsOrganizations);
 
             var projectNoteSpec = new ProjectNoteExcelSpec();
