@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Views.Project
 
         private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
         {
-            return project.ProgramListDisplayHelper(programsByProject);
+            return project.ProgramListDisplayHelper(programsByProject, false);
         }
 
 

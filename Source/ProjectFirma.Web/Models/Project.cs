@@ -885,11 +885,11 @@ namespace ProjectFirma.Web.Models
             get
             {
                 var programsDictionary = this.ProjectPrograms.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList().Select(x => x.Program).ToList());
-                return ProgramListDisplayHelper(programsDictionary);
+                return ProgramListDisplayHelper(programsDictionary, true);
             }
         }
 
-        public HtmlString ProgramListDisplayHelper(Dictionary<int, List<Models.Program>> programsByProject)
+        public HtmlString ProgramListDisplayHelper(Dictionary<int, List<Models.Program>> programsByProject, bool showDefaultsAsWell)
         {
             var programs = new List<Models.Program>();
             if (programsByProject.ContainsKey(ProjectID))
@@ -899,7 +899,7 @@ namespace ProjectFirma.Web.Models
             var listOfStrings = new List<string>();
             foreach (var program in programs)
             {
-                if (!program.IsDefaultProgramForImportOnly)
+                if (!program.IsDefaultProgramForImportOnly || showDefaultsAsWell)
                 {
                     var stringReturn = UrlTemplate.MakeHrefString(
                         program.GetDetailUrl(),
