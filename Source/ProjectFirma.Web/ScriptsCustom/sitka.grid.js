@@ -684,6 +684,7 @@ Sitka.Grid.Class.Grid.prototype.buildWithArguments = function (hideHeader, group
 
         if (true) {
             this.grid.enableSmartRendering(true);
+            this.grid.enableDistributedParsing(true, 10, 250);
 
             //  For dhtmlxgrid smart rendering height has to be the same between row content (image heights), sitka_dhtmlxgrid_skins.css (.ev_sitkaskin, .odd_sitkaskin), and sitka.js (grid.setAwaitedRowHeight) or paged grids scrolling will be off in dhtmlxgrid smart rendering mode
             var rowHeightInPxThatMatchesSkin = this.awaitedRowHeight;
