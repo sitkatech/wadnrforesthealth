@@ -37,8 +37,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public IEnumerable<SelectListItem> Organizations { get; }
         public IEnumerable<SelectListItem> PrimaryContactPeople { get; }
         public IEnumerable<SelectListItem> FocusAreas { get; }
-        public Person DefaultPrimaryContactPerson { get; }
-        public EditProjectType EditProjectType { get; }
+        public string EditProjectTypeIntroductoryText { get; }
         public string ProjectTypeDisplayName { get; }
         public decimal? TotalExpenditures { get; }
         public string DefaultPrimaryContactPersonName { get; }
@@ -61,7 +60,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             List<ProgramSimple> allPrograms,
             int projectID)
         {
-            EditProjectType = editProjectType;
+            EditProjectTypeIntroductoryText = editProjectType.IntroductoryText;
             ProjectTypeDisplayName = projectTypeDisplayName;
             TotalExpenditures = totalExpenditures;
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
@@ -70,12 +69,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             PrimaryContactPeople = primaryContactPeople.ToSelectListWithEmptyFirstRow(
                     x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLastAndOrgShortName,
                     $"<Set Based on {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}'s Associated {Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}>");
-            DefaultPrimaryContactPerson = defaultPrimaryContactPerson;
             ProjectTypes = projectTypes.ToGroupedSelectList();
             StartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
-            DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
+            DefaultPrimaryContactPersonName = defaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             FocusAreas = focusAreas.OrderBy(x => x.FocusAreaName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);
             ProjectTypeHasBeenSet = projectTypeHasBeenSet;
             AllPrograms = allPrograms;
