@@ -12,6 +12,10 @@ select p.ProjectID
 , x.GrantAllocationID
 , lan.LetterDate as LetterDate
 , lan.ProjectExpirationDate as ProjectExpirationDate
+, lan.ApplicationDate as ApplicationDate
+, x.LoaStageID
+, x.IsNortheast
+, x.IsSoutheast
 from dbo.vLoaStageGrantAllocation x
 join dbo.LoaStage lan on x.LoaStageID = lan.LoaStageID
 join dbo.Project p on p.ProjectGisIdentifier = lan.ProjectIdentifier
@@ -30,6 +34,10 @@ p.ProjectID
 , null
 , lan.LetterDate as LetterDate
 , lan.ProjectExpirationDate as ProjectExpirationDate
+, lan.ApplicationDate as ApplicationDate
+, lan.LoaStageID
+, lan.IsNortheast
+, lan.IsSoutheast
  from dbo.Project p
  join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
 join dbo.LoaStage lan on lan.ProjectIdentifier = p.ProjectGisIdentifier

@@ -13,6 +13,10 @@ begin
               , x.LetterDate
               , x.ProjectExpirationDate
               , x.ProjectStatus
+			  , x.ApplicationDate
+			  , x.IsNortheast
+			  , x.IsSoutheast
+			  , x.LoaStageID
               into #projectGrantAllocation
               from dbo.vLoaStageProjectGrantAllocation x
 
@@ -83,13 +87,14 @@ begin
 
                 update dbo.Project 
                 set EstimatedTotalCost = y.EstimatedTotalCost
-                ,   PlannedDate = y.Letterdate
                 ,   ExpirationDate = y.ExpirationDate
+				,   PlannedDate = y.LetterDate
                 from dbo.Project p
                 join (select x.ProjectID
                 , sum(x.MatchAmount) + sum(x.PayAmount) as EstimatedTotalCost
-                , min(x.LetterDate) as Letterdate
                 , max(x.ProjectExpirationDate) as ExpirationDate
+				, min(case when x.IsNortheast = 1 then x.ApplicationDate else x.LetterDate end) as ProjectInitiationDate
+				, min(x.LetterDate) as LetterDate
                   from  #projectGrantAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
 
 

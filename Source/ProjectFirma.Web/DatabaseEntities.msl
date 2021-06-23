@@ -885,6 +885,7 @@
           <ScalarProperty Name="ForesterFirstName" ColumnName="ForesterFirstName" />
           <ScalarProperty Name="ForesterPhone" ColumnName="ForesterPhone" />
           <ScalarProperty Name="ForesterEmail" ColumnName="ForesterEmail" />
+          <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2036,6 +2037,8 @@
           <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
+          <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2046,6 +2049,8 @@
           <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
+          <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2055,6 +2060,8 @@
           <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
+          <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2068,6 +2075,10 @@
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
           <ScalarProperty Name="ProjectExpirationDate" ColumnName="ProjectExpirationDate" />
+          <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
+          <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
+          <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
+          <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

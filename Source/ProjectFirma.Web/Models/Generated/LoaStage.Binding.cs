@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public LoaStage(int loaStageID, string projectIdentifier, string projectStatus, string grantNumber, string focusAreaName, DateTime? projectExpirationDate, DateTime? letterDate, decimal? matchAmount, decimal? payAmount, string programIndex, string projectCode, bool isNortheast, bool isSoutheast, string foresterLastName, string foresterFirstName, string foresterPhone, string foresterEmail) : this()
+        public LoaStage(int loaStageID, string projectIdentifier, string projectStatus, string grantNumber, string focusAreaName, DateTime? projectExpirationDate, DateTime? letterDate, decimal? matchAmount, decimal? payAmount, string programIndex, string projectCode, bool isNortheast, bool isSoutheast, string foresterLastName, string foresterFirstName, string foresterPhone, string foresterEmail, DateTime? applicationDate) : this()
         {
             this.LoaStageID = loaStageID;
             this.ProjectIdentifier = projectIdentifier;
@@ -50,6 +50,7 @@ namespace ProjectFirma.Web.Models
             this.ForesterFirstName = foresterFirstName;
             this.ForesterPhone = foresterPhone;
             this.ForesterEmail = foresterEmail;
+            this.ApplicationDate = applicationDate;
         }
 
         /// <summary>
@@ -133,6 +134,7 @@ namespace ProjectFirma.Web.Models
         public string ForesterFirstName { get; set; }
         public string ForesterPhone { get; set; }
         public string ForesterEmail { get; set; }
+        public DateTime? ApplicationDate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return LoaStageID; } set { LoaStageID = value; } }
 

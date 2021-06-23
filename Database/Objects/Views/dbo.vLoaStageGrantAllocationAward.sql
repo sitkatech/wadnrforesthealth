@@ -5,7 +5,7 @@ go
 create view dbo.vLoaStageGrantAllocationAward
 as
 
-select distinct x.LoaStageID, gaa.GrantAllocationAwardID, ga.GrantAllocationID, g.GrantID 
+select distinct x.LoaStageID, gaa.GrantAllocationAwardID, ga.GrantAllocationID, g.GrantID , x.IsNortheast, x.IsSoutheast
 from dbo.LoaStage x
 join dbo.FocusArea fa on (fa.FocusAreaName like '%'+ x.FocusAreaName + '%') or (fa.FocusAreaName like '%' +LEFT(x.FocusAreaName, LEN(x.FocusAreaName)-5) + '%' and x.IsSoutheast = 1)
 join dbo.[Grant] g on x.GrantNumber = RIGHT(g.GrantNumber, LEN(g.GrantNumber)-2) or x.GrantNumber = g.GrantNumber

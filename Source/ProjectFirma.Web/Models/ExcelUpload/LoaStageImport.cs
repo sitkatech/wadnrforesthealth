@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         public readonly string Status;
         public readonly DateTime? LetterDate;
         public readonly DateTime? ProjectExpirationDate;
+        public readonly DateTime? ApplicationDate;
         public readonly string GrantNumber;
         public readonly string FocusArea;
         public readonly string ProjectCode;
@@ -76,7 +77,18 @@ namespace ProjectFirma.Web.Models.ExcelUpload
                 {
                     problemList.Add(e.Message);
                 }
-               
+
+                try
+                {
+                    // Column - Application Date Key
+                    ApplicationDate = ExcelColumnHelper.GetDateTimeDataValueForColumnName(dr, rowIndex, columnMappingDictionary, LoaStageImports.ApplicationDateKey, true);
+                }
+
+                catch (ExcelImportBadCellException e)
+                {
+                    problemList.Add(e.Message);
+                }
+
 
                 // Column - Grant Number Key
                 GrantNumber = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.GrantNumberKey, columnMappingDictionary);

@@ -110,6 +110,7 @@ Renamed: "Vendor Name" => "Name"
         public const string ProjectIDKey = "Project ID";
         public const string LetterDateKey = "Letter Date";
         public const string ProjectExpirationDateKey = "Project Expiration Date";
+        public const string ApplicationDateKey = "Application Date";
         public const string GrantNumberKey = "Grant #";
         public const string GrantKey = "Grant";
         public const string CodeKey = "Code";

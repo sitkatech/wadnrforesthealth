@@ -2243,6 +2243,7 @@
     <Property Name="ForesterFirstName" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="ForesterPhone" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="ForesterEmail" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ApplicationDate" Type="DateTime" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -3613,10 +3614,13 @@
   <EntityType Name="vLoaStageGrantAllocation">
     <Key>
       <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="Int32" Nullable="false" />
     <Property Name="GrantID" Type="Int32" />
     <Property Name="GrantAllocationID" Type="Int32" />
+    <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
+    <Property Name="IsSoutheast" Type="Boolean" />
   </EntityType>
   <EntityType Name="vLoaStageGrantAllocationAward">
     <Key>
@@ -3624,23 +3628,31 @@
       <PropertyRef Name="GrantAllocationAwardID" />
       <PropertyRef Name="GrantAllocationID" />
       <PropertyRef Name="GrantID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
+    <Property Name="IsSoutheast" Type="Boolean" />
   </EntityType>
   <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
     <Key>
       <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" />
     <Property Name="GrantID" Type="Int32" />
+    <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
+    <Property Name="IsSoutheast" Type="Boolean" />
   </EntityType>
   <EntityType Name="vLoaStageProjectGrantAllocation">
     <Key>
       <PropertyRef Name="ProjectID" />
+      <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -3649,6 +3661,10 @@
     <Property Name="GrantAllocationID" Type="Int32" />
     <Property Name="LetterDate" Type="DateTime" />
     <Property Name="ProjectExpirationDate" Type="DateTime" />
+    <Property Name="ApplicationDate" Type="DateTime" />
+    <Property Name="LoaStageID" Type="Int32" Nullable="false" />
+    <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
+    <Property Name="IsSoutheast" Type="Boolean" />
   </EntityType>
   <EntityType Name="vSingularGrantAllocation">
     <Key>

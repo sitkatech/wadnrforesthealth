@@ -173,7 +173,9 @@ FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</Defin
       <DefiningQuery>SELECT 
 [vLoaStageGrantAllocation].[LoaStageID] AS [LoaStageID], 
 [vLoaStageGrantAllocation].[GrantID] AS [GrantID], 
-[vLoaStageGrantAllocation].[GrantAllocationID] AS [GrantAllocationID]
+[vLoaStageGrantAllocation].[GrantAllocationID] AS [GrantAllocationID], 
+[vLoaStageGrantAllocation].[IsNortheast] AS [IsNortheast], 
+[vLoaStageGrantAllocation].[IsSoutheast] AS [IsSoutheast]
 FROM [dbo].[vLoaStageGrantAllocation] AS [vLoaStageGrantAllocation]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vLoaStageGrantAllocationAward" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocationAward" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocationAward">
@@ -181,14 +183,18 @@ FROM [dbo].[vLoaStageGrantAllocation] AS [vLoaStageGrantAllocation]</DefiningQue
 [vLoaStageGrantAllocationAward].[LoaStageID] AS [LoaStageID], 
 [vLoaStageGrantAllocationAward].[GrantAllocationAwardID] AS [GrantAllocationAwardID], 
 [vLoaStageGrantAllocationAward].[GrantAllocationID] AS [GrantAllocationID], 
-[vLoaStageGrantAllocationAward].[GrantID] AS [GrantID]
+[vLoaStageGrantAllocationAward].[GrantID] AS [GrantID], 
+[vLoaStageGrantAllocationAward].[IsNortheast] AS [IsNortheast], 
+[vLoaStageGrantAllocationAward].[IsSoutheast] AS [IsSoutheast]
 FROM [dbo].[vLoaStageGrantAllocationAward] AS [vLoaStageGrantAllocationAward]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vLoaStageGrantAllocationByProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocationByProgramIndexProjectCode" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
       <DefiningQuery>SELECT 
 [vLoaStageGrantAllocationByProgramIndexProjectCode].[LoaStageID] AS [LoaStageID], 
 [vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantAllocationID] AS [GrantAllocationID], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantID] AS [GrantID]
+[vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantID] AS [GrantID], 
+[vLoaStageGrantAllocationByProgramIndexProjectCode].[IsNortheast] AS [IsNortheast], 
+[vLoaStageGrantAllocationByProgramIndexProjectCode].[IsSoutheast] AS [IsSoutheast]
 FROM [dbo].[vLoaStageGrantAllocationByProgramIndexProjectCode] AS [vLoaStageGrantAllocationByProgramIndexProjectCode]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vLoaStageProjectGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageProjectGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageProjectGrantAllocation">
@@ -199,7 +205,11 @@ FROM [dbo].[vLoaStageGrantAllocationByProgramIndexProjectCode] AS [vLoaStageGran
 [vLoaStageProjectGrantAllocation].[ProjectStatus] AS [ProjectStatus], 
 [vLoaStageProjectGrantAllocation].[GrantAllocationID] AS [GrantAllocationID], 
 [vLoaStageProjectGrantAllocation].[LetterDate] AS [LetterDate], 
-[vLoaStageProjectGrantAllocation].[ProjectExpirationDate] AS [ProjectExpirationDate]
+[vLoaStageProjectGrantAllocation].[ProjectExpirationDate] AS [ProjectExpirationDate], 
+[vLoaStageProjectGrantAllocation].[ApplicationDate] AS [ApplicationDate], 
+[vLoaStageProjectGrantAllocation].[LoaStageID] AS [LoaStageID], 
+[vLoaStageProjectGrantAllocation].[IsNortheast] AS [IsNortheast], 
+[vLoaStageProjectGrantAllocation].[IsSoutheast] AS [IsSoutheast]
 FROM [dbo].[vLoaStageProjectGrantAllocation] AS [vLoaStageProjectGrantAllocation]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vSingularGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vSingularGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vSingularGrantAllocation">
@@ -2068,6 +2078,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ForesterFirstName" Type="varchar" MaxLength="200" />
     <Property Name="ForesterPhone" Type="varchar" MaxLength="200" />
     <Property Name="ForesterEmail" Type="varchar" MaxLength="200" />
+    <Property Name="ApplicationDate" Type="datetime" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -3166,10 +3177,13 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocation' 
   <EntityType Name="vLoaStageGrantAllocation">
     <Key>
       <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
     <Property Name="GrantID" Type="int" />
     <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="IsNortheast" Type="bit" Nullable="false" />
+    <Property Name="IsSoutheast" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationAward' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3180,11 +3194,14 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationAw
       <PropertyRef Name="GrantAllocationAwardID" />
       <PropertyRef Name="GrantAllocationID" />
       <PropertyRef Name="GrantID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="IsNortheast" Type="bit" Nullable="false" />
+    <Property Name="IsSoutheast" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationByProgramIndexProjectCode' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3192,10 +3209,13 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationBy
   <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
     <Key>
       <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" />
     <Property Name="GrantID" Type="int" />
+    <Property Name="IsNortheast" Type="bit" Nullable="false" />
+    <Property Name="IsSoutheast" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3203,6 +3223,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAlloc
   <EntityType Name="vLoaStageProjectGrantAllocation">
     <Key>
       <PropertyRef Name="ProjectID" />
+      <PropertyRef Name="LoaStageID" />
+      <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="MatchAmount" Type="money" />
@@ -3211,6 +3233,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAlloc
     <Property Name="GrantAllocationID" Type="int" />
     <Property Name="LetterDate" Type="datetime" />
     <Property Name="ProjectExpirationDate" Type="datetime" />
+    <Property Name="ApplicationDate" Type="datetime" />
+    <Property Name="LoaStageID" Type="int" Nullable="false" />
+    <Property Name="IsNortheast" Type="bit" Nullable="false" />
+    <Property Name="IsSoutheast" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSingularGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

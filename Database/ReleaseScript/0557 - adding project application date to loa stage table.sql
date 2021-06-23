@@ -1,0 +1,1 @@
+ALTER TABLE dbo.LoaStage ADD ApplicationDate datetime
