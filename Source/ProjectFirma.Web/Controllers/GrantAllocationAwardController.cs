@@ -540,7 +540,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
+        [ProjectActivitiesSectionViewFeature]
         public GridJsonNetJObjectResult<TreatmentGroup> TreatmentAreaProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
@@ -556,7 +556,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
+        [ProjectActivitiesSectionViewFeature]
         public GridJsonNetJObjectResult<Treatment> TreatmentProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;

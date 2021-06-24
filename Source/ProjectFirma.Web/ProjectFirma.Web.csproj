@@ -950,6 +950,7 @@
     <Compile Include="Security\ProgramIndexViewJsonApiFeature.cs" />
     <Compile Include="Security\ProgramManageFeature.cs" />
     <Compile Include="Security\ProgramViewFeature.cs" />
+    <Compile Include="Security\ProjectActivitiesSectionViewFeature.cs" />
     <Compile Include="Security\ProjectCodeViewJsonApiFeature.cs" />
     <Compile Include="Security\ProjectsViewJsonApiFeature.cs" />
     <Compile Include="Security\DNRUplandRegionManageFeature.cs" />
