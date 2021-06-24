@@ -93,7 +93,6 @@ begin
                 join (select x.ProjectID
                 , sum(x.MatchAmount) + sum(x.PayAmount) as EstimatedTotalCost
                 , max(x.ProjectExpirationDate) as ExpirationDate
-				, min(case when x.IsNortheast = 1 then x.ApplicationDate else x.LetterDate end) as ProjectInitiationDate
 				, min(x.LetterDate) as LetterDate
                   from  #projectGrantAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
 
