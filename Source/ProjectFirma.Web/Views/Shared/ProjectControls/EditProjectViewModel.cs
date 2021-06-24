@@ -104,6 +104,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public void UpdateModel(Models.Project project, Person currentPerson)
         {
+
+            if (ProjectProgramSimples == null)
+            {
+                ProjectProgramSimples = new List<ProjectProgramSimple>();
+            }
+
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
             project.ProjectTypeID = ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID;
@@ -130,6 +136,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
 
             var existingProjectPrograms = project.ProjectPrograms.Select(x => x.ProjectProgramID).ToList();
+
             var projectProgramSimplesNew = ProjectProgramSimples.Where(x => x.ProjectProgramID < 0).ToList();
             var projectProgramsNew = projectProgramSimplesNew.Select(x => new ProjectProgram(x.ProjectID, x.ProgramID))
                 .ToList();
