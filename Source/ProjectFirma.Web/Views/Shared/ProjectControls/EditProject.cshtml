@@ -27,7 +27,14 @@
 
 @Html.Raw(ViewDataTyped.EditProjectTypeIntroductoryText)
 
-    <script type="text/javascript">
+<style type="text/css">
+    .narrowRow {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+</style>
+
+<script type="text/javascript">
     // <![CDATA[
     jQuery(document).ready(function() {
         angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
@@ -51,7 +58,7 @@
 
 @Html.ValidationSummary()
 
-<div ng-app="ProjectFirmaApp" id="EditProjectApp" ng-controller="EditProjectController" style="max-height: 600px;">
+<div ng-app="ProjectFirmaApp" id="EditProjectApp" ng-controller="EditProjectController">
     @using (Html.BeginForm())
     {
     <div class="form-horizontal">
@@ -189,13 +196,13 @@
 
         <div class="form-group">
 
-            <div class="row">
+            <div class="row narrowRow">
                 <div class="col-xs-4 control-label">
                     @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
                 </div>
                 <div class="col-xs-7"></div>
             </div>
-            <div class="row" ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
+            <div class="row narrowRow" ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
                 <div class="col-xs-4 control-label">
 
                 </div>
