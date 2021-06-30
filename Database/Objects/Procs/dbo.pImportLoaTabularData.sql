@@ -17,6 +17,7 @@ begin
 			  , x.IsNortheast
 			  , x.IsSoutheast
 			  , x.LoaStageID
+			  , x.DecisionDate
               into #projectGrantAllocation
               from dbo.vLoaStageProjectGrantAllocation x
 
@@ -89,11 +90,15 @@ begin
                 set EstimatedTotalCost = y.EstimatedTotalCost
                 ,   ExpirationDate = y.ExpirationDate
 				,   PlannedDate = y.LetterDate
+				,	SubmissionDate = y.ApplicationDate
+				,	ApprovalDate = y.DecisionDate
                 from dbo.Project p
                 join (select x.ProjectID
                 , sum(x.MatchAmount) + sum(x.PayAmount) as EstimatedTotalCost
                 , max(x.ProjectExpirationDate) as ExpirationDate
 				, min(x.LetterDate) as LetterDate
+				, min(x.ApplicationDate) as ApplicationDate
+				, min(x.DecisionDate) as DecisionDate
                   from  #projectGrantAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
 
 

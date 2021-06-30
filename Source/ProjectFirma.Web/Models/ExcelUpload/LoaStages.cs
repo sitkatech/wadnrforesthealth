@@ -111,6 +111,7 @@ Renamed: "Vendor Name" => "Name"
         public const string LetterDateKey = "Letter Date";
         public const string ProjectExpirationDateKey = "Project Expiration Date";
         public const string ApplicationDateKey = "Application Date";
+        public const string DecisionDateKey = "Decision Date";
         public const string GrantNumberKey = "Grant #";
         public const string GrantKey = "Grant";
         public const string CodeKey = "Code";
@@ -140,7 +141,8 @@ Renamed: "Vendor Name" => "Name"
                 {"G", ForesterKey},
                 {"H", ForesterPhoneKey},
                 {"I", ForesterEmailKey},
-
+                {"E", DecisionDateKey},
+                {"D", ApplicationDateKey}
             };
         }
 

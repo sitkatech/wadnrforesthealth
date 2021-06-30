@@ -886,6 +886,7 @@
           <ScalarProperty Name="ForesterPhone" ColumnName="ForesterPhone" />
           <ScalarProperty Name="ForesterEmail" ColumnName="ForesterEmail" />
           <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
+          <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2039,6 +2040,8 @@
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
           <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
+          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2051,6 +2054,8 @@
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
           <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
+          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2062,6 +2067,8 @@
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
           <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
+          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2069,6 +2076,7 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vLoaStageProjectGrantAllocation">
         <MappingFragment StoreEntitySet="vLoaStageProjectGrantAllocation">
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
           <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
           <ScalarProperty Name="ProjectStatus" ColumnName="ProjectStatus" />
@@ -2076,9 +2084,12 @@
           <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
           <ScalarProperty Name="ProjectExpirationDate" ColumnName="ProjectExpirationDate" />
           <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
+          <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
           <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
           <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
           <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
+          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

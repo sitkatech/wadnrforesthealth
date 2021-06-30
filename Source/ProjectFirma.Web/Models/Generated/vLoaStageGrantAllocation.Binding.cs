@@ -26,13 +26,15 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public vLoaStageGrantAllocation(int loaStageID, int? grantID, int? grantAllocationID, bool isNortheast, bool? isSoutheast) : this()
+        public vLoaStageGrantAllocation(int loaStageID, int? grantID, int? grantAllocationID, bool isNortheast, bool? isSoutheast, string programIndex, string projectCode) : this()
         {
             this.LoaStageID = loaStageID;
             this.GrantID = grantID;
             this.GrantAllocationID = grantAllocationID;
             this.IsNortheast = isNortheast;
             this.IsSoutheast = isSoutheast;
+            this.ProgramIndex = programIndex;
+            this.ProjectCode = projectCode;
         }
 
         /// <summary>
@@ -45,6 +47,8 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = vLoaStageGrantAllocation.GrantAllocationID;
             this.IsNortheast = vLoaStageGrantAllocation.IsNortheast;
             this.IsSoutheast = vLoaStageGrantAllocation.IsSoutheast;
+            this.ProgramIndex = vLoaStageGrantAllocation.ProgramIndex;
+            this.ProjectCode = vLoaStageGrantAllocation.ProjectCode;
             CallAfterConstructor(vLoaStageGrantAllocation);
         }
 
@@ -55,5 +59,7 @@ namespace ProjectFirma.Web.Models
         public int? GrantAllocationID { get; set; }
         public bool IsNortheast { get; set; }
         public bool? IsSoutheast { get; set; }
+        public string ProgramIndex { get; set; }
+        public string ProjectCode { get; set; }
     }
 }

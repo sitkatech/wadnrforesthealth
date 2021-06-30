@@ -14,6 +14,7 @@ select p.ProjectID
 , lan.LetterDate as LetterDate
 , lan.ProjectExpirationDate as ProjectExpirationDate
 , lan.ApplicationDate as ApplicationDate
+, lan.DecisionDate as DecisionDate
 , x.LoaStageID
 , x.IsNortheast
 , x.IsSoutheast
@@ -39,6 +40,7 @@ p.ProjectID
 , lan.LetterDate as LetterDate
 , lan.ProjectExpirationDate as ProjectExpirationDate
 , lan.ApplicationDate as ApplicationDate
+, lan.DecisionDate as DecisionDate
 , lan.LoaStageID
 , lan.IsNortheast
 , lan.IsSoutheast

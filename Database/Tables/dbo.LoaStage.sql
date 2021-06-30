@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[LoaStage](
 	[ForesterPhone] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ForesterEmail] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ApplicationDate] [datetime] NULL,
+	[DecisionDate] [datetime] NULL,
  CONSTRAINT [PK_LoaStage_LoaStageID] PRIMARY KEY CLUSTERED 
 (
 	[LoaStageID] ASC
