@@ -25,8 +25,8 @@ namespace ProjectFirma.Web.Common
 {
     public static class FirmaValidationMessages
     {
-       public static readonly string CompletionDateGreaterThanEqualToImplementationStartYear = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel()}.";
-        public static readonly string CompletionDateGreaterThanEqualToPlannedDate = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel()}.";
+       public static readonly string CompletionDateGreaterThanEqualToImplementationStartYear = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.ProjectInitiationDate.GetFieldDefinitionLabel()}.";
+        public static readonly string CompletionDateGreaterThanEqualToPlannedDate = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.ProjectInitiationDate.GetFieldDefinitionLabel()}.";
         public static readonly string UpdateSectionIsDependentUponBasicsSection = "Your project's \"Basics\" page must be complete before you can begin updating this section.";
         public static readonly string ProjectNameUnique = $"{FieldDefinition.ProjectName.GetFieldDefinitionLabel()} already exists.";
         public static readonly string ProjectCodeInvalid = $"{FieldDefinition.ProjectCode.GetFieldDefinitionLabel()} is not valid.";
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Common
         public const string LettersNumbersSpacesDashesAndUnderscoresOnly = "Only letters, numbers, spaces, dashes and underscores are allowed.";
         public const string LettersOnly = "Only letters are allowed.";
         public const string MoreThanOneProjectUpdateInProgress = "Cannot determine latest update state; more than one update is in progress.";
-        public static readonly string ImplementationYearMustBePastOrPresentForImplementationProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Implementation stage cannot have an {FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel()} in the future.";
+        public static readonly string ImplementationYearMustBePastOrPresentForImplementationProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Implementation stage cannot have an {FieldDefinition.ProjectInitiationDate.GetFieldDefinitionLabel()} in the future.";
         public static readonly string InvoiceNicknameMustBePopulated = "You must provide an Invoice nickname.";
         public static readonly string PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement = "Purchase Authority Agreement Number Must Be Blank If It Is Land-Owner Agreement";
         public static readonly string InvoiceMatchAmountDollarValueMustNotBeNull = $"You must enter a dollar value for the {FieldDefinition.MatchAmount.GetFieldDefinitionLabel()} if dollar amount is selected";

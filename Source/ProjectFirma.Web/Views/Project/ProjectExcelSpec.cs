@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Views.Project
                 });
             AddColumn(Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabelPluralized(), x => string.Join(",", x.GetProjectPriorityLandscapes().Select(y => y.PriorityLandscapeName)));
             AddColumn("Regions", x => string.Join(",", x.GetProjectRegions().Select(y => y.DNRUplandRegionName)));
-            AddColumn(Models.FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel(), x => x.GetImplementationStartYear());
+            AddColumn(Models.FieldDefinition.ProjectInitiationDate.GetFieldDefinitionLabel(), x => x.GetImplementationStartYear());
             AddColumn(Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel(), x => x.GetCompletionYear());
             AddColumn(Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel(), x => x.ProjectDescription);
             AddColumn(Models.FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(), x => x.EstimatedTotalCost);

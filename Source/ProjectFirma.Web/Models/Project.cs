@@ -855,6 +855,16 @@ namespace ProjectFirma.Web.Models
             return PlannedDate?.ToShortDateString();
         }
 
+        public string GetApplicationDate()
+        {
+            return SubmissionDate?.ToShortDateString();
+        }
+
+        public string GetDecisionDate()
+        {
+            return ApprovalDate?.ToShortDateString();
+        }
+
         public string GetCompletionDateFormatted()
         {
             return CompletionDate?.ToShortDateString();

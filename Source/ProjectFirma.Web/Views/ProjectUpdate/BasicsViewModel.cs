@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
         public int ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.StartApprovalDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectInitiationDate)]
         public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]

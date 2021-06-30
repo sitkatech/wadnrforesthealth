@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             //Add(Models.FieldDefinition.ProjectRelationshipType.ToGridHeaderStringPlural(Models.FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabelPluralized()),
             //    a => a.AssocatedFocusAreaNames(focusArea), 180, DhtmlxGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.StartApprovalDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProjectInitiationDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.ExpirationDate, 115, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.CompletionDate, 90, DhtmlxGridColumnFormatType.Date);
             Add($"Number Of Reported {MultiTenantHelpers.GetPerformanceMeasureName()} Records", x => x.PerformanceMeasureActuals.Count, 100);

@@ -92,17 +92,25 @@ Source code is available upon request via <support@sitkatech.com>.
 
     <hr />
 
-    @*<div class="row"> //todo: add DecisionDate here!
-        <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.Submi)
-        </div>
-        <div class="col-sm-9">
-            @ViewDataTyped.Project.GetPlannedDate()
-        </div>
-    </div>*@
     <div class="row">
         <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.StartApprovalDate)
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectApplicationDate)
+        </div>
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.GetApplicationDate()
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectDecisionDate)
+        </div>
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.GetDecisionDate()
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectInitiationDate)
         </div>
         <div class="col-sm-9">
             @ViewDataTyped.Project.GetPlannedDate()
