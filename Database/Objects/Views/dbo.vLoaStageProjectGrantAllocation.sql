@@ -6,6 +6,7 @@ create view dbo.vLoaStageProjectGrantAllocation
 as
 
 select p.ProjectID
+, p.ProjectGisIdentifier
 , lan.MatchAmount
 , lan.PayAmount 
 , lan.ProjectStatus
@@ -16,6 +17,8 @@ select p.ProjectID
 , x.LoaStageID
 , x.IsNortheast
 , x.IsSoutheast
+, x.ProgramIndex
+, x.ProjectCode
 from dbo.vLoaStageGrantAllocation x
 join dbo.LoaStage lan on x.LoaStageID = lan.LoaStageID
 join dbo.Project p on p.ProjectGisIdentifier = lan.ProjectIdentifier
@@ -28,6 +31,7 @@ union
 
 select 
 p.ProjectID
+, p.ProjectGisIdentifier
 , lan.MatchAmount
 , lan.PayAmount
 , lan.ProjectStatus
@@ -38,6 +42,8 @@ p.ProjectID
 , lan.LoaStageID
 , lan.IsNortheast
 , lan.IsSoutheast
+, lan.ProgramIndex
+, lan.ProjectCode
  from dbo.Project p
  join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
 join dbo.LoaStage lan on lan.ProjectIdentifier = p.ProjectGisIdentifier
@@ -47,6 +53,6 @@ where pp.ProgramID = 3 and x.LoaStageID is null
 go
 
 /*
-select * from dbo.vLoaStageProjectGrantAllocation
+select * from dbo.vLoaStageProjectGrantAllocation x where x.grantallocationid = 324
 
 */
