@@ -25,6 +25,8 @@ namespace ProjectFirma.Web.Models
             this.ProgramIndex = loaStageImport.ProgramIndex;
             this.ProjectCode = loaStageImport.ProjectCode;
             this.IsNortheast = isNortheast;
+            this.ApplicationDate = loaStageImport.ApplicationDate;
+            this.DecisionDate = loaStageImport.DecisionDate;
 
             var foresterSplit = loaStageImport.Forester.Split(' ');
             if (foresterSplit.Length > 1)

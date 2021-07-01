@@ -47,7 +47,7 @@ VALUES
 (80, N'ReportedExpenditure', N'Reported Expenditure', N'<p>An expenditure, tied to a Grant Allocation, as reported by the project implementer.</p>'),
 (81, N'Application', N'Application', N'<p>A project suggested by an program partner that will be reviewed for inclusion in the program. The system administrators are responsible for reviewing, and if appropriate, approving proposals.</p>'),
 (85, N'SpendingAssociatedWithPM', N'Spending Associated with PM', N'<p>The estimated spending allotted to the Performance Measure.</p>'),
-(86, N'StartApprovalDate', N'Start/Approval Date', N'<p>The date on which project began.  Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
+(86, N'ProjectInitiationDate', N'Project Initiation Date', N'<p>The date on which project began.  Contrast with &quot;Approval.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
 (87, N'AssociatedTaxonomyBranches', N'Associated Taxonomy Branches', N'<p>External&nbsp;programs that are related to the content you are reviewing. You may wish to look up these programs to learn more.</p>'),
 (88, N'ExternalLinks', N'External Links', N'<p>Links to external web pages where you might find additional information.</p>'),
 (91, N'CurrentYearForPVCalculations', N'Current Year for PV Calculations', N'<p>The year to use as the starting point for inflation calculations.</p>'),
@@ -296,6 +296,8 @@ VALUES
 (474, N'LimitVisibilityToAdmin', N'Project Type Visibility Limited To Admin', 'Limit Visibility of this Project Type to just Administrators (Program Manager, Admin, Sitka Admin)'),
 (475, N'Program', N'Program', 'Program'),
 (476, N'ProjectGrantAllocationRequestMatchAmount', N'MatchAmount', N'<p>Funding that has been acquired for a project.</p>'),
-(477, N'ProjectGrantAllocationRequestPayAmount', N'PayAmount', N'<p>Funding that has been acquired for a project.</p>')
+(477, N'ProjectGrantAllocationRequestPayAmount', N'PayAmount', N'<p>Funding that has been acquired for a project.</p>'),
+(478, N'ProjectApplicationDate', N'Project Application Date', N'<p>The date on which the application for the project was submitted.'),
+(479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.')
 
 

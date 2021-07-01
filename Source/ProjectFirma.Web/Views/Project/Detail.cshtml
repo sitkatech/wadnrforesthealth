@@ -49,6 +49,7 @@
     <script src="@Url.Content("~/Views/PerformanceMeasureActual/PerformanceMeasureActualController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/ProjectGrantAllocationExpenditure/ProjectGrantAllocationExpenditureController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/ProjectGrantAllocationRequest/ProjectGrantAllocationRequestController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/Shared/ProjectControls/EditProjectController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/Shared/ProjectOrganization/ProjectOrganizationController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/Shared/ProjectPerson/ProjectPersonController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/ProjectExternalLink/ProjectExternalLinkController.js")" type="text/javascript"></script>
@@ -299,7 +300,7 @@
                     </div>
                 </div>
 
-                @if(new GrantAllocationAwardLandownerCostShareLineItemViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson)) { 
+                @if(new ProjectActivitiesSectionViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson)) { 
                     <h2 class="sectionHeader">Activities</h2>
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">

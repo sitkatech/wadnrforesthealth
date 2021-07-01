@@ -26,12 +26,16 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public vLoaStageGrantAllocationAward(int loaStageID, int grantAllocationAwardID, int grantAllocationID, int grantID) : this()
+        public vLoaStageGrantAllocationAward(int loaStageID, int grantAllocationAwardID, int grantAllocationID, int grantID, bool isNortheast, bool? isSoutheast, string programIndex, string projectCode) : this()
         {
             this.LoaStageID = loaStageID;
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
+            this.IsNortheast = isNortheast;
+            this.IsSoutheast = isSoutheast;
+            this.ProgramIndex = programIndex;
+            this.ProjectCode = projectCode;
         }
 
         /// <summary>
@@ -43,6 +47,10 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationAwardID = vLoaStageGrantAllocationAward.GrantAllocationAwardID;
             this.GrantAllocationID = vLoaStageGrantAllocationAward.GrantAllocationID;
             this.GrantID = vLoaStageGrantAllocationAward.GrantID;
+            this.IsNortheast = vLoaStageGrantAllocationAward.IsNortheast;
+            this.IsSoutheast = vLoaStageGrantAllocationAward.IsSoutheast;
+            this.ProgramIndex = vLoaStageGrantAllocationAward.ProgramIndex;
+            this.ProjectCode = vLoaStageGrantAllocationAward.ProjectCode;
             CallAfterConstructor(vLoaStageGrantAllocationAward);
         }
 
@@ -52,5 +60,9 @@ namespace ProjectFirma.Web.Models
         public int GrantAllocationAwardID { get; set; }
         public int GrantAllocationID { get; set; }
         public int GrantID { get; set; }
+        public bool IsNortheast { get; set; }
+        public bool? IsSoutheast { get; set; }
+        public string ProgramIndex { get; set; }
+        public string ProjectCode { get; set; }
     }
 }

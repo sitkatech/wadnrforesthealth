@@ -39,7 +39,7 @@
     }
 
     .mapLegendIcon {
-        margin-bottom: -30px;
+        margin-right: 5px;
     }
 
     .mapLegendElement .maki-marker {
@@ -114,6 +114,7 @@
     ProjectFirmaMaps.Map.prototype.addProjectLocationsToMap = function(points, layer, layerName, showByDefault)
     {
         var self = this;
+        var myRenderer = L.canvas({ padding: 0.5 });
         if (layer != null)
         {
             this.map.removeLayer(layer);
@@ -125,10 +126,16 @@
         var newLayer = L.geoJson(points.GeoJsonFeatureCollection, {
             pointToLayer: function(feature, latlng)
             {
-                var legendColor = _.result(_.find(markerColorTable, function(legendItem) { return legendItem.LegendID == feature.properties[self.mapCustomizationObject.ColorByPropertyName]; }), 'LegendColor');
-                var marker = L.marker(latlng, { icon: L.MakiMarkers.icon({ icon: "marker", color: legendColor, size: "s" }) });
-                self.bindPopupToFeature(marker, feature);
-                return marker;
+                var legendColor = _.result(_.find(markerColorTable, function (legendItem) { return legendItem.LegendID == feature.properties[self.mapCustomizationObject.ColorByPropertyName]; }), 'LegendColor');
+                
+                var circleMarker = L.circleMarker(latlng,
+                    {
+                        renderer: myRenderer,
+                        color: legendColor,
+                        radius: 1
+                    });
+                self.bindPopupToFeature(circleMarker, feature);
+                return circleMarker;
             },
             filter: function(feature)
             {
@@ -167,11 +174,27 @@
     ProjectFirmaMaps.Map.prototype.getLegend = function() {
         var markerColorTable = this.legendColorsToUse[this.mapCustomizationObject.ColorByPropertyName];
         var allLegendsHtml = "";
-        for (var i = 0; i < markerColorTable.length; ++i)
-        {
-            var currentLegendIcon = L.MakiMarkers.icon({ icon: "marker", color: markerColorTable[i].LegendColor, size: "m" }),
-                currentLegendAsHtml = currentLegendIcon.options.iconUrl;
-            allLegendsHtml += "<div class=\"mapLegendElement\">" + "<img class='mapLegendIcon' src= '" + currentLegendAsHtml  + "'></img>" + markerColorTable[i].LegendText + "</div>";
+        for (var i = 0; i < markerColorTable.length; ++i) {
+
+            var currentLegendIcon = L.MakiMarkers.icon({ icon: "marker", color: markerColorTable[i].LegendColor, size: "m" });
+            var currentText = markerColorTable[i].LegendText;
+            var currentUrl = "";
+            if (currentText == 'Planned') {
+                currentUrl = "/Content/img/MapLegend/planned.PNG";
+            }
+            if (currentText == 'Implementation') {
+                currentUrl = "/Content/img/MapLegend/implementation.PNG";
+            }
+            if (currentText == 'Completed') {
+                currentUrl = "/Content/img/MapLegend/completed.PNG";
+            }
+            if (currentText == 'Cancelled') {
+                currentUrl = "/Content/img/MapLegend/cancelled.PNG";
+            }
+            if (currentText == 'Proposed') {
+                currentUrl = "/Content/img/MapLegend/proposed.PNG";
+            }
+            allLegendsHtml += "<div class=\"mapLegendElement\">" + "<img class='mapLegendIcon' src='" + currentUrl+"'></img>" + markerColorTable[i].LegendText + "</div>";
         }
         return allLegendsHtml;
     };

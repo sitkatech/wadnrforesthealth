@@ -20,16 +20,47 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views.Shared.ProjectControls
 @using LtInfo.Common.HtmlHelperExtensions
+@using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @inherits EditProject
 
-@Html.Raw(ViewDataTyped.EditProjectType.IntroductoryText)
+@Html.Raw(ViewDataTyped.EditProjectTypeIntroductoryText)
+
+<style type="text/css">
+    .narrowRow {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+</style>
+
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function() {
+        angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+            function() {
+                return {
+                    AngularModel: @Html.Raw(JObject.FromObject(Model)),
+                    AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
+                };
+            });
+        angular.bootstrap(jQuery("#EditProjectApp"), ["ProjectFirmaApp"]);
+
+        jQuery(".selectpicker").selectpicker("refresh");
+        jQuery(".modal").on("hidden.bs.modal",
+            function() {
+                jQuery(".bootstrap-select.open").removeClass("open");
+            });
+    })
+    // ]]>
+    </script>
+
 
 @Html.ValidationSummary()
 
-@using (Html.BeginForm())
-{
+<div ng-app="ProjectFirmaApp" id="EditProjectApp" ng-controller="EditProjectController">
+    @using (Html.BeginForm())
+    {
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectTypeID, 600, MultiTenantHelpers.GetProjectTypeDisplayNameForProject())</div>
@@ -117,14 +148,78 @@
                 @Html.ValidationMessageFor(m => m.CompletionDate)
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProgramIdentifier)
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(m => m.ProgramIdentifier, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProgramIdentifier)
+            </div>
+        </div>
+
+        <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getGrantAllocationName, getProjectName]">
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].DisplayString).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.DisplayString}}" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                <strong>@FieldDefinition.Program.GetFieldDefinitionLabel() to Add: </strong>
+            </div>
+            <div class="col-xs-8">
+                <div class="input-group">
+                    <select ng-model="ProgramIDToAdd"
+                            class="selectpicker"
+                            data-live-search="true"
+                            data-container="body"
+                            title="Select a @FieldDefinition.Program.GetFieldDefinitionLabel() to Add"
+                            data-width="100%">
+                        <option value="-1" selected>Select a Program to Add</option>
+                        <option ng-repeat="program in filteredPrograms()"
+                                value="{{program.ProgramID}}"
+                                ng-selected="ProgramIDToAdd == program.ProgramIDToAdd"
+                                ng-bind="program.DisplayString"
+                                data-tokens="{{program.DisplayString}}"></option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-firma" type="button" ng-click="addRow()">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <div class="row narrowRow">
+                <div class="col-xs-4 control-label">
+                    @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
+                </div>
+                <div class="col-xs-7"></div>
+            </div>
+            <div class="row narrowRow" ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
+                <div class="col-xs-4 control-label">
+
+                </div>
+                <div class="col-xs-1"><span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectProgram)" style="cursor: pointer"></span></div>
+                <div class="col-xs-6" ng-bind="projectProgram.DisplayString"></div>
+            </div>
+        </div>
+
     </div>
-    @Html.HiddenFor(m => m.ProjectID)
-    @Html.HiddenFor(m => m.HasExistingProjectUpdate)
-    @Html.HiddenFor(m => m.OldProjectStageID)
-}
+        @Html.HiddenFor(m => m.ProjectID)
+        @Html.HiddenFor(m => m.HasExistingProjectUpdate)
+        @Html.HiddenFor(m => m.OldProjectStageID)
+    }
+</div>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
     jQuery(document)
         .ready(function() {
             // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
@@ -158,4 +253,4 @@
                 }
             });
         });
-</script>
+    </script>

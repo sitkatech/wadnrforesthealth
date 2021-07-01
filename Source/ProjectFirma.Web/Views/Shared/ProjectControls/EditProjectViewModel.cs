@@ -38,6 +38,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [Required]
         public string ProjectName { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectIdentifier)]
+        [StringLength(Models.Project.FieldLengths.ProjectGisIdentifier)]
+        public string ProgramIdentifier { get; set; }
+
+        
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectDescription)]
         [StringLength(Models.Project.MaxLengthForProjectDescription)]
         public string ProjectDescription { get; set; }
@@ -49,7 +55,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
         public DateTime? ExpirationDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.StartApprovalDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectInitiationDate)]
         public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
@@ -69,6 +75,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
         public int? FocusAreaID { get; set; }
 
+        public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -91,10 +98,18 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             EstimatedTotalCost = project.EstimatedTotalCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
             FocusAreaID = project.FocusAreaID;
+            ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
+            ProgramIdentifier = project.ProjectGisIdentifier;
         }
 
         public void UpdateModel(Models.Project project, Person currentPerson)
         {
+
+            if (ProjectProgramSimples == null)
+            {
+                ProjectProgramSimples = new List<ProjectProgramSimple>();
+            }
+
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
             project.ProjectTypeID = ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID;
@@ -104,6 +119,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
+            project.ProjectGisIdentifier = ProgramIdentifier;
             var projectType =
                 HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
                     x.ProjectTypeID == project.ProjectTypeID);
@@ -117,6 +133,32 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             var values = badProjectAttributes.SelectMany(x => x.ProjectCustomAttributeValues).ToList();
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.DeleteProjectCustomAttributeValue(values);
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.DeleteProjectCustomAttribute(badProjectAttributes);
+
+
+            var existingProjectPrograms = project.ProjectPrograms.Select(x => x.ProjectProgramID).ToList();
+
+            var projectProgramSimplesNew = ProjectProgramSimples.Where(x => x.ProjectProgramID < 0).ToList();
+            var projectProgramsNew = projectProgramSimplesNew.Select(x => new ProjectProgram(x.ProjectID, x.ProgramID))
+                .ToList();
+            var programs = HttpRequestStorage.DatabaseEntities.Programs.ToList();
+            foreach (var projectProgram in projectProgramsNew)
+            {
+                var program = programs.Single(x => x.ProgramID == projectProgram.ProgramID);
+                projectProgram.Program = program;
+                projectProgram.Project = project;
+                project.ProjectPrograms.Add(projectProgram);
+            }
+
+  
+            
+
+            var projectProgramsCurrentList = ProjectProgramSimples.Select(x => x.ProjectProgramID).ToList();
+            var deleteIDList = existingProjectPrograms.Where(x => !projectProgramsCurrentList.Contains(x)).ToList();
+            var deleteList = project.ProjectPrograms.Where(x => deleteIDList.Contains(x.ProjectProgramID)).ToList();
+            deleteList.ForEach(x => x.Delete(HttpRequestStorage.DatabaseEntities));
+
+
+
 
         }
 

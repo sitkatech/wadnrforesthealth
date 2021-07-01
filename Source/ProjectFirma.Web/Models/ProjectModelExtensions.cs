@@ -153,20 +153,31 @@ namespace ProjectFirma.Web.Models
         /// Returns as ProjectOrganization with a dummy "Funder" RelationshipType, which lives as a static property of the RelationshipType class
         /// </summary>
         /// <returns></returns>
-        public static List<ProjectOrganizationRelationship> GetFundingOrganizations(this Project project)
+        public static List<ProjectOrganizationRelationship> GetFundingOrganizations(this Project project, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized, Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
         {
+           
+            var thisListOfProjectGrantAllocationExpenditures =
+                projectGrantAllocationExpenditureDict.ContainsKey(project.ProjectID)
+                    ? projectGrantAllocationExpenditureDict[project.ProjectID]
+                    : new List<ProjectGrantAllocationExpenditure>();
             var relationshipTypeFunder = new RelationshipType(ModelObjectHelpers.NotYetAssignedID, "Funder", false, false, false, string.Empty, true, true);
-            var fundingOrganizations = project.ProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
+            var fundingOrganizations = thisListOfProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
                 .Union(project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation.BottommostOrganization)).Distinct()
                 .Select(x => new ProjectOrganizationRelationship(project, x, relationshipTypeFunder));
-            Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), $"Must have {FieldDefinition.Organization.GetFieldDefinitionLabel()} set for all Funding {FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}");
+            Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), $"Must have {organizationFieldDefinitionLabelSingle} set for all Funding {organizationFieldDefinitionLabelPluralized}");
             return fundingOrganizations.ToList();
         }
 
-        public static List<ProjectOrganizationRelationship> GetAssociatedOrganizations(this Project project)
+        public static List<ProjectOrganizationRelationship> GetAssociatedOrganizations(this Project project
+            , string organizationFieldDefinitionLabelSingle
+            , string organizationFieldDefinitionLabelPluralized
+            , Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
         {
+
+ 
+
             var explicitOrganizations = project.ProjectOrganizations.Select(x => new ProjectOrganizationRelationship(project, x.Organization, x.RelationshipType)).ToList();
-            explicitOrganizations.AddRange(project.GetFundingOrganizations());
+            explicitOrganizations.AddRange(project.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict));
             return explicitOrganizations.DistinctBy(x => new {x.Project.ProjectID, x.Organization.OrganizationID})
                 .ToList();
         }

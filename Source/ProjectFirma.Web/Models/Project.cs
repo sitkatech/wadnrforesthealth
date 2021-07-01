@@ -376,11 +376,14 @@ namespace ProjectFirma.Web.Models
         public FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties)
         {
             var featureCollection = new FeatureCollection();
+            var allProjectGrantAllocationExpenditures =
+                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
             if (ProjectLocationSimpleType == ProjectLocationSimpleType.PointOnMap && HasProjectLocationPoint)
             {
                 featureCollection.Features.Add(
-                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true));
+                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict));
             }
 
             return featureCollection;
@@ -486,13 +489,31 @@ namespace ProjectFirma.Web.Models
             var featureCollection = new FeatureCollection();
             var filteredProjectList = projects.Where(x1 => x1.HasProjectLocationPoint)
                 .Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
+            var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
+            var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
+
+            var allProjectGrantAllocationExpenditures =
+                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
             featureCollection.Features.AddRange(filteredProjectList.Select(project =>
-                project.MakePointFeatureWithRelevantProperties(project.ProjectLocationPoint, addProjectProperties,
-                    useDetailedCustomPopup)).ToList());
+            {
+                
+                return project.MakePointFeatureWithRelevantProperties(project.ProjectLocationPoint,
+                    addProjectProperties,
+                    useDetailedCustomPopup, organizationFieldDefinitionLabelSingle,
+                    organizationFieldDefinitionLabelPluralized,
+                    projectGrantAllocationExpenditureDict);
+            }).ToList());
             return featureCollection;
         }
 
-        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint, bool addProjectProperties, bool useDetailedCustomPopup)
+        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint
+            , bool addProjectProperties
+            , bool useDetailedCustomPopup
+            , string organizationFieldDefinitionLabelSingle
+            , string organizationFieldDefinitionLabelPluralized
+            , Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(projectLocationPoint);
             feature.Properties.Add("TaxonomyTrunkID",
@@ -512,7 +533,7 @@ namespace ProjectFirma.Web.Models
                 feature.Properties.Add("ProjectTypeID", ProjectTypeID.ToString(CultureInfo.InvariantCulture));
                 feature.Properties.Add("ClassificationID",
                     string.Join(",", ProjectClassifications.Select(x => x.ClassificationID)));
-                var associatedOrganizations = this.GetAssociatedOrganizations();
+                var associatedOrganizations = this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict);
                 foreach (var relationshipTypeGroup in associatedOrganizations.GroupBy(x => x.RelationshipType.RelationshipTypeName))
                 {
                     feature.Properties.Add($"{relationshipTypeGroup.First().RelationshipType.RelationshipTypeName}ID",
@@ -556,8 +577,15 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
+
+                var allProjectGrantAllocationExpenditures =
+                    HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+                var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
                 // get the list of funders so we can exclude any that have other project associations
-                var fundingOrganizations = this.GetFundingOrganizations().Select(x => x.Organization.OrganizationID);
+                var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
+                var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
+                var fundingOrganizations = this.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(x => x.Organization.OrganizationID);
                 // Don't use GetAssociatedOrganizations because we don't care about funders for this list.
                 var associatedOrganizations = ProjectOrganizations.Where(x =>
                     x.RelationshipType.ShowOnFactSheet && !fundingOrganizations.Contains(x.OrganizationID)).ToList();
@@ -576,16 +604,24 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
+                var allProjectGrantAllocationExpenditures =
+                    HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+                var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
+                var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
+                var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
                 return string.Join(", ",
-                    this.GetFundingOrganizations().OrderBy(x => x.Organization.OrganizationName)
+                    this.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).OrderBy(x => x.Organization.OrganizationName)
                         .Select(x => x.Organization.OrganizationName));
             }
         }
 
-        public string AssociatedOrganizationNames(Organization organization)
+        public string AssociatedOrganizationNames(Organization organization, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized, Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
         {
+
+            
             var projectOrganizationAssociationNames = new List<string>();
-            this.GetAssociatedOrganizations().Where(x => x.Organization == organization).ForEach(x =>
+            this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Where(x => x.Organization == organization).ForEach(x =>
                 projectOrganizationAssociationNames.Add(x.RelationshipType.RelationshipTypeName));
             return string.Join(", ", projectOrganizationAssociationNames);
         }
@@ -819,6 +855,16 @@ namespace ProjectFirma.Web.Models
             return PlannedDate?.ToShortDateString();
         }
 
+        public string GetApplicationDate()
+        {
+            return SubmissionDate?.ToShortDateString();
+        }
+
+        public string GetDecisionDate()
+        {
+            return ApprovalDate?.ToShortDateString();
+        }
+
         public string GetCompletionDateFormatted()
         {
             return CompletionDate?.ToShortDateString();
@@ -849,11 +895,11 @@ namespace ProjectFirma.Web.Models
             get
             {
                 var programsDictionary = this.ProjectPrograms.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList().Select(x => x.Program).ToList());
-                return ProgramListDisplayHelper(programsDictionary);
+                return ProgramListDisplayHelper(programsDictionary, true);
             }
         }
 
-        public HtmlString ProgramListDisplayHelper(Dictionary<int, List<Models.Program>> programsByProject)
+        public HtmlString ProgramListDisplayHelper(Dictionary<int, List<Models.Program>> programsByProject, bool showDefaultsAsWell)
         {
             var programs = new List<Models.Program>();
             if (programsByProject.ContainsKey(ProjectID))
@@ -863,7 +909,7 @@ namespace ProjectFirma.Web.Models
             var listOfStrings = new List<string>();
             foreach (var program in programs)
             {
-                if (!program.IsDefaultProgramForImportOnly)
+                if (!program.IsDefaultProgramForImportOnly || showDefaultsAsWell)
                 {
                     var stringReturn = UrlTemplate.MakeHrefString(
                         program.GetDetailUrl(),

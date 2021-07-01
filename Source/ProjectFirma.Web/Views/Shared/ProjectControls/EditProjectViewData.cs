@@ -37,13 +37,14 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public IEnumerable<SelectListItem> Organizations { get; }
         public IEnumerable<SelectListItem> PrimaryContactPeople { get; }
         public IEnumerable<SelectListItem> FocusAreas { get; }
-        public Person DefaultPrimaryContactPerson { get; }
-        public EditProjectType EditProjectType { get; }
+        public string EditProjectTypeIntroductoryText { get; }
         public string ProjectTypeDisplayName { get; }
         public decimal? TotalExpenditures { get; }
         public string DefaultPrimaryContactPersonName { get; }
         public bool HasThreeTierTaxonomy { get; }
         public bool ProjectTypeHasBeenSet { get; }
+        public List<ProgramSimple> AllPrograms { get; }
+        public int ProjectID { get; set; }
 
 
         public EditProjectViewData(EditProjectType editProjectType,
@@ -55,9 +56,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             decimal? totalExpenditures,
             List<Models.ProjectType> projectTypes,
             IEnumerable<Models.FocusArea> focusAreas,
-            bool projectTypeHasBeenSet)
+            bool projectTypeHasBeenSet,
+            List<ProgramSimple> allPrograms,
+            int projectID)
         {
-            EditProjectType = editProjectType;
+            EditProjectTypeIntroductoryText = editProjectType.IntroductoryText;
             ProjectTypeDisplayName = projectTypeDisplayName;
             TotalExpenditures = totalExpenditures;
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
@@ -66,14 +69,15 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             PrimaryContactPeople = primaryContactPeople.ToSelectListWithEmptyFirstRow(
                     x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLastAndOrgShortName,
                     $"<Set Based on {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}'s Associated {Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}>");
-            DefaultPrimaryContactPerson = defaultPrimaryContactPerson;
             ProjectTypes = projectTypes.ToGroupedSelectList();
             StartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
-            DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
+            DefaultPrimaryContactPersonName = defaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             FocusAreas = focusAreas.OrderBy(x => x.FocusAreaName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);
             ProjectTypeHasBeenSet = projectTypeHasBeenSet;
+            AllPrograms = allPrograms;
+            ProjectID = projectID;
         }
     }
 }
