@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common.DesignByContract;
@@ -439,7 +440,7 @@ namespace ProjectFirma.Web.Controllers
             lineItem.GrantAllocationBudgetLineItemAmount = grantAllocationBudgetLineItemAjaxModel.LineItemAmount;
             lineItem.GrantAllocationBudgetLineItemNote = grantAllocationBudgetLineItemAjaxModel.LineItemNote;
 
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            HttpRequestStorage.DatabaseEntities.SaveChanges(IsolationLevel.ReadUncommitted);
 
             return Json($"Saved {FieldDefinition.GrantAllocationBudgetLineItem.FieldDefinitionDisplayName} for {FieldDefinition.CostType.FieldDefinitionDisplayName} \"{costType.CostTypeDisplayName}\".");
         }
