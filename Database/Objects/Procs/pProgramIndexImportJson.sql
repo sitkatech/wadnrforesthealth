@@ -73,28 +73,60 @@ from #programIndexSocrataTemp as pist
 -- If they do not, we likely have a problem and should stop.
 --------------------------------------------------------------
 
-DECLARE @bienniumsOverlapExactly bit
-set @bienniumsOverlapExactly =
+-- 7/7/21 TK & JV - Commenting out this check for now because the feed is sending 2019 and 2021 data right now and the code is looking for 2021 and 2023. 
+--		We are adding a new check to make sure the feed is not ahead of our code, which would cause useful data to be deleted.
+
+--DECLARE @bienniumsOverlapExactly bit
+--set @bienniumsOverlapExactly =
+--(
+--  CASE 
+--    WHEN EXISTS (
+--      SELECT * FROM #CurrentAndNextBiennium as cpb 
+--      FULL JOIN #BienniumsFoundInIncomingData as bfid ON cpb.BienniumYear = bfid.BienniumYear
+--      WHERE cpb.BienniumYear IS NULL OR bfid.BienniumYear IS NULL
+--      )
+--    -- Elements in tables are not equal'
+--    THEN 0
+--    -- Elements in tables are equal
+--    ELSE 1
+--  END
+--)
+
+--if @bienniumsOverlapExactly = 0
+--begin
+--    RAISERROR ('Incoming Bienniums do not match expected Bienniums!', 16, 1)
+--    rollback tran
+--    return
+--end
+
+
+-- Check that the feed bienniums are not ahead of our codes expected bienniums
+------------------------------------------------------------------------------
+DECLARE @bienniumsAreAheadOfExpectedBienniums bit
+set @bienniumsAreAheadOfExpectedBienniums =
 (
   CASE 
     WHEN EXISTS (
-      SELECT * FROM #CurrentAndNextBiennium as cpb 
-      FULL JOIN #BienniumsFoundInIncomingData as bfid ON cpb.BienniumYear = bfid.BienniumYear
-      WHERE cpb.BienniumYear IS NULL OR bfid.BienniumYear IS NULL
+      SELECT * FROM #CurrentAndNextBiennium as cpb
+	  join dbo.ProgramIndex as pix on cpb.BienniumYear = pix.Biennium
+	  left join #BienniumsFoundInIncomingData as bfid on cpb.BienniumYear = bfid.BienniumYear
+      WHERE bfid.BienniumYear IS NULL
       )
-    -- Elements in tables are not equal'
-    THEN 0
-    -- Elements in tables are equal
-    ELSE 1
+    -- We have existing data for bienniums that is not in current or next and could be removed in the upcoming delete
+    THEN 1
+    -- bienniums are good
+    ELSE 0
   END
 )
 
-if @bienniumsOverlapExactly = 0
+if @bienniumsAreAheadOfExpectedBienniums = 1
 begin
-    RAISERROR ('Incoming Bienniums do not match expected Bienniums!', 16, 1)
+    RAISERROR ('Feed Bienniums are ahead of expected Bienniums!', 16, 1)
     rollback tran
     return
 end
+
+
 
 -- Get started doing import
 ----------------------------
@@ -184,6 +216,8 @@ select * from dbo.ProgramIndex
 set statistics time on
 
 exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 49
+
+exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 10564
 
 set statistics time off
 

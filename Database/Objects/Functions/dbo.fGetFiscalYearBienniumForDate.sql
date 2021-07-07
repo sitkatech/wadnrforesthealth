@@ -69,7 +69,7 @@ SELECT dbo.fGetFiscalYearBienniumForDate('1/1/2018')
 
 ("1/1/2018"))  == 2017, 
 
-
+SELECT dbo.fGetFiscalYearBienniumForDate('7/2/2021')
 
 
 */
