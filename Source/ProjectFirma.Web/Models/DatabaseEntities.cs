@@ -61,6 +61,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public int SaveChanges(Person userPerson, IsolationLevel isolationLevel)
+        {
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = isolationLevel }))
+            {
+                return SaveChangesImpl(userPerson, scope);
+            }
+        }
+
         /// <summary>
         /// Save changes using the current person
         /// </summary>
@@ -69,6 +77,12 @@ namespace ProjectFirma.Web.Models
         {
             var person = HttpRequestStorage.Person;
             return SaveChanges(person);
+        }
+
+        public int SaveChanges(IsolationLevel isolationLevel)
+        {
+            var person = HttpRequestStorage.Person;
+            return SaveChanges(person, isolationLevel);
         }
 
         public int SaveChangesWithNoAuditing()

@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string ProjectTypeDisplayName { get; private set; }
         public string ClassificationDisplayNamePluralized { get; private set; }
 
+        public string ProjectDisplayName { get; set; }
         public HtmlString DisplayNameAsUrlBlankTarget { get; set; }
         public Models.ProjectImage KeyPhoto { get; set; }
         public string Duration { get; set; }
@@ -48,6 +49,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public HtmlString LeadImplementerOrganizationName { get; set; }
         public Dictionary<Models.ClassificationSystem, string> ClassificationsBySystem { get; set; }
         public string FactSheetUrl { get; set; }
+        public string ProjectDetailUrl { get; set; }
         public TaxonomyLevel TaxonomyLevel { get; }
 
         public bool ShowDetailedInformation { get; }
@@ -70,6 +72,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             MoreEnumerable.ForEach(project.ProjectClassifications.Select(x => x.Classification.ClassificationSystem).Distinct(), x => dict.Add(x, string.Join(", ", project.ProjectClassifications.Select(y => y.Classification).Where(y => y.ClassificationSystem == x).Select(y => y.DisplayName).ToList())));
             ClassificationsBySystem = dict;
 
+            ProjectDisplayName = project.DisplayName;
+            ProjectDetailUrl = project.GetDetailUrl();
             FactSheetUrl = project.GetFactSheetUrl();
             DetailLinkDescriptor = project.IsProposal() ? $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is a proposal. For description and expected results, see the" : $"For {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} information & results, see the";
             InitializeDisplayNames();

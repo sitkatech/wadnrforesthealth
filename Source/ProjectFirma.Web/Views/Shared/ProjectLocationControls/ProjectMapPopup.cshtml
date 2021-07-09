@@ -98,9 +98,10 @@
         </div>
         <div class="row">
             <div class="col-xs-12 text-center">
+                @* 7/6/21 TK - WANDR does not have enough details in their projects and does not want this to link to the Fact Sheet right now. *@
                 <span>
                     @ViewDataTyped.DetailLinkDescriptor
-                    <a target="_blank" href="@ViewDataTyped.FactSheetUrl">@FieldDefinition.Project.GetFieldDefinitionLabel() Fact Sheet</a>
+                    <a target="_blank" href="@ViewDataTyped.ProjectDetailUrl">@FieldDefinition.Project.GetFieldDefinitionLabel() Detail page</a>
                 </span>
             </div>
         </div>
@@ -110,7 +111,7 @@ else
 {
     <div style="max-width: 200px">
         <div class="text-center">
-            <a target="_blank" href="@ViewDataTyped.FactSheetUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabel() Fact Sheet"><strong>@ViewDataTyped.DisplayNameAsUrlBlankTarget</strong></a>
+            <a target="_blank" href="@ViewDataTyped.ProjectDetailUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabel() Detail page"><strong>@ViewDataTyped.ProjectDisplayName</strong></a>
         </div>
     </div>
 }
