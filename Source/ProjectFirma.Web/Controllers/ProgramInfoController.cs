@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Taxonomy, TaxonomyViewData>(viewData);
         }
 
-        [FirmaAdminFeature]
+        [AnonymousUnclassifiedFeature]
         public ViewResult ClassificationSystem(ClassificationSystemPrimaryKey classificationSystemPrimaryKey)
         {
             var classificationSystem = classificationSystemPrimaryKey.EntityObject;

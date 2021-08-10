@@ -20,13 +20,13 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using ProjectFirma.Web.Models;
-using System.Collections.Generic;
+using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View {0}", FieldDefinitionEnum.PerformanceMeasure)]
-    public class PerformanceMeasureViewFeature : FirmaFeature
+    public class PerformanceMeasureViewFeature : AnonymousUnclassifiedFeature
     {
-        public PerformanceMeasureViewFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin }) { }
+
     }
 }
