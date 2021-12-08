@@ -421,11 +421,32 @@ namespace ProjectFirma.Web.Controllers
                 .ToList()
                 .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
+
+
+            var projectsWithUplandRegionsToDelete = projectsWithUplandDnrRegions
+                .SelectMany(x => x.ProjectRegions)
+                .ToList();
+
+            var projectsWithUplandRegionsToDeleteAkList = projectsWithUplandRegionsToDelete
+                .Select(x => $"{x.ProjectID}, {x.DNRUplandRegionID}").ToList();
+
+            var allProjectUplandRegionsAkList = HttpRequestStorage.DatabaseEntities.ProjectRegions.ToList().Select(x => $"{x.ProjectID}, {x.DNRUplandRegionID}").ToList();
+
+            var allProjectUplandRegionsAkListExceptDeletes = allProjectUplandRegionsAkList.Where(x =>
+                !projectsWithUplandRegionsToDeleteAkList.Contains(x));
+
+
             projectsWithUplandDnrRegions.SelectMany(x => x.ProjectRegions)
                 .ToList()
                 .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
-            HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectRegions);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var projectUplandRegionsToAdd = projectRegions.Where(x =>
+                    !allProjectUplandRegionsAkListExceptDeletes.Contains($"{x.ProjectID}, {x.DNRUplandRegionID}"))
+                .ToList();
+
+            HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectUplandRegionsToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
@@ -444,10 +465,28 @@ namespace ProjectFirma.Web.Controllers
                 .ToList()
                 .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
-            projectsWithPriorityLandscapes.SelectMany(x => x.ProjectPriorityLandscapes)
-                .ToList()
-                .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
-            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapes);
+
+            var projectsWithPriorityLandscapesToDelete = projectsWithPriorityLandscapes
+                .SelectMany(x => x.ProjectPriorityLandscapes)
+                .ToList();
+
+            var projectsWithPriorityLandscapesToDeleteAkList = projectsWithPriorityLandscapesToDelete
+                .Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToList();
+
+            var allProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.ToList().Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToList();
+            var allProjectPriorityLandscapesExceptDeletes = allProjectPriorityLandscapes.Where(x =>
+                !projectsWithPriorityLandscapesToDeleteAkList.Contains(x));
+
+            projectsWithPriorityLandscapesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+
+
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var projectPriorityLandscapesToAdd = projectPriorityLandscapes.Where(x =>
+                    !allProjectPriorityLandscapesExceptDeletes.Contains($"{x.ProjectID}, {x.PriorityLandscapeID}"))
+                .ToList();
+
+            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapesToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
