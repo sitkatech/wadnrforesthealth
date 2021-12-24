@@ -24,6 +24,8 @@
 @using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Views
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
@@ -116,7 +118,7 @@
                 </div>
 
             </div>
-            
+
 
         </div>
     </div>
@@ -126,8 +128,8 @@
 
 
     @{ GrantAllocationBudgetVsActuals.RenderPartialView(Html, ViewDataTyped.GrantAllocationBudgetVsActualsViewData); }
-    
-    
+
+
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
@@ -140,6 +142,29 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
+                    {
+                        @currentAgreementGrantAllocation.Agreement.GetAgreementTitleAsUrl()
+                        <br />
+                    }
+                    
+                    @if (ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder.Count < 1)
+                    {
+                        <p>There are no @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col-sm-12">
@@ -216,29 +241,29 @@
                 </div>
                 <div class="panel-body">
                     <div class="basicsLayout">
-                       <table class="summaryLayout">
-                              @foreach (var changeLog in ViewDataTyped.GrantAllocation.GrantAllocationChangeLogs.OrderByDescending(x => x.ChangeDate))
-                              {
-                                  <tr>
-                                      <th scope="row">Created:</th>
-                                      <td>@changeLog.ChangeDate.ToStringDateTime()</td>
-                                      <td>@changeLog.ChangePerson.FullNameFirstLastAndOrgShortName</td>
-                                  </tr>
-                                  <tr>
-                                      <th scope="row">Old Amount:</th>
-                                      <td>@changeLog.GrantAllocationAmountOldValue.ToStringCurrency()</td>
-                                  </tr>
-                                  <tr>
-                                      <th scope="row">New Amount:</th>
-                                      <td>@changeLog.GrantAllocationAmountNewValue.ToStringCurrency()</td>
-                                  </tr>
-                                  <tr>
-                                      <th scope="row">Note:</th>
-                                      <td colspan="3">@Html.Raw(changeLog.GrantAllocationAmountNote.HtmlEncodeWithBreaks())</td>
-                                  </tr>
-                                  <tr><td>&nbsp;</td></tr>
-                              }
-                          </table>
+                        <table class="summaryLayout">
+                            @foreach (var changeLog in ViewDataTyped.GrantAllocation.GrantAllocationChangeLogs.OrderByDescending(x => x.ChangeDate))
+                            {
+                                <tr>
+                                    <th scope="row">Created:</th>
+                                    <td>@changeLog.ChangeDate.ToStringDateTime()</td>
+                                    <td>@changeLog.ChangePerson.FullNameFirstLastAndOrgShortName</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Old Amount:</th>
+                                    <td>@changeLog.GrantAllocationAmountOldValue.ToStringCurrency()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">New Amount:</th>
+                                    <td>@changeLog.GrantAllocationAmountNewValue.ToStringCurrency()</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Note:</th>
+                                    <td colspan="3">@Html.Raw(changeLog.GrantAllocationAmountNote.HtmlEncodeWithBreaks())</td>
+                                </tr>
+                                <tr><td>&nbsp;</td></tr>
+                            }
+                        </table>
                     </div>
                 </div>
             </div>

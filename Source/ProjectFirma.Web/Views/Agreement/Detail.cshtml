@@ -220,7 +220,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementGrantAllocationRelationshipsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
-                    Grant Allocations associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
+                    @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
                     @*Display grant allocations in descending order according to grant number year*@

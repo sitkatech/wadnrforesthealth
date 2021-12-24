@@ -64,6 +64,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string GrantAllocationAwardGridName { get; }
         public string GrantAllocationAwardGridDataUrl { get; }
         public FileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
+        public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
@@ -122,6 +123,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 canEditDocuments,
                 Models.FieldDefinition.GrantAllocation
             );
+
+            List<AgreementGrantAllocation> agreementGrantAllocationsList = grantAllocation.AgreementGrantAllocations.ToList();
+            CurrentAgreementGrantAllocationsInSortedOrder = agreementGrantAllocationsList;
+
+
+
         }
     }
 }
