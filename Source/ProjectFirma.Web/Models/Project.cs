@@ -263,9 +263,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public bool IsUpdatableViaProjectUpdateProcess => !IsPendingProject() &&
-                                                          (ProjectStage.RequiresReportedExpenditures() ||
-                                                           ProjectStage.RequiresPerformanceMeasureActuals());
+        public bool IsUpdatableViaProjectUpdateProcess => !IsPendingProject();
 
         public ProjectUpdateState GetLatestUpdateState()
         {
