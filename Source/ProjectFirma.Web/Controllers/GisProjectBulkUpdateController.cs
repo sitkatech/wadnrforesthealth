@@ -657,8 +657,7 @@ namespace ProjectFirma.Web.Controllers
                         StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
             var trimmedDistinctGisValue = distinctGisValue.Trim();
 
-            //todo: change back to first or default once data has been cleaned up
-            var project = existingProjects.Where(x => x.ProjectGisIdentifier != null).FirstOrDefault(x => string.Equals(x.ProjectGisIdentifier.Trim(), distinctGisValue.Trim(), StringComparison.InvariantCultureIgnoreCase));
+            var project = existingProjects.Where(x => x.ProjectGisIdentifier != null).SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier.Trim(), distinctGisValue.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var completionDate = CalculateCompletionDate(completionDateDictionary, gisFeaturesIdListWithProjectIdentifier, project, program.ProgramID);
 
