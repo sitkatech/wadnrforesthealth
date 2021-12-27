@@ -312,8 +312,7 @@ namespace ProjectFirma.Web.Controllers
                 .Include(x => x.ProjectPeople)
                 .Where(x => projectProgramList.Contains(x.ProjectID))
                 .ToList()
-                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,
-                    StringComparer.InvariantCultureIgnoreCase))
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
@@ -344,7 +343,8 @@ namespace ProjectFirma.Web.Controllers
                 .Include(x => x.ProjectLocations)
                 .Where(x => projectProgramList.Contains(x.ProjectID))
                 .ToList()
-                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,
+                .Where(x => x.ProjectGisIdentifier != null)
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier.Trim(),
                     StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
@@ -533,8 +533,7 @@ namespace ProjectFirma.Web.Controllers
             var projectIdentifierValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue)
-                .Where(y => !string.IsNullOrWhiteSpace(y)).Select(x => x.ToUpperInvariant()).Distinct().OrderBy(x => x).ToList();
+            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrWhiteSpace(y)).Select(x => x.ToUpperInvariant().Trim()).Distinct().OrderBy(x => x).ToList();
             return distinctProjectIdentifiers;
         }
 
@@ -653,17 +652,13 @@ namespace ProjectFirma.Web.Controllers
         {
 
             var gisFeaturesIdListWithProjectIdentifier =
-                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
-                    string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
+                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => x.GisFeatureMetadataAttributeValue != null).Where(x =>
+                    string.Equals(x.GisFeatureMetadataAttributeValue.Trim(), distinctGisValue.Trim(),
                         StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
             var trimmedDistinctGisValue = distinctGisValue.Trim();
 
-            var project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, distinctGisValue, StringComparison.InvariantCultureIgnoreCase));
-
-            if (project == null)
-            {
-                project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, trimmedDistinctGisValue, StringComparison.InvariantCultureIgnoreCase));
-            }
+            //todo: change back to first or default once data has been cleaned up
+            var project = existingProjects.Where(x => x.ProjectGisIdentifier != null).FirstOrDefault(x => string.Equals(x.ProjectGisIdentifier.Trim(), distinctGisValue.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var completionDate = CalculateCompletionDate(completionDateDictionary, gisFeaturesIdListWithProjectIdentifier, project, program.ProgramID);
 
