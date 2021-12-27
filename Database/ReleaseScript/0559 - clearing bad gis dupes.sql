@@ -31,3 +31,10 @@ delete from dbo.Treatment where ProjectID in (select ProjectID from #projectIDsT
 delete from dbo.ProjectPriorityLandscape where ProjectID in (select ProjectID from #projectIDsToDelete)
 delete from dbo.ProjectRegion where ProjectID in (select ProjectID from #projectIDsToDelete)
 delete from dbo.Project where ProjectID in (select ProjectID from #projectIDsToDelete)
+
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ProjectGisIdentifierDoesNotEndWithSpace] CHECK  (RIGHT(ProjectGisIdentifier, 1) != ' ')
+GO
+
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_ProjectGisIdentifierDoesNotEndWithSpace]
+GO
+
