@@ -656,7 +656,14 @@ namespace ProjectFirma.Web.Controllers
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
                         StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
-            var project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, distinctGisValue));
+            var trimmedDistinctGisValue = distinctGisValue.Trim();
+
+            var project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, distinctGisValue, StringComparison.InvariantCultureIgnoreCase));
+
+            if (project == null)
+            {
+                project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, trimmedDistinctGisValue, StringComparison.InvariantCultureIgnoreCase));
+            }
 
             var completionDate = CalculateCompletionDate(completionDateDictionary, gisFeaturesIdListWithProjectIdentifier, project, program.ProgramID);
 
@@ -694,7 +701,7 @@ namespace ProjectFirma.Web.Controllers
                     projectNumber
                 );
                 project.CreateGisUploadAttemptID = gisUploadAttemptID;
-                project.ProjectGisIdentifier = distinctGisValue;
+                project.ProjectGisIdentifier = trimmedDistinctGisValue;
             }
 
             var existingProjectProgram = project.ProjectPrograms.SingleOrDefault(x => x.ProgramID == program.ProgramID);
