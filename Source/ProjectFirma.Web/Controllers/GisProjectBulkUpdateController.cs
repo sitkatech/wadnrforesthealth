@@ -1116,7 +1116,7 @@ namespace ProjectFirma.Web.Controllers
                     new GisFeatureMetadataAttribute(gisFeatureID,
                         attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID)
                     {
-                        GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null
+                        GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString().Trim() : null
                     }).ToList();
                 listOfAllAttributesAboutToBeAdded.AddRange(gisFeatureMetadataAttributes);
             }
