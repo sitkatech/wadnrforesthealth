@@ -312,8 +312,7 @@ namespace ProjectFirma.Web.Controllers
                 .Include(x => x.ProjectPeople)
                 .Where(x => projectProgramList.Contains(x.ProjectID))
                 .ToList()
-                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,
-                    StringComparer.InvariantCultureIgnoreCase))
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
@@ -344,7 +343,8 @@ namespace ProjectFirma.Web.Controllers
                 .Include(x => x.ProjectLocations)
                 .Where(x => projectProgramList.Contains(x.ProjectID))
                 .ToList()
-                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier,
+                .Where(x => x.ProjectGisIdentifier != null)
+                .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier.Trim(),
                     StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
@@ -533,8 +533,7 @@ namespace ProjectFirma.Web.Controllers
             var projectIdentifierValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                     gisFeatureIDs.Contains(x.GisFeatureID));
-            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue)
-                .Where(y => !string.IsNullOrWhiteSpace(y)).Select(x => x.ToUpperInvariant()).Distinct().OrderBy(x => x).ToList();
+            var distinctProjectIdentifiers = projectIdentifierValues.Select(x => x.GisFeatureMetadataAttributeValue).Where(y => !string.IsNullOrWhiteSpace(y)).Select(x => x.ToUpperInvariant().Trim()).Distinct().OrderBy(x => x).ToList();
             return distinctProjectIdentifiers;
         }
 
@@ -653,10 +652,12 @@ namespace ProjectFirma.Web.Controllers
         {
 
             var gisFeaturesIdListWithProjectIdentifier =
-                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
-                    string.Equals(x.GisFeatureMetadataAttributeValue, distinctGisValue,
+                projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x => x.GisFeatureMetadataAttributeValue != null).Where(x =>
+                    string.Equals(x.GisFeatureMetadataAttributeValue.Trim(), distinctGisValue.Trim(),
                         StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
-            var project = existingProjects.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier, distinctGisValue));
+            var trimmedDistinctGisValue = distinctGisValue.Trim();
+
+            var project = existingProjects.Where(x => x.ProjectGisIdentifier != null).SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier.Trim(), distinctGisValue.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var completionDate = CalculateCompletionDate(completionDateDictionary, gisFeaturesIdListWithProjectIdentifier, project, program.ProgramID);
 
@@ -694,7 +695,7 @@ namespace ProjectFirma.Web.Controllers
                     projectNumber
                 );
                 project.CreateGisUploadAttemptID = gisUploadAttemptID;
-                project.ProjectGisIdentifier = distinctGisValue;
+                project.ProjectGisIdentifier = trimmedDistinctGisValue;
             }
 
             var existingProjectProgram = project.ProjectPrograms.SingleOrDefault(x => x.ProgramID == program.ProgramID);
@@ -1115,7 +1116,7 @@ namespace ProjectFirma.Web.Controllers
                     new GisFeatureMetadataAttribute(gisFeatureID,
                         attributeDictionary[x.Key.ToLowerInvariant()].GisMetadataAttributeID)
                     {
-                        GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString() : null
+                        GisFeatureMetadataAttributeValue = x.Value != null ? x.Value.ToString().Trim() : null
                     }).ToList();
                 listOfAllAttributesAboutToBeAdded.AddRange(gisFeatureMetadataAttributes);
             }
