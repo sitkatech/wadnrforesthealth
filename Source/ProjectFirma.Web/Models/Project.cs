@@ -30,6 +30,7 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Drawing;
 using System.Globalization;
@@ -506,7 +507,52 @@ namespace ProjectFirma.Web.Models
             return featureCollection;
         }
 
-        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint
+        public static LayerGeoJson ProjectDetailedLocationsToGeoJsonFeatureCollection(List<Project> projects)
+        {
+
+            var projectIDs = projects.Select(x => x.ProjectID).ToList();
+
+            var projectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations
+                .Where(x => projectIDs.Contains(x.ProjectID)).ToList();
+
+
+            var detailedLocationsByTypeGeoJsonFeatureCollection = projectLocations.ToGeoJsonFeatureCollectionWithPopupUrl();
+
+            var layerGeoJson =
+                new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail",
+                    detailedLocationsByTypeGeoJsonFeatureCollection, "#ed5e0b", (decimal) 0.3,
+                    LayerInitialVisibility.Hide);
+            layerGeoJson.LayerIconImageLocation = "/Content/leaflet/images/washington_location_detailed.png";
+
+
+            return layerGeoJson;
+        }
+
+        public static LayerGeoJson ProjectTreatmentAreasToGeoJsonFeatureCollection(List<Project> projects)
+        {
+
+            var projectIDs = projects.Select(x => x.ProjectID).ToList();
+
+            var projectTreatments = HttpRequestStorage.DatabaseEntities.Treatments
+                .Where(x => projectIDs.Contains(x.ProjectID))
+                .Include(x => x.TreatmentArea)
+                .ToList();
+
+
+            var detailedLocationsByTypeGeoJsonFeatureCollection = projectTreatments.ToGeoJsonFeatureCollectionWithPopupUrl();
+            var layerName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Treatment Areas";
+            var layerGeoJson =
+                new LayerGeoJson(layerName,
+                    detailedLocationsByTypeGeoJsonFeatureCollection, "#355e3b", (decimal)0.3,
+                    LayerInitialVisibility.Hide);
+            layerGeoJson.LayerIconImageLocation = "/Content/leaflet/images/washington_project_treatment.png";
+
+
+            return layerGeoJson;
+        }
+
+
+    public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint
             , bool addProjectProperties
             , bool useDetailedCustomPopup
             , string organizationFieldDefinitionLabelSingle

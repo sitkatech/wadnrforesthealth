@@ -129,7 +129,12 @@ ProjectFirmaMaps.Map.prototype.addVectorLayer = function (currentLayer, overlayL
         layerGroup.addTo(this.map);
     }
    
-    overlayLayers[currentLayer.LayerName] = layerGroup;
+    if (currentLayer.LayerIconImageLocation != undefined && currentLayer.LayerIconImageLocation != null && currentLayer.LayerIconImageLocation != "") {
+        overlayLayers["<img src=\"" + currentLayer.LayerIconImageLocation + "\" />" + currentLayer.LayerName] =
+            layerGroup;
+    } else {
+        overlayLayers[currentLayer.LayerName] = layerGroup;
+    }
     this.vectorLayers.push(layerGeoJson);
 };
 
@@ -189,7 +194,9 @@ ProjectFirmaMaps.Map.prototype.bindPopupToFeature = function (layer, feature) {
         layer.on("click",
             function(e) {
                 //var popup = e.target.getPopup();
-                self.map.setView(e.target.getLatLng());
+                var isMarker = e.target instanceof L.Marker;
+                var latlng = isMarker ? e.target.getLatLng() : e.latlng;
+                self.map.setView(latlng);
                 jQuery.get(feature.properties.PopupUrl).done(function(data) {
                     layer.bindPopup(data).openPopup();
                 });

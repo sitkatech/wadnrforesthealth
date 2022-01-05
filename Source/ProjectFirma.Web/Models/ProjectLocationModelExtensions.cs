@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.GeoJson;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -29,10 +31,36 @@ namespace ProjectFirma.Web.Models
     {
         public static GeoJSON.Net.Feature.FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<IProjectLocation> projectLocations)
         {
+            
             return new GeoJSON.Net.Feature.FeatureCollection(projectLocations.Where(x => DbGeometryToGeoJsonHelper.CanParseGeometry(x.ProjectLocationGeometry)).Select(x =>
             {
                 var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(x.ProjectLocationGeometry);
                 feature.Properties.Add("Info", x.ProjectLocationNotes);
+                return feature;
+            }).ToList());
+        }
+
+        public static readonly UrlTemplate<int> ProjectMapPopuUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.ProjectMapPopup(UrlTemplate.Parameter1Int)));
+        public static string GetProjectMapPopupUrl(this ProjectLocation projectLocation)
+        {
+            return ProjectMapPopuUrlTemplate.ParameterReplace(projectLocation.ProjectID);
+        }
+
+        public static readonly UrlTemplate<int> ProjectMapSimplePopuUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.ProjectSimpleMapPopup(UrlTemplate.Parameter1Int)));
+        public static string GetProjectSimpleMapPopupUrl(this ProjectLocation projectLocation)
+        {
+            return ProjectMapSimplePopuUrlTemplate.ParameterReplace(projectLocation.ProjectID);
+        }
+
+
+        public static GeoJSON.Net.Feature.FeatureCollection ToGeoJsonFeatureCollectionWithPopupUrl(this IEnumerable<ProjectLocation> projectLocations)
+        {
+
+            return new GeoJSON.Net.Feature.FeatureCollection(projectLocations.Where(x => DbGeometryToGeoJsonHelper.CanParseGeometry(x.ProjectLocationGeometry)).Select(x =>
+            {
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(x.ProjectLocationGeometry);
+                feature.Properties.Add("Info", x.ProjectLocationNotes);
+                feature.Properties.Add("PopupUrl", x.GetProjectSimpleMapPopupUrl());
                 return feature;
             }).ToList());
         }

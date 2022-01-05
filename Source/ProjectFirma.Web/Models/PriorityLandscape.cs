@@ -58,13 +58,18 @@ namespace ProjectFirma.Web.Models
             var priorityLandscapeLayerGeoJson = new LayerGeoJson(priorityLandscape.DisplayName,
                 new List<PriorityLandscape> { priorityLandscape }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
+            var projectDetailedLocationsLayerGeoJson =
+                Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
+            var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
 
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 projectLayerGeoJson,
                 priorityLandscapeLayerGeoJson,
                 GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.6m,
-                    LayerInitialVisibility.Show)
+                    LayerInitialVisibility.Show),
+                projectDetailedLocationsLayerGeoJson,
+                projectTreatmentAreasLayerGeoJson
             };
 
             return layerGeoJsons;
