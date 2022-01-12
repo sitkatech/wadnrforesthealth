@@ -1070,13 +1070,13 @@ namespace ProjectFirma.Web.Controllers
                 if (existingGisMetdataAttribute == null)
                 {
                     HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Add(new GisMetadataAttribute(columnName.ToLowerInvariant()));
-                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
                 }
 
                 existingGisMetdataAttribute = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList().Single(x => string.Equals(x.GisMetadataAttributeName, columnName, StringComparison.InvariantCultureIgnoreCase));
 
                 HttpRequestStorage.DatabaseEntities.GisUploadAttemptGisMetadataAttributes.Add(new GisUploadAttemptGisMetadataAttribute(gisUploadAttempt, existingGisMetdataAttribute, i));
-                HttpRequestStorage.DatabaseEntities.SaveChanges();
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
             }
 
 
