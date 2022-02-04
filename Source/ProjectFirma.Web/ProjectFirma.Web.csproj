@@ -1074,6 +1074,7 @@
     <Compile Include="Views\Grant\DuplicateGrant.cs" />
     <Compile Include="Views\Grant\DuplicateGrantViewData.cs" />
     <Compile Include="Views\Grant\DuplicateGrantViewModel.cs" />
+    <Compile Include="Views\Grant\GrantAgreementGridSpec.cs" />
     <Compile Include="Views\Grant\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\Grant\GrantDetail.cs" />
     <Compile Include="Views\Grant\GrantDetailViewData.cs" />

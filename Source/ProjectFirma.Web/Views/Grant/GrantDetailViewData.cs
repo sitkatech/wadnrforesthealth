@@ -49,6 +49,10 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantAllocationBudgetLineItemGridName { get; }
         public string GrantAllocationBudgetLineItemGridDataUrl { get; }
 
+        public GrantAgreementGridSpec GrantAgreementGridSpec { get; }
+        public string GrantAgreementGridName { get; }
+        public string GrantAgreementGridDataUrl { get; }
+
         public GrantDetailViewData(Person currentPerson,
                                     Models.Grant grant,
                                     EntityNotesViewData grantNotesViewData,
