@@ -1,19 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects.DataClasses;
-using System.Data.Entity.Spatial;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.IO;
-using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.Zip;
-using System.Linq;
-using System.Transactions;
-using System.Web;
-using System.Web.Mvc;
-using ApprovalUtilities.Utilities;
+﻿using ApprovalUtilities.Utilities;
 using GeoJSON.Net;
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
@@ -22,13 +7,19 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GdalOgr;
 using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
-using Microsoft.SqlServer.Types;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.UnitTestCommon;
 using ProjectFirma.Web.Views.GisProjectBulkUpdate;
-using ProjectFirma.Web.Views.ProjectCreate;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Spatial;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace ProjectFirma.Web.Controllers
 {
