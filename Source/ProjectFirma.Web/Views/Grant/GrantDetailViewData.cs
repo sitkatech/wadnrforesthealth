@@ -49,6 +49,10 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantAllocationBudgetLineItemGridName { get; }
         public string GrantAllocationBudgetLineItemGridDataUrl { get; }
 
+        public GrantAgreementGridSpec GrantAgreementGridSpec { get; }
+        public string GrantAgreementGridName { get; }
+        public string GrantAgreementGridDataUrl { get; }
+
         public GrantDetailViewData(Person currentPerson,
                                     Models.Grant grant,
                                     EntityNotesViewData grantNotesViewData,
@@ -72,6 +76,10 @@ namespace ProjectFirma.Web.Views.Grant
             GrantAllocationBudgetLineItemGridSpec = new GrantAllocationBudgetLineItemGridSpec();
             GrantAllocationBudgetLineItemGridName = "grantAllocationBudgetLineItemsGridName";
             GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationBudgetLineItemGridJsonDataByGrant(grant));
+
+            GrantAgreementGridSpec = new GrantAgreementGridSpec();
+            GrantAgreementGridName = "grantAgreementGridName";
+            GrantAgreementGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAgreementGridJsonData(grant));
 
             GrantDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
