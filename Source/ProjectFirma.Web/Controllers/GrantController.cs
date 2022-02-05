@@ -696,5 +696,19 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationBudgetLineItemForGrid>(budgetLineItems, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+        public GridJsonNetJObjectResult<Agreement> GrantAgreementGridJsonData(GrantPrimaryKey grantPrimaryKey)
+        {
+            // 2/4/22 TK - need to walk "grant -> grant mod -> grant allocation -> AgreementGrantAllocation -> Agreement"
+            var grant = grantPrimaryKey.EntityObject;
+            var grantMods = grant.GrantModifications;
+            var grantAllocations = grantMods.SelectMany(x => x.GrantAllocations);
+            var agreementGrantAllocations = grantAllocations.SelectMany(x => x.AgreementGrantAllocations);
+            var agreements = agreementGrantAllocations.Select(x => x.Agreement).ToList();
+
+            var gridSpec = new GrantAgreementGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
     }
 }
