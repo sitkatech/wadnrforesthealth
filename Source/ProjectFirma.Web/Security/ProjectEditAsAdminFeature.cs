@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You cannot edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it is a Pending Project.");
             }
 
-            bool isProjectStewardButCannotStewardThisProject = person != null && person.Role.RoleID == Role.ProjectSteward.RoleID && !person.CanStewardProject(contextModelObject);
+            bool isProjectStewardButCannotStewardThisProject = person != null && person.HasRole(Role.ProjectSteward) && !person.CanStewardProject(contextModelObject);
             bool forbidEdit = !HasPermissionByPerson(person) || isProjectStewardButCannotStewardThisProject;
             if (forbidEdit)
             {

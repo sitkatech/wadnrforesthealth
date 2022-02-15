@@ -807,7 +807,8 @@ namespace ProjectFirma.Web.Controllers
                     }
                     else
                     {
-                        var person = new Person(firstName, Role.Unassigned, DateTime.Now, true, false) {LastName = lastName};
+                        var person = new Person(firstName, DateTime.Now, true, false) {LastName = lastName};
+                        person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
                         newPersonList.Add(person);
                         var projectPerson = new ProjectPerson(project, person,
                             ProjectPersonRelationshipType.PrivateLandowner);

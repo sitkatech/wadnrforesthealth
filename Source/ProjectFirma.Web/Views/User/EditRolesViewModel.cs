@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -50,19 +51,20 @@ namespace ProjectFirma.Web.Views.User
         public EditRolesViewModel(Person person)
         {
             PersonID = person.PersonID;
-            RoleID = person.RoleID;
+            RoleID = person.PersonRoles.FirstOrDefault().RoleID;
 
             ShouldReceiveSupportEmails = person.ReceiveSupportEmails;
         }
 
         public void UpdateModel(Person person, Person currentPerson)
         {
-            var downgradingFromSteward = person.Role == Models.Role.ProjectSteward &&
+            var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) &&
                                          RoleID != Models.Role.ProjectSteward.RoleID &&
                                          RoleID != Models.Role.Admin.RoleID && RoleID != Models.Role.SitkaAdmin.RoleID;
             
             // RoleID is required so this should not really happen, but map to unassigned as a safety
-            person.RoleID = RoleID ?? Models.Role.Unassigned.RoleID;
+            var personRole = person.PersonRoles.First();
+            personRole.RoleID = RoleID ?? Models.Role.Unassigned.RoleID;
             person.ReceiveSupportEmails = ShouldReceiveSupportEmails;
 
             if (ModelObjectHelpers.IsRealPrimaryKeyValue(person.PersonID))

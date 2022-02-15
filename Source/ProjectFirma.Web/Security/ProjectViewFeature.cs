@@ -64,10 +64,9 @@ namespace ProjectFirma.Web.Security
             }
 
             // "should only be visible and accessible to the following roles: Program Manager, Admin, Sitka Admin."
-            var limitedVisibilityRoleIDs = new List<int> {Role.Admin.RoleID, Role.SitkaAdmin.RoleID, Role.ProjectSteward.RoleID};
             bool projectCanOnlyBeSeenByAdmins = contextModelObject.ProjectType.LimitVisibilityToAdmin;
-            bool personHasAdminRole = limitedVisibilityRoleIDs.Contains(person.Role.RoleID);
-            if (projectCanOnlyBeSeenByAdmins && !personHasAdminRole)
+            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.SitkaAdmin) || person.HasRole(Role.ProjectSteward);
+            if (projectCanOnlyBeSeenByAdmins && !personHasLimitedVisibilityRole)
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
             }

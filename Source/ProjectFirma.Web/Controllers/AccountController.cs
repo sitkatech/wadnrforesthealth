@@ -160,12 +160,14 @@ namespace ProjectFirma.Web.Controllers
                 // new user - initially provision with limited Role.Unassigned
                 SitkaHttpApplication.Logger.Info($"In {nameof(ProcessLogin)} - Creating new Person. [{userDetailsStringForLogging}]");
                 
-                person = new Person(firstName, Role.Unassigned.RoleID, DateTime.Now, true, false)
+                person = new Person(firstName, DateTime.Now, true, false)
                 {
                     LastName = lastName,
                     Email = email,
                     OrganizationID = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization().OrganizationID
                 };
+                person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
+
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 shouldSendNewUserCreatedMessage = true;
@@ -194,7 +196,8 @@ namespace ProjectFirma.Web.Controllers
                 SitkaHttpApplication.Logger.InfoFormat($"In {nameof(ProcessLogin)} - Setup of WA DNR account and mapping ADFS role groups. [{userDetailsStringForLogging}]");
                 if (roleGroups.Any())
                 {
-                    person.RoleID = MapRoleFromClaims(roleGroups).RoleID;
+                    var roleFromClaims = MapRoleFromClaims(roleGroups);
+                    person.PersonRoles.Add(new PersonRole(person, roleFromClaims));
                 }
                 person.OrganizationID = OrganizationModelExtensions.WadnrID;
             }

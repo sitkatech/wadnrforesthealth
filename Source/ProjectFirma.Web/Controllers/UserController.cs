@@ -325,11 +325,11 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var person = new Person(viewModel.FirstName, 
-                                         Role.Unassigned.RoleID, 
                                          DateTime.Now, 
                                          true, 
                                          false)
                 { LastName = viewModel.LastName, PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
+            person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
             HttpRequestStorage.DatabaseEntities.People.Add(person);
 
             EditContactViewModel.SetAuthenticatorsForGivenEmailAddress(viewModel, person);

@@ -8,7 +8,6 @@ CREATE TABLE [dbo].[Person](
 	[LastName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Email] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Phone] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[RoleID] [int] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[UpdateDate] [datetime] NULL,
 	[LastActivityDate] [datetime] NULL,
@@ -55,11 +54,6 @@ ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Person_AddedBy
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Person_AddedByPersonID_PersonID]
-GO
-ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Role_RoleID] FOREIGN KEY([RoleID])
-REFERENCES [dbo].[Role] ([RoleID])
-GO
-ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Role_RoleID]
 GO
 ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Vendor_VendorID] FOREIGN KEY([VendorID])
 REFERENCES [dbo].[Vendor] ([VendorID])

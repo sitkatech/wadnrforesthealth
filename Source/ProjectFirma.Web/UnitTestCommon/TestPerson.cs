@@ -32,11 +32,12 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var organization = TestOrganization.Create();
                 var person = new Person(MakeTestName("firstName", Person.FieldLengths.FirstName)
-                    , Role.Normal, DateTime.Now, true, false)
+                    , DateTime.Now, true, false)
                 {
                     LastName = MakeTestName("lastName", Person.FieldLengths.LastName),
                     Organization = organization, Email = MakeTestEmail("email")
                 };
+                person.PersonRoles.Add(new PersonRole(person, Role.Normal));
 
                 return person;
             }

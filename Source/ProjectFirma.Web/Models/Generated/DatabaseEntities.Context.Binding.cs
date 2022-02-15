@@ -118,6 +118,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
         public virtual DbSet<PersonAllowedAuthenticator> PersonAllowedAuthenticators { get; set; }
+        public virtual DbSet<PersonRole> PersonRoles { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
@@ -694,6 +695,9 @@ namespace ProjectFirma.Web.Models
 
                 case "PersonAllowedAuthenticator":
                     return PersonAllowedAuthenticators.GetPersonAllowedAuthenticator(primaryKey);
+
+                case "PersonRole":
+                    return PersonRoles.GetPersonRole(primaryKey);
 
                 case "PersonStewardOrganization":
                     return PersonStewardOrganizations.GetPersonStewardOrganization(primaryKey);

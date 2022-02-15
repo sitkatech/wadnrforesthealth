@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -379,6 +379,9 @@
     <Compile Include="Models\Generated\PersonAllowedAuthenticator.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PersonAllowedAuthenticatorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PersonRole.Binding.cs" />
+    <Compile Include="Models\Generated\PersonRole.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PersonRolePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganization.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganization.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganizationPrimaryKey.Binding.cs" />

@@ -236,7 +236,7 @@ namespace ProjectFirma.Web.Views
             // Group 5 - Organizations
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationAndRelationshipTypeController>(c => c.Index()), currentPerson, Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabelPluralized(), "Group5"));
 
-            if (currentPerson.Role == Models.Role.Admin || currentPerson.Role == Models.Role.SitkaAdmin)
+            if (currentPerson.HasRole(Models.Role.Admin) || currentPerson.HasRole(Models.Role.SitkaAdmin))
             {
                 manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}", "Group5"));
             }

@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Security
 
         public override bool HasPermissionByPerson(Person person)
         {
-            if (person.Role == Role.Normal)
+            if (person.HasRole(Role.Normal))
             {
                 if (person.OrganizationID != OrganizationModelExtensions.WadnrID)
                 {

@@ -737,7 +737,7 @@ namespace ProjectFirma.Web.Models
         public IEnumerable<Person> GetProjectStewards()
         {
             return GetCanStewardProjectsOrganization()?.People
-                       .Where(y => y.RoleID == Role.ProjectSteward.RoleID)
+                       .Where(y => y.HasRole(Role.ProjectSteward))
                        .ToList() ?? new List<Person>();
         }
 
