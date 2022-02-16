@@ -155,7 +155,7 @@
                         <div class="col-xs-8">
                             @if (ViewDataTyped.UserHasViewEverythingPermissions)
                             {
-                                @Html.Raw(string.Join(",", ViewDataTyped.Person.PersonRoles.Select(x => x.Role.GetDisplayNameAsUrl()))) 
+                                @Html.Raw(string.Join(", ", ViewDataTyped.Person.PersonRoles.Select(x => x.Role.GetDisplayNameAsUrl()))) 
                             }
                             else
                             {
