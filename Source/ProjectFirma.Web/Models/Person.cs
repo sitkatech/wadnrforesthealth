@@ -185,6 +185,24 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        /// <summary>
+        /// All role names of BOTH types used by Keystone for user display 
+        /// </summary>
+        public IEnumerable<string> RoleNamesForDisplay
+        {
+            get
+            {
+                if (IsAnonymousUser)
+                {
+                    // the presence of roles switches you from being IsAuthenticated or not
+                    return new List<string>();
+                }
+
+                var roleNames = this.PersonRoles.Select(x => x.Role.RoleDisplayName);
+                return roleNames;
+            }
+        }
+
         public bool CanStewardProject(Project project)
         {
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.CanStewardProject(this, project) ?? true;
