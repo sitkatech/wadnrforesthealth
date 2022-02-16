@@ -230,7 +230,7 @@ namespace ProjectFirma.Web.Models
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.GetProjectStewardshipAreaHtmlStringList(this);
         }
 
-        public bool IsAnonymousOrUnassigned => IsAnonymousUser || this.HasRole(Role.Unassigned);
+        public bool IsAnonymousOrUnassigned => IsAnonymousUser || this.PersonRoles.All(x => x.Role == Role.Unassigned);
 
         public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;       
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);

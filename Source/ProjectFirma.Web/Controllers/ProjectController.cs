@@ -510,20 +510,23 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
             var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
-            if (CurrentPerson.HasRole(Role.Normal))
+
+            var elevatedRoles = new List<IRole> {Role.Admin, Role.SitkaAdmin, Role.ProjectSteward};
+            if (CurrentPerson.HasAnyOfTheseRoles(elevatedRoles))
+            {
+                filteredProposals = pendingProjects;
+                
+            }
+            else
             {
                 filteredProposals = pendingProjects.Where(x =>
                     {
-                        
+
                         return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
                                 organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(y => y.Organization)
                             .Contains(CurrentPerson.Organization);
                     })
                     .ToList();
-            }
-            else
-            {
-                filteredProposals = pendingProjects;
             }
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(filteredProposals, gridSpec);
             return gridJsonNetJObjectResult;
