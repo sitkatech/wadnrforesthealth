@@ -20,16 +20,17 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.User
 {
     public class EditRolesViewData : FirmaUserControlViewData
     {
-        public readonly IEnumerable<SelectListItem> Roles;
+        public List<RoleSimple> AllRoles { get; }
 
-        public EditRolesViewData(IEnumerable<SelectListItem> roles)
+        public EditRolesViewData(List<RoleSimple> roles)
         {
-            Roles = roles;
+            AllRoles = roles;
         }
     }
 }

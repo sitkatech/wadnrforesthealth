@@ -19,9 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using LtInfo.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -35,7 +37,7 @@ namespace ProjectFirma.Web.Views.User
 
         [Required]
         [DisplayName("Role")]
-        public int? RoleID { get; set; }
+        public List<RoleSimple> RoleSimples { get; set; }
 
         [Required]
         [DisplayName("Should Receive Support Emails?")]
@@ -51,20 +53,37 @@ namespace ProjectFirma.Web.Views.User
         public EditRolesViewModel(Person person)
         {
             PersonID = person.PersonID;
-            RoleID = person.PersonRoles.FirstOrDefault().RoleID;
+            RoleSimples = person.PersonRoles.Select(x => new RoleSimple(x.Role)).ToList();
 
             ShouldReceiveSupportEmails = person.ReceiveSupportEmails;
         }
 
         public void UpdateModel(Person person, Person currentPerson)
         {
+            var roleSimpleIDs = RoleSimples.Select(x => x.RoleID).ToList();
             var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) &&
-                                         RoleID != Models.Role.ProjectSteward.RoleID &&
-                                         RoleID != Models.Role.Admin.RoleID && RoleID != Models.Role.SitkaAdmin.RoleID;
-            
-            // RoleID is required so this should not really happen, but map to unassigned as a safety
-            var personRole = person.PersonRoles.First();
-            personRole.RoleID = RoleID ?? Models.Role.Unassigned.RoleID;
+                                         !roleSimpleIDs.Contains(Models.Role.ProjectSteward.RoleID) &&
+                                         !roleSimpleIDs.Contains(Models.Role.Admin.RoleID) && !roleSimpleIDs.Contains(Models.Role.SitkaAdmin.RoleID);
+
+
+            var newPersonRoles = new List<PersonRole>();
+            if (RoleSimples.Any())
+            {
+                foreach (var roleSimple in RoleSimples)
+                {
+                    var newPersonRole = new PersonRole(person.PersonID, roleSimple.RoleID);
+                    newPersonRoles.Add(newPersonRole);
+                }
+            }
+            else
+            {
+                // RoleID is required so this should not really happen, but map to unassigned as a safety
+                newPersonRoles.Add(new PersonRole(person, Models.Role.Unassigned));
+            }
+
+            person.PersonRoles.Merge(newPersonRoles, HttpRequestStorage.DatabaseEntities.PersonRoles.Local, (o1, o2) => o1.PersonID == o2.PersonID && o1.RoleID == o2.RoleID);
+
+
             person.ReceiveSupportEmails = ShouldReceiveSupportEmails;
 
             if (ModelObjectHelpers.IsRealPrimaryKeyValue(person.PersonID))

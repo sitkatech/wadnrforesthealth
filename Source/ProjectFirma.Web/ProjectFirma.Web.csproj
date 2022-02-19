@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -688,9 +688,11 @@
     <Compile Include="Models\DhtmlxExcelDownload\TokenType.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
+    <Compile Include="Models\PersonRole.cs" />
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />
     <Compile Include="Models\ProjectProgramSimple.cs" />
+    <Compile Include="Models\RoleSimple.cs" />
     <Compile Include="Models\TabularDataImport.cs" />
     <Compile Include="Controllers\ExcelUploadController.cs" />
     <Compile Include="Models\ExcelUpload\ExcelColumnHelper.cs" />
@@ -2467,6 +2469,7 @@
     <Content Include="Views\Shared\EditorTemplates\MoneyWithCents.cshtml" />
     <Content Include="Views\Home\StyleGuide.cshtml" />
     <Content Include="Views\Shared\UserStewardshipAreas\EditUserStewardshipAreas.cshtml" />
+    <Content Include="Views\User\EditRolesController.js" />
     <Content Include="Views\User\EditContact.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\EditPeople.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPeopleDetail.cshtml" />
