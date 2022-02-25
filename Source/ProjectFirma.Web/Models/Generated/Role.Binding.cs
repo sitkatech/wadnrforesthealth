@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleUnassigned Unassigned = RoleUnassigned.Instance;
         public static readonly RoleSitkaAdmin SitkaAdmin = RoleSitkaAdmin.Instance;
         public static readonly RoleProjectSteward ProjectSteward = RoleProjectSteward.Instance;
+        public static readonly RoleProgramEditor ProgramEditor = RoleProgramEditor.Instance;
 
         public static readonly List<Role> All;
         public static readonly ReadOnlyDictionary<int, Role> AllLookupDictionary;
@@ -33,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, SitkaAdmin, ProjectSteward };
+            All = new List<Role> { Admin, Normal, Unassigned, SitkaAdmin, ProjectSteward, ProgramEditor };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
@@ -109,6 +110,8 @@ namespace ProjectFirma.Web.Models
                     return Admin;
                 case RoleEnum.Normal:
                     return Normal;
+                case RoleEnum.ProgramEditor:
+                    return ProgramEditor;
                 case RoleEnum.ProjectSteward:
                     return ProjectSteward;
                 case RoleEnum.SitkaAdmin:
@@ -127,7 +130,8 @@ namespace ProjectFirma.Web.Models
         Normal = 2,
         Unassigned = 7,
         SitkaAdmin = 8,
-        ProjectSteward = 9
+        ProjectSteward = 9,
+        ProgramEditor = 10
     }
 
     public partial class RoleAdmin : Role
@@ -158,5 +162,11 @@ namespace ProjectFirma.Web.Models
     {
         private RoleProjectSteward(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
         public static readonly RoleProjectSteward Instance = new RoleProjectSteward(9, @"ProjectSteward", @"Project Steward", @"Users with this role can approve Project Proposals, create new Projects, approve Project Updates, and create Grant Allocations for their Organization.");
+    }
+
+    public partial class RoleProgramEditor : Role
+    {
+        private RoleProgramEditor(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
+        public static readonly RoleProgramEditor Instance = new RoleProgramEditor(10, @"ProgramEditor", @"Program Editor", @"Users with this role can edit Projects that are from their Program");
     }
 }
