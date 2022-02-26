@@ -209,10 +209,19 @@
 
 
 <div ng-controller="ProjectMapController">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="txtZoomAddress">Enter an Address</label>
+            <input id="txtZoomAddress" type="text" placeholder="Enter an address" />
+            <button id="btnZoomToAddress">
+                Zoom to Address
+            </button>
+        </div>
+    </div>
     <div class="row" style="vertical-align: top;">
         <div class="col-md-12" id="mapPanel">
             @{ ProjectLocationsMap.RenderPartialView(Html, ViewDataTyped.ProjectLocationsMapViewData); }
-            
+
             <div id="showBasinwideProjectsToast">
                 <a class="btn pull-right" style="clear: left;" title="@String.Format("{0} that are not represented by a point on the map are listed here.", FieldDefinition.Project.GetFieldDefinitionLabelPluralized())">
                     <span class="glyphicon glyphicon-chevron-left"></span>Show @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() with no Simple Location
@@ -233,14 +242,14 @@
             <div style="clear: both; white-space: nowrap; overflow-x: hidden; overflow-y: auto; max-height: 750px">
                 <table id="projectLocationGroupTypeTree" class="table table-hover table-condensed" style="margin-bottom: 10px">
                     <colgroup>
-                        <col style="width: auto; text-overflow: ellipsis" />
-                        <col style="width: 150px; text-align:right" />
+                        <col style="width: auto; text-overflow: ellipsis"/>
+                        <col style="width: 150px; text-align: right"/>
                     </colgroup>
                     <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -416,6 +425,17 @@
         jQuery('#customUrlPopover').on('shown.bs.popover', function() { jQuery("#filterHtmlInput").select(); });
 
         updateCustomUrlPopover();
+
+        jQuery('#btnZoomToAddress').click(function () {
+            //take txtZoomAddress data and query google geocoding API
+
+            //IF multiple results
+                //use results to present options for user to select
+            //ELSE if only one result
+                //place pin and flyTo pin
+
+            projectFirmaMap.map.flyTo([45.524359, -122.678399], 12);//fly to Portland, OR
+        });
 
         jQuery('#showBasinwideProjectsToast').click(function() {
             jQuery("#mapPanel").removeClass("col-md-12");
