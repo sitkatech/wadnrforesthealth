@@ -125,6 +125,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
+        public virtual DbSet<ProgramPerson> ProgramPeople { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
@@ -716,6 +717,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
+
+                case "ProgramPerson":
+                    return ProgramPeople.GetProgramPerson(primaryKey);
 
                 case "Program":
                     return Programs.GetProgram(primaryKey);
