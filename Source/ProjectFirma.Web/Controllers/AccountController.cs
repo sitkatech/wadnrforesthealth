@@ -197,7 +197,10 @@ namespace ProjectFirma.Web.Controllers
                 if (roleGroups.Any())
                 {
                     var roleFromClaims = MapRoleFromClaims(roleGroups);
-                    person.PersonRoles.Add(new PersonRole(person, roleFromClaims));
+                    if (!person.PersonRoles.Select(x => x.RoleID).Contains(roleFromClaims.RoleID))
+                    {
+                        person.PersonRoles.Add(new PersonRole(person, roleFromClaims));
+                    }
                 }
                 person.OrganizationID = OrganizationModelExtensions.WadnrID;
             }
