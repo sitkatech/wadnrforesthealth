@@ -62,15 +62,15 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Detail(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
-            var viewData = new Views.Program.DetailViewData(CurrentPerson, program);
-            return RazorView<Views.Program.Detail, Views.Program.DetailViewData>(viewData);
+            var viewData = new DetailViewData(CurrentPerson, program);
+            return RazorView<Detail, DetailViewData>(viewData);
         }
 
         [ProgramViewFeature]
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ProgramsList);
-            var viewData = new Views.Program.IndexViewData(CurrentPerson, firmaPage);
+            var viewData = new IndexViewData(CurrentPerson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
@@ -264,5 +264,67 @@ namespace ProjectFirma.Web.Controllers
 
             return new ModalDialogFormJsonResult();
         }
+
+
+
+        private PartialViewResult ViewEditProgramPeople(Views.Program.EditViewModel viewModel, Person currentPrimaryContactPerson, Organization organization)
+        {
+            throw new NotImplementedException();
+            //var organizationsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
+            //    .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
+            //    .OrderBy(x => x.OrganizationName)
+            //    .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+            //        x => x.OrganizationName);
+            //var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser()).ToList();
+            //if (currentPrimaryContactPerson != null && !activePeople.Contains(currentPrimaryContactPerson))
+            //{
+            //    activePeople.Add(currentPrimaryContactPerson);
+            //}
+            //var people = activePeople.OrderBy(x => x.FullNameLastFirst).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+            //    x => x.FullNameFirstLastAndOrg);
+            //bool isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
+            //var viewData = new Views.Program.EditViewData(organizationsAsSelectListItems, people, isSitkaAdmin, organization);
+            //return RazorPartialView<Views.Program.Edit, Views.Program.EditViewData, Views.Program.EditViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey)
+        {
+            throw new NotImplementedException();
+            //var program = programPrimaryKey.EntityObject;
+            //var viewModel = new EditViewModel(program);
+            //return ViewEdit(viewModel, program.ProgramPrimaryContactPerson, null);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey, EditViewModel viewModel)
+        {
+            throw new NotImplementedException();
+            //var program = programPrimaryKey.EntityObject;
+            //if (!ModelState.IsValid)
+            //{
+            //    return ViewEdit(viewModel, program.ProgramPrimaryContactPerson, null);
+            //}
+            //viewModel.UpdateModel(program, CurrentPerson, false);
+            //if (viewModel.ProgramFileResourceData != null)
+            //{
+            //    var currentAgreementFileResource = program.ProgramFileResource;
+            //    program.ProgramFileResource = null;
+            //    // Delete old Agreement file, if present
+            //    if (currentAgreementFileResource != null)
+            //    {
+            //        HttpRequestStorage.DatabaseEntities.SaveChanges();
+            //        HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+            //    }
+            //    program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            //}
+            //return new ModalDialogFormJsonResult();
+        }
+
+
     }
 }
