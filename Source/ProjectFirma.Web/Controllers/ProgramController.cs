@@ -267,24 +267,20 @@ namespace ProjectFirma.Web.Controllers
 
 
 
-        private PartialViewResult ViewEditProgramPeople(Views.Program.EditViewModel viewModel, Person currentPrimaryContactPerson, Organization organization)
+        private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel, Person currentPrimaryContactPerson)
         {
-            throw new NotImplementedException();
-            //var organizationsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
-            //    .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
-            //    .OrderBy(x => x.OrganizationName)
-            //    .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
-            //        x => x.OrganizationName);
-            //var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser()).ToList();
-            //if (currentPrimaryContactPerson != null && !activePeople.Contains(currentPrimaryContactPerson))
-            //{
-            //    activePeople.Add(currentPrimaryContactPerson);
-            //}
-            //var people = activePeople.OrderBy(x => x.FullNameLastFirst).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
-            //    x => x.FullNameFirstLastAndOrg);
-            //bool isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
-            //var viewData = new Views.Program.EditViewData(organizationsAsSelectListItems, people, isSitkaAdmin, organization);
-            //return RazorPartialView<Views.Program.Edit, Views.Program.EditViewData, Views.Program.EditViewModel>(viewData, viewModel);
+
+
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser()).ToList();
+            if (currentPrimaryContactPerson != null && !activePeople.Contains(currentPrimaryContactPerson))
+            {
+                activePeople.Add(currentPrimaryContactPerson);
+            }
+            var people = activePeople.OrderBy(x => x.FullNameLastFirst).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                x => x.FullNameFirstLastAndOrg);
+
+            var viewData = new EditProgramPeopleViewData(people);
+            return RazorPartialView<EditProgramPeople, EditProgramPeopleViewData, EditProgramPeopleViewModel>(viewData, viewModel);
         }
 
 
@@ -292,37 +288,25 @@ namespace ProjectFirma.Web.Controllers
         [ProgramManageFeature]
         public PartialViewResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey)
         {
-            throw new NotImplementedException();
-            //var program = programPrimaryKey.EntityObject;
-            //var viewModel = new EditViewModel(program);
-            //return ViewEdit(viewModel, program.ProgramPrimaryContactPerson, null);
+            var program = programPrimaryKey.EntityObject;
+            var viewModel = new EditProgramPeopleViewModel(program);
+            return ViewEditProgramPeople(viewModel, program.ProgramPrimaryContactPerson);
         }
 
         [HttpPost]
         [ProgramManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey, EditViewModel viewModel)
+        public ActionResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey, EditProgramPeopleViewModel viewModel)
         {
-            throw new NotImplementedException();
-            //var program = programPrimaryKey.EntityObject;
-            //if (!ModelState.IsValid)
-            //{
-            //    return ViewEdit(viewModel, program.ProgramPrimaryContactPerson, null);
-            //}
-            //viewModel.UpdateModel(program, CurrentPerson, false);
-            //if (viewModel.ProgramFileResourceData != null)
-            //{
-            //    var currentAgreementFileResource = program.ProgramFileResource;
-            //    program.ProgramFileResource = null;
-            //    // Delete old Agreement file, if present
-            //    if (currentAgreementFileResource != null)
-            //    {
-            //        HttpRequestStorage.DatabaseEntities.SaveChanges();
-            //        HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
-            //    }
-            //    program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
-            //}
-            //return new ModalDialogFormJsonResult();
+
+            var program = programPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditProgramPeople(viewModel, program.ProgramPrimaryContactPerson);
+            }
+            viewModel.UpdateModel(program, CurrentPerson);
+
+            return new ModalDialogFormJsonResult();
         }
 
 
