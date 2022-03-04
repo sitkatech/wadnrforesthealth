@@ -1397,6 +1397,7 @@
     <Content Include="Views\Grant\GrantDetail.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
+    <Content Include="Views\Program\EditProgramPeopleController.js" />
     <Content Include="Views\ProjectCreate\DNRUplandRegions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
     <Content Include="Views\GrantAllocation\Detail.cshtml" />

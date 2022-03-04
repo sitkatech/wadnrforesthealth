@@ -26,8 +26,7 @@ angular.module("ProjectFirmaApp").controller("EditRolesController", function($sc
     $scope.$watch(function() {
         jQuery(".selectpicker").selectpicker("refresh");
 
-        // so that unsavedChanges.js knows to check if the form has changed.
-        jQuery("form").trigger("input");
+
     });
 
     $scope.getAvailableRolesForPerson = function() {

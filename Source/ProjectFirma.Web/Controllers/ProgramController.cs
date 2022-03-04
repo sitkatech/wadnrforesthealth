@@ -276,8 +276,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 activePeople.Add(currentPrimaryContactPerson);
             }
-            var people = activePeople.OrderBy(x => x.FullNameLastFirst).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
-                x => x.FullNameFirstLastAndOrg);
+            var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
 
             var viewData = new EditProgramPeopleViewData(people);
             return RazorPartialView<EditProgramPeople, EditProgramPeopleViewData, EditProgramPeopleViewModel>(viewData, viewModel);

@@ -22,16 +22,17 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Program
 {
     public class EditProgramPeopleViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> People { get; }
+        public List<PersonSimple> AllPeople { get; }
 
-        public EditProgramPeopleViewData(IEnumerable<SelectListItem> people)
+        public EditProgramPeopleViewData(List<PersonSimple> people)
         {
-            People = people;
+            AllPeople = people;
 
         }
     }

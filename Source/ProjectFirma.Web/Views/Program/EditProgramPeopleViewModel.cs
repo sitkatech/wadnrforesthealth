@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.Program
     {
         public int ProgramID { get; set; }
 
-        public IEnumerable<int> PeopleIDs { get; set; }
+        public List<int> PersonIDList { get; set; }
 
 
         /// <summary>
@@ -51,11 +51,27 @@ namespace ProjectFirma.Web.Views.Program
         public EditProgramPeopleViewModel(Models.Program program)
         {
             ProgramID = program.ProgramID;
+            PersonIDList = program.ProgramPeople.Select(x => x.PersonID).ToList();
 
         }
 
         public void UpdateModel(Models.Program program, Person currentPerson)
         {
+
+            //var peopleToCommit =
+            //    HttpRequestStorage.DatabaseEntities.People.Where(x => PersonIDList.Contains(x.PersonID));
+
+            //program.ProgramPeople.Merge(projectImageUpdatesToCommit,
+            //    allProjectImages,
+            //    (x, y) => x.ProjectImageID == y.ProjectImageID,
+            //    (x, y) =>
+            //    {
+            //        x.ProjectImageTimingID = y.ProjectImageTimingID;
+            //        x.Caption = y.Caption;
+            //        x.Credit = y.Credit;
+            //        x.IsKeyPhoto = y.IsKeyPhoto;
+            //        x.ExcludeFromFactSheet = y.ExcludeFromFactSheet;
+            //    });
 
         }
 
