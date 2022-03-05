@@ -25,12 +25,16 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using DocumentFormat.OpenXml.Bibliography;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
+using MoreLinq;
+using ProjectFirma.Web.Views.User;
 using ProjectFirma.Web.Views.Vendor;
+using Person = ProjectFirma.Web.Models.Person;
 
 namespace ProjectFirma.Web.Views.Program
 {
@@ -58,27 +62,37 @@ namespace ProjectFirma.Web.Views.Program
         public void UpdateModel(Models.Program program, Person currentPerson)
         {
 
-            //var peopleToCommit =
-            //    HttpRequestStorage.DatabaseEntities.People.Where(x => PersonIDList.Contains(x.PersonID));
+            var programPeopleToCommit = PersonIDList != null ? PersonIDList.Select(x => new ProgramPerson(program.ProgramID, x)).ToList() : new List<ProgramPerson>();
 
-            //program.ProgramPeople.Merge(projectImageUpdatesToCommit,
-            //    allProjectImages,
-            //    (x, y) => x.ProjectImageID == y.ProjectImageID,
-            //    (x, y) =>
-            //    {
-            //        x.ProjectImageTimingID = y.ProjectImageTimingID;
-            //        x.Caption = y.Caption;
-            //        x.Credit = y.Credit;
-            //        x.IsKeyPhoto = y.IsKeyPhoto;
-            //        x.ExcludeFromFactSheet = y.ExcludeFromFactSheet;
-            //    });
+            program.ProgramPeople.Merge(programPeopleToCommit,
+                HttpRequestStorage.DatabaseEntities.ProgramPeople.Local,
+                (x, y) => x.ProgramID == y.ProgramID && x.PersonID == y.PersonID);
 
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (PersonIDList != null && PersonIDList.Any())
+            {
+                var peopleEditors = HttpRequestStorage.DatabaseEntities.People
+                    .Where(x => PersonIDList.Contains(x.PersonID)).ToList();
+                var peopleWithoutProgramEditorRole = peopleEditors
+                    .Where(x => x.PersonRoles.All(pr => pr.RoleID != Models.Role.ProgramEditor.RoleID)).ToList();
+                if (peopleWithoutProgramEditorRole.Any())
+                {
+                    var listOfNames = new List<string>();
+                    foreach (var person in peopleWithoutProgramEditorRole)
+                    {
+                        listOfNames.Add(person.FullNameFirstLastAndOrgShortName);
+                    }
 
-            return new List<ValidationResult>();
+                    yield return new SitkaValidationResult<EditProgramPeopleViewModel, List<int>>(
+                        $"The following user(s) do not have the Program Editor role and cannot be set as an editor for this program: {string.Join(", ", listOfNames)}. Please add the \"Program Editor\" role on their user page.",
+                        m => m.PersonIDList);
+                }
+            }
+
+
         }
     }
 }

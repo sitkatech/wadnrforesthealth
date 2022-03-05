@@ -59,15 +59,13 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <div id="EditProgramPeopleApp" ng-controller="EditProgramPeopleController">
     <div class="form-group">
+        @if (!ViewDataTyped.AllPeople.Any())
+        {
+            <p>Please add the "Program Editor" role to users to see them in this list.</p>
+        }
         <label class="control-label">
             User to Add:
         </label>
-        @*<div class="input-group">
-            <input class="form-control" type="text" ng-model="PersonToAdd" typeahead-append-to-body="true" typeahead="project as project.DisplayName for project in filteredProjects() | filter:{DisplayName: $viewValue} | limitTo:8" style="width: 700px" placeholder="Search for a User" />
-            <span class="input-group-btn">
-                <button class="btn btn-firma" type="button" ng-click="addRow()"><span class="glyphicon glyphicon-plus"></span> Add</button>
-            </span>
-        </div>*@
         <div class="input-group" style="width: 100%;">
             <select class="selectpicker" id="selectPickerProgramPeopleEditor"
                     ng-model="selectedPersonID"

@@ -267,15 +267,10 @@ namespace ProjectFirma.Web.Controllers
 
 
 
-        private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel, Person currentPrimaryContactPerson)
+        private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel)
         {
-
-
-            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser()).ToList();
-            if (currentPrimaryContactPerson != null && !activePeople.Contains(currentPrimaryContactPerson))
-            {
-                activePeople.Add(currentPrimaryContactPerson);
-            }
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
+            
             var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
 
             var viewData = new EditProgramPeopleViewData(people);
@@ -289,7 +284,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var program = programPrimaryKey.EntityObject;
             var viewModel = new EditProgramPeopleViewModel(program);
-            return ViewEditProgramPeople(viewModel, program.ProgramPrimaryContactPerson);
+            return ViewEditProgramPeople(viewModel);
         }
 
         [HttpPost]
@@ -301,7 +296,7 @@ namespace ProjectFirma.Web.Controllers
             var program = programPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEditProgramPeople(viewModel, program.ProgramPrimaryContactPerson);
+                return ViewEditProgramPeople(viewModel);
             }
             viewModel.UpdateModel(program, CurrentPerson);
 

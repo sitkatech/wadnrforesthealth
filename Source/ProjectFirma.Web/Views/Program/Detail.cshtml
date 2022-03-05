@@ -165,7 +165,12 @@
                 </div>
                 <div class="panel-body">
                     <div>
-
+                        <ul>
+                            @foreach (var person in ViewDataTyped.Program.ProgramPeople.Select(x => x.Person))
+                            {
+                                <li>@person.GetFullNameFirstLastAndOrgAsUrl()</li>
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>
