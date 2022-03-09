@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Project> _firmaFeatureWithContextImpl;
 
         public ProjectEditAsAdminFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward, Role.ProgramEditor })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Project>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -60,6 +60,12 @@ namespace ProjectFirma.Web.Security
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
+
+            if (person != null && !person.CanProgramEditorManageProject(contextModelObject))
+            {
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
+            }
+
             return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }

@@ -208,6 +208,19 @@ namespace ProjectFirma.Web.Models
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.CanStewardProject(this, project) ?? true;
         }
 
+        public bool CanProgramEditorManageProject(Project project)
+        {
+            if (!this.HasRole(Role.ProgramEditor))
+            {
+                return false;
+            }
+
+            var personsProgramIDs = this.ProgramPeople.Select(x => x.ProgramID);
+            var projectsProgramIDs = project.ProjectPrograms.Select(x => x.ProgramID);
+
+            return projectsProgramIDs.Intersect(personsProgramIDs).Any();
+        }
+
         public bool PersonIsProjectOwnerWhoCanStewardProjects
         {
             get
