@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Security
             }
 
             var forbidAdmin = !HasPermissionByPerson(person) ||
-                                       person.Role.RoleID == Role.ProjectSteward.RoleID &&
+                                       person.HasRole(Role.ProjectSteward) &&
                                        !person.CanStewardProject(contextModelObject);
 
             string possiblePermissionDeniedMessage = $"You don't have permission to make Administrative actions on {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}";

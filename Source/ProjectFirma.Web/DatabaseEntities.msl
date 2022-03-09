@@ -1088,7 +1088,6 @@
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
           <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
@@ -1113,6 +1112,15 @@
           <ScalarProperty Name="PersonAllowedAuthenticatorID" ColumnName="PersonAllowedAuthenticatorID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonRole">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonRole">
+        <MappingFragment StoreEntitySet="PersonRole">
+          <ScalarProperty Name="PersonRoleID" ColumnName="PersonRoleID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1195,6 +1203,15 @@
           <ScalarProperty Name="Program" ColumnName="Program" />
           <ScalarProperty Name="Subprogram" ColumnName="Subprogram" />
           <ScalarProperty Name="Subactivity" ColumnName="Subactivity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramPerson">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramPerson">
+        <MappingFragment StoreEntitySet="ProgramPerson">
+          <ScalarProperty Name="ProgramPersonID" ColumnName="ProgramPersonID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

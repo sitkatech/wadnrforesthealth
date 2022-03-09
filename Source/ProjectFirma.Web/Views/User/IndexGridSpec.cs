@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.User
             Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => GetOrganizationShortNameUrl(a), 200);
             Add("Phone", a => a.Phone.ToPhoneNumberString(), 100);
             Add("Last Activity", a => a.IsFullUser() ? a.LastActivityDate : null, 120);
-            Add("Role", a => a.IsFullUser() ? a.Role.GetDisplayNameAsUrl() : new HtmlString("N/A"), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("Role", a => a.IsFullUser() ? string.Join(", ", a.RoleNamesForDisplay) : "N/A", 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Active?", a => a.IsFullUser() ? a.IsActive.ToYesNo() : "N/A", 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Receives Support Emails?", a => a.IsFullUser() ? a.ReceiveSupportEmails.ToYesNo(): "N/A", 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);

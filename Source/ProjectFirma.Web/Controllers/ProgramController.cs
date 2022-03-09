@@ -62,15 +62,15 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Detail(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
-            var viewData = new Views.Program.DetailViewData(CurrentPerson, program);
-            return RazorView<Views.Program.Detail, Views.Program.DetailViewData>(viewData);
+            var viewData = new DetailViewData(CurrentPerson, program);
+            return RazorView<Detail, DetailViewData>(viewData);
         }
 
         [ProgramViewFeature]
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ProgramsList);
-            var viewData = new Views.Program.IndexViewData(CurrentPerson, firmaPage);
+            var viewData = new IndexViewData(CurrentPerson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
@@ -264,5 +264,45 @@ namespace ProjectFirma.Web.Controllers
 
             return new ModalDialogFormJsonResult();
         }
+
+
+
+        private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel)
+        {
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
+            
+            var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
+
+            var viewData = new EditProgramPeopleViewData(people);
+            return RazorPartialView<EditProgramPeople, EditProgramPeopleViewData, EditProgramPeopleViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var viewModel = new EditProgramPeopleViewModel(program);
+            return ViewEditProgramPeople(viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditProgramPeople(ProgramPrimaryKey programPrimaryKey, EditProgramPeopleViewModel viewModel)
+        {
+
+            var program = programPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditProgramPeople(viewModel);
+            }
+            viewModel.UpdateModel(program, CurrentPerson);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+
     }
 }

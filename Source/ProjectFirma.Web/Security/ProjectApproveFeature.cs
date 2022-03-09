@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel}.");
             }
 
-            if (person.Role.RoleID == Role.ProjectSteward.RoleID &&
+            if (person.HasRole(Role.ProjectSteward) &&
                 !person.CanStewardProject(contextModelObject))
             {
                 var organizationLabel = FieldDefinition.Organization.GetFieldDefinitionLabel();

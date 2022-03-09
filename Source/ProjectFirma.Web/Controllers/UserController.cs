@@ -84,8 +84,8 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEdit(EditRolesViewModel viewModel)
         {
             var roles = CurrentPerson.IsSitkaAdministrator() ? Role.All : Role.All.Except(new[] {Role.SitkaAdmin});
-            var rolesAsSelectListItems = roles.ToSelectListWithEmptyFirstRow(x => x.RoleID.ToString(CultureInfo.InvariantCulture), x => x.GetRoleDisplayName());
-            var viewData = new EditRolesViewData(rolesAsSelectListItems);
+            var rolesAsSimples = roles.Select(x => new RoleSimple(x)).ToList();
+            var viewData = new EditRolesViewData(rolesAsSimples);
             return RazorPartialView<EditRoles, EditRolesViewData, EditRolesViewModel>(viewData, viewModel);
         }
 
@@ -325,11 +325,11 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var person = new Person(viewModel.FirstName, 
-                                         Role.Unassigned.RoleID, 
                                          DateTime.Now, 
                                          true, 
                                          false)
                 { LastName = viewModel.LastName, PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
+            person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
             HttpRequestStorage.DatabaseEntities.People.Add(person);
 
             EditContactViewModel.SetAuthenticatorsForGivenEmailAddress(viewModel, person);

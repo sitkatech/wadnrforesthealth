@@ -155,11 +155,11 @@
                         <div class="col-xs-8">
                             @if (ViewDataTyped.UserHasViewEverythingPermissions)
                             {
-                                @ViewDataTyped.Person.Role.GetDisplayNameAsUrl()
+                                @Html.Raw(string.Join(", ", ViewDataTyped.Person.PersonRoles.Select(x => x.Role.GetDisplayNameAsUrl())))
                             }
                             else
                             {
-                                @ViewDataTyped.Person.Role.RoleDisplayName
+                                @(string.Join(", ", ViewDataTyped.Person.RoleNamesForDisplay))
                             }
                         </div>
                     </div>
@@ -173,7 +173,7 @@
         <div class="col-md-6">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @if (ViewDataTyped.UserHasEditBasicsPermission && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Person.Role == Role.ProjectSteward)
+                    @if (ViewDataTyped.UserHasEditBasicsPermission && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Person.HasRole(Role.ProjectSteward))
                     {
                         <span>
                             @ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditStewardshipAreas(ViewDataTyped.Person)),
@@ -196,7 +196,7 @@
                             @ViewDataTyped.Person.FullNameFirstLast is not assigned a role and cannot add or edit any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized().
                         </p>
                     }
-                    else if (ViewDataTyped.Person.Role == Role.Normal)
+                    else if (ViewDataTyped.Person.HasRole(Role.Normal))
                     {
                         <p class="systemText">
                             @ViewDataTyped.Person.FullNameFirstLast is a @FieldDefinition.NormalUser.GetFieldDefinitionLabel() and can add @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() to any @FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabel(), but cannot edit/manage @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() that are not their own.
@@ -226,6 +226,23 @@
                         }
                     }
 
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        @foreach (var program in ViewDataTyped.Person.ProgramPeople.Select(x => x.Program))
+                        {
+                            <li>@program.GetDisplayNameAsUrl()</li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>

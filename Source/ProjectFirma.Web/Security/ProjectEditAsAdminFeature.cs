@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Project> _firmaFeatureWithContextImpl;
 
         public ProjectEditAsAdminFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward, Role.ProgramEditor })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Project>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -54,12 +54,18 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You cannot edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it is a Pending Project.");
             }
 
-            bool isProjectStewardButCannotStewardThisProject = person != null && person.Role.RoleID == Role.ProjectSteward.RoleID && !person.CanStewardProject(contextModelObject);
+            bool isProjectStewardButCannotStewardThisProject = person != null && person.HasRole(Role.ProjectSteward) && !person.CanStewardProject(contextModelObject);
             bool forbidEdit = !HasPermissionByPerson(person) || isProjectStewardButCannotStewardThisProject;
             if (forbidEdit)
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
+
+            if (person != null && !person.CanProgramEditorManageProject(contextModelObject))
+            {
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
+            }
+
             return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }

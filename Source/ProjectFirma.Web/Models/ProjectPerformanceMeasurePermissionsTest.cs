@@ -43,13 +43,13 @@ namespace ProjectFirma.Web.Models
             Person userAnonymous = Person.GetAnonymousSitkaUser();
 
             var userNormal = TestFramework.TestPerson.Create();
-            userNormal.RoleID = Role.Normal.RoleID;
+            userNormal.PersonRoles.Add(new PersonRole(userNormal, Role.Normal));
 
             var userAdmin = TestFramework.TestPerson.Create();
-            userAdmin.RoleID = Role.Admin.RoleID;
+            userAdmin.PersonRoles.Add(new PersonRole(userAdmin, Role.Admin));
 
             var userSitkaAdmin = TestFramework.TestPerson.Create();
-            userSitkaAdmin.RoleID = Role.SitkaAdmin.RoleID;
+            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.SitkaAdmin));
 
             // Deferred Project
             // ----------------
@@ -246,13 +246,13 @@ namespace ProjectFirma.Web.Models
             Person userAnonymous = null;
 
             var userNormal = TestFramework.TestPerson.Create();
-            userNormal.RoleID = Role.Normal.RoleID;
+            userNormal.PersonRoles.Add(new PersonRole(userNormal, Role.Normal));
 
             var userAdmin = TestFramework.TestPerson.Create();
-            userAdmin.RoleID = Role.Admin.RoleID;
+            userAdmin.PersonRoles.Add(new PersonRole(userAdmin, Role.Admin));
 
             var userSitkaAdmin = TestFramework.TestPerson.Create();
-            userSitkaAdmin.RoleID = Role.SitkaAdmin.RoleID;
+            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.SitkaAdmin));
 
             // Planning/Design Project
             // ----------------
@@ -288,13 +288,13 @@ namespace ProjectFirma.Web.Models
             Person userAnonymous = null;
 
             var userNormal = TestFramework.TestPerson.Create();
-            userNormal.RoleID = Role.Normal.RoleID;
+            userNormal.PersonRoles.Add(new PersonRole(userNormal, Role.Normal));
 
             var userAdmin = TestFramework.TestPerson.Create();
-            userAdmin.RoleID = Role.Admin.RoleID;
+            userAdmin.PersonRoles.Add(new PersonRole(userAdmin, Role.Admin));
 
             var userSitkaAdmin = TestFramework.TestPerson.Create();
-            userSitkaAdmin.RoleID = Role.SitkaAdmin.RoleID;
+            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.SitkaAdmin));
 
             // Planning/Design Project
             // ----------------
