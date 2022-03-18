@@ -67,11 +67,10 @@ namespace ProjectFirma.Web.Models
             return SitkaRoute<RoleController>.BuildUrlFromExpression(t => t.Anonymous());
         }
 
-        public static List<int> GetBaseRoleIDs()
+        public static List<int> GetRequiredBaseRoleIDs()
         {
             var roleIDs = new List<int>()
             {
-                Role.Unassigned.RoleID,
                 Role.Normal.RoleID,
                 Role.ProjectSteward.RoleID,
                 Role.Admin.RoleID,

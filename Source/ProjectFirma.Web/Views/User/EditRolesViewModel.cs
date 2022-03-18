@@ -106,12 +106,21 @@ namespace ProjectFirma.Web.Views.User
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var roleIDs = this.RoleSimples.Select(x => x.RoleID).ToList();
-            var baseRoleIDs = Models.Role.GetBaseRoleIDs();
-            if (!roleIDs.Intersect(baseRoleIDs).Any())
+
+            //if a user only has unassigned that is okay.
+            if (roleIDs.Count == 1 && roleIDs.Contains(Models.Role.Unassigned.RoleID))
             {
-                yield return new SitkaValidationResult<EditRolesViewModel, List<RoleSimple>>($"This user needs to have one of the following base roles: {Models.Role.Unassigned.RoleDisplayName}, {Models.Role.Normal.RoleDisplayName}, {Models.Role.ProjectSteward.RoleDisplayName}, or {Models.Role.Admin.RoleDisplayName}", m => m.RoleSimples);
+                yield break;
             }
 
+            var baseRoleIDs = Models.Role.GetRequiredBaseRoleIDs();
+            //They must have at least one of the base roles if not unassigned.
+            if (!roleIDs.Intersect(baseRoleIDs).Any())
+            {
+                yield return new SitkaValidationResult<EditRolesViewModel, List<RoleSimple>>(
+                    $"This user needs to have one of the following base roles:  {Models.Role.Normal.RoleDisplayName}, {Models.Role.ProjectSteward.RoleDisplayName}, or {Models.Role.Admin.RoleDisplayName}",
+                    m => m.RoleSimples);
+            }
 
         }
     }
