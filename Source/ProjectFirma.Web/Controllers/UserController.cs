@@ -78,6 +78,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel);
             }
             viewModel.UpdateModel(person, CurrentPerson);
+            SetMessageForDisplay($"Successfully updated the roles for {person.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
 

@@ -30,7 +30,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class EditRolesViewModel : FormViewModel
+    public class EditRolesViewModel : FormViewModel, IValidatableObject
     {
         [Required]
         public int PersonID { get; set; }
@@ -101,6 +101,18 @@ namespace ProjectFirma.Web.Views.User
                 HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.DeletePersonStewardTaxonomyBranch(person.PersonStewardTaxonomyBranches);
                 HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.DeletePersonStewardOrganization(person.PersonStewardOrganizations);
             }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var roleIDs = this.RoleSimples.Select(x => x.RoleID).ToList();
+            var baseRoleIDs = Models.Role.GetBaseRoleIDs();
+            if (!roleIDs.Intersect(baseRoleIDs).Any())
+            {
+                yield return new SitkaValidationResult<EditRolesViewModel, List<RoleSimple>>($"This user needs to have one of the following base roles: {Models.Role.Unassigned.RoleDisplayName}, {Models.Role.Normal.RoleDisplayName}, {Models.Role.ProjectSteward.RoleDisplayName}, or {Models.Role.Admin.RoleDisplayName}", m => m.RoleSimples);
+            }
+
+
         }
     }
 }
