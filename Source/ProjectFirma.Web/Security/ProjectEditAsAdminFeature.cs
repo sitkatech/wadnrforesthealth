@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
 
-            if (person != null && !person.CanProgramEditorManageProject(contextModelObject))
+            if (person != null && person.HasRole(Role.ProgramEditor) && !person.CanProgramEditorManageProject(contextModelObject))
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
