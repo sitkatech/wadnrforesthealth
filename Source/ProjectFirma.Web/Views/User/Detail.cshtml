@@ -230,23 +230,33 @@
             </div>
         </div>
 
-
-        <div class="col-md-6">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
-                </div>
-                <div class="panel-body">
-                    <ul>
-                        @foreach (var program in ViewDataTyped.Person.ProgramPeople.Select(x => x.Program))
+        if (ViewDataTyped.Person.HasRole(Role.ProgramEditor))
+        {
+            <div class="col-md-6">
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
+                    </div>
+                    <div class="panel-body">
+                        @if (ViewDataTyped.Person.ProgramPeople.Any())
                         {
-                            <li>@program.GetDisplayNameAsUrl()</li>
+                            <ul>
+                                @foreach (var program in ViewDataTyped.Person.ProgramPeople.Select(x => x.Program))
+                                {
+                                    <li>@program.GetDisplayNameAsUrl()</li>
+                                }
+                            </ul>
                         }
-                    </ul>
+                        else
+                        {
+                            <p class="systemText">@ViewDataTyped.Person.FullNameFirstLast is not assigned to manage @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in any Program.</p>
+                        }
+
+
+                    </div>
                 </div>
             </div>
-        </div>
-
+        }
     }
 </div>
 @if (!ViewDataTyped.PersonIsMereContact)

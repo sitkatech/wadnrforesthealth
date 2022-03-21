@@ -65,6 +65,8 @@ namespace ProjectFirma.Web.Views.User
                                          !roleSimpleIDs.Contains(Models.Role.ProjectSteward.RoleID) &&
                                          !roleSimpleIDs.Contains(Models.Role.Admin.RoleID) && !roleSimpleIDs.Contains(Models.Role.SitkaAdmin.RoleID);
 
+            var downgradingFromProgramEditor = person.HasRole(Models.Role.ProgramEditor) && !roleSimpleIDs.Contains(Models.Role.ProgramEditor.RoleID);
+
 
             var newPersonRoles = new List<PersonRole>();
             if (RoleSimples.Any())
@@ -100,6 +102,11 @@ namespace ProjectFirma.Web.Views.User
                 HttpRequestStorage.DatabaseEntities.PersonStewardRegions.DeletePersonStewardRegion(person.PersonStewardRegions);
                 HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.DeletePersonStewardTaxonomyBranch(person.PersonStewardTaxonomyBranches);
                 HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.DeletePersonStewardOrganization(person.PersonStewardOrganizations);
+            }
+
+            if (downgradingFromProgramEditor)
+            {
+                HttpRequestStorage.DatabaseEntities.ProgramPeople.DeleteProgramPerson(person.ProgramPeople);
             }
         }
 
