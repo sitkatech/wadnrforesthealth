@@ -168,6 +168,7 @@ namespace ProjectFirma.Web.Controllers
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x => string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
+            var existingProjectCount = 0;
             var projectList = new List<Project>();
             var newPersonList = new List<Person>();
             var newProjectPersonList = new List<ProjectPerson>();
@@ -193,7 +194,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
 
-            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program,currentCounter);
+            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program,currentCounter, ref existingProjectCount);
 
             MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID);
 
@@ -240,7 +241,7 @@ namespace ProjectFirma.Web.Controllers
 
             ExecPClearGisImportTables();
 
-            SetMessageForDisplay($"Successfully imported {projectList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+            SetMessageForDisplay($"Successfully imported {projectList.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
 
             return new ModalDialogFormJsonResult();
         }
@@ -381,7 +382,7 @@ namespace ProjectFirma.Web.Controllers
             GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary,
             Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
             List<GisCrossWalkDefault> gisCrossWalkDefaultList, GisUploadAttempt gisUploadAttempt, ProjectType otherProjectType, List<Project> projectList, Program program,
-            int currentCounter)
+            int currentCounter, ref int existingProjectCounter)
         {
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
@@ -389,7 +390,7 @@ namespace ProjectFirma.Web.Controllers
                     completionDateDictionary, startDateDictionary, projectNameDictionary,
                     projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType,
                     gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, program,
-                    ref currentCounter);
+                    ref currentCounter, ref existingProjectCounter);
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
@@ -639,7 +640,8 @@ namespace ProjectFirma.Web.Controllers
                                         List<Project> projectList, 
                                         GisUploadSourceOrganization gisUploadSourceOrganization,
                                         Program program,
-                                        ref int currentCounter)
+                                        ref int newProjectNumberCounter,
+                                        ref int existingProjectCounter)
         {
 
             var gisFeaturesIdListWithProjectIdentifier =
@@ -659,7 +661,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectAlreadyExists = project != null;
 
-            var projectNumber = $"FHT-{DateTime.Now.Year}-{currentCounter:00000}";
+            var projectNumber = $"FHT-{DateTime.Now.Year}-{newProjectNumberCounter:00000}";
             var startDate = CalculateStartDate(startDateDictionary, gisFeaturesIdListWithProjectIdentifier, project, program.ProgramID);
             var projectName = CalculateProjectName(projectNameDictionary, gisFeaturesIdListWithProjectIdentifier);
             var projectStage = CalculateProjectStage(projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, gisFeaturesIdListWithProjectIdentifier, completionDate);
@@ -721,7 +723,11 @@ namespace ProjectFirma.Web.Controllers
             if (!projectAlreadyExists)
             {
                 projectList.Add(project);
-                currentCounter++;
+                newProjectNumberCounter++;
+            }
+            else
+            {
+                existingProjectCounter++;
             }
         }
 
