@@ -230,15 +230,16 @@
             </div>
         </div>
 
-        if (ViewDataTyped.Person.HasRole(Role.ProgramEditor))
-        {
-            <div class="col-md-6">
-                <div class="panel panelFirma">
-                    <div class="panel-heading panelTitle">
-                        Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
-                    </div>
-                    <div class="panel-body">
-                        @if (ViewDataTyped.Person.ProgramPeople.Any())
+        
+        <div class="col-md-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.Person.HasRole(Role.ProgramEditor))
+                    {
+                        if (ViewDataTyped.Person.ProgramPeople.Any())
                         {
                             <ul>
                                 @foreach (var program in ViewDataTyped.Person.ProgramPeople.Select(x => x.Program))
@@ -252,11 +253,15 @@
                             <p class="systemText">@ViewDataTyped.Person.FullNameFirstLast is not assigned to manage @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in any Program.</p>
                         }
 
-
-                    </div>
+                    }
+                    else
+                    {
+                        <p class="systemText">@ViewDataTyped.Person.FullNameFirstLast is not assigned to the Program Editor role.</p>
+                    }
                 </div>
             </div>
-        }
+        </div>
+        
     }
 </div>
 @if (!ViewDataTyped.PersonIsMereContact)
