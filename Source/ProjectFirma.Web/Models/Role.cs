@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Person> GetPeopleWithRole()
         {
-            return HttpRequestStorage.DatabaseEntities.People.Where(x => x.IsActive && x.HasRoleID(RoleID)).ToList();
+            return HttpRequestStorage.DatabaseEntities.People.Where(x => x.IsActive).ToList().Where(x => x.HasRoleID(RoleID)).ToList();
         }
 
         public HtmlString GetDisplayNameAsUrl()
