@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Security
         public PermissionCheckResult HasPermission(Person person, GrantAllocation contextModelObject)
         {
 
-            if (person != null && person.PersonID != Person.AnonymousPersonID && GrantedRoles.Select(x => x.RoleID).Contains(person.RoleID))
+            if (person != null && person.PersonID != Person.AnonymousPersonID && person.HasAnyOfTheseRoles(GrantedRoles))
             {
                 return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }

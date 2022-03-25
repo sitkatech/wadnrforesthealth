@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditRolesViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProgramPeople.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,19 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Web.Mvc;
-using ProjectFirma.Web.Models;
-
-namespace ProjectFirma.Web.Views.User
+namespace ProjectFirma.Web.Views.Program
 {
-    public class EditRolesViewData : FirmaUserControlViewData
+    public abstract class EditProgramPeople : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProgramPeopleViewData, EditProgramPeopleViewModel>
     {
-        public List<RoleSimple> AllRoles { get; }
-
-        public EditRolesViewData(List<RoleSimple> roles)
-        {
-            AllRoles = roles;
-        }
     }
 }

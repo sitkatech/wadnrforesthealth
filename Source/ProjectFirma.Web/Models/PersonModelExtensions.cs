@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Common;
@@ -104,13 +105,13 @@ namespace ProjectFirma.Web.Models
 
         public static bool IsSitkaAdministrator(this Person person)
         {
-            return person != null && person.Role == Role.SitkaAdmin;
+            return person != null && person.HasRole(Role.SitkaAdmin);
 
         }
 
         public static bool IsAdministrator(this Person person)
         {
-            return person != null && (person.Role == Role.Admin || IsSitkaAdministrator(person));
+            return person != null && (person.HasRole(Role.Admin) || IsSitkaAdministrator(person));
         }
 
         public static bool IsApprover(this Person person)
@@ -121,6 +122,22 @@ namespace ProjectFirma.Web.Models
         public static bool ShouldReceiveNotifications(this Person person)
         {
             return person.ReceiveSupportEmails;
+        }
+
+        public static bool HasRole(this Person person, Role role)
+        {
+            return person.PersonRoles.Select(x => x.Role).Contains(role);
+        }
+
+        public static bool HasRoleID(this Person person, int roleID)
+        {
+            return person.PersonRoles.Select(x => x.Role.RoleID).Contains(roleID);
+        }
+
+        public static bool HasAnyOfTheseRoles(this Person person, IEnumerable<IRole> iroles)
+        {
+            var roleIDs = iroles.Select(x => x.RoleID);
+            return person.PersonRoles.Select(x => x.Role.RoleID).Intersect(roleIDs).Any();
         }
     }
 }

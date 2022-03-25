@@ -43,8 +43,10 @@ namespace ProjectFirma.Web.Models
             var anonymousSitkaUser = new Person
             {
                 PersonID = AnonymousPersonID,
-                RoleID = Role.Unassigned.RoleID
+                //RoleID = Role.Unassigned.RoleID
             };
+
+            anonymousSitkaUser.PersonRoles.Add(new PersonRole(anonymousSitkaUser, Role.Unassigned));
             // as we add new areas, we need to make sure we assign the anonymous user with the unassigned roles for each area
             return anonymousSitkaUser;
         }
@@ -177,7 +179,26 @@ namespace ProjectFirma.Web.Models
                     // the presence of roles switches you from being IsAuthenticated or not
                     return new List<string>();
                 }
-                var roleNames = new List<string> {Role.RoleName};
+
+                var roleNames = this.PersonRoles.Select(x => x.Role.RoleName);
+                return roleNames;
+            }
+        }
+
+        /// <summary>
+        /// All role names of BOTH types used by Keystone for user display 
+        /// </summary>
+        public IEnumerable<string> RoleNamesForDisplay
+        {
+            get
+            {
+                if (IsAnonymousUser)
+                {
+                    // the presence of roles switches you from being IsAuthenticated or not
+                    return new List<string>();
+                }
+
+                var roleNames = this.PersonRoles.Select(x => x.Role.RoleDisplayName);
                 return roleNames;
             }
         }
@@ -187,6 +208,19 @@ namespace ProjectFirma.Web.Models
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.CanStewardProject(this, project) ?? true;
         }
 
+        public bool CanProgramEditorManageProject(Project project)
+        {
+            if (!this.HasRole(Role.ProgramEditor))
+            {
+                return false;
+            }
+
+            var personsProgramIDs = this.ProgramPeople.Select(x => x.ProgramID);
+            var projectsProgramIDs = project.ProjectPrograms.Select(x => x.ProgramID);
+
+            return projectsProgramIDs.Intersect(personsProgramIDs).Any();
+        }
+
         public bool PersonIsProjectOwnerWhoCanStewardProjects
         {
             get
@@ -194,13 +228,13 @@ namespace ProjectFirma.Web.Models
                 var canStewardProjectsOrganizationRelationship = MultiTenantHelpers.GetCanStewardProjectsOrganizationRelationship();
                 if (MultiTenantHelpers.GetProjectStewardshipAreaType() == ProjectStewardshipAreaType.ProjectStewardingOrganizations)
                 {
-                    return Role.ProjectSteward.RoleID == RoleID &&
+                    return this.HasRole(Role.ProjectSteward) &&
                            canStewardProjectsOrganizationRelationship != null &&
                            canStewardProjectsOrganizationRelationship.OrganizationTypeRelationshipTypes.Any(
                                x => x.OrganizationTypeID == Organization.OrganizationTypeID);
                 }
 
-                return Role.ProjectSteward.RoleID == RoleID;
+                return this.HasRole(Role.ProjectSteward);
             }
         }
 
@@ -209,7 +243,7 @@ namespace ProjectFirma.Web.Models
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.GetProjectStewardshipAreaHtmlStringList(this);
         }
 
-        public bool IsAnonymousOrUnassigned => IsAnonymousUser || Role == Role.Unassigned;
+        public bool IsAnonymousOrUnassigned => IsAnonymousUser || this.PersonRoles.All(x => x.Role == Role.Unassigned);
 
         public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;       
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);
@@ -219,5 +253,15 @@ namespace ProjectFirma.Web.Models
         {
             return PersonAllowedAuthenticators.Any();
         }
+
+        public static Person CreateNewBlank(Role role)
+        {
+            var person = CreateNewBlank();
+            person.PersonRoles.Add( new PersonRole(person, role));
+            return person;
+        }
+
+
+
     }
 }

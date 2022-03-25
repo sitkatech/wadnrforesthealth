@@ -38,6 +38,8 @@ namespace ProjectFirma.Web.Views.Program
         private ICollection<GisDefaultMapping> Defaults { get; set; }
         private ICollection<GisCrossWalkDefault> CrosswalkDefaults { get; set; }
 
+        public string EditProgramPeopleUrl { get; }
+
         public DetailViewData(Person currentPerson,
                                     Models.Program program
                                    )
@@ -47,6 +49,7 @@ namespace ProjectFirma.Web.Views.Program
             BreadCrumbTitle = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()} Detail";
             Defaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisDefaultMappings : new List<GisDefaultMapping>();
             CrosswalkDefaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisCrossWalkDefaults : new List<GisCrossWalkDefault>();
+            EditProgramPeopleUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.EditProgramPeople(program));
 
         }
         private string GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition fieldDefinition)

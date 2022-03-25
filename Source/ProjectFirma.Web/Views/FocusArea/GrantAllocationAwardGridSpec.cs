@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized()} associated with {grantAllocation.DisplayName}";
 
             var userHasCreatePermissions = new GrantAllocationAwardCreateFeature().HasPermissionByPerson(currentPerson);
-            if (userHasCreatePermissions)
+            if (userHasCreatePermissions && grantAllocation.DNRUplandRegionID.HasValue)
             {
                 var contentUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.NewForAGrantAllocation(grantAllocation));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {ObjectNameSingular}");

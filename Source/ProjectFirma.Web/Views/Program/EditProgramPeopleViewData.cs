@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditRolesViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProgramPeopleViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -20,17 +20,20 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.User
+namespace ProjectFirma.Web.Views.Program
 {
-    public class EditRolesViewData : FirmaUserControlViewData
+    public class EditProgramPeopleViewData : FirmaUserControlViewData
     {
-        public List<RoleSimple> AllRoles { get; }
+        public List<PersonSimple> AllPeople { get; }
 
-        public EditRolesViewData(List<RoleSimple> roles)
+        public EditProgramPeopleViewData(List<PersonSimple> people)
         {
-            AllRoles = roles;
+            AllPeople = people;
+
         }
     }
 }

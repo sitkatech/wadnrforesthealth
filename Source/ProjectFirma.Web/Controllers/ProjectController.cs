@@ -510,20 +510,23 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
             var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
-            if (CurrentPerson.Role == Role.Normal)
+
+            var elevatedRoles = new List<IRole> {Role.Admin, Role.SitkaAdmin, Role.ProjectSteward};
+            if (CurrentPerson.HasAnyOfTheseRoles(elevatedRoles))
+            {
+                filteredProposals = pendingProjects;
+                
+            }
+            else
             {
                 filteredProposals = pendingProjects.Where(x =>
                     {
-                        
+
                         return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
                                 organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(y => y.Organization)
                             .Contains(CurrentPerson.Organization);
                     })
                     .ToList();
-            }
-            else
-            {
-                filteredProposals = pendingProjects;
             }
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(filteredProposals, gridSpec);
             return gridJsonNetJObjectResult;
@@ -906,7 +909,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var organizationLabel = FieldDefinition.Organization.GetFieldDefinitionLabel();
             var projectRelationshipTypeLabel = FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel();
 
-            var confirmMessage = CurrentPerson.RoleID == Role.ProjectSteward.RoleID
+            var confirmMessage = CurrentPerson.HasRole(Role.ProjectSteward)
                 ? $"Although you are a {projectStewardLabel}, you do not have the ability to create a {projectLabel} because your {organizationLabel} does not have a \"Can Steward {projectLabel}\" {projectRelationshipTypeLabel}."
                 : $"You don't have permission to edit {projectLabel}.";
 
@@ -922,7 +925,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var projectLabel = FieldDefinition.Project.GetFieldDefinitionLabel();
             var organizationLabel = FieldDefinition.Organization.GetFieldDefinitionLabel();
 
-            var confirmMessage = CurrentPerson.RoleID == Role.ProjectSteward.RoleID
+            var confirmMessage = CurrentPerson.HasRole(Role.ProjectSteward)
                 ? $"Although you are a {projectStewardLabel}, you do not have permission to edit this {projectLabel} because it does not belong to your {organizationLabel}."
                 : $"You don't have permission to edit this {projectLabel}.";
 
@@ -939,7 +942,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var projectStewardLabel = FieldDefinition.ProjectSteward.GetFieldDefinitionLabel();
             var proposalLabel = FieldDefinition.Application.GetFieldDefinitionLabel();
 
-            var confirmMessage = CurrentPerson.RoleID == Role.ProjectSteward.RoleID
+            var confirmMessage = CurrentPerson.HasRole(Role.ProjectSteward)
                 ? $"Although you are a {projectStewardLabel}, you do not have permission to edit this {proposalLabel} through this page because it is pending approval. You can <a href='{projectCreateUrl}'>review, edit, or approve</a> the proposal."
                 : $"You don't have permission to edit this {proposalLabel}.";
 

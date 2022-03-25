@@ -73,8 +73,6 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly bool HasSpatialData;
 
         public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
-        //public readonly string NewGrantAllocationUrl;
-        public readonly bool CanCreateNewGrantAllocation;
 
         public readonly string ProjectStewardOrLeadImplementorFieldDefinitionName;
 
@@ -158,10 +156,6 @@ namespace ProjectFirma.Web.Views.Organization
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x => organization.GetPerformanceMeasureChartViewData(x, currentPerson)).ToList();
 
-            //NewGrantAllocationUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.New());
-            CanCreateNewGrantAllocation = new GrantAllocationCreateFeature().HasPermissionByPerson(CurrentPerson) &&
-                                        (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create grant allocations for their organization
-                                         CurrentPerson.OrganizationID == organization.OrganizationID);
             ShowProposals = currentPerson.CanViewProposals;
             ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()
                 ? Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()

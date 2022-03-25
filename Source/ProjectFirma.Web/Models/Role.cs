@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Person> GetPeopleWithRole()
         {
-            return HttpRequestStorage.DatabaseEntities.People.Where(x => x.IsActive && x.RoleID == RoleID).ToList();
+            return HttpRequestStorage.DatabaseEntities.People.Where(x => x.IsActive).ToList().Where(x => x.HasRoleID(RoleID)).ToList();
         }
 
         public HtmlString GetDisplayNameAsUrl()
@@ -65,6 +65,18 @@ namespace ProjectFirma.Web.Models
         public static string GetAnonymousRoleUrl()
         {
             return SitkaRoute<RoleController>.BuildUrlFromExpression(t => t.Anonymous());
+        }
+
+        public static List<int> GetRequiredBaseRoleIDs()
+        {
+            var roleIDs = new List<int>()
+            {
+                Role.Normal.RoleID,
+                Role.ProjectSteward.RoleID,
+                Role.Admin.RoleID,
+                Role.SitkaAdmin.RoleID
+            };
+            return roleIDs;
         }
     }
 }
