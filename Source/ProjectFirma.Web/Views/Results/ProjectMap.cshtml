@@ -24,6 +24,7 @@
 @using ProjectFirma.Web.Views.Shared
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
 @inherits ProjectFirma.Web.Views.Results.ProjectMap
 @section JavascriptAndStylesContent
 {
@@ -212,7 +213,8 @@
     <div class="row">
         <div class="col-md-6">
             <label for="txtZoomAddress">Enter an Address</label>
-            <input id="txtZoomAddress" type="text" placeholder="Enter an address" />
+            <input id="txtZoomAddress" type="text" placeholder="123 Main St" />
+            <input id="txtZoomZip" type="number" placeholder="12345" />
             <button id="btnZoomToAddress">
                 Zoom to Address
             </button>
@@ -426,15 +428,23 @@
 
         updateCustomUrlPopover();
 
+        //zoom to address
         jQuery('#btnZoomToAddress').click(function () {
-            //take txtZoomAddress data and query google geocoding API
+            
 
-            //IF multiple results
-                //use results to present options for user to select
-            //ELSE if only one result
-                //place pin and flyTo pin
+            var dataAddress = jQuery('#txtZoomAddress').val();
+            var dataZip = jQuery('#txtZoomZip').val();
 
-            projectFirmaMap.map.flyTo([45.524359, -122.678399], 12);//fly to Portland, OR
+            $.ajax({
+                    method: "POST",
+                    url: "@ViewDataTyped.GeocodeAddressUrl",
+                    data: { address: dataAddress, zip: dataZip }
+                })
+                .done(function( msg ) {
+                    alert( "Data Saved: " + msg );
+                });
+
+            //projectFirmaMap.map.flyTo([45.524359, -122.678399], 12);//fly to Portland, OR
         });
 
         jQuery('#showBasinwideProjectsToast').click(function() {
