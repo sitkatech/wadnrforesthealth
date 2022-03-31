@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Map;
@@ -36,6 +37,8 @@ namespace ProjectFirma.Web.Views.Results
         public string FilteredProjectsWithLocationAreasUrl { get; }
         public ProjectMapViewDataForAngular ProjectMapViewDataForAngular { get; }
 
+        public string GeocodeAddressUrl { get; }
+
         public ProjectMapViewData(Person currentPerson, Models.FirmaPage firmaPage, ProjectLocationsMapInitJson projectLocationsMapInitJson, ProjectLocationsMapViewData projectLocationsMapViewData, Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> projectLocationFilterTypesAndValues, string projectLocationsUrl, string filteredProjectsWithLocationAreasUrl, List<ProjectMapLocationJson> projectMapLocationJsons) : base(currentPerson, firmaPage)
         {
             PageTitle = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Map";
@@ -45,6 +48,7 @@ namespace ProjectFirma.Web.Views.Results
             ProjectLocationsUrl = projectLocationsUrl;
             FilteredProjectsWithLocationAreasUrl = filteredProjectsWithLocationAreasUrl;
             ProjectMapViewDataForAngular = new ProjectMapViewDataForAngular(projectLocationsMapInitJson, projectLocationsMapInitJson.ProjectLocationsLayerGeoJson, projectMapLocationJsons);
+            GeocodeAddressUrl = SitkaRoute<ResultsController>.BuildAbsoluteUrlHttpsFromExpression(x => x.GeocodeAddress(null, null)); ;
         }
     }
     public class ProjectMapViewDataForAngular

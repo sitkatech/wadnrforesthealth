@@ -24,6 +24,7 @@
 @using ProjectFirma.Web.Views.Shared
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
 @inherits ProjectFirma.Web.Views.Results.ProjectMap
 @section JavascriptAndStylesContent
 {
@@ -209,10 +210,21 @@
 
 
 <div ng-controller="ProjectMapController">
+    <div class="row">
+        <div class="col-md-12">
+            <label for="txtZoomAddress">Address</label>
+            <input id="txtZoomAddress" type="text" placeholder="123 Main St" />
+            <label for="txtZoomZip">Zip Code</label>
+            <input id="txtZoomZip" type="text" placeholder="12345" />
+            <button id="btnZoomToAddress">
+                Zoom to Address
+            </button>
+        </div>
+    </div>
     <div class="row" style="vertical-align: top;">
         <div class="col-md-12" id="mapPanel">
             @{ ProjectLocationsMap.RenderPartialView(Html, ViewDataTyped.ProjectLocationsMapViewData); }
-            
+
             <div id="showBasinwideProjectsToast">
                 <a class="btn pull-right" style="clear: left;" title="@String.Format("{0} that are not represented by a point on the map are listed here.", FieldDefinition.Project.GetFieldDefinitionLabelPluralized())">
                     <span class="glyphicon glyphicon-chevron-left"></span>Show @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() with no Simple Location
@@ -233,14 +245,14 @@
             <div style="clear: both; white-space: nowrap; overflow-x: hidden; overflow-y: auto; max-height: 750px">
                 <table id="projectLocationGroupTypeTree" class="table table-hover table-condensed" style="margin-bottom: 10px">
                     <colgroup>
-                        <col style="width: auto; text-overflow: ellipsis" />
-                        <col style="width: 150px; text-align:right" />
+                        <col style="width: auto; text-overflow: ellipsis"/>
+                        <col style="width: 150px; text-align: right"/>
                     </colgroup>
                     <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -416,6 +428,39 @@
         jQuery('#customUrlPopover').on('shown.bs.popover', function() { jQuery("#filterHtmlInput").select(); });
 
         updateCustomUrlPopover();
+
+        var geocodeMarker = L.marker();
+
+        //zoom to address
+        jQuery('#btnZoomToAddress').click(function () {
+            
+
+            var dataAddress = jQuery('#txtZoomAddress').val();
+            var dataZip = jQuery('#txtZoomZip').val();
+
+            $.ajax({
+                    method: "POST",
+                    url: "@ViewDataTyped.GeocodeAddressUrl",
+                    data: { address: dataAddress, zip: dataZip }
+                })
+                .done(function (msg) {
+                    if (!msg.ErrorStatus) {
+
+                        if (geocodeMarker != undefined) {
+                            geocodeMarker.remove();
+                        };
+
+                        //Add a marker to show where you clicked.
+                        geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(projectFirmaMap.map);
+                        projectFirmaMap.map.flyTo([msg.Lat, msg.Long], 12);
+                    } else {
+                        console.log(msg.ErrorStatus);
+                        alert(msg.ErrorStatus);
+                    }
+
+                });
+
+        });
 
         jQuery('#showBasinwideProjectsToast').click(function() {
             jQuery("#mapPanel").removeClass("col-md-12");
