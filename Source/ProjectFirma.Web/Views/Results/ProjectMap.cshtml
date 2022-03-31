@@ -211,10 +211,11 @@
 
 <div ng-controller="ProjectMapController">
     <div class="row">
-        <div class="col-md-6">
-            <label for="txtZoomAddress">Enter an Address</label>
+        <div class="col-md-12">
+            <label for="txtZoomAddress">Address</label>
             <input id="txtZoomAddress" type="text" placeholder="123 Main St" />
-            <input id="txtZoomZip" type="number" placeholder="12345" />
+            <label for="txtZoomZip">Zip Code</label>
+            <input id="txtZoomZip" type="text" placeholder="12345" />
             <button id="btnZoomToAddress">
                 Zoom to Address
             </button>
@@ -428,6 +429,8 @@
 
         updateCustomUrlPopover();
 
+        var geocodeMarker = L.marker();
+
         //zoom to address
         jQuery('#btnZoomToAddress').click(function () {
             
@@ -440,11 +443,23 @@
                     url: "@ViewDataTyped.GeocodeAddressUrl",
                     data: { address: dataAddress, zip: dataZip }
                 })
-                .done(function( msg ) {
-                    alert( "Data Saved: " + msg );
+                .done(function (msg) {
+                    if (!msg.ErrorStatus) {
+
+                        if (geocodeMarker != undefined) {
+                            geocodeMarker.remove();
+                        };
+
+                        //Add a marker to show where you clicked.
+                        geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(projectFirmaMap.map);
+                        projectFirmaMap.map.flyTo([msg.Lat, msg.Long], 12);
+                    } else {
+                        console.log(msg.ErrorStatus);
+                        alert(msg.ErrorStatus);
+                    }
+
                 });
 
-            //projectFirmaMap.map.flyTo([45.524359, -122.678399], 12);//fly to Portland, OR
         });
 
         jQuery('#showBasinwideProjectsToast').click(function() {

@@ -27,6 +27,7 @@ using System.Net;
 using System.ServiceModel;
 using System.Web.Mvc;
 using System.Xml;
+using System.Xml.Linq;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -131,7 +132,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        public JsonNetJArrayResult GeocodeAddress(string address, string zip)
+        public JsonNetJObjectResult GeocodeAddress(string address, string zip)
         {
             //https://wamas.watech.wa.gov/geocoder/service.asmx/FindAddress?address=&Consumer=FHT&zip=97210&city=&zip4=null
 
@@ -141,30 +142,41 @@ namespace ProjectFirma.Web.Controllers
             var _url = "https://wamas.watech.wa.gov/geocoder/service.asmx";
             var _action = "http://geography.wa.gov/GeospatialPortal/FindAddress";
 
-            XmlDocument soapEnvelopeXml = CreateSoapEnvelope(address, zip);
-            HttpWebRequest webRequest = CreateWebRequest(_url, _action);
-            InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
-
-            // begin async call to web request.
-            IAsyncResult asyncResult = webRequest.BeginGetResponse(null, null);
-
-            // suspend this thread until call is complete. You might want to
-            // do something usefull here like update your UI.
-            asyncResult.AsyncWaitHandle.WaitOne();
-
-            // get the response from the completed web request.
-            string soapResult;
-            using (WebResponse webResponse = webRequest.EndGetResponse(asyncResult))
+            try
             {
-                using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
-                {
-                    soapResult = rd.ReadToEnd();
-                }
-                //Console.Write(soapResult);
-            }
-            //need to parse soapResult XML into json object to pass to frontend
 
-            return new JsonNetJArrayResult(string.Empty);
+                XmlDocument soapEnvelopeXml = CreateSoapEnvelope(address, zip);
+                HttpWebRequest webRequest = CreateWebRequest(_url, _action);
+                InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
+
+                IAsyncResult asyncResult = webRequest.BeginGetResponse(null, null);
+
+                asyncResult.AsyncWaitHandle.WaitOne();
+
+                string soapResult;
+                using (WebResponse webResponse = webRequest.EndGetResponse(asyncResult))
+                {
+                    using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
+                    {
+                        soapResult = rd.ReadToEnd();
+                    }
+                }
+
+                XDocument xml = XDocument.Parse(soapResult);
+                var soapResponse = xml.Descendants().Where(x => x.Name.LocalName == "FindAddressResult").Select(x => new
+                {
+                    Lat = (double) x.Element(x.Name.Namespace + "latitude"),
+                    Long = (double) x.Element(x.Name.Namespace + "longitude"),
+                    ErrorStatus = (string) x.Element(x.Name.Namespace + "error_status"),
+                }).FirstOrDefault();
+
+                return new JsonNetJObjectResult(soapResponse);
+            }
+            catch (Exception e)
+            {
+                Logger.Info("Error geocoding address on Project Map", e);
+                return new JsonNetJObjectResult(new { ErrorStatus = "There was an error geocoding the provided address." });
+            }
         }
 
 
