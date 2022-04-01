@@ -78,9 +78,6 @@ angular.module("ProjectFirmaApp").controller("EditRolesController", function($sc
         return false;
     };
 
-    $scope.dropdownDefaultOption = function () {
-        return "Add a Role";
-    };
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
