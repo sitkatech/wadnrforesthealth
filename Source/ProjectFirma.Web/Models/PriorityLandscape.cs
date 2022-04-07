@@ -58,6 +58,8 @@ namespace ProjectFirma.Web.Models
             var priorityLandscapeLayerGeoJson = new LayerGeoJson(priorityLandscape.DisplayName,
                 new List<PriorityLandscape> { priorityLandscape }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
+
+
             var projectDetailedLocationsLayerGeoJson =
                 Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
             var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);

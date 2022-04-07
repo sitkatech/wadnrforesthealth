@@ -106,6 +106,9 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<OrganizationTypeRelationshipType> OrganizationTypeRelationshipTypes { get; set; }
         public virtual DbSet<OrganizationType> OrganizationTypes { get; set; }
+        public virtual DbSet<PclBoundaryLine> PclBoundaryLines { get; set; }
+        public virtual DbSet<PclLandscapeTreatmentPriority> PclLandscapeTreatmentPriorities { get; set; }
+        public virtual DbSet<PclWildfireResponseBenefit> PclWildfireResponseBenefits { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PerformanceMeasureActual> PerformanceMeasureActuals { get; set; }
         public virtual DbSet<PerformanceMeasureActualSubcategoryOption> PerformanceMeasureActualSubcategoryOptions { get; set; }
@@ -645,6 +648,15 @@ namespace ProjectFirma.Web.Models
 
                 case "OrganizationType":
                     return OrganizationTypes.GetOrganizationType(primaryKey);
+
+                case "PclBoundaryLine":
+                    return PclBoundaryLines.GetPclBoundaryLine(primaryKey);
+
+                case "PclLandscapeTreatmentPriority":
+                    return PclLandscapeTreatmentPriorities.GetPclLandscapeTreatmentPriority(primaryKey);
+
+                case "PclWildfireResponseBenefit":
+                    return PclWildfireResponseBenefits.GetPclWildfireResponseBenefit(primaryKey);
 
                 case "Person":
                     return People.GetPerson(primaryKey);

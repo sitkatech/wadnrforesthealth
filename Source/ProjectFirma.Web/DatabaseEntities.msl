@@ -959,6 +959,35 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PclBoundaryLine">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclBoundaryLine">
+        <MappingFragment StoreEntitySet="PclBoundaryLine">
+          <ScalarProperty Name="PclBoundaryLineID" ColumnName="PclBoundaryLineID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="Feature" ColumnName="Feature" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PclLandscapeTreatmentPriority">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclLandscapeTreatmentPriority">
+        <MappingFragment StoreEntitySet="PclLandscapeTreatmentPriority">
+          <ScalarProperty Name="PclLandscapeTreatmentPriorityID" ColumnName="PclLandscapeTreatmentPriorityID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="Feature" ColumnName="Feature" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PclWildfireResponseBenefit">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclWildfireResponseBenefit">
+        <MappingFragment StoreEntitySet="PclWildfireResponseBenefit">
+          <ScalarProperty Name="PclWildfireResponseBenefitID" ColumnName="PclWildfireResponseBenefitID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="Feature" ColumnName="Feature" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PerformanceMeasure">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PerformanceMeasure">
         <MappingFragment StoreEntitySet="PerformanceMeasure">

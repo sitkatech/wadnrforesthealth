@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -337,6 +337,15 @@
     <Compile Include="Models\Generated\OrganizationTypeRelationshipType.Binding.cs" />
     <Compile Include="Models\Generated\OrganizationTypeRelationshipType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\OrganizationTypeRelationshipTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclBoundaryLine.Binding.cs" />
+    <Compile Include="Models\Generated\PclBoundaryLine.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclBoundaryLinePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclLandscapeTreatmentPriority.Binding.cs" />
+    <Compile Include="Models\Generated\PclLandscapeTreatmentPriority.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclLandscapeTreatmentPriorityPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclWildfireResponseBenefit.Binding.cs" />
+    <Compile Include="Models\Generated\PclWildfireResponseBenefit.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclWildfireResponseBenefitPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PerformanceMeasure.Binding.cs" />
     <Compile Include="Models\Generated\PerformanceMeasure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PerformanceMeasureActual.Binding.cs" />

@@ -78,6 +78,9 @@
     <EntitySet Name="OrganizationBoundaryStaging" EntityType="ProjectFirma.Web.Models.Store.OrganizationBoundaryStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationType" EntityType="ProjectFirma.Web.Models.Store.OrganizationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationTypeRelationshipType" EntityType="ProjectFirma.Web.Models.Store.OrganizationTypeRelationshipType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.PclBoundaryLine" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.Store.PclLandscapeTreatmentPriority" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.Store.PclWildfireResponseBenefit" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureActual" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureActual" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureActualSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureActualSubcategoryOption" store:Type="Tables" Schema="dbo" />
@@ -705,6 +708,18 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_OrganizationTypeRelationshipType_RelationshipType_RelationshipTypeID" Association="ProjectFirma.Web.Models.Store.FK_OrganizationTypeRelationshipType_RelationshipType_RelationshipTypeID">
       <End Role="RelationshipType" EntitySet="RelationshipType" />
       <End Role="OrganizationTypeRelationshipTypes" EntitySet="OrganizationTypeRelationshipType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PclBoundaryLines" EntitySet="PclBoundaryLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PclLandscapeTreatmentPriorities" EntitySet="PclLandscapeTreatmentPriority" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PclWildfireResponseBenefits" EntitySet="PclWildfireResponseBenefit" />
     </AssociationSet>
     <AssociationSet Name="FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
@@ -2167,6 +2182,32 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="OrganizationTypeRelationshipTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
     <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PclBoundaryLine">
+    <Key>
+      <PropertyRef Name="PclBoundaryLineID" />
+    </Key>
+    <Property Name="PclBoundaryLineID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="Feature" Type="geometry" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PclLandscapeTreatmentPriority">
+    <Key>
+      <PropertyRef Name="PclLandscapeTreatmentPriorityID" />
+    </Key>
+    <Property Name="PclLandscapeTreatmentPriorityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="Feature" Type="geometry" Nullable="false" />
+    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="PclWildfireResponseBenefit">
+    <Key>
+      <PropertyRef Name="PclWildfireResponseBenefitID" />
+    </Key>
+    <Property Name="PclWildfireResponseBenefitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="Feature" Type="geometry" Nullable="false" />
+    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <EntityType Name="PerformanceMeasure">
     <Key>
@@ -4701,6 +4742,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="OrganizationTypeRelationshipTypes">
         <PropertyRef Name="RelationshipTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
+    <End Role="PclBoundaryLines" Type="ProjectFirma.Web.Models.Store.PclBoundaryLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PclBoundaryLines">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
+    <End Role="PclLandscapeTreatmentPriorities" Type="ProjectFirma.Web.Models.Store.PclLandscapeTreatmentPriority" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PclLandscapeTreatmentPriorities">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
+    <End Role="PclWildfireResponseBenefits" Type="ProjectFirma.Web.Models.Store.PclWildfireResponseBenefit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PclWildfireResponseBenefits">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
