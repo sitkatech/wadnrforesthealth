@@ -644,6 +644,9 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclBoundaryLine.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclLandscapeTreatmentPriority.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclWildfireResponseBenefit.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPriorityLandscape.Binding.cs" />
     <Compile Include="Models\Generated\vLoaStageGrantAllocation.Binding.cs" />
     <Compile Include="Models\Generated\vLoaStageGrantAllocationAward.Binding.cs" />

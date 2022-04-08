@@ -165,6 +165,35 @@
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclBoundaryLine" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclBoundaryLine">
+      <DefiningQuery>SELECT 
+[vGeoServerPclBoundaryLine].[PclBoundaryLineID] AS [PclBoundaryLineID], 
+[vGeoServerPclBoundaryLine].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerPclBoundaryLine].[PriorityLandscapeID] AS [PriorityLandscapeID], 
+[vGeoServerPclBoundaryLine].[Feature] AS [Feature], 
+[vGeoServerPclBoundaryLine].[Ogr_Geometry] AS [Ogr_Geometry]
+FROM [dbo].[vGeoServerPclBoundaryLine] AS [vGeoServerPclBoundaryLine]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclLandscapeTreatmentPriority" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclLandscapeTreatmentPriority">
+      <DefiningQuery>SELECT 
+[vGeoServerPclLandscapeTreatmentPriority].[PclLandscapeTreatmentPriorityID] AS [PclLandscapeTreatmentPriorityID], 
+[vGeoServerPclLandscapeTreatmentPriority].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerPclLandscapeTreatmentPriority].[PriorityLandscapeID] AS [PriorityLandscapeID], 
+[vGeoServerPclLandscapeTreatmentPriority].[Color] AS [Color], 
+[vGeoServerPclLandscapeTreatmentPriority].[Feature] AS [Feature], 
+[vGeoServerPclLandscapeTreatmentPriority].[Ogr_Geometry] AS [Ogr_Geometry]
+FROM [dbo].[vGeoServerPclLandscapeTreatmentPriority] AS [vGeoServerPclLandscapeTreatmentPriority]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vGeoServerPclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclWildfireResponseBenefit" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclWildfireResponseBenefit">
+      <DefiningQuery>SELECT 
+[vGeoServerPclWildfireResponseBenefit].[PclWildfireResponseBenefitID] AS [PclWildfireResponseBenefitID], 
+[vGeoServerPclWildfireResponseBenefit].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerPclWildfireResponseBenefit].[PriorityLandscapeID] AS [PriorityLandscapeID], 
+[vGeoServerPclWildfireResponseBenefit].[Color] AS [Color], 
+[vGeoServerPclWildfireResponseBenefit].[Feature] AS [Feature], 
+[vGeoServerPclWildfireResponseBenefit].[Ogr_Geometry] AS [Ogr_Geometry]
+FROM [dbo].[vGeoServerPclWildfireResponseBenefit] AS [vGeoServerPclWildfireResponseBenefit]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityLandscape" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityLandscape">
       <DefiningQuery>SELECT 
 [vGeoServerPriorityLandscape].[PriorityLandscapeID] AS [PriorityLandscapeID], 
@@ -3222,6 +3251,61 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclBoundaryLine' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerPclBoundaryLine">
+    <Key>
+      <PropertyRef Name="PclBoundaryLineID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="PriorityLandscapeID" />
+      <PropertyRef Name="Feature" />
+      <PropertyRef Name="Ogr_Geometry" />
+    </Key>
+    <Property Name="PclBoundaryLineID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="Feature" Type="geometry" Nullable="false" />
+    <Property Name="Ogr_Geometry" Type="geometry" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclLandscapeTreatmentPriority' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerPclLandscapeTreatmentPriority">
+    <Key>
+      <PropertyRef Name="PclLandscapeTreatmentPriorityID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="PriorityLandscapeID" />
+      <PropertyRef Name="Color" />
+      <PropertyRef Name="Feature" />
+      <PropertyRef Name="Ogr_Geometry" />
+    </Key>
+    <Property Name="PclLandscapeTreatmentPriorityID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Feature" Type="geometry" Nullable="false" />
+    <Property Name="Ogr_Geometry" Type="geometry" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclWildfireResponseBenefit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerPclWildfireResponseBenefit">
+    <Key>
+      <PropertyRef Name="PclWildfireResponseBenefitID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="PriorityLandscapeID" />
+      <PropertyRef Name="Color" />
+      <PropertyRef Name="Feature" />
+      <PropertyRef Name="Ogr_Geometry" />
+    </Key>
+    <Property Name="PclWildfireResponseBenefitID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Feature" Type="geometry" Nullable="false" />
+    <Property Name="Ogr_Geometry" Type="geometry" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscape' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
