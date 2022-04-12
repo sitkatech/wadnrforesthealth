@@ -64,6 +64,8 @@ namespace ProjectFirma.Web.Models
                 Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
             var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
 
+
+
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 projectLayerGeoJson,
@@ -73,6 +75,35 @@ namespace ProjectFirma.Web.Models
                 projectDetailedLocationsLayerGeoJson,
                 projectTreatmentAreasLayerGeoJson
             };
+
+
+            if (priorityLandscape.HasPclLayerData())
+            {
+                var pclFeatures = new List<Feature>();
+
+                //get the landscape boundary
+                pclFeatures.Add(DbGeometryToGeoJsonHelper.FromDbGeometry(priorityLandscape.PriorityLandscapeLocation));
+
+                var pclBoundaryLineFeatures = priorityLandscape.PclBoundaryLines.Select(x => DbGeometryToGeoJsonHelper.FromDbGeometry(x.Feature)).ToList();
+                pclFeatures.AddRange(pclBoundaryLineFeatures);
+
+                var pclLandscapeTreatmentPriorityFeatures = priorityLandscape.PclLandscapeTreatmentPriorities.Select(x => DbGeometryToGeoJsonHelper.FromDbGeometry(x.Feature)).ToList();
+                pclFeatures.AddRange(pclLandscapeTreatmentPriorityFeatures);
+
+                var pclWildfireFeatures = priorityLandscape.PclWildfireResponseBenefits.Select(x => DbGeometryToGeoJsonHelper.FromDbGeometry(x.Feature)).ToList();
+                pclFeatures.AddRange(pclWildfireFeatures);
+
+                FeatureCollection pclFeatureCollection = new FeatureCollection(pclFeatures);
+
+                var pclGeoJson = new LayerGeoJson("Wildfire Response Benefit by potential control lines (PCLs)",
+                    pclFeatureCollection, "#2dc3a1", 1,
+                    LayerInitialVisibility.Hide);
+
+                layerGeoJsons.Add(pclGeoJson);
+            }
+
+
+
 
             return layerGeoJsons;
         }
@@ -87,6 +118,14 @@ namespace ProjectFirma.Web.Models
         {
             var priorityLandscapeFileResource = new PriorityLandscapeFileResource(this, fileResource, displayName) { Description = description };
             PriorityLandscapeFileResources.Add(priorityLandscapeFileResource);
+        }
+
+        public bool HasPclLayerData()
+        {
+            bool hasPclLayerData = this.PclBoundaryLines.Any() && this.PclLandscapeTreatmentPriorities.Any() &&
+                                   this.PclWildfireResponseBenefits.Any();
+
+            return hasPclLayerData;
         }
     }
 }

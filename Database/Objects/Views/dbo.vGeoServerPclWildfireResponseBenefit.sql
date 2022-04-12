@@ -6,12 +6,11 @@ create view [dbo].[vGeoServerPclWildfireResponseBenefit]
 as
 select
 	wrb.PclWildfireResponseBenefitID,
-	wrb.PclWildfireResponseBenefitID as PrimaryKey,
+	IsNull(wrb.PclWildfireResponseBenefitID, -1) as PrimaryKey,
 	wrb.PriorityLandscapeID,
 	wrb.Color,
-	wrb.Feature,
-	wrb.Feature as Ogr_Geometry
-	
+	COALESCE (wrb.Feature, '') as Feature,
+	COALESCE (wrb.Feature, '') as Ogr_Geometry	
 from
 	dbo.PclWildfireResponseBenefit as wrb
 GO

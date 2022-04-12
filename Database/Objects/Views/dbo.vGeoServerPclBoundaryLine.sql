@@ -6,11 +6,10 @@ create view [dbo].[vGeoServerPclBoundaryLine]
 as
 select
 	bl.PclBoundaryLineID,
-	bl.PclBoundaryLineID as PrimaryKey,
+	IsNull(bl.PclBoundaryLineID, -1) as PrimaryKey,
 	bl.PriorityLandscapeID,
-	bl.Feature,
-	bl.Feature as Ogr_Geometry
-	
+	COALESCE (bl.Feature, '') as Feature,
+	COALESCE (bl.Feature, '') as Ogr_Geometry	
 from
 	dbo.PclBoundaryLine as bl
 GO

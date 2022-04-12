@@ -6,11 +6,11 @@ create view [dbo].[vGeoServerPclLandscapeTreatmentPriority]
 as
 select
 	ltp.PclLandscapeTreatmentPriorityID,
-	ltp.PclLandscapeTreatmentPriorityID as PrimaryKey,
+	IsNull(ltp.PclLandscapeTreatmentPriorityID, -1) as PrimaryKey,
 	ltp.PriorityLandscapeID,
 	ltp.Color,
-	ltp.Feature,
-	ltp.Feature as Ogr_Geometry
+	COALESCE (ltp.Feature, '') as Feature,
+	COALESCE (ltp.Feature, '') as Ogr_Geometry	
 	
 from
 	dbo.PclLandscapeTreatmentPriority as ltp
