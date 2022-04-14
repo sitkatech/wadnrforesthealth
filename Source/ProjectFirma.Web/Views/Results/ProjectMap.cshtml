@@ -212,13 +212,17 @@
 <div ng-controller="ProjectMapController">
     <div class="row">
         <div class="col-md-12">
-            <label for="txtZoomAddress">Address</label>
-            <input id="txtZoomAddress" type="text" placeholder="123 Main St" />
-            <label for="txtZoomZip">Zip Code</label>
-            <input id="txtZoomZip" type="text" placeholder="12345" />
-            <button id="btnZoomToAddress">
-                Zoom to Address
-            </button>
+            <fieldset style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;">
+                <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Project Map to Zip Code or Mailing Address with Zip Code</legend>
+                <label for="txtZoomAddress">Street address, City, and State</label> 
+                <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA" />
+                <label for="txtZoomZip">Zip Code</label>
+                <input id="txtZoomZip" type="text" style="width: 80px;" placeholder="12345" />
+                <button id="btnZoomToAddress">
+                    Zoom to Address
+                </button>
+                <span style="display:none; color: red;" id="errZoomNoZipCode">Please provide a zip code for zooming the Project Map.</span>
+            </fieldset>
         </div>
     </div>
     <div class="row" style="vertical-align: top;">
@@ -432,15 +436,20 @@
         var geocodeMarker = L.marker();
 
         //zoom to address
-        jQuery('#btnZoomToAddress').click(function () {
-            
+        jQuery('#btnZoomToAddress').click(function() {
+
 
             var dataAddress = jQuery('#txtZoomAddress').val();
             var dataZip = jQuery('#txtZoomZip').val();
 
-            $.ajax({
-                    method: "POST",
-                    url: "@ViewDataTyped.GeocodeAddressUrl",
+            if (jQuery.trim(dataZip).length === 0) {
+                jQuery('#errZoomNoZipCode').show();
+            } else {
+
+                jQuery('#errZoomNoZipCode').hide();
+                $.ajax({
+                        method: "POST",
+                        url: "@ViewDataTyped.GeocodeAddressUrl",
                     data: { address: dataAddress, zip: dataZip }
                 })
                 .done(function (msg) {
@@ -459,6 +468,7 @@
                     }
 
                 });
+            }
 
         });
 
