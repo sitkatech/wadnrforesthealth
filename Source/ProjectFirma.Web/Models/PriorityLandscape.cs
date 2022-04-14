@@ -99,7 +99,21 @@ namespace ProjectFirma.Web.Models
                     pclFeatureCollection, "#2dc3a1", 1,
                     LayerInitialVisibility.Hide);
 
-                layerGeoJsons.Add(pclGeoJson);
+                var pclBoundary = new LayerGeoJson("PCL boundary lines", FirmaWebConfiguration.WebMapServiceUrl,
+                    "WADNRForestHealth:vGeoServerPclBoundaryLine", "", 1,
+                    LayerInitialVisibility.Show, "/Content/leaflet/images/washington_priority_landscape.png");
+
+                var pclTreatment = new LayerGeoJson("PCL treatment priority", FirmaWebConfiguration.WebMapServiceUrl,
+                    "WADNRForestHealth:vGeoServerPclLandscapeTreatmentPriority", "", (decimal)0.8,
+                    LayerInitialVisibility.Show, "/Content/leaflet/images/washington_priority_landscape.png");
+
+                var pclWildfires = new LayerGeoJson("PCL wildfires", FirmaWebConfiguration.WebMapServiceUrl,
+                    "WADNRForestHealth:vGeoServerPclWildfireResponseBenefit", "", (decimal)0.8,
+                    LayerInitialVisibility.Show, "/Content/leaflet/images/washington_priority_landscape.png");
+
+                layerGeoJsons.Add(pclBoundary);
+                layerGeoJsons.Add(pclTreatment);
+                layerGeoJsons.Add(pclWildfires);
             }
 
 

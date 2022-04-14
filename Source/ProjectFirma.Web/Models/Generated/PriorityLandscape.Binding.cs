@@ -27,7 +27,9 @@ namespace ProjectFirma.Web.Models
         {
             this.PclBoundaryLines = new HashSet<PclBoundaryLine>();
             this.PclLandscapeTreatmentPriorities = new HashSet<PclLandscapeTreatmentPriority>();
+            this.PclVectorRankeds = new HashSet<PclVectorRanked>();
             this.PclWildfireResponseBenefits = new HashSet<PclWildfireResponseBenefit>();
+            this.PodVectorRankeds = new HashSet<PodVectorRanked>();
             this.PriorityLandscapeFileResources = new HashSet<PriorityLandscapeFileResource>();
             this.ProjectPriorityLandscapes = new HashSet<ProjectPriorityLandscape>();
             this.ProjectPriorityLandscapeUpdates = new HashSet<ProjectPriorityLandscapeUpdate>();
@@ -71,7 +73,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return PclBoundaryLines.Any() || PclLandscapeTreatmentPriorities.Any() || PclWildfireResponseBenefits.Any() || PriorityLandscapeFileResources.Any() || ProjectPriorityLandscapes.Any() || ProjectPriorityLandscapeUpdates.Any();
+            return PclBoundaryLines.Any() || PclLandscapeTreatmentPriorities.Any() || PclVectorRankeds.Any() || PclWildfireResponseBenefits.Any() || PodVectorRankeds.Any() || PriorityLandscapeFileResources.Any() || ProjectPriorityLandscapes.Any() || ProjectPriorityLandscapeUpdates.Any();
         }
 
         /// <summary>
@@ -91,9 +93,19 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(PclLandscapeTreatmentPriority).Name);
             }
 
+            if(PclVectorRankeds.Any())
+            {
+                dependentObjects.Add(typeof(PclVectorRanked).Name);
+            }
+
             if(PclWildfireResponseBenefits.Any())
             {
                 dependentObjects.Add(typeof(PclWildfireResponseBenefit).Name);
+            }
+
+            if(PodVectorRankeds.Any())
+            {
+                dependentObjects.Add(typeof(PodVectorRanked).Name);
             }
 
             if(PriorityLandscapeFileResources.Any())
@@ -116,7 +128,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscape).Name, typeof(PclBoundaryLine).Name, typeof(PclLandscapeTreatmentPriority).Name, typeof(PclWildfireResponseBenefit).Name, typeof(PriorityLandscapeFileResource).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectPriorityLandscapeUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscape).Name, typeof(PclBoundaryLine).Name, typeof(PclLandscapeTreatmentPriority).Name, typeof(PclVectorRanked).Name, typeof(PclWildfireResponseBenefit).Name, typeof(PodVectorRanked).Name, typeof(PriorityLandscapeFileResource).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectPriorityLandscapeUpdate).Name};
 
 
         /// <summary>
@@ -151,7 +163,17 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in PclVectorRankeds.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in PclWildfireResponseBenefits.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in PodVectorRankeds.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -189,7 +211,9 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<PclBoundaryLine> PclBoundaryLines { get; set; }
         public virtual ICollection<PclLandscapeTreatmentPriority> PclLandscapeTreatmentPriorities { get; set; }
+        public virtual ICollection<PclVectorRanked> PclVectorRankeds { get; set; }
         public virtual ICollection<PclWildfireResponseBenefit> PclWildfireResponseBenefits { get; set; }
+        public virtual ICollection<PodVectorRanked> PodVectorRankeds { get; set; }
         public virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual ICollection<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual ICollection<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }

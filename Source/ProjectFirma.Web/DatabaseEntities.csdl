@@ -80,6 +80,7 @@
     <EntitySet Name="OrganizationTypeRelationshipType" EntityType="ProjectFirma.Web.Models.OrganizationTypeRelationshipType" />
     <EntitySet Name="PclBoundaryLine" EntityType="ProjectFirma.Web.Models.PclBoundaryLine" />
     <EntitySet Name="PclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.PclLandscapeTreatmentPriority" />
+    <EntitySet Name="PclVectorRanked" EntityType="ProjectFirma.Web.Models.PclVectorRanked" />
     <EntitySet Name="PclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.PclWildfireResponseBenefit" />
     <EntitySet Name="PerformanceMeasure" EntityType="ProjectFirma.Web.Models.PerformanceMeasure" />
     <EntitySet Name="PerformanceMeasureActual" EntityType="ProjectFirma.Web.Models.PerformanceMeasureActual" />
@@ -97,6 +98,7 @@
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.PersonStewardOrganization" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.PersonStewardRegion" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
+    <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.PodVectorRanked" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.PriorityLandscape" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.PriorityLandscapeFileResource" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Program" />
@@ -167,7 +169,9 @@
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.vGeoServerPclBoundaryLine" />
     <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.vGeoServerPclLandscapeTreatmentPriority" />
+    <EntitySet Name="vGeoServerPclVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPclVectorRanked" />
     <EntitySet Name="vGeoServerPclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.vGeoServerPclWildfireResponseBenefit" />
+    <EntitySet Name="vGeoServerPodVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPodVectorRanked" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
     <EntitySet Name="vLoaStageGrantAllocation" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocation" />
     <EntitySet Name="vLoaStageGrantAllocationAward" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocationAward" />
@@ -764,6 +768,10 @@
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PclLandscapeTreatmentPriorities" EntitySet="PclLandscapeTreatmentPriority" />
     </AssociationSet>
+    <AssociationSet Name="FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PclVectorRankeds" EntitySet="PclVectorRanked" />
+    </AssociationSet>
     <AssociationSet Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PclWildfireResponseBenefits" EntitySet="PclWildfireResponseBenefit" />
@@ -983,6 +991,10 @@
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
     </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
@@ -2383,6 +2395,16 @@
     <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PclLandscapeTreatmentPriorities" ToRole="PriorityLandscape" />
   </EntityType>
+  <EntityType Name="PclVectorRanked">
+    <Key>
+      <PropertyRef Name="PclVectorRankedID" />
+    </Key>
+    <Property Name="PclVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
+    <Property Name="Feature" Type="Geometry" Nullable="false" />
+    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PclVectorRankeds" ToRole="PriorityLandscape" />
+  </EntityType>
   <EntityType Name="PclWildfireResponseBenefit">
     <Key>
       <PropertyRef Name="PclWildfireResponseBenefitID" />
@@ -2678,6 +2700,16 @@
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="PersonStewardTaxonomyBranches" ToRole="Person" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" FromRole="PersonStewardTaxonomyBranches" ToRole="TaxonomyBranch" />
   </EntityType>
+  <EntityType Name="PodVectorRanked">
+    <Key>
+      <PropertyRef Name="PodVectorRankedID" />
+    </Key>
+    <Property Name="PodVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
+    <Property Name="Feature" Type="Geometry" Nullable="false" />
+    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PodVectorRankeds" ToRole="PriorityLandscape" />
+  </EntityType>
   <EntityType Name="PriorityLandscape">
     <Key>
       <PropertyRef Name="PriorityLandscapeID" />
@@ -2689,7 +2721,9 @@
     <Property Name="PlanYear" Type="Int32" />
     <NavigationProperty Name="PclBoundaryLines" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclBoundaryLines" />
     <NavigationProperty Name="PclLandscapeTreatmentPriorities" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclLandscapeTreatmentPriorities" />
+    <NavigationProperty Name="PclVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclVectorRankeds" />
     <NavigationProperty Name="PclWildfireResponseBenefits" Relationship="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclWildfireResponseBenefits" />
+    <NavigationProperty Name="PodVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PodVectorRankeds" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />
@@ -3711,6 +3745,20 @@
     <Property Name="Feature" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
+  <EntityType Name="vGeoServerPclVectorRanked">
+    <Key>
+      <PropertyRef Name="PclVectorRankedID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="PriorityLandscapeID" />
+      <PropertyRef Name="Color" />
+    </Key>
+    <Property Name="PclVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
+    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Feature" Type="Geometry" />
+    <Property Name="Ogr_Geometry" Type="Geometry" />
+  </EntityType>
   <EntityType Name="vGeoServerPclWildfireResponseBenefit">
     <Key>
       <PropertyRef Name="PclWildfireResponseBenefitID" />
@@ -3719,6 +3767,20 @@
       <PropertyRef Name="Color" />
     </Key>
     <Property Name="PclWildfireResponseBenefitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
+    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Feature" Type="Geometry" />
+    <Property Name="Ogr_Geometry" Type="Geometry" />
+  </EntityType>
+  <EntityType Name="vGeoServerPodVectorRanked">
+    <Key>
+      <PropertyRef Name="PodVectorRankedID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="PriorityLandscapeID" />
+      <PropertyRef Name="Color" />
+    </Key>
+    <Property Name="PodVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
     <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
@@ -5607,6 +5669,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
+    <End Role="PclVectorRankeds" Type="ProjectFirma.Web.Models.PclVectorRanked" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PclVectorRankeds">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
     <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
     <End Role="PclWildfireResponseBenefits" Type="ProjectFirma.Web.Models.PclWildfireResponseBenefit" Multiplicity="*" />
@@ -6264,6 +6338,18 @@
       </Principal>
       <Dependent Role="PersonStewardTaxonomyBranches">
         <PropertyRef Name="TaxonomyBranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
+    <End Role="PodVectorRankeds" Type="ProjectFirma.Web.Models.PodVectorRanked" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
+      </Principal>
+      <Dependent Role="PodVectorRankeds">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
