@@ -132,6 +132,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
+        [ProjectLocationsViewFeature]
         public JsonNetJObjectResult GeocodeAddress(string address, string zip)
         {
             //https://wamas.watech.wa.gov/geocoder/service.asmx/FindAddress?address=&Consumer=FHT&zip=97210&city=&zip4=null

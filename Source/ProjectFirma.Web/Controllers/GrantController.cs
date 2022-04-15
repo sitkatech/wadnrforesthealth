@@ -697,6 +697,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        [GrantsViewFeature]
         public GridJsonNetJObjectResult<Agreement> GrantAgreementGridJsonData(GrantPrimaryKey grantPrimaryKey)
         {
             // 2/4/22 TK - need to walk "grant -> grant mod -> grant allocation -> AgreementGrantAllocation -> Agreement"
