@@ -105,5 +105,15 @@ namespace ProjectFirma.Web.Common
         {
             return "WADNRForestHealth:WashingtonLegislativeDistrict";//todo: move layer name to web config
         }
+
+        public static string GetPodWmsLayerName()
+        {
+            return "WADNRForestHealth:POD";//todo: move layer name to web config
+        }
+
+        public static string GetPclWmsLayerName()
+        {
+            return "WADNRForestHealth:PCL";//todo: move layer name to web config
+        }
     }
 }

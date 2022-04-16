@@ -79,44 +79,25 @@ namespace ProjectFirma.Web.Models
 
             if (priorityLandscape.HasPclLayerData())
             {
-                var pclFeatures = new List<Feature>();
 
-                //get the landscape boundary
-                pclFeatures.Add(DbGeometryToGeoJsonHelper.FromDbGeometry(priorityLandscape.PriorityLandscapeLocation));
-
-                var pclBoundaryLineFeatures = priorityLandscape.PclBoundaryLines.Select(x => DbGeometryToGeoJsonHelper.FromDbGeometry(x.Feature)).ToList();
-                pclFeatures.AddRange(pclBoundaryLineFeatures);
-
-                var pclLandscapeTreatmentPriorityFeatures = priorityLandscape.PclLandscapeTreatmentPriorities.Select(x => DbGeometryToGeoJsonHelper.FromDbGeometry(x.Feature)).ToList();
-                pclFeatures.AddRange(pclLandscapeTreatmentPriorityFeatures);
-
-                var pclWildfireFeatures = priorityLandscape.PclWildfireResponseBenefits.Select(x => DbGeometryToGeoJsonHelper.FromDbGeometry(x.Feature)).ToList();
-                pclFeatures.AddRange(pclWildfireFeatures);
-
-                FeatureCollection pclFeatureCollection = new FeatureCollection(pclFeatures);
-
-                var pclGeoJson = new LayerGeoJson("Wildfire Response Benefit by potential control lines (PCLs)",
-                    pclFeatureCollection, "#2dc3a1", 1,
+                var pclLayer = new LayerGeoJson("Wildfire Response Benefit by potential control lines (PCLs)", FirmaWebConfiguration.WebMapServiceUrl,
+                    FirmaWebConfiguration.GetPclWmsLayerName(), "", 1,
                     LayerInitialVisibility.Hide);
 
-                var pclBoundary = new LayerGeoJson("PCL boundary lines", FirmaWebConfiguration.WebMapServiceUrl,
-                    "WADNRForestHealth:vGeoServerPclBoundaryLine", "", 1,
-                    LayerInitialVisibility.Show, "/Content/leaflet/images/washington_priority_landscape.png");
+                layerGeoJsons.Add(pclLayer);
 
-                var pclTreatment = new LayerGeoJson("PCL treatment priority", FirmaWebConfiguration.WebMapServiceUrl,
-                    "WADNRForestHealth:vGeoServerPclLandscapeTreatmentPriority", "", (decimal)0.8,
-                    LayerInitialVisibility.Show, "/Content/leaflet/images/washington_priority_landscape.png");
-
-                var pclWildfires = new LayerGeoJson("PCL wildfires", FirmaWebConfiguration.WebMapServiceUrl,
-                    "WADNRForestHealth:vGeoServerPclWildfireResponseBenefit", "", (decimal)0.8,
-                    LayerInitialVisibility.Show, "/Content/leaflet/images/washington_priority_landscape.png");
-
-                layerGeoJsons.Add(pclBoundary);
-                layerGeoJsons.Add(pclTreatment);
-                layerGeoJsons.Add(pclWildfires);
             }
 
+            if (priorityLandscape.HasPodLayerData())
+            {
 
+                var podLayer = new LayerGeoJson("Landscape treatment prioritization by potential operational delineations (PODs)", FirmaWebConfiguration.WebMapServiceUrl,
+                    FirmaWebConfiguration.GetPodWmsLayerName(), "", 1,
+                    LayerInitialVisibility.Hide);
+
+                layerGeoJsons.Add(podLayer);
+
+            }
 
 
             return layerGeoJsons;
@@ -140,6 +121,14 @@ namespace ProjectFirma.Web.Models
                                    this.PclWildfireResponseBenefits.Any();
 
             return hasPclLayerData;
+        }
+
+        public bool HasPodLayerData()
+        {
+            bool podLayerData = this.PclVectorRankeds.Any() && this.PodVectorRankeds.Any() &&
+                                   this.PclBoundaryLines.Any();
+
+            return podLayerData;
         }
     }
 }
