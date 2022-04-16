@@ -58,9 +58,13 @@ namespace ProjectFirma.Web.Models
             var priorityLandscapeLayerGeoJson = new LayerGeoJson(priorityLandscape.DisplayName,
                 new List<PriorityLandscape> { priorityLandscape }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
+
+
             var projectDetailedLocationsLayerGeoJson =
                 Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
             var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
+
+
 
             var layerGeoJsons = new List<LayerGeoJson>
             {
@@ -71,6 +75,30 @@ namespace ProjectFirma.Web.Models
                 projectDetailedLocationsLayerGeoJson,
                 projectTreatmentAreasLayerGeoJson
             };
+
+
+            if (priorityLandscape.HasPclLayerData())
+            {
+
+                var pclLayer = new LayerGeoJson("Wildfire Response Benefit by potential control lines (PCLs)", FirmaWebConfiguration.WebMapServiceUrl,
+                    FirmaWebConfiguration.GetPclWmsLayerName(), "", 1,
+                    LayerInitialVisibility.Hide);
+
+                layerGeoJsons.Add(pclLayer);
+
+            }
+
+            if (priorityLandscape.HasPodLayerData())
+            {
+
+                var podLayer = new LayerGeoJson("Landscape treatment prioritization by potential operational delineations (PODs)", FirmaWebConfiguration.WebMapServiceUrl,
+                    FirmaWebConfiguration.GetPodWmsLayerName(), "", 1,
+                    LayerInitialVisibility.Hide);
+
+                layerGeoJsons.Add(podLayer);
+
+            }
+
 
             return layerGeoJsons;
         }
@@ -85,6 +113,22 @@ namespace ProjectFirma.Web.Models
         {
             var priorityLandscapeFileResource = new PriorityLandscapeFileResource(this, fileResource, displayName) { Description = description };
             PriorityLandscapeFileResources.Add(priorityLandscapeFileResource);
+        }
+
+        public bool HasPclLayerData()
+        {
+            bool hasPclLayerData = this.PclBoundaryLines.Any() && this.PclLandscapeTreatmentPriorities.Any() &&
+                                   this.PclWildfireResponseBenefits.Any();
+
+            return hasPclLayerData;
+        }
+
+        public bool HasPodLayerData()
+        {
+            bool podLayerData = this.PclVectorRankeds.Any() && this.PodVectorRankeds.Any() &&
+                                   this.PclBoundaryLines.Any();
+
+            return podLayerData;
         }
     }
 }

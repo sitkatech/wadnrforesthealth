@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -337,6 +337,18 @@
     <Compile Include="Models\Generated\OrganizationTypeRelationshipType.Binding.cs" />
     <Compile Include="Models\Generated\OrganizationTypeRelationshipType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\OrganizationTypeRelationshipTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclBoundaryLine.Binding.cs" />
+    <Compile Include="Models\Generated\PclBoundaryLine.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclBoundaryLinePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclLandscapeTreatmentPriority.Binding.cs" />
+    <Compile Include="Models\Generated\PclLandscapeTreatmentPriority.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclLandscapeTreatmentPriorityPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclVectorRanked.Binding.cs" />
+    <Compile Include="Models\Generated\PclVectorRanked.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclVectorRankedPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PclWildfireResponseBenefit.Binding.cs" />
+    <Compile Include="Models\Generated\PclWildfireResponseBenefit.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PclWildfireResponseBenefitPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PerformanceMeasure.Binding.cs" />
     <Compile Include="Models\Generated\PerformanceMeasure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PerformanceMeasureActual.Binding.cs" />
@@ -391,6 +403,9 @@
     <Compile Include="Models\Generated\PersonStewardTaxonomyBranch.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardTaxonomyBranch.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PersonStewardTaxonomyBranchPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PodVectorRanked.Binding.cs" />
+    <Compile Include="Models\Generated\PodVectorRanked.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PodVectorRankedPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PriorityLandscape.Binding.cs" />
     <Compile Include="Models\Generated\PriorityLandscape.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PriorityLandscapeFileResource.Binding.cs" />
@@ -635,6 +650,11 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclBoundaryLine.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclLandscapeTreatmentPriority.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclVectorRanked.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPclWildfireResponseBenefit.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerPodVectorRanked.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPriorityLandscape.Binding.cs" />
     <Compile Include="Models\Generated\vLoaStageGrantAllocation.Binding.cs" />
     <Compile Include="Models\Generated\vLoaStageGrantAllocationAward.Binding.cs" />

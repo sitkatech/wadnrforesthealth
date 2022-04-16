@@ -106,6 +106,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<OrganizationTypeRelationshipType> OrganizationTypeRelationshipTypes { get; set; }
         public virtual DbSet<OrganizationType> OrganizationTypes { get; set; }
+        public virtual DbSet<PclBoundaryLine> PclBoundaryLines { get; set; }
+        public virtual DbSet<PclLandscapeTreatmentPriority> PclLandscapeTreatmentPriorities { get; set; }
+        public virtual DbSet<PclVectorRanked> PclVectorRankeds { get; set; }
+        public virtual DbSet<PclWildfireResponseBenefit> PclWildfireResponseBenefits { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PerformanceMeasureActual> PerformanceMeasureActuals { get; set; }
         public virtual DbSet<PerformanceMeasureActualSubcategoryOption> PerformanceMeasureActualSubcategoryOptions { get; set; }
@@ -122,6 +126,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
+        public virtual DbSet<PodVectorRanked> PodVectorRankeds { get; set; }
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
@@ -190,6 +195,11 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
+        public virtual DbSet<vGeoServerPclBoundaryLine> vGeoServerPclBoundaryLines { get; set; }
+        public virtual DbSet<vGeoServerPclLandscapeTreatmentPriority> vGeoServerPclLandscapeTreatmentPriorities { get; set; }
+        public virtual DbSet<vGeoServerPclVectorRanked> vGeoServerPclVectorRankeds { get; set; }
+        public virtual DbSet<vGeoServerPclWildfireResponseBenefit> vGeoServerPclWildfireResponseBenefits { get; set; }
+        public virtual DbSet<vGeoServerPodVectorRanked> vGeoServerPodVectorRankeds { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vLoaStageGrantAllocationAward> vLoaStageGrantAllocationAwards { get; set; }
         public virtual DbSet<vLoaStageGrantAllocationByProgramIndexProjectCode> vLoaStageGrantAllocationByProgramIndexProjectCodes { get; set; }
@@ -646,6 +656,18 @@ namespace ProjectFirma.Web.Models
                 case "OrganizationType":
                     return OrganizationTypes.GetOrganizationType(primaryKey);
 
+                case "PclBoundaryLine":
+                    return PclBoundaryLines.GetPclBoundaryLine(primaryKey);
+
+                case "PclLandscapeTreatmentPriority":
+                    return PclLandscapeTreatmentPriorities.GetPclLandscapeTreatmentPriority(primaryKey);
+
+                case "PclVectorRanked":
+                    return PclVectorRankeds.GetPclVectorRanked(primaryKey);
+
+                case "PclWildfireResponseBenefit":
+                    return PclWildfireResponseBenefits.GetPclWildfireResponseBenefit(primaryKey);
+
                 case "Person":
                     return People.GetPerson(primaryKey);
 
@@ -708,6 +730,9 @@ namespace ProjectFirma.Web.Models
 
                 case "PersonStewardTaxonomyBranch":
                     return PersonStewardTaxonomyBranches.GetPersonStewardTaxonomyBranch(primaryKey);
+
+                case "PodVectorRanked":
+                    return PodVectorRankeds.GetPodVectorRanked(primaryKey);
 
                 case "PriorityLandscapeFileResource":
                     return PriorityLandscapeFileResources.GetPriorityLandscapeFileResource(primaryKey);
