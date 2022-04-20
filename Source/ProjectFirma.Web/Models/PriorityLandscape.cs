@@ -77,25 +77,25 @@ namespace ProjectFirma.Web.Models
             };
 
 
-            if (priorityLandscape.HasPclLayerData())
+            if (priorityLandscape.HasDualBenefitPrioritizationLayerData())
             {
 
-                var pclLayer = new LayerGeoJson("Wildfire Response Benefit by potential control lines (PCLs)", FirmaWebConfiguration.WebMapServiceUrl,
+                var dualBenefitPrioritizationLayer = new LayerGeoJson("DNR Landscape Evaluation Dual Benefit Prioritization", FirmaWebConfiguration.WebMapServiceUrl,
                     FirmaWebConfiguration.GetPclWmsLayerName(), "", 1,
                     LayerInitialVisibility.Hide);
 
-                layerGeoJsons.Add(pclLayer);
+                layerGeoJsons.Add(dualBenefitPrioritizationLayer);
 
             }
 
-            if (priorityLandscape.HasPodLayerData())
+            if (priorityLandscape.HasPriorityRankingLayerData())
             {
 
-                var podLayer = new LayerGeoJson("Landscape treatment prioritization by potential operational delineations (PODs)", FirmaWebConfiguration.WebMapServiceUrl,
+                var priorityRankingLayer = new LayerGeoJson("DNR Landscape Evaluation Priority Ranking by POD and PCL", FirmaWebConfiguration.WebMapServiceUrl,
                     FirmaWebConfiguration.GetPodWmsLayerName(), "", 1,
                     LayerInitialVisibility.Hide);
 
-                layerGeoJsons.Add(podLayer);
+                layerGeoJsons.Add(priorityRankingLayer);
 
             }
 
@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Models
             PriorityLandscapeFileResources.Add(priorityLandscapeFileResource);
         }
 
-        public bool HasPclLayerData()
+        public bool HasDualBenefitPrioritizationLayerData()
         {
             bool hasPclLayerData = this.PclBoundaryLines.Any() && this.PclLandscapeTreatmentPriorities.Any() &&
                                    this.PclWildfireResponseBenefits.Any();
@@ -123,7 +123,7 @@ namespace ProjectFirma.Web.Models
             return hasPclLayerData;
         }
 
-        public bool HasPodLayerData()
+        public bool HasPriorityRankingLayerData()
         {
             bool podLayerData = this.PclVectorRankeds.Any() && this.PodVectorRankeds.Any() &&
                                    this.PclBoundaryLines.Any();
