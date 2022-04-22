@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Models
 
                 var dualBenefitPrioritizationLayer = new LayerGeoJson("DNR Landscape Evaluation Dual Benefit Prioritization", FirmaWebConfiguration.WebMapServiceUrl,
                     FirmaWebConfiguration.GetDualBenefitPrioritizationWmsLayerName(), "", 1,
-                    LayerInitialVisibility.Hide);
+                    LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
 
                 layerGeoJsons.Add(dualBenefitPrioritizationLayer);
 
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Models
 
                 var priorityRankingLayer = new LayerGeoJson("DNR Landscape Evaluation Priority Ranking by POD and PCL", FirmaWebConfiguration.WebMapServiceUrl,
                     FirmaWebConfiguration.GetPriorityRankingWmsLayerName(), "", 1,
-                    LayerInitialVisibility.Hide);
+                    LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
 
                 layerGeoJsons.Add(priorityRankingLayer);
 

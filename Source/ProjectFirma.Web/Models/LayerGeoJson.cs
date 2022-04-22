@@ -24,6 +24,7 @@ using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
 {
@@ -43,6 +44,8 @@ namespace ProjectFirma.Web.Models
         public readonly LayerGeoJsonType LayerType;
         public readonly bool HasCustomPopups;
         public string LayerIconImageLocation;
+        public bool HasCqlFilter;
+        public string CqlFilter;
 
         /// <summary>
         /// Constructor for LayerGeoJson with Vector Type
@@ -87,8 +90,21 @@ namespace ProjectFirma.Web.Models
         }
 
 
+        /// <summary>
+        /// Constructor for LayerGeoJson with WMS Type
+        /// </summary>
+        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string cqlFilter, bool hasCqlFilter) : this(layerName, mapServerUrl, mapServerLayerName, layerColor, layerOpacity, layerInitialVisibility)
+        {
+            if (!string.IsNullOrEmpty(cqlFilter) && hasCqlFilter)
+            {
+                HasCqlFilter = hasCqlFilter;
+                CqlFilter = cqlFilter;
+            }
+        }
 
-        
+
+
+
         public string GetGeoJsonFeatureCollectionAsJsonString()
         {
             return JsonTools.SerializeObject(GeoJsonFeatureCollection);

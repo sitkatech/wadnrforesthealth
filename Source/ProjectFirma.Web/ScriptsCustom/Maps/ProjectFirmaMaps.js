@@ -139,9 +139,15 @@ ProjectFirmaMaps.Map.prototype.addVectorLayer = function (currentLayer, overlayL
 };
 
 ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLayers) {
-    var layerGroup = new L.LayerGroup(),
-        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName }),
-        wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
+    var layerGroup = new L.LayerGroup();
+    var wmsParams;
+    if (currentLayer.HasCqlFilter) {
+        wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter });
+    } else {
+        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName});
+    }
+
+    var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
 
     if (currentLayer.LayerInitialVisibility === 1) {
         layerGroup.addTo(this.map);
