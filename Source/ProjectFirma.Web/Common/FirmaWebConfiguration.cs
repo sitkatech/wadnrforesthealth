@@ -106,14 +106,14 @@ namespace ProjectFirma.Web.Common
             return "WADNRForestHealth:WashingtonLegislativeDistrict";//todo: move layer name to web config
         }
 
-        public static string GetPodWmsLayerName()
+        public static string GetPriorityRankingWmsLayerName()
         {
-            return "WADNRForestHealth:POD";//todo: move layer name to web config
+            return "WADNRForestHealth:PriorityRanking";//todo: move layer name to web config
         }
 
-        public static string GetPclWmsLayerName()
+        public static string GetDualBenefitPrioritizationWmsLayerName()
         {
-            return "WADNRForestHealth:PCL";//todo: move layer name to web config
+            return "WADNRForestHealth:DualBenefitPrioritization";//todo: move layer name to web config
         }
     }
 }
