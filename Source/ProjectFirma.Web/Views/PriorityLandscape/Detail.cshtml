@@ -28,6 +28,7 @@
 @using MoreLinq
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Shared.FileResourceControls
 
@@ -113,6 +114,8 @@
                 </div>
 
                 <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
+                <img id="priorityRankingLegend" src="~/Content/leaflet/images/priorityRanking-legend.png" alt="" />
+
                 <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabelPluralized(), but are mapped in a single location. Therefore some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside of the @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel() boundary.</p>
             </div>
         </div>
@@ -216,5 +219,20 @@
         jQuery("#overviewTab").on("shown.bs.tab", function() {
             map.map.invalidateSize();
         });
+
+        jQuery('#priorityRankingLegend').hide();
+
+        map.map.on('layeradd', function(e) {
+            if (e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
+                jQuery('#priorityRankingLegend').show();
+            }
+        });
+
+        map.map.on('layerremove', function(e) {
+            if (e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
+                jQuery('#priorityRankingLegend').hide();
+            }
+        });
+
     });
 </script>
