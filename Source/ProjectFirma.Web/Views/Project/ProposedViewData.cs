@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.Project
 
             GridSpec = new ProposalsGridSpec(currentPerson) {ObjectNameSingular = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 
-            if (new ProjectCreateNewFeature().HasPermissionByPerson(CurrentPerson))
+            if (new ProjectCreateNewFeature().HasPermission(CurrentPerson))
             {
                 GridSpec.CustomExcelDownloadUrl =
                     SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.ProposalsExcelDownload());

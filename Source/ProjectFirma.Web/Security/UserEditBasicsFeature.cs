@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Person> _firmaFeatureWithContextImpl;
 
         public UserEditBasicsFeature()
-            : base(new List<Role> {Role.SitkaAdmin, Role.Admin, Role.Normal, Role.ProjectSteward})
+            : base(new List<Role> {Role.SitkaAdmin, Role.Admin, Role.Normal, Role.ProjectSteward, Role.Unassigned})
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Person>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Person contextModelObject)
         {
-            var hasContactManagePermissions = new ContactManageFeature().HasPermissionByPerson(person);
+            var hasContactManagePermissions = new ContactManageFeature().HasPermission(person);
             var hasAdminPermissions = new FirmaAdminFeature().HasPermissionByPerson(person);
 
             if (contextModelObject.PersonID == person.PersonID)

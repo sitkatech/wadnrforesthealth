@@ -9,8 +9,8 @@ namespace ProjectFirma.Web.Security
         public ContactManageFeature() : base(new List<IRole>{Role.Normal, Role.Admin, Role.ProjectSteward, Role.SitkaAdmin})
         {
         }
-
-        public override bool HasPermissionByPerson(Person person)
+        
+        public bool HasPermission(Person person)
         {
             if (person.HasRole(Role.Normal))
             {

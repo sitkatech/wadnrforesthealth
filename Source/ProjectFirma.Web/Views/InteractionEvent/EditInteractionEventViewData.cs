@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
             var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();      
 
-            UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+            UserCanManageContacts = new ContactManageFeature().HasPermission(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
             var allContactSimples = allPeople.Select(x => new PersonSimple(x)).ToList();
 

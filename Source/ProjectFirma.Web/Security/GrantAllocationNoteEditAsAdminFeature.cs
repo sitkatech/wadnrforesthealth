@@ -19,6 +19,11 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, GrantAllocationNote contextModelObject)
         {
+            var hasPermissionByPerson = HasPermissionByPerson(person);
+            if (!hasPermissionByPerson)
+            {
+                return new PermissionCheckResult(false, "You do not have permission for this action");
+            }
             return grantAllocationEditAsAdminFeature.HasPermission(person, contextModelObject.GrantAllocation);
         }
 

@@ -17,8 +17,14 @@ namespace ProjectFirma.Web.Security
             ActionFilter = _firmaFeatureWithContextImpl;
         }
 
+
         public PermissionCheckResult HasPermission(Person person, GrantNote contextModelObject)
         {
+            var hasPermissionByPerson = HasPermissionByPerson(person);
+            if (!hasPermissionByPerson)
+            {
+                return new PermissionCheckResult(false, "You do not have permission for this action");
+            }
             return grantEditAsAdminFeature.HasPermission(person, contextModelObject.Grant);
         }
 

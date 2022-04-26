@@ -30,8 +30,8 @@ namespace ProjectFirma.Web.Security
             : base(new List<Role> {Role.SitkaAdmin, Role.Admin, Role.ProjectSteward})
         {
         }
-
-        public override bool HasPermissionByPerson(Person person)
+       
+        public bool HasPermission(Person person)
         {
             if (!base.HasPermissionByPerson(person))
             {

@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Person contextModelObject)
         {
-            var hasPermissionByPerson = new ContactManageFeature().HasPermissionByPerson(person);
+            var hasPermissionByPerson = new ContactManageFeature().HasPermission(person) && HasPermissionByPerson(person);
             if (!hasPermissionByPerson)
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to delete {contextModelObject.FullNameFirstLast}");

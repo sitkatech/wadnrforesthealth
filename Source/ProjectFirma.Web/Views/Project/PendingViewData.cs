@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.Project
 
             GridSpec = new PendingGridSpec(currentPerson) {ObjectNameSingular = $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 
-            if (new ProjectCreateNewFeature().HasPermissionByPerson(CurrentPerson))
+            if (new ProjectCreateNewFeature().HasPermission(CurrentPerson))
             {
                 GridSpec.CustomExcelDownloadUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.PendingExcelDownload());
             }

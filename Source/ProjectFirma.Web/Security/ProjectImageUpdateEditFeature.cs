@@ -42,6 +42,11 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, ProjectImageUpdate contextModelObject)
         {
+            var hasPermissionByPerson = HasPermissionByPerson(person);
+            if (!hasPermissionByPerson)
+            {
+                return new PermissionCheckResult(false, $"You don't have permission to Edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectUpdateBatch.Project.DisplayName}");
+            }
             return new ProjectUpdateCreateEditSubmitFeature().HasPermission(person, contextModelObject.ProjectUpdateBatch.Project);
         }
     }

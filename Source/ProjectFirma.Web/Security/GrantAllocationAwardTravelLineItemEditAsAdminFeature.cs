@@ -20,8 +20,14 @@ namespace ProjectFirma.Web.Security
             _firmaFeatureWithContextImpl.DemandPermission(person, contextModelObject);
         }
 
+        //JJV 4/26/22 TODO
         public PermissionCheckResult HasPermission(Person person, GrantAllocationAwardTravelLineItem contextModelObject)
         {
+            var hasPermissionByPerson = HasPermissionByPerson(person);
+            if (!hasPermissionByPerson)
+            {
+                return new PermissionCheckResult(false, "You do not have permission for this action");
+            }
             return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }

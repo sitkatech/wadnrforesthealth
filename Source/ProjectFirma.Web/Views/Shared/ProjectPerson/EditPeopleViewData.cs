@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
                 ProjectPersonRelationshipType.PrimaryContact
             }).Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();
             PrimaryContactProjectPersonRelationshipType = new ProjectPersonRelationshipTypeSimple(ProjectPersonRelationshipType.PrimaryContact);
-            UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+            UserCanManageContacts = new ContactManageFeature().HasPermission(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
         }
     }
