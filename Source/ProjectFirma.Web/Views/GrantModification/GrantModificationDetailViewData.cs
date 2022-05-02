@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.GrantModification
             EditGrantModificationBasicsUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.EditGrantModification(grantModification.PrimaryKey));
             UserHasEditGrantModificationPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
 
-            var canEditDocuments = new GrantModificationEditAsAdminFeature().HasPermission(currentPerson, grantModification).HasPermission;
+            var canEditDocuments = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             GrantModificationDetailFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grantModification.GrantModificationFileResources)),
                 SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x => x.NewGrantModificationFiles(grantModification.PrimaryKey)),

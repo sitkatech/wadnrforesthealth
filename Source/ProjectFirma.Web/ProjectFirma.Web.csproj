@@ -805,6 +805,7 @@
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
     <Compile Include="Security\ContactCreateAndViewFeature.cs" />
     <Compile Include="Security\FirmaNormalUserAndAboveFeature.cs" />
+    <Compile Include="Security\FirmaProjectStewardAndAdminFeature.cs" />
     <Compile Include="Security\GisFeatureViewFeature.cs" />
     <Compile Include="Security\GisUploadAttemptCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardContractorInvoiceCreateFeature.cs" />

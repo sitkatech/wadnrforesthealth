@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Security
                 return new PermissionCheckResult(false, possiblePermissionDeniedMessage);
             }
 
-            if (new ProjectDeleteFeature().HasPermission(person, contextModelObject).HasPermission)
+            if (new ProjectDeleteFeature().HasPermissionByPerson(person))
             {
                 return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }

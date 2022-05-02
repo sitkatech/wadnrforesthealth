@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
                 SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantFiles(grant.PrimaryKey)),
-                new GrantEditAsAdminFeature().HasPermission(currentPerson, grant).HasPermission,
+                new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson),
                 Models.FieldDefinition.Grant
             );
         }

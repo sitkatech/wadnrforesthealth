@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Views.Shared
         }
 
         public ViewPageContentViewData(Models.FirmaPage firmaPage, Person currentPerson)
-            : this(firmaPage, new FirmaPageManageFeature().HasPermission(currentPerson, firmaPage).HasPermission)
+            : this(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson))
         {
         }
     }

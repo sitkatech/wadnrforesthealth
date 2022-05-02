@@ -24,30 +24,8 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Delete Project")]
-    public class ProjectDeleteFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<Project>
+    public class ProjectDeleteFeature : FirmaAdminFeature
     {
-        private readonly FirmaFeatureWithContextImpl<Project> _firmaFeatureWithContextImpl;
-
-        public ProjectDeleteFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
-        {
-            _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Project>(this);
-            ActionFilter = _firmaFeatureWithContextImpl;
-        }
-
-        public void DemandPermission(Person person, Project contextModelObject)
-        {
-            _firmaFeatureWithContextImpl.DemandPermission(person, contextModelObject);
-        }
-
-        public PermissionCheckResult HasPermission(Person person, Project contextModelObject)
-        {
-            var hasPermissionByPerson = HasPermissionByPerson(person);
-            if (!hasPermissionByPerson)
-            {
-                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to delete {contextModelObject.DisplayName}");
-            }
-            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
-        }
+       
     }
 }

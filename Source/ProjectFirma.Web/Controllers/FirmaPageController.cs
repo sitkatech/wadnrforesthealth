@@ -42,9 +42,10 @@ namespace ProjectFirma.Web.Controllers
         [FirmaPageViewListFeature]
         public GridJsonNetJObjectResult<FirmaPage> IndexGridJsonData()
         {
+            var hasPermission = new FirmaPageManageFeature().HasPermissionByPerson(CurrentPerson);
             var gridSpec = new FirmaPageGridSpec(new FirmaPageViewListFeature().HasPermissionByPerson(CurrentPerson));
             var firmaPages = HttpRequestStorage.DatabaseEntities.FirmaPages.ToList()
-                .Where(x => new FirmaPageManageFeature().HasPermission(CurrentPerson, x).HasPermission)
+                .Where(x => hasPermission)
                 .OrderBy(x => x.FirmaPageType.FirmaPageTypeDisplayName)
                 .ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FirmaPage>(firmaPages, gridSpec);

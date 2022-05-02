@@ -73,11 +73,5 @@ namespace ProjectFirma.Web.Security
             return PermissionCheckResult.MakeFailurePermissionCheckResult("You don\'t have permission to view this user.");
         }
 
-        //This should only ever be called by HasPermission
-        [Obsolete]
-        public new bool HasPermissionByPerson(Person person)
-        {
-            return base.HasPermissionByPerson(person);
-        }
     }
 }

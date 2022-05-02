@@ -55,7 +55,8 @@ namespace ProjectFirma.Web.Controllers
         private static List<FieldDefinition> GetFieldDefinitionsAndGridSpec(out FieldDefinitionGridSpec gridSpec, Person currentPerson)
         {
             gridSpec = new FieldDefinitionGridSpec(new FieldDefinitionViewListFeature().HasPermissionByPerson(currentPerson));
-            return FieldDefinition.All.Where(x => new FieldDefinitionManageFeature().HasPermission(currentPerson, x).HasPermission).OrderBy(x => x.GetFieldDefinitionLabel()).ToList();
+            var hasPermission = new FieldDefinitionManageFeature().HasPermissionByPerson(currentPerson);
+            return FieldDefinition.All.Where(x => hasPermission).OrderBy(x => x.GetFieldDefinitionLabel()).ToList();
         }
 
         [HttpGet]
@@ -103,7 +104,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var fieldDefinition = FieldDefinition.AllLookupDictionary[fieldDefinitionID];
             var fieldDefinitionData = HttpRequestStorage.DatabaseEntities.FieldDefinitionDatas.SingleOrDefault(x => x.FieldDefinitionID == fieldDefinitionID);
-            var showEditLink = new FieldDefinitionManageFeature().HasPermission(CurrentPerson, fieldDefinition).HasPermission;
+            var showEditLink = new FieldDefinitionManageFeature().HasPermissionByPerson(CurrentPerson);
             var editUrl = SitkaRoute<FieldDefinitionController>.BuildUrlFromExpression(t => t.Edit(fieldDefinition));
             var viewData = new FieldDefinitionDetailsViewData(fieldDefinitionData, showEditLink, editUrl, fieldDefinition.DefaultDefinitionHtmlString, fieldDefinition.GetFieldDefinitionLabel());
             return RazorPartialView<FieldDefinitionDetails, FieldDefinitionDetailsViewData>(viewData);

@@ -37,13 +37,13 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             : base(currentPerson, gisUploadAttempt, "Instructions", new GisImportSectionStatus(gisUploadAttempt))
         {
             PageTitle = $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
-            InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermission(currentPerson, firmaPage).HasPermission);
+            InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));
         }
 
         public InstructionsGisImportViewData(Person currentPerson, GisUploadAttempt gisUploadAttempt, GisImportSectionStatus gisImportSectionStatus, Models.FirmaPage firmaPage, bool isNewProjectCreate) 
             : base(currentPerson, gisUploadAttempt, "Instructions", gisImportSectionStatus)
         {
-            InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermission(currentPerson, firmaPage).HasPermission);
+            InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));
         }
     }
 }

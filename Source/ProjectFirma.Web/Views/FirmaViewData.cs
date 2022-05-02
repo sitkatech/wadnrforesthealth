@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views
             ProjectSearchUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Search(UrlTemplate.Parameter1String));
             ProjectFindUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Find(string.Empty));
 
-            var currentPersonCanManage = new FirmaPageManageFeature().HasPermission(currentPerson, firmaPage).HasPermission;
+            var currentPersonCanManage = new FirmaPageManageFeature().HasPermissionByPerson(currentPerson);
             ViewPageContentViewData = firmaPage != null ? new ViewPageContentViewData(firmaPage, currentPersonCanManage) : null;
             CustomFooterViewData =
                 new ViewPageContentViewData(Models.FirmaPage.GetFirmaPageByPageType(FirmaPageType.CustomFooter),

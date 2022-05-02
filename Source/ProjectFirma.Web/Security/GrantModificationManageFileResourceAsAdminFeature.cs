@@ -25,31 +25,8 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Edit or Delete Grant Modification File")]
-    public class GrantModificationManageFileResourceAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantModificationFileResource>
+    public class GrantModificationManageFileResourceAsAdminFeature : FirmaAdminFeature
     {
-        private readonly FirmaFeatureWithContextImpl<GrantModificationFileResource> _firmaFeatureWithContextImpl;
-
-        public GrantModificationManageFileResourceAsAdminFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
-        {
-            _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<GrantModificationFileResource>(this);
-            ActionFilter = _firmaFeatureWithContextImpl;
-        }
-
-        public void DemandPermission(Person person, GrantModificationFileResource contextModelObject)
-        {
-            _firmaFeatureWithContextImpl.DemandPermission(person, contextModelObject);
-        }
-
-        public PermissionCheckResult HasPermission(Person person, GrantModificationFileResource contextModelObject)
-        {
-            bool userHasPermission = HasPermissionByPerson(person);
-            if (userHasPermission)
-            {
-                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
-            }
-
-            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have access to manage the Grant Modification file {contextModelObject.DisplayName}");
-        }
+        
     }
 }

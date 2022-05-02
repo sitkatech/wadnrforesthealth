@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.ProgramInfo
             PageTitle = classificationSystem.ClassificationSystemDefinition;
             Classifications = classificationSystem.Classifications.SortByOrderThenName().ToList();
             ClassificationSystem = classificationSystem;
-            ShowEditButton = new FirmaPageManageFeature().HasPermission(currentPerson, null).HasPermission;
+            ShowEditButton = new FirmaPageManageFeature().HasPermissionByPerson(currentPerson);
             EditPageContentUrl = SitkaRoute<ClassificationSystemController>.BuildUrlFromExpression(t => t.EditInDialog(classificationSystem));
         }
     }

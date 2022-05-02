@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Controllers
             var customPage = MultiTenantHelpers.GetAllCustomPages()
                 .SingleOrDefault(x => x.CustomPageVanityUrl == vanityUrl);
             new CustomPageViewFeature().DemandPermission(CurrentPerson, customPage);
-            var hasPermission = new CustomPageManageFeature().HasPermission(CurrentPerson, customPage).HasPermission;
+            var hasPermission = new CustomPageManageFeature().HasPermissionByPerson(CurrentPerson);
             var viewData = new DisplayPageContentViewData(CurrentPerson, customPage, hasPermission);
             return RazorView<DisplayPageContent, DisplayPageContentViewData>(viewData);
         }
@@ -62,8 +62,9 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<CustomPage> IndexGridJsonData()
         {
             var gridSpec = new CustomPageGridSpec(new FirmaPageViewListFeature().HasPermissionByPerson(CurrentPerson));
+            var hasPermissionByPerson = new CustomPageManageFeature().HasPermissionByPerson(CurrentPerson);
             var customPages = HttpRequestStorage.DatabaseEntities.CustomPages.ToList()
-                .Where(x => new CustomPageManageFeature().HasPermission(CurrentPerson, x).HasPermission)
+                .Where(x => hasPermissionByPerson)
                 .OrderBy(x => x.CustomPageDisplayName)
                 .ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<CustomPage>(customPages, gridSpec);

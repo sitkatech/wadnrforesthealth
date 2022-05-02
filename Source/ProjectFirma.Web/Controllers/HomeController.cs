@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
             var firmaPageType = FirmaPageType.ToType(firmaPageTypeEnum);
             var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
 
-            var hasPermission = new FirmaPageManageFeature().HasPermission(CurrentPerson, firmaPage).HasPermission;
+            var hasPermission = new FirmaPageManageFeature().HasPermissionByPerson(CurrentPerson);
             var viewData = new DisplayPageContentViewData(CurrentPerson, firmaPage, hasPermission);
             return RazorView<DisplayPageContent, DisplayPageContentViewData>(viewData);
         }

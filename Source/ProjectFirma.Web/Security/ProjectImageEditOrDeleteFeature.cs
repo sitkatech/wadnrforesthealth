@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Security
             _firmaFeatureWithContextImpl.DemandPermission(person, contextModelObject);
         }
 
-        //JJV 4/26/22 TODO
+
         public PermissionCheckResult HasPermission(Person person, ProjectImage contextModelObject)
         {
 
