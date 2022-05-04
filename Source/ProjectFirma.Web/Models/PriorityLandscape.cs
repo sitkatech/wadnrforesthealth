@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("20-Year Plan for eastern WA", FirmaWebConfiguration.WebMapServiceUrl,
+            return new LayerGeoJson("Eastern Washington Priority Landscapes", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility, "/Content/leaflet/images/washington_priority_landscape.png");
         }
