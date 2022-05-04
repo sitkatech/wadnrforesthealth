@@ -222,14 +222,16 @@
 
         jQuery('#priorityRankingLegend').hide();
 
-        map.map.on('layeradd', function(e) {
-            if (e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
+        map.map.on('layeradd', function (e) {
+            
+            if (typeof(e.layer.wmsParams) !== 'undefined' && e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
                 jQuery('#priorityRankingLegend').show();
             }
         });
 
-        map.map.on('layerremove', function(e) {
-            if (e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
+        map.map.on('layerremove', function (e) {
+            
+            if (typeof(e.layer.wmsParams) !== 'undefined' && e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
                 jQuery('#priorityRankingLegend').hide();
             }
         });
