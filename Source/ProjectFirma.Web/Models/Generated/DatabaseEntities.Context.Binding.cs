@@ -130,6 +130,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
+        public virtual DbSet<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
+        public virtual DbSet<ProgramNotificationType> ProgramNotificationTypes { get; set; }
         public virtual DbSet<ProgramPerson> ProgramPeople { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
@@ -178,6 +180,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
         public virtual DbSet<ProjectUpdateHistory> ProjectUpdateHistories { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
+        public virtual DbSet<RecurrenceInterval> RecurrenceIntervals { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
         public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
@@ -743,6 +746,12 @@ namespace ProjectFirma.Web.Models
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
 
+                case "ProgramNotificationConfiguration":
+                    return ProgramNotificationConfigurations.GetProgramNotificationConfiguration(primaryKey);
+
+                case "ProgramNotificationType":
+                    return ProgramNotificationTypes.GetProgramNotificationType(primaryKey);
+
                 case "ProgramPerson":
                     return ProgramPeople.GetProgramPerson(primaryKey);
 
@@ -966,6 +975,9 @@ namespace ProjectFirma.Web.Models
                     var projectWorkflowSectionGrouping = ProjectWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectWorkflowSectionGrouping, "ProjectWorkflowSectionGrouping", primaryKey);
                     return projectWorkflowSectionGrouping;
+
+                case "RecurrenceInterval":
+                    return RecurrenceIntervals.GetRecurrenceInterval(primaryKey);
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);

@@ -16,8 +16,6 @@ CREATE TABLE [dbo].[Program](
 	[IsDefaultProgramForImportOnly] [bit] NOT NULL,
 	[ProgramFileResourceID] [int] NULL,
 	[ProgramNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[ProgramProjectsReceiveCompletedNotifications] [bit] NULL,
-	[ProjectNotificationRecurranceInterval] [int] NULL,
  CONSTRAINT [PK_Program_ProgramID] PRIMARY KEY CLUSTERED 
 (
 	[ProgramID] ASC
@@ -34,8 +32,6 @@ CREATE TABLE [dbo].[Program](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
-GO
-ALTER TABLE [dbo].[Program] ADD  DEFAULT ((0)) FOR [ProgramProjectsReceiveCompletedNotifications]
 GO
 ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_FileResource_ProgramFileResourceID_FileResourceID] FOREIGN KEY([ProgramFileResourceID])
 REFERENCES [dbo].[FileResource] ([FileResourceID])
@@ -61,8 +57,3 @@ ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_Person_Progr
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[Program] CHECK CONSTRAINT [FK_Program_Person_ProgramPrimaryContactPersonID_PersonID]
-GO
-ALTER TABLE [dbo].[Program]  WITH CHECK ADD  CONSTRAINT [FK_Program_ProjectNotificationRecurranceInterval_ProjectNotificationRecurranceIntervalID] FOREIGN KEY([ProjectNotificationRecurranceInterval])
-REFERENCES [dbo].[ProjectNotificationRecurranceInterval] ([ProjectNotificationRecurranceIntervalID])
-GO
-ALTER TABLE [dbo].[Program] CHECK CONSTRAINT [FK_Program_ProjectNotificationRecurranceInterval_ProjectNotificationRecurranceIntervalID]
