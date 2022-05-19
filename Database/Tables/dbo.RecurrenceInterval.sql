@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[RecurrenceInterval](
 	[RecurrenceIntervalID] [int] NOT NULL,
 	[RecurrenceIntervalInYears] [int] NOT NULL,
 	[RecurrenceIntervalDisplayName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[RecurrenceIntervalName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_RecurrenceInterval_RecurrenceIntervalID] PRIMARY KEY CLUSTERED 
 (
 	[RecurrenceIntervalID] ASC

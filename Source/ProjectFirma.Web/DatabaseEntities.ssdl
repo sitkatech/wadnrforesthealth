@@ -104,7 +104,6 @@
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramNotificationConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProgramNotificationType" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.Store.ProgramPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -152,7 +151,6 @@
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateConfiguration" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateHistory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RecurrenceInterval" EntityType="ProjectFirma.Web.Models.Store.RecurrenceInterval" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.Store.RelationshipType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.Store.SocrataDataMartRawJsonImport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.Store.StateProvince" store:Type="Tables" Schema="dbo" />
@@ -953,14 +951,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_ProgramNotificationConfiguration_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationConfiguration_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
-      <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
-      <End Role="ProgramNotificationType" EntitySet="ProgramNotificationType" />
-      <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID">
-      <End Role="RecurrenceInterval" EntitySet="RecurrenceInterval" />
       <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
     </AssociationSet>
     <AssociationSet Name="FK_ProgramPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProgramPerson_Person_PersonID">
@@ -2553,14 +2543,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="RecurrenceIntervalID" Type="int" Nullable="false" />
     <Property Name="NotificationEmailText" Type="varchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="ProgramNotificationType">
-    <Key>
-      <PropertyRef Name="ProgramNotificationTypeID" />
-    </Key>
-    <Property Name="ProgramNotificationTypeID" Type="int" Nullable="false" />
-    <Property Name="ProgramNotificationTypeName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="ProgramNotificationTypeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
-  </EntityType>
   <EntityType Name="ProgramPerson">
     <Key>
       <PropertyRef Name="ProgramPersonID" />
@@ -3098,14 +3080,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateStateID" Type="int" Nullable="false" />
     <Property Name="UpdatePersonID" Type="int" Nullable="false" />
     <Property Name="TransitionDate" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="RecurrenceInterval">
-    <Key>
-      <PropertyRef Name="RecurrenceIntervalID" />
-    </Key>
-    <Property Name="RecurrenceIntervalID" Type="int" Nullable="false" />
-    <Property Name="RecurrenceIntervalInYears" Type="int" Nullable="false" />
-    <Property Name="RecurrenceIntervalDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -5521,30 +5495,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProgramNotificationConfigurations">
         <PropertyRef Name="ProgramID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
-    <End Role="ProgramNotificationType" Type="ProjectFirma.Web.Models.Store.ProgramNotificationType" Multiplicity="1" />
-    <End Role="ProgramNotificationConfigurations" Type="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramNotificationType">
-        <PropertyRef Name="ProgramNotificationTypeID" />
-      </Principal>
-      <Dependent Role="ProgramNotificationConfigurations">
-        <PropertyRef Name="ProgramNotificationTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID">
-    <End Role="RecurrenceInterval" Type="ProjectFirma.Web.Models.Store.RecurrenceInterval" Multiplicity="1" />
-    <End Role="ProgramNotificationConfigurations" Type="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RecurrenceInterval">
-        <PropertyRef Name="RecurrenceIntervalID" />
-      </Principal>
-      <Dependent Role="ProgramNotificationConfigurations">
-        <PropertyRef Name="RecurrenceIntervalID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

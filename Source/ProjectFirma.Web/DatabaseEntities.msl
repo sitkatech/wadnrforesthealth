@@ -1266,15 +1266,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProgramNotificationType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationType">
-        <MappingFragment StoreEntitySet="ProgramNotificationType">
-          <ScalarProperty Name="ProgramNotificationTypeID" ColumnName="ProgramNotificationTypeID" />
-          <ScalarProperty Name="ProgramNotificationTypeName" ColumnName="ProgramNotificationTypeName" />
-          <ScalarProperty Name="ProgramNotificationTypeDisplayName" ColumnName="ProgramNotificationTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProgramPerson">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramPerson">
         <MappingFragment StoreEntitySet="ProgramPerson">
@@ -1857,15 +1848,6 @@
           <ScalarProperty Name="ProjectUpdateStateID" ColumnName="ProjectUpdateStateID" />
           <ScalarProperty Name="UpdatePersonID" ColumnName="UpdatePersonID" />
           <ScalarProperty Name="TransitionDate" ColumnName="TransitionDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RecurrenceInterval">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.RecurrenceInterval">
-        <MappingFragment StoreEntitySet="RecurrenceInterval">
-          <ScalarProperty Name="RecurrenceIntervalID" ColumnName="RecurrenceIntervalID" />
-          <ScalarProperty Name="RecurrenceIntervalInYears" ColumnName="RecurrenceIntervalInYears" />
-          <ScalarProperty Name="RecurrenceIntervalDisplayName" ColumnName="RecurrenceIntervalDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

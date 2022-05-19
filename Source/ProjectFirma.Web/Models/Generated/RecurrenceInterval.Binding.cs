@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[RecurrenceInterval]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using CodeFirstStoreFunctions;
@@ -16,118 +17,136 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[RecurrenceInterval] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[RecurrenceInterval]")]
-    public partial class RecurrenceInterval : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class RecurrenceInterval : IHavePrimaryKey
     {
+        public static readonly RecurrenceIntervalOneYear OneYear = RecurrenceIntervalOneYear.Instance;
+        public static readonly RecurrenceIntervalFiveYears FiveYears = RecurrenceIntervalFiveYears.Instance;
+        public static readonly RecurrenceIntervalTenYears TenYears = RecurrenceIntervalTenYears.Instance;
+        public static readonly RecurrenceIntervalFifteenYears FifteenYears = RecurrenceIntervalFifteenYears.Instance;
+
+        public static readonly List<RecurrenceInterval> All;
+        public static readonly ReadOnlyDictionary<int, RecurrenceInterval> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected RecurrenceInterval()
+        static RecurrenceInterval()
         {
-            this.ProgramNotificationConfigurations = new HashSet<ProgramNotificationConfiguration>();
+            All = new List<RecurrenceInterval> { OneYear, FiveYears, TenYears, FifteenYears };
+            AllLookupDictionary = new ReadOnlyDictionary<int, RecurrenceInterval>(All.ToDictionary(x => x.RecurrenceIntervalID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public RecurrenceInterval(int recurrenceIntervalID, int recurrenceIntervalInYears, string recurrenceIntervalDisplayName) : this()
+        protected RecurrenceInterval(int recurrenceIntervalID, int recurrenceIntervalInYears, string recurrenceIntervalDisplayName, string recurrenceIntervalName)
         {
-            this.RecurrenceIntervalID = recurrenceIntervalID;
-            this.RecurrenceIntervalInYears = recurrenceIntervalInYears;
-            this.RecurrenceIntervalDisplayName = recurrenceIntervalDisplayName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public RecurrenceInterval(int recurrenceIntervalInYears, string recurrenceIntervalDisplayName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.RecurrenceIntervalID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.RecurrenceIntervalInYears = recurrenceIntervalInYears;
-            this.RecurrenceIntervalDisplayName = recurrenceIntervalDisplayName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static RecurrenceInterval CreateNewBlank()
-        {
-            return new RecurrenceInterval(default(int), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return ProgramNotificationConfigurations.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(ProgramNotificationConfigurations.Any())
-            {
-                dependentObjects.Add(typeof(ProgramNotificationConfiguration).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(RecurrenceInterval).Name, typeof(ProgramNotificationConfiguration).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.RecurrenceIntervals.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in ProgramNotificationConfigurations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            RecurrenceIntervalID = recurrenceIntervalID;
+            RecurrenceIntervalInYears = recurrenceIntervalInYears;
+            RecurrenceIntervalDisplayName = recurrenceIntervalDisplayName;
+            RecurrenceIntervalName = recurrenceIntervalName;
         }
 
         [Key]
-        public int RecurrenceIntervalID { get; set; }
-        public int RecurrenceIntervalInYears { get; set; }
-        public string RecurrenceIntervalDisplayName { get; set; }
+        public int RecurrenceIntervalID { get; private set; }
+        public int RecurrenceIntervalInYears { get; private set; }
+        public string RecurrenceIntervalDisplayName { get; private set; }
+        public string RecurrenceIntervalName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return RecurrenceIntervalID; } set { RecurrenceIntervalID = value; } }
+        public int PrimaryKey { get { return RecurrenceIntervalID; } }
 
-        public virtual ICollection<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(RecurrenceInterval other)
         {
-            public const int RecurrenceIntervalDisplayName = 100;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.RecurrenceIntervalID == RecurrenceIntervalID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as RecurrenceInterval);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return RecurrenceIntervalID;
+        }
+
+        public static bool operator ==(RecurrenceInterval left, RecurrenceInterval right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(RecurrenceInterval left, RecurrenceInterval right)
+        {
+            return !Equals(left, right);
+        }
+
+        public RecurrenceIntervalEnum ToEnum { get { return (RecurrenceIntervalEnum)GetHashCode(); } }
+
+        public static RecurrenceInterval ToType(int enumValue)
+        {
+            return ToType((RecurrenceIntervalEnum)enumValue);
+        }
+
+        public static RecurrenceInterval ToType(RecurrenceIntervalEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case RecurrenceIntervalEnum.FifteenYears:
+                    return FifteenYears;
+                case RecurrenceIntervalEnum.FiveYears:
+                    return FiveYears;
+                case RecurrenceIntervalEnum.OneYear:
+                    return OneYear;
+                case RecurrenceIntervalEnum.TenYears:
+                    return TenYears;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum RecurrenceIntervalEnum
+    {
+        OneYear = 1,
+        FiveYears = 2,
+        TenYears = 3,
+        FifteenYears = 4
+    }
+
+    public partial class RecurrenceIntervalOneYear : RecurrenceInterval
+    {
+        private RecurrenceIntervalOneYear(int recurrenceIntervalID, int recurrenceIntervalInYears, string recurrenceIntervalDisplayName, string recurrenceIntervalName) : base(recurrenceIntervalID, recurrenceIntervalInYears, recurrenceIntervalDisplayName, recurrenceIntervalName) {}
+        public static readonly RecurrenceIntervalOneYear Instance = new RecurrenceIntervalOneYear(1, 1, @"1 Year", @"OneYear");
+    }
+
+    public partial class RecurrenceIntervalFiveYears : RecurrenceInterval
+    {
+        private RecurrenceIntervalFiveYears(int recurrenceIntervalID, int recurrenceIntervalInYears, string recurrenceIntervalDisplayName, string recurrenceIntervalName) : base(recurrenceIntervalID, recurrenceIntervalInYears, recurrenceIntervalDisplayName, recurrenceIntervalName) {}
+        public static readonly RecurrenceIntervalFiveYears Instance = new RecurrenceIntervalFiveYears(2, 5, @"5 Years", @"FiveYears");
+    }
+
+    public partial class RecurrenceIntervalTenYears : RecurrenceInterval
+    {
+        private RecurrenceIntervalTenYears(int recurrenceIntervalID, int recurrenceIntervalInYears, string recurrenceIntervalDisplayName, string recurrenceIntervalName) : base(recurrenceIntervalID, recurrenceIntervalInYears, recurrenceIntervalDisplayName, recurrenceIntervalName) {}
+        public static readonly RecurrenceIntervalTenYears Instance = new RecurrenceIntervalTenYears(3, 10, @"10 Years", @"TenYears");
+    }
+
+    public partial class RecurrenceIntervalFifteenYears : RecurrenceInterval
+    {
+        private RecurrenceIntervalFifteenYears(int recurrenceIntervalID, int recurrenceIntervalInYears, string recurrenceIntervalDisplayName, string recurrenceIntervalName) : base(recurrenceIntervalID, recurrenceIntervalInYears, recurrenceIntervalDisplayName, recurrenceIntervalName) {}
+        public static readonly RecurrenceIntervalFifteenYears Instance = new RecurrenceIntervalFifteenYears(4, 15, @"15 Years", @"FifteenYears");
     }
 }

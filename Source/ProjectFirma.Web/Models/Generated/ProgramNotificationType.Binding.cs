@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[ProgramNotificationType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using CodeFirstStoreFunctions;
@@ -16,119 +17,104 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProgramNotificationType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProgramNotificationType]")]
-    public partial class ProgramNotificationType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class ProgramNotificationType : IHavePrimaryKey
     {
+        public static readonly ProgramNotificationTypeCompletedProjectsMaintenanceReminder CompletedProjectsMaintenanceReminder = ProgramNotificationTypeCompletedProjectsMaintenanceReminder.Instance;
+
+        public static readonly List<ProgramNotificationType> All;
+        public static readonly ReadOnlyDictionary<int, ProgramNotificationType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected ProgramNotificationType()
+        static ProgramNotificationType()
         {
-            this.ProgramNotificationConfigurations = new HashSet<ProgramNotificationConfiguration>();
+            All = new List<ProgramNotificationType> { CompletedProjectsMaintenanceReminder };
+            AllLookupDictionary = new ReadOnlyDictionary<int, ProgramNotificationType>(All.ToDictionary(x => x.ProgramNotificationTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public ProgramNotificationType(int programNotificationTypeID, string programNotificationTypeName, string programNotificationTypeDisplayName) : this()
+        protected ProgramNotificationType(int programNotificationTypeID, string programNotificationTypeName, string programNotificationTypeDisplayName)
         {
-            this.ProgramNotificationTypeID = programNotificationTypeID;
-            this.ProgramNotificationTypeName = programNotificationTypeName;
-            this.ProgramNotificationTypeDisplayName = programNotificationTypeDisplayName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public ProgramNotificationType(string programNotificationTypeName, string programNotificationTypeDisplayName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.ProgramNotificationTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.ProgramNotificationTypeName = programNotificationTypeName;
-            this.ProgramNotificationTypeDisplayName = programNotificationTypeDisplayName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static ProgramNotificationType CreateNewBlank()
-        {
-            return new ProgramNotificationType(default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return ProgramNotificationConfigurations.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(ProgramNotificationConfigurations.Any())
-            {
-                dependentObjects.Add(typeof(ProgramNotificationConfiguration).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramNotificationType).Name, typeof(ProgramNotificationConfiguration).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.ProgramNotificationTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in ProgramNotificationConfigurations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            ProgramNotificationTypeID = programNotificationTypeID;
+            ProgramNotificationTypeName = programNotificationTypeName;
+            ProgramNotificationTypeDisplayName = programNotificationTypeDisplayName;
         }
 
         [Key]
-        public int ProgramNotificationTypeID { get; set; }
-        public string ProgramNotificationTypeName { get; set; }
-        public string ProgramNotificationTypeDisplayName { get; set; }
+        public int ProgramNotificationTypeID { get; private set; }
+        public string ProgramNotificationTypeName { get; private set; }
+        public string ProgramNotificationTypeDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProgramNotificationTypeID; } set { ProgramNotificationTypeID = value; } }
+        public int PrimaryKey { get { return ProgramNotificationTypeID; } }
 
-        public virtual ICollection<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(ProgramNotificationType other)
         {
-            public const int ProgramNotificationTypeName = 100;
-            public const int ProgramNotificationTypeDisplayName = 100;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.ProgramNotificationTypeID == ProgramNotificationTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ProgramNotificationType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return ProgramNotificationTypeID;
+        }
+
+        public static bool operator ==(ProgramNotificationType left, ProgramNotificationType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ProgramNotificationType left, ProgramNotificationType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public ProgramNotificationTypeEnum ToEnum { get { return (ProgramNotificationTypeEnum)GetHashCode(); } }
+
+        public static ProgramNotificationType ToType(int enumValue)
+        {
+            return ToType((ProgramNotificationTypeEnum)enumValue);
+        }
+
+        public static ProgramNotificationType ToType(ProgramNotificationTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case ProgramNotificationTypeEnum.CompletedProjectsMaintenanceReminder:
+                    return CompletedProjectsMaintenanceReminder;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum ProgramNotificationTypeEnum
+    {
+        CompletedProjectsMaintenanceReminder = 1
+    }
+
+    public partial class ProgramNotificationTypeCompletedProjectsMaintenanceReminder : ProgramNotificationType
+    {
+        private ProgramNotificationTypeCompletedProjectsMaintenanceReminder(int programNotificationTypeID, string programNotificationTypeName, string programNotificationTypeDisplayName) : base(programNotificationTypeID, programNotificationTypeName, programNotificationTypeDisplayName) {}
+        public static readonly ProgramNotificationTypeCompletedProjectsMaintenanceReminder Instance = new ProgramNotificationTypeCompletedProjectsMaintenanceReminder(1, @"CompletedProjectsMaintenanceReminder", @"Completed Projects Maintenance Reminder");
     }
 }

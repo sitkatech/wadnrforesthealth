@@ -104,7 +104,6 @@
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Program" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="ProgramNotificationConfiguration" EntityType="ProjectFirma.Web.Models.ProgramNotificationConfiguration" />
-    <EntitySet Name="ProgramNotificationType" EntityType="ProjectFirma.Web.Models.ProgramNotificationType" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.ProgramPerson" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
@@ -152,7 +151,6 @@
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.ProjectUpdateBatch" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.ProjectUpdateConfiguration" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
-    <EntitySet Name="RecurrenceInterval" EntityType="ProjectFirma.Web.Models.RecurrenceInterval" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
@@ -1030,14 +1028,6 @@
     <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
       <End Role="Treatments" EntitySet="Treatment" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
-      <End Role="ProgramNotificationType" EntitySet="ProgramNotificationType" />
-      <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID">
-      <End Role="RecurrenceInterval" EntitySet="RecurrenceInterval" />
-      <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
@@ -2808,17 +2798,6 @@
     <Property Name="RecurrenceIntervalID" Type="Int32" Nullable="false" />
     <Property Name="NotificationEmailText" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_Program_ProgramID" FromRole="ProgramNotificationConfigurations" ToRole="Program" />
-    <NavigationProperty Name="ProgramNotificationType" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" FromRole="ProgramNotificationConfigurations" ToRole="ProgramNotificationType" />
-    <NavigationProperty Name="RecurrenceInterval" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID" FromRole="ProgramNotificationConfigurations" ToRole="RecurrenceInterval" />
-  </EntityType>
-  <EntityType Name="ProgramNotificationType">
-    <Key>
-      <PropertyRef Name="ProgramNotificationTypeID" />
-    </Key>
-    <Property Name="ProgramNotificationTypeID" Type="Int32" Nullable="false" />
-    <Property Name="ProgramNotificationTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ProgramNotificationTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="ProgramNotificationConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" FromRole="ProgramNotificationType" ToRole="ProgramNotificationConfigurations" />
   </EntityType>
   <EntityType Name="ProgramPerson">
     <Key>
@@ -3500,15 +3479,6 @@
     <Property Name="TransitionDate" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="UpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" ToRole="UpdatePerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateHistories" ToRole="ProjectUpdateBatch" />
-  </EntityType>
-  <EntityType Name="RecurrenceInterval">
-    <Key>
-      <PropertyRef Name="RecurrenceIntervalID" />
-    </Key>
-    <Property Name="RecurrenceIntervalID" Type="Int32" Nullable="false" />
-    <Property Name="RecurrenceIntervalInYears" Type="Int32" Nullable="false" />
-    <Property Name="RecurrenceIntervalDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="ProgramNotificationConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID" FromRole="RecurrenceInterval" ToRole="ProgramNotificationConfigurations" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -6493,30 +6463,6 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProgramID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
-    <End Role="ProgramNotificationType" Type="ProjectFirma.Web.Models.ProgramNotificationType" Multiplicity="1" />
-    <End Role="ProgramNotificationConfigurations" Type="ProjectFirma.Web.Models.ProgramNotificationConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramNotificationType">
-        <PropertyRef Name="ProgramNotificationTypeID" />
-      </Principal>
-      <Dependent Role="ProgramNotificationConfigurations">
-        <PropertyRef Name="ProgramNotificationTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID">
-    <End Role="RecurrenceInterval" Type="ProjectFirma.Web.Models.RecurrenceInterval" Multiplicity="1" />
-    <End Role="ProgramNotificationConfigurations" Type="ProjectFirma.Web.Models.ProgramNotificationConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RecurrenceInterval">
-        <PropertyRef Name="RecurrenceIntervalID" />
-      </Principal>
-      <Dependent Role="ProgramNotificationConfigurations">
-        <PropertyRef Name="RecurrenceIntervalID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

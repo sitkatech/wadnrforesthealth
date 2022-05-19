@@ -185,13 +185,13 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramPeopleUrl, string.Format("Edit Program Editors for the {0} program", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)*@
                         Completed Project Notifications
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div>
-                    
+                        @ModalDialogFormHelper.ModalDialogFormLink("Create New Notification", ViewDataTyped.CreateNewProgramNotificationConfigurationUrl, "Create New Notification", new List<string>(), ViewDataTyped.UserHasEditProgramPermissions)
+
                     </div>
                 </div>
             </div>

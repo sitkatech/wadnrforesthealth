@@ -15,16 +15,17 @@ values
 create table dbo.RecurrenceInterval(
 	RecurrenceIntervalID int not null constraint PK_RecurrenceInterval_RecurrenceIntervalID primary key,
 	RecurrenceIntervalInYears int not null,
-	RecurrenceIntervalDisplayName varchar(100) not null
+	RecurrenceIntervalDisplayName varchar(100) not null,
+	RecurrenceIntervalName varchar(100) not null
 )
 
 
-insert into dbo.RecurrenceInterval(RecurrenceIntervalID, RecurrenceIntervalInYears, RecurrenceIntervalDisplayName)
+insert into dbo.RecurrenceInterval(RecurrenceIntervalID, RecurrenceIntervalInYears, RecurrenceIntervalDisplayName, RecurrenceIntervalName)
 values
-(1, 1, '1 Year'),
-(2, 5, '5 Years'),
-(3, 10, '10 Years'),
-(4, 15, '15 Years');
+(1, 1, '1 Year', 'OneYear'),
+(2, 5, '5 Years', 'FiveYears'),
+(3, 10, '10 Years', 'TenYears'),
+(4, 15, '15 Years', 'FifteenYears');
 
 
 create table dbo.ProgramNotificationConfiguration(

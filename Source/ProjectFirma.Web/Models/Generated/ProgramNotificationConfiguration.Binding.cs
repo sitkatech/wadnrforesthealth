@@ -65,11 +65,7 @@ namespace ProjectFirma.Web.Models
             this.Program = program;
             program.ProgramNotificationConfigurations.Add(this);
             this.ProgramNotificationTypeID = programNotificationType.ProgramNotificationTypeID;
-            this.ProgramNotificationType = programNotificationType;
-            programNotificationType.ProgramNotificationConfigurations.Add(this);
             this.RecurrenceIntervalID = recurrenceInterval.RecurrenceIntervalID;
-            this.RecurrenceInterval = recurrenceInterval;
-            recurrenceInterval.ProgramNotificationConfigurations.Add(this);
             this.NotificationEmailText = notificationEmailText;
         }
 
@@ -139,8 +135,8 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProgramNotificationConfigurationID; } set { ProgramNotificationConfigurationID = value; } }
 
         public virtual Program Program { get; set; }
-        public virtual ProgramNotificationType ProgramNotificationType { get; set; }
-        public virtual RecurrenceInterval RecurrenceInterval { get; set; }
+        public ProgramNotificationType ProgramNotificationType { get { return ProgramNotificationType.AllLookupDictionary[ProgramNotificationTypeID]; } }
+        public RecurrenceInterval RecurrenceInterval { get { return RecurrenceInterval.AllLookupDictionary[RecurrenceIntervalID]; } }
 
         public static class FieldLengths
         {

@@ -304,5 +304,51 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult EditProgramNotificationConfiguration()
+        {
+            EditProgramNotificationConfigurationViewModel viewModel = new EditProgramNotificationConfigurationViewModel();
+            return ViewEditProgramNotificationConfiguration(viewModel);
+        }
+
+        private PartialViewResult ViewEditProgramNotificationConfiguration(EditProgramNotificationConfigurationViewModel viewModel)
+        {
+            var recurranceIntervals = RecurrenceInterval.All.ToSelectListWithEmptyFirstRow(x => x.RecurrenceIntervalID.ToString(CultureInfo.InvariantCulture),
+                    x => x.RecurrenceIntervalDisplayName);
+
+            var programNotificationTypes = ProgramNotificationType.All.ToSelectListWithEmptyFirstRow(x => x.ProgramNotificationTypeID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProgramNotificationTypeDisplayName);
+
+            var viewData = new EditProgramNotificationConfigurationViewData(CurrentPerson, recurranceIntervals, programNotificationTypes);
+            return RazorPartialView<EditProgramNotificationConfiguration, EditProgramNotificationConfigurationViewData, EditProgramNotificationConfigurationViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditProgramNotificationConfiguration(EditProgramNotificationConfigurationViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditProgramNotificationConfiguration(viewModel);
+            }
+
+            var programNotificationConfiguration = HttpRequestStorage.DatabaseEntities.ProgramNotificationConfigurations.FirstOrDefault(x => x.ProgramNotificationConfigurationID == viewModel.ProgramNotificationConfigurationID);
+            if (programNotificationConfiguration != null)
+            {
+                viewModel.UpdateModel(programNotificationConfiguration);
+                SetMessageForDisplay("Program Notification Configuration saved successfully.");
+            }
+            else
+            {
+                //we have a new one
+            }
+            
+            
+
+            return new ModalDialogFormJsonResult();
+        }
+
     }
 }
