@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.Program
             Defaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisDefaultMappings : new List<GisDefaultMapping>();
             CrosswalkDefaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisCrossWalkDefaults : new List<GisCrossWalkDefault>();
             EditProgramPeopleUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.EditProgramPeople(program));
-            CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.EditProgramNotificationConfiguration());
+            CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(program));
 
         }
         private string GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition fieldDefinition)

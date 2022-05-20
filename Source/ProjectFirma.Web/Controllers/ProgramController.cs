@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
@@ -306,47 +307,69 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProgramManageFeature]
-        public PartialViewResult EditProgramNotificationConfiguration()
+        public PartialViewResult EditProgramNotificationConfiguration(ProgramNotificationConfigurationPrimaryKey programNotificationConfigurationPrimaryKey)
         {
-            EditProgramNotificationConfigurationViewModel viewModel = new EditProgramNotificationConfigurationViewModel();
+            var programNotificationConfiguration = programNotificationConfigurationPrimaryKey.EntityObject;
+            EditProgramNotificationConfigurationViewModel viewModel = new EditProgramNotificationConfigurationViewModel(programNotificationConfiguration);
             return ViewEditProgramNotificationConfiguration(viewModel);
         }
 
         private PartialViewResult ViewEditProgramNotificationConfiguration(EditProgramNotificationConfigurationViewModel viewModel)
         {
-            var recurranceIntervals = RecurrenceInterval.All.ToSelectListWithEmptyFirstRow(x => x.RecurrenceIntervalID.ToString(CultureInfo.InvariantCulture),
+            var recurrenceIntervals = RecurrenceInterval.All.ToSelectListWithEmptyFirstRow(x => x.RecurrenceIntervalID.ToString(CultureInfo.InvariantCulture),
                     x => x.RecurrenceIntervalDisplayName);
 
             var programNotificationTypes = ProgramNotificationType.All.ToSelectListWithEmptyFirstRow(x => x.ProgramNotificationTypeID.ToString(CultureInfo.InvariantCulture),
                 x => x.ProgramNotificationTypeDisplayName);
 
-            var viewData = new EditProgramNotificationConfigurationViewData(CurrentPerson, recurranceIntervals, programNotificationTypes);
+            var viewData = new EditProgramNotificationConfigurationViewData(CurrentPerson, recurrenceIntervals, programNotificationTypes);
             return RazorPartialView<EditProgramNotificationConfiguration, EditProgramNotificationConfigurationViewData, EditProgramNotificationConfigurationViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [ProgramManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProgramNotificationConfiguration(EditProgramNotificationConfigurationViewModel viewModel)
+        public ActionResult EditProgramNotificationConfiguration(ProgramNotificationConfigurationPrimaryKey programNotificationConfigurationPrimaryKey, EditProgramNotificationConfigurationViewModel viewModel)
         {
+            var programNotificationConfiguration = programNotificationConfigurationPrimaryKey.EntityObject;
+            Check.Require(programNotificationConfiguration.ProgramNotificationConfigurationID == viewModel.ProgramNotificationConfigurationID, "URL ProgramNotificationConfigurationID does not match Form ProgramNotificationConfigurationID. Should not happen.");
             if (!ModelState.IsValid)
             {
                 return ViewEditProgramNotificationConfiguration(viewModel);
             }
 
-            var programNotificationConfiguration = HttpRequestStorage.DatabaseEntities.ProgramNotificationConfigurations.FirstOrDefault(x => x.ProgramNotificationConfigurationID == viewModel.ProgramNotificationConfigurationID);
-            if (programNotificationConfiguration != null)
-            {
-                viewModel.UpdateModel(programNotificationConfiguration);
-                SetMessageForDisplay("Program Notification Configuration saved successfully.");
-            }
-            else
-            {
-                //we have a new one
-            }
-            
-            
+            viewModel.UpdateModel(programNotificationConfiguration);
+            SetMessageForDisplay("Program Notification Configuration saved successfully.");
 
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult NewProgramNotificationConfiguration(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var viewModel = new EditProgramNotificationConfigurationViewModel(program);
+            return ViewEditProgramNotificationConfiguration(viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewProgramNotificationConfiguration(ProgramPrimaryKey programPrimaryKey, EditProgramNotificationConfigurationViewModel viewModel)
+        {
+            var program = programPrimaryKey.EntityObject;
+            Check.Require(program.ProgramID == viewModel.ProgramID, "URL ProgramID does not match Form ProgramID. Should not happen.");
+            if (!ModelState.IsValid)
+            {
+                return ViewEditProgramNotificationConfiguration(viewModel);
+            }
+
+            var recurrenceInterval = RecurrenceInterval.All.Single(x => x.RecurrenceIntervalID == viewModel.RecurrenceIntervalID);
+            var programNotificationType = ProgramNotificationType.All.Single(x => x.ProgramNotificationTypeID == viewModel.ProgramNotificationTypeID);
+            var programNotificationConfiguration = ProgramNotificationConfiguration.CreateNewBlank(program, programNotificationType, recurrenceInterval);
+            viewModel.UpdateModel(programNotificationConfiguration);
+            SetMessageForDisplay("Program Notification Configuration created successfully.");
             return new ModalDialogFormJsonResult();
         }
 

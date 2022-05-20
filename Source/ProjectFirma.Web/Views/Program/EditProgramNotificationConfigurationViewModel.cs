@@ -59,12 +59,21 @@ namespace ProjectFirma.Web.Views.Program
         {
         }
 
+        public EditProgramNotificationConfigurationViewModel(Models.Program program)
+        {
+            ProgramID = program.ProgramID;
+            ProgramNotificationConfigurationID = -1;
+
+        }
+
         public EditProgramNotificationConfigurationViewModel(ProgramNotificationConfiguration programNotificationConfiguration)
         {
 
             RecurrenceIntervalID = programNotificationConfiguration.RecurrenceIntervalID;
             ProgramNotificationTypeID = programNotificationConfiguration.ProgramNotificationTypeID;
             NotificationEmailText = programNotificationConfiguration.NotificationEmailTextHtmlString;
+            ProgramID = programNotificationConfiguration.ProgramID;
+            ProgramNotificationConfigurationID = programNotificationConfiguration.ProgramNotificationConfigurationID;
 
         }
 
