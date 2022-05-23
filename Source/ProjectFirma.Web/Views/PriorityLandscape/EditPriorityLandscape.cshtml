@@ -52,6 +52,15 @@
                 @Html.ValidationMessageFor(m => m.PriorityLandscapeDescription)
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-xs-2 control-label">
+                @Html.LabelWithSugarFor(m => m.PriorityLandscapeAboveMapText)
+            </div>
+            <div class="col-xs-10">
+                @Html.TextAreaWithMaxLengthFor(x => x.PriorityLandscapeAboveMapText, new TextAreaForExtensions.TextAreaDimensions(null, 4), string.Empty)
+                @Html.ValidationMessageFor(m => m.PriorityLandscapeAboveMapText)
+            </div>
+        </div>
 
     </div>
 

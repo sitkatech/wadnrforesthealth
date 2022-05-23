@@ -43,6 +43,10 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         [DisplayName("Description")]
         public HtmlString PriorityLandscapeDescription { get; set; }
 
+        [DisplayName("Above Map Text")]
+        [StringLength(Models.PriorityLandscape.FieldLengths.PriorityLandscapeAboveMapText)]
+        public string PriorityLandscapeAboveMapText { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -57,11 +61,13 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
             PriorityLandscapeName = priorityLandscape.PriorityLandscapeName;
             PriorityLandscapeDescription = priorityLandscape.PriorityLandscapeDescriptionHtmlString;
             PriorityLandscapeID = priorityLandscape.PriorityLandscapeID;
+            PriorityLandscapeAboveMapText = priorityLandscape.PriorityLandscapeAboveMapText;
         }
 
         public void UpdateModel(Models.PriorityLandscape priorityLandscape)
         {
             priorityLandscape.PriorityLandscapeDescriptionHtmlString = PriorityLandscapeDescription;
+            priorityLandscape.PriorityLandscapeAboveMapText = PriorityLandscapeAboveMapText;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
