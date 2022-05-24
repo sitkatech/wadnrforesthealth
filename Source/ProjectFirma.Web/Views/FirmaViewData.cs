@@ -105,14 +105,14 @@ namespace ProjectFirma.Web.Views
 
             TopLevelLtInfoMenuItems.ForEach(x => x.ExtraTopLevelMenuCssClasses = new List<string> { "navigation-root-item" });
             TopLevelLtInfoMenuItems.SelectMany(x => x.ChildMenus).ToList().ForEach(x => x.ExtraTopLevelMenuCssClasses = new List<string> { "navigation-dropdown-item" });
-
+            
             HelpMenu = new LtInfoMenuItem("Help");
             HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem("Request Support",
                 ModalDialogFormHelper.ModalDialogFormLink("Request Support", RequestSupportUrl, "Request Support", 800,
                     "Submit Request", "Cancel", new List<string>(), null, null).ToString(), "ToolHelp"));
-            HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c=>c.Training()), currentPerson, "Training", "ToolHelp"));
-            HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem("About ProjectFirma",
-                @"<a href='http://www.sitkatech.com/products/ProjectFirma/projectfirma-faqs/' target='_blank'>About ProjectFirma <span class='glyphicon glyphicon-new-window'></span></a>", "ExternalHelp"));
+            //5/24/2022 TK & AM Commenting out until new training videos are added
+            //HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c=>c.Training()), currentPerson, "Training", "ToolHelp"));
+            HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem("About ProjectFirma",@"<a href='http://www.sitkatech.com/products/ProjectFirma/projectfirma-faqs/' target='_blank'>About ProjectFirma <span class='glyphicon glyphicon-new-window'></span></a>", "ExternalHelp"));
         }
 
         private static LtInfoMenuItem BuildAboutMenu(Person currentPerson)
