@@ -2724,6 +2724,7 @@
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="PriorityLandscapeDescription" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="PlanYear" Type="Int32" />
+    <Property Name="PriorityLandscapeAboveMapText" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PclBoundaryLines" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclBoundaryLines" />
     <NavigationProperty Name="PclLandscapeTreatmentPriorities" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclLandscapeTreatmentPriorities" />
     <NavigationProperty Name="PclVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclVectorRankeds" />

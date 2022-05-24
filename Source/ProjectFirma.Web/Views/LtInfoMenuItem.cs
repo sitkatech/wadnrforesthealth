@@ -109,7 +109,8 @@ namespace ProjectFirma.Web.Views
 
         private IEnumerable<LtInfoMenuItem> ChildenMenuItemsSecurityFiltered
         {
-            get { return ChildMenus.Where(mi => mi.HasUrl && mi.ShouldShow).ToList(); }
+            //5/24/2022 TK & AM - adding check for null or empty RawString so Help menu will output because all children use RawString and not HasUrl
+            get { return ChildMenus.Where(mi => (mi.HasUrl || !string.IsNullOrEmpty(mi.RawString)) && mi.ShouldShow).ToList(); }
         }
 
         private IEnumerable<LtInfoMenuItem> ChildenMenuItemsAndDividersSecurityFiltered
