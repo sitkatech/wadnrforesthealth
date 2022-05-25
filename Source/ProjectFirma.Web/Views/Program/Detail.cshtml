@@ -190,7 +190,8 @@
                 </div>
                 <div class="panel-body">
                     <div>
-                        @ModalDialogFormHelper.ModalDialogFormLink("Create New Notification", ViewDataTyped.CreateNewProgramNotificationConfigurationUrl, "Create New Notification", new List<string>(), ViewDataTyped.UserHasEditProgramPermissions)
+
+                        @Html.DhtmlxGrid(ViewDataTyped.NotificationsGridSpec, ViewDataTyped.NotificationsGridName, ViewDataTyped.NotificationsGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
 
                     </div>
                 </div>

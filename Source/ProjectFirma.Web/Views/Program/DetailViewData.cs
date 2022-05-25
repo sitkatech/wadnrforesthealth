@@ -41,6 +41,10 @@ namespace ProjectFirma.Web.Views.Program
         public string EditProgramPeopleUrl { get; }
         public string CreateNewProgramNotificationConfigurationUrl { get; }
 
+        public ProgramNotificationGridSpec NotificationsGridSpec { get; }
+        public string NotificationsGridName { get; }
+        public string NotificationsGridDataUrl { get; }
+
         public DetailViewData(Person currentPerson,
                               Models.Program program)
                               : base(currentPerson, program)
@@ -51,6 +55,14 @@ namespace ProjectFirma.Web.Views.Program
             CrosswalkDefaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisCrossWalkDefaults : new List<GisCrossWalkDefault>();
             EditProgramPeopleUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.EditProgramPeople(program));
             CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(program));
+
+            NotificationsGridSpec = new ProgramNotificationGridSpec(currentPerson, program)
+            {
+                ObjectNameSingular = $"Program Notification",
+                ObjectNamePlural = $"Program Notifications"
+            };
+            NotificationsGridName = "programNotificationsGrid";
+            NotificationsGridDataUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(tc => tc.ProgramNotificationGridJsonData(program));
 
         }
         private string GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition fieldDefinition)

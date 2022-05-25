@@ -373,5 +373,15 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [ProgramManageFeature]
+        public GridJsonNetJObjectResult<ProgramNotificationConfiguration> ProgramNotificationGridJsonData(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var gridSpec = new ProgramNotificationGridSpec(CurrentPerson, program);
+            var programNotifications = program.ProgramNotificationConfigurations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProgramNotificationConfiguration>(programNotifications, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
     }
 }

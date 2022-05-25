@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -719,6 +719,8 @@
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
     <Compile Include="Models\PersonRole.cs" />
+    <Compile Include="Models\ProgramNotificationConfiguration.cs" />
+    <Compile Include="Models\ProgramNotificationConfigurationModelExtensions.cs" />
     <Compile Include="Models\ProgramPerson.cs" />
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />
@@ -1165,6 +1167,7 @@
     <Compile Include="Views\Program\EditProgramPeopleViewModel.cs" />
     <Compile Include="Views\Program\EditViewModel.cs" />
     <Compile Include="Views\Program\EditViewModelValidator.cs" />
+    <Compile Include="Views\Program\ProgramNotificationGridSpec.cs" />
     <Compile Include="Views\Program\ProgramViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />

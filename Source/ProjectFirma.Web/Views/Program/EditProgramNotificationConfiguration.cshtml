@@ -58,7 +58,8 @@
         <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.NotificationEmailText)</div>
         <div class="col-xs-8">
             @Html.CkEditorFor(m => m.NotificationEmailText, CkEditorExtension.CkEditorToolbar.All, true, true, null)
-
+            <br/>
+            <p>The notification email will also include a link at the bottom to the relevant project. </p>
         </div>
     </div>
 
