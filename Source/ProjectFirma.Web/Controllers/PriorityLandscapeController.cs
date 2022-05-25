@@ -173,6 +173,37 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+        [HttpGet]
+        [PriorityLandscapeManageFeature]
+        public PartialViewResult EditPriorityLandscapeAboveMapText(PriorityLandscapePrimaryKey priorityLandscapePrimaryKey)
+        {
+            var priorityLandscape = priorityLandscapePrimaryKey.EntityObject;
+            var viewModel = new EditPriorityLandscapeAboveMapTextViewModel(priorityLandscape);
+            return ViewEditPriorityLandscapeAboveMapText(viewModel);
+        }
+
+        [HttpPost]
+        [PriorityLandscapeManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditPriorityLandscapeAboveMapText(PriorityLandscapePrimaryKey priorityLandscapePrimaryKey, EditPriorityLandscapeAboveMapTextViewModel viewModel)
+        {
+            var priorityLandscape = priorityLandscapePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditPriorityLandscapeAboveMapText(viewModel);
+            }
+
+            viewModel.UpdateModel(priorityLandscape);
+            SetMessageForDisplay($"{FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()} \"{priorityLandscape.PriorityLandscapeName}\" has been updated.");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditPriorityLandscapeAboveMapText(EditPriorityLandscapeAboveMapTextViewModel viewModel)
+        {
+            var viewData = new EditPriorityLandscapeAboveMapTextViewData();
+            return RazorPartialView<EditPriorityLandscapeAboveMapText, EditPriorityLandscapeAboveMapTextViewData, EditPriorityLandscapeAboveMapTextViewModel>(viewData, viewModel);
+        }
+
 
         #region  FileResources
 
