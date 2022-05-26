@@ -72,43 +72,46 @@
 
 <div class="row">
     <div class="col-lg-7">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPriorityLandscapeBasicsUrl, string.Format("Edit {0}", ViewDataTyped.PriorityLandscape.PriorityLandscapeName), 950, ViewDataTyped.UserHasPriorityLandscapeManagePermissions)
-                        Basics
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <strong>Name</strong>
-                            </div>
-                            <div class="col-sm-9">
-                                @ViewDataTyped.PriorityLandscape.PriorityLandscapeName
-                            </div>
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h3>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPriorityLandscapeBasicsUrl, string.Format("Edit {0}", ViewDataTyped.PriorityLandscape.PriorityLandscapeName), 950, ViewDataTyped.UserHasPriorityLandscapeManagePermissions)
+                    Basics
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="basicsLayout">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <strong>Name</strong>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <strong>Description</strong>
-                            </div>
-                            <div class="col-sm-9">
-                                @ViewDataTyped.PriorityLandscape.PriorityLandscapeDescriptionHtmlString
-                            </div>
+                        <div class="col-sm-9">
+                            @ViewDataTyped.PriorityLandscape.PriorityLandscapeName
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <strong>Description</strong>
+                        </div>
+                        <div class="col-sm-9">
+                            @ViewDataTyped.PriorityLandscape.PriorityLandscapeDescriptionHtmlString
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <div class="col-lg-5">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                <h2>Map</h2>
+                <h2>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPriorityLandscapeMapUrl, string.Format("Edit {0} above map text", ViewDataTyped.PriorityLandscape.PriorityLandscapeName), 950, ViewDataTyped.UserHasPriorityLandscapeManagePermissions)
+                    Map
+                </h2>
             </div>
             <div class="panel-body">
                 <p>
-                 @ViewDataTyped.PriorityLandscape.PriorityLandscapeAboveMapText
+                    @ViewDataTyped.PriorityLandscape.PriorityLandscapeAboveMapText
                 </p>
                 <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 320px; margin: 5px 0 5px 0">
                 </div>
@@ -223,14 +226,14 @@
         jQuery('#priorityRankingLegend').hide();
 
         map.map.on('layeradd', function (e) {
-            
+
             if (typeof(e.layer.wmsParams) !== 'undefined' && e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
                 jQuery('#priorityRankingLegend').show();
             }
         });
 
         map.map.on('layerremove', function (e) {
-            
+
             if (typeof(e.layer.wmsParams) !== 'undefined' && e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
                 jQuery('#priorityRankingLegend').hide();
             }

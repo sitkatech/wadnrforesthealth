@@ -48,6 +48,8 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         public FileDetailsViewData PriorityLandscapeFileDetailsViewData { get; set; }
         public string EditPriorityLandscapeBasicsUrl { get; set; }
 
+        public string EditPriorityLandscapeMapUrl { get; set; }
+
         public DetailViewData(Person currentPerson, Models.PriorityLandscape priorityLandscape, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
         {
             PriorityLandscape = priorityLandscape;
@@ -65,12 +67,13 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
                 ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()}",
                 SaveFiltersInCookie = true
             };
-          
+
             BasicProjectInfoGridDataUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(priorityLandscape));
 
-            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>priorityLandscape.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
+            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x => priorityLandscape.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
 
             EditPriorityLandscapeBasicsUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(plc => plc.EditPriorityLandscape(priorityLandscape));
+            EditPriorityLandscapeMapUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(plc => plc.EditPriorityLandscapeAboveMapText(priorityLandscape));
 
             PriorityLandscapeFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(priorityLandscape.PriorityLandscapeFileResources)),
@@ -80,6 +83,6 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
             );
         }
 
-        
+
     }
 }
