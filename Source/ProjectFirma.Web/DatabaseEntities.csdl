@@ -104,6 +104,7 @@
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Program" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="ProgramNotificationConfiguration" EntityType="ProjectFirma.Web.Models.ProgramNotificationConfiguration" />
+    <EntitySet Name="ProgramNotificationSent" EntityType="ProjectFirma.Web.Models.ProgramNotificationSent" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.ProgramPerson" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
@@ -913,6 +914,10 @@
       <End Role="ProgramPrimaryContactPerson" EntitySet="Person" />
       <End Role="ProgramsWhereYouAreTheProgramPrimaryContactPerson" EntitySet="Program" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationSent_Person_SentToPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationSent_Person_SentToPersonID_PersonID">
+      <End Role="SentToPerson" EntitySet="Person" />
+      <End Role="ProgramNotificationSentsWhereYouAreTheSentToPerson" EntitySet="ProgramNotificationSent" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProgramPerson_Person_PersonID" Association="ProjectFirma.Web.Models.FK_ProgramPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="ProgramPeople" EntitySet="ProgramPerson" />
@@ -1028,6 +1033,14 @@
     <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
       <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID">
+      <End Role="ProgramNotificationConfiguration" EntitySet="ProgramNotificationConfiguration" />
+      <End Role="ProgramNotificationSents" EntitySet="ProgramNotificationSent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationSent_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationSent_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProgramNotificationSents" EntitySet="ProgramNotificationSent" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
@@ -2637,6 +2650,7 @@
     <NavigationProperty Name="ProgramsWhereYouAreTheProgramCreatePerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramCreatePersonID_PersonID" FromRole="ProgramCreatePerson" ToRole="ProgramsWhereYouAreTheProgramCreatePerson" />
     <NavigationProperty Name="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramLastUpdatedByPersonID_PersonID" FromRole="ProgramLastUpdatedByPerson" ToRole="ProgramsWhereYouAreTheProgramLastUpdatedByPerson" />
     <NavigationProperty Name="ProgramsWhereYouAreTheProgramPrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramPrimaryContactPersonID_PersonID" FromRole="ProgramPrimaryContactPerson" ToRole="ProgramsWhereYouAreTheProgramPrimaryContactPerson" />
+    <NavigationProperty Name="ProgramNotificationSentsWhereYouAreTheSentToPerson" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_Person_SentToPersonID_PersonID" FromRole="SentToPerson" ToRole="ProgramNotificationSentsWhereYouAreTheSentToPerson" />
     <NavigationProperty Name="ProgramPeople" Relationship="ProjectFirma.Web.Models.FK_ProgramPerson_Person_PersonID" FromRole="Person" ToRole="ProgramPeople" />
     <NavigationProperty Name="ProjectsWhereYouAreTheProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProposingPerson" ToRole="ProjectsWhereYouAreTheProposingPerson" />
     <NavigationProperty Name="ProjectsWhereYouAreTheReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ReviewedByPerson" ToRole="ProjectsWhereYouAreTheReviewedByPerson" />
@@ -2799,6 +2813,20 @@
     <Property Name="RecurrenceIntervalID" Type="Int32" Nullable="false" />
     <Property Name="NotificationEmailText" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_Program_ProgramID" FromRole="ProgramNotificationConfigurations" ToRole="Program" />
+    <NavigationProperty Name="ProgramNotificationSents" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID" FromRole="ProgramNotificationConfiguration" ToRole="ProgramNotificationSents" />
+  </EntityType>
+  <EntityType Name="ProgramNotificationSent">
+    <Key>
+      <PropertyRef Name="ProgramNotificationSendID" />
+    </Key>
+    <Property Name="ProgramNotificationSendID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramNotificationConfigurationID" Type="Int32" Nullable="false" />
+    <Property Name="SentToPersonID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="ProgramNotificationSentDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="SentToPerson" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_Person_SentToPersonID_PersonID" FromRole="ProgramNotificationSentsWhereYouAreTheSentToPerson" ToRole="SentToPerson" />
+    <NavigationProperty Name="ProgramNotificationConfiguration" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID" FromRole="ProgramNotificationSents" ToRole="ProgramNotificationConfiguration" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_Project_ProjectID" FromRole="ProgramNotificationSents" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProgramPerson">
     <Key>
@@ -2855,6 +2883,7 @@
     <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
     <NavigationProperty Name="ProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProjectsWhereYouAreTheProposingPerson" ToRole="ProposingPerson" />
     <NavigationProperty Name="ReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ProjectsWhereYouAreTheReviewedByPerson" ToRole="ReviewedByPerson" />
+    <NavigationProperty Name="ProgramNotificationSents" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_Project_ProjectID" FromRole="Project" ToRole="ProgramNotificationSents" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="Projects" ToRole="ProjectType" />
     <NavigationProperty Name="ProjectClassifications" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="Project" ToRole="ProjectClassifications" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID" FromRole="Project" ToRole="ProjectCustomAttributes" />
@@ -6119,6 +6148,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProgramNotificationSent_Person_SentToPersonID_PersonID">
+    <End Role="SentToPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="ProgramNotificationSentsWhereYouAreTheSentToPerson" Type="ProjectFirma.Web.Models.ProgramNotificationSent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SentToPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationSentsWhereYouAreTheSentToPerson">
+        <PropertyRef Name="SentToPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProgramPerson_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
     <End Role="ProgramPeople" Type="ProjectFirma.Web.Models.ProgramPerson" Multiplicity="*" />
@@ -6464,6 +6505,30 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID">
+    <End Role="ProgramNotificationConfiguration" Type="ProjectFirma.Web.Models.ProgramNotificationConfiguration" Multiplicity="1" />
+    <End Role="ProgramNotificationSents" Type="ProjectFirma.Web.Models.ProgramNotificationSent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramNotificationConfiguration">
+        <PropertyRef Name="ProgramNotificationConfigurationID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationSents">
+        <PropertyRef Name="ProgramNotificationConfigurationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramNotificationSent_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProgramNotificationSents" Type="ProjectFirma.Web.Models.ProgramNotificationSent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationSents">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

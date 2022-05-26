@@ -1267,6 +1267,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProgramNotificationSent">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationSent">
+        <MappingFragment StoreEntitySet="ProgramNotificationSent">
+          <ScalarProperty Name="ProgramNotificationSendID" ColumnName="ProgramNotificationSendID" />
+          <ScalarProperty Name="ProgramNotificationConfigurationID" ColumnName="ProgramNotificationConfigurationID" />
+          <ScalarProperty Name="SentToPersonID" ColumnName="SentToPersonID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ProgramNotificationSentDate" ColumnName="ProgramNotificationSentDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProgramPerson">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramPerson">
         <MappingFragment StoreEntitySet="ProgramPerson">

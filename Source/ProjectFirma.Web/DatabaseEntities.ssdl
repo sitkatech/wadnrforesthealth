@@ -104,6 +104,7 @@
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramNotificationConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProgramNotificationSent" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationSent" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.Store.ProgramPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -952,6 +953,18 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProgramNotificationConfiguration_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationConfiguration_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
       <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationSent_Person_SentToPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationSent_Person_SentToPersonID_PersonID">
+      <End Role="SentToPerson" EntitySet="Person" />
+      <End Role="ProgramNotificationSentsWhereYouAreTheSentToPerson" EntitySet="ProgramNotificationSent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID">
+      <End Role="ProgramNotificationConfiguration" EntitySet="ProgramNotificationConfiguration" />
+      <End Role="ProgramNotificationSents" EntitySet="ProgramNotificationSent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationSent_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationSent_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProgramNotificationSents" EntitySet="ProgramNotificationSent" />
     </AssociationSet>
     <AssociationSet Name="FK_ProgramPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProgramPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -2543,6 +2556,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramNotificationTypeID" Type="int" Nullable="false" />
     <Property Name="RecurrenceIntervalID" Type="int" Nullable="false" />
     <Property Name="NotificationEmailText" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProgramNotificationSent">
+    <Key>
+      <PropertyRef Name="ProgramNotificationSendID" />
+    </Key>
+    <Property Name="ProgramNotificationSendID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramNotificationConfigurationID" Type="int" Nullable="false" />
+    <Property Name="SentToPersonID" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="ProgramNotificationSentDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="ProgramPerson">
     <Key>
@@ -5496,6 +5519,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProgramNotificationConfigurations">
         <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramNotificationSent_Person_SentToPersonID_PersonID">
+    <End Role="SentToPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="ProgramNotificationSentsWhereYouAreTheSentToPerson" Type="ProjectFirma.Web.Models.Store.ProgramNotificationSent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SentToPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationSentsWhereYouAreTheSentToPerson">
+        <PropertyRef Name="SentToPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID">
+    <End Role="ProgramNotificationConfiguration" Type="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" Multiplicity="1" />
+    <End Role="ProgramNotificationSents" Type="ProjectFirma.Web.Models.Store.ProgramNotificationSent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramNotificationConfiguration">
+        <PropertyRef Name="ProgramNotificationConfigurationID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationSents">
+        <PropertyRef Name="ProgramNotificationConfigurationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramNotificationSent_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="ProgramNotificationSents" Type="ProjectFirma.Web.Models.Store.ProgramNotificationSent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationSents">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

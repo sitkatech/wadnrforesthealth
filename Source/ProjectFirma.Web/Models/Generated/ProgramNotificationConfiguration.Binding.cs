@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProgramNotificationConfiguration()
         {
-
+            this.ProgramNotificationSents = new HashSet<ProgramNotificationSent>();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return ProgramNotificationSents.Any();
         }
 
         /// <summary>
@@ -93,13 +93,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(ProgramNotificationSents.Any())
+            {
+                dependentObjects.Add(typeof(ProgramNotificationSent).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramNotificationConfiguration).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramNotificationConfiguration).Name, typeof(ProgramNotificationSent).Name};
 
 
         /// <summary>
@@ -115,8 +119,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in ProgramNotificationSents.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -134,6 +149,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProgramNotificationConfigurationID; } set { ProgramNotificationConfigurationID = value; } }
 
+        public virtual ICollection<ProgramNotificationSent> ProgramNotificationSents { get; set; }
         public virtual Program Program { get; set; }
         public ProgramNotificationType ProgramNotificationType { get { return ProgramNotificationType.AllLookupDictionary[ProgramNotificationTypeID]; } }
         public RecurrenceInterval RecurrenceInterval { get { return RecurrenceInterval.AllLookupDictionary[RecurrenceIntervalID]; } }
