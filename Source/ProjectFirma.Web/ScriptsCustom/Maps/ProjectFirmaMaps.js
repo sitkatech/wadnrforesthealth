@@ -164,8 +164,43 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     this.vectorLayers.push(wmsLayer);
 };
 
+ProjectFirmaMaps.Map.prototype.addWestLayer = function (currentLayer, overlayLayers) {
+    var layerGroup = new L.LayerGroup();
+    var westParams;
+    if (currentLayer.HasCqlFilter) {
+        westParams = L.Util.extend(this.westParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter });
+    } else {
+        westParams = L.Util.extend(this.westParams, { layers: currentLayer.MapServerLayerName });
+    }
+
+    var westLayer = L.tileLayer.west(currentLayer.MapServerUrl, westParams).addTo(layerGroup);
+
+    if (currentLayer.LayerInitialVisibility === 1) {
+        layerGroup.addTo(this.map);
+    }
+
+    westLayer.on("click", function (e) { self.getFeatureInfo(e); });
+
+    if (currentLayer.LayerIconImageLocation != undefined && currentLayer.LayerIconImageLocation != null && currentLayer.LayerIconImageLocation != "") {
+        overlayLayers["<img src=\"" + currentLayer.LayerIconImageLocation + "\" />" + currentLayer.LayerName] =
+            layerGroup;
+    } else {
+        overlayLayers[currentLayer.LayerName] = layerGroup;
+    }
+    this.vectorLayers.push(westLayer);
+};
+
 ProjectFirmaMaps.Map.prototype.wmsParams = {
     service: "WMS",
+    transparent: true,
+    version: "1.1.1",
+    format: "image/png",
+    info_format: "application/json",
+    tiled: true
+};
+
+ProjectFirmaMaps.Map.prototype.westParams = {
+    service: "West",
     transparent: true,
     version: "1.1.1",
     format: "image/png",

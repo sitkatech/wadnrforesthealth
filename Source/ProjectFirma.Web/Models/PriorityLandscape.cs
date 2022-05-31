@@ -50,6 +50,13 @@ namespace ProjectFirma.Web.Models
                 layerInitialVisibility, "/Content/leaflet/images/washington_priority_landscape.png");
         }
 
+        public static LayerGeoJson GetPriorityLandscapeWestLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
+        {
+            return new LayerGeoJson("Western Washington Priority Landscapes", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetPriorityLandscapeWestLayerName(), layerColor, layerOpacity,
+                layerInitialVisibility, "/Content/leaflet/images/washington_priority_landscape.png");
+        }
+
         public static List<LayerGeoJson> GetPriorityLandscapeAndAssociatedProjectLayers(PriorityLandscape priorityLandscape, List<Project> projects)
         {
             var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
@@ -71,6 +78,8 @@ namespace ProjectFirma.Web.Models
                 projectLayerGeoJson,
                 priorityLandscapeLayerGeoJson,
                 GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.6m,
+                    LayerInitialVisibility.Show),
+                GetPriorityLandscapeWestLayerGeoJson("#59ACFF", 0.6m,
                     LayerInitialVisibility.Show),
                 projectDetailedLocationsLayerGeoJson,
                 projectTreatmentAreasLayerGeoJson
