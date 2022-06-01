@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditPriorityLandscapeViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditPriorityLandscapeAboveMapTextViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -32,36 +32,30 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.PriorityLandscape
 {
-    public class EditPriorityLandscapeViewModel : FormViewModel, IValidatableObject
+    public class EditPriorityLandscapeAboveMapTextViewModel : FormViewModel, IValidatableObject
     {
         public int PriorityLandscapeID { get; set; }
 
-        //9/18/20 TK - We do not want them to edit the Name because these are imported from another source
-        [DisplayName("Name")]
-        public string PriorityLandscapeName { get; }
+        [DisplayName("Above Map Text")]
+        [StringLength(Models.PriorityLandscape.FieldLengths.PriorityLandscapeAboveMapText)]
+        public string PriorityLandscapeAboveMapText { get; set; }
 
-        [DisplayName("Description")]
-        public HtmlString PriorityLandscapeDescription { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditPriorityLandscapeViewModel()
+        public EditPriorityLandscapeAboveMapTextViewModel()
         {
         }
 
-
-        public EditPriorityLandscapeViewModel(Models.PriorityLandscape priorityLandscape)
+        public EditPriorityLandscapeAboveMapTextViewModel(Models.PriorityLandscape priorityLandscape)
         {
-            PriorityLandscapeName = priorityLandscape.PriorityLandscapeName;
-            PriorityLandscapeDescription = priorityLandscape.PriorityLandscapeDescriptionHtmlString;
-            PriorityLandscapeID = priorityLandscape.PriorityLandscapeID;
+            PriorityLandscapeAboveMapText = priorityLandscape.PriorityLandscapeAboveMapText;
         }
 
         public void UpdateModel(Models.PriorityLandscape priorityLandscape)
         {
-            priorityLandscape.PriorityLandscapeDescriptionHtmlString = PriorityLandscapeDescription;
-
+            priorityLandscape.PriorityLandscapeAboveMapText = PriorityLandscapeAboveMapText;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
