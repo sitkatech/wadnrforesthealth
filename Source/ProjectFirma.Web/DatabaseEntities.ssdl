@@ -101,6 +101,7 @@
     <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.Store.PodVectorRanked" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PriorityLandscapeType" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.Store.ProgramPerson" store:Type="Tables" Schema="dbo" />
@@ -919,6 +920,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID">
+      <End Role="PriorityLandscapeType" EntitySet="PriorityLandscapeType" />
+      <End Role="PriorityLandscapes" EntitySet="PriorityLandscape" />
     </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
@@ -2487,6 +2492,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeDescription" Type="varchar(max)" />
     <Property Name="PlanYear" Type="int" />
     <Property Name="PriorityLandscapeAboveMapText" Type="varchar" MaxLength="2000" />
+    <Property Name="PriorityLandscapeTypeID" Type="int" />
   </EntityType>
   <EntityType Name="PriorityLandscapeFileResource">
     <Key>
@@ -2497,6 +2503,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="PriorityLandscapeType">
+    <Key>
+      <PropertyRef Name="PriorityLandscapeTypeID" />
+    </Key>
+    <Property Name="PriorityLandscapeTypeID" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PriorityLandscapeTypeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="Program">
     <Key>
@@ -5383,6 +5397,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="PodVectorRankeds">
         <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID">
+    <End Role="PriorityLandscapeType" Type="ProjectFirma.Web.Models.Store.PriorityLandscapeType" Multiplicity="0..1" />
+    <End Role="PriorityLandscapes" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscapeType">
+        <PropertyRef Name="PriorityLandscapeTypeID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapes">
+        <PropertyRef Name="PriorityLandscapeTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

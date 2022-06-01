@@ -101,6 +101,7 @@
     <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.PodVectorRanked" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.PriorityLandscape" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.PriorityLandscapeFileResource" />
+    <EntitySet Name="PriorityLandscapeType" EntityType="ProjectFirma.Web.Models.PriorityLandscapeType" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Program" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.ProgramPerson" />
@@ -995,6 +996,10 @@
     <AssociationSet Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID" Association="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID">
+      <End Role="PriorityLandscapeType" EntitySet="PriorityLandscapeType" />
+      <End Role="PriorityLandscapes" EntitySet="PriorityLandscape" />
     </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
@@ -2720,11 +2725,13 @@
     <Property Name="PriorityLandscapeDescription" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="PlanYear" Type="Int32" />
     <Property Name="PriorityLandscapeAboveMapText" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeTypeID" Type="Int32" />
     <NavigationProperty Name="PclBoundaryLines" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclBoundaryLines" />
     <NavigationProperty Name="PclLandscapeTreatmentPriorities" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclLandscapeTreatmentPriorities" />
     <NavigationProperty Name="PclVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclVectorRankeds" />
     <NavigationProperty Name="PclWildfireResponseBenefits" Relationship="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclWildfireResponseBenefits" />
     <NavigationProperty Name="PodVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PodVectorRankeds" />
+    <NavigationProperty Name="PriorityLandscapeType" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID" FromRole="PriorityLandscapes" ToRole="PriorityLandscapeType" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />
@@ -2740,6 +2747,15 @@
     <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_FileResource_FileResourceID" FromRole="PriorityLandscapeFileResources" ToRole="FileResource" />
     <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscapeFileResources" ToRole="PriorityLandscape" />
+  </EntityType>
+  <EntityType Name="PriorityLandscapeType">
+    <Key>
+      <PropertyRef Name="PriorityLandscapeTypeID" />
+    </Key>
+    <Property Name="PriorityLandscapeTypeID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityLandscapeTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="PriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID" FromRole="PriorityLandscapeType" ToRole="PriorityLandscapes" />
   </EntityType>
   <EntityType Name="Program">
     <Key>
@@ -6351,6 +6367,18 @@
       </Principal>
       <Dependent Role="PodVectorRankeds">
         <PropertyRef Name="PriorityLandscapeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID">
+    <End Role="PriorityLandscapeType" Type="ProjectFirma.Web.Models.PriorityLandscapeType" Multiplicity="0..1" />
+    <End Role="PriorityLandscapes" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscapeType">
+        <PropertyRef Name="PriorityLandscapeTypeID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapes">
+        <PropertyRef Name="PriorityLandscapeTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

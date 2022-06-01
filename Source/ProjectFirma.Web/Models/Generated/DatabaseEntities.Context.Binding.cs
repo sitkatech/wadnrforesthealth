@@ -129,6 +129,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PodVectorRanked> PodVectorRankeds { get; set; }
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
+        public virtual DbSet<PriorityLandscapeType> PriorityLandscapeTypes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProgramPerson> ProgramPeople { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
@@ -739,6 +740,9 @@ namespace ProjectFirma.Web.Models
 
                 case "PriorityLandscape":
                     return PriorityLandscapes.GetPriorityLandscape(primaryKey);
+
+                case "PriorityLandscapeType":
+                    return PriorityLandscapeTypes.GetPriorityLandscapeType(primaryKey);
 
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);

@@ -1209,6 +1209,7 @@
           <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
           <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
           <ScalarProperty Name="PriorityLandscapeAboveMapText" ColumnName="PriorityLandscapeAboveMapText" />
+          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1220,6 +1221,15 @@
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriorityLandscapeType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeType">
+        <MappingFragment StoreEntitySet="PriorityLandscapeType">
+          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
+          <ScalarProperty Name="PriorityLandscapeTypeName" ColumnName="PriorityLandscapeTypeName" />
+          <ScalarProperty Name="PriorityLandscapeTypeDisplayName" ColumnName="PriorityLandscapeTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
