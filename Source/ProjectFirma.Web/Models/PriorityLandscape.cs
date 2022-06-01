@@ -66,13 +66,6 @@ namespace ProjectFirma.Web.Models
                 new List<PriorityLandscape> { priorityLandscape }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
 
-
-            var projectDetailedLocationsLayerGeoJson =
-                Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
-            var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
-
-
-
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 projectLayerGeoJson,
@@ -80,10 +73,19 @@ namespace ProjectFirma.Web.Models
                 GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.6m,
                     LayerInitialVisibility.Show),
                 GetPriorityLandscapeWestLayerGeoJson("#59ACFF", 0.6m,
-                    LayerInitialVisibility.Show),
-                projectDetailedLocationsLayerGeoJson,
-                projectTreatmentAreasLayerGeoJson
+                    LayerInitialVisibility.Show)
             };
+
+
+            if (projects.Any())
+            {
+                var projectDetailedLocationsLayerGeoJson = Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
+                layerGeoJsons.Add(projectDetailedLocationsLayerGeoJson);
+
+                var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
+                layerGeoJsons.Add(projectTreatmentAreasLayerGeoJson);
+            }
+
 
 
             if (priorityLandscape.HasDualBenefitPrioritizationLayerData())

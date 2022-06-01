@@ -37,6 +37,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DbSpatial;
+using LtInfo.Common.DesignByContract;
 
 namespace ProjectFirma.Web.Models
 {
@@ -530,8 +531,10 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson ProjectTreatmentAreasToGeoJsonFeatureCollection(List<Project> projects)
         {
+            Check.Require(projects.Any(), "We need to have projects to create a GeoJsonFeatureCollection");
 
             var projectIDs = projects.Select(x => x.ProjectID).ToList();
+
 
             var projectTreatments = HttpRequestStorage.DatabaseEntities.Treatments
                 .Where(x => projectIDs.Contains(x.ProjectID))
