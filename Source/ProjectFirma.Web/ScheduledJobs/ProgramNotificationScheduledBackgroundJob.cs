@@ -13,7 +13,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     public class ProgramNotificationScheduledBackgroundJob : ScheduledBackgroundJobBase
     {
-        public new const string JobName = "Program Notifications";
+        public static ProgramNotificationScheduledBackgroundJob Instance;
 
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
@@ -22,73 +22,91 @@ namespace ProjectFirma.Web.ScheduledJobs
             FirmaEnvironmentType.Qa
         };
 
-        public ProgramNotificationScheduledBackgroundJob(string jobName, ConcurrencySetting concurrencySetting) : base(jobName, concurrencySetting)
+        static ProgramNotificationScheduledBackgroundJob()
+        {
+            Instance = new ProgramNotificationScheduledBackgroundJob();
+        }
+
+        public ProgramNotificationScheduledBackgroundJob() : base("Program Notifications", ConcurrencySetting.RunJobByItself)
         {
         }
 
-        protected  void RunJobImplementation()
-        {
-            //ProcessRemindersImpl();
-        }
+
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            throw new NotImplementedException();
+            ProcessRemindersImpl();
         }
 
         protected virtual void ProcessRemindersImpl()
         {
-            Logger.Info($"Processing '{JobName}' notifications.");
+            Logger.Info($"Processing '{JobName}'.");
 
-            var projectUpdateSettings = HttpRequestStorage.DatabaseEntities.ProgramNotificationConfigurations.ToList();
+            var programNotificationConfigurations = HttpRequestStorage.DatabaseEntities.ProgramNotificationConfigurations.ToList();
 
-            /*
-            foreach (var projectUpdateSetting in projectUpdateSettings)
+
+            foreach (var programNotificationConfiguration in programNotificationConfigurations)
             {
 
-                var notifications = new List<Notification>();
-                var tenantID = projectUpdateSetting.TenantID;
-                var databaseEntities = new DatabaseEntities(tenantID);
+                var notificationSents = new List<ProgramNotificationSent>();
+                var databaseEntities = new DatabaseEntities();
                 var projects = databaseEntities.Projects.ToList();
 
-                var tenantAttribute = databaseEntities.TenantAttributes.Single();
-                var reminderSubject = $"Time to update your {FieldDefinitionEnum.Project.ToType().GetFieldDefinitionLabelPluralizedForBackgroundJob(tenantAttribute.TenantID)}";
-                if (projectUpdateSetting.EnableProjectUpdateReminders)
+
+                var reminderSubject = $"Time to update your Project";
+
+                if (programNotificationConfiguration.ProgramNotificationTypeID == (int)ProgramNotificationTypeEnum.CompletedProjectsMaintenanceReminder)
                 {
-                    var projectUpdateKickOffDate = FirmaDateUtilities.LastReportingPeriodStartDateForBackgroundJob(projectUpdateSetting.ProjectUpdateKickOffDate.GetValueOrDefault());
-                    if (DateTime.Today == projectUpdateKickOffDate)
-                    {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject,
-                                                        projectUpdateSetting.ProjectUpdateKickOffIntroContent, tenantAttribute));
-                    }
+                    ProcessCompletedProjectsMaintenanceReminder(programNotificationConfiguration);
+
                 }
 
-                if (projectUpdateSetting.SendPeriodicReminders)
-                {
-                    if (TodayIsReminderDayForProjectUpdateConfiguration(projectUpdateSetting))
-                    {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject, projectUpdateSetting.ProjectUpdateReminderIntroContent, tenantAttribute));
-                        // notifyOnAll is false b/c we only send periodic reminders for projects whose updates haven't been submitted yet.
-                    }
-                }
+                //if (programNotificationConfiguration.EnableProjectUpdateReminders)
+                //{
+                //    var projectUpdateKickOffDate = FirmaDateUtilities.LastReportingPeriodStartDateForBackgroundJob(programNotificationConfiguration.ProjectUpdateKickOffDate.GetValueOrDefault());
+                //    if (DateTime.Today == projectUpdateKickOffDate)
+                //    {
+                //        notificationSents.AddRange(RunNotifications(projects, reminderSubject,
+                //                                        programNotificationConfiguration.ProjectUpdateKickOffIntroContent, tenantAttribute));
+                //    }
+                //}
 
-                if (projectUpdateSetting.SendCloseOutNotification)
-                {
-                    var closeOutReminderDate = FirmaDateUtilities.LastReportingPeriodEndDateForBackgroundJob(projectUpdateSetting.ProjectUpdateKickOffDate.GetValueOrDefault(), projectUpdateSetting.ProjectUpdateCloseOutDate.GetValueOrDefault());
-                    if (projectUpdateSetting.DaysBeforeCloseOutDateForReminder.HasValue)
-                    {
-                        closeOutReminderDate = closeOutReminderDate.AddDays(-projectUpdateSetting.DaysBeforeCloseOutDateForReminder.Value);
-                    }
-                    if (DateTime.Today == closeOutReminderDate)
-                    {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject,
-                            projectUpdateSetting.ProjectUpdateCloseOutIntroContent, tenantAttribute));
-                    }
-                }
+                //if (programNotificationConfiguration.SendPeriodicReminders)
+                //{
+                //    if (TodayIsReminderDayForProjectUpdateConfiguration(programNotificationConfiguration))
+                //    {
+                //        notificationSents.AddRange(RunNotifications(projects, reminderSubject, programNotificationConfiguration.ProjectUpdateReminderIntroContent, tenantAttribute));
+                //        // notifyOnAll is false b/c we only send periodic reminders for projects whose updates haven't been submitted yet.
+                //    }
+                //}
 
-                databaseEntities.AllNotifications.AddRange(notifications);
-                databaseEntities.SaveChangesWithNoAuditing(tenantID);
+                //if (programNotificationConfiguration.SendCloseOutNotification)
+                //{
+                //    var closeOutReminderDate = FirmaDateUtilities.LastReportingPeriodEndDateForBackgroundJob(programNotificationConfiguration.ProjectUpdateKickOffDate.GetValueOrDefault(), programNotificationConfiguration.ProjectUpdateCloseOutDate.GetValueOrDefault());
+                //    if (programNotificationConfiguration.DaysBeforeCloseOutDateForReminder.HasValue)
+                //    {
+                //        closeOutReminderDate = closeOutReminderDate.AddDays(-programNotificationConfiguration.DaysBeforeCloseOutDateForReminder.Value);
+                //    }
+                //    if (DateTime.Today == closeOutReminderDate)
+                //    {
+                //        notificationSents.AddRange(RunNotifications(projects, reminderSubject,
+                //            programNotificationConfiguration.ProjectUpdateCloseOutIntroContent, tenantAttribute));
+                //    }
+                //}
+
+                databaseEntities.ProgramNotificationSents.AddRange(notificationSents);
+                databaseEntities.SaveChangesWithNoAuditing();
             }
-            */
+
+        }
+
+        private void ProcessCompletedProjectsMaintenanceReminder(ProgramNotificationConfiguration programNotificationConfiguration)
+        {
+            var allProjectsInProgram = programNotificationConfiguration.Program.ProjectPrograms.Select(x => x.Project);
+            var recurrenceIntervalInYears = programNotificationConfiguration.RecurrenceInterval.RecurrenceIntervalInYears;
+
+            var projectsThatNeedNotifications = allProjectsInProgram.Where();
+
+
         }
 
         private static bool TodayIsReminderDayForProjectUpdateConfiguration()//ProjectUpdateSetting projectUpdateSetting)
