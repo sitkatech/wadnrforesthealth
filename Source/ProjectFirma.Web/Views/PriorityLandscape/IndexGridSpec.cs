@@ -30,7 +30,8 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
     {
         public IndexGridSpec(Person person)
         {
-            Add("PriorityLandscape", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.PriorityLandscapeName), 300, DhtmlxGridColumnFilterType.Html);
+            Add("PriorityLandscape", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.PriorityLandscapeName), 150, DhtmlxGridColumnFilterType.Html);
+            Add("Type", a => a.PriorityLandscapeType.PriorityLandscapeTypeDisplayName, 250);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjectsVisibleToUser(person).Count, 65);
         }
     }
