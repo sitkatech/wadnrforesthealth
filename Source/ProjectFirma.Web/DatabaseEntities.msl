@@ -2166,6 +2166,9 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
+          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
+          <ScalarProperty Name="PriorityLandscapeTypeName" ColumnName="PriorityLandscapeTypeName" />
+          <ScalarProperty Name="MapColor" ColumnName="MapColor" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

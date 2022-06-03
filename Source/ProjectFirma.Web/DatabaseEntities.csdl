@@ -3810,12 +3810,17 @@
       <PropertyRef Name="PriorityLandscapeID" />
       <PropertyRef Name="PrimaryKey" />
       <PropertyRef Name="PriorityLandscapeName" />
+      <PropertyRef Name="PriorityLandscapeTypeName" />
+      <PropertyRef Name="MapColor" />
     </Key>
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
+    <Property Name="PriorityLandscapeTypeID" Type="Int32" />
+    <Property Name="PriorityLandscapeTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="MapColor" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="vLoaStageGrantAllocation">
     <Key>

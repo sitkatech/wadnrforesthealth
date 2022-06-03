@@ -223,7 +223,10 @@ FROM [dbo].[vGeoServerPodVectorRanked] AS [vGeoServerPodVectorRanked]</DefiningQ
 [vGeoServerPriorityLandscape].[PrimaryKey] AS [PrimaryKey], 
 [vGeoServerPriorityLandscape].[PriorityLandscapeName] AS [PriorityLandscapeName], 
 [vGeoServerPriorityLandscape].[PriorityLandscapeLocation] AS [PriorityLandscapeLocation], 
-[vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry]
+[vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry], 
+[vGeoServerPriorityLandscape].[PriorityLandscapeTypeID] AS [PriorityLandscapeTypeID], 
+[vGeoServerPriorityLandscape].[PriorityLandscapeTypeName] AS [PriorityLandscapeTypeName], 
+[vGeoServerPriorityLandscape].[MapColor] AS [MapColor]
 FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vLoaStageGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocation">
@@ -3406,12 +3409,17 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscap
       <PropertyRef Name="PriorityLandscapeID" />
       <PropertyRef Name="PrimaryKey" />
       <PropertyRef Name="PriorityLandscapeName" />
+      <PropertyRef Name="PriorityLandscapeTypeName" />
+      <PropertyRef Name="MapColor" />
     </Key>
     <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
     <Property Name="PrimaryKey" Type="int" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="PriorityLandscapeLocation" Type="geometry" />
     <Property Name="Ogr_Geometry" Type="geometry" />
+    <Property Name="PriorityLandscapeTypeID" Type="int" />
+    <Property Name="PriorityLandscapeTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="MapColor" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationDetailed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

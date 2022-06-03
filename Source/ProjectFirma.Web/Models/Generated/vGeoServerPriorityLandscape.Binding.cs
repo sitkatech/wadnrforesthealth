@@ -26,11 +26,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public vGeoServerPriorityLandscape(int priorityLandscapeID, int primaryKey, string priorityLandscapeName) : this()
+        public vGeoServerPriorityLandscape(int priorityLandscapeID, int primaryKey, string priorityLandscapeName, int? priorityLandscapeTypeID, string priorityLandscapeTypeName, string mapColor) : this()
         {
             this.PriorityLandscapeID = priorityLandscapeID;
             this.PrimaryKey = primaryKey;
             this.PriorityLandscapeName = priorityLandscapeName;
+            this.PriorityLandscapeTypeID = priorityLandscapeTypeID;
+            this.PriorityLandscapeTypeName = priorityLandscapeTypeName;
+            this.MapColor = mapColor;
         }
 
         /// <summary>
@@ -41,6 +44,9 @@ namespace ProjectFirma.Web.Models
             this.PriorityLandscapeID = vGeoServerPriorityLandscape.PriorityLandscapeID;
             this.PrimaryKey = vGeoServerPriorityLandscape.PrimaryKey;
             this.PriorityLandscapeName = vGeoServerPriorityLandscape.PriorityLandscapeName;
+            this.PriorityLandscapeTypeID = vGeoServerPriorityLandscape.PriorityLandscapeTypeID;
+            this.PriorityLandscapeTypeName = vGeoServerPriorityLandscape.PriorityLandscapeTypeName;
+            this.MapColor = vGeoServerPriorityLandscape.MapColor;
             CallAfterConstructor(vGeoServerPriorityLandscape);
         }
 
@@ -49,5 +55,8 @@ namespace ProjectFirma.Web.Models
         public int PriorityLandscapeID { get; set; }
         public int PrimaryKey { get; set; }
         public string PriorityLandscapeName { get; set; }
+        public int? PriorityLandscapeTypeID { get; set; }
+        public string PriorityLandscapeTypeName { get; set; }
+        public string MapColor { get; set; }
     }
 }
