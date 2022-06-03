@@ -2755,6 +2755,7 @@
     <Property Name="PriorityLandscapeTypeID" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeTypeMapLayerColor" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID" FromRole="PriorityLandscapeType" ToRole="PriorityLandscapes" />
   </EntityType>
   <EntityType Name="Program">

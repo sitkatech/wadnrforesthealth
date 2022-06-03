@@ -31,23 +31,25 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PriorityLandscapeType(int priorityLandscapeTypeID, string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName) : this()
+        public PriorityLandscapeType(int priorityLandscapeTypeID, string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor) : this()
         {
             this.PriorityLandscapeTypeID = priorityLandscapeTypeID;
             this.PriorityLandscapeTypeName = priorityLandscapeTypeName;
             this.PriorityLandscapeTypeDisplayName = priorityLandscapeTypeDisplayName;
+            this.PriorityLandscapeTypeMapLayerColor = priorityLandscapeTypeMapLayerColor;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PriorityLandscapeType(string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName) : this()
+        public PriorityLandscapeType(string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PriorityLandscapeTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.PriorityLandscapeTypeName = priorityLandscapeTypeName;
             this.PriorityLandscapeTypeDisplayName = priorityLandscapeTypeDisplayName;
+            this.PriorityLandscapeTypeMapLayerColor = priorityLandscapeTypeMapLayerColor;
         }
 
 
@@ -56,7 +58,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static PriorityLandscapeType CreateNewBlank()
         {
-            return new PriorityLandscapeType(default(string), default(string));
+            return new PriorityLandscapeType(default(string), default(string), default(string));
         }
 
         /// <summary>
@@ -120,6 +122,7 @@ namespace ProjectFirma.Web.Models
         public int PriorityLandscapeTypeID { get; set; }
         public string PriorityLandscapeTypeName { get; set; }
         public string PriorityLandscapeTypeDisplayName { get; set; }
+        public string PriorityLandscapeTypeMapLayerColor { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeTypeID; } set { PriorityLandscapeTypeID = value; } }
 
@@ -129,6 +132,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int PriorityLandscapeTypeName = 100;
             public const int PriorityLandscapeTypeDisplayName = 100;
+            public const int PriorityLandscapeTypeMapLayerColor = 20;
         }
     }
 }

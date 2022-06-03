@@ -2511,6 +2511,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeTypeID" Type="int" Nullable="false" />
     <Property Name="PriorityLandscapeTypeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="PriorityLandscapeTypeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PriorityLandscapeTypeMapLayerColor" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <EntityType Name="Program">
     <Key>

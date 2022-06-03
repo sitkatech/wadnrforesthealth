@@ -1,13 +1,13 @@
 /*
 create lookup for PriorityLandscapeType(Name, DisplayName)
 */
-create table PriorityLandscapeType(PriorityLandscapeTypeID int not null primary key, PriorityLandscapeTypeName varchar(100) not null, PriorityLandscapeTypeDisplayName varchar(100) not null)
+create table PriorityLandscapeType(PriorityLandscapeTypeID int not null primary key, PriorityLandscapeTypeName varchar(100) not null, PriorityLandscapeTypeDisplayName varchar(100) not null, PriorityLandscapeTypeMapLayerColor varchar(20) not null)
 
 delete from dbo.PriorityLandscapeType;
-insert dbo.PriorityLandscapeType (PriorityLandscapeTypeID, PriorityLandscapeTypeName, PriorityLandscapeTypeDisplayName) 
+insert dbo.PriorityLandscapeType (PriorityLandscapeTypeID, PriorityLandscapeTypeName, PriorityLandscapeTypeDisplayName, PriorityLandscapeTypeMapLayerColor) 
 values 
-(1,'East', '20-Year Forest Health Strategic Plan: Eastern Washington Priority Landscape'),
-(2, 'West', 'West');
+(1,'East', '20-Year Forest Health Strategic Plan: Eastern Washington Priority Landscape', '#59ACFF'),
+(2, 'West', 'West', '#4cc28f');
 
 /*
 add column to PriorityLandscape FK to Type

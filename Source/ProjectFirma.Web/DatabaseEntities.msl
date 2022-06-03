@@ -1230,6 +1230,7 @@
           <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
           <ScalarProperty Name="PriorityLandscapeTypeName" ColumnName="PriorityLandscapeTypeName" />
           <ScalarProperty Name="PriorityLandscapeTypeDisplayName" ColumnName="PriorityLandscapeTypeDisplayName" />
+          <ScalarProperty Name="PriorityLandscapeTypeMapLayerColor" ColumnName="PriorityLandscapeTypeMapLayerColor" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
