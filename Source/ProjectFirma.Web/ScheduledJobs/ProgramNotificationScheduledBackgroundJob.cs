@@ -49,113 +49,79 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 var notificationSents = new List<ProgramNotificationSent>();
                 var databaseEntities = new DatabaseEntities();
-                var projects = databaseEntities.Projects.ToList();
-
-
-                var reminderSubject = $"Time to update your Project";
 
                 if (programNotificationConfiguration.ProgramNotificationTypeID == (int)ProgramNotificationTypeEnum.CompletedProjectsMaintenanceReminder)
                 {
-                    ProcessCompletedProjectsMaintenanceReminder(programNotificationConfiguration);
+                    notificationSents.AddRange(ProcessCompletedProjectsMaintenanceReminder(programNotificationConfiguration));
 
                 }
 
-                //if (programNotificationConfiguration.EnableProjectUpdateReminders)
-                //{
-                //    var projectUpdateKickOffDate = FirmaDateUtilities.LastReportingPeriodStartDateForBackgroundJob(programNotificationConfiguration.ProjectUpdateKickOffDate.GetValueOrDefault());
-                //    if (DateTime.Today == projectUpdateKickOffDate)
-                //    {
-                //        notificationSents.AddRange(RunNotifications(projects, reminderSubject,
-                //                                        programNotificationConfiguration.ProjectUpdateKickOffIntroContent, tenantAttribute));
-                //    }
-                //}
-
-                //if (programNotificationConfiguration.SendPeriodicReminders)
-                //{
-                //    if (TodayIsReminderDayForProjectUpdateConfiguration(programNotificationConfiguration))
-                //    {
-                //        notificationSents.AddRange(RunNotifications(projects, reminderSubject, programNotificationConfiguration.ProjectUpdateReminderIntroContent, tenantAttribute));
-                //        // notifyOnAll is false b/c we only send periodic reminders for projects whose updates haven't been submitted yet.
-                //    }
-                //}
-
-                //if (programNotificationConfiguration.SendCloseOutNotification)
-                //{
-                //    var closeOutReminderDate = FirmaDateUtilities.LastReportingPeriodEndDateForBackgroundJob(programNotificationConfiguration.ProjectUpdateKickOffDate.GetValueOrDefault(), programNotificationConfiguration.ProjectUpdateCloseOutDate.GetValueOrDefault());
-                //    if (programNotificationConfiguration.DaysBeforeCloseOutDateForReminder.HasValue)
-                //    {
-                //        closeOutReminderDate = closeOutReminderDate.AddDays(-programNotificationConfiguration.DaysBeforeCloseOutDateForReminder.Value);
-                //    }
-                //    if (DateTime.Today == closeOutReminderDate)
-                //    {
-                //        notificationSents.AddRange(RunNotifications(projects, reminderSubject,
-                //            programNotificationConfiguration.ProjectUpdateCloseOutIntroContent, tenantAttribute));
-                //    }
-                //}
-
                 databaseEntities.ProgramNotificationSents.AddRange(notificationSents);
                 databaseEntities.SaveChangesWithNoAuditing();
+
             }
 
         }
 
-        private void ProcessCompletedProjectsMaintenanceReminder(ProgramNotificationConfiguration programNotificationConfiguration)
+        private List<ProgramNotificationSent> ProcessCompletedProjectsMaintenanceReminder(ProgramNotificationConfiguration programNotificationConfiguration)
         {
             var allProjectsInProgram = programNotificationConfiguration.Program.ProjectPrograms.Select(x => x.Project);
             var recurrenceIntervalInYears = programNotificationConfiguration.RecurrenceInterval.RecurrenceIntervalInYears;
 
-            var projectsThatNeedNotifications = allProjectsInProgram.Where();
+            var completedProjects = allProjectsInProgram.Where(ap => ap.CompletionDate.HasValue && ap.CompletionDate.Value.AddYears(recurrenceIntervalInYears) > DateTime.Now);
 
+            var projectsNeedingNotification = new List<Project>();
+            
+            //check that notifications have not been sent for current interval
+            foreach (var project in completedProjects)
+            {
+                if (!project.ProgramNotificationSents.Any())
+                {
+                    //send notification!
+                    projectsNeedingNotification.Add(project);
+                    continue;
+                }
+
+                var lastNotificationSentDate = project.ProgramNotificationSents.OrderByDescending(x => x.ProgramNotificationSentDate).First().ProgramNotificationSentDate;
+                if (lastNotificationSentDate.AddYears(recurrenceIntervalInYears) > DateTime.Now)
+                {
+                    //send notification!
+                    projectsNeedingNotification.Add(project);
+                    continue;
+                }
+
+                //no need to send notification!
+            }
+
+            return RunNotifications(projectsNeedingNotification, programNotificationConfiguration);
 
         }
 
-        private static bool TodayIsReminderDayForProjectUpdateConfiguration()//ProjectUpdateSetting projectUpdateSetting)
+
+        private List<ProgramNotificationSent> RunNotifications(List<Project> projectsNeedingNotification, ProgramNotificationConfiguration programNotificationConfiguration)
         {
-            /*
-            var projectUpdateKickOffDate = FirmaDateUtilities.LastReportingPeriodStartDateForBackgroundJob(projectUpdateSetting.ProjectUpdateKickOffDate.GetValueOrDefault());
-            var projectUpdateCloseOutDate = FirmaDateUtilities.LastReportingPeriodEndDateForBackgroundJob(projectUpdateSetting.ProjectUpdateKickOffDate.GetValueOrDefault(), projectUpdateSetting.ProjectUpdateCloseOutDate.GetValueOrDefault());
-            var isReminderDay = DateTime.Today != projectUpdateKickOffDate && (DateTime.Today - projectUpdateKickOffDate).Days % projectUpdateSetting.ProjectUpdateReminderInterval == 0;
-            var isAfterCloseOut = DateTime.Today.IsDateAfter(projectUpdateCloseOutDate);
-            return isReminderDay && !isAfterCloseOut;
-            */
-            return false;
-        }
+            string contactSupportEmail = FirmaWebConfiguration.SitkaSupportEmail;
+            string reminderSubject = "Forest Health Tracker - Time to update your Project";
+            FileResource toolLogo = null;
+            string toolDisplayName = string.Empty;
 
-        /// <summary>
-        /// Sends a notification to all the primary contacts for the given tenant's projects.
-        /// </summary>
-        /// <param name="projectsForTenant"></param>
-        /// <param name="reminderSubject"></param>
-        /// <param name="introContent"></param>
-        /// <param name="notifyOnAll"></param>
-        /// <param name="attribute"></param>
-        private List<Notification> RunNotifications(IEnumerable<Project> projectsForTenant, string reminderSubject, string introContent)
-        {
-            /*
-            // Constrain to tenant boundaries.
-            var toolDisplayName = attribute.ToolDisplayName;
-            var contactSupportEmail = attribute.PrimaryContactPerson.Email;
-            var toolLogo = attribute.TenantSquareLogoFileResourceInfo;
-            var tenantID = attribute.TenantID;
+            var programNotificationHelper = new ProgramNotificationHelper(contactSupportEmail, programNotificationConfiguration.NotificationEmailText, reminderSubject, toolLogo, toolDisplayName);
 
-            var projectUpdateNotificationHelper = new ProjectUpdateNotificationHelper(contactSupportEmail, introContent, reminderSubject, toolLogo, toolDisplayName, tenantID);
 
-            var projectsToNotifyOn = projectsForTenant.AsQueryable().GetUpdatableProjectsThatHaveNotBeenSubmittedForBackgroundJob(tenantID);
+            var projectsGroupedByPrimaryContact = projectsNeedingNotification.Where(x => x.GetPrimaryContact() != null).GroupBy(x => x.GetPrimaryContact()).ToList();
+            var notifications = projectsGroupedByPrimaryContact.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x)).ToList();
 
-            var projectsGroupedByPrimaryContact =
-                projectsToNotifyOn.Where(x => x.GetPrimaryContact() != null).GroupBy(x => x.GetPrimaryContact())
-                    .ToList();
+            var message = $"Reminder emails sent to {projectsGroupedByPrimaryContact.Count} Primary Contacts for {projectsGroupedByPrimaryContact.Count} projects requiring an update.";
+            Logger.Info(message);
 
-            var notifications = projectsGroupedByPrimaryContact
-                .SelectMany(x => projectUpdateNotificationHelper.SendProjectUpdateReminderMessage(x)).ToList();
+            var projectsGroupedByPrivateLandowner = projectsNeedingNotification.Where(x => x.GetPrivateLandowner() != null).GroupBy(x => x.GetPrivateLandowner()).ToList();
+            notifications.AddRange(projectsGroupedByPrivateLandowner.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x)).ToList());
 
-            var message =
-                $"Reminder emails sent to {projectsGroupedByPrimaryContact.Count} {FieldDefinitionEnum.ProjectPrimaryContact.ToType().GetFieldDefinitionLabelPluralized()} for {projectsGroupedByPrimaryContact.Count} projects requiring an update.";
+            message = $"Reminder emails sent to {projectsGroupedByPrivateLandowner.Count} Private Landowner for {projectsGroupedByPrivateLandowner.Count} projects requiring an update.";
             Logger.Info(message);
 
             return notifications;
-            */
-            return new List<Notification>();
+            
         }
 
 

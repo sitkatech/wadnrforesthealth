@@ -35,22 +35,21 @@ namespace ProjectFirma.Web.ScheduledJobs
             ToolName = toolDisplayName;
         }
 
-        public List<Notification> SendProjectUpdateReminderMessage(
-            IGrouping<Person, Project> primaryContactProjectsGrouping)
+        public List<ProgramNotificationSent> SendProgramNotificationMessage(IGrouping<Person, Project> contactProjectsGrouping)
         {
-            var primaryContactPerson = primaryContactProjectsGrouping.Key;
-            var projects = primaryContactProjectsGrouping.ToList();
+            var primaryContactPerson = contactProjectsGrouping.Key;
+            var projects = contactProjectsGrouping.ToList();
 
-            if (projects.Count <= 0) return new List<Notification>();
+            if (projects.Count <= 0) return new List<ProgramNotificationSent>();
 
             var mailMessage = GenerateReminderForPerson(primaryContactPerson, projects);
-            var sendProjectUpdateReminderMessage = Notification.SendMessageAndLogNotification(mailMessage,
+            var sendProjectUpdateReminderMessage = ProgramNotificationSent.SendMessageAndLogNotification(mailMessage,
                 new List<string> {primaryContactPerson.Email},
                 new List<string>(),
                 new List<string>(),
                 new List<Person> {primaryContactPerson},
                 DateTime.Now, projects,
-                NotificationType.ProjectUpdateReminder);
+                ProgramNotificationType.CompletedProjectsMaintenanceReminder);
             return sendProjectUpdateReminderMessage;
         }
 
