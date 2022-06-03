@@ -221,7 +221,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual ICollection<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual ICollection<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
-        public virtual PriorityLandscapeType PriorityLandscapeType { get; set; }
+        public PriorityLandscapeType PriorityLandscapeType { get { return PriorityLandscapeTypeID.HasValue ? PriorityLandscapeType.AllLookupDictionary[PriorityLandscapeTypeID.Value] : null; } }
 
         public static class FieldLengths
         {

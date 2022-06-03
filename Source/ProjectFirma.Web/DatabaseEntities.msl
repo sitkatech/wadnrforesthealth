@@ -1224,16 +1224,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PriorityLandscapeType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeType">
-        <MappingFragment StoreEntitySet="PriorityLandscapeType">
-          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
-          <ScalarProperty Name="PriorityLandscapeTypeName" ColumnName="PriorityLandscapeTypeName" />
-          <ScalarProperty Name="PriorityLandscapeTypeDisplayName" ColumnName="PriorityLandscapeTypeDisplayName" />
-          <ScalarProperty Name="PriorityLandscapeTypeMapLayerColor" ColumnName="PriorityLandscapeTypeMapLayerColor" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Program">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Program">
         <MappingFragment StoreEntitySet="Program">

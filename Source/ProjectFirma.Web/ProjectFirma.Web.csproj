@@ -413,7 +413,6 @@
     <Compile Include="Models\Generated\PriorityLandscapeFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PriorityLandscapePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PriorityLandscapeType.Binding.cs" />
-    <Compile Include="Models\Generated\PriorityLandscapeType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PriorityLandscapeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Program.Binding.cs" />
     <Compile Include="Models\Generated\Program.DatabaseContextExtensions.cs" />

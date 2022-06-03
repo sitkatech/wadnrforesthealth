@@ -64,8 +64,8 @@ namespace ProjectFirma.Web.Models
                 GetAllSimpleProjectLocations(),
                 GetAllDetailedProjectLocations(),
                 GetAllProjectTreatments(),
-                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
-                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
+                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeType.East),
+                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeType.West),
                 DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
                 
             };
@@ -86,8 +86,8 @@ namespace ProjectFirma.Web.Models
         {
             var layerGeoJsons = new List<LayerGeoJson>
             {
-                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
-                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeType.East),
+                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeType.West)
             };
 
             return layerGeoJsons;

@@ -45,9 +45,16 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("Eastern Washington Priority Landscapes", FirmaWebConfiguration.WebMapServiceUrl,
+            return new LayerGeoJson("Priority Landscapes", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility, "/Content/leaflet/images/washington_priority_landscape.png");
+        }
+
+        public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, PriorityLandscapeType priorityLandscapeType)
+        {
+            return new LayerGeoJson(priorityLandscapeType.PriorityLandscapeTypeDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), "", layerOpacity,
+                layerInitialVisibility, $"PriorityLandscapeTypeID={priorityLandscapeType.PriorityLandscapeTypeID}", true);
         }
 
 
@@ -64,10 +71,10 @@ namespace ProjectFirma.Web.Models
             {
                 projectLayerGeoJson,
                 priorityLandscapeLayerGeoJson,
-                GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.6m,
-                    LayerInitialVisibility.Show),
-                GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.6m,
-                    LayerInitialVisibility.Show)
+                GetPriorityLandscapeWmsLayerGeoJson(0.6m,
+                    LayerInitialVisibility.Show, PriorityLandscapeType.East),
+                GetPriorityLandscapeWmsLayerGeoJson(0.6m,
+                    LayerInitialVisibility.Show, PriorityLandscapeType.West)
             };
 
 

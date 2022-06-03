@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[PriorityLandscapeType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using CodeFirstStoreFunctions;
@@ -16,123 +17,116 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[PriorityLandscapeType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[PriorityLandscapeType]")]
-    public partial class PriorityLandscapeType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class PriorityLandscapeType : IHavePrimaryKey
     {
+        public static readonly PriorityLandscapeTypeEast East = PriorityLandscapeTypeEast.Instance;
+        public static readonly PriorityLandscapeTypeWest West = PriorityLandscapeTypeWest.Instance;
+
+        public static readonly List<PriorityLandscapeType> All;
+        public static readonly ReadOnlyDictionary<int, PriorityLandscapeType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected PriorityLandscapeType()
+        static PriorityLandscapeType()
         {
-            this.PriorityLandscapes = new HashSet<PriorityLandscape>();
+            All = new List<PriorityLandscapeType> { East, West };
+            AllLookupDictionary = new ReadOnlyDictionary<int, PriorityLandscapeType>(All.ToDictionary(x => x.PriorityLandscapeTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public PriorityLandscapeType(int priorityLandscapeTypeID, string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor) : this()
+        protected PriorityLandscapeType(int priorityLandscapeTypeID, string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor)
         {
-            this.PriorityLandscapeTypeID = priorityLandscapeTypeID;
-            this.PriorityLandscapeTypeName = priorityLandscapeTypeName;
-            this.PriorityLandscapeTypeDisplayName = priorityLandscapeTypeDisplayName;
-            this.PriorityLandscapeTypeMapLayerColor = priorityLandscapeTypeMapLayerColor;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public PriorityLandscapeType(string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.PriorityLandscapeTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.PriorityLandscapeTypeName = priorityLandscapeTypeName;
-            this.PriorityLandscapeTypeDisplayName = priorityLandscapeTypeDisplayName;
-            this.PriorityLandscapeTypeMapLayerColor = priorityLandscapeTypeMapLayerColor;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static PriorityLandscapeType CreateNewBlank()
-        {
-            return new PriorityLandscapeType(default(string), default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return PriorityLandscapes.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(PriorityLandscapes.Any())
-            {
-                dependentObjects.Add(typeof(PriorityLandscape).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscapeType).Name, typeof(PriorityLandscape).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.PriorityLandscapeTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in PriorityLandscapes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            PriorityLandscapeTypeID = priorityLandscapeTypeID;
+            PriorityLandscapeTypeName = priorityLandscapeTypeName;
+            PriorityLandscapeTypeDisplayName = priorityLandscapeTypeDisplayName;
+            PriorityLandscapeTypeMapLayerColor = priorityLandscapeTypeMapLayerColor;
         }
 
         [Key]
-        public int PriorityLandscapeTypeID { get; set; }
-        public string PriorityLandscapeTypeName { get; set; }
-        public string PriorityLandscapeTypeDisplayName { get; set; }
-        public string PriorityLandscapeTypeMapLayerColor { get; set; }
+        public int PriorityLandscapeTypeID { get; private set; }
+        public string PriorityLandscapeTypeName { get; private set; }
+        public string PriorityLandscapeTypeDisplayName { get; private set; }
+        public string PriorityLandscapeTypeMapLayerColor { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return PriorityLandscapeTypeID; } set { PriorityLandscapeTypeID = value; } }
+        public int PrimaryKey { get { return PriorityLandscapeTypeID; } }
 
-        public virtual ICollection<PriorityLandscape> PriorityLandscapes { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(PriorityLandscapeType other)
         {
-            public const int PriorityLandscapeTypeName = 100;
-            public const int PriorityLandscapeTypeDisplayName = 100;
-            public const int PriorityLandscapeTypeMapLayerColor = 20;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.PriorityLandscapeTypeID == PriorityLandscapeTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as PriorityLandscapeType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return PriorityLandscapeTypeID;
+        }
+
+        public static bool operator ==(PriorityLandscapeType left, PriorityLandscapeType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(PriorityLandscapeType left, PriorityLandscapeType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public PriorityLandscapeTypeEnum ToEnum { get { return (PriorityLandscapeTypeEnum)GetHashCode(); } }
+
+        public static PriorityLandscapeType ToType(int enumValue)
+        {
+            return ToType((PriorityLandscapeTypeEnum)enumValue);
+        }
+
+        public static PriorityLandscapeType ToType(PriorityLandscapeTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case PriorityLandscapeTypeEnum.East:
+                    return East;
+                case PriorityLandscapeTypeEnum.West:
+                    return West;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum PriorityLandscapeTypeEnum
+    {
+        East = 1,
+        West = 2
+    }
+
+    public partial class PriorityLandscapeTypeEast : PriorityLandscapeType
+    {
+        private PriorityLandscapeTypeEast(int priorityLandscapeTypeID, string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor) : base(priorityLandscapeTypeID, priorityLandscapeTypeName, priorityLandscapeTypeDisplayName, priorityLandscapeTypeMapLayerColor) {}
+        public static readonly PriorityLandscapeTypeEast Instance = new PriorityLandscapeTypeEast(1, @"East", @"20-Year Forest Health Strategic Plan: Eastern Washington Priority Landscape", @"#59ACFF");
+    }
+
+    public partial class PriorityLandscapeTypeWest : PriorityLandscapeType
+    {
+        private PriorityLandscapeTypeWest(int priorityLandscapeTypeID, string priorityLandscapeTypeName, string priorityLandscapeTypeDisplayName, string priorityLandscapeTypeMapLayerColor) : base(priorityLandscapeTypeID, priorityLandscapeTypeName, priorityLandscapeTypeDisplayName, priorityLandscapeTypeMapLayerColor) {}
+        public static readonly PriorityLandscapeTypeWest Instance = new PriorityLandscapeTypeWest(2, @"West", @"West", @"#4cc28f");
     }
 }
