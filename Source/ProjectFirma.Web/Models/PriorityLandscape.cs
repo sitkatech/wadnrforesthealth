@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         {
             return new LayerGeoJson(priorityLandscapeType.PriorityLandscapeTypeDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), "", layerOpacity,
-                layerInitialVisibility, $"PriorityLandscapeTypeID={priorityLandscapeType.PriorityLandscapeTypeID}", true);
+                layerInitialVisibility, $"PriorityLandscapeTypeID={priorityLandscapeType.PriorityLandscapeTypeID}", true, priorityLandscapeType.GetPriorityLandscapeMapLayerIconImagePath());
         }
 
 
