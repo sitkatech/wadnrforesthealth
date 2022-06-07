@@ -81,11 +81,6 @@ namespace ProjectFirma.Web.Common
             return "WADNRForestHealth:PriorityLandscape";//todo: move priorityLandscape layer name to web config
         }
 
-        public static string GetPriorityLandscapeWestLayerName()
-        {
-            return "WADNRForestHealth:PriorityLandscape";//todo: move priorityLandscape layer name to web config
-        }
-
         public static string GetAllProjectLocationsSimpleWmsLayerName()
         {
             return "WADNRForestHealth:ProjectLocationSimple";//todo: move layer name to web config
