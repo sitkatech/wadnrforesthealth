@@ -9,15 +9,15 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProgramNotificationSent
     {
-        public static List<ProgramNotificationSent> SendMessageAndLogNotification(MailMessage mailMessage, IEnumerable<string> emailsToSendTo, IEnumerable<string> emailsToReplyTo, IEnumerable<string> emailsToCc, List<Person> notificationPeople, DateTime notificationDate, List<Project> notificationProjects, ProgramNotificationType programNotificationType)
+        public static List<ProgramNotificationSent> SendMessageAndLogNotification(MailMessage mailMessage, IEnumerable<string> emailsToSendTo, IEnumerable<string> emailsToReplyTo, IEnumerable<string> emailsToCc, List<Person> notificationPeople, DateTime notificationDate, List<Project> notificationProjects, ProgramNotificationConfiguration programNotificationConfiguration)
         {
             SendMessage(mailMessage, emailsToSendTo, emailsToReplyTo, emailsToCc);
             var notifications = new List<ProgramNotificationSent>();
             foreach (var notificationPerson in notificationPeople)
             {
-                //var notification = new ProgramNotificationSent(programNotificationConfiguration, notificationPerson, ); //(programNotificationType, notificationPerson, notificationDate);
-                //notification.NotificationProjects = notificationProjects.Select(p => new NotificationProject(notification, p)).ToList();
-                //notifications.Add(notification);
+                var notification = new ProgramNotificationSent(programNotificationConfiguration, notificationPerson, notificationDate); //(programNotificationType, notificationPerson, notificationDate);
+                notification.ProgramNotificationSentProjects = notificationProjects.Select(p => new ProgramNotificationSentProject(notification, p)).ToList();
+                notifications.Add(notification);
             }
             return notifications;
         }

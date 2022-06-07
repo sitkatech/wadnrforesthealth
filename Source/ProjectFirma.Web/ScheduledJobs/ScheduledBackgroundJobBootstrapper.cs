@@ -114,7 +114,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // 1:30 AM tasks
-            //var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36);
+            var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36);
+            AddRecurringJob(ProgramNotificationScheduledBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramNotificationScheduledBackgroundJob(JobCancellationToken.Null), oneThirtyAmCronString, recurringJobIds);
 
 
             // See ConfigureScheduledBackgroundJobs in Gemini for further examples of how to schedule things at various time intervals. 

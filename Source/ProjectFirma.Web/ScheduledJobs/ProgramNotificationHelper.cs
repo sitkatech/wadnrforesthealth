@@ -35,21 +35,27 @@ namespace ProjectFirma.Web.ScheduledJobs
             ToolName = toolDisplayName;
         }
 
-        public List<ProgramNotificationSent> SendProgramNotificationMessage(IGrouping<Person, Project> contactProjectsGrouping)
+        public List<ProgramNotificationSent> SendProgramNotificationMessage(IGrouping<Person, Project> contactProjectsGrouping, ProgramNotificationConfiguration programNotificationConfiguration)
         {
-            var primaryContactPerson = contactProjectsGrouping.Key;
+            var contactPerson = contactProjectsGrouping.Key;
+
+            if (string.IsNullOrEmpty(contactPerson.Email))
+            {
+                return new List<ProgramNotificationSent>();
+            }
+
             var projects = contactProjectsGrouping.ToList();
 
             if (projects.Count <= 0) return new List<ProgramNotificationSent>();
 
-            var mailMessage = GenerateReminderForPerson(primaryContactPerson, projects);
+            var mailMessage = GenerateReminderForPerson(contactPerson, projects);
             var sendProjectUpdateReminderMessage = ProgramNotificationSent.SendMessageAndLogNotification(mailMessage,
-                new List<string> {primaryContactPerson.Email},
+                new List<string> {contactPerson.Email},
                 new List<string>(),
                 new List<string>(),
-                new List<Person> {primaryContactPerson},
+                new List<Person> {contactPerson},
                 DateTime.Now, projects,
-                ProgramNotificationType.CompletedProjectsMaintenanceReminder);
+                programNotificationConfiguration);
             return sendProjectUpdateReminderMessage;
         }
 
@@ -66,8 +72,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 person.FullNameFirstLast, String.Join("<br/>", projectListAsHtmlStrings));
 
             var htmlView = AlternateView.CreateAlternateViewFromString(emailContent, null, "text/html");
-            htmlView.LinkedResources.Add(
-                new LinkedResource(new MemoryStream(ToolLogo.FileResourceData), "img/jpeg") {ContentId = "tool-logo"});
+            //htmlView.LinkedResources.Add(new LinkedResource(new MemoryStream(ToolLogo.FileResourceData), "img/jpeg") {ContentId = "tool-logo"});
             var mailMessage = new MailMessage {Subject = ReminderEmailSubject, IsBodyHtml = true};
             mailMessage.AlternateViews.Add(htmlView);
 

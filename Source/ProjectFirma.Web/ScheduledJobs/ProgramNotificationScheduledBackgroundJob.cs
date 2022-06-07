@@ -65,15 +65,16 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private List<ProgramNotificationSent> ProcessCompletedProjectsMaintenanceReminder(ProgramNotificationConfiguration programNotificationConfiguration)
         {
-            var allProjectsInProgram = programNotificationConfiguration.Program.ProjectPrograms.Select(x => x.Project);
             var recurrenceIntervalInYears = programNotificationConfiguration.RecurrenceInterval.RecurrenceIntervalInYears;
 
-            var completedProjects = allProjectsInProgram.Where(ap => ap.CompletionDate.HasValue && ap.CompletionDate.Value.AddYears(recurrenceIntervalInYears) > DateTime.Now);
+            var allProjectsInProgram = programNotificationConfiguration.Program.ProjectPrograms.Select(x => x.Project);
+            var allCompletedProjectsInProgram = allProjectsInProgram.Where(x => x.ProjectStageID == (int)ProjectStageEnum.Completed);
+            var completedProjectsThatMightNeedNotification = allCompletedProjectsInProgram.Where(ap => ap.CompletionDate.HasValue && ap.CompletionDate.Value.AddYears(recurrenceIntervalInYears).CompareTo(DateTime.Now) < 0);
 
             var projectsNeedingNotification = new List<Project>();
             
             //check that notifications have not been sent for current interval
-            foreach (var project in completedProjects)
+            foreach (var project in completedProjectsThatMightNeedNotification)
             {
                 if (!project.ProgramNotificationSentProjects.Any())
                 {
@@ -83,7 +84,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 }
 
                 var lastNotificationSentDate = project.ProgramNotificationSentProjects.Select(x => x.ProgramNotificationSent).OrderByDescending(pns => pns.ProgramNotificationSentDate).First().ProgramNotificationSentDate;
-                if (lastNotificationSentDate.AddYears(recurrenceIntervalInYears) > DateTime.Now)
+                if (lastNotificationSentDate.AddYears(recurrenceIntervalInYears).CompareTo(DateTime.Now) < 0)
                 {
                     //send notification!
                     projectsNeedingNotification.Add(project);
@@ -109,13 +110,13 @@ namespace ProjectFirma.Web.ScheduledJobs
 
 
             var projectsGroupedByPrimaryContact = projectsNeedingNotification.Where(x => x.GetPrimaryContact() != null).GroupBy(x => x.GetPrimaryContact()).ToList();
-            var notifications = projectsGroupedByPrimaryContact.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x)).ToList();
+            var notifications = projectsGroupedByPrimaryContact.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x, programNotificationConfiguration)).ToList();
 
             var message = $"Reminder emails sent to {projectsGroupedByPrimaryContact.Count} Primary Contacts for {projectsGroupedByPrimaryContact.Count} projects requiring an update.";
             Logger.Info(message);
 
             var projectsGroupedByPrivateLandowner = projectsNeedingNotification.Where(x => x.GetPrivateLandowner() != null).GroupBy(x => x.GetPrivateLandowner()).ToList();
-            notifications.AddRange(projectsGroupedByPrivateLandowner.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x)).ToList());
+            notifications.AddRange(projectsGroupedByPrivateLandowner.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x, programNotificationConfiguration)).ToList());
 
             message = $"Reminder emails sent to {projectsGroupedByPrivateLandowner.Count} Private Landowner for {projectsGroupedByPrivateLandowner.Count} projects requiring an update.";
             Logger.Info(message);
