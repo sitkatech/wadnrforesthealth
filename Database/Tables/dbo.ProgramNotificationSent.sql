@@ -3,14 +3,13 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProgramNotificationSent](
-	[ProgramNotificationSendID] [int] IDENTITY(1,1) NOT NULL,
+	[ProgramNotificationSentID] [int] IDENTITY(1,1) NOT NULL,
 	[ProgramNotificationConfigurationID] [int] NOT NULL,
 	[SentToPersonID] [int] NOT NULL,
-	[ProjectID] [int] NOT NULL,
 	[ProgramNotificationSentDate] [datetime] NOT NULL,
  CONSTRAINT [PK_ProgramNotificationSent_ProgramNotificationSentID] PRIMARY KEY CLUSTERED 
 (
-	[ProgramNotificationSendID] ASC
+	[ProgramNotificationSentID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -24,8 +23,3 @@ ALTER TABLE [dbo].[ProgramNotificationSent]  WITH CHECK ADD  CONSTRAINT [FK_Prog
 REFERENCES [dbo].[ProgramNotificationConfiguration] ([ProgramNotificationConfigurationID])
 GO
 ALTER TABLE [dbo].[ProgramNotificationSent] CHECK CONSTRAINT [FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID]
-GO
-ALTER TABLE [dbo].[ProgramNotificationSent]  WITH CHECK ADD  CONSTRAINT [FK_ProgramNotificationSent_Project_ProjectID] FOREIGN KEY([ProjectID])
-REFERENCES [dbo].[Project] ([ProjectID])
-GO
-ALTER TABLE [dbo].[ProgramNotificationSent] CHECK CONSTRAINT [FK_ProgramNotificationSent_Project_ProjectID]

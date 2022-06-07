@@ -25,60 +25,55 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProgramNotificationSent()
         {
-
+            this.ProgramNotificationSentProjects = new HashSet<ProgramNotificationSentProject>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramNotificationSent(int programNotificationSendID, int programNotificationConfigurationID, int sentToPersonID, int projectID, DateTime programNotificationSentDate) : this()
+        public ProgramNotificationSent(int programNotificationSentID, int programNotificationConfigurationID, int sentToPersonID, DateTime programNotificationSentDate) : this()
         {
-            this.ProgramNotificationSendID = programNotificationSendID;
+            this.ProgramNotificationSentID = programNotificationSentID;
             this.ProgramNotificationConfigurationID = programNotificationConfigurationID;
             this.SentToPersonID = sentToPersonID;
-            this.ProjectID = projectID;
             this.ProgramNotificationSentDate = programNotificationSentDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramNotificationSent(int programNotificationConfigurationID, int sentToPersonID, int projectID, DateTime programNotificationSentDate) : this()
+        public ProgramNotificationSent(int programNotificationConfigurationID, int sentToPersonID, DateTime programNotificationSentDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProgramNotificationSendID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProgramNotificationSentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProgramNotificationConfigurationID = programNotificationConfigurationID;
             this.SentToPersonID = sentToPersonID;
-            this.ProjectID = projectID;
             this.ProgramNotificationSentDate = programNotificationSentDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProgramNotificationSent(ProgramNotificationConfiguration programNotificationConfiguration, Person sentToPerson, Project project, DateTime programNotificationSentDate) : this()
+        public ProgramNotificationSent(ProgramNotificationConfiguration programNotificationConfiguration, Person sentToPerson, DateTime programNotificationSentDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProgramNotificationSendID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProgramNotificationSentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProgramNotificationConfigurationID = programNotificationConfiguration.ProgramNotificationConfigurationID;
             this.ProgramNotificationConfiguration = programNotificationConfiguration;
             programNotificationConfiguration.ProgramNotificationSents.Add(this);
             this.SentToPersonID = sentToPerson.PersonID;
             this.SentToPerson = sentToPerson;
             sentToPerson.ProgramNotificationSentsWhereYouAreTheSentToPerson.Add(this);
-            this.ProjectID = project.ProjectID;
-            this.Project = project;
-            project.ProgramNotificationSents.Add(this);
             this.ProgramNotificationSentDate = programNotificationSentDate;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProgramNotificationSent CreateNewBlank(ProgramNotificationConfiguration programNotificationConfiguration, Person sentToPerson, Project project)
+        public static ProgramNotificationSent CreateNewBlank(ProgramNotificationConfiguration programNotificationConfiguration, Person sentToPerson)
         {
-            return new ProgramNotificationSent(programNotificationConfiguration, sentToPerson, project, default(DateTime));
+            return new ProgramNotificationSent(programNotificationConfiguration, sentToPerson, default(DateTime));
         }
 
         /// <summary>
@@ -87,7 +82,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return ProgramNotificationSentProjects.Any();
         }
 
         /// <summary>
@@ -97,13 +92,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(ProgramNotificationSentProjects.Any())
+            {
+                dependentObjects.Add(typeof(ProgramNotificationSentProject).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramNotificationSent).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramNotificationSent).Name, typeof(ProgramNotificationSentProject).Name};
 
 
         /// <summary>
@@ -119,22 +118,32 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in ProgramNotificationSentProjects.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
-        public int ProgramNotificationSendID { get; set; }
+        public int ProgramNotificationSentID { get; set; }
         public int ProgramNotificationConfigurationID { get; set; }
         public int SentToPersonID { get; set; }
-        public int ProjectID { get; set; }
         public DateTime ProgramNotificationSentDate { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProgramNotificationSendID; } set { ProgramNotificationSendID = value; } }
+        public int PrimaryKey { get { return ProgramNotificationSentID; } set { ProgramNotificationSentID = value; } }
 
+        public virtual ICollection<ProgramNotificationSentProject> ProgramNotificationSentProjects { get; set; }
         public virtual ProgramNotificationConfiguration ProgramNotificationConfiguration { get; set; }
         public virtual Person SentToPerson { get; set; }
-        public virtual Project Project { get; set; }
 
         public static class FieldLengths
         {

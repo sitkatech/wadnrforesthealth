@@ -14,19 +14,19 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static ProgramNotificationSent GetProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, int programNotificationSendID)
+        public static ProgramNotificationSent GetProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, int programNotificationSentID)
         {
-            var programNotificationSent = programNotificationSents.SingleOrDefault(x => x.ProgramNotificationSendID == programNotificationSendID);
-            Check.RequireNotNullThrowNotFound(programNotificationSent, "ProgramNotificationSent", programNotificationSendID);
+            var programNotificationSent = programNotificationSents.SingleOrDefault(x => x.ProgramNotificationSentID == programNotificationSentID);
+            Check.RequireNotNullThrowNotFound(programNotificationSent, "ProgramNotificationSent", programNotificationSentID);
             return programNotificationSent;
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, List<int> programNotificationSendIDList)
+        public static void DeleteProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, List<int> programNotificationSentIDList)
         {
-            if(programNotificationSendIDList.Any())
+            if(programNotificationSentIDList.Any())
             {
-                var programNotificationSentsInSourceCollectionToDelete = programNotificationSents.Where(x => programNotificationSendIDList.Contains(x.ProgramNotificationSendID));
+                var programNotificationSentsInSourceCollectionToDelete = programNotificationSents.Where(x => programNotificationSentIDList.Contains(x.ProgramNotificationSentID));
                 foreach (var programNotificationSentToDelete in programNotificationSentsInSourceCollectionToDelete.ToList())
                 {
                     programNotificationSentToDelete.Delete(HttpRequestStorage.DatabaseEntities);
@@ -39,8 +39,8 @@ namespace ProjectFirma.Web.Models
         {
             if(programNotificationSentsToDelete.Any())
             {
-                var programNotificationSendIDList = programNotificationSentsToDelete.Select(x => x.ProgramNotificationSendID).ToList();
-                var programNotificationSentsToDeleteFromSourceList = programNotificationSents.Where(x => programNotificationSendIDList.Contains(x.ProgramNotificationSendID)).ToList();
+                var programNotificationSentIDList = programNotificationSentsToDelete.Select(x => x.ProgramNotificationSentID).ToList();
+                var programNotificationSentsToDeleteFromSourceList = programNotificationSents.Where(x => programNotificationSentIDList.Contains(x.ProgramNotificationSentID)).ToList();
 
                 foreach (var programNotificationSentToDelete in programNotificationSentsToDeleteFromSourceList)
                 {
@@ -49,9 +49,9 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, int programNotificationSendID)
+        public static void DeleteProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, int programNotificationSentID)
         {
-            DeleteProgramNotificationSent(programNotificationSents, new List<int> { programNotificationSendID });
+            DeleteProgramNotificationSent(programNotificationSents, new List<int> { programNotificationSentID });
         }
 
         public static void DeleteProgramNotificationSent(this IQueryable<ProgramNotificationSent> programNotificationSents, ProgramNotificationSent programNotificationSentToDelete)

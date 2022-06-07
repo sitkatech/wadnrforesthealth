@@ -34,13 +34,19 @@ create table dbo.ProgramNotificationConfiguration(
 	ProgramNotificationTypeID int not null constraint FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID foreign key references dbo.ProgramNotificationType(ProgramNotificationTypeID),
 	RecurrenceIntervalID int not null constraint FK_ProgramNotificationConfiguration_RecurrenceInterval_RecurrenceIntervalID foreign key references dbo.RecurrenceInterval(RecurrenceIntervalID),
 	NotificationEmailText html not null
-)
+);
 
 
 create table dbo.ProgramNotificationSent(
-	ProgramNotificationSendID int not null identity(1,1) constraint PK_ProgramNotificationSent_ProgramNotificationSentID primary key,
+	ProgramNotificationSentID int not null identity(1,1) constraint PK_ProgramNotificationSent_ProgramNotificationSentID primary key,
 	ProgramNotificationConfigurationID int not null constraint FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID foreign key references dbo.ProgramNotificationConfiguration(ProgramNotificationConfigurationID),
 	SentToPersonID int not null constraint FK_ProgramNotificationSent_Person_SentToPersonID_PersonID foreign key references dbo.Person(PersonID),
-	ProjectID int not null constraint FK_ProgramNotificationSent_Project_ProjectID foreign key references dbo.Project(ProjectID),
+	--ProjectID int not null constraint FK_ProgramNotificationSent_Project_ProjectID foreign key references dbo.Project(ProjectID),
 	ProgramNotificationSentDate datetime not null
-)
+);
+
+create table dbo.ProgramNotificationSentProject(
+	ProgramNotificationSentProjectID int not null identity(1,1) constraint PK_ProgramNotificationSentProject_ProgramNotificationSentProjectID primary key,
+	ProgramNotificationSentID int not null constraint FK_ProgramNotificationSentProject_ProgramNotificationSent_ProgramNotificationSentID foreign key references dbo.ProgramNotificationSent(ProgramNotificationSentID),
+	ProjectID int not null constraint FK_ProgramNotificationSentProject_Project_ProjectID foreign key references dbo.Project(ProjectID)
+);

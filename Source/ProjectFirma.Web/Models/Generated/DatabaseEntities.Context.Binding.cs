@@ -131,6 +131,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
+        public virtual DbSet<ProgramNotificationSentProject> ProgramNotificationSentProjects { get; set; }
         public virtual DbSet<ProgramNotificationSent> ProgramNotificationSents { get; set; }
         public virtual DbSet<ProgramPerson> ProgramPeople { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
@@ -747,6 +748,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProgramNotificationConfiguration":
                     return ProgramNotificationConfigurations.GetProgramNotificationConfiguration(primaryKey);
+
+                case "ProgramNotificationSentProject":
+                    return ProgramNotificationSentProjects.GetProgramNotificationSentProject(primaryKey);
 
                 case "ProgramNotificationSent":
                     return ProgramNotificationSents.GetProgramNotificationSent(primaryKey);

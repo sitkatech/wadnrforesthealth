@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -423,6 +423,9 @@
     <Compile Include="Models\Generated\ProgramNotificationSent.Binding.cs" />
     <Compile Include="Models\Generated\ProgramNotificationSent.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProgramNotificationSentPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProgramNotificationSentProject.Binding.cs" />
+    <Compile Include="Models\Generated\ProgramNotificationSentProject.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProgramNotificationSentProjectPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProgramNotificationType.Binding.cs" />
     <Compile Include="Models\Generated\ProgramNotificationTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProgramPerson.Binding.cs" />
@@ -724,6 +727,7 @@
     <Compile Include="Models\PersonRole.cs" />
     <Compile Include="Models\ProgramNotificationConfiguration.cs" />
     <Compile Include="Models\ProgramNotificationConfigurationModelExtensions.cs" />
+    <Compile Include="Models\ProgramNotificationSent.cs" />
     <Compile Include="Models\ProgramPerson.cs" />
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />

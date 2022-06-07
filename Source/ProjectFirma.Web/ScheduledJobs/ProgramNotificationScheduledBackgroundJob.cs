@@ -75,14 +75,14 @@ namespace ProjectFirma.Web.ScheduledJobs
             //check that notifications have not been sent for current interval
             foreach (var project in completedProjects)
             {
-                if (!project.ProgramNotificationSents.Any())
+                if (!project.ProgramNotificationSentProjects.Any())
                 {
                     //send notification!
                     projectsNeedingNotification.Add(project);
                     continue;
                 }
 
-                var lastNotificationSentDate = project.ProgramNotificationSents.OrderByDescending(x => x.ProgramNotificationSentDate).First().ProgramNotificationSentDate;
+                var lastNotificationSentDate = project.ProgramNotificationSentProjects.Select(x => x.ProgramNotificationSent).OrderByDescending(pns => pns.ProgramNotificationSentDate).First().ProgramNotificationSentDate;
                 if (lastNotificationSentDate.AddYears(recurrenceIntervalInYears) > DateTime.Now)
                 {
                     //send notification!
