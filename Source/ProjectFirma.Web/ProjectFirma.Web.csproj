@@ -412,6 +412,8 @@
     <Compile Include="Models\Generated\PriorityLandscapeFileResource.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PriorityLandscapeFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PriorityLandscapePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PriorityLandscapeType.Binding.cs" />
+    <Compile Include="Models\Generated\PriorityLandscapeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Program.Binding.cs" />
     <Compile Include="Models\Generated\Program.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProgramIndex.Binding.cs" />
@@ -712,6 +714,7 @@
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
     <Compile Include="Models\PersonRole.cs" />
+    <Compile Include="Models\PriorityLandscapeType.cs" />
     <Compile Include="Models\ProgramPerson.cs" />
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />

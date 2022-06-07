@@ -740,6 +740,11 @@ namespace ProjectFirma.Web.Models
                 case "PriorityLandscape":
                     return PriorityLandscapes.GetPriorityLandscape(primaryKey);
 
+                case "PriorityLandscapeType":
+                    var priorityLandscapeType = PriorityLandscapeType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(priorityLandscapeType, "PriorityLandscapeType", primaryKey);
+                    return priorityLandscapeType;
+
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
 

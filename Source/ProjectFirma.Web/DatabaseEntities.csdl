@@ -2720,6 +2720,7 @@
     <Property Name="PriorityLandscapeDescription" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="PlanYear" Type="Int32" />
     <Property Name="PriorityLandscapeAboveMapText" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeTypeID" Type="Int32" />
     <NavigationProperty Name="PclBoundaryLines" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclBoundaryLines" />
     <NavigationProperty Name="PclLandscapeTreatmentPriorities" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclLandscapeTreatmentPriorities" />
     <NavigationProperty Name="PclVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclVectorRankeds" />
@@ -3793,12 +3794,17 @@
       <PropertyRef Name="PriorityLandscapeID" />
       <PropertyRef Name="PrimaryKey" />
       <PropertyRef Name="PriorityLandscapeName" />
+      <PropertyRef Name="PriorityLandscapeTypeName" />
+      <PropertyRef Name="MapColor" />
     </Key>
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
+    <Property Name="PriorityLandscapeTypeID" Type="Int32" />
+    <Property Name="PriorityLandscapeTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="MapColor" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="vLoaStageGrantAllocation">
     <Key>

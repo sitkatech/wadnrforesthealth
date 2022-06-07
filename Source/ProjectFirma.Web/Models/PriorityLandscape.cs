@@ -45,10 +45,18 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("Eastern Washington Priority Landscapes", FirmaWebConfiguration.WebMapServiceUrl,
+            return new LayerGeoJson("Priority Landscapes", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility, "/Content/leaflet/images/washington_priority_landscape.png");
         }
+
+        public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, PriorityLandscapeType priorityLandscapeType)
+        {
+            return new LayerGeoJson(priorityLandscapeType.PriorityLandscapeTypeDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), "", layerOpacity,
+                layerInitialVisibility, $"PriorityLandscapeTypeID={priorityLandscapeType.PriorityLandscapeTypeID}", true, priorityLandscapeType.GetPriorityLandscapeMapLayerIconImagePath());
+        }
+
 
         public static List<LayerGeoJson> GetPriorityLandscapeAndAssociatedProjectLayers(PriorityLandscape priorityLandscape, List<Project> projects)
         {
@@ -59,22 +67,26 @@ namespace ProjectFirma.Web.Models
                 new List<PriorityLandscape> { priorityLandscape }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
 
-
-            var projectDetailedLocationsLayerGeoJson =
-                Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
-            var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
-
-
-
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 projectLayerGeoJson,
                 priorityLandscapeLayerGeoJson,
-                GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.6m,
-                    LayerInitialVisibility.Show),
-                projectDetailedLocationsLayerGeoJson,
-                projectTreatmentAreasLayerGeoJson
+                GetPriorityLandscapeWmsLayerGeoJson(0.6m,
+                    LayerInitialVisibility.Show, PriorityLandscapeType.East),
+                GetPriorityLandscapeWmsLayerGeoJson(0.6m,
+                    LayerInitialVisibility.Show, PriorityLandscapeType.West)
             };
+
+
+            if (projects.Any())
+            {
+                var projectDetailedLocationsLayerGeoJson = Project.ProjectDetailedLocationsToGeoJsonFeatureCollection(projects);
+                layerGeoJsons.Add(projectDetailedLocationsLayerGeoJson);
+
+                var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
+                layerGeoJsons.Add(projectTreatmentAreasLayerGeoJson);
+            }
+
 
 
             if (priorityLandscape.HasDualBenefitPrioritizationLayerData())
