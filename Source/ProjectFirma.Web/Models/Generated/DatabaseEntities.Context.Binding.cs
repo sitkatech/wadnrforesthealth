@@ -130,6 +130,9 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
+        public virtual DbSet<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
+        public virtual DbSet<ProgramNotificationSentProject> ProgramNotificationSentProjects { get; set; }
+        public virtual DbSet<ProgramNotificationSent> ProgramNotificationSents { get; set; }
         public virtual DbSet<ProgramPerson> ProgramPeople { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
@@ -748,6 +751,20 @@ namespace ProjectFirma.Web.Models
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
 
+                case "ProgramNotificationConfiguration":
+                    return ProgramNotificationConfigurations.GetProgramNotificationConfiguration(primaryKey);
+
+                case "ProgramNotificationSentProject":
+                    return ProgramNotificationSentProjects.GetProgramNotificationSentProject(primaryKey);
+
+                case "ProgramNotificationSent":
+                    return ProgramNotificationSents.GetProgramNotificationSent(primaryKey);
+
+                case "ProgramNotificationType":
+                    var programNotificationType = ProgramNotificationType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(programNotificationType, "ProgramNotificationType", primaryKey);
+                    return programNotificationType;
+
                 case "ProgramPerson":
                     return ProgramPeople.GetProgramPerson(primaryKey);
 
@@ -971,6 +988,11 @@ namespace ProjectFirma.Web.Models
                     var projectWorkflowSectionGrouping = ProjectWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectWorkflowSectionGrouping, "ProjectWorkflowSectionGrouping", primaryKey);
                     return projectWorkflowSectionGrouping;
+
+                case "RecurrenceInterval":
+                    var recurrenceInterval = RecurrenceInterval.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(recurrenceInterval, "RecurrenceInterval", primaryKey);
+                    return recurrenceInterval;
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);

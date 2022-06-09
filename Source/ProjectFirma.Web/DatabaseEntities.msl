@@ -1257,6 +1257,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProgramNotificationConfiguration">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationConfiguration">
+        <MappingFragment StoreEntitySet="ProgramNotificationConfiguration">
+          <ScalarProperty Name="ProgramNotificationConfigurationID" ColumnName="ProgramNotificationConfigurationID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ProgramNotificationTypeID" ColumnName="ProgramNotificationTypeID" />
+          <ScalarProperty Name="RecurrenceIntervalID" ColumnName="RecurrenceIntervalID" />
+          <ScalarProperty Name="NotificationEmailText" ColumnName="NotificationEmailText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramNotificationSent">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationSent">
+        <MappingFragment StoreEntitySet="ProgramNotificationSent">
+          <ScalarProperty Name="ProgramNotificationSentID" ColumnName="ProgramNotificationSentID" />
+          <ScalarProperty Name="ProgramNotificationConfigurationID" ColumnName="ProgramNotificationConfigurationID" />
+          <ScalarProperty Name="SentToPersonID" ColumnName="SentToPersonID" />
+          <ScalarProperty Name="ProgramNotificationSentDate" ColumnName="ProgramNotificationSentDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramNotificationSentProject">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationSentProject">
+        <MappingFragment StoreEntitySet="ProgramNotificationSentProject">
+          <ScalarProperty Name="ProgramNotificationSentProjectID" ColumnName="ProgramNotificationSentProjectID" />
+          <ScalarProperty Name="ProgramNotificationSentID" ColumnName="ProgramNotificationSentID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProgramPerson">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramPerson">
         <MappingFragment StoreEntitySet="ProgramPerson">

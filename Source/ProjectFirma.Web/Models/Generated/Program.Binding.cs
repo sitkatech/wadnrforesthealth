@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected Program()
         {
             this.GisUploadSourceOrganizations = new HashSet<GisUploadSourceOrganization>();
+            this.ProgramNotificationConfigurations = new HashSet<ProgramNotificationConfiguration>();
             this.ProgramPeople = new HashSet<ProgramPerson>();
             this.ProjectLocations = new HashSet<ProjectLocation>();
             this.ProjectPrograms = new HashSet<ProjectProgram>();
@@ -99,7 +100,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any() || ProgramPeople.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || Treatments.Any();
+            return GisUploadSourceOrganizations.Any() || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -112,6 +113,11 @@ namespace ProjectFirma.Web.Models
             if(GisUploadSourceOrganizations.Any())
             {
                 dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
+            }
+
+            if(ProgramNotificationConfigurations.Any())
+            {
+                dependentObjects.Add(typeof(ProgramNotificationConfiguration).Name);
             }
 
             if(ProgramPeople.Any())
@@ -139,7 +145,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProgramPerson).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProgramNotificationConfiguration).Name, typeof(ProgramPerson).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -165,6 +171,11 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in GisUploadSourceOrganizations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in ProgramNotificationConfigurations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -208,6 +219,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProgramID; } set { ProgramID = value; } }
 
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
+        public virtual ICollection<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
         public virtual ICollection<ProgramPerson> ProgramPeople { get; set; }
         public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }
         public virtual ICollection<ProjectProgram> ProjectPrograms { get; set; }

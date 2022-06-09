@@ -7,12 +7,9 @@ namespace ProjectFirma.Web.ScheduledJobs
     /// </summary>
     public static class ScheduledBackgroundJobLaunchHelper
     {
-        public static void RunProjectUpdateKickoffReminderScheduledBackgroundJob()
+        public static void RunProgramNotificationScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
-            throw new System.NotImplementedException();
-
-            //var projectUpdateReminderScheduledBackgroundJob = new ProjectUpdateReminderScheduledBackgroundJob("Project Update Reminders");
-            //projectUpdateReminderScheduledBackgroundJob.RunJob();
+            ProgramNotificationScheduledBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
         public static void RunVendorImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)

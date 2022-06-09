@@ -147,6 +147,12 @@ namespace ProjectFirma.Web.Models
             return GetPrimaryContactOrganization()?.PrimaryContactPerson;
         }
 
+        public List<Person> GetPrivateLandowners()
+        {
+            var privateLandowners = this.ProjectPeople.Where(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrivateLandowner.ProjectPersonRelationshipTypeID).Select(x => x.Person);
+            return privateLandowners.ToList();
+        }
+
         //public decimal? UnfundedNeed()
         //{
         //    return EstimatedTotalCost - GetSecuredFunding();
