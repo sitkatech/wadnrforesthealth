@@ -146,10 +146,10 @@ namespace ProjectFirma.Web.Models
             return GetPrimaryContactOrganization()?.PrimaryContactPerson;
         }
 
-        public Person GetPrivateLandowner()
+        public List<Person> GetPrivateLandowners()
         {
-            var privateLandowner = this.ProjectPeople.SingleOrDefault(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrivateLandowner.ProjectPersonRelationshipTypeID);
-            return privateLandowner?.Person;
+            var privateLandowners = this.ProjectPeople.Where(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrivateLandowner.ProjectPersonRelationshipTypeID).Select(x => x.Person);
+            return privateLandowners.ToList();
         }
 
         //public decimal? UnfundedNeed()

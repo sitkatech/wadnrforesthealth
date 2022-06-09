@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -12,20 +13,20 @@ namespace ProjectFirma.Web.ScheduledJobs
     public class ProgramNotificationHelper
     {
         public string ToolName { get; set; }
-        public string IntroContent { get; set; }
+        public HtmlString IntroContent { get; set; }
         public FileResource ToolLogo { get; set; }
         public string ReminderEmailSubject { get; set; }
         public string ContactSupportEmail { get; set; }
 
         private const string ReminderMessageTemplate = @"Hello {0},<br/><br/>
 {1}
-<div style=""font-weight:bold"">Your <a href=""{2}"">projects that require an update</a> are:</div>
+<div style=""font-weight:bold"">Your projects that require an update are:</div>
 <div style=""margin-left: 15px"">
-    {3}
+    {2}
 </div>";
 
 
-        public ProgramNotificationHelper(string contactSupportEmail, string introContent, string reminderSubject,
+        public ProgramNotificationHelper(string contactSupportEmail, HtmlString introContent, string reminderSubject,
             FileResource toolLogo, string toolDisplayName)
         {
             ContactSupportEmail = contactSupportEmail;
@@ -64,39 +65,31 @@ namespace ProjectFirma.Web.ScheduledJobs
             var projectListAsHtmlStrings =
                 GenerateProjectListAsHtmlStrings(
                     projects);
-            var projectsRequiringAnUpdateUrl =
-                SitkaRoute<ProjectUpdateController>.BuildAbsoluteUrlHttpsFromExpression(x =>
-                    x.MyProjectsRequiringAnUpdate());
 
-            var emailContent = GetEmailContentWithGeneratedSignature(projectsRequiringAnUpdateUrl,
-                person.FullNameFirstLast, String.Join("<br/>", projectListAsHtmlStrings));
+
+            var emailContent = GetEmailContentWithGeneratedSignature(person.FullNameFirstLast, String.Join("<br/>", projectListAsHtmlStrings));
 
             var htmlView = AlternateView.CreateAlternateViewFromString(emailContent, null, "text/html");
             //htmlView.LinkedResources.Add(new LinkedResource(new MemoryStream(ToolLogo.FileResourceData), "img/jpeg") {ContentId = "tool-logo"});
-            var mailMessage = new MailMessage {Subject = ReminderEmailSubject, IsBodyHtml = true};
+            var mailMessage = new MailMessage {Subject = ReminderEmailSubject, IsBodyHtml = true, Body = emailContent };
             mailMessage.AlternateViews.Add(htmlView);
 
             return mailMessage;
         }
 
-        private string GetEmailContent(
-            string projectsRequiringAnUpdateUrl, string fullNameFirstLast, string projectListConcatenated,
-            string signature)
+        private string GetEmailContent(string fullNameFirstLast, string projectListConcatenated, string signature)
         {
             var body = string.Format(ReminderMessageTemplate,
                 fullNameFirstLast,
                 IntroContent,
-                projectsRequiringAnUpdateUrl,
                 projectListConcatenated);
             var emailContent = $"{body}<br/>{signature}";
             return emailContent;
         }
 
-        private string GetEmailContentWithGeneratedSignature(
-            string projectsRequiringAnUpdateUrl, string fullNameFirstLast, string projectListConcatenated
-        )
+        private string GetEmailContentWithGeneratedSignature(string fullNameFirstLast, string projectListConcatenated)
         {
-            return GetEmailContent(projectsRequiringAnUpdateUrl, fullNameFirstLast,
+            return GetEmailContent(fullNameFirstLast,
                 projectListConcatenated, GetReminderMessageSignature(false));
         }
 
@@ -105,14 +98,13 @@ namespace ProjectFirma.Web.ScheduledJobs
             var signature = GetReminderMessageSignature(true);
 
             return GetEmailContent(
-                SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate()),
                 $"<em>{FieldDefinition.Organization.GetFieldDefinitionLabel()} Primary Contact</em>",
                 "<p><em>A list of the recipient’s projects that require an update and do not have an update submitted yet will appear here.&nbsp;</em></p>",
                 signature
             );
         }
 
-        private static IEnumerable<string> GenerateProjectListAsHtmlStrings(
+        private static IEnumerable<HtmlString> GenerateProjectListAsHtmlStrings(
             IReadOnlyCollection<Project> projects)
         {
             var projectsRemaining = projects;
@@ -121,7 +113,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var projectUrl =
                     SitkaRoute<ProjectController>.BuildAbsoluteUrlHttpsFromExpression(controller =>
                         controller.Detail(project));
-                return $@"<div style=""font-size:smaller""><a href=""{projectUrl}"">{project.ProjectName}</a></div>";
+                return new HtmlString($@"<div style=""font-size:smaller""><a href=""{projectUrl}"">{project.ProjectName}</a></div>");
             }).ToList();
 
             return projectListAsHtmlStrings;

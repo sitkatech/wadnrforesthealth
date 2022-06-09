@@ -46,9 +46,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             foreach (var programNotificationConfiguration in programNotificationConfigurations)
             {
-
                 var notificationSents = new List<ProgramNotificationSent>();
-                var databaseEntities = new DatabaseEntities();
 
                 if (programNotificationConfiguration.ProgramNotificationTypeID == (int)ProgramNotificationTypeEnum.CompletedProjectsMaintenanceReminder)
                 {
@@ -56,8 +54,8 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 }
 
-                databaseEntities.ProgramNotificationSents.AddRange(notificationSents);
-                databaseEntities.SaveChangesWithNoAuditing();
+                HttpRequestStorage.DatabaseEntities.ProgramNotificationSents.AddRange(notificationSents);
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             }
 
@@ -106,19 +104,24 @@ namespace ProjectFirma.Web.ScheduledJobs
             FileResource toolLogo = null;
             string toolDisplayName = string.Empty;
 
-            var programNotificationHelper = new ProgramNotificationHelper(contactSupportEmail, programNotificationConfiguration.NotificationEmailText, reminderSubject, toolLogo, toolDisplayName);
+            var programNotificationHelper = new ProgramNotificationHelper(contactSupportEmail, programNotificationConfiguration.NotificationEmailTextHtmlString, reminderSubject, toolLogo, toolDisplayName);
 
 
-            var projectsGroupedByPrimaryContact = projectsNeedingNotification.Where(x => x.GetPrimaryContact() != null).GroupBy(x => x.GetPrimaryContact()).ToList();
+            var projectsWithPrimaryContactWithEmail = projectsNeedingNotification.Where(x => x.GetPrimaryContact() != null && !string.IsNullOrEmpty(x.GetPrimaryContact().Email)).ToList();
+            var projectsGroupedByPrimaryContact = projectsWithPrimaryContactWithEmail.GroupBy(x => x.GetPrimaryContact()).ToList();
             var notifications = projectsGroupedByPrimaryContact.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x, programNotificationConfiguration)).ToList();
 
-            var message = $"Reminder emails sent to {projectsGroupedByPrimaryContact.Count} Primary Contacts for {projectsGroupedByPrimaryContact.Count} projects requiring an update.";
+            var totalProjectsCapturedInThePrimaryContactGroupingEmails = projectsGroupedByPrimaryContact.SelectMany(group => group.ToList().Select(x => x.ProjectID)).Distinct().Count();
+            var message = $"Reminder emails sent to {projectsGroupedByPrimaryContact.Count} Primary Contacts for {totalProjectsCapturedInThePrimaryContactGroupingEmails} projects requiring an update.";
             Logger.Info(message);
 
-            var projectsGroupedByPrivateLandowner = projectsNeedingNotification.Where(x => x.GetPrivateLandowner() != null).GroupBy(x => x.GetPrivateLandowner()).ToList();
+            var projectsWithPrivateLandowners = projectsNeedingNotification.Where(x => x.GetPrivateLandowners().Any()).ToList();
+            var projectPersonsWithPrivateLandownersWithEmails = projectsWithPrivateLandowners.SelectMany(x => x.ProjectPeople).Where(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrivateLandowner.ProjectPersonRelationshipTypeID && !string.IsNullOrEmpty(pp.Person.Email)).ToList();
+            var projectsGroupedByPrivateLandowner = projectPersonsWithPrivateLandownersWithEmails.GroupBy(x => x.Person, y => y.Project).ToList();
             notifications.AddRange(projectsGroupedByPrivateLandowner.SelectMany(x => programNotificationHelper.SendProgramNotificationMessage(x, programNotificationConfiguration)).ToList());
 
-            message = $"Reminder emails sent to {projectsGroupedByPrivateLandowner.Count} Private Landowner for {projectsGroupedByPrivateLandowner.Count} projects requiring an update.";
+            var totalProjectsCapturedInThePrivateLandownerGroupingEmails = projectsGroupedByPrivateLandowner.SelectMany(group => group.ToList().Select(x => x.ProjectID)).Distinct().Count();
+            message = $"Reminder emails sent to {projectsGroupedByPrivateLandowner.Count} Private Landowner for {totalProjectsCapturedInThePrivateLandownerGroupingEmails} projects requiring an update.";
             Logger.Info(message);
 
             return notifications;

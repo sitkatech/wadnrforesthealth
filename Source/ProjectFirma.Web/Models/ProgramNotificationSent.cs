@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Models
             var notifications = new List<ProgramNotificationSent>();
             foreach (var notificationPerson in notificationPeople)
             {
-                var notification = new ProgramNotificationSent(programNotificationConfiguration, notificationPerson, notificationDate); //(programNotificationType, notificationPerson, notificationDate);
+                var notification = new ProgramNotificationSent(programNotificationConfiguration, notificationPerson, notificationDate); 
                 notification.ProgramNotificationSentProjects = notificationProjects.Select(p => new ProgramNotificationSentProject(notification, p)).ToList();
                 notifications.Add(notification);
             }
