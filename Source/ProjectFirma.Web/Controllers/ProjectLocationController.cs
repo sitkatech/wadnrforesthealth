@@ -300,7 +300,8 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => x != null)
                 .ToList();
 
-            layerGeoJsons.Add(PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
+            layerGeoJsons.Add(PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.1m, LayerInitialVisibility.Hide, PriorityLandscapeType.East));
+            layerGeoJsons.Add(PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.1m, LayerInitialVisibility.Hide, PriorityLandscapeType.West));
             layerGeoJsons.Add(DNRUplandRegion.GetRegionWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
             var boundingBox = BoundingBox.MakeBoundingBoxFromProject(project);
             var mapInitJson = new MapInitJson("EditProjectBoundingBoxMap", 10, layerGeoJsons, boundingBox)

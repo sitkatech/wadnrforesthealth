@@ -93,7 +93,15 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for LayerGeoJson with WMS Type
         /// </summary>
-        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string cqlFilter, bool hasCqlFilter) : this(layerName, mapServerUrl, mapServerLayerName, layerColor, layerOpacity, layerInitialVisibility)
+        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string cqlFilter, bool hasCqlFilter) : this(layerName, mapServerUrl, mapServerLayerName, layerColor, layerOpacity, layerInitialVisibility, cqlFilter, hasCqlFilter, string.Empty)
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor for LayerGeoJson with WMS Type
+        /// </summary>
+        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string cqlFilter, bool hasCqlFilter, string mapLayerIconImageLocation) : this(layerName, mapServerUrl, mapServerLayerName, layerColor, layerOpacity, layerInitialVisibility, mapLayerIconImageLocation)
         {
             if (!string.IsNullOrEmpty(cqlFilter) && hasCqlFilter)
             {

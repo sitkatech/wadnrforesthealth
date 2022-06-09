@@ -30,7 +30,8 @@ namespace ProjectFirma.Web.Controllers
             var layerGeoJsons = new List<LayerGeoJson>();
             layerGeoJsons = new List<LayerGeoJson>
             {
-                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show),
+                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, LayerInitialVisibility.Show, PriorityLandscapeType.East),
+                PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, LayerInitialVisibility.Show, PriorityLandscapeType.West),
                 MapInitJson.GetAllDetailedProjectLocations(),
                 MapInitJson.GetAllProjectTreatments()
             };

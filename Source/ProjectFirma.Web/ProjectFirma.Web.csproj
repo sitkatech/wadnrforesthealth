@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -412,6 +412,8 @@
     <Compile Include="Models\Generated\PriorityLandscapeFileResource.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PriorityLandscapeFileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PriorityLandscapePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\PriorityLandscapeType.Binding.cs" />
+    <Compile Include="Models\Generated\PriorityLandscapeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Program.Binding.cs" />
     <Compile Include="Models\Generated\Program.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProgramIndex.Binding.cs" />
@@ -725,6 +727,7 @@
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
     <Compile Include="Models\PersonRole.cs" />
+    <Compile Include="Models\PriorityLandscapeType.cs" />
     <Compile Include="Models\ProgramNotificationConfiguration.cs" />
     <Compile Include="Models\ProgramNotificationConfigurationModelExtensions.cs" />
     <Compile Include="Models\ProgramNotificationSent.cs" />
