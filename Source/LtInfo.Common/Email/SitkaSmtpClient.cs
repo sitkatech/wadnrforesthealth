@@ -218,6 +218,7 @@ namespace LtInfo.Common.Email
         private static string GetHumanReadableDisplayOfMessage(MailMessage mm)
         {
             var currentDateFormattedForEmail = DateTime.Now.ToString("ddd dd MMM yyyy HH:mm:ss zzz");
+            // 6/9/2022 TK - This is will not output the body for HTML emails
             var messageString = string.Format(@"Date: {0}
 From: {1}
 To: {2}
