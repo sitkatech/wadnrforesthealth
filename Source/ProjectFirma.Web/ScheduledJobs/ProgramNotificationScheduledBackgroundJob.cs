@@ -99,12 +99,11 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private List<ProgramNotificationSent> RunNotifications(List<Project> projectsNeedingNotification, ProgramNotificationConfiguration programNotificationConfiguration)
         {
-            string contactSupportEmail = FirmaWebConfiguration.SitkaSupportEmail;
+            string contactSupportEmail = FirmaWebConfiguration.WadnrSupportEmail;
             string reminderSubject = "Forest Health Tracker - Time to update your Project";
-            FileResource toolLogo = null;
-            string toolDisplayName = string.Empty;
+            string toolDisplayName = FirmaWebConfiguration.WebsiteDisplayName;
 
-            var programNotificationHelper = new ProgramNotificationHelper(contactSupportEmail, programNotificationConfiguration.NotificationEmailTextHtmlString, reminderSubject, toolLogo, toolDisplayName);
+            var programNotificationHelper = new ProgramNotificationHelper(contactSupportEmail, programNotificationConfiguration.NotificationEmailTextHtmlString, reminderSubject, toolDisplayName);
 
 
             var projectsWithPrimaryContactWithEmail = projectsNeedingNotification.Where(x => x.GetPrimaryContact() != null && !string.IsNullOrEmpty(x.GetPrimaryContact().Email)).ToList();

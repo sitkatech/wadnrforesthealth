@@ -24,6 +24,8 @@
     <add key="DatabaseConnectionString" value="Server=${db-data-source};Database=${db-name};${db-auth-settings}" />
     <add key="RecaptchaValidatorUrl" value="https://www.google.com/recaptcha/api/siteverify" />
     <add key="SitkaSupportEmail" value="projectfirma@sitkatech.com" />
+    <add key="WadnrSupportEmail" value="DNRForestHealthTracker@dnr.wa.gov" />
+    <add key="WebsiteDisplayName" value="Forest Health Tracker" />
     <add key="DoNotReplyEmail" value="donotreply@${application-domain}" />
     <add key="CanonicalHostName" value="${canonical-host-name}" />
     <add key="ApplicationDomain" value="${application-domain}" />

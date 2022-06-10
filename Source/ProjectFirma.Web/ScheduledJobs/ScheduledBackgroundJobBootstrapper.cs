@@ -113,8 +113,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
             }
 
-            // 1:30 AM tasks
-            var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36);
+            // 1:30 AM  pacific tasks is 8:36am utc
+            var oneThirtyAmCronString = MakeDailyCronJobStringFromUtcTime(8, 36);
             AddRecurringJob(ProgramNotificationScheduledBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramNotificationScheduledBackgroundJob(JobCancellationToken.Null), oneThirtyAmCronString, recurringJobIds);
 
 
@@ -193,10 +193,10 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// <summary>
         /// Convert hour/minute into cron time string for Hangfire
         /// </summary>
-        private static string MakeDailyCronJobStringFromLocalTime(int hour, int minute)
+        private static string MakeDailyCronJobStringFromUtcTime(int hour, int minute)
         {
             var now = DateTime.Now;
-            var localCrontTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, 0, DateTimeKind.Local);
+            var localCrontTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, 0, DateTimeKind.Utc);
             return Cron.Daily(localCrontTime.Hour, localCrontTime.Minute);
         }
 

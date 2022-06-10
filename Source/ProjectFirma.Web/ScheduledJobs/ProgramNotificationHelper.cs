@@ -14,7 +14,6 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         public string ToolName { get; set; }
         public HtmlString IntroContent { get; set; }
-        public FileResource ToolLogo { get; set; }
         public string ReminderEmailSubject { get; set; }
         public string ContactSupportEmail { get; set; }
 
@@ -26,13 +25,11 @@ namespace ProjectFirma.Web.ScheduledJobs
 </div>";
 
 
-        public ProgramNotificationHelper(string contactSupportEmail, HtmlString introContent, string reminderSubject,
-            FileResource toolLogo, string toolDisplayName)
+        public ProgramNotificationHelper(string contactSupportEmail, HtmlString introContent, string reminderSubject, string toolDisplayName)
         {
             ContactSupportEmail = contactSupportEmail;
             IntroContent = introContent;
             ReminderEmailSubject = reminderSubject;
-            ToolLogo = toolLogo;
             ToolName = toolDisplayName;
         }
 
@@ -62,10 +59,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private MailMessage GenerateReminderForPerson(Person person, List<Project> projects)
         {
-            var projectListAsHtmlStrings =
-                GenerateProjectListAsHtmlStrings(
-                    projects);
-
+            var projectListAsHtmlStrings = GenerateProjectListAsHtmlStrings(projects);
 
             var emailContent = GetEmailContentWithGeneratedSignature(person.FullNameFirstLast, String.Join("<br/>", projectListAsHtmlStrings));
 
@@ -89,8 +83,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private string GetEmailContentWithGeneratedSignature(string fullNameFirstLast, string projectListConcatenated)
         {
-            return GetEmailContent(fullNameFirstLast,
-                projectListConcatenated, GetReminderMessageSignature(false));
+            return GetEmailContent(fullNameFirstLast, projectListConcatenated, GetReminderMessageSignature(false));
         }
 
         public string GetEmailContentPreview()
@@ -121,13 +114,12 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private string GetReminderMessageSignature(bool isPreview)
         {
-            var logoUrl = isPreview ? ToolLogo.FileResourceUrl : "cid:tool-logo";
 
             return $@"
 Thank you,<br />
-{ToolName} team<br/><br/><img src=""{logoUrl}"" width=""160"" />
+{ToolName} team<br/><br/>
 <p>
-P.S. - You received this email because you are listed as the Primary Contact for these projects. If you feel that you should not be the Primary Contact for one or more of these projects, please <a href=""mailto:{ContactSupportEmail}"">contact support</a>.
+P.S. - You received this email because you are listed as a Contact for these projects. If you feel that you should not be a Contact for one or more of these projects, please <a href=""mailto:{ContactSupportEmail}"">contact support</a>.
 </p>";
         }
     }
