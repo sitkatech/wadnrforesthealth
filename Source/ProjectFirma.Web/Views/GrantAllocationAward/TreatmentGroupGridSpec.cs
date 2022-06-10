@@ -5,6 +5,8 @@ using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
@@ -15,6 +17,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public TreatmentGroupGridSpec(Person currentPerson)
         {
             bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            bool hasCreatePermission = new GrantAllocationAwardLandownerCostShareLineItemCreateFeature().HasPermissionByPerson(currentPerson);
+            if (hasCreatePermission)
+            {
+                var newLandownerCostShareLineItemUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(gaac => gaac.NewLandownerCostShareLineItemFromGrantAllocationAward(grantAllocationAward.PrimaryKey));
+                CreateEntityModalDialogForm = new ModalDialogForm(newLandownerCostShareLineItemUrl, $"Create a new {Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} Line Item");
+            }
             int buttonGridWidth = 30;
 
 
