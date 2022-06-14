@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProgramNotificationType]
+//  Source Table: [dbo].[PriorityLandscapeCategory]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,47 +16,49 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProgramNotificationType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProgramNotificationType]")]
-    public partial class ProgramNotificationType : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[PriorityLandscapeCategory] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[PriorityLandscapeCategory]")]
+    public partial class PriorityLandscapeCategory : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProgramNotificationType()
+        protected PriorityLandscapeCategory()
         {
-            this.ProgramNotificationConfigurations = new HashSet<ProgramNotificationConfiguration>();
+            this.PriorityLandscapes = new HashSet<PriorityLandscape>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramNotificationType(int programNotificationTypeID, string programNotificationTypeName, string programNotificationTypeDisplayName) : this()
+        public PriorityLandscapeCategory(int priorityLandscapeCategoryID, string priorityLandscapeCategoryName, string priorityLandscapeCategoryDisplayName, string priorityLandscapeCategoryMapLayerColor) : this()
         {
-            this.ProgramNotificationTypeID = programNotificationTypeID;
-            this.ProgramNotificationTypeName = programNotificationTypeName;
-            this.ProgramNotificationTypeDisplayName = programNotificationTypeDisplayName;
+            this.PriorityLandscapeCategoryID = priorityLandscapeCategoryID;
+            this.PriorityLandscapeCategoryName = priorityLandscapeCategoryName;
+            this.PriorityLandscapeCategoryDisplayName = priorityLandscapeCategoryDisplayName;
+            this.PriorityLandscapeCategoryMapLayerColor = priorityLandscapeCategoryMapLayerColor;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramNotificationType(string programNotificationTypeName, string programNotificationTypeDisplayName) : this()
+        public PriorityLandscapeCategory(string priorityLandscapeCategoryName, string priorityLandscapeCategoryDisplayName, string priorityLandscapeCategoryMapLayerColor) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProgramNotificationTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.PriorityLandscapeCategoryID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ProgramNotificationTypeName = programNotificationTypeName;
-            this.ProgramNotificationTypeDisplayName = programNotificationTypeDisplayName;
+            this.PriorityLandscapeCategoryName = priorityLandscapeCategoryName;
+            this.PriorityLandscapeCategoryDisplayName = priorityLandscapeCategoryDisplayName;
+            this.PriorityLandscapeCategoryMapLayerColor = priorityLandscapeCategoryMapLayerColor;
         }
 
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProgramNotificationType CreateNewBlank()
+        public static PriorityLandscapeCategory CreateNewBlank()
         {
-            return new ProgramNotificationType(default(string), default(string));
+            return new PriorityLandscapeCategory(default(string), default(string), default(string));
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProgramNotificationConfigurations.Any();
+            return PriorityLandscapes.Any();
         }
 
         /// <summary>
@@ -75,9 +77,9 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(ProgramNotificationConfigurations.Any())
+            if(PriorityLandscapes.Any())
             {
-                dependentObjects.Add(typeof(ProgramNotificationConfiguration).Name);
+                dependentObjects.Add(typeof(PriorityLandscape).Name);
             }
             return dependentObjects.Distinct().ToList();
         }
@@ -85,7 +87,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramNotificationType).Name, typeof(ProgramNotificationConfiguration).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PriorityLandscapeCategory).Name, typeof(PriorityLandscape).Name};
 
 
         /// <summary>
@@ -93,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.ProgramNotificationTypes.Remove(this);
+            dbContext.PriorityLandscapeCategories.Remove(this);
         }
         
         /// <summary>
@@ -110,25 +112,27 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in ProgramNotificationConfigurations.ToList())
+            foreach(var x in PriorityLandscapes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
         }
 
         [Key]
-        public int ProgramNotificationTypeID { get; set; }
-        public string ProgramNotificationTypeName { get; set; }
-        public string ProgramNotificationTypeDisplayName { get; set; }
+        public int PriorityLandscapeCategoryID { get; set; }
+        public string PriorityLandscapeCategoryName { get; set; }
+        public string PriorityLandscapeCategoryDisplayName { get; set; }
+        public string PriorityLandscapeCategoryMapLayerColor { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProgramNotificationTypeID; } set { ProgramNotificationTypeID = value; } }
+        public int PrimaryKey { get { return PriorityLandscapeCategoryID; } set { PriorityLandscapeCategoryID = value; } }
 
-        public virtual ICollection<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
+        public virtual ICollection<PriorityLandscape> PriorityLandscapes { get; set; }
 
         public static class FieldLengths
         {
-            public const int ProgramNotificationTypeName = 100;
-            public const int ProgramNotificationTypeDisplayName = 100;
+            public const int PriorityLandscapeCategoryName = 100;
+            public const int PriorityLandscapeCategoryDisplayName = 100;
+            public const int PriorityLandscapeCategoryMapLayerColor = 20;
         }
     }
 }

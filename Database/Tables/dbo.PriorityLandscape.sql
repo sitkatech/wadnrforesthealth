@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[PriorityLandscape](
 	[PriorityLandscapeDescription] [dbo].[html] NULL,
 	[PlanYear] [int] NULL,
 	[PriorityLandscapeAboveMapText] [varchar](2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[PriorityLandscapeTypeID] [int] NULL,
+	[PriorityLandscapeCategoryID] [int] NULL,
  CONSTRAINT [PK_PriorityLandscape_PriorityLandscapeID] PRIMARY KEY CLUSTERED 
 (
 	[PriorityLandscapeID] ASC
@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[PriorityLandscape](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-ALTER TABLE [dbo].[PriorityLandscape]  WITH CHECK ADD  CONSTRAINT [FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID] FOREIGN KEY([PriorityLandscapeTypeID])
-REFERENCES [dbo].[PriorityLandscapeType] ([PriorityLandscapeTypeID])
+ALTER TABLE [dbo].[PriorityLandscape]  WITH CHECK ADD  CONSTRAINT [FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID] FOREIGN KEY([PriorityLandscapeCategoryID])
+REFERENCES [dbo].[PriorityLandscapeCategory] ([PriorityLandscapeCategoryID])
 GO
-ALTER TABLE [dbo].[PriorityLandscape] CHECK CONSTRAINT [FK_PriorityLandscape_PriorityLandscapeType_PriorityLandscapeTypeID]
+ALTER TABLE [dbo].[PriorityLandscape] CHECK CONSTRAINT [FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID]

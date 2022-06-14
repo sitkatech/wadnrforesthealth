@@ -100,12 +100,14 @@
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
     <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.PodVectorRanked" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.PriorityLandscape" />
+    <EntitySet Name="PriorityLandscapeCategory" EntityType="ProjectFirma.Web.Models.PriorityLandscapeCategory" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.PriorityLandscapeFileResource" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Program" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="ProgramNotificationConfiguration" EntityType="ProjectFirma.Web.Models.ProgramNotificationConfiguration" />
     <EntitySet Name="ProgramNotificationSent" EntityType="ProjectFirma.Web.Models.ProgramNotificationSent" />
     <EntitySet Name="ProgramNotificationSentProject" EntityType="ProjectFirma.Web.Models.ProgramNotificationSentProject" />
+    <EntitySet Name="ProgramNotificationType" EntityType="ProjectFirma.Web.Models.ProgramNotificationType" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.ProgramPerson" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
@@ -1003,6 +1005,10 @@
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
     </AssociationSet>
+    <AssociationSet Name="FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID" Association="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID">
+      <End Role="PriorityLandscapeCategory" EntitySet="PriorityLandscapeCategory" />
+      <End Role="PriorityLandscapes" EntitySet="PriorityLandscape" />
+    </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
@@ -1034,6 +1040,10 @@
     <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
       <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
+      <End Role="ProgramNotificationType" EntitySet="ProgramNotificationType" />
+      <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
     </AssociationSet>
     <AssociationSet Name="FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID" Association="ProjectFirma.Web.Models.FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID">
       <End Role="ProgramNotificationConfiguration" EntitySet="ProgramNotificationConfiguration" />
@@ -2744,15 +2754,26 @@
     <Property Name="PriorityLandscapeDescription" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="PlanYear" Type="Int32" />
     <Property Name="PriorityLandscapeAboveMapText" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-    <Property Name="PriorityLandscapeTypeID" Type="Int32" />
+    <Property Name="PriorityLandscapeCategoryID" Type="Int32" />
     <NavigationProperty Name="PclBoundaryLines" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclBoundaryLines" />
     <NavigationProperty Name="PclLandscapeTreatmentPriorities" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclLandscapeTreatmentPriorities" />
     <NavigationProperty Name="PclVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclVectorRankeds" />
     <NavigationProperty Name="PclWildfireResponseBenefits" Relationship="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclWildfireResponseBenefits" />
     <NavigationProperty Name="PodVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PodVectorRankeds" />
+    <NavigationProperty Name="PriorityLandscapeCategory" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID" FromRole="PriorityLandscapes" ToRole="PriorityLandscapeCategory" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />
+  </EntityType>
+  <EntityType Name="PriorityLandscapeCategory">
+    <Key>
+      <PropertyRef Name="PriorityLandscapeCategoryID" />
+    </Key>
+    <Property Name="PriorityLandscapeCategoryID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityLandscapeCategoryName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeCategoryDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeCategoryMapLayerColor" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="PriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID" FromRole="PriorityLandscapeCategory" ToRole="PriorityLandscapes" />
   </EntityType>
   <EntityType Name="PriorityLandscapeFileResource">
     <Key>
@@ -2819,6 +2840,7 @@
     <Property Name="RecurrenceIntervalID" Type="Int32" Nullable="false" />
     <Property Name="NotificationEmailText" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_Program_ProgramID" FromRole="ProgramNotificationConfigurations" ToRole="Program" />
+    <NavigationProperty Name="ProgramNotificationType" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" FromRole="ProgramNotificationConfigurations" ToRole="ProgramNotificationType" />
     <NavigationProperty Name="ProgramNotificationSents" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSent_ProgramNotificationConfiguration_ProgramNotificationConfigurationID" FromRole="ProgramNotificationConfiguration" ToRole="ProgramNotificationSents" />
   </EntityType>
   <EntityType Name="ProgramNotificationSent">
@@ -2842,6 +2864,15 @@
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ProgramNotificationSent" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSentProject_ProgramNotificationSent_ProgramNotificationSentID" FromRole="ProgramNotificationSentProjects" ToRole="ProgramNotificationSent" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSentProject_Project_ProjectID" FromRole="ProgramNotificationSentProjects" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProgramNotificationType">
+    <Key>
+      <PropertyRef Name="ProgramNotificationTypeID" />
+    </Key>
+    <Property Name="ProgramNotificationTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ProgramNotificationTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramNotificationTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="ProgramNotificationConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" FromRole="ProgramNotificationType" ToRole="ProgramNotificationConfigurations" />
   </EntityType>
   <EntityType Name="ProgramPerson">
     <Key>
@@ -3854,7 +3885,7 @@
       <PropertyRef Name="PriorityLandscapeID" />
       <PropertyRef Name="PrimaryKey" />
       <PropertyRef Name="PriorityLandscapeName" />
-      <PropertyRef Name="PriorityLandscapeTypeName" />
+      <PropertyRef Name="PriorityLandscapeCategoryName" />
       <PropertyRef Name="MapColor" />
     </Key>
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
@@ -3862,8 +3893,8 @@
     <Property Name="PriorityLandscapeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
-    <Property Name="PriorityLandscapeTypeID" Type="Int32" />
-    <Property Name="PriorityLandscapeTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityLandscapeCategoryID" Type="Int32" />
+    <Property Name="PriorityLandscapeCategoryName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="MapColor" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="vLoaStageGrantAllocation">
@@ -6432,6 +6463,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID">
+    <End Role="PriorityLandscapeCategory" Type="ProjectFirma.Web.Models.PriorityLandscapeCategory" Multiplicity="0..1" />
+    <End Role="PriorityLandscapes" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityLandscapeCategory">
+        <PropertyRef Name="PriorityLandscapeCategoryID" />
+      </Principal>
+      <Dependent Role="PriorityLandscapes">
+        <PropertyRef Name="PriorityLandscapeCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
     <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
     <End Role="PriorityLandscapeFileResources" Type="ProjectFirma.Web.Models.PriorityLandscapeFileResource" Multiplicity="*" />
@@ -6525,6 +6568,18 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
+    <End Role="ProgramNotificationType" Type="ProjectFirma.Web.Models.ProgramNotificationType" Multiplicity="1" />
+    <End Role="ProgramNotificationConfigurations" Type="ProjectFirma.Web.Models.ProgramNotificationConfiguration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramNotificationType">
+        <PropertyRef Name="ProgramNotificationTypeID" />
+      </Principal>
+      <Dependent Role="ProgramNotificationConfigurations">
+        <PropertyRef Name="ProgramNotificationTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

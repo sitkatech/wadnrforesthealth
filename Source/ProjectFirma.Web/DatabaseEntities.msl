@@ -1209,7 +1209,17 @@
           <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
           <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
           <ScalarProperty Name="PriorityLandscapeAboveMapText" ColumnName="PriorityLandscapeAboveMapText" />
-          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
+          <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriorityLandscapeCategory">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeCategory">
+        <MappingFragment StoreEntitySet="PriorityLandscapeCategory">
+          <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
+          <ScalarProperty Name="PriorityLandscapeCategoryName" ColumnName="PriorityLandscapeCategoryName" />
+          <ScalarProperty Name="PriorityLandscapeCategoryDisplayName" ColumnName="PriorityLandscapeCategoryDisplayName" />
+          <ScalarProperty Name="PriorityLandscapeCategoryMapLayerColor" ColumnName="PriorityLandscapeCategoryMapLayerColor" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1284,6 +1294,15 @@
           <ScalarProperty Name="ProgramNotificationSentProjectID" ColumnName="ProgramNotificationSentProjectID" />
           <ScalarProperty Name="ProgramNotificationSentID" ColumnName="ProgramNotificationSentID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramNotificationType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationType">
+        <MappingFragment StoreEntitySet="ProgramNotificationType">
+          <ScalarProperty Name="ProgramNotificationTypeID" ColumnName="ProgramNotificationTypeID" />
+          <ScalarProperty Name="ProgramNotificationTypeName" ColumnName="ProgramNotificationTypeName" />
+          <ScalarProperty Name="ProgramNotificationTypeDisplayName" ColumnName="ProgramNotificationTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2186,8 +2205,8 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
-          <ScalarProperty Name="PriorityLandscapeTypeName" ColumnName="PriorityLandscapeTypeName" />
+          <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
+          <ScalarProperty Name="PriorityLandscapeCategoryName" ColumnName="PriorityLandscapeCategoryName" />
           <ScalarProperty Name="MapColor" ColumnName="MapColor" />
         </MappingFragment>
       </EntityTypeMapping>

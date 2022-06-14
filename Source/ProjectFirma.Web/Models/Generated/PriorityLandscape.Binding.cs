@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation, string priorityLandscapeDescription, int? planYear, string priorityLandscapeAboveMapText, int? priorityLandscapeTypeID) : this()
+        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation, string priorityLandscapeDescription, int? planYear, string priorityLandscapeAboveMapText, int? priorityLandscapeCategoryID) : this()
         {
             this.PriorityLandscapeID = priorityLandscapeID;
             this.PriorityLandscapeName = priorityLandscapeName;
@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
             this.PriorityLandscapeDescription = priorityLandscapeDescription;
             this.PlanYear = planYear;
             this.PriorityLandscapeAboveMapText = priorityLandscapeAboveMapText;
-            this.PriorityLandscapeTypeID = priorityLandscapeTypeID;
+            this.PriorityLandscapeCategoryID = priorityLandscapeCategoryID;
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace ProjectFirma.Web.Models
         }
         public int? PlanYear { get; set; }
         public string PriorityLandscapeAboveMapText { get; set; }
-        public int? PriorityLandscapeTypeID { get; set; }
+        public int? PriorityLandscapeCategoryID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeID; } set { PriorityLandscapeID = value; } }
 
@@ -221,7 +221,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual ICollection<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
         public virtual ICollection<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
-        public PriorityLandscapeType PriorityLandscapeType { get { return PriorityLandscapeTypeID.HasValue ? PriorityLandscapeType.AllLookupDictionary[PriorityLandscapeTypeID.Value] : null; } }
+        public virtual PriorityLandscapeCategory PriorityLandscapeCategory { get; set; }
 
         public static class FieldLengths
         {
