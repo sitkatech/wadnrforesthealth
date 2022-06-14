@@ -50,11 +50,11 @@ namespace ProjectFirma.Web.Models
                 layerInitialVisibility, "/Content/leaflet/images/washington_priority_landscape.png");
         }
 
-        public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, PriorityLandscapeType priorityLandscapeType)
+        public static LayerGeoJson GetPriorityLandscapeWmsLayerGeoJson(decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, PriorityLandscapeCategory priorityLandscapeCategory)
         {
-            return new LayerGeoJson(priorityLandscapeType.PriorityLandscapeTypeDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
+            return new LayerGeoJson(priorityLandscapeCategory.PriorityLandscapeCategoryDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetPriorityLandscapeWmsLayerName(), "", layerOpacity,
-                layerInitialVisibility, $"PriorityLandscapeTypeID={priorityLandscapeType.PriorityLandscapeTypeID}", true, priorityLandscapeType.GetPriorityLandscapeMapLayerIconImagePath());
+                layerInitialVisibility, $"PriorityLandscapeCategoryID={priorityLandscapeCategory.PriorityLandscapeCategoryID}", true, priorityLandscapeCategory.GetPriorityLandscapeMapLayerIconImagePath());
         }
 
 
@@ -72,9 +72,9 @@ namespace ProjectFirma.Web.Models
                 projectLayerGeoJson,
                 priorityLandscapeLayerGeoJson,
                 GetPriorityLandscapeWmsLayerGeoJson(0.6m,
-                    LayerInitialVisibility.Show, PriorityLandscapeType.East),
+                    LayerInitialVisibility.Show, PriorityLandscapeCategory.East),
                 GetPriorityLandscapeWmsLayerGeoJson(0.6m,
-                    LayerInitialVisibility.Show, PriorityLandscapeType.West)
+                    LayerInitialVisibility.Show, PriorityLandscapeCategory.West)
             };
 
 

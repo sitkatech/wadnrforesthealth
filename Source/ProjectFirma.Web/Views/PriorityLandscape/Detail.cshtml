@@ -91,10 +91,10 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
-                            <strong>Type</strong>
+                            <strong>Priority Landscape Category</strong>
                         </div>
                         <div class="col-sm-9">
-                            @ViewDataTyped.PriorityLandscape.PriorityLandscapeType.PriorityLandscapeTypeDisplayName
+                            @ViewDataTyped.PriorityLandscape.PriorityLandscapeCategory.PriorityLandscapeCategoryDisplayName
                         </div>
                     </div>
                     <div class="row">
@@ -188,7 +188,7 @@
             @if (ViewDataTyped.PerformanceMeasureChartViewDatas.Any())
             {
                 <p>
-                    The reported @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() results within this @ViewDataTyped.PriorityLandscapeTypeName are charted here. Results are included for every @FieldDefinition.Project.GetFieldDefinitionLabel() that is assigned to this @ViewDataTyped.PriorityLandscapeTypeName. To see the full results for a @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel(), click the @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() name in the chart title.
+                    The reported @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() results within this @ViewDataTyped.PriorityLandscapeCategoryName are charted here. Results are included for every @FieldDefinition.Project.GetFieldDefinitionLabel() that is assigned to this @ViewDataTyped.PriorityLandscapeCategoryName. To see the full results for a @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel(), click the @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() name in the chart title.
                 </p>
                 foreach (var batch in ViewDataTyped.PerformanceMeasureChartViewDatas.Batch(2))
                 {
@@ -213,7 +213,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <p class="text-center">
-                            There are no @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized() to report for this @ViewDataTyped.PriorityLandscapeTypeName.
+                            There are no @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized() to report for this @ViewDataTyped.PriorityLandscapeCategoryName.
                         </p>
                     </div>
                 </div>

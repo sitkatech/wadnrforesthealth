@@ -1209,7 +1209,7 @@
           <ScalarProperty Name="PriorityLandscapeDescription" ColumnName="PriorityLandscapeDescription" />
           <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
           <ScalarProperty Name="PriorityLandscapeAboveMapText" ColumnName="PriorityLandscapeAboveMapText" />
-          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
+          <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2186,8 +2186,8 @@
           <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
           <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-          <ScalarProperty Name="PriorityLandscapeTypeID" ColumnName="PriorityLandscapeTypeID" />
-          <ScalarProperty Name="PriorityLandscapeTypeName" ColumnName="PriorityLandscapeTypeName" />
+          <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
+          <ScalarProperty Name="PriorityLandscapeCategoryName" ColumnName="PriorityLandscapeCategoryName" />
           <ScalarProperty Name="MapColor" ColumnName="MapColor" />
         </MappingFragment>
       </EntityTypeMapping>
