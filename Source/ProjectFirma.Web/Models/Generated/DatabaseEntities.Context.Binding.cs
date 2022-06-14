@@ -127,14 +127,12 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
         public virtual DbSet<PodVectorRanked> PodVectorRankeds { get; set; }
-        public virtual DbSet<PriorityLandscapeCategory> PriorityLandscapeCategories { get; set; }
         public virtual DbSet<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
         public virtual DbSet<ProgramNotificationSentProject> ProgramNotificationSentProjects { get; set; }
         public virtual DbSet<ProgramNotificationSent> ProgramNotificationSents { get; set; }
-        public virtual DbSet<ProgramNotificationType> ProgramNotificationTypes { get; set; }
         public virtual DbSet<ProgramPerson> ProgramPeople { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
@@ -740,7 +738,9 @@ namespace ProjectFirma.Web.Models
                     return PodVectorRankeds.GetPodVectorRanked(primaryKey);
 
                 case "PriorityLandscapeCategory":
-                    return PriorityLandscapeCategories.GetPriorityLandscapeCategory(primaryKey);
+                    var priorityLandscapeCategory = PriorityLandscapeCategory.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(priorityLandscapeCategory, "PriorityLandscapeCategory", primaryKey);
+                    return priorityLandscapeCategory;
 
                 case "PriorityLandscapeFileResource":
                     return PriorityLandscapeFileResources.GetPriorityLandscapeFileResource(primaryKey);
@@ -761,7 +761,9 @@ namespace ProjectFirma.Web.Models
                     return ProgramNotificationSents.GetProgramNotificationSent(primaryKey);
 
                 case "ProgramNotificationType":
-                    return ProgramNotificationTypes.GetProgramNotificationType(primaryKey);
+                    var programNotificationType = ProgramNotificationType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(programNotificationType, "ProgramNotificationType", primaryKey);
+                    return programNotificationType;
 
                 case "ProgramPerson":
                     return ProgramPeople.GetProgramPerson(primaryKey);

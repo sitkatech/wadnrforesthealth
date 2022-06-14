@@ -1213,16 +1213,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PriorityLandscapeCategory">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeCategory">
-        <MappingFragment StoreEntitySet="PriorityLandscapeCategory">
-          <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
-          <ScalarProperty Name="PriorityLandscapeCategoryName" ColumnName="PriorityLandscapeCategoryName" />
-          <ScalarProperty Name="PriorityLandscapeCategoryDisplayName" ColumnName="PriorityLandscapeCategoryDisplayName" />
-          <ScalarProperty Name="PriorityLandscapeCategoryMapLayerColor" ColumnName="PriorityLandscapeCategoryMapLayerColor" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PriorityLandscapeFileResource">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscapeFileResource">
         <MappingFragment StoreEntitySet="PriorityLandscapeFileResource">
@@ -1294,15 +1284,6 @@
           <ScalarProperty Name="ProgramNotificationSentProjectID" ColumnName="ProgramNotificationSentProjectID" />
           <ScalarProperty Name="ProgramNotificationSentID" ColumnName="ProgramNotificationSentID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProgramNotificationType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramNotificationType">
-        <MappingFragment StoreEntitySet="ProgramNotificationType">
-          <ScalarProperty Name="ProgramNotificationTypeID" ColumnName="ProgramNotificationTypeID" />
-          <ScalarProperty Name="ProgramNotificationTypeName" ColumnName="ProgramNotificationTypeName" />
-          <ScalarProperty Name="ProgramNotificationTypeDisplayName" ColumnName="ProgramNotificationTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

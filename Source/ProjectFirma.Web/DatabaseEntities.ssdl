@@ -100,14 +100,12 @@
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.Store.PodVectorRanked" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PriorityLandscapeCategory" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeCategory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramNotificationConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramNotificationSent" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationSent" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramNotificationSentProject" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationSentProject" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProgramNotificationType" EntityType="ProjectFirma.Web.Models.Store.ProgramNotificationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramPerson" EntityType="ProjectFirma.Web.Models.Store.ProgramPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -928,10 +926,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
     </AssociationSet>
-    <AssociationSet Name="FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID">
-      <End Role="PriorityLandscapeCategory" EntitySet="PriorityLandscapeCategory" />
-      <End Role="PriorityLandscapes" EntitySet="PriorityLandscape" />
-    </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
@@ -962,10 +956,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_ProgramNotificationConfiguration_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationConfiguration_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
-      <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
-      <End Role="ProgramNotificationType" EntitySet="ProgramNotificationType" />
       <End Role="ProgramNotificationConfigurations" EntitySet="ProgramNotificationConfiguration" />
     </AssociationSet>
     <AssociationSet Name="FK_ProgramNotificationSent_Person_SentToPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProgramNotificationSent_Person_SentToPersonID_PersonID">
@@ -2525,15 +2515,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeAboveMapText" Type="varchar" MaxLength="2000" />
     <Property Name="PriorityLandscapeCategoryID" Type="int" />
   </EntityType>
-  <EntityType Name="PriorityLandscapeCategory">
-    <Key>
-      <PropertyRef Name="PriorityLandscapeCategoryID" />
-    </Key>
-    <Property Name="PriorityLandscapeCategoryID" Type="int" Nullable="false" />
-    <Property Name="PriorityLandscapeCategoryName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="PriorityLandscapeCategoryDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="PriorityLandscapeCategoryMapLayerColor" Type="varchar" Nullable="false" MaxLength="20" />
-  </EntityType>
   <EntityType Name="PriorityLandscapeFileResource">
     <Key>
       <PropertyRef Name="PriorityLandscapeFileResourceID" />
@@ -2601,14 +2582,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramNotificationSentProjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProgramNotificationSentID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProgramNotificationType">
-    <Key>
-      <PropertyRef Name="ProgramNotificationTypeID" />
-    </Key>
-    <Property Name="ProgramNotificationTypeID" Type="int" Nullable="false" />
-    <Property Name="ProgramNotificationTypeName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="ProgramNotificationTypeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="ProgramPerson">
     <Key>
@@ -5472,18 +5445,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PriorityLandscape_PriorityLandscapeCategory_PriorityLandscapeCategoryID">
-    <End Role="PriorityLandscapeCategory" Type="ProjectFirma.Web.Models.Store.PriorityLandscapeCategory" Multiplicity="0..1" />
-    <End Role="PriorityLandscapes" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscapeCategory">
-        <PropertyRef Name="PriorityLandscapeCategoryID" />
-      </Principal>
-      <Dependent Role="PriorityLandscapes">
-        <PropertyRef Name="PriorityLandscapeCategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
     <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -5579,18 +5540,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProgramNotificationConfigurations">
         <PropertyRef Name="ProgramID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProgramNotificationConfiguration_ProgramNotificationType_ProgramNotificationTypeID">
-    <End Role="ProgramNotificationType" Type="ProjectFirma.Web.Models.Store.ProgramNotificationType" Multiplicity="1" />
-    <End Role="ProgramNotificationConfigurations" Type="ProjectFirma.Web.Models.Store.ProgramNotificationConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramNotificationType">
-        <PropertyRef Name="ProgramNotificationTypeID" />
-      </Principal>
-      <Dependent Role="ProgramNotificationConfigurations">
-        <PropertyRef Name="ProgramNotificationTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
