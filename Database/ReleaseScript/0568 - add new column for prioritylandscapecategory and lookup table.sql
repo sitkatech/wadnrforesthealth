@@ -8,7 +8,7 @@ PriorityLandscapeCategoryMapLayerColor varchar(20) not null
 
 insert dbo.PriorityLandscapeCategory (PriorityLandscapeCategoryID, PriorityLandscapeCategoryName, PriorityLandscapeCategoryDisplayName, PriorityLandscapeCategoryMapLayerColor) 
 values 
-(1,'East', '20-Year Forest Health Strategic Plan: Eastern Washington Priority Landscape', '#59ACFF'),
+(1,'East', '20-Year Forest Health Strategic Plan: Eastern WA Priority Landscapes', '#59ACFF'),
 (2, 'West', 'Western WA Forest Health Priority Landscapes', '#0267e3');
 
 --add column to PriorityLandscape FK to Category
