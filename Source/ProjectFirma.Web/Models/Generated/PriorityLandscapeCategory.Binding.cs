@@ -121,7 +121,7 @@ namespace ProjectFirma.Web.Models
     public partial class PriorityLandscapeCategoryEast : PriorityLandscapeCategory
     {
         private PriorityLandscapeCategoryEast(int priorityLandscapeCategoryID, string priorityLandscapeCategoryName, string priorityLandscapeCategoryDisplayName, string priorityLandscapeCategoryMapLayerColor) : base(priorityLandscapeCategoryID, priorityLandscapeCategoryName, priorityLandscapeCategoryDisplayName, priorityLandscapeCategoryMapLayerColor) {}
-        public static readonly PriorityLandscapeCategoryEast Instance = new PriorityLandscapeCategoryEast(1, @"East", @"20-Year Forest Health Strategic Plan: Eastern Washington Priority Landscape", @"#59ACFF");
+        public static readonly PriorityLandscapeCategoryEast Instance = new PriorityLandscapeCategoryEast(1, @"East", @"20-Year Forest Health Strategic Plan: Eastern WA Priority Landscapes", @"#59ACFF");
     }
 
     public partial class PriorityLandscapeCategoryWest : PriorityLandscapeCategory
