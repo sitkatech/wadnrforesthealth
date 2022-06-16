@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
 
         public TreatmentGroup(ProjectLocation projectLocation)
         {
-            Check.Require(projectLocation.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentActivity, "Your Project Location needs to be a Treatment Area");
+            Check.Require(projectLocation.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea, "Your Project Location needs to be a Treatment Area");
             Treatments = projectLocation.Treatments.ToList();
             ProjectLocation = projectLocation;
         }
