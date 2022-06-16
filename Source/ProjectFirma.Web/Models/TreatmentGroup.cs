@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LtInfo.Common.DesignByContract;
 
 namespace ProjectFirma.Web.Models
 {
@@ -7,7 +8,7 @@ namespace ProjectFirma.Web.Models
     {
         public List<Treatment> Treatments { get; set; }
 
-        public TreatmentArea TreatmentArea
+        public ProjectLocation ProjectLocation
         {
             get;
             set;
@@ -19,10 +20,11 @@ namespace ProjectFirma.Web.Models
             set;
         }
 
-        public TreatmentGroup(TreatmentArea treatmentArea)
+        public TreatmentGroup(ProjectLocation projectLocation)
         {
-            Treatments = treatmentArea.Treatments.ToList();
-            TreatmentArea = treatmentArea;
+            Check.Require(projectLocation.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentActivity, "Your Project Location needs to be a Treatment Area");
+            Treatments = projectLocation.Treatments.ToList();
+            ProjectLocation = projectLocation;
         }
 
         public TreatmentGroup(GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem)

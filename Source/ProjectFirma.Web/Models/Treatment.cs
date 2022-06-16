@@ -2,6 +2,6 @@
 {
     public partial class Treatment : IAuditableEntity
     {
-        public string AuditDescriptionString =>  $"TreatmentID:{this.TreatmentID} -  TreatmentAreaID:{this.TreatmentAreaID}  - TreatmentTypeID:{this.TreatmentTypeID} - :TreatmentStartDate: {this.TreatmentStartDate} - TreatmentEndDate: {this.TreatmentEndDate}";
+        public string AuditDescriptionString =>  $"TreatmentID:{this.TreatmentID} -  ProjectLocationID:{this.ProjectLocationID}  - TreatmentTypeID:{this.TreatmentTypeID} - :TreatmentStartDate: {this.TreatmentStartDate} - TreatmentEndDate: {this.TreatmentEndDate}";
     }
 }

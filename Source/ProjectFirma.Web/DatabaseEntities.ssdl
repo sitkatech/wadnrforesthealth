@@ -1382,8 +1382,8 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Project" EntitySet="Project" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
-    <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentArea_TreatmentAreaID">
-      <End Role="TreatmentArea" EntitySet="TreatmentArea" />
+    <AssociationSet Name="FK_Treatment_ProjectLocation_ProjectLocationID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_ProjectLocation_ProjectLocationID">
+      <End Role="ProjectLocation" EntitySet="ProjectLocation" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
   </EntityContainer>
@@ -2865,7 +2865,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ArcGisGlobalID" Type="varchar" MaxLength="50" />
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGisUpload" Type="bit" />
-    <Property Name="TreatmentAreaID" Type="int" />
+    <Property Name="TemporaryTreatmentCacheID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>
@@ -3291,7 +3291,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentFootprintAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="varchar" MaxLength="2000" />
     <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
-    <Property Name="TreatmentAreaID" Type="int" />
     <Property Name="TreatmentTreatedAcres" Type="decimal" Precision="38" Scale="10" />
     <Property Name="TreatmentTypeImportedText" Type="varchar" MaxLength="200" />
     <Property Name="CreateGisUploadAttemptID" Type="int" />
@@ -3300,6 +3299,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGis" Type="bit" />
+    <Property Name="ProjectLocationID" Type="int" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -6816,15 +6816,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Treatment_TreatmentArea_TreatmentAreaID">
-    <End Role="TreatmentArea" Type="ProjectFirma.Web.Models.Store.TreatmentArea" Multiplicity="0..1" />
+  <Association Name="FK_Treatment_ProjectLocation_ProjectLocationID">
+    <End Role="ProjectLocation" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="0..1" />
     <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TreatmentArea">
-        <PropertyRef Name="TreatmentAreaID" />
+      <Principal Role="ProjectLocation">
+        <PropertyRef Name="ProjectLocationID" />
       </Principal>
       <Dependent Role="Treatments">
-        <PropertyRef Name="TreatmentAreaID" />
+        <PropertyRef Name="ProjectLocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

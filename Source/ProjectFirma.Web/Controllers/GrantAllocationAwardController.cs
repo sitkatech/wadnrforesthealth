@@ -544,7 +544,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<TreatmentGroup> TreatmentAreaProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var treatmentAreas = project.Treatments.Where(x => x.TreatmentAreaID.HasValue).Select(x => x.TreatmentArea).GroupBy(x => x.TreatmentAreaID).Select(x => x.ToList().First()).ToList();
+            var treatmentAreas = project.Treatments.Where(x => x.ProjectLocationID.HasValue).Select(x => x.ProjectLocation).GroupBy(x => x.ProjectLocationID).Select(x => x.ToList().First()).ToList();
             var grantAllocationAwardLandownerCostShareLineItems = project.Treatments.Where(x => x.GrantAllocationAwardLandownerCostShareLineItemID.HasValue).Select(x => x.GrantAllocationAwardLandownerCostShareLineItem).GroupBy(x => x.GrantAllocationAwardLandownerCostShareLineItemID).Select(x => x.ToList().First());
             var treatmentGroups = new List<TreatmentGroup>();
             var treatmentAreaToTreatmentGroups = treatmentAreas.Select(x => new TreatmentGroup(x)).ToList();

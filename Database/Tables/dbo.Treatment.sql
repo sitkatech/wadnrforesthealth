@@ -11,7 +11,6 @@ CREATE TABLE [dbo].[Treatment](
 	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
 	[TreatmentNotes] [varchar](2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TreatmentTypeID] [int] NOT NULL,
-	[TreatmentAreaID] [int] NULL,
 	[TreatmentTreatedAcres] [decimal](38, 10) NULL,
 	[TreatmentTypeImportedText] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[CreateGisUploadAttemptID] [int] NULL,
@@ -20,6 +19,7 @@ CREATE TABLE [dbo].[Treatment](
 	[TreatmentDetailedActivityTypeImportedText] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProgramID] [int] NULL,
 	[ImportedFromGis] [bit] NULL,
+	[ProjectLocationID] [int] NULL,
  CONSTRAINT [PK_Treatment_TreatmentID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentID] ASC
@@ -52,10 +52,10 @@ REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_Project_ProjectID]
 GO
-ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentArea_TreatmentAreaID] FOREIGN KEY([TreatmentAreaID])
-REFERENCES [dbo].[TreatmentArea] ([TreatmentAreaID])
+ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_ProjectLocation_ProjectLocationID] FOREIGN KEY([ProjectLocationID])
+REFERENCES [dbo].[ProjectLocation] ([ProjectLocationID])
 GO
-ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_TreatmentArea_TreatmentAreaID]
+ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_ProjectLocation_ProjectLocationID]
 GO
 ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID] FOREIGN KEY([TreatmentDetailedActivityTypeID])
 REFERENCES [dbo].[TreatmentDetailedActivityType] ([TreatmentDetailedActivityTypeID])

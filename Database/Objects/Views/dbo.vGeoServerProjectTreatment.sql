@@ -10,14 +10,14 @@ select
 	pa.ProjectID,
 	p.ProjectName,
     p.FhtProjectNumber,
-	ta.TreatmentAreaFeature as Ogr_Geometry,
-    ta.TreatmentAreaFeature as TreatmentFeature
+	pl.ProjectLocationGeometry as Ogr_Geometry,
+    pl.ProjectLocationGeometry as TreatmentFeature
 	
 from
 	dbo.Treatment as pa
     join dbo.Project p on pa.ProjectID = p.ProjectID
-    join dbo.TreatmentArea ta on pa.TreatmentAreaID = ta.TreatmentAreaID
-    where ta.TreatmentAreaFeature is not null
+    join dbo.ProjectLocation pl on pa.ProjectLocationID = pl.ProjectLocationID
+    where pl.ProjectLocationGeometry is not null
 
 
 

@@ -35,11 +35,11 @@ set @programID = (select giuso.ProgramID from dbo.GisUploadAttempt gia join dbo.
 
 
 if object_id('tempdb.dbo.#tempTreatmentsForDelete') is not null drop table #tempTreatmentsForDelete
-select p.ProjectID, t.TreatmentID, ta.TreatmentAreaID 
+select p.ProjectID, t.TreatmentID, pl.ProjectLocationID 
 into #tempTreatmentsForDelete
 from dbo.Project p
 join dbo.Treatment t on t.ProjectID = p.ProjectID
-join dbo.TreatmentArea ta on t.TreatmentAreaID = ta.TreatmentAreaID
+join dbo.ProjectLocation pl on t.ProjectLocationID = pl.ProjectLocationID
 where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
                         join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
                         where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
@@ -48,16 +48,14 @@ where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttribu
 
 delete from dbo.Treatment where TreatmentID in (select TreatmentID from #tempTreatmentsForDelete)
 
-delete from dbo.TreatmentArea where TreatmentAreaID in (select TreatmentAreaID from #tempTreatmentsForDelete)
-
-
+delete from dbo.ProjectLocation where ProjectLocationID in (select ProjectLocationID from #tempTreatmentsForDelete)
 
 
 if object_id('tempdb.dbo.#tempTreatments') is not null drop table #tempTreatments
 
 CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
-    [TreatmentAreaFeature] [geometry] NOT NULL,
+    ProjectLocationGeometry [geometry] NOT NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemID] [int] NULL,
 	[TreatmentStartDate] [datetime] NULL,
 	[TreatmentEndDate] [datetime] NULL,
@@ -86,7 +84,7 @@ CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT N
 
 INSERT INTO #tempTreatments
            ([ProjectID]
-           ,[TreatmentAreaFeature]
+           ,ProjectLocationGeometry
            ,[GrantAllocationAwardLandownerCostShareLineItemID]
            ,[TreatmentStartDate]
            ,[TreatmentEndDate]
@@ -197,9 +195,9 @@ where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttribu
 
 
 
-insert into dbo.TreatmentArea(TreatmentAreaFeature, TemporaryTreatmentCacheID)
+insert into dbo.ProjectLocation(ProjectLocationGeometry, TemporaryTreatmentCacheID)
 
-select x.TreatmentAreaFeature, x.TemporaryTreatmentCacheID from #tempTreatments x
+select x.ProjectLocationGeometry, x.TemporaryTreatmentCacheID from #tempTreatments x
 
 
 if(@isFlattened = 0)
@@ -214,7 +212,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -232,7 +230,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID
                , x.TreatmentTypeID
                , x.TreatmentDetailedActivityTypeID
                , x.TreatmentTypeImportedText
@@ -241,7 +239,7 @@ begin
                , x.TreatedAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 end
 
 if(@isFlattened = 1)
@@ -256,7 +254,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -274,7 +272,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 2 -- Pruning
                , x.TreatmentTypeImportedText
@@ -283,7 +281,7 @@ begin
                , x.PruningAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     ----Thinning--------------------------------------------------------------------------------
@@ -295,7 +293,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -313,7 +311,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 3 -- Thinning
                , x.TreatmentTypeImportedText
@@ -322,7 +320,7 @@ begin
                , x.ThinningAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
 
@@ -335,7 +333,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -353,7 +351,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 1 -- chipping
                , x.TreatmentTypeImportedText
@@ -362,7 +360,7 @@ begin
                , x.ChippingAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     --Mastication-------------------------------------------------------------
@@ -374,7 +372,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -392,7 +390,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 4 -- Mastication
                , x.TreatmentTypeImportedText
@@ -401,7 +399,7 @@ begin
                , x.MasticationAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
     --Grazing-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
@@ -412,7 +410,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -430,7 +428,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 5 -- Grazing
                , x.TreatmentTypeImportedText
@@ -439,7 +437,7 @@ begin
                , x.GrazingAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     --Lop and Scatter-------------------------------------------------------------
@@ -451,7 +449,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -469,7 +467,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 6 -- Lop and Scatter
                , x.TreatmentTypeImportedText
@@ -478,7 +476,7 @@ begin
                , x.LopScatterAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
     --Biomass Removal-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
@@ -489,7 +487,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -507,7 +505,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 7 -- Biomass Removal
                , x.TreatmentTypeImportedText
@@ -516,7 +514,7 @@ begin
                , x.BiomassRemovalAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
     --Hand Pile-------------------------------------------------------------
     insert into dbo.Treatment ([ProjectID]
@@ -527,7 +525,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -545,7 +543,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 3 -- non-commercial
                , 8 -- Hand Pile
                , x.TreatmentTypeImportedText
@@ -554,7 +552,7 @@ begin
                , x.HandPileAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     --Hand Pile Burn-------------------------------------------------------------
@@ -566,7 +564,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -584,7 +582,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 2 -- burn
                , 10 -- Hand Pile Burn
                , x.TreatmentTypeImportedText
@@ -593,7 +591,7 @@ begin
                , x.HandPileBurnAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     --Machine Burn-------------------------------------------------------------
@@ -605,7 +603,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -623,7 +621,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID 
                , 2 -- burn
                , 11 -- Machine Burn
                , x.TreatmentTypeImportedText
@@ -632,7 +630,7 @@ begin
                , x.MachineBurnAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     --Broadcast Burn-------------------------------------------------------------
@@ -644,7 +642,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -662,7 +660,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID
                , 2 -- fire
                , 9 -- Broadcast Burn
                , x.TreatmentTypeImportedText
@@ -671,7 +669,7 @@ begin
                , x.BroadcastBurnAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 
 
     --Other-------------------------------------------------------------
@@ -683,7 +681,7 @@ begin
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
                ,[TreatmentNotes]
-               , TreatmentAreaID
+               , ProjectLocationID
                , TreatmentTypeID
                , TreatmentDetailedActivityTypeID
                , TreatmentTypeImportedText
@@ -701,7 +699,7 @@ begin
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
                , x.TreatmentNotes
-               , ta.TreatmentAreaID
+               , pl.ProjectLocationID
                , 3 -- non-commercial
                , 13 -- Other
                , x.TreatmentTypeImportedText
@@ -710,7 +708,7 @@ begin
                , x.OtherAcres
 
     from #tempTreatments x
-    join dbo.TreatmentArea ta on ta.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
+    join dbo.ProjectLocation pl on pl.TemporaryTreatmentCacheID = x.TemporaryTreatmentCacheID
 end
 
 
@@ -749,9 +747,9 @@ update dbo.Project
 set ProjectLocationPoint = SimplePoint, ProjectLocationSimpleTypeID = 1
 from dbo.Project x join (
 
-select p.ProjectID,  geometry::UnionAggregate(ta.TreatmentAreaFeature).STCentroid() as SimplePoint  from dbo.Project p
+select p.ProjectID,  geometry::UnionAggregate(pl.ProjectLocationGeometry).STCentroid() as SimplePoint  from dbo.Project p
 join dbo.Treatment t on p.ProjectID = t.ProjectID
-join dbo.TreatmentArea ta on ta.TreatmentAreaID = t.TreatmentAreaID
+join dbo.ProjectLocation pl on pl.ProjectLocationID = t.ProjectLocationID
 group by p.ProjectID) y on x.ProjectID = y.ProjectID
 where x.CreateGisUploadAttemptID = @piGisUploadAttemptID
 

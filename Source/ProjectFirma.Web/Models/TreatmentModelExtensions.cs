@@ -34,10 +34,10 @@ namespace ProjectFirma.Web.Models
 
             var featureCollection = new FeatureCollection();
 
-            foreach (var treatmnent in treatmentsAsList.Where(ie => ie.TreatmentArea != null))
+            foreach (var treatment in treatmentsAsList.Where(ie => ie.ProjectLocation != null))
             {
-                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatmnent.TreatmentArea.TreatmentAreaFeature);
-                feature.Properties.Add("TreatmentID", treatmnent.TreatmentID);
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatment.ProjectLocation.ProjectLocationGeometry);
+                feature.Properties.Add("TreatmentID", treatment.TreatmentID);
                 featureCollection.Features.Add(feature);
             }
 
@@ -56,9 +56,9 @@ namespace ProjectFirma.Web.Models
 
             var featureCollection = new FeatureCollection();
 
-            foreach (var treatment in treatmentsAsList.Where(ie => ie.TreatmentArea != null))
+            foreach (var treatment in treatmentsAsList.Where(ie => ie.ProjectLocation != null))
             {
-                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatment.TreatmentArea.TreatmentAreaFeature);
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatment.ProjectLocation.ProjectLocationGeometry);
                 feature.Properties.Add("TreatmentID", treatment.TreatmentID);
                 feature.Properties.Add("PopupUrl", treatment.GetProjectSimpleMapPopupUrl());
                 featureCollection.Features.Add(feature);

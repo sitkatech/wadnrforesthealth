@@ -25,13 +25,13 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectLocation()
         {
-
+            this.Treatments = new HashSet<Treatment>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID, int? programID, bool? importedFromGisUpload, int? treatmentAreaID) : this()
+        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID, int? programID, bool? importedFromGisUpload, int? temporaryTreatmentCacheID) : this()
         {
             this.ProjectLocationID = projectLocationID;
             this.ProjectID = projectID;
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models
             this.ArcGisGlobalID = arcGisGlobalID;
             this.ProgramID = programID;
             this.ImportedFromGisUpload = importedFromGisUpload;
-            this.TreatmentAreaID = treatmentAreaID;
+            this.TemporaryTreatmentCacheID = temporaryTreatmentCacheID;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return Treatments.Any();
         }
 
         /// <summary>
@@ -99,13 +99,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(Treatments.Any())
+            {
+                dependentObjects.Add(typeof(Treatment).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocation).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -121,8 +125,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in Treatments.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -136,10 +151,11 @@ namespace ProjectFirma.Web.Models
         public string ArcGisGlobalID { get; set; }
         public int? ProgramID { get; set; }
         public bool? ImportedFromGisUpload { get; set; }
-        public int? TreatmentAreaID { get; set; }
+        public int? TemporaryTreatmentCacheID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationID; } set { ProjectLocationID = value; } }
 
+        public virtual ICollection<Treatment> Treatments { get; set; }
         public virtual Project Project { get; set; }
         public ProjectLocationType ProjectLocationType { get { return ProjectLocationType.AllLookupDictionary[ProjectLocationTypeID]; } }
         public virtual Program Program { get; set; }
