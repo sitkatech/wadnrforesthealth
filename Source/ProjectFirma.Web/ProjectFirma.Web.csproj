@@ -654,9 +654,6 @@
     <Compile Include="Models\Generated\TrainingVideoPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Treatment.Binding.cs" />
     <Compile Include="Models\Generated\Treatment.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\TreatmentArea.Binding.cs" />
-    <Compile Include="Models\Generated\TreatmentArea.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\TreatmentAreaPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentDetailedActivityType.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentDetailedActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentPrimaryKey.Binding.cs" />

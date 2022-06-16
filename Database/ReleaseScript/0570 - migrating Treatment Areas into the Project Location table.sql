@@ -84,3 +84,5 @@ GO
 
 alter table dbo.ProjectLocation
 add TemporaryTreatmentCacheID int null
+
+drop table dbo.TreatmentArea
