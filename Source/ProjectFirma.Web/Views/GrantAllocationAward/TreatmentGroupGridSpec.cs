@@ -18,11 +18,11 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             bool hasCreatePermission = new GrantAllocationAwardLandownerCostShareLineItemCreateFeature().HasPermissionByPerson(currentPerson);
-            if (hasCreatePermission)
-            {
-                var newLandownerCostShareLineItemUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(gaac => gaac.NewLandownerCostShareLineItemFromGrantAllocationAward(grantAllocationAward.PrimaryKey));
-                CreateEntityModalDialogForm = new ModalDialogForm(newLandownerCostShareLineItemUrl, $"Create a new {Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} Line Item");
-            }
+            //if (hasCreatePermission)
+            //{
+            //    var newLandownerCostShareLineItemUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(gaac => gaac.NewLandownerCostShareLineItemFromGrantAllocationAward(grantAllocationAward.PrimaryKey));
+            //    CreateEntityModalDialogForm = new ModalDialogForm(newLandownerCostShareLineItemUrl, $"Create a new {Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} Line Item");
+            //}
             int buttonGridWidth = 30;
 
 
