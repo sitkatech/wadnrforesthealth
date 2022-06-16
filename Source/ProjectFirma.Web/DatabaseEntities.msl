@@ -1592,6 +1592,7 @@
           <ScalarProperty Name="ArcGisGlobalID" ColumnName="ArcGisGlobalID" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGisUpload" ColumnName="ImportedFromGisUpload" />
+          <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

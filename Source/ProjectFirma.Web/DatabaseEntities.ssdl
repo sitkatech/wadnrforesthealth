@@ -2865,6 +2865,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ArcGisGlobalID" Type="varchar" MaxLength="50" />
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGisUpload" Type="bit" />
+    <Property Name="TreatmentAreaID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>

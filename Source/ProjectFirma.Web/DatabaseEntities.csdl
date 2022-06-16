@@ -3201,6 +3201,7 @@
     <Property Name="ArcGisGlobalID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="ProgramID" Type="Int32" />
     <Property Name="ImportedFromGisUpload" Type="Boolean" />
+    <Property Name="TreatmentAreaID" Type="Int32" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID" FromRole="ProjectLocations" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="ProjectLocations" ToRole="Project" />
   </EntityType>

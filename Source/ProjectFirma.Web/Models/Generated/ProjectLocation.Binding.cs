@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID, int? programID, bool? importedFromGisUpload) : this()
+        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID, int? programID, bool? importedFromGisUpload, int? treatmentAreaID) : this()
         {
             this.ProjectLocationID = projectLocationID;
             this.ProjectID = projectID;
@@ -43,6 +43,7 @@ namespace ProjectFirma.Web.Models
             this.ArcGisGlobalID = arcGisGlobalID;
             this.ProgramID = programID;
             this.ImportedFromGisUpload = importedFromGisUpload;
+            this.TreatmentAreaID = treatmentAreaID;
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace ProjectFirma.Web.Models
         public string ArcGisGlobalID { get; set; }
         public int? ProgramID { get; set; }
         public bool? ImportedFromGisUpload { get; set; }
+        public int? TreatmentAreaID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationID; } set { ProjectLocationID = value; } }
 
