@@ -226,8 +226,8 @@ FROM [dbo].[vGeoServerPodVectorRanked] AS [vGeoServerPodVectorRanked]</DefiningQ
 [vGeoServerPriorityLandscape].[PriorityLandscapeName] AS [PriorityLandscapeName], 
 [vGeoServerPriorityLandscape].[PriorityLandscapeLocation] AS [PriorityLandscapeLocation], 
 [vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry], 
-[vGeoServerPriorityLandscape].[PriorityLandscapeTypeID] AS [PriorityLandscapeTypeID], 
-[vGeoServerPriorityLandscape].[PriorityLandscapeTypeName] AS [PriorityLandscapeTypeName], 
+[vGeoServerPriorityLandscape].[PriorityLandscapeCategoryID] AS [PriorityLandscapeCategoryID], 
+[vGeoServerPriorityLandscape].[PriorityLandscapeCategoryName] AS [PriorityLandscapeCategoryName], 
 [vGeoServerPriorityLandscape].[MapColor] AS [MapColor]
 FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
     </EntitySet>
@@ -2513,7 +2513,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PriorityLandscapeDescription" Type="varchar(max)" />
     <Property Name="PlanYear" Type="int" />
     <Property Name="PriorityLandscapeAboveMapText" Type="varchar" MaxLength="2000" />
-    <Property Name="PriorityLandscapeTypeID" Type="int" />
+    <Property Name="PriorityLandscapeCategoryID" Type="int" />
   </EntityType>
   <EntityType Name="PriorityLandscapeFileResource">
     <Key>
@@ -3446,7 +3446,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscap
       <PropertyRef Name="PriorityLandscapeID" />
       <PropertyRef Name="PrimaryKey" />
       <PropertyRef Name="PriorityLandscapeName" />
-      <PropertyRef Name="PriorityLandscapeTypeName" />
+      <PropertyRef Name="PriorityLandscapeCategoryName" />
       <PropertyRef Name="MapColor" />
     </Key>
     <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
@@ -3454,8 +3454,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscap
     <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="PriorityLandscapeLocation" Type="geometry" />
     <Property Name="Ogr_Geometry" Type="geometry" />
-    <Property Name="PriorityLandscapeTypeID" Type="int" />
-    <Property Name="PriorityLandscapeTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PriorityLandscapeCategoryID" Type="int" />
+    <Property Name="PriorityLandscapeCategoryName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="MapColor" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <!--Errors Found During Generation:

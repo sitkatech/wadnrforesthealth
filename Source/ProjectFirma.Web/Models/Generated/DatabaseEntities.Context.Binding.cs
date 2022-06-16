@@ -737,16 +737,16 @@ namespace ProjectFirma.Web.Models
                 case "PodVectorRanked":
                     return PodVectorRankeds.GetPodVectorRanked(primaryKey);
 
+                case "PriorityLandscapeCategory":
+                    var priorityLandscapeCategory = PriorityLandscapeCategory.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(priorityLandscapeCategory, "PriorityLandscapeCategory", primaryKey);
+                    return priorityLandscapeCategory;
+
                 case "PriorityLandscapeFileResource":
                     return PriorityLandscapeFileResources.GetPriorityLandscapeFileResource(primaryKey);
 
                 case "PriorityLandscape":
                     return PriorityLandscapes.GetPriorityLandscape(primaryKey);
-
-                case "PriorityLandscapeType":
-                    var priorityLandscapeType = PriorityLandscapeType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(priorityLandscapeType, "PriorityLandscapeType", primaryKey);
-                    return priorityLandscapeType;
 
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
