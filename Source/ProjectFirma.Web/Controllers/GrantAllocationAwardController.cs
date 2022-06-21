@@ -561,7 +561,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var treatments = project.Treatments.ToList();
-            var gridSpec = new TreatmentGridSpec(CurrentPerson);
+            var gridSpec = new TreatmentGridSpec(CurrentPerson, project);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Treatment>(treatments, gridSpec);
             return gridJsonNetJObjectResult;
         }

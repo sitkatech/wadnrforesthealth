@@ -4,17 +4,28 @@ using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
-    public class TreatmentGridSpec : GridSpec<Treatment>
+    public class TreatmentGridSpec : GridSpec<Models.Treatment>
     {
-        public TreatmentGridSpec(Person currentPerson)
+        public TreatmentGridSpec(Person currentPerson, Models.Project projectForCreatingNewTreatments)
         {
+            this.ObjectNameSingular = "Treatment";
+            this.ObjectNamePlural = "Treatments";
             bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             int buttonGridWidth = 30;
+
+            if (userHasEditPermissions)
+            {
+                var createUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(x => x.NewTreatmentFromProject(projectForCreatingNewTreatments));
+                this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create a new {ObjectNameSingular}");
+            }
+
             Add(string.Empty, x => x.GrantAllocationAwardLandownerCostShareLineItemID.HasValue ? DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GrantAllocationAwardLandownerCostShareLineItem?.GetEditLandownerCostShareLineItemUrl(), $"Edit {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()}"), userHasEditPermissions) : new HtmlString(string.Empty), buttonGridWidth, DhtmlxGridColumnFilterType.None);
 
             Add("Treatment ID", a => a.TreatmentID.ToString(), 75, DhtmlxGridColumnFilterType.Text);

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantAllocationAwardLandownerCostShareLineItemViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditTreatmentViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,6 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,9 +28,9 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.GrantAllocationAward
+namespace ProjectFirma.Web.Views.Treatment
 {
-    public class EditGrantAllocationAwardLandownerCostShareLineItemViewModel : FormViewModel, IValidatableObject
+    public class EditTreatmentViewModel : FormViewModel, IValidatableObject
     {
         public int GrantAllocationAwardLandownerCostShareLineItemID { get; set; }
 
@@ -110,13 +111,13 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantAllocationAwardLandownerCostShareLineItemViewModel()
+        public EditTreatmentViewModel()
         {
             StartDate = DateTime.Today;
             EndDate = DateTime.Today;
         }
 
-        public EditGrantAllocationAwardLandownerCostShareLineItemViewModel(Models.GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem)
+        public EditTreatmentViewModel(Models.GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem)
         {
             GrantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID;
             GrantAllocationAwardID = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardID;
