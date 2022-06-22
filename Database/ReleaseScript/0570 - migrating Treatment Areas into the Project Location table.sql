@@ -81,6 +81,10 @@ GO
 ALTER TABLE [dbo].ProjectLocation DROP COLUMN [TreatmentAreaID]
 GO
 
+ALTER TABLE dbo.Treatment   
+ADD CONSTRAINT AK_Treatment_ProjectID_ProjectLocationID_TreatmentDetailedActivityTypeID UNIQUE (ProjectID, ProjectLocationID, TreatmentDetailedActivityTypeID); 
+
+
 
 alter table dbo.ProjectLocation
 add TemporaryTreatmentCacheID int null

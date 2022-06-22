@@ -30,15 +30,13 @@ namespace ProjectFirma.Web.Views.Treatment
 {
     public class EditTreatmentViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> StatusList { get; }
-        public IEnumerable<SelectListItem> ProjectList { get; }
-        public IEnumerable<SelectListItem> GrantAllocationAwardList { get; }
+        public IEnumerable<SelectListItem> TreatmentTypeList { get; }
+        public IEnumerable<SelectListItem> TreatmentAreaList { get; }
 
-        public EditTreatmentViewData(IEnumerable<LandownerCostShareLineItemStatus> statusList, IEnumerable<Models.Project> projectList, IEnumerable<Models.GrantAllocationAward> grantAllocationAwards)
+        public EditTreatmentViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<ProjectLocation> treatmentAreas)
         {
-            StatusList = statusList.ToSelectList(x => x.LandownerCostShareLineItemStatusID.ToString(CultureInfo.InvariantCulture), y => y.LandownerCostShareLineItemStatusDisplayName);
-            ProjectList = projectList.ToSelectListWithEmptyFirstRow(x => x.ProjectID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            GrantAllocationAwardList = grantAllocationAwards.ToSelectListWithEmptyFirstRow(x => x.GrantAllocationAwardID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationAwardName);
+            TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
+            TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationName);
         }
     }
 

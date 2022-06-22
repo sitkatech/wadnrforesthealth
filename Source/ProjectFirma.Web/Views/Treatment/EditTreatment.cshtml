@@ -39,72 +39,50 @@
 
 @using (Html.BeginForm())
 {
+    
+    @Html.HiddenFor(m => m.ProjectID)
 
-    @Html.HiddenFor(m => m.GrantAllocationAwardLandownerCostShareLineItemID)
+<div class="form-horizontal">
 
-    <div class="form-horizontal">
-        <div class="form-group no-margin-top">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantAllocationAwardID)
-            </div>
-            <div class="col-sm-7">
-                @Html.DropDownListFor(m => m.GrantAllocationAwardID, ViewDataTyped.GrantAllocationAwardList, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
-                @Html.ValidationMessageFor(m => m.GrantAllocationAwardID)
-            </div>
+    <div class="form-group no-margin-top">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.TreatmentTypeID)
         </div>
-        <div class="form-group no-margin-top">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectID)
-            </div>
-            <div class="col-sm-7">
-                @Html.DropDownListFor(m => m.ProjectID, ViewDataTyped.ProjectList, new Dictionary<string, object> {{"class", "form-control selectpicker"}, {"style", "width:100%"}, {"data-width", "100%"}, {"data-live-search", "true"}, {"data-size", "8"}})
-                @Html.ValidationMessageFor(m => m.ProjectID)
-            </div>
-        </div>
-        <div class="form-group no-margin-top">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.StatusID)
-            </div>
-            <div class="col-sm-3">
-                @Html.DropDownListFor(m => m.StatusID, ViewDataTyped.StatusList, new {@class = "form-control", style = "width:100%"})
-                @Html.ValidationMessageFor(m => m.StatusID)
-            </div>
-        </div>
-        <div class="form-group no-margin-top">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.AllocatedAmount)
-            </div>
-            <div class="col-sm-2">
-                @Html.EditorFor(m => m.AllocatedAmount, new {@class = "form-control", style = "width:100%"})
-                @Html.ValidationMessageFor(m => m.AllocatedAmount)
-            </div>
-
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.TotalCost)
-            </div>
-            <div class="col-sm-2">
-                @Html.EditorFor(m => m.TotalCost, new {@class = "form-control", style = "width:100%"})
-                @Html.ValidationMessageFor(m => m.TotalCost)
-            </div>
-        </div>
-
-        <div class="form-group no-margin-top">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.StartDate)
-            </div>
-            <div class="col-sm-2">
-                @Html.EditorFor(m => m.StartDate, new {@class = "form-control", style = "width:100%"})
-                @Html.ValidationMessageFor(m => m.StartDate)
-            </div>
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.EndDate)
-            </div>
-            <div class="col-sm-2">
-                @Html.EditorFor(m => m.EndDate, new {@class = "form-control", style = "width:100%"})
-                @Html.ValidationMessageFor(m => m.EndDate)
-            </div>
+        <div class="col-sm-7">
+            @Html.DropDownListFor(m => m.TreatmentTypeID, ViewDataTyped.TreatmentTypeList, new Dictionary<string, object> { { "class", "form-control" }, { "style", "width:100%" }, { "data-width", "100%" } })
+            @Html.ValidationMessageFor(m => m.TreatmentTypeID)
         </div>
     </div>
+
+    <div class="form-group no-margin-top">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.ProjectLocationID)
+        </div>
+        <div class="col-sm-7">
+            @Html.DropDownListFor(m => m.ProjectLocationID, ViewDataTyped.TreatmentAreaList, new Dictionary<string, object> { { "class", "form-control" }, { "style", "width:100%" }, { "data-width", "100%" } })
+            @Html.ValidationMessageFor(m => m.ProjectLocationID)
+        </div>
+    </div>
+
+
+
+    <div class="form-group no-margin-top">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.StartDate)
+        </div>
+        <div class="col-sm-2">
+            @Html.EditorFor(m => m.StartDate, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.StartDate)
+        </div>
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.EndDate)
+        </div>
+        <div class="col-sm-2">
+            @Html.EditorFor(m => m.EndDate, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.EndDate)
+        </div>
+    </div>
+</div>
     <br />
     <div class="form-horizontal">
         <div class="form-group no-margin-top col-md-6">

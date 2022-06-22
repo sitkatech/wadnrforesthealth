@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -24,7 +25,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 ProjectID = project.ProjectID
             };
-            return TreatmentViewEdit(viewModel);
+            return TreatmentViewEdit(viewModel, project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea && !x.Treatments.Any()));
         }
 
         [HttpPost]
@@ -32,27 +33,21 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentViewModel viewModel)
         {
+            var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return TreatmentViewEdit(viewModel);
+                return TreatmentViewEdit(viewModel, project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea && !x.Treatments.Any()));
             }
 
-            //var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
-            //var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == viewModel.ProjectID);
-            //var treatmentType = TreatmentType.All.Single(x => x.TreatmentTypeID == viewModel.TreatmentTypeID);
-            //var treatmentDetailedActivity = TreatmentDetailedActivityType.
-            //var treatment = Treatment.CreateNewBlank(project, treatmentType);
-            ////landownerCostShareLineItem.GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
-            //viewModel.UpdateModel(treatment);
+
+            viewModel.UpdateModel(project.Treatments.ToList());
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult TreatmentViewEdit(EditTreatmentViewModel viewModel)
+        private PartialViewResult TreatmentViewEdit(EditTreatmentViewModel viewModel, IEnumerable<ProjectLocation> projectLocationTreatmentAreas)
         {
-            var statusList = LandownerCostShareLineItemStatus.All;
-            var projectList = HttpRequestStorage.DatabaseEntities.Projects.ToList().OrderBy(x => x.DisplayName);
-            var grantAllocationAwardList = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.OrderBy(x => x.GrantAllocationAwardName);
-            var viewData = new EditTreatmentViewData(statusList, projectList, grantAllocationAwardList);
+            var treatmentTypesList = TreatmentType.All;
+            var viewData = new EditTreatmentViewData(treatmentTypesList, projectLocationTreatmentAreas);
             return RazorPartialView<EditTreatment, EditTreatmentViewData, EditTreatmentViewModel>(viewData, viewModel);
         }
 
@@ -90,28 +85,29 @@ namespace ProjectFirma.Web.Controllers
         //    return new ModalDialogFormJsonResult();
         //}
 
-        //[HttpGet]
-        //[GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
-        //public PartialViewResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey)
-        //{
-        //    var treatment = treatmentPrimaryKey.EntityObject;
-        //    var viewModel = new EditTreatmentViewModel(treatment);
-        //    return TreatmentViewEdit(viewModel);
-        //}
+        [HttpGet]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        public PartialViewResult EditTreatmentsForProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new EditTreatmentViewModel(project.Treatments.ToList());
+            var projectLocationTreatmentAreas = project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea);
+            return TreatmentViewEdit(viewModel, projectLocationTreatmentAreas);
+        }
 
-        //[HttpPost]
-        //[GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey, EditTreatmentViewModel viewModel)
-        //{
-        //    var treatment = treatmentPrimaryKey.EntityObject;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return TreatmentViewEdit(viewModel);
-        //    }
-        //    viewModel.UpdateModel(treatment);
-        //    return new ModalDialogFormJsonResult();
-        //}
+        [HttpPost]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTreatmentsForProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return TreatmentViewEdit(viewModel, project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea && !x.Treatments.Any()));
+            }
+            viewModel.UpdateModel(project.Treatments.ToList());
+            return new ModalDialogFormJsonResult();
+        }
 
     }
 }
