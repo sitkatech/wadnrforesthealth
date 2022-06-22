@@ -9,20 +9,20 @@ using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class ProjectImportBlacklistController : FirmaBaseController
+    public class ProjectImportBlockListController : FirmaBaseController
     {
         [HttpGet]
         [ProgramManageFeature]
-        public PartialViewResult BlacklistProject(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult BlockListProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
-            return ViewBlacklistProject(projectPrimaryKey.EntityObject, viewModel);
+            return ViewBlockListProject(projectPrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewBlacklistProject(Project project, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewBlockListProject(Project project, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to blacklist this project '{project.ProjectName}'?";
+            var confirmMessage = $"Are you sure you want to add this project '{project.ProjectName}' to the block list?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -30,23 +30,23 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [ProgramManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult BlacklistProject(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult BlockListProject(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewBlacklistProject(project, viewModel);
+                return ViewBlockListProject(project, viewModel);
             }
 
             foreach (var projectProgram in project.ProjectPrograms)
             {
-                var projectImportBlacklist = new ProjectImportBlacklist(projectProgram.Program)
+                var projectImportBlockList = new ProjectImportBlockList(projectProgram.Program)
                 {
                     ProjectGisIdentifier = project.ProjectGisIdentifier,
                     ProjectName = project.ProjectName
                 };
 
-                HttpRequestStorage.DatabaseEntities.ProjectImportBlacklists.Add(projectImportBlacklist);
+                HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(projectImportBlockList);
             }
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();

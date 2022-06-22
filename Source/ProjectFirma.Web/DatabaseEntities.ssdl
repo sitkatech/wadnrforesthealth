@@ -129,7 +129,7 @@
     <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.Store.ProjectImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImageUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectImageUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectImportBlacklist" EntityType="ProjectFirma.Web.Models.Store.ProjectImportBlacklist" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectImportBlockList" EntityType="ProjectFirma.Web.Models.Store.ProjectImportBlockList" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectInternalNote" EntityType="ProjectFirma.Web.Models.Store.ProjectInternalNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocation" EntityType="ProjectFirma.Web.Models.Store.ProjectLocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationStaging" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationStaging" store:Type="Tables" Schema="dbo" />
@@ -1131,9 +1131,9 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectImageUpdates" EntitySet="ProjectImageUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectImportBlacklist_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectImportBlacklist_Program_ProgramID">
+    <AssociationSet Name="FK_ProjectImportBlockList_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectImportBlockList_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
-      <End Role="ProjectImportBlacklists" EntitySet="ProjectImportBlacklist" />
+      <End Role="ProjectImportBlockLists" EntitySet="ProjectImportBlockList" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectInternalNote_Person_CreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectInternalNote_Person_CreatePersonID_PersonID">
       <End Role="CreatePerson" EntitySet="Person" />
@@ -2844,11 +2844,11 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ExcludeFromFactSheet" Type="bit" Nullable="false" />
     <Property Name="ProjectImageID" Type="int" />
   </EntityType>
-  <EntityType Name="ProjectImportBlacklist">
+  <EntityType Name="ProjectImportBlockList">
     <Key>
-      <PropertyRef Name="ProjectImportBlacklistID" />
+      <PropertyRef Name="ProjectImportBlockListID" />
     </Key>
-    <Property Name="ProjectImportBlacklistID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectImportBlockListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProgramID" Type="int" Nullable="false" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectName" Type="varchar" MaxLength="140" />
@@ -6073,14 +6073,14 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectImportBlacklist_Program_ProgramID">
+  <Association Name="FK_ProjectImportBlockList_Program_ProgramID">
     <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
-    <End Role="ProjectImportBlacklists" Type="ProjectFirma.Web.Models.Store.ProjectImportBlacklist" Multiplicity="*" />
+    <End Role="ProjectImportBlockLists" Type="ProjectFirma.Web.Models.Store.ProjectImportBlockList" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Program">
         <PropertyRef Name="ProgramID" />
       </Principal>
-      <Dependent Role="ProjectImportBlacklists">
+      <Dependent Role="ProjectImportBlockLists">
         <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>

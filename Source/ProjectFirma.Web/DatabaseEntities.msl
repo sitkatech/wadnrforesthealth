@@ -1566,10 +1566,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectImportBlacklist">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectImportBlacklist">
-        <MappingFragment StoreEntitySet="ProjectImportBlacklist">
-          <ScalarProperty Name="ProjectImportBlacklistID" ColumnName="ProjectImportBlacklistID" />
+    <EntitySetMapping Name="ProjectImportBlockList">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectImportBlockList">
+        <MappingFragment StoreEntitySet="ProjectImportBlockList">
+          <ScalarProperty Name="ProjectImportBlockListID" ColumnName="ProjectImportBlockListID" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />

@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProjectImportBlacklist]
+//  Source Table: [dbo].[ProjectImportBlockList]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,14 +16,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectImportBlacklist] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProjectImportBlacklist]")]
-    public partial class ProjectImportBlacklist : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectImportBlockList] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectImportBlockList]")]
+    public partial class ProjectImportBlockList : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProjectImportBlacklist()
+        protected ProjectImportBlockList()
         {
 
         }
@@ -31,9 +31,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectImportBlacklist(int projectImportBlacklistID, int programID, string projectGisIdentifier, string projectName) : this()
+        public ProjectImportBlockList(int projectImportBlockListID, int programID, string projectGisIdentifier, string projectName) : this()
         {
-            this.ProjectImportBlacklistID = projectImportBlacklistID;
+            this.ProjectImportBlockListID = projectImportBlockListID;
             this.ProgramID = programID;
             this.ProjectGisIdentifier = projectGisIdentifier;
             this.ProjectName = projectName;
@@ -42,10 +42,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectImportBlacklist(int programID) : this()
+        public ProjectImportBlockList(int programID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectImportBlacklistID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectImportBlockListID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProgramID = programID;
         }
@@ -53,21 +53,21 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectImportBlacklist(Program program) : this()
+        public ProjectImportBlockList(Program program) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectImportBlacklistID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectImportBlockListID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProgramID = program.ProgramID;
             this.Program = program;
-            program.ProjectImportBlacklists.Add(this);
+            program.ProjectImportBlockLists.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectImportBlacklist CreateNewBlank(Program program)
+        public static ProjectImportBlockList CreateNewBlank(Program program)
         {
-            return new ProjectImportBlacklist(program);
+            return new ProjectImportBlockList(program);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectImportBlacklist).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectImportBlockList).Name};
 
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.ProjectImportBlacklists.Remove(this);
+            dbContext.ProjectImportBlockLists.Remove(this);
         }
         
         /// <summary>
@@ -113,12 +113,12 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int ProjectImportBlacklistID { get; set; }
+        public int ProjectImportBlockListID { get; set; }
         public int ProgramID { get; set; }
         public string ProjectGisIdentifier { get; set; }
         public string ProjectName { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectImportBlacklistID; } set { ProjectImportBlacklistID = value; } }
+        public int PrimaryKey { get { return ProjectImportBlockListID; } set { ProjectImportBlockListID = value; } }
 
         public virtual Program Program { get; set; }
 

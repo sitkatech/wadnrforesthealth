@@ -171,8 +171,8 @@ namespace ProjectFirma.Web.Views.Project
 
             EditProjectAttributesUrl = project.GetEditProjectAttributesUrl();
             ProjectImportBlockListUrl =
-                SitkaRoute<ProjectImportBlacklistController>.BuildUrlFromExpression(c =>
-                    c.BlacklistProject(project.ProjectID));
+                SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
+                    c.BlockListProject(project.ProjectID));
 
             CanViewProjectFactSheet = ProjectController.FactSheetIsAvailable(project);
 
