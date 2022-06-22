@@ -513,6 +513,9 @@
     <Compile Include="Models\Generated\ProjectImageUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectImageUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectImageUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectImportBlacklist.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectImportBlacklist.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectImportBlacklistPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectInternalNote.Binding.cs" />
     <Compile Include="Models\Generated\ProjectInternalNote.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectInternalNotePrimaryKey.Binding.cs" />

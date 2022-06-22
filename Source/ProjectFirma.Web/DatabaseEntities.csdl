@@ -129,6 +129,7 @@
     <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationRequestUpdate" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.ProjectImage" />
     <EntitySet Name="ProjectImageUpdate" EntityType="ProjectFirma.Web.Models.ProjectImageUpdate" />
+    <EntitySet Name="ProjectImportBlacklist" EntityType="ProjectFirma.Web.Models.ProjectImportBlacklist" />
     <EntitySet Name="ProjectInternalNote" EntityType="ProjectFirma.Web.Models.ProjectInternalNote" />
     <EntitySet Name="ProjectLocation" EntityType="ProjectFirma.Web.Models.ProjectLocation" />
     <EntitySet Name="ProjectLocationStaging" EntityType="ProjectFirma.Web.Models.ProjectLocationStaging" />
@@ -1022,6 +1023,10 @@
     <AssociationSet Name="FK_ProgramPerson_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProgramPerson_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
       <End Role="ProgramPeople" EntitySet="ProgramPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectImportBlacklist_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProjectImportBlacklist_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectImportBlacklists" EntitySet="ProjectImportBlacklist" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectLocation_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
@@ -2791,6 +2796,7 @@
     <NavigationProperty Name="ProgramPrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Program_Person_ProgramPrimaryContactPersonID_PersonID" FromRole="ProgramsWhereYouAreTheProgramPrimaryContactPerson" ToRole="ProgramPrimaryContactPerson" />
     <NavigationProperty Name="ProgramNotificationConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationConfiguration_Program_ProgramID" FromRole="Program" ToRole="ProgramNotificationConfigurations" />
     <NavigationProperty Name="ProgramPeople" Relationship="ProjectFirma.Web.Models.FK_ProgramPerson_Program_ProgramID" FromRole="Program" ToRole="ProgramPeople" />
+    <NavigationProperty Name="ProjectImportBlacklists" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlacklist_Program_ProgramID" FromRole="Program" ToRole="ProjectImportBlacklists" />
     <NavigationProperty Name="ProjectLocations" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID" FromRole="Program" ToRole="ProjectLocations" />
     <NavigationProperty Name="ProjectPrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID" FromRole="Program" ToRole="ProjectPrograms" />
     <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Program" ToRole="Treatments" />
@@ -3171,6 +3177,16 @@
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID" FromRole="ProjectImageUpdates" ToRole="FileResource" />
     <NavigationProperty Name="ProjectImage" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_ProjectImage_ProjectImageID" FromRole="ProjectImageUpdates" ToRole="ProjectImage" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectImageUpdates" ToRole="ProjectUpdateBatch" />
+  </EntityType>
+  <EntityType Name="ProjectImportBlacklist">
+    <Key>
+      <PropertyRef Name="ProjectImportBlacklistID" />
+    </Key>
+    <Property Name="ProjectImportBlacklistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectName" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlacklist_Program_ProgramID" FromRole="ProjectImportBlacklists" ToRole="Program" />
   </EntityType>
   <EntityType Name="ProjectInternalNote">
     <Key>
@@ -6488,6 +6504,18 @@
         <PropertyRef Name="ProgramID" />
       </Principal>
       <Dependent Role="ProgramPeople">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectImportBlacklist_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="1" />
+    <End Role="ProjectImportBlacklists" Type="ProjectFirma.Web.Models.ProjectImportBlacklist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectImportBlacklists">
         <PropertyRef Name="ProgramID" />
       </Dependent>
     </ReferentialConstraint>
