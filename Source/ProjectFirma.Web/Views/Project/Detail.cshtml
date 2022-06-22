@@ -75,6 +75,12 @@
 
 @section RightOfPageTitle
 {
+
+    @if (ViewDataTyped.UserHasProjectAdminPermissions)
+    {
+        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasProjectAdminPermissions)
+    }
+
     @if (ViewDataTyped.CanLaunchProjectOrProposalWizard)
     {
         <a class="btn btn-firma" href="@ViewDataTyped.ProjectWizardUrl" title="@ViewDataTyped.ProjectUpdateButtonText">@DhtmlxGridHtmlHelpers.EditIconBootstrap @ViewDataTyped.ProjectUpdateButtonText</a>
@@ -300,7 +306,8 @@
                     </div>
                 </div>
 
-                @if(new ProjectActivitiesSectionViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson)) { 
+                @if (new ProjectActivitiesSectionViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+                {
                     <h2 class="sectionHeader">Activities</h2>
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
@@ -322,7 +329,7 @@
                                 <div>
                                     <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
                                 </div>
-                            
+
                                 <div class="panel-body" id="treatmentGridNonFlattened">
                                     @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                                 </div>
@@ -498,7 +505,7 @@
 
             jQuery('#displayFlattenedByTreatmentArea').prop('checked', '');
 
-            jQuery('#displayFlattenedByTreatmentArea').change(function() {
+            jQuery('#displayFlattenedByTreatmentArea').change(function () {
                 if (this.checked) {
                     jQuery("#treatmentGridNonFlattened").hide();
                     jQuery("#treatmentGridFlattened").show();
