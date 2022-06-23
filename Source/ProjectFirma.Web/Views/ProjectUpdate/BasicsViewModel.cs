@@ -40,9 +40,12 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public string ProjectDescription { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
+        public int ProjectUpdateID { get; set; }
+
+        //6/23/2022 TK and AM- Project ID needed here for validating treatments are completed before project is marked as completed. 
         public int ProjectID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectType)]
         public int ProjectTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
@@ -82,6 +85,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             CompletionDate = projectUpdate.CompletionDate;
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
+            ProjectUpdateID = projectUpdate.ProjectUpdateID;
             ProjectID = projectUpdate.ProjectUpdateBatch.ProjectID;
             ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
         }
