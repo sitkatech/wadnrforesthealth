@@ -18,8 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", function ($scope, angularModelAndViewData)
-{
+angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", function ($scope, angularModelAndViewData) {
+    
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
     });
@@ -36,7 +36,7 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
 
     $scope.filteredPrograms = function () {
         var usedProgramIDs = $scope.getAllUsedProgramIDs();
-        console.log($scope.AngularViewDat);
+        console.log($scope.AngularViewData);
         var returnArray = _($scope.AngularViewData.AllPrograms).filter(function (f) { return !_.includes(usedProgramIDs, f.ProgramID); })
             .sortBy(["DisplayString"]).value();
         console.log(returnArray);
@@ -68,11 +68,12 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
     };
 
     $scope.addRow = function() {
-        console.log($scope.ProgramIDToAdd);
+        console.log($scope.ProjectUpdateIDToAdd);
         if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectUpdateIDToAdd == null)) {
             return;
         }
         var newProjectUpdateProgram = $scope.createNewRow($scope.ProjectUpdateIDToAdd, $scope.ProgramIDToAdd);
+
         $scope.AngularModel.ProjectUpdateProgramSimples.push(newProjectUpdateProgram);
         $scope.resetProgramIDToAdd();
         $scope.resetProjectUpdateIDToAdd();

@@ -45,8 +45,8 @@
             angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
                 function() {
                     return {
-                        AngularModel: @Html.Raw(JObject.FromObject(Model)),
-                        AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.BasicsViewDataForAngular))
+                        "AngularModel": @Html.Raw(JObject.FromObject(Model)),
+                        "AngularViewData": @Html.Raw(JObject.FromObject(ViewDataTyped.BasicsViewDataForAngular))
                     };
                 });
             angular.bootstrap(jQuery("#EditProjectApp"), ["ProjectFirmaApp"]);
@@ -67,10 +67,9 @@
     from the @FieldDefinition.ProjectStage.GetFieldDefinitionLabel() dropdown. Changes made here will not take effect until a review approves your updates.
 </p>
 <hr />
-<div ng-app="ProjectFirmaApp" id="EditProjectApp" ng-controller="EditProjectUpdateController">
+<div id="EditProjectApp" ng-controller="EditProjectUpdateController">
     @using (Html.BeginForm())
     {
-        @Html.HiddenFor(m => m.ProjectUpdateID)
         @Html.HiddenFor(m => m.ProjectID)
         @Html.HiddenFor(m => m.ProjectTypeID)
         <div class="form-horizontal">
@@ -177,7 +176,7 @@
                     @ViewDataTyped.ProjectTypeDisplayName
                 </div>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <div class="col-xs-4 control-label">
                     <strong>@FieldDefinition.Program.GetFieldDefinitionLabel() to Add: </strong>
                 </div>
@@ -220,7 +219,13 @@
                     <div class="col-xs-1"><span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectUpdateProgram)" style="cursor: pointer"></span></div>
                     <div class="col-xs-6" ng-bind="projectUpdateProgram.DisplayString"></div>
                 </div>
-            </div>*@
+            </div>
+        </div>
+        <div ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples">
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].ProjectUpdateID).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.ProjectUpdateID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].ProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.ProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].ProjectUpdateProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.ProjectUpdateProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].DisplayString).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.DisplayString}}" />
         </div>
 
         if (ViewDataTyped.IsEditable)

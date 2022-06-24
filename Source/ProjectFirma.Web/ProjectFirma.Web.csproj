@@ -729,6 +729,7 @@
     <Compile Include="Models\DhtmlxExcelDownload\TokenType.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
+    <Compile Include="Models\IEntityProgram.cs" />
     <Compile Include="Models\PersonRole.cs" />
     <Compile Include="Models\PriorityLandscapeType.cs" />
     <Compile Include="Models\ProgramNotificationConfiguration.cs" />
@@ -738,6 +739,8 @@
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />
     <Compile Include="Models\ProjectProgramSimple.cs" />
+    <Compile Include="Models\ProjectUpdateProgram.cs" />
+    <Compile Include="Models\ProjectUpdateProgramSimple.cs" />
     <Compile Include="Models\RoleSimple.cs" />
     <Compile Include="Models\TabularDataImport.cs" />
     <Compile Include="Controllers\ExcelUploadController.cs" />

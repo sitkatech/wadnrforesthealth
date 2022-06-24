@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -38,9 +39,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectDescription)]
         [StringLength(Models.Project.MaxLengthForProjectDescription)]
         public string ProjectDescription { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
-        public int ProjectUpdateID { get; set; }
 
         //6/23/2022 TK and AM- Project ID needed here for validating treatments are completed before project is marked as completed. 
         public int ProjectID { get; set; }
@@ -68,6 +66,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public string Comments { get; set; }
 
         public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
+        public List<ProjectUpdateProgramSimple> ProjectUpdateProgramSimples { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -85,9 +84,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             CompletionDate = projectUpdate.CompletionDate;
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
-            ProjectUpdateID = projectUpdate.ProjectUpdateID;
             ProjectID = projectUpdate.ProjectUpdateBatch.ProjectID;
             ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
+            ProjectUpdateProgramSimples = projectUpdate.ProjectUpdatePrograms.Select(x=> new ProjectUpdateProgramSimple(x)).ToList();
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -98,6 +97,49 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ExpirationDate = ExpirationDate;
             projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.FocusAreaID = FocusAreaID;
+
+
+
+            //var existingProjectPrograms = project.ProjectPrograms.Select(x => x.ProjectProgramID).ToList();
+
+            //var projectProgramSimplesNew = ProjectProgramSimples.Where(x => x.ProjectProgramID < 0).ToList();
+            //var projectProgramsNew = projectProgramSimplesNew.Select(x => x.ProgramID)
+            //    .ToList();
+            //var programs = HttpRequestStorage.DatabaseEntities.Programs.ToList();
+            //foreach (var projectProgram in projectProgramsNew)
+            //{
+            //    var program = programs.Single(x => x.ProgramID == projectProgram.ProgramID);
+            //    projectProgram.Program = program;
+            //    projectProgram.Project = project;
+            //    project.ProjectPrograms.Add(projectProgram);
+            //}
+
+
+
+
+            //var projectProgramsCurrentList = ProjectProgramSimples.Select(x => x.ProjectProgramID).ToList();
+            //var deleteIDList = existingProjectPrograms.Where(x => !projectProgramsCurrentList.Contains(x)).ToList();
+            //var deleteList = project.ProjectPrograms.Where(x => deleteIDList.Contains(x.ProjectProgramID)).ToList();
+            //deleteList.ForEach(x => x.Delete(HttpRequestStorage.DatabaseEntities));
+
+            if (ProjectUpdateProgramSimples == null)
+            {
+                ProjectUpdateProgramSimples = new List<ProjectUpdateProgramSimple>();
+            }
+
+            var projectUpdateProgramsUpdatedList = ProjectUpdateProgramSimples.Select(x => new ProjectUpdateProgram(x.ProgramID, x.ProjectUpdateID))
+                .ToList();
+            HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.Load();
+            var allProjectUpdatePrograms = HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.Local;
+
+            //var allProjectUpdatePrograms = HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.ToList();
+            projectUpdate.ProjectUpdatePrograms
+                .Merge(projectUpdateProgramsUpdatedList,
+                    allProjectUpdatePrograms, 
+                        (x, y) => x.ProjectUpdateID == y.ProjectUpdateID && x.ProgramID == y.ProgramID);
+
+
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
