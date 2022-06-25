@@ -551,7 +551,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationAwardLandownerCostShareLineItemsToTreatmentGroups = grantAllocationAwardLandownerCostShareLineItems.Select(x => new TreatmentGroup(x)).ToList();
             treatmentGroups.AddRange(treatmentAreaToTreatmentGroups);
             treatmentGroups.AddRange(grantAllocationAwardLandownerCostShareLineItemsToTreatmentGroups);
-            var gridSpec = new TreatmentGroupGridSpec(CurrentPerson);
+            var gridSpec = new TreatmentGroupGridSpec(CurrentPerson, project);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentGroup>(treatmentGroups, gridSpec);
             return gridJsonNetJObjectResult;
         }

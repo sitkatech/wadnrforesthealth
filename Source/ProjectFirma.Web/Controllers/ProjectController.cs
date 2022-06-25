@@ -221,7 +221,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
 
-            var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson);
+            var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson, project);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson, project);
             var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
             var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));

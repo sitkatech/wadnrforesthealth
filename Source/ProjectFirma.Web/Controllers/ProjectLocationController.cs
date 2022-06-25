@@ -121,7 +121,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectLocationDetailed(project, viewModel);
             }
-            SaveProjectDetailedLocationsWithDelete(viewModel, project);
+            SaveProjectDetailedLocations(viewModel, project);
             return new ModalDialogFormJsonResult();
         }
 
@@ -256,8 +256,8 @@ namespace ProjectFirma.Web.Controllers
 
                 HttpRequestStorage.DatabaseEntities.ProjectLocations.Load();
                 var allProjectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations.Local;
-                project.ProjectLocations.Merge(projectLocationsFromViewModel, allProjectLocations, x => );
-                //project.ProjectLocations.Add(projectLocation);
+                project.ProjectLocations.Merge(projectLocationsFromViewModel, allProjectLocations, (x, y) => x.ProjectLocationID == y.ProjectLocationID);
+                
             }
 
             //update arcGIS ProjectLocations for the notes

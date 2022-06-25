@@ -87,26 +87,32 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
-        public PartialViewResult EditTreatmentsForProject(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult EditTreatmentsForProjectTreatmentArea(ProjectLocationPrimaryKey projectLocationPrimaryKey)
         {
-            var project = projectPrimaryKey.EntityObject;
-            var viewModel = new EditTreatmentViewModel(project.Treatments.ToList());
-            var projectLocationTreatmentAreas = project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea);
-            return TreatmentViewEdit(viewModel, projectLocationTreatmentAreas);
+            var projectLocation = projectLocationPrimaryKey.EntityObject;
+            var viewModel = new EditTreatmentViewModel(projectLocation.Treatments.ToList());
+            return TreatmentsForProjectTreatmentAreaViewEdit(viewModel);
         }
 
         [HttpPost]
         [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditTreatmentsForProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentViewModel viewModel)
+        public ActionResult EditTreatmentsForProjectTreatmentArea(ProjectLocationPrimaryKey projectLocationPrimaryKey, EditTreatmentViewModel viewModel)
         {
-            var project = projectPrimaryKey.EntityObject;
+            var projectLocation = projectLocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return TreatmentViewEdit(viewModel, project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea && !x.Treatments.Any()));
+                return TreatmentsForProjectTreatmentAreaViewEdit(viewModel);
             }
-            viewModel.UpdateModel(project.Treatments.ToList());
+            viewModel.UpdateModel(projectLocation.Treatments.ToList());
             return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult TreatmentsForProjectTreatmentAreaViewEdit(EditTreatmentViewModel viewModel)
+        {
+            var treatmentTypesList = TreatmentType.All;
+            var viewData = new EditTreatmentViewData(treatmentTypesList, new List<ProjectLocation>());
+            return RazorPartialView<EditTreatment, EditTreatmentViewData, EditTreatmentViewModel>(viewData, viewModel);
         }
 
     }

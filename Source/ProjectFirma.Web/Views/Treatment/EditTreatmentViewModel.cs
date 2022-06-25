@@ -26,6 +26,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -121,7 +122,11 @@ namespace ProjectFirma.Web.Views.Treatment
             StartDate = defaultTreatment?.TreatmentStartDate ?? DateTime.Today;
             EndDate = defaultTreatment?.TreatmentEndDate ?? DateTime.Today;
             FootprintAcres = (defaultTreatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
-
+            if (defaultTreatment.ProjectLocationID.HasValue)
+            {
+                ProjectLocationID = defaultTreatment.ProjectLocationID.Value;
+            }
+            
             ProjectID = defaultTreatment.ProjectID;
             Notes = defaultTreatment.TreatmentNotes;
 
@@ -232,10 +237,12 @@ namespace ProjectFirma.Web.Views.Treatment
             , TreatmentDetailedActivityType treatmentDetailedActivityType
             , decimal treatedAcres)
         {
-            var treatment = treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == treatmentDetailedActivityType);
+            bool needToAdd = false;
+            var treatment = treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == treatmentDetailedActivityType && x.ProjectLocationID == ProjectLocationID);
             if (treatment == null)
             {
                 treatment = new Models.Treatment(ProjectID, FootprintAcres, TreatmentType.Other.TreatmentTypeID, treatmentDetailedActivityType.TreatmentDetailedActivityTypeID);
+                needToAdd = true;
             }
 
             treatment.TreatmentFootprintAcres = FootprintAcres;
@@ -244,7 +251,18 @@ namespace ProjectFirma.Web.Views.Treatment
             treatment.TreatmentEndDate = EndDate;
             treatment.TreatmentNotes = Notes;
             treatment.ProjectID = ProjectID;
+            treatment.ProjectLocationID = ProjectLocationID;
+            treatment.TreatmentTypeID = TreatmentTypeID;
+
+
+            if (needToAdd)
+            {
+                HttpRequestStorage.DatabaseEntities.Treatments.Add(treatment);
+            }
+
         }
+
+
     }
 
 }
