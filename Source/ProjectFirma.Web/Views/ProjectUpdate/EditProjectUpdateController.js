@@ -73,7 +73,6 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
             return;
         }
         var newProjectUpdateProgram = $scope.createNewRow($scope.ProjectUpdateIDToAdd, $scope.ProgramIDToAdd);
-
         $scope.AngularModel.ProjectUpdateProgramSimples.push(newProjectUpdateProgram);
         $scope.resetProgramIDToAdd();
         $scope.resetProjectUpdateIDToAdd();

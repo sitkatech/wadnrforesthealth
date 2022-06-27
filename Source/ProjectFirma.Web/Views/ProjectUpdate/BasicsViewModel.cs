@@ -99,29 +99,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.FocusAreaID = FocusAreaID;
 
 
-
-            //var existingProjectPrograms = project.ProjectPrograms.Select(x => x.ProjectProgramID).ToList();
-
-            //var projectProgramSimplesNew = ProjectProgramSimples.Where(x => x.ProjectProgramID < 0).ToList();
-            //var projectProgramsNew = projectProgramSimplesNew.Select(x => x.ProgramID)
-            //    .ToList();
-            //var programs = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            //foreach (var projectProgram in projectProgramsNew)
-            //{
-            //    var program = programs.Single(x => x.ProgramID == projectProgram.ProgramID);
-            //    projectProgram.Program = program;
-            //    projectProgram.Project = project;
-            //    project.ProjectPrograms.Add(projectProgram);
-            //}
-
-
-
-
-            //var projectProgramsCurrentList = ProjectProgramSimples.Select(x => x.ProjectProgramID).ToList();
-            //var deleteIDList = existingProjectPrograms.Where(x => !projectProgramsCurrentList.Contains(x)).ToList();
-            //var deleteList = project.ProjectPrograms.Where(x => deleteIDList.Contains(x.ProjectProgramID)).ToList();
-            //deleteList.ForEach(x => x.Delete(HttpRequestStorage.DatabaseEntities));
-
             if (ProjectUpdateProgramSimples == null)
             {
                 ProjectUpdateProgramSimples = new List<ProjectUpdateProgramSimple>();
@@ -131,8 +108,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 .ToList();
             HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.Load();
             var allProjectUpdatePrograms = HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.Local;
-
-            //var allProjectUpdatePrograms = HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.ToList();
+            
             projectUpdate.ProjectUpdatePrograms
                 .Merge(projectUpdateProgramsUpdatedList,
                     allProjectUpdatePrograms, 

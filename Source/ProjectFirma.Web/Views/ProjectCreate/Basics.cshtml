@@ -52,8 +52,8 @@
             angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
                 function() {
                     return {
-                        AngularModel: @Html.Raw(JObject.FromObject(Model)),
-                        AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.BasicsViewDataForAngular))
+                        "AngularModel": @Html.Raw(JObject.FromObject(Model)),
+                        "AngularViewData": @Html.Raw(JObject.FromObject(ViewDataTyped.BasicsViewDataForAngular))
                     };
                 });
             angular.bootstrap(jQuery("#EditProjectApp"), ["ProjectFirmaApp"]);
@@ -70,7 +70,7 @@
 }
 <p>Add your @FieldDefinition.Project.GetFieldDefinitionLabel()’s basic information here.</p>
 <hr />
-<div ng-app="ProjectFirmaApp" id="EditProjectApp" ng-controller="EditProjectController">
+<div id="EditProjectApp" ng-controller="EditProjectController">
     @using (Html.BeginForm())
     {
         <div class="form-horizontal">
@@ -214,6 +214,12 @@
                     <div class="col-xs-6" ng-bind="projectProgram.DisplayString"></div>
                 </div>
             </div>
+        </div>
+        <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples">
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].DisplayString).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.DisplayString}}" />
         </div>
         @Html.HiddenFor(m => m.ProjectID)
         @Html.HiddenFor(m => m.ImportExternalProjectStagingID)

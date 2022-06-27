@@ -68,7 +68,7 @@ angular.module("ProjectFirmaApp").controller("EditProjectController", function (
     };
 
     $scope.addRow = function() {
-        console.log($scope.ProgramIDToAdd);
+        console.log($scope.ProjectIDToAdd);
         if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectIDToAdd == null)) {
             return;
         }
