@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditTreatmentsForAProjectViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -32,7 +32,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Treatment
 {
-    public class EditTreatmentViewModel : FormViewModel, IValidatableObject
+    public class EditTreatmentsForAProjectViewModel : FormViewModel, IValidatableObject
     {
         [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
         [Required]
@@ -109,13 +109,13 @@ namespace ProjectFirma.Web.Views.Treatment
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditTreatmentViewModel()
+        public EditTreatmentsForAProjectViewModel()
         {
             StartDate = DateTime.Today;
             EndDate = DateTime.Today;
         }
 
-        public EditTreatmentViewModel(List<Models.Treatment> treatments)
+        public EditTreatmentsForAProjectViewModel(List<Models.Treatment> treatments)
         {
             var defaultTreatment = treatments.FirstOrDefault();
            

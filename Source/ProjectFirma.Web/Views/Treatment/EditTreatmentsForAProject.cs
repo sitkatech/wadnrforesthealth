@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditTreatmentsForAProject.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,25 +19,13 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-
-using System.Collections.Generic;
-using System.Globalization;
-using System.Web.Mvc;
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Treatment
 {
-    public class EditTreatmentViewData : FirmaUserControlViewData
+    public abstract class EditTreatmentsForAProject : TypedWebPartialViewPage<EditTreatmentsForAProjectViewData, EditTreatmentsForAProjectViewModel>
     {
-        public IEnumerable<SelectListItem> TreatmentTypeList { get; }
-        public IEnumerable<SelectListItem> TreatmentAreaList { get; }
-
-        public EditTreatmentViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<ProjectLocation> treatmentAreas)
-        {
-            TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
-            TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationName);
-        }
     }
 
+    
 }
