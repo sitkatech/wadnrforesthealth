@@ -79,7 +79,7 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
     };
 
     $scope.createNewRow = function (ProjectUpdateID, programID) {
-        console.log(programID);
+        console.log("Program ID ",programID);
         var programIDAsInt = parseInt(programID.toString());
         var newProjectUpdateProgram = {
             ProjectUpdateID: ProjectUpdateID,
