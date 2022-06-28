@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             if (userHasEditPermissions)
             {
-                var createUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(x => x.NewTreatmentFromProject(projectForCreatingNewTreatments));
+                var createUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(x => x.NewTreatmentsForAProject(projectForCreatingNewTreatments));
                 this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNamePlural}");
             }
 
