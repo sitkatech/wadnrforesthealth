@@ -210,14 +210,11 @@
                     <div class="col-xs-4 control-label">
                         @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
                     </div>
-                    <div class="col-xs-7"></div>
-                </div>
-                <div class="row narrowRow" ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples | orderBy:[getProgramName]">
-                    <div class="col-xs-4 control-label">
+                    <div class="col-xs-8 col-xs-offset-4" ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples | orderBy:[getProgramName]">
 
+                        <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectUpdateProgram)" style="cursor: pointer"></span>
+                        <span ng-bind="projectUpdateProgram.DisplayString"></span>
                     </div>
-                    <div class="col-xs-1"><span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectUpdateProgram)" style="cursor: pointer"></span></div>
-                    <div class="col-xs-6" ng-bind="projectUpdateProgram.DisplayString"></div>
                 </div>
             </div>
         </div>
