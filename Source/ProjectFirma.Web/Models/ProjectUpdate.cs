@@ -48,7 +48,17 @@ namespace ProjectFirma.Web.Models
             this.ProjectDescription = projectUpdateBatch.Project.ProjectDescription;
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
-            LoadSimpleLocationFromProject(project);            
+            LoadSimpleLocationFromProject(project);
+            LoadProgramsFromProject(project);
+        }
+
+        public void LoadProgramsFromProject(Project project)
+        {
+            foreach (var projectProgram in project.ProjectPrograms)
+            {
+                var projectUpdateProgramTemp = new ProjectUpdateProgram(projectProgram.Program, this);
+                this.ProjectUpdatePrograms.Add(projectUpdateProgramTemp);
+            }
         }
 
         public void LoadUpdateFromProject(Project project)
