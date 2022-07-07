@@ -18,7 +18,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             this.ObjectNameSingular = "Treatment";
             this.ObjectNamePlural = "Treatments";
             bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            //int buttonGridWidth = 30;
+            int buttonGridWidth = 30;
 
             if (userHasEditPermissions)
             {
@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNamePlural}");
             }
 
-            //Add(string.Empty, x => x.GrantAllocationAwardLandownerCostShareLineItemID.HasValue ? DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GrantAllocationAwardLandownerCostShareLineItem?.GetEditLandownerCostShareLineItemUrl(), $"Edit {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()}"), userHasEditPermissions) : new HtmlString(string.Empty), buttonGridWidth, DhtmlxGridColumnFilterType.None);
+            Add(string.Empty, x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUrl(), $"Edit Treatment"), userHasEditPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);
 
             Add("Treatment Area Name", a => a.ProjectLocation.ProjectLocationName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Treatment ID", a => a.TreatmentID.ToString(), 75, DhtmlxGridColumnFilterType.Text);

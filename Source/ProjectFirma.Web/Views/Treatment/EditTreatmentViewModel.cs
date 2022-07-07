@@ -34,9 +34,9 @@ namespace ProjectFirma.Web.Views.Treatment
 {
     public class EditTreatmentViewModel : FormViewModel, IValidatableObject
     {
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
-        [Required]
-        public int ProjectID { get; set; }
+
+        public int TreatmentID { get; set; }
+
 
         [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentDetailedActivityType)]
@@ -45,6 +45,12 @@ namespace ProjectFirma.Web.Views.Treatment
         [Required]
         [DisplayName("Project Location - Treatment Area")]
         public int ProjectLocationID { get; set; }
+
+
+        //These name fields are here temporarily until we update treatments to edit one at a time everywhere
+        public string ProjectLocationName { get; }
+        public string TreatmentTypeName { get; }
+        public string TreatmentDetailedActivityName { get; }
 
 
 
@@ -69,12 +75,8 @@ namespace ProjectFirma.Web.Views.Treatment
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFootprintAcres)]
         public decimal FootprintAcres { get; set; }
 
-
-
-
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareChippingAcres)]
-        public decimal ActivityAcres { get; set; }
+        [DisplayName("Treated Acres")]
+        public decimal TreatedAcres { get; set; }
 
 
 
@@ -88,87 +90,26 @@ namespace ProjectFirma.Web.Views.Treatment
             EndDate = DateTime.Today;
         }
 
-        public EditTreatmentViewModel(List<Models.Treatment> treatments)
+        public EditTreatmentViewModel(Models.Treatment treatment)
         {
-            var defaultTreatment = treatments.FirstOrDefault();
-           
-            StartDate = defaultTreatment?.TreatmentStartDate ?? DateTime.Today;
-            EndDate = defaultTreatment?.TreatmentEndDate ?? DateTime.Today;
-            FootprintAcres = (defaultTreatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
-            if (defaultTreatment.ProjectLocationID.HasValue)
+            StartDate = treatment?.TreatmentStartDate ?? DateTime.Today;
+            EndDate = treatment?.TreatmentEndDate ?? DateTime.Today;
+            FootprintAcres = (treatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
+            TreatedAcres = (treatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+            if (treatment.ProjectLocationID.HasValue)
             {
-                ProjectLocationID = defaultTreatment.ProjectLocationID.Value;
+                ProjectLocationID = treatment.ProjectLocationID.Value;
+                ProjectLocationName = treatment.ProjectLocation.ProjectLocationName;
             }
-            
-            ProjectID = defaultTreatment.ProjectID;
-            Notes = defaultTreatment.TreatmentNotes;
 
-            var slashTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Slash);
-            SlashAcres = (slashTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
 
-            var chippingTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Chipping);
-            ChippingAcres = (chippingTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+            TreatmentTypeName = treatment.TreatmentType.TreatmentTypeDisplayName;
+            TreatmentDetailedActivityName = treatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
 
-            var pruningTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Pruning);
-            PruningAcres = (pruningTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+            Notes = treatment.TreatmentNotes;
 
-            var thinningTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Thinning);
-            ThinningAcres = (thinningTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+            TreatmentID = treatment.TreatmentID;
 
-            var masticationTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Mastication);
-            MasticationAcres = (masticationTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var grazingTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Grazing);
-            GrazingAcres = (grazingTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var lopAndScatterTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.LopAndScatter);
-            LopAndScatterAcres = (lopAndScatterTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var biomassRemovalTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.BiomassRemoval);
-            BiomassRemovalAcres = (biomassRemovalTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var handPileTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.HandPile);
-            HandPileAcres = (handPileTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var broadCastBurnTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.BroadcastBurn);
-            BroadcastBurnAcres = (broadCastBurnTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var handPileBurnTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.HandPileBurn);
-            HandPileBurnAcres = (handPileBurnTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var machinePileBurnTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.MachinePileBurn);
-            MachinePileBurnAcres = (machinePileBurnTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            var otherTreatment =
-                treatments.SingleOrDefault(x =>
-                    x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Other);
-            OtherTreatmentAcres = (otherTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -184,56 +125,22 @@ namespace ProjectFirma.Web.Views.Treatment
 
 
 
-        public void UpdateModel(List<Models.Treatment> treatments)
+        public void UpdateModel(Models.Treatment treatment)
         {
-            
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Chipping, ChippingAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Pruning, PruningAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Thinning, ThinningAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Mastication, MasticationAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Grazing, GrazingAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.LopAndScatter, LopAndScatterAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.BiomassRemoval, BiomassRemovalAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.HandPile, HandPileAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.BroadcastBurn, BroadcastBurnAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.HandPileBurn, HandPileBurnAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.MachinePileBurn, MachinePileBurnAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Other, OtherTreatmentAcres);
-            UpdateTreatmentByTreatmentType(treatments, TreatmentDetailedActivityType.Slash, SlashAcres);
-
-            
-
-        }
-
-        private void UpdateTreatmentByTreatmentType(
-            ICollection<Models.Treatment> treatments
-            , TreatmentDetailedActivityType treatmentDetailedActivityType
-            , decimal treatedAcres)
-        {
-            bool needToAdd = false;
-            var treatment = treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == treatmentDetailedActivityType && x.ProjectLocationID == ProjectLocationID);
-            if (treatment == null)
-            {
-                treatment = new Models.Treatment(ProjectID, FootprintAcres, TreatmentType.Other.TreatmentTypeID, treatmentDetailedActivityType.TreatmentDetailedActivityTypeID);
-                needToAdd = true;
-            }
-
             treatment.TreatmentFootprintAcres = FootprintAcres;
-            treatment.TreatmentTreatedAcres = treatedAcres;
+            treatment.TreatmentTreatedAcres = TreatedAcres;
             treatment.TreatmentStartDate = StartDate;
             treatment.TreatmentEndDate = EndDate;
             treatment.TreatmentNotes = Notes;
-            treatment.ProjectID = ProjectID;
-            treatment.ProjectLocationID = ProjectLocationID;
-            treatment.TreatmentTypeID = TreatmentTypeID;
+
+            //treatment.ProjectLocationID = ProjectLocationID;
+            //treatment.TreatmentTypeID = TreatmentTypeID;
 
 
-            if (needToAdd)
-            {
-                HttpRequestStorage.DatabaseEntities.Treatments.Add(treatment);
-            }
 
         }
+
+
 
 
     }

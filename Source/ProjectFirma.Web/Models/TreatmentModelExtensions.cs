@@ -22,6 +22,16 @@ namespace ProjectFirma.Web.Models
             return ProjectMapSimplePopuUrlTemplate.ParameterReplace(treatment.ProjectID);
         }
 
+        public static readonly UrlTemplate<int> EditTreatmentUrlTemplate = new UrlTemplate<int>(SitkaRoute<TreatmentController>.BuildUrlFromExpression(t => t.EditTreatment(UrlTemplate.Parameter1Int)));
+        public static string GetEditTreatmentUrl(this Treatment treatment)
+        {
+            return EditTreatmentUrlTemplate.ParameterReplace(treatment.TreatmentID);
+        }
+
+
+
+
+
         public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<Treatment> treatments)
         {
 

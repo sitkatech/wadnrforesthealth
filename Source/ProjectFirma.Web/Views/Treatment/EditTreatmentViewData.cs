@@ -22,7 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Globalization;
-using System.Web.Mvc;
+using System.Web.Mvc; 
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Models;
 
@@ -30,13 +30,11 @@ namespace ProjectFirma.Web.Views.Treatment
 {
     public class EditTreatmentViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> TreatmentTypeList { get; }
-        public IEnumerable<SelectListItem> TreatmentAreaList { get; }
 
-        public EditTreatmentViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<ProjectLocation> treatmentAreas)
+
+        public EditTreatmentViewData()
         {
-            TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
-            TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationName);
+            
         }
     }
 

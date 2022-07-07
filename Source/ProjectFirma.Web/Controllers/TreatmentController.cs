@@ -80,6 +80,37 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+        [HttpGet]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        public PartialViewResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey)
+        {
+            var treatment = treatmentPrimaryKey.EntityObject;
+            var viewModel = new EditTreatmentViewModel(treatment);
+            return TreatmentViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey, EditTreatmentViewModel viewModel)
+        {
+            var treatment = treatmentPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return TreatmentViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(treatment);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult TreatmentViewEdit(EditTreatmentViewModel viewModel)
+        {
+            var viewData = new EditTreatmentViewData();
+            return RazorPartialView<EditTreatment, EditTreatmentViewData, EditTreatmentViewModel>(viewData, viewModel);
+        }
+
+
+
 
         //[HttpGet]
         //[GrantAllocationAwardLandownerCostShareLineItemDeleteFeature]
