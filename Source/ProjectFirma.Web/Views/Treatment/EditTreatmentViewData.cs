@@ -30,11 +30,16 @@ namespace ProjectFirma.Web.Views.Treatment
 {
     public class EditTreatmentViewData : FirmaUserControlViewData
     {
+        public IEnumerable<SelectListItem> TreatmentTypeList { get; }
+        public IEnumerable<SelectListItem> TreatmentAreaList { get; }
 
+        public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeList { get; }
 
-        public EditTreatmentViewData()
+        public EditTreatmentViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<TreatmentDetailedActivityType> treatmentDetailedActivityTypesList, IEnumerable<ProjectLocation> treatmentAreas)
         {
-            
+            TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
+            TreatmentDetailedActivityTypeList = treatmentDetailedActivityTypesList.ToSelectList(x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentDetailedActivityTypeDisplayName);
+            TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationName);
         }
     }
 

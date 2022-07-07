@@ -37,27 +37,25 @@ namespace ProjectFirma.Web.Views.Treatment
 
         public int TreatmentID { get; set; }
 
+        public int ProjectID { get; set; }
+
 
         [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentDetailedActivityType)]
         public int TreatmentDetailedActivityTypeID { get; set; }
 
         [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentType)]
+        public int TreatmentTypeID { get; set; }
+
+        [Required]
         [DisplayName("Project Location - Treatment Area")]
         public int ProjectLocationID { get; set; }
 
 
-        //These name fields are here temporarily until we update treatments to edit one at a time everywhere
-        public string ProjectLocationName { get; }
-        public string TreatmentTypeName { get; }
-        public string TreatmentDetailedActivityName { get; }
 
 
 
-
-        [Required]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentType)]
-        public int TreatmentTypeID { get; set; }
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareStartDate)]
         [Required]
         public DateTime StartDate { get; set; }
@@ -99,16 +97,13 @@ namespace ProjectFirma.Web.Views.Treatment
             if (treatment.ProjectLocationID.HasValue)
             {
                 ProjectLocationID = treatment.ProjectLocationID.Value;
-                ProjectLocationName = treatment.ProjectLocation.ProjectLocationName;
             }
 
-
-            TreatmentTypeName = treatment.TreatmentType.TreatmentTypeDisplayName;
-            TreatmentDetailedActivityName = treatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
-
+            TreatmentDetailedActivityTypeID = treatment.TreatmentDetailedActivityTypeID;
+            TreatmentTypeID = treatment.TreatmentTypeID;
             Notes = treatment.TreatmentNotes;
-
             TreatmentID = treatment.TreatmentID;
+            ProjectID = treatment.ProjectID;
 
         }
 
@@ -133,9 +128,10 @@ namespace ProjectFirma.Web.Views.Treatment
             treatment.TreatmentEndDate = EndDate;
             treatment.TreatmentNotes = Notes;
 
-            //treatment.ProjectLocationID = ProjectLocationID;
-            //treatment.TreatmentTypeID = TreatmentTypeID;
-
+            treatment.ProjectLocationID = ProjectLocationID;
+            treatment.TreatmentTypeID = TreatmentTypeID;
+            treatment.TreatmentDetailedActivityTypeID = TreatmentDetailedActivityTypeID;
+            treatment.ProjectID = ProjectID;
 
 
         }

@@ -22,8 +22,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             if (userHasEditPermissions)
             {
-                var createUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(x => x.NewTreatmentsForAProject(projectForCreatingNewTreatments));
-                this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNamePlural}");
+                var createUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(x => x.NewTreatmentFromProject(projectForCreatingNewTreatments));
+                this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNameSingular} for {projectForCreatingNewTreatments.DisplayName}");
             }
 
             Add(string.Empty, x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUrl(), $"Edit Treatment"), userHasEditPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);

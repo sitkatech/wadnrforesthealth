@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
@@ -86,7 +87,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var treatment = treatmentPrimaryKey.EntityObject;
             var viewModel = new EditTreatmentViewModel(treatment);
-            return TreatmentViewEdit(viewModel);
+            return TreatmentViewEdit(viewModel, treatment.Project);
         }
 
         [HttpPost]
@@ -97,16 +98,48 @@ namespace ProjectFirma.Web.Controllers
             var treatment = treatmentPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return TreatmentViewEdit(viewModel);
+                return TreatmentViewEdit(viewModel, treatment.Project);
             }
             viewModel.UpdateModel(treatment);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult TreatmentViewEdit(EditTreatmentViewModel viewModel)
+        private PartialViewResult TreatmentViewEdit(EditTreatmentViewModel viewModel, Project project)
         {
-            var viewData = new EditTreatmentViewData();
+            var treatmentTypesList = TreatmentType.All;
+            var treatmentDetailedActivityTypesList = TreatmentDetailedActivityType.All;
+            var treatmentAreas = project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea);
+            var viewData = new EditTreatmentViewData(treatmentTypesList, treatmentDetailedActivityTypesList, treatmentAreas);
             return RazorPartialView<EditTreatment, EditTreatmentViewData, EditTreatmentViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        public PartialViewResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+
+
+
+            var viewModel = new EditTreatmentViewModel();
+            return TreatmentViewEdit(viewModel, project);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return TreatmentViewEdit(viewModel, project);
+            }
+
+            var newTreatment = Treatment.CreateNewBlank(project, TreatmentType.Other, TreatmentDetailedActivityType.Other);
+            viewModel.UpdateModel(newTreatment);
+            return new ModalDialogFormJsonResult();
         }
 
 
