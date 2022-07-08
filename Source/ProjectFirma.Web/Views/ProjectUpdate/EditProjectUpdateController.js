@@ -27,7 +27,7 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
   
     $scope.resetProgramIDToAdd = function () { $scope.ProgramIDToAdd = -1 };
 
-    $scope.resetProjectUpdateIDToAdd = function () { $scope.ProjectUpdateIDToAdd = $scope.AngularViewData.ProjectUpdateID };
+    $scope.resetProjectUpdateBatchIDToAdd = function () { $scope.ProjectUpdateBatchIDToAdd = $scope.AngularViewData.ProjectUpdateBatchID };
 
 
     $scope.getAllUsedProgramIDs = function () {
@@ -57,9 +57,9 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
 
 
 
-    $scope.findPojectProgramRow = function(ProjectUpdateID, programID) {
+    $scope.findPojectProgramRow = function(ProjectUpdateBatchID, programID) {
         return _.find($scope.AngularModel.ProjectUpdateProgramSimples,
-            function(pfse) { return pfse.ProjectUpdateID == ProjectUpdateID && pfse.ProgramID == programID; });
+            function(pfse) { return pfse.ProjectUpdateBatchID == ProjectUpdateBatchID && pfse.ProgramID == programID; });
     };
 
 
@@ -68,21 +68,21 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
     };
 
     $scope.addRow = function() {
-        console.log($scope.ProjectUpdateIDToAdd);
-        if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectUpdateIDToAdd == null)) {
+        console.log($scope.ProjectUpdateBatchIDToAdd);
+        if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectUpdateBatchIDToAdd == null)) {
             return;
         }
-        var newProjectUpdateProgram = $scope.createNewRow($scope.ProjectUpdateIDToAdd, $scope.ProgramIDToAdd);
+        var newProjectUpdateProgram = $scope.createNewRow($scope.ProjectUpdateBatchIDToAdd, $scope.ProgramIDToAdd);
         $scope.AngularModel.ProjectUpdateProgramSimples.push(newProjectUpdateProgram);
         $scope.resetProgramIDToAdd();
-        $scope.resetProjectUpdateIDToAdd();
+        $scope.resetProjectUpdateBatchIDToAdd();
     };
 
-    $scope.createNewRow = function (ProjectUpdateID, programID) {
+    $scope.createNewRow = function (ProjectUpdateBatchID, programID) {
         console.log("Program ID ",programID);
         var programIDAsInt = parseInt(programID.toString());
         var newProjectUpdateProgram = {
-            ProjectUpdateID: ProjectUpdateID,
+            ProjectUpdateBatchID: ProjectUpdateBatchID,
             ProgramID: programIDAsInt,
             ProjectUpdateProgramID: -1
     };
@@ -98,6 +98,6 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     $scope.resetProgramIDToAdd();
-    $scope.resetProjectUpdateIDToAdd();
+    $scope.resetProjectUpdateBatchIDToAdd();
 });
 

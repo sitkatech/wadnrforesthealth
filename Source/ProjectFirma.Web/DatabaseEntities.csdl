@@ -1252,13 +1252,13 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID">
-      <End Role="ProjectUpdate" EntitySet="ProjectUpdate" />
-      <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdateHistories" EntitySet="ProjectUpdateHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
     </AssociationSet>
     <AssociationSet Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" Association="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
@@ -3452,7 +3452,6 @@
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
-    <NavigationProperty Name="ProjectUpdatePrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID" FromRole="ProjectUpdate" ToRole="ProjectUpdatePrograms" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
     <Key>
@@ -3508,6 +3507,7 @@
     <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectRegionUpdates" />
     <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdates" />
     <NavigationProperty Name="ProjectUpdateHistories" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdateHistories" />
+    <NavigationProperty Name="ProjectUpdatePrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdatePrograms" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
@@ -3542,9 +3542,9 @@
     </Key>
     <Property Name="ProjectUpdateProgramID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProgramID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectUpdateID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_Program_ProgramID" FromRole="ProjectUpdatePrograms" ToRole="Program" />
-    <NavigationProperty Name="ProjectUpdate" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID" FromRole="ProjectUpdatePrograms" ToRole="ProjectUpdate" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdatePrograms" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -7197,18 +7197,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID">
-    <End Role="ProjectUpdate" Type="ProjectFirma.Web.Models.ProjectUpdate" Multiplicity="1" />
-    <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.ProjectUpdateProgram" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdate">
-        <PropertyRef Name="ProjectUpdateID" />
-      </Principal>
-      <Dependent Role="ProjectUpdatePrograms">
-        <PropertyRef Name="ProjectUpdateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectUpdateHistories" Type="ProjectFirma.Web.Models.ProjectUpdateHistory" Multiplicity="*" />
@@ -7217,6 +7205,18 @@
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
       <Dependent Role="ProjectUpdateHistories">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.ProjectUpdateProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectUpdatePrograms">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>

@@ -56,8 +56,8 @@ namespace ProjectFirma.Web.Models
         {
             foreach (var projectProgram in project.ProjectPrograms)
             {
-                var projectUpdateProgramTemp = new ProjectUpdateProgram(projectProgram.Program, this);
-                this.ProjectUpdatePrograms.Add(projectUpdateProgramTemp);
+                var projectUpdateProgramTemp = new ProjectUpdateProgram(projectProgram.Program, this.ProjectUpdateBatch);
+                this.ProjectUpdateBatch.ProjectUpdatePrograms.Add(projectUpdateProgramTemp);
             }
         }
 
@@ -91,11 +91,11 @@ namespace ProjectFirma.Web.Models
             project.FocusAreaID = FocusAreaID;
 
             var allProjectProgramIDs = project.ProjectPrograms.Select(x => x.ProgramID);
-            var filteredProjectUpdatePrograms = this.ProjectUpdatePrograms.Where(x => allProjectProgramIDs.Contains(x.ProgramID));
+            var filteredProjectUpdatePrograms = this.ProjectUpdateBatch.ProjectUpdatePrograms.Where(x => allProjectProgramIDs.Contains(x.ProgramID));
             var matchingProgramIDs = filteredProjectUpdatePrograms.Select(x => x.ProgramID);
 
             var newProjectPrograms = project.ProjectPrograms.Where(x => matchingProgramIDs.Contains(x.ProgramID)).ToList();
-            var addProjectPrograms = this.ProjectUpdatePrograms.Where(x => !matchingProgramIDs.Contains(x.ProgramID)).Select(x => new ProjectProgram(project, x.Program));
+            var addProjectPrograms = this.ProjectUpdateBatch.ProjectUpdatePrograms.Where(x => !matchingProgramIDs.Contains(x.ProgramID)).Select(x => new ProjectProgram(project, x.Program));
             newProjectPrograms.AddRange(addProjectPrograms);
             project.ProjectPrograms = newProjectPrograms;
         }

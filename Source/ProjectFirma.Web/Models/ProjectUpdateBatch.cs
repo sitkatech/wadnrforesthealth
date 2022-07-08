@@ -293,6 +293,12 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectOrganizationUpdates);
         }
 
+        public void DeleteProjectUpdatePrograms()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.DeleteProjectUpdateProgram(ProjectUpdatePrograms);
+            RefreshFromDatabase(ProjectUpdatePrograms);
+        }
+
         public void DeleteProjectAttributeUpdates()
         {
             var values = ProjectCustomAttributeUpdates.SelectMany(x => x.ProjectCustomAttributeUpdateValues).ToList();

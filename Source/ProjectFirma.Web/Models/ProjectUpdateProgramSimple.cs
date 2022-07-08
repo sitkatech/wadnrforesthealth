@@ -2,7 +2,7 @@
 {
     public class ProjectUpdateProgramSimple
     {
-        public int ProjectUpdateID { get; set; }
+        public int ProjectUpdateBatchID { get; set; }
 
         public int ProgramID { get; set; }
 
@@ -13,7 +13,7 @@
 
         public ProjectUpdateProgramSimple(ProjectUpdateProgram projectUpdateProgram)
         {
-            ProjectUpdateID = projectUpdateProgram.ProjectUpdateID;
+            ProjectUpdateBatchID = projectUpdateProgram.ProjectUpdateBatchID;
             ProgramID = projectUpdateProgram.ProgramID;
             DisplayString = projectUpdateProgram.Program.DisplayName;
             ProjectUpdateProgramID = projectUpdateProgram.ProjectUpdateProgramID;

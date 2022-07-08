@@ -31,46 +31,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateProgram(int projectUpdateProgramID, int programID, int projectUpdateID) : this()
+        public ProjectUpdateProgram(int projectUpdateProgramID, int programID, int projectUpdateBatchID) : this()
         {
             this.ProjectUpdateProgramID = projectUpdateProgramID;
             this.ProgramID = programID;
-            this.ProjectUpdateID = projectUpdateID;
+            this.ProjectUpdateBatchID = projectUpdateBatchID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateProgram(int programID, int projectUpdateID) : this()
+        public ProjectUpdateProgram(int programID, int projectUpdateBatchID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectUpdateProgramID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProgramID = programID;
-            this.ProjectUpdateID = projectUpdateID;
+            this.ProjectUpdateBatchID = projectUpdateBatchID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectUpdateProgram(Program program, ProjectUpdate projectUpdate) : this()
+        public ProjectUpdateProgram(Program program, ProjectUpdateBatch projectUpdateBatch) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectUpdateProgramID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProgramID = program.ProgramID;
             this.Program = program;
             program.ProjectUpdatePrograms.Add(this);
-            this.ProjectUpdateID = projectUpdate.ProjectUpdateID;
-            this.ProjectUpdate = projectUpdate;
-            projectUpdate.ProjectUpdatePrograms.Add(this);
+            this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
+            this.ProjectUpdateBatch = projectUpdateBatch;
+            projectUpdateBatch.ProjectUpdatePrograms.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectUpdateProgram CreateNewBlank(Program program, ProjectUpdate projectUpdate)
+        public static ProjectUpdateProgram CreateNewBlank(Program program, ProjectUpdateBatch projectUpdateBatch)
         {
-            return new ProjectUpdateProgram(program, projectUpdate);
+            return new ProjectUpdateProgram(program, projectUpdateBatch);
         }
 
         /// <summary>
@@ -118,12 +118,12 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectUpdateProgramID { get; set; }
         public int ProgramID { get; set; }
-        public int ProjectUpdateID { get; set; }
+        public int ProjectUpdateBatchID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateProgramID; } set { ProjectUpdateProgramID = value; } }
 
         public virtual Program Program { get; set; }
-        public virtual ProjectUpdate ProjectUpdate { get; set; }
+        public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
 
         public static class FieldLengths
         {

@@ -67,19 +67,19 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdate.ProjectUpdateBatch.BasicsComment, projectUpdate.ProjectUpdateBatch.IsReturned);            
                         
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
-            BasicsViewDataForAngular = new BasicsViewDataForAngular(allPrograms.Select(x=>new ProgramSimple(x)).ToList(), projectUpdate.ProjectUpdateID);
+            BasicsViewDataForAngular = new BasicsViewDataForAngular(allPrograms.Select(x=>new ProgramSimple(x)).ToList(), projectUpdate.ProjectUpdateBatchID);
         }
     }
 
     public class BasicsViewDataForAngular
     {
-        public BasicsViewDataForAngular(List<ProgramSimple> allPrograms, int projectUpdateID) 
+        public BasicsViewDataForAngular(List<ProgramSimple> allPrograms, int projectUpdateBatchID) 
         {
             this.AllPrograms = allPrograms;
-            this.ProjectUpdateID = projectUpdateID;
+            this.ProjectUpdateBatchID = projectUpdateBatchID;
         }
         public List<ProgramSimple> AllPrograms { get; }
-        public int ProjectUpdateID { get; set; }
+        public int ProjectUpdateBatchID { get; set; }
 
     }
 }

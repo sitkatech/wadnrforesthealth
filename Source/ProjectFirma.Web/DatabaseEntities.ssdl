@@ -1335,8 +1335,8 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Program" EntitySet="Program" />
       <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID">
-      <End Role="ProjectUpdate" EntitySet="ProjectUpdate" />
+    <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
     </AssociationSet>
     <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.Store.FK_StateProvince_Country_CountryID">
@@ -3136,7 +3136,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectUpdateProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProgramID" Type="int" Nullable="false" />
-    <Property Name="ProjectUpdateID" Type="int" Nullable="false" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -6688,15 +6688,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectUpdateProgram_ProjectUpdate_ProjectUpdateID">
-    <End Role="ProjectUpdate" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="1" />
+  <Association Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.Store.ProjectUpdateProgram" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ProjectUpdate">
-        <PropertyRef Name="ProjectUpdateID" />
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
       <Dependent Role="ProjectUpdatePrograms">
-        <PropertyRef Name="ProjectUpdateID" />
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

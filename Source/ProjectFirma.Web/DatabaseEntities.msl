@@ -1877,7 +1877,7 @@
         <MappingFragment StoreEntitySet="ProjectUpdateProgram">
           <ScalarProperty Name="ProjectUpdateProgramID" ColumnName="ProjectUpdateProgramID" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
-          <ScalarProperty Name="ProjectUpdateID" ColumnName="ProjectUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -298,6 +298,8 @@ namespace ProjectFirma.Web.Controllers
             if (projectUpdate != null)
             {
                 projectUpdate.LoadUpdateFromProject(project);
+                projectUpdateBatch.DeleteProjectUpdatePrograms();
+                projectUpdate.LoadProgramsFromProject(project);
                 projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             }
             if (!projectUpdateBatch.AreAccomplishmentsRelevant())

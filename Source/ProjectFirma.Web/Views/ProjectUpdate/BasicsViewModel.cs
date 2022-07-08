@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             Comments = comments;
             ProjectID = projectUpdate.ProjectUpdateBatch.ProjectID;
             ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
-            ProjectUpdateProgramSimples = projectUpdate.ProjectUpdatePrograms.Select(x=> new ProjectUpdateProgramSimple(x)).ToList();
+            ProjectUpdateProgramSimples = projectUpdate.ProjectUpdateBatch.ProjectUpdatePrograms.Select(x=> new ProjectUpdateProgramSimple(x)).ToList();
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -104,15 +104,15 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 ProjectUpdateProgramSimples = new List<ProjectUpdateProgramSimple>();
             }
 
-            var projectUpdateProgramsUpdatedList = ProjectUpdateProgramSimples.Select(x => new ProjectUpdateProgram(x.ProgramID, x.ProjectUpdateID))
+            var projectUpdateProgramsUpdatedList = ProjectUpdateProgramSimples.Select(x => new ProjectUpdateProgram(x.ProgramID, x.ProjectUpdateBatchID))
                 .ToList();
             HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.Load();
             var allProjectUpdatePrograms = HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.Local;
             
-            projectUpdate.ProjectUpdatePrograms
+            projectUpdate.ProjectUpdateBatch.ProjectUpdatePrograms
                 .Merge(projectUpdateProgramsUpdatedList,
                     allProjectUpdatePrograms, 
-                        (x, y) => x.ProjectUpdateID == y.ProjectUpdateID && x.ProgramID == y.ProgramID);
+                        (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.ProgramID == y.ProgramID);
 
 
 
