@@ -111,7 +111,9 @@ namespace ProjectFirma.Web.Views.Project
         public bool CanLaunchProjectOrProposalWizard { get; }
         public bool CanViewProjectFactSheet { get; }
         public string ProjectWizardUrl { get; }
+        public bool ExistsInImportBlockList { get; }
         public string ProjectImportBlockListUrl { get; }
+        public string ProjectImportRemoveBlockListUrl { get; }
         public string ProjectListUrl { get; }
         public string BackToProjectsText { get; }
         public List<string> ProjectAlerts { get; }
@@ -170,9 +172,14 @@ namespace ProjectFirma.Web.Views.Project
             EditProjectUrl = project.GetEditUrl();
 
             EditProjectAttributesUrl = project.GetEditProjectAttributesUrl();
+            
+            ExistsInImportBlockList = ProjectImportBlockListController.ExistsInBlockList(project);
             ProjectImportBlockListUrl =
                 SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
                     c.BlockListProject(project.ProjectID));
+            ProjectImportRemoveBlockListUrl =
+                SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
+                    c.RemoveBlockListProject(project.ProjectID));
 
             CanViewProjectFactSheet = ProjectController.FactSheetIsAvailable(project);
 

@@ -78,7 +78,14 @@
 
     @if (ViewDataTyped.UserHasProjectAdminPermissions)
     {
-        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasProjectAdminPermissions)
+        if (!ViewDataTyped.ExistsInImportBlockList)
+        {
+            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle").ToString() + " Add to Block List", ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
+        }
+        else
+        {
+            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-exclamation-sign").ToString() + " Remove from Block List", ViewDataTyped.ProjectImportRemoveBlockListUrl, string.Format("Remove {0} from Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-warning" }, null, null)
+        }
     }
 
     @if (ViewDataTyped.CanLaunchProjectOrProposalWizard)

@@ -17,13 +17,21 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
-            return ViewBlockListProject(projectPrimaryKey.EntityObject, viewModel);
+            return ConfirmBlockListProjectAction(projectPrimaryKey.EntityObject, viewModel, $"Are you sure you want to add the project '{project.ProjectName}' to the import block list?");
         }
 
-        private PartialViewResult ViewBlockListProject(Project project, ConfirmDialogFormViewModel viewModel)
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult RemoveBlockListProject(ProjectPrimaryKey projectPrimaryKey)
         {
-            var confirmMessage = $"Are you sure you want to add this project '{project.ProjectName}' to the block list?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
+            return ConfirmBlockListProjectAction(projectPrimaryKey.EntityObject, viewModel, $"Are you sure you want to remove the project '{project.ProjectName}' from the import block list?");
+        }
+
+        private PartialViewResult ConfirmBlockListProjectAction(Project project, ConfirmDialogFormViewModel viewModel, string message)
+        {
+            var viewData = new ConfirmDialogFormViewData(message, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
@@ -35,7 +43,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewBlockListProject(project, viewModel);
+                return ConfirmBlockListProjectAction(project, viewModel, $"ModelState is invalid. Refresh the page and try again.");
             }
 
             foreach (var projectProgram in project.ProjectPrograms)
@@ -54,5 +62,40 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult RemoveBlockListProject(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ConfirmBlockListProjectAction(project, viewModel, $"ModelState is invalid. Refresh the page and try again.");
+            }
+
+            foreach (var projectProgram in project.ProjectPrograms)
+            {
+                var existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
+                    .FirstOrDefault(p => p.ProjectGisIdentifier == project.ProjectGisIdentifier &&
+                                         p.ProjectName == project.ProjectName &&
+                                         p.ProgramID == projectProgram.Program.ProgramID);
+
+                if(existing != null)
+                    HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Remove(existing);
+            }
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        public static bool ExistsInBlockList(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
+                .FirstOrDefault(p => p.ProjectGisIdentifier == project.ProjectGisIdentifier);
+
+            return existing != null;
+        }
     }
 }
