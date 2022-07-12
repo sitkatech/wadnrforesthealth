@@ -167,6 +167,7 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Treatment" />
+    <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.TreatmentArea" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
@@ -3748,6 +3749,14 @@
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Treatments" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
     <NavigationProperty Name="ProjectLocation" Relationship="ProjectFirma.Web.Models.FK_Treatment_ProjectLocation_ProjectLocationID" FromRole="Treatments" ToRole="ProjectLocation" />
+  </EntityType>
+  <EntityType Name="TreatmentArea">
+    <Key>
+      <PropertyRef Name="TreatmentAreaID" />
+    </Key>
+    <Property Name="TreatmentAreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TreatmentAreaFeature" Type="Geometry" Nullable="false" />
+    <Property Name="TemporaryTreatmentCacheID" Type="Int32" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>

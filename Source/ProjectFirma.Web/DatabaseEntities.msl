@@ -2074,6 +2074,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentArea">
+        <MappingFragment StoreEntitySet="TreatmentArea">
+          <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
+          <ScalarProperty Name="TreatmentAreaFeature" ColumnName="TreatmentAreaFeature" />
+          <ScalarProperty Name="TemporaryTreatmentCacheID" ColumnName="TemporaryTreatmentCacheID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Vendor">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Vendor">
         <MappingFragment StoreEntitySet="Vendor">
