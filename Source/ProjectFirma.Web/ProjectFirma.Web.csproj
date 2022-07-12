@@ -738,6 +738,7 @@
     <Compile Include="Models\ProgramPerson.cs" />
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />
+    <Compile Include="Models\ProjectProgramModelExtensions.cs" />
     <Compile Include="Models\ProjectProgramSimple.cs" />
     <Compile Include="Models\ProjectUpdateProgram.cs" />
     <Compile Include="Models\ProjectUpdateProgramSimple.cs" />

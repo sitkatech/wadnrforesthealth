@@ -90,14 +90,6 @@ namespace ProjectFirma.Web.Models
             project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
 
-            var allProjectProgramIDs = project.ProjectPrograms.Select(x => x.ProgramID);
-            var filteredProjectUpdatePrograms = this.ProjectUpdateBatch.ProjectUpdatePrograms.Where(x => allProjectProgramIDs.Contains(x.ProgramID));
-            var matchingProgramIDs = filteredProjectUpdatePrograms.Select(x => x.ProgramID);
-
-            var newProjectPrograms = project.ProjectPrograms.Where(x => matchingProgramIDs.Contains(x.ProgramID)).ToList();
-            var addProjectPrograms = this.ProjectUpdateBatch.ProjectUpdatePrograms.Where(x => !matchingProgramIDs.Contains(x.ProgramID)).Select(x => new ProjectProgram(project, x.Program));
-            newProjectPrograms.AddRange(addProjectPrograms);
-            project.ProjectPrograms = newProjectPrograms;
         }
 
         public void CommitSimpleLocationToProject(Project project)
