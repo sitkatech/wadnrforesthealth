@@ -29,14 +29,6 @@
 
 @section JavascriptAndStylesContent
 {
-    @if (ViewDataTyped.IsEditable)
-    {
-        <script type="text/javascript">
-            // <![CDATA[
-            jQuery(document).ready(function () { HookupCheckIfFormIsDirty(undefined, ".submitProject"); });
-            // ]]>
-        </script>
-    }
 
     <script src="@Url.Content("~/Views/ProjectUpdate/EditProjectUpdateController.js")" type="text/javascript"></script>
     <script type="text/javascript">
@@ -56,9 +48,18 @@
                 function() {
                     jQuery(".bootstrap-select.open").removeClass("open");
                 });
-        })
+
+            @if (ViewDataTyped.IsEditable)
+            {
+                <text>
+                HookupCheckIfFormIsDirty(undefined, ".submitProject");
+                </text>
+
+            }
+        });
         // ]]>
     </script>
+
 }
 
 
@@ -282,4 +283,4 @@
                     .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
             }
         });
-</script>
+        </script>

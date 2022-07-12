@@ -31,21 +31,8 @@
             margin-top: 5px;
         }
     </style>
-    <script type="text/javascript">
-        // <![CDATA[
-
-        jQuery(document).ready(function () {
-
-            HookupCheckIfFormIsDirty(undefined, ".submitProject");
-
-            // Bypass the "Could not parse a blank value" error
-            jQuery("#ProjectTypeID option.bs-title-option").val(-1);
-        });
-        // ]]>
-    </script>
 
     <script src="~/Views/Shared/ProjectControls/EditProjectController.js"></script>
-    
     <script type="text/javascript">
         // <![CDATA[
         jQuery(document).ready(function() {
@@ -63,7 +50,15 @@
                 function() {
                     jQuery(".bootstrap-select.open").removeClass("open");
                 });
-        })
+
+
+            HookupCheckIfFormIsDirty(undefined, ".submitProject");
+
+            // Bypass the "Could not parse a blank value" error
+            jQuery("#ProjectTypeID option.bs-title-option").val(-1);
+
+
+        });
         // ]]>
     </script>
 

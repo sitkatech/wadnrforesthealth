@@ -36,10 +36,10 @@ angular.module("ProjectFirmaApp").controller("EditProjectController", function (
 
     $scope.filteredPrograms = function () {
         var usedProgramIDs = $scope.getAllUsedProgramIDs();
-        console.log(usedProgramIDs);
+        //console.log(usedProgramIDs);
         var returnArray = _($scope.AngularViewData.AllPrograms).filter(function (f) { return !_.includes(usedProgramIDs, f.ProgramID); })
             .sortBy(["DisplayString"]).value();
-        console.log(returnArray);
+        //console.log(returnArray);
         return returnArray;
     };
 
@@ -63,12 +63,8 @@ angular.module("ProjectFirmaApp").controller("EditProjectController", function (
     };
 
 
-    $scope.selectionChanged = function (programID) {
-        console.log(programID);
-    };
-
     $scope.addRow = function() {
-        console.log($scope.ProjectIDToAdd);
+        //console.log($scope.ProjectIDToAdd);
         if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectIDToAdd == null)) {
             return;
         }

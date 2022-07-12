@@ -36,10 +36,10 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
 
     $scope.filteredPrograms = function () {
         var usedProgramIDs = $scope.getAllUsedProgramIDs();
-        console.log($scope.AngularViewData);
+        //console.log($scope.AngularViewData);
         var returnArray = _($scope.AngularViewData.AllPrograms).filter(function (f) { return !_.includes(usedProgramIDs, f.ProgramID); })
             .sortBy(["DisplayString"]).value();
-        console.log(returnArray);
+        //console.log(returnArray);
         return returnArray;
     };
 
@@ -64,11 +64,11 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
 
 
     $scope.selectionChanged = function (programID) {
-        console.log(programID);
+        //console.log(programID);
     };
 
     $scope.addRow = function() {
-        console.log($scope.ProjectUpdateBatchIDToAdd);
+        //console.log($scope.ProjectUpdateBatchIDToAdd);
         if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectUpdateBatchIDToAdd == null)) {
             return;
         }
@@ -79,7 +79,7 @@ angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", func
     };
 
     $scope.createNewRow = function (ProjectUpdateBatchID, programID) {
-        console.log("Program ID ",programID);
+        //console.log("Program ID ",programID);
         var programIDAsInt = parseInt(programID.toString());
         var newProjectUpdateProgram = {
             ProjectUpdateBatchID: ProjectUpdateBatchID,
