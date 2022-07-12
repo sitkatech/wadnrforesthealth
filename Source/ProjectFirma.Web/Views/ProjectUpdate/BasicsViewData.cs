@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.EMMA;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -40,6 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public string RefreshUrl { get; }
         public string DiffUrl { get; }
 
+        public BasicsViewDataForAngular BasicsViewDataForAngular { get; }
         public Models.ProjectUpdate ProjectUpdate { get; }
         public SectionCommentsViewData SectionCommentsViewData { get; }
 
@@ -49,7 +51,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public BasicsViewData(Person currentPerson, Models.ProjectUpdate projectUpdate,
             IEnumerable<ProjectStage> projectStages, UpdateStatus updateStatus,
             BasicsValidationResult basicsValidationResult,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<Models.FocusArea> focusAreas)
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<Models.FocusArea> focusAreas, List<Models.Program> allPrograms)
             : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, basicsValidationResult.GetWarningMessages(), ProjectUpdateSection.Basics.ProjectUpdateSectionDisplayName)
         {
             ProjectUpdate = projectUpdate;
@@ -65,6 +67,19 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdate.ProjectUpdateBatch.BasicsComment, projectUpdate.ProjectUpdateBatch.IsReturned);            
                         
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
+            BasicsViewDataForAngular = new BasicsViewDataForAngular(allPrograms.Select(x=>new ProgramSimple(x)).ToList(), projectUpdate.ProjectUpdateBatchID);
         }
+    }
+
+    public class BasicsViewDataForAngular
+    {
+        public BasicsViewDataForAngular(List<ProgramSimple> allPrograms, int projectUpdateBatchID) 
+        {
+            this.AllPrograms = allPrograms;
+            this.ProjectUpdateBatchID = projectUpdateBatchID;
+        }
+        public List<ProgramSimple> AllPrograms { get; }
+        public int ProjectUpdateBatchID { get; set; }
+
     }
 }

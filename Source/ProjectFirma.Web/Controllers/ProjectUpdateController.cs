@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -272,7 +273,8 @@ namespace ProjectFirma.Web.Controllers
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, projectCustomAttributeTypes, focusAreas);
+            var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, projectCustomAttributeTypes, focusAreas, allPrograms);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -297,6 +299,8 @@ namespace ProjectFirma.Web.Controllers
             if (projectUpdate != null)
             {
                 projectUpdate.LoadUpdateFromProject(project);
+                projectUpdateBatch.DeleteProjectUpdatePrograms();
+                projectUpdate.LoadProgramsFromProject(project);
                 projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             }
             if (!projectUpdateBatch.AreAccomplishmentsRelevant())
@@ -1531,6 +1535,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectCustomAttributes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.Load();
             var allProjectCustomAttributeValues = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
+            var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
 
             projectUpdateBatch.Approve(CurrentPerson,
                 DateTime.Now,
@@ -1552,7 +1558,8 @@ namespace ProjectFirma.Web.Controllers
                 allProjectDocuments,
                 allProjectCustomAttributes,
                 allProjectCustomAttributeValues,
-                allProjectPeople);
+                allProjectPeople,
+                allProjectPrograms);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
@@ -1905,6 +1912,9 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var originalHtml = GeneratePartialViewForProjectBasics(project);            
             projectUpdate.CommitChangesToProject(project);
+            HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
+            var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
+            ProjectUpdateProgram.CommitChangesToProject(projectUpdateBatch, allProjectPrograms);
             project.FocusArea = projectUpdate.FocusArea;
             var updatedHtml = GeneratePartialViewForProjectBasics(project);
 

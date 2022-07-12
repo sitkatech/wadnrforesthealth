@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -598,6 +598,9 @@
     <Compile Include="Models\Generated\ProjectUpdateHistory.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectUpdateHistoryPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectUpdateProgram.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectUpdateProgram.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectUpdateProgramPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdateSection.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdateSectionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdateState.Binding.cs" />
@@ -726,6 +729,7 @@
     <Compile Include="Models\DhtmlxExcelDownload\TokenType.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
+    <Compile Include="Models\IEntityProgram.cs" />
     <Compile Include="Models\PersonRole.cs" />
     <Compile Include="Models\PriorityLandscapeType.cs" />
     <Compile Include="Models\ProgramNotificationConfiguration.cs" />
@@ -734,7 +738,10 @@
     <Compile Include="Models\ProgramPerson.cs" />
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectProgram.cs" />
+    <Compile Include="Models\ProjectProgramModelExtensions.cs" />
     <Compile Include="Models\ProjectProgramSimple.cs" />
+    <Compile Include="Models\ProjectUpdateProgram.cs" />
+    <Compile Include="Models\ProjectUpdateProgramSimple.cs" />
     <Compile Include="Models\RoleSimple.cs" />
     <Compile Include="Models\TabularDataImport.cs" />
     <Compile Include="Controllers\ExcelUploadController.cs" />
@@ -1904,6 +1911,7 @@
     <Content Include="Views\CustomPage\Index.cshtml" />
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
+    <Content Include="Views\ProjectUpdate\EditProjectUpdateController.js" />
     <Content Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.CreateFromGrantAllocationsAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Results\ProjectMapController.js" />
     <Content Include="Views\Shared\FileResourceControls\NewFileController.js" />

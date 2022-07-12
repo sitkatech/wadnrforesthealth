@@ -1872,6 +1872,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectUpdateProgram">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectUpdateProgram">
+        <MappingFragment StoreEntitySet="ProjectUpdateProgram">
+          <ScalarProperty Name="ProjectUpdateProgramID" ColumnName="ProjectUpdateProgramID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="RelationshipType">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.RelationshipType">
         <MappingFragment StoreEntitySet="RelationshipType">

@@ -23,11 +23,6 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectProgram : IEntityProgram
-    {
-
-    }
-
     public partial class ProjectClassification : IEntityClassification, IAuditableEntity
     {
         public string AuditDescriptionString

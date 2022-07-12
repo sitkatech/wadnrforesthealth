@@ -48,13 +48,16 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             .ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture),
                 y => y.FocusAreaName);
 
+
+        public BasicsViewDataForAngular BasicsViewDataForAngular { get; set; }
+
 		public BasicsViewData(Person currentPerson,
             IEnumerable<Models.ProjectType> projectTypes, bool showProjectStageDropDown, string instructionsPageUrl)
             : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, instructionsPageUrl)
         {
             // This constructor is only used for the case where we're coming from the instructions, so we hide the dropdown if they clicked the button for proposing a new project.
             ShowProjectStageDropDown = showProjectStageDropDown;
-            AssignParameters(projectTypes);
+            AssignParameters(projectTypes, -1);
         }
 
         public BasicsViewData(Person currentPerson,
@@ -65,11 +68,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Proposed;
             ProjectDisplayName = project.DisplayName;
-            AssignParameters(projectTypes);
+            AssignParameters(projectTypes, project.ProjectID);
             ProjectTypeHasBeenSet = project?.ProjectType != null;
         }
 
-        private void AssignParameters(IEnumerable<Models.ProjectType> projectTypes)
+        private void AssignParameters(IEnumerable<Models.ProjectType> projectTypes, int projectID)
         {
             ProjectTypes = projectTypes.ToList().OrderTaxonomyLeaves().ToList().ToGroupedSelectList();
             
@@ -89,6 +92,20 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 PageTitle += $": {ProjectDisplayName}";
             }
 
+            var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList().Select(x => new ProgramSimple(x)).ToList();
+            BasicsViewDataForAngular = new BasicsViewDataForAngular(allPrograms, projectID);
         }
+    }
+
+    public class BasicsViewDataForAngular
+    {
+        public BasicsViewDataForAngular(List<ProgramSimple> allPrograms, int projectID)
+        {
+            this.AllPrograms = allPrograms;
+            this.ProjectID = projectID;
+        }
+        public List<ProgramSimple> AllPrograms { get; }
+        public int ProjectID { get; set; }
+
     }
 }
