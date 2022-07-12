@@ -1592,6 +1592,7 @@
           <ScalarProperty Name="ArcGisGlobalID" ColumnName="ArcGisGlobalID" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGisUpload" ColumnName="ImportedFromGisUpload" />
+          <ScalarProperty Name="TemporaryTreatmentCacheID" ColumnName="TemporaryTreatmentCacheID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2061,7 +2062,6 @@
           <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
           <ScalarProperty Name="TreatmentNotes" ColumnName="TreatmentNotes" />
           <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
-          <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
           <ScalarProperty Name="TreatmentTreatedAcres" ColumnName="TreatmentTreatedAcres" />
           <ScalarProperty Name="TreatmentTypeImportedText" ColumnName="TreatmentTypeImportedText" />
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
@@ -2070,6 +2070,7 @@
           <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
+          <ScalarProperty Name="ProjectLocationID" ColumnName="ProjectLocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

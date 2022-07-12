@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[ProjectLocation](
 	[ArcGisGlobalID] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProgramID] [int] NULL,
 	[ImportedFromGisUpload] [bit] NULL,
+	[TemporaryTreatmentCacheID] [int] NULL,
  CONSTRAINT [PK_ProjectLocation_ProjectLocationID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectLocationID] ASC

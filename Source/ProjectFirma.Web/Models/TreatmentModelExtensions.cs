@@ -22,6 +22,16 @@ namespace ProjectFirma.Web.Models
             return ProjectMapSimplePopuUrlTemplate.ParameterReplace(treatment.ProjectID);
         }
 
+        public static readonly UrlTemplate<int> EditTreatmentUrlTemplate = new UrlTemplate<int>(SitkaRoute<TreatmentController>.BuildUrlFromExpression(t => t.EditTreatment(UrlTemplate.Parameter1Int)));
+        public static string GetEditTreatmentUrl(this Treatment treatment)
+        {
+            return EditTreatmentUrlTemplate.ParameterReplace(treatment.TreatmentID);
+        }
+
+
+
+
+
         public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<Treatment> treatments)
         {
 
@@ -34,10 +44,10 @@ namespace ProjectFirma.Web.Models
 
             var featureCollection = new FeatureCollection();
 
-            foreach (var treatmnent in treatmentsAsList.Where(ie => ie.TreatmentArea != null))
+            foreach (var treatment in treatmentsAsList.Where(ie => ie.ProjectLocation != null))
             {
-                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatmnent.TreatmentArea.TreatmentAreaFeature);
-                feature.Properties.Add("TreatmentID", treatmnent.TreatmentID);
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatment.ProjectLocation.ProjectLocationGeometry);
+                feature.Properties.Add("TreatmentID", treatment.TreatmentID);
                 featureCollection.Features.Add(feature);
             }
 
@@ -56,9 +66,9 @@ namespace ProjectFirma.Web.Models
 
             var featureCollection = new FeatureCollection();
 
-            foreach (var treatment in treatmentsAsList.Where(ie => ie.TreatmentArea != null))
+            foreach (var treatment in treatmentsAsList.Where(ie => ie.ProjectLocation != null))
             {
-                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatment.TreatmentArea.TreatmentAreaFeature);
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(treatment.ProjectLocation.ProjectLocationGeometry);
                 feature.Properties.Add("TreatmentID", treatment.TreatmentID);
                 feature.Properties.Add("PopupUrl", treatment.GetProjectSimpleMapPopupUrl());
                 featureCollection.Features.Add(feature);

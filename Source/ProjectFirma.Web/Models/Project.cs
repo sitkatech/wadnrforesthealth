@@ -544,7 +544,7 @@ namespace ProjectFirma.Web.Models
 
             var projectTreatments = HttpRequestStorage.DatabaseEntities.Treatments
                 .Where(x => projectIDs.Contains(x.ProjectID))
-                .Include(x => x.TreatmentArea)
+                .Include(x => x.ProjectLocation)
                 .ToList();
 
 

@@ -30,6 +30,7 @@ using ProjectFirma.Web.Views.Map;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web.Mvc;
@@ -120,7 +121,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectLocationDetailed(project, viewModel);
             }
-            SaveProjectDetailedLocationsWithDelete(viewModel, project);
+            SaveProjectDetailedLocations(viewModel, project);
             return new ModalDialogFormJsonResult();
         }
 
@@ -216,32 +217,47 @@ namespace ProjectFirma.Web.Controllers
             return EditProjectLocationDetailed(projectPrimaryKey);
         }
 
-        private static void SaveProjectDetailedLocationsWithDelete(ProjectLocationDetailViewModel viewModel, Project project)
-        {
-            var currentProjectLocationsThatAreEditable = project.ProjectLocations.Where(x => !x.ArcGisObjectID.HasValue).ToList();
-            foreach (var currentProjectLocation in currentProjectLocationsThatAreEditable)
-            {
-                currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                project.ProjectLocations.Remove(currentProjectLocation);
-            }
-            SaveProjectDetailedLocations(viewModel, project);
-        }
+        //private static void SaveProjectDetailedLocationsWithDelete(ProjectLocationDetailViewModel viewModel, Project project)
+        //{
+        //    var currentProjectLocationsThatAreEditable = project.ProjectLocations.Where(x => !x.ArcGisObjectID.HasValue).ToList();
+        //    foreach (var currentProjectLocation in currentProjectLocationsThatAreEditable)
+        //    {
+        //        currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+        //        project.ProjectLocations.Remove(currentProjectLocation);
+        //    }
+        //    SaveProjectDetailedLocations(viewModel, project);
+        //}
 
         private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
             //update the editable ProjectLocations
             if (viewModel.ProjectLocationJsons != null)
             {
+                var projectLocationsFromViewModel = new List<ProjectLocation>();
                 foreach (var projectLocationJson in viewModel.ProjectLocationJsons.Where(x => !x.ArcGisObjectID.HasValue))
                 {
                     var projectLocationGeometry =
                         DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText,
                             FirmaWebConfiguration.GeoSpatialReferenceID);
-                    var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName,
-                        projectLocationGeometry, projectLocationJson.ProjectLocationTypeID,
-                        projectLocationJson.ProjectLocationNotes);
-                    project.ProjectLocations.Add(projectLocation);
+                    
+                    var projectLocationInDB = project.ProjectLocations.SingleOrDefault(x => x.ProjectLocationID == projectLocationJson.ProjectLocationID);
+                    if (projectLocationInDB == null)
+                    {
+                        var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName,
+                            projectLocationGeometry, projectLocationJson.ProjectLocationTypeID,
+                            projectLocationJson.ProjectLocationNotes);
+                        projectLocationsFromViewModel.Add(projectLocation);
+                    }
+                    else
+                    {
+                        projectLocationsFromViewModel.Add(projectLocationInDB);
+                    }
                 }
+
+                HttpRequestStorage.DatabaseEntities.ProjectLocations.Load();
+                var allProjectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations.Local;
+                project.ProjectLocations.Merge(projectLocationsFromViewModel, allProjectLocations, (x, y) => x.ProjectLocationID == y.ProjectLocationID);
+                
             }
 
             //update arcGIS ProjectLocations for the notes
