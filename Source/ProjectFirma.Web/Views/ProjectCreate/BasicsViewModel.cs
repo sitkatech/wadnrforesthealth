@@ -26,6 +26,7 @@ using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
+using System.Data.Entity;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
@@ -65,6 +66,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public int? ImportExternalProjectStagingID { get; set; }
 
+        public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -84,6 +87,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ExpirationDate = project.ExpirationDate;
             CompletionDate = project.CompletionDate;
             FocusAreaID = project.FocusAreaID;
+            ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
+
         }
 
         public void UpdateModel(Models.Project project, Person person)
@@ -113,6 +118,21 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                     }
                 }
             }
+            if (ProjectProgramSimples == null)
+            {
+                ProjectProgramSimples = new List<ProjectProgramSimple>();
+            }
+
+            var projectProgramsUpdatedList = ProjectProgramSimples.Select(x => new ProjectProgram(x.ProjectID, x.ProgramID))
+                .ToList();
+            HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
+            var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
+
+            project.ProjectPrograms
+                .Merge(projectProgramsUpdatedList,
+                    allProjectPrograms,
+                    (x, y) => x.ProjectID == y.ProjectID && x.ProgramID == y.ProgramID);
+
 
 
         }

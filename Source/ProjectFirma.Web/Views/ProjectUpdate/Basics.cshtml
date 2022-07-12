@@ -24,169 +24,242 @@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Views
+@using Newtonsoft.Json.Linq
 @inherits Basics
 
 @section JavascriptAndStylesContent
 {
-    @if (ViewDataTyped.IsEditable)
-    {
-        <script type="text/javascript">
-            // <![CDATA[
-            jQuery(document).ready(function () { HookupCheckIfFormIsDirty(undefined, ".submitProject"); });
-            // ]]>
-        </script>
-    }
+
+    <script src="@Url.Content("~/Views/ProjectUpdate/EditProjectUpdateController.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        // <![CDATA[
+        jQuery(document).ready(function() {
+            angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+                function() {
+                    return {
+                        "AngularModel": @Html.Raw(JObject.FromObject(Model)),
+                        "AngularViewData": @Html.Raw(JObject.FromObject(ViewDataTyped.BasicsViewDataForAngular))
+                    };
+                });
+            angular.bootstrap(jQuery("#EditProjectApp"), ["ProjectFirmaApp"]);
+
+            jQuery(".selectpicker").selectpicker("refresh");
+            jQuery(".modal").on("hidden.bs.modal",
+                function() {
+                    jQuery(".bootstrap-select.open").removeClass("open");
+                });
+
+            @if (ViewDataTyped.IsEditable)
+            {
+                <text>
+                HookupCheckIfFormIsDirty(undefined, ".submitProject");
+                </text>
+
+            }
+        });
+        // ]]>
+    </script>
+
 }
+
 
 <p>
     Update your @FieldDefinition.Project.GetFieldDefinitionLabel()’s basic information here. If this @FieldDefinition.Project.GetFieldDefinitionLabel() is complete, be sure to set the stage to "Complete" or "Post-Implementation"
     from the @FieldDefinition.ProjectStage.GetFieldDefinitionLabel() dropdown. Changes made here will not take effect until a review approves your updates.
 </p>
 <hr />
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(m => m.ProjectID)
-    @Html.HiddenFor(m => m.ProjectTypeID)
-    <div class="form-horizontal">
-        <div class="row form-group form-group-condensed">
-            <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectDescription, false)
-            </div>
-            <div class="col-sm-8" style="padding-left: 10px;">
-                @if (ViewDataTyped.IsEditable)
-                {
-                    @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 6), null, new List<string> { "form-control" }, false)
-                    @Html.ValidationMessageFor(m => m.ProjectDescription)
-                }
-                else
-                {
-                    <div style="width: 464px">
-                        @Html.Raw(ViewDataTyped.ProjectUpdate.ProjectDescription.HtmlEncodeWithBreaks())
-                    </div>
-                }
-            </div>
-        </div>
-        <div class="row form-group form-group-condensed">
-            <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectStageID, true)
-            </div>
-            <div class="col-sm-8" style="padding-left: 10px;">
-                @if (ViewDataTyped.IsEditable)
-                {
-                    @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                    @Html.ValidationMessageFor(m => m.ProjectStageID)
-                }
-                else
-                {
-                    @ViewDataTyped.ProjectUpdate.ProjectStage.ProjectStageDisplayName
-                }
-                <div>
-                    <p class="systemText">To change the @FieldDefinition.Project.GetFieldDefinitionLabel() stage to a stage not listed, @ModalDialogFormHelper.ModalDialogFormLink("contact support", ViewDataTyped.RequestSupportUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null).</p>
-                </div>
-            </div>
-        </div>
-        <div class="form-group form-group-condensed">
-            <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(FieldDefinition.ProjectInitiationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Start/Approval Date</strong>
-            </div>
-            <div class="col-sm-8">
-                @if (ViewDataTyped.IsEditable)
-                {
-                    @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                    @Html.ValidationMessageFor(m => m.PlannedDate)
-                }
-                else
-                {
-                    <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetPlannedDate().</p>
-                }
-            </div>
-        </div>
-        <div class="form-group form-group-condensed">
-            <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(FieldDefinition.ExpirationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Expiration Date</strong>
-            </div>
-            <div class="col-sm-8">
-                @if (ViewDataTyped.IsEditable)
-                {
-                    @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                    @Html.ValidationMessageFor(m => m.ExpirationDate)
-                }
-                else
-                {
-                    <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetExpirationDateFormatted()</p>
-                }
-            </div>
-        </div>
-        <div class="form-group form-group-condensed">
-            <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.CompletionDate)
-            </div>
-            <div class="col-sm-8">
-                @if (ViewDataTyped.IsEditable)
-                {
-                    @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
-                    @Html.ValidationMessageFor(m => m.CompletionDate)
-                }
-                else
-                {
-                    <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionDateFormatted()</p>
-                }
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div id="focusAreaDiv" class="col-xs-12 col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.FocusAreaID, true)
-            </div>
-            <div class="col-xs-12 col-sm-8">
-                @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })
-                @Html.ValidationMessageFor(m => m.FocusAreaID)
-            </div>
-        </div>
-        <div class="row form-group-condensed">
-            <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(FieldDefinition.ProjectType)
-            </div>
-            <div id="projectTypeDisplayNameDiv" class="col-sm-8">
-                @ViewDataTyped.ProjectTypeDisplayName
-            </div>
-        </div>
-    </div>
-
-    if (ViewDataTyped.IsEditable)
+<div id="EditProjectApp" ng-controller="EditProjectUpdateController">
+    @using (Html.BeginForm())
     {
-        if (ViewDataTyped.ShowApproveAndReturnButton)
-        {
-            <hr />
-            <div class="row form-group">
-                <div class="col-sm-4 control-label">@Html.LabelWithSugarFor(x => x.Comments)</div>
-                <div class="col-sm-8">
-                    @Html.TextAreaFor(x => x.Comments, new { style = "width: 100%", @class = "form-control" })
+        @Html.HiddenFor(m => m.ProjectID)
+        @Html.HiddenFor(m => m.ProjectTypeID)
+        <div class="form-horizontal">
+            <div class="row form-group form-group-condensed">
+                <div class="col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.ProjectDescription, false)
                 </div>
+                <div class="col-sm-8" style="padding-left: 10px;">
+                    @if (ViewDataTyped.IsEditable)
+                    {
+                        @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 6), null, new List<string> { "form-control" }, false)
+                        @Html.ValidationMessageFor(m => m.ProjectDescription)
+                    }
+                    else
+                    {
+                        <div style="width: 464px">
+                            @Html.Raw(ViewDataTyped.ProjectUpdate.ProjectDescription.HtmlEncodeWithBreaks())
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row form-group form-group-condensed">
+                <div class="col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.ProjectStageID, true)
+                </div>
+                <div class="col-sm-8" style="padding-left: 10px;">
+                    @if (ViewDataTyped.IsEditable)
+                    {
+                        @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                        @Html.ValidationMessageFor(m => m.ProjectStageID)
+                    }
+                    else
+                    {
+                        @ViewDataTyped.ProjectUpdate.ProjectStage.ProjectStageDisplayName
+                    }
+                    <div>
+                        <p class="systemText">To change the @FieldDefinition.Project.GetFieldDefinitionLabel() stage to a stage not listed, @ModalDialogFormHelper.ModalDialogFormLink("contact support", ViewDataTyped.RequestSupportUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-group-condensed">
+                <div class="col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(FieldDefinition.ProjectInitiationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Start/Approval Date</strong>
+                </div>
+                <div class="col-sm-8">
+                    @if (ViewDataTyped.IsEditable)
+                    {
+                        @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                        @Html.ValidationMessageFor(m => m.PlannedDate)
+                    }
+                    else
+                    {
+                        <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetPlannedDate().</p>
+                    }
+                </div>
+            </div>
+            <div class="form-group form-group-condensed">
+                <div class="col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(FieldDefinition.ExpirationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Expiration Date</strong>
+                </div>
+                <div class="col-sm-8">
+                    @if (ViewDataTyped.IsEditable)
+                    {
+                        @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                        @Html.ValidationMessageFor(m => m.ExpirationDate)
+                    }
+                    else
+                    {
+                        <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetExpirationDateFormatted()</p>
+                    }
+                </div>
+            </div>
+            <div class="form-group form-group-condensed">
+                <div class="col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.CompletionDate)
+                </div>
+                <div class="col-sm-8">
+                    @if (ViewDataTyped.IsEditable)
+                    {
+                        @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
+                        @Html.ValidationMessageFor(m => m.CompletionDate)
+                    }
+                    else
+                    {
+                        <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionDateFormatted()</p>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div id="focusAreaDiv" class="col-xs-12 col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.FocusAreaID, true)
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                    @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })
+                    @Html.ValidationMessageFor(m => m.FocusAreaID)
+                </div>
+            </div>
+            <div class="row form-group-condensed">
+                <div class="col-sm-4 control-label">
+                    @Html.LabelWithSugarFor(FieldDefinition.ProjectType)
+                </div>
+                <div id="projectTypeDisplayNameDiv" class="col-sm-8">
+                    @ViewDataTyped.ProjectTypeDisplayName
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    <strong>@FieldDefinition.Program.GetFieldDefinitionLabel() to Add: </strong>
+                </div>
+                <div class="col-xs-8">
+                    <div class="input-group">
+                        <select ng-model="ProgramIDToAdd"
+                                class="selectpicker"
+                                data-live-search="true"
+                                data-container="body"
+                                title="Select a @FieldDefinition.Program.GetFieldDefinitionLabel() to Add"
+                                data-width="100%">
+                            <option value="-1" selected>Select a Program to Add</option>
+                            <option ng-repeat="program in filteredPrograms()"
+                                    value="{{program.ProgramID}}"
+                                    ng-selected="ProgramIDToAdd == program.ProgramIDToAdd"
+                                    ng-bind="program.DisplayString"
+                                    data-tokens="{{program.DisplayString}}"></option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-firma" type="button" ng-click="addRow()">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="row narrowRow">
+                    <div class="col-xs-4 control-label">
+                        @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
+                    </div>
+                    <div class="col-xs-8 col-xs-offset-4" ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples | orderBy:[getProgramName]">
+
+                        <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectUpdateProgram)" style="cursor: pointer"></span>
+                        <span ng-bind="projectUpdateProgram.DisplayString"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples">
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].ProjectUpdateBatchID).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.ProjectUpdateBatchID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].ProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.ProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].ProjectUpdateProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.ProjectUpdateProgramID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectUpdateProgramSimples[0].DisplayString).ToString().Replace("0", "{{$index}}")" value="{{projectUpdateProgram.DisplayString}}" />
+        </div>
+
+        if (ViewDataTyped.IsEditable)
+        {
+            if (ViewDataTyped.ShowApproveAndReturnButton)
+            {
+                <hr />
+                <div class="row form-group">
+                    <div class="col-sm-4 control-label">@Html.LabelWithSugarFor(x => x.Comments)</div>
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(x => x.Comments, new { style = "width: 100%", @class = "form-control" })
+                    </div>
+                </div>
+            }
+            <hr />
+            SectionComments.RenderPartialView(Html, ViewDataTyped.SectionCommentsViewData);
+            <div>
+                <table class="summaryLayout" style="width: 100%">
+                    <tr>
+                        <td>
+                            @ModalDialogFormHelper.ModalDialogFormLink("revert-button", "Revert Current Page", ViewDataTyped.RefreshUrl, "Refresh this section", 500, "Continue", "Continue", "Cancel", new List<string> { "btn btn-xs btn-firma" }, null, null, null, "Undo all changes on this page")
+                            @if (ViewDataTyped.UpdateStatus.IsBasicsUpdated)
+                            {
+                                @ModalDialogFormHelper.ModalDialogFormLink("diff-link-id", "Show Changes", ViewDataTyped.DiffUrl, string.Format("Changes to {0} Basics", FieldDefinition.Project.GetFieldDefinitionLabel()), 800, "hidden-save-button", string.Empty, "Close", new List<string> { "btn btn-xs btn-firma" }, null, null, null)
+                            }
+                        </td>
+                        <td style="text-align: right; white-space: nowrap">
+                            <button type="submit" class="btn btn-xs btn-firma" title="Save changes made on this page" value="false" name="@Html.NameFor(x => x.AutoAdvance)">Save</button>
+                            <button type="submit" class="btn btn-xs btn-firma" title="Save changes and continue to next page" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         }
-        <hr />
-        SectionComments.RenderPartialView(Html, ViewDataTyped.SectionCommentsViewData);
-        <div>
-            <table class="summaryLayout" style="width: 100%">
-                <tr>
-                    <td>
-                        @ModalDialogFormHelper.ModalDialogFormLink("revert-button", "Revert Current Page", ViewDataTyped.RefreshUrl, "Refresh this section", 500, "Continue", "Continue", "Cancel", new List<string> { "btn btn-xs btn-firma" }, null, null, null, "Undo all changes on this page")
-                        @if (ViewDataTyped.UpdateStatus.IsBasicsUpdated)
-                        {
-                            @ModalDialogFormHelper.ModalDialogFormLink("diff-link-id", "Show Changes", ViewDataTyped.DiffUrl, string.Format("Changes to {0} Basics", FieldDefinition.Project.GetFieldDefinitionLabel()), 800, "hidden-save-button", string.Empty, "Close", new List<string> { "btn btn-xs btn-firma" }, null, null, null)
-                        }
-                    </td>
-                    <td style="text-align: right; white-space: nowrap">
-                        <button type="submit" class="btn btn-xs btn-firma" title="Save changes made on this page" value="false" name="@Html.NameFor(x => x.AutoAdvance)">Save</button>
-                        <button type="submit" class="btn btn-xs btn-firma" title="Save changes and continue to next page" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
-                    </td>
-                </tr>
-            </table>
-        </div>
     }
-}
-
+</div>
 
 <script type="text/javascript">
     jQuery(document)
@@ -210,4 +283,4 @@
                     .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
             }
         });
-</script>
+        </script>

@@ -48,7 +48,17 @@ namespace ProjectFirma.Web.Models
             this.ProjectDescription = projectUpdateBatch.Project.ProjectDescription;
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
-            LoadSimpleLocationFromProject(project);            
+            LoadSimpleLocationFromProject(project);
+            LoadProgramsFromProject(project);
+        }
+
+        public void LoadProgramsFromProject(Project project)
+        {
+            foreach (var projectProgram in project.ProjectPrograms)
+            {
+                var projectUpdateProgramTemp = new ProjectUpdateProgram(projectProgram.Program, this.ProjectUpdateBatch);
+                this.ProjectUpdateBatch.ProjectUpdatePrograms.Add(projectUpdateProgramTemp);
+            }
         }
 
         public void LoadUpdateFromProject(Project project)
@@ -79,6 +89,7 @@ namespace ProjectFirma.Web.Models
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
+
         }
 
         public void CommitSimpleLocationToProject(Project project)

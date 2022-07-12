@@ -943,14 +943,7 @@ namespace ProjectFirma.Web.Models
         public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
 
 
-        public HtmlString ProgramListDisplay
-        {
-            get
-            {
-                var programsDictionary = this.ProjectPrograms.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList().Select(x => x.Program).ToList());
-                return ProgramListDisplayHelper(programsDictionary, true);
-            }
-        }
+ 
 
         public HtmlString ProgramListDisplayHelper(Dictionary<int, List<Models.Program>> programsByProject, bool showDefaultsAsWell)
         {

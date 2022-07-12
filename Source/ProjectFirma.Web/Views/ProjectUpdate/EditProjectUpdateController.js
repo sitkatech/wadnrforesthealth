@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectController.js" company="Tahoe Regional Planning Agency">
+<copyright file="EditProjectUpdateController.js" company="Tahoe Regional Planning Agency">
 Copyright (c) Tahoe Regional Planning Agency. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,8 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-angular.module("ProjectFirmaApp").controller("EditProjectController", function ($scope, angularModelAndViewData)
-{
+angular.module("ProjectFirmaApp").controller("EditProjectUpdateController", function ($scope, angularModelAndViewData) {
+    
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
     });
@@ -27,25 +27,25 @@ angular.module("ProjectFirmaApp").controller("EditProjectController", function (
   
     $scope.resetProgramIDToAdd = function () { $scope.ProgramIDToAdd = -1 };
 
-    $scope.resetProjectIDToAdd = function () { $scope.ProjectIDToAdd = $scope.AngularViewData.ProjectID };
+    $scope.resetProjectUpdateBatchIDToAdd = function () { $scope.ProjectUpdateBatchIDToAdd = $scope.AngularViewData.ProjectUpdateBatchID };
 
 
     $scope.getAllUsedProgramIDs = function () {
-        return _.map($scope.AngularModel.ProjectProgramSimples, function (p) { return p.ProgramID; });
+        return _.map($scope.AngularModel.ProjectUpdateProgramSimples, function (p) { return p.ProgramID; });
     };
 
     $scope.filteredPrograms = function () {
         var usedProgramIDs = $scope.getAllUsedProgramIDs();
-        //console.log(usedProgramIDs);
+        //console.log($scope.AngularViewData);
         var returnArray = _($scope.AngularViewData.AllPrograms).filter(function (f) { return !_.includes(usedProgramIDs, f.ProgramID); })
             .sortBy(["DisplayString"]).value();
         //console.log(returnArray);
         return returnArray;
     };
 
-    $scope.getProgramName = function (projectProgram)
+    $scope.getProgramName = function (projectUpdateProgram)
     {
-        var programToFind = $scope.getProgram(projectProgram.ProgramID);
+        var programToFind = $scope.getProgram(projectUpdateProgram.ProgramID);
         var returnString = programToFind.DisplayString;
         return returnString;
     };
@@ -57,42 +57,47 @@ angular.module("ProjectFirmaApp").controller("EditProjectController", function (
 
 
 
-    $scope.findPojectProgramRow = function(projectID, programID) {
-        return _.find($scope.AngularModel.ProjectProgramSimples,
-            function(pfse) { return pfse.ProjectID == projectID && pfse.ProgramID == programID; });
+    $scope.findPojectProgramRow = function(ProjectUpdateBatchID, programID) {
+        return _.find($scope.AngularModel.ProjectUpdateProgramSimples,
+            function(pfse) { return pfse.ProjectUpdateBatchID == ProjectUpdateBatchID && pfse.ProgramID == programID; });
     };
 
+
+    $scope.selectionChanged = function (programID) {
+        //console.log(programID);
+    };
 
     $scope.addRow = function() {
-        //console.log($scope.ProjectIDToAdd);
-        if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectIDToAdd == null)) {
+        //console.log($scope.ProjectUpdateBatchIDToAdd);
+        if (($scope.ProgramIDToAdd == null) || $scope.ProgramIDToAdd == -1 || ($scope.ProjectUpdateBatchIDToAdd == null)) {
             return;
         }
-        var newProjectProgram = $scope.createNewRow($scope.ProjectIDToAdd, $scope.ProgramIDToAdd);
-        $scope.AngularModel.ProjectProgramSimples.push(newProjectProgram);
+        var newProjectUpdateProgram = $scope.createNewRow($scope.ProjectUpdateBatchIDToAdd, $scope.ProgramIDToAdd);
+        $scope.AngularModel.ProjectUpdateProgramSimples.push(newProjectUpdateProgram);
         $scope.resetProgramIDToAdd();
-        $scope.resetProjectIDToAdd();
+        $scope.resetProjectUpdateBatchIDToAdd();
     };
 
-    $scope.createNewRow = function (projectID, programID) {
+    $scope.createNewRow = function (ProjectUpdateBatchID, programID) {
+        //console.log("Program ID ",programID);
         var programIDAsInt = parseInt(programID.toString());
-        var newProjectProgram = {
-            ProjectID: projectID,
+        var newProjectUpdateProgram = {
+            ProjectUpdateBatchID: ProjectUpdateBatchID,
             ProgramID: programIDAsInt,
-            ProjectProgramID: -1
+            ProjectUpdateProgramID: -1
     };
-        var displayName = $scope.getProgramName(newProjectProgram);
-        newProjectProgram.DisplayString = displayName;
-        return newProjectProgram;
+        var displayName = $scope.getProgramName(newProjectUpdateProgram);
+        newProjectUpdateProgram.DisplayString = displayName;
+        return newProjectUpdateProgram;
     };
 
     $scope.deleteRow = function (rowToDelete) {
-        Sitka.Methods.removeFromJsonArray($scope.AngularModel.ProjectProgramSimples, rowToDelete);
+        Sitka.Methods.removeFromJsonArray($scope.AngularModel.ProjectUpdateProgramSimples, rowToDelete);
     };
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     $scope.resetProgramIDToAdd();
-    $scope.resetProjectIDToAdd();
+    $scope.resetProjectUpdateBatchIDToAdd();
 });
 

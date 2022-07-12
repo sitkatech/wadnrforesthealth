@@ -25,11 +25,4 @@ namespace ProjectFirma.Web.Models
         int ClassificationID { get; }
         Classification Classification { get; }
     }
-
-    public interface IEntityProgram
-    {
-        int ProgramID { get; }
-        Program Program { get; }
-    }
-
 }
