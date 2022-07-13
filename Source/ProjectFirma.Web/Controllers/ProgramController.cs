@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,7 +13,10 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Program;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
+using Detail = ProjectFirma.Web.Views.Program.Detail;
+using DetailViewData = ProjectFirma.Web.Views.Program.DetailViewData;
 using EditViewData = ProjectFirma.Web.Views.Program.EditViewData;
 using EditViewModel = ProjectFirma.Web.Views.Program.EditViewModel;
 using Index = ProjectFirma.Web.Views.Program.Index;
@@ -100,7 +104,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult NewProgram(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;
-            var viewModel = new Views.Program.EditViewModel { IsActive = true, OrganizationID = organization.OrganizationID};
+            var viewModel = new Views.Program.EditViewModel { IsActive = true, OrganizationID = organization.OrganizationID };
             return ViewEdit(viewModel, null, organization);
         }
 
@@ -115,7 +119,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, null, organization);
             }
-            
+
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
@@ -136,7 +140,7 @@ namespace ProjectFirma.Web.Controllers
         [ProgramManageFeature]
         public PartialViewResult New()
         {
-            var viewModel = new Views.Program.EditViewModel { IsActive = true};
+            var viewModel = new Views.Program.EditViewModel { IsActive = true };
             return ViewEdit(viewModel, null, null);
         }
 
@@ -271,7 +275,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel)
         {
             var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
-            
+
             var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
 
             var viewData = new EditProgramPeopleViewData(people);
@@ -380,6 +384,31 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new ProgramNotificationGridSpec(CurrentPerson, program);
             var programNotifications = program.ProgramNotificationConfigurations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProgramNotificationConfiguration>(programNotifications, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [ProgramManageFeature]
+        public GridJsonNetJObjectResult<ProjectListViewModel> ProgramProjectListGridJson(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var gridSpec = new ProjectListGridSpec(CurrentPerson);
+            var allProjectIDsUnderProgram =
+                HttpRequestStorage.DatabaseEntities.ProjectPrograms.Where(p => p.ProgramID == program.ProgramID);
+            var projects = HttpRequestStorage.DatabaseEntities.Projects
+                .Join(allProjectIDsUnderProgram,
+                    p => p.ProjectID,
+                    ap => ap.ProjectID,
+                    (p, ap) => p);
+            var projectsWithImportBlock = projects
+                .GroupJoin(HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists,
+                    project => new { project.ProjectGisIdentifier, program.ProgramID },
+                    bl => new { bl.ProjectGisIdentifier, bl.ProgramID },
+                    (project, bl) => new { Project = project, ImportBlockList = bl })
+                .SelectMany(pvm => pvm.ImportBlockList.DefaultIfEmpty(),
+                    (project, bl) => new ProjectListViewModel()
+                    { Project = project.Project, ProjectImportBlockListID = (bl != null) ? bl.ProjectImportBlockListID : 0 });
+            
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectListViewModel>(projectsWithImportBlock.ToList(), gridSpec);
             return gridJsonNetJObjectResult;
         }
 

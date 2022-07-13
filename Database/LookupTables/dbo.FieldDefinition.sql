@@ -298,6 +298,5 @@ VALUES
 (476, N'ProjectGrantAllocationRequestMatchAmount', N'MatchAmount', N'<p>Funding that has been acquired for a project.</p>'),
 (477, N'ProjectGrantAllocationRequestPayAmount', N'PayAmount', N'<p>Funding that has been acquired for a project.</p>'),
 (478, N'ProjectApplicationDate', N'Project Application Date', N'<p>The date on which the application for the project was submitted.'),
-(479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.')
-
-
+(479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.'),
+(480, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>')

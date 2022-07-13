@@ -5,6 +5,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
+using ProjectFirma.Web.Views.Program;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
@@ -80,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
                                          p.ProjectName == project.ProjectName &&
                                          p.ProgramID == projectProgram.Program.ProgramID);
 
-                if(existing != null)
+                if (existing != null)
                     HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Remove(existing);
             }
 
@@ -97,5 +98,16 @@ namespace ProjectFirma.Web.Controllers
 
             return existing != null;
         }
+
+        public static bool ExistsInBlockList(ProjectPrimaryKey projectPrimaryKey, ProgramPrimaryKey programPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var program = programPrimaryKey.EntityObject;
+            var existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
+                .FirstOrDefault(p => p.ProjectGisIdentifier == project.ProjectGisIdentifier && p.ProgramID == program.ProgramID);
+
+            return existing != null;
+        }
+
     }
 }

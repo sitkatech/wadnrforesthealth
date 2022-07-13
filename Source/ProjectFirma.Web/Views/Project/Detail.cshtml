@@ -80,7 +80,7 @@
     {
         if (!ViewDataTyped.ExistsInImportBlockList)
         {
-            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle").ToString() + " Add to Block List", ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
+            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle red").ToString() + " Add to Block List", ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
         }
         else
         {

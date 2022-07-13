@@ -1188,6 +1188,7 @@
     <Compile Include="Views\Program\EditViewModel.cs" />
     <Compile Include="Views\Program\EditViewModelValidator.cs" />
     <Compile Include="Views\Program\ProgramNotificationGridSpec.cs" />
+    <Compile Include="Views\Program\ProjectListViewModel.cs" />
     <Compile Include="Views\Program\ProgramViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
@@ -1229,6 +1230,7 @@
     <Compile Include="Views\Program\Index.cs" />
     <Compile Include="Views\Program\ProgramGridSpec.cs" />
     <Compile Include="Views\Program\IndexViewData.cs" />
+    <Compile Include="Views\Program\ProjectListGridSpec.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewData.cs" />
