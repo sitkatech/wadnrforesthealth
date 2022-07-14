@@ -8,11 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using LtInfo.Common;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web
@@ -46,31 +48,114 @@ namespace ProjectFirma.Web
 
         public bool IsValid(out string userDisplayableValidationErrorMessage)
         {
-            userDisplayableValidationErrorMessage = string.Empty;
             var nodeList = _xmlDoc.SelectNodes("//ds:Signature", _xmlNameSpaceManager);
             if (nodeList == null || nodeList.Count == 0)
             {
                 userDisplayableValidationErrorMessage = "Could not find signature node in SAW xml response.";
                 return false;
             }
-            var signedXml = new SignedXml(_xmlDoc);
+
+            var signedXml = new SignedXml(_xmlDoc); 
             signedXml.LoadXml((XmlElement)nodeList[0]);
+            
             var hasValidSignatureReference = HasValidSignatureReference(signedXml);
             if (!hasValidSignatureReference)
             {
                 userDisplayableValidationErrorMessage = "Could not validate SignatureReference in SAW xml response.";
+                return false;
             }
-            var checkSignature = signedXml.CheckSignature(_certificate, true);
+
+            var checkSignature = CheckSignature(out var checkSignatureMessage, signedXml);
             if (!checkSignature)
             {
-                userDisplayableValidationErrorMessage = "SAW xml signature is invalid.";
+                userDisplayableValidationErrorMessage = checkSignatureMessage;
+                return false;
             }
+
             var isResponseStillWithinValidTimePeriod = IsResponseStillWithinValidTimePeriod();
             if (!isResponseStillWithinValidTimePeriod)
             {
                 userDisplayableValidationErrorMessage = "Current time is past the expiration time for the SAW xml response.";
+                return false;
             }
-            return hasValidSignatureReference && checkSignature && isResponseStillWithinValidTimePeriod;
+
+            userDisplayableValidationErrorMessage = string.Empty;
+            return true;
+        }
+
+        private static bool CheckSignature(out string userDisplayableValidationErrorMessage, SignedXml signedXml)
+        {
+            userDisplayableValidationErrorMessage = string.Empty;
+
+            var keyInfoX509Data = signedXml.Signature.KeyInfo.OfType<KeyInfoX509Data>().FirstOrDefault();
+            if (keyInfoX509Data == null)
+            {
+                userDisplayableValidationErrorMessage =
+                    $"SAW xml signature is missing expected {nameof(KeyInfo)} {nameof(KeyInfoX509Data)} section with signing certificate.";
+                return false;
+            }
+
+            var signingCert = keyInfoX509Data.Certificates[0] as X509Certificate2;
+            if (signingCert == null)
+            {
+                userDisplayableValidationErrorMessage = $"Could not retrieve expected certificate of type {nameof(X509Certificate2)} in SAW xml signature, may not be present or could be an unexpected type of certificate.";
+                return false;
+            }
+
+            // Check signature only at first to allow for more detailed error messging
+            if (!signedXml.CheckSignature(signingCert, true))
+            {
+                userDisplayableValidationErrorMessage = "SAW xml signature is invalid.";
+                return false;
+            }
+
+            // Now check signature and signing cert, a bit redundant so that we can now give more error detail about which step is having problems
+            if (!signedXml.CheckSignature(signingCert, false))
+            {
+                userDisplayableValidationErrorMessage = "SAW xml signature signing certificate is invalid (date, certificate authority, etc).";
+                return false;
+            }
+
+
+            var dnsNameList = ExtractDnsNamesFromSubjectAlternativeName(signingCert);
+            if (!dnsNameList.Any(x => string.Equals(x, FirmaWebConfiguration.SAWEndPoint.Host, StringComparison.CurrentCultureIgnoreCase)))
+            {
+                userDisplayableValidationErrorMessage =
+                    $"SAW xml signature signed with cert with unexpected FriendlyName, expected name \"{FirmaWebConfiguration.SAWEndPoint.Host}\" (matching hostname of SAW endpoint) but got \"{signingCert.FriendlyName}\".";
+                return false;
+            }
+
+            return true;
+        }
+
+        public static List<string> ExtractDnsNamesFromSubjectAlternativeName(X509Certificate2 signingCert)
+        {
+            var dnsNameList = new List<string>();
+            // 2.5.29.17 is the OID for SubjectAlternativeName
+            X509Extension uccSan = signingCert.Extensions["2.5.29.17"];
+            if (uccSan != null)
+            {
+                foreach (string nvp in uccSan.Format(true)
+                             .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    //expecting to see:
+                    //DNS Name = secureaccess.wa.gov
+                    //DNS Name = support.secureaccess.wa.gov
+                    //DNS Name = help.secureaccess.wa.gov
+                    //DNS Name = aa - secureaccess.wa.gov
+
+                    string[] parts = nvp.Split('=');
+                    string name = parts[0];
+                    string value = (parts.Length > 0) ? parts[1] : null;
+                    if (name == "DNS Name")
+                    {
+                        dnsNameList.Add(value);
+                    }
+
+                }
+            }
+
+            return dnsNameList;
         }
 
         /// <summary>

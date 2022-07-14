@@ -41,11 +41,9 @@ namespace ProjectFirma.Web.Common
         public static readonly int DefaultSupportPersonID = Int32.Parse(SitkaConfiguration.GetRequiredAppSetting("DefaultSupportPersonID"));
 
         public static readonly TimeSpan HttpRuntimeExecutionTimeout = ((HttpRuntimeSection)WebConfigurationManager.GetSection("system.web/httpRuntime")).ExecutionTimeout;
-        public static readonly string SAWUrl = SitkaConfiguration.GetRequiredAppSetting("SAWUrl");
 
         public static readonly FirmaEnvironment FirmaEnvironment = FirmaEnvironment.MakeFirmaEnvironment(SitkaConfiguration.GetRequiredAppSetting("FirmaEnvironment"));
 
-        public static readonly string Saml2IDPCertificateThumbPrint = SitkaConfiguration.GetRequiredAppSetting("SamlIDPCertificateThumbPrint");
         public static readonly Uri SAWEndPoint = new Uri(SitkaConfiguration.GetRequiredAppSetting("SAWEndPoint"));
         public static readonly Uri ADFSEndPoint = new Uri(SitkaConfiguration.GetRequiredAppSetting("ADFSEndPoint"));
 
@@ -100,6 +98,7 @@ namespace ProjectFirma.Web.Common
 
         public static string GetWashingtonCountyWmsLayerName()
         {
+
             return "WADNRForestHealth:WashingtonCounty";//todo: move layer name to web config
         }
 

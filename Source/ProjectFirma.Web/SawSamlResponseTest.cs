@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using LtInfo.Common;
 using NUnit.Framework;
 using ProjectFirma.Web.Common;
 
@@ -93,11 +96,27 @@ namespace ProjectFirma.Web
                 sawSamlResponse.LoadXmlFromString(samlXml);
                 Console.Write(DateTimeOffset.Now);
                 //  NotOnOrAfter=""2020-11-17T00:12:59Z"" 
-                var now = DateTimeOffset.Parse("11/16/2020 4:11:59 PM -08:00");
-                var isResponseStillWithinValidTimePeriod = sawSamlResponse.IsResponseStillWithinValidTimePeriod(now);
-                Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(now), Is.True, "Should be valid date");
-                Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(now.AddMinutes(5)), Is.False, "Should be invalid date too old");
+                var testDateTime = DateTimeOffset.Parse("11/16/2020 4:11:59 PM -08:00");
+                var isResponseStillWithinValidTimePeriod = sawSamlResponse.IsResponseStillWithinValidTimePeriod(testDateTime);
+                Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(testDateTime), Is.True, "Should be valid date");
+                Assert.That(sawSamlResponse.IsResponseStillWithinValidTimePeriod(testDateTime.AddMinutes(5)), Is.False, "Should be invalid date too old");
             }
         }
+
+
+        [Test]
+        public void TestExtractDnsNamesFromSubjectAlternativeName()
+        {
+            //"C:\git\sitkatech\wadnrforesthealth\Source\ProjectFirma.Web\wadnr-saw-saml-response-test.cer"
+            var certFile = FileUtility.FirstMatchingFileUpDirectoryTree("wadnr-saw-saml-response-test.cer");
+            var cert = new X509Certificate2(certFile.FullName);
+            var dnsNameResponse = SawSamlResponse.ExtractDnsNamesFromSubjectAlternativeName(cert);
+            Assert.That(dnsNameResponse, Is.EquivalentTo(new List<string>() { @"secureaccess.wa.gov", "support.secureaccess.wa.gov", "help.secureaccess.wa.gov", "aa-secureaccess.wa.gov"}));
+
+        }
+
+
+
+
     }
 }
