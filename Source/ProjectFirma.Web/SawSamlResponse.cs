@@ -116,7 +116,9 @@ namespace ProjectFirma.Web
                 return false;
             }
 
-            if (!string.Equals(signingCert.FriendlyName, FirmaWebConfiguration.SAWEndPoint.Host, StringComparison.CurrentCultureIgnoreCase))
+
+            var dnsNameList = ExtractDnsNamesFromSubjectAlternativeName(signingCert);
+            if (!dnsNameList.Any(x => string.Equals(x, FirmaWebConfiguration.SAWEndPoint.Host, StringComparison.CurrentCultureIgnoreCase)))
             {
                 userDisplayableValidationErrorMessage =
                     $"SAW xml signature signed with cert with unexpected FriendlyName, expected name \"{FirmaWebConfiguration.SAWEndPoint.Host}\" (matching hostname of SAW endpoint) but got \"{signingCert.FriendlyName}\".";
@@ -124,6 +126,36 @@ namespace ProjectFirma.Web
             }
 
             return true;
+        }
+
+        public static List<string> ExtractDnsNamesFromSubjectAlternativeName(X509Certificate2 signingCert)
+        {
+            var dnsNameList = new List<string>();
+            // 2.5.29.17 is the OID for SubjectAlternativeName
+            X509Extension uccSan = signingCert.Extensions["2.5.29.17"];
+            if (uccSan != null)
+            {
+                foreach (string nvp in uccSan.Format(true)
+                             .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    //expecting to see:
+                    //DNS Name = secureaccess.wa.gov
+                    //DNS Name = support.secureaccess.wa.gov
+                    //DNS Name = help.secureaccess.wa.gov
+                    //DNS Name = aa - secureaccess.wa.gov
+
+                    string[] parts = nvp.Split('=');
+                    string name = parts[0];
+                    string value = (parts.Length > 0) ? parts[1] : null;
+                    if (name == "DNS Name")
+                    {
+                        dnsNameList.Add(value);
+                    }
+
+                }
+            }
+
+            return dnsNameList;
         }
 
         /// <summary>
