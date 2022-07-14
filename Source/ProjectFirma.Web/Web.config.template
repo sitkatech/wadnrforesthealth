@@ -33,10 +33,8 @@
     <add key="OgrInfoExecutable" value="C:\Program Files\GDAL\ogrinfo.exe" />
     <add key="DefaultSupportPersonID" value="2" />
     <add key="LogFileFolder" value="${application-root-dir}\Logs" />
-    <add key="SAWUrl" value="${saw-base-url}" />
     <add key="Saml2EntityID" value="${saw-saml-entity-id}" />
     <add key="SAWEndPoint" value="${saw-sso-endpoint}" />
-    <add key="SamlIDPCertificateThumbPrint" value="${saml-idp-certificate-thumbprint}" />
     <add key="ADFSEndPoint" value="${adfs-sso-endpoint}" />
     <add key="DefaultModalDialogButtonCssClasses" value="btn-firma,btn-xs" />
     <add key="WkhtmltopdfExecutable" value="${wkhtmltopdf-executable}" />
