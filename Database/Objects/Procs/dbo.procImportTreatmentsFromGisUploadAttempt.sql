@@ -64,7 +64,6 @@ CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT N
 	[TreatmentNotes] [varchar](2000) NULL,
 	[TreatmentTypeID] [int] NOT NULL,
     [TreatmentDetailedActivityTypeID] [int] not null,
-	[TreatmentAreaID] [int] NULL,
     TreatmentTypeImportedText varchar(200),
     [TreatmentDetailedActivityTypeImportedText] varchar(200),
     PruningAcres [decimal](38, 10) NULL,
@@ -194,10 +193,10 @@ where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttribu
 
 
 
+--ProjectLocationTypeID 2 is TreatmentArea
+insert into dbo.ProjectLocation(ProjectLocationGeometry, TemporaryTreatmentCacheID, ProjectID, ProjectLocationTypeID, ProjectLocationName)
 
-insert into dbo.ProjectLocation(ProjectLocationGeometry, TemporaryTreatmentCacheID)
-
-select x.ProjectLocationGeometry, x.TemporaryTreatmentCacheID from #tempTreatments x
+select x.ProjectLocationGeometry, x.TemporaryTreatmentCacheID, x.ProjectID, 2 as ProjectLocationTypeID, CONCAT('Imported Treatment Area ', x.ProjectID, @@ROWCOUNT) as ProjectLocationName from #tempTreatments x
 
 
 if(@isFlattened = 0)
