@@ -247,7 +247,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
         private void UpdateTreatmentByTreatmentType(
             Models.GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem,
-            ICollection<Treatment> treatments
+            ICollection<Models.Treatment> treatments
             , int projectID
             , int grantAllocationAwardLandownerCostShareLineItemID
             , TreatmentDetailedActivityType treatmentDetailedActivityType
@@ -256,7 +256,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             var treatment = treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == treatmentDetailedActivityType);
             if (treatment == null)
             {
-                treatment = new Treatment(projectID, FootprintAcres, TreatmentType.Other.TreatmentTypeID,treatmentDetailedActivityType.TreatmentDetailedActivityTypeID);
+                treatment = new Models.Treatment(projectID, FootprintAcres, TreatmentType.Other.TreatmentTypeID,treatmentDetailedActivityType.TreatmentDetailedActivityTypeID);
                 treatment.GrantAllocationAwardLandownerCostShareLineItemID =
                     grantAllocationAwardLandownerCostShareLineItemID;
                 treatment.GrantAllocationAwardLandownerCostShareLineItem =

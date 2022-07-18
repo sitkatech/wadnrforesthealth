@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected TreatmentArea()
         {
-            this.Treatments = new HashSet<Treatment>();
+
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Treatments.Any();
+            return false;
         }
 
         /// <summary>
@@ -74,17 +74,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(Treatments.Any())
-            {
-                dependentObjects.Add(typeof(Treatment).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TreatmentArea).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TreatmentArea).Name};
 
 
         /// <summary>
@@ -100,19 +96,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Treatments.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -122,7 +107,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return TreatmentAreaID; } set { TreatmentAreaID = value; } }
 
-        public virtual ICollection<Treatment> Treatments { get; set; }
+
 
         public static class FieldLengths
         {

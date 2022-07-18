@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -601,6 +601,9 @@
     <Compile Include="Models\Generated\ProjectUpdateHistory.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectUpdateHistoryPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectUpdateProgram.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectUpdateProgram.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectUpdateProgramPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdateSection.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdateSectionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdateState.Binding.cs" />
@@ -688,6 +691,7 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
     <Compile Include="Controllers\ProjectImportBlockListController.cs" />
+    <Compile Include="Controllers\TreatmentController.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\CellFormulaProxy.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\CellProxy.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\DocumentSharedStrings.cs" />
@@ -730,6 +734,7 @@
     <Compile Include="Models\DhtmlxExcelDownload\TokenType.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\ValueChecker.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\WorksheetCache.cs" />
+    <Compile Include="Models\IEntityProgram.cs" />
     <Compile Include="Models\PersonRole.cs" />
     <Compile Include="Models\PriorityLandscapeType.cs" />
     <Compile Include="Models\ProgramNotificationConfiguration.cs" />
@@ -739,7 +744,10 @@
     <Compile Include="Models\ProgramSimple.cs" />
     <Compile Include="Models\ProjectImportBlockList.cs" />
     <Compile Include="Models\ProjectProgram.cs" />
+    <Compile Include="Models\ProjectProgramModelExtensions.cs" />
     <Compile Include="Models\ProjectProgramSimple.cs" />
+    <Compile Include="Models\ProjectUpdateProgram.cs" />
+    <Compile Include="Models\ProjectUpdateProgramSimple.cs" />
     <Compile Include="Models\RoleSimple.cs" />
     <Compile Include="Models\TabularDataImport.cs" />
     <Compile Include="Controllers\ExcelUploadController.cs" />
@@ -1293,6 +1301,12 @@
     <Compile Include="Views\Shared\FileResourceControls\NewFileViewData.cs" />
     <Compile Include="Views\Shared\FileResourceControls\NewFileViewModel.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
+    <Compile Include="Views\Treatment\EditTreatment.cs" />
+    <Compile Include="Views\Treatment\EditTreatmentsForAProject.cs" />
+    <Compile Include="Views\Treatment\EditTreatmentViewData.cs" />
+    <Compile Include="Views\Treatment\EditTreatmentsForAProjectViewData.cs" />
+    <Compile Include="Views\Treatment\EditTreatmentViewModel.cs" />
+    <Compile Include="Views\Treatment\EditTreatmentsForAProjectViewModel.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
@@ -1911,6 +1925,7 @@
     <Content Include="Views\CustomPage\Index.cshtml" />
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
+    <Content Include="Views\ProjectUpdate\EditProjectUpdateController.js" />
     <Content Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.CreateFromGrantAllocationsAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Results\ProjectMapController.js" />
     <Content Include="Views\Shared\FileResourceControls\NewFileController.js" />
@@ -2567,6 +2582,8 @@
     <Content Include="Views\Program\EditProgramPeople.cshtml" />
     <Content Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cshtml" />
     <Content Include="Views\Program\EditProgramNotificationConfiguration.cshtml" />
+    <Content Include="Views\Treatment\EditTreatmentsForAProject.cshtml" />
+    <Content Include="Views\Treatment\EditTreatment.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

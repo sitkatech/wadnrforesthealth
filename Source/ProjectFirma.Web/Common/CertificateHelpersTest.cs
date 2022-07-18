@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using LtInfo.Common;
 using NUnit.Framework;
 
 namespace ProjectFirma.Web.Common
@@ -29,5 +32,29 @@ namespace ProjectFirma.Web.Common
             Assert.Catch(() => CertificateHelpers.GetX509Certificate2FromUri(new Uri("/relative")), "Should have exception with relative url");
             Assert.Catch(() => CertificateHelpers.GetX509Certificate2FromUri(new Uri("http://www.example.org")), "Should have exception with non secure url");
         }
+
+        [Test]
+        public void TestExtractDnsNamesFromSubjectAlternativeName()
+        {
+            // Arrange
+            // -------
+
+            // Sample certificate file from WA SAW website
+            // ReSharper disable StringLiteralTypo
+            var certificateFileInfo = FileUtility.FirstMatchingFileUpDirectoryTree(@"Common\wadnr-saw-saml-response-test.cer");
+            // ReSharper restore StringLiteralTypo
+            var certificate2 = new X509Certificate2(certificateFileInfo.FullName);
+
+            // Act
+            // ---
+            var dnsNameResponse = CertificateHelpers.ExtractDnsNamesFromSubjectAlternativeName(certificate2);
+
+            // Assert
+            // -------
+            // ReSharper disable StringLiteralTypo
+            Assert.That(dnsNameResponse, Is.EquivalentTo(new List<string>() { @"secureaccess.wa.gov", "support.secureaccess.wa.gov", "help.secureaccess.wa.gov", "aa-secureaccess.wa.gov" }), "Should be able to properly parse out the DNS Name entries from Subject Alternative Name certificate field.");
+            // ReSharper restore StringLiteralTypo
+        }
+
     }
 }

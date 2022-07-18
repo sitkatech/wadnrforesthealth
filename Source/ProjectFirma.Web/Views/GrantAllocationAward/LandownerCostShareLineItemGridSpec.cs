@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(),
                 a => a.GrantAllocationAwardID != null ? a.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited() : "Not Available",
                 75, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStatus.GetFieldDefinitionLabel(), a => a.GetStatusDisplayName(), 125, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStatus.GetFieldDefinitionLabel(), a => a.GetStatusDisplayName(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStartDate.GetFieldDefinitionLabel(), a => a.Treatments.FirstOrDefault()?.TreatmentStartDate, 125, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareEndDate.GetFieldDefinitionLabel(), a => a.Treatments.FirstOrDefault()?.TreatmentEndDate, 125, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareFootprintAcres.GetFieldDefinitionLabel(), a => a.Treatments.FirstOrDefault()?.TreatmentFootprintAcres ?? 0, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);

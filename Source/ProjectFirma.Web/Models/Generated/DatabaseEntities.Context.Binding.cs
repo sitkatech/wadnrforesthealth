@@ -181,6 +181,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
         public virtual DbSet<ProjectUpdateHistory> ProjectUpdateHistories { get; set; }
+        public virtual DbSet<ProjectUpdateProgram> ProjectUpdatePrograms { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
         public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
@@ -974,6 +975,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectUpdateHistory":
                     return ProjectUpdateHistories.GetProjectUpdateHistory(primaryKey);
+
+                case "ProjectUpdateProgram":
+                    return ProjectUpdatePrograms.GetProjectUpdateProgram(primaryKey);
 
                 case "ProjectUpdate":
                     return ProjectUpdates.GetProjectUpdate(primaryKey);

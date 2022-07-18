@@ -293,6 +293,12 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectOrganizationUpdates);
         }
 
+        public void DeleteProjectUpdatePrograms()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectUpdatePrograms.DeleteProjectUpdateProgram(ProjectUpdatePrograms);
+            RefreshFromDatabase(ProjectUpdatePrograms);
+        }
+
         public void DeleteProjectAttributeUpdates()
         {
             var values = ProjectCustomAttributeUpdates.SelectMany(x => x.ProjectCustomAttributeUpdateValues).ToList();
@@ -550,7 +556,8 @@ namespace ProjectFirma.Web.Models
             IList<ProjectDocument> allProjectDocuments,
             IList<ProjectCustomAttribute> allProjectCustomAttributes,
             IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
-            IList<ProjectPerson> allProjectPersons)
+            IList<ProjectPerson> allProjectPersons,
+            IList<ProjectProgram> allProjectPrograms)
         {
             Check.Require(IsSubmitted, $"You cannot approve a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted!");
             CommitChangesToProject(projectExemptReportingYears,
@@ -571,7 +578,8 @@ namespace ProjectFirma.Web.Models
                 allProjectDocuments,
                 allProjectCustomAttributes,
                 allProjectCustomAttributeValues,
-                allProjectPersons);
+                allProjectPersons,
+                allProjectPrograms);
             CreateNewTransitionRecord(this, ProjectUpdateState.Approved, currentPerson, transitionDate);
             PushTransitionRecordsToAuditLog();
         }
@@ -607,10 +615,14 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectDocument> allProjectDocuments,
                 IList<ProjectCustomAttribute> allProjectCustomAttributes,
                 IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
-                IList<ProjectPerson> allProjectPeople)
+                IList<ProjectPerson> allProjectPeople,
+                IList<ProjectProgram> allProjectPrograms)
         {
             // basics
             ProjectUpdate.CommitChangesToProject(Project);
+
+            //Programs
+            ProjectUpdateProgram.CommitChangesToProject(this, allProjectPrograms);
 
             // expenditures
             ProjectGrantAllocationExpenditureUpdate.CommitChangesToProject(this, projectGrantAllocationExpenditures);

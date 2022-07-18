@@ -154,6 +154,7 @@
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateConfiguration" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateProgram" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.Store.RelationshipType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.Store.SocrataDataMartRawJsonImport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.Store.StateProvince" store:Type="Tables" Schema="dbo" />
@@ -1339,6 +1340,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdateHistories" EntitySet="ProjectUpdateHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdateProgram_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdateProgram_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
+    </AssociationSet>
     <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.Store.FK_StateProvince_Country_CountryID">
       <End Role="Country" EntitySet="Country" />
       <End Role="StateProvinces" EntitySet="StateProvince" />
@@ -1391,8 +1400,8 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Project" EntitySet="Project" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
-    <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentArea_TreatmentAreaID">
-      <End Role="TreatmentArea" EntitySet="TreatmentArea" />
+    <AssociationSet Name="FK_Treatment_ProjectLocation_ProjectLocationID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_ProjectLocation_ProjectLocationID">
+      <End Role="ProjectLocation" EntitySet="ProjectLocation" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
   </EntityContainer>
@@ -2884,6 +2893,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ArcGisGlobalID" Type="varchar" MaxLength="50" />
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGisUpload" Type="bit" />
+    <Property Name="TemporaryTreatmentCacheID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>
@@ -3140,6 +3150,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="UpdatePersonID" Type="int" Nullable="false" />
     <Property Name="TransitionDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="ProjectUpdateProgram">
+    <Key>
+      <PropertyRef Name="ProjectUpdateProgramID" />
+    </Key>
+    <Property Name="ProjectUpdateProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
       <PropertyRef Name="RelationshipTypeID" />
@@ -3309,7 +3327,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentFootprintAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="varchar" MaxLength="2000" />
     <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
-    <Property Name="TreatmentAreaID" Type="int" />
     <Property Name="TreatmentTreatedAcres" Type="decimal" Precision="38" Scale="10" />
     <Property Name="TreatmentTypeImportedText" Type="varchar" MaxLength="200" />
     <Property Name="CreateGisUploadAttemptID" Type="int" />
@@ -3318,6 +3335,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGis" Type="bit" />
+    <Property Name="ProjectLocationID" Type="int" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -6702,6 +6720,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectUpdateProgram_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
+    <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.Store.ProjectUpdateProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectUpdatePrograms">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.Store.ProjectUpdateProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectUpdatePrograms">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_StateProvince_Country_CountryID">
     <End Role="Country" Type="ProjectFirma.Web.Models.Store.Country" Multiplicity="1" />
     <End Role="StateProvinces" Type="ProjectFirma.Web.Models.Store.StateProvince" Multiplicity="*" />
@@ -6858,15 +6900,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Treatment_TreatmentArea_TreatmentAreaID">
-    <End Role="TreatmentArea" Type="ProjectFirma.Web.Models.Store.TreatmentArea" Multiplicity="0..1" />
+  <Association Name="FK_Treatment_ProjectLocation_ProjectLocationID">
+    <End Role="ProjectLocation" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="0..1" />
     <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TreatmentArea">
-        <PropertyRef Name="TreatmentAreaID" />
+      <Principal Role="ProjectLocation">
+        <PropertyRef Name="ProjectLocationID" />
       </Principal>
       <Dependent Role="Treatments">
-        <PropertyRef Name="TreatmentAreaID" />
+        <PropertyRef Name="ProjectLocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

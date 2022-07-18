@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using log4net;
-using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
-using LtInfo.Common.Tasks;
 
 namespace ProjectFirma.Web.Common
 {
@@ -43,6 +44,27 @@ namespace ProjectFirma.Web.Common
 
             // Convert the X509Certificate to an X509Certificate2 object by passing it into the constructor
             return new X509Certificate2(request.ServicePoint.Certificate ?? throw new InvalidOperationException($"There was not Certificate available when accessing url {uriOfWebsiteFromWhichToGetCertificate.AbsoluteUri}"));
+        }
+
+        public static List<string> ExtractDnsNamesFromSubjectAlternativeName(X509Certificate2 signingCert)
+        {
+            const string oidForSubjectAlternativeName = "2.5.29.17";
+            var subjectAlternativeNameExtension = signingCert.Extensions[oidForSubjectAlternativeName];
+            if (subjectAlternativeNameExtension == null)
+            {
+                return new List<string>();
+            }
+
+            // Subject Alternative Name field will look like this:
+            // DNS Name=secureaccess.wa.gov
+            // DNS Name=support.secureaccess.wa.gov
+            // DNS Name=help.secureaccess.wa.gov
+            // DNS Name=aa-secureaccess.wa.gov
+            var subjectAlternativeNameAsString = subjectAlternativeNameExtension.Format(true);
+            var regexForDnsName = new Regex(@"DNS Name=([a-zA-Z0-9\.\-]+)");
+            var matches = regexForDnsName.Matches(subjectAlternativeNameAsString);
+            var dnsNameList = matches.Cast<Match>().Select(m => m.Groups[1].Value).ToList();
+            return dnsNameList;
         }
     }
 }

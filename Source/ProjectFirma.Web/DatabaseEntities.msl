@@ -1603,6 +1603,7 @@
           <ScalarProperty Name="ArcGisGlobalID" ColumnName="ArcGisGlobalID" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGisUpload" ColumnName="ImportedFromGisUpload" />
+          <ScalarProperty Name="TemporaryTreatmentCacheID" ColumnName="TemporaryTreatmentCacheID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1883,6 +1884,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectUpdateProgram">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectUpdateProgram">
+        <MappingFragment StoreEntitySet="ProjectUpdateProgram">
+          <ScalarProperty Name="ProjectUpdateProgramID" ColumnName="ProjectUpdateProgramID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="RelationshipType">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.RelationshipType">
         <MappingFragment StoreEntitySet="RelationshipType">
@@ -2063,7 +2073,6 @@
           <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
           <ScalarProperty Name="TreatmentNotes" ColumnName="TreatmentNotes" />
           <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
-          <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
           <ScalarProperty Name="TreatmentTreatedAcres" ColumnName="TreatmentTreatedAcres" />
           <ScalarProperty Name="TreatmentTypeImportedText" ColumnName="TreatmentTypeImportedText" />
           <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
@@ -2072,6 +2081,7 @@
           <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
+          <ScalarProperty Name="ProjectLocationID" ColumnName="ProjectLocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -8,69 +8,127 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using LtInfo.Common;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web
 {
-    public class SawSamlResponse : IDisposable
+    public class SawSamlResponse
     {
-        private string _originalDecodedResponse;
-        private XmlDocument _xmlDoc;
-        private readonly X509Certificate2 _certificate;
-        private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
-
-        public SawSamlResponse(X509Certificate2 certificate)
-        {
-            _certificate = certificate;
-        }
-
-        public void LoadXmlFromBase64(string base64SawSamlResponse)
+        public static SawSamlResponse CreateFromBase64String(string base64EncodedXmlStringSawSamlResponse)
         {
             var utf8Encoding = new UTF8Encoding();
-            var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64SawSamlResponse));
-            LoadXmlFromString(xmlStringSawSamlResponse);
+            var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64EncodedXmlStringSawSamlResponse));
+            return CreateFromString(xmlStringSawSamlResponse);
         }
 
-        internal void LoadXmlFromString(string xmlStringSawSamlResponse)
+        public static SawSamlResponse CreateFromString(string xmlStringSawSamlResponse)
         {
-            _originalDecodedResponse = xmlStringSawSamlResponse;
+            return new SawSamlResponse(xmlStringSawSamlResponse);
+        }
+
+        private readonly string _originalDecodedResponse;
+        private readonly XmlDocument _xmlDoc;
+        private readonly XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
+
+        private SawSamlResponse(string xmlStringSawSamlResponse)
+        {
             _xmlDoc = new XmlDocument { PreserveWhitespace = true, XmlResolver = null };
+            _originalDecodedResponse = xmlStringSawSamlResponse;
             _xmlDoc.LoadXml(xmlStringSawSamlResponse);
             _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
         }
-
         public bool IsValid(out string userDisplayableValidationErrorMessage)
         {
-            userDisplayableValidationErrorMessage = string.Empty;
             var nodeList = _xmlDoc.SelectNodes("//ds:Signature", _xmlNameSpaceManager);
             if (nodeList == null || nodeList.Count == 0)
             {
                 userDisplayableValidationErrorMessage = "Could not find signature node in SAW xml response.";
                 return false;
             }
-            var signedXml = new SignedXml(_xmlDoc);
+
+            var signedXml = new SignedXml(_xmlDoc); 
             signedXml.LoadXml((XmlElement)nodeList[0]);
+            
             var hasValidSignatureReference = HasValidSignatureReference(signedXml);
             if (!hasValidSignatureReference)
             {
                 userDisplayableValidationErrorMessage = "Could not validate SignatureReference in SAW xml response.";
+                return false;
             }
-            var checkSignature = signedXml.CheckSignature(_certificate, true);
+
+            var checkSignature = CheckSignatureUsingEmbeddedSigningCertificate(out var checkSignatureMessage, signedXml);
             if (!checkSignature)
             {
-                userDisplayableValidationErrorMessage = "SAW xml signature is invalid.";
+                userDisplayableValidationErrorMessage = checkSignatureMessage;
+                return false;
             }
+
             var isResponseStillWithinValidTimePeriod = IsResponseStillWithinValidTimePeriod();
             if (!isResponseStillWithinValidTimePeriod)
             {
                 userDisplayableValidationErrorMessage = "Current time is past the expiration time for the SAW xml response.";
+                return false;
             }
-            return hasValidSignatureReference && checkSignature && isResponseStillWithinValidTimePeriod;
+
+            userDisplayableValidationErrorMessage = string.Empty;
+            return true;
+        }
+
+        private static bool CheckSignatureUsingEmbeddedSigningCertificate(out string userDisplayableValidationErrorMessage, SignedXml signedXml)
+        {
+            var keyInfoX509Data = signedXml.Signature.KeyInfo.OfType<KeyInfoX509Data>().FirstOrDefault();
+            if (keyInfoX509Data == null)
+            {
+                userDisplayableValidationErrorMessage =
+                    $"SAW xml signature is missing expected {nameof(KeyInfo)} {nameof(KeyInfoX509Data)} section with embedded signing certificate.";
+                return false;
+            }
+
+            if (keyInfoX509Data.Certificates.Count < 1)
+            {
+                userDisplayableValidationErrorMessage =
+                    "SAW xml signature does not have the expected embedded signing certificate within the xml itself, can't validate.";
+                return false;
+            }
+
+            var signingCert = keyInfoX509Data.Certificates[0] as X509Certificate2;
+            if (signingCert == null)
+            {
+                userDisplayableValidationErrorMessage = $"Could not retrieve expected embedded signing certificate of type {nameof(X509Certificate2)} in SAW xml signature, certificate may not be present or could be an unexpected type of certificate.";
+                return false;
+            }
+
+            // Check *signature only* at first to allow for more detailed error messging
+            if (!signedXml.CheckSignature(signingCert, true))
+            {
+                userDisplayableValidationErrorMessage = "SAW xml signature is invalid.";
+                return false;
+            }
+
+            // Now check signature along with signing cert itself, so that we can give more error detail about which step is having problems (a bit redundant but more informative)
+            if (!signedXml.CheckSignature(signingCert, false))
+            {
+                userDisplayableValidationErrorMessage = "SAW xml signature embedded signing certificate is invalid (date, certificate authority, etc).";
+                return false;
+            }
+
+            var dnsNameList = CertificateHelpers.ExtractDnsNamesFromSubjectAlternativeName(signingCert);
+            if (!dnsNameList.Any(x => string.Equals(x, FirmaWebConfiguration.SAWEndPoint.Host, StringComparison.CurrentCultureIgnoreCase)))
+            {
+                userDisplayableValidationErrorMessage =
+                    $"SAW xml signature signed with unexpected embedded signing certificate, expected certificate to have \"{FirmaWebConfiguration.SAWEndPoint.Host}\" (hostname of SAW endpoint) listed in Subject Alternative Name but only had these names listed: \"{string.Join("\", \"", dnsNameList)}\".";
+                return false;
+            }
+
+            userDisplayableValidationErrorMessage = string.Empty;
+            return true;
         }
 
         /// <summary>
@@ -137,7 +195,11 @@ namespace ProjectFirma.Web
 
         public List<string> GetRoleGroups()
         {
-            // We're not using any group claims from SAW, so leave it blank
+            var nodes = _xmlDoc.SelectNodes("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='groups']/saml:AttributeValue", _xmlNameSpaceManager);
+            if (nodes != null && nodes.Count > 0)
+            {
+                return nodes.Cast<XmlNode>().Select(x => x.InnerText).ToList();
+            }
             return new List<string>();
         }
 
@@ -191,16 +253,11 @@ namespace ProjectFirma.Web
                 _xmlDoc.WriteTo(xmlTextWriter);
                 return stringWriter.ToString();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 // At least show something if we have problems here
-                return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {_originalDecodedResponse}";
+                return $"Problem pretty printing XML: {ex}.\r\nOriginal SAW Response: {_originalDecodedResponse}";
             }
-        }
-
-        public void Dispose()
-        {
-            _certificate.Dispose();
         }
     }
 }

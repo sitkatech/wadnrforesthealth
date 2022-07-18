@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Views.User
         public IndexGridSpec GridSpec { get; }
         public string GridName { get; }
         public string GridDataUrl { get; }
-        public string SAWUrl { get; }
 
         public bool UserIsSitkaAdmin { get; }
 
@@ -40,7 +39,6 @@ namespace ProjectFirma.Web.Views.User
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true};
             GridName = "UserGrid";
             GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
-            SAWUrl = FirmaWebConfiguration.SAWUrl;
 
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());

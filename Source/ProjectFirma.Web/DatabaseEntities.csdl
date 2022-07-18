@@ -154,6 +154,7 @@
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.ProjectUpdateBatch" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.ProjectUpdateConfiguration" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
+    <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.ProjectUpdateProgram" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
@@ -1036,6 +1037,10 @@
       <End Role="Program" EntitySet="Program" />
       <End Role="ProjectPrograms" EntitySet="ProjectProgram" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdateProgram_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
+    </AssociationSet>
     <AssociationSet Name="FK_Treatment_Program_ProgramID" Association="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID">
       <End Role="Program" EntitySet="Program" />
       <End Role="Treatments" EntitySet="Treatment" />
@@ -1200,6 +1205,10 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectImageUpdates" EntitySet="ProjectImageUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_Treatment_ProjectLocation_ProjectLocationID" Association="ProjectFirma.Web.Models.FK_Treatment_ProjectLocation_ProjectLocationID">
+      <End Role="ProjectLocation" EntitySet="ProjectLocation" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationStagingUpdates" EntitySet="ProjectLocationStagingUpdate" />
@@ -1260,13 +1269,13 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdateHistories" EntitySet="ProjectUpdateHistory" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
+    </AssociationSet>
     <AssociationSet Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" Association="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Treatment_TreatmentArea_TreatmentAreaID" Association="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID">
-      <End Role="TreatmentArea" EntitySet="TreatmentArea" />
-      <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
       <Parameter Name="psTableName" Type="String" />
@@ -2803,6 +2812,7 @@
     <NavigationProperty Name="ProjectImportBlockLists" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Program_ProgramID" FromRole="Program" ToRole="ProjectImportBlockLists" />
     <NavigationProperty Name="ProjectLocations" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID" FromRole="Program" ToRole="ProjectLocations" />
     <NavigationProperty Name="ProjectPrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectProgram_Program_ProgramID" FromRole="Program" ToRole="ProjectPrograms" />
+    <NavigationProperty Name="ProjectUpdatePrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_Program_ProgramID" FromRole="Program" ToRole="ProjectUpdatePrograms" />
     <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Program" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="ProgramIndex">
@@ -3224,8 +3234,10 @@
     <Property Name="ArcGisGlobalID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="ProgramID" Type="Int32" />
     <Property Name="ImportedFromGisUpload" Type="Boolean" />
+    <Property Name="TemporaryTreatmentCacheID" Type="Int32" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Program_ProgramID" FromRole="ProjectLocations" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="ProjectLocations" ToRole="Project" />
+    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_ProjectLocation_ProjectLocationID" FromRole="ProjectLocation" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>
@@ -3520,6 +3532,7 @@
     <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectRegionUpdates" />
     <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdates" />
     <NavigationProperty Name="ProjectUpdateHistories" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdateHistories" />
+    <NavigationProperty Name="ProjectUpdatePrograms" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdatePrograms" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
@@ -3547,6 +3560,16 @@
     <Property Name="TransitionDate" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="UpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" ToRole="UpdatePerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateHistories" ToRole="ProjectUpdateBatch" />
+  </EntityType>
+  <EntityType Name="ProjectUpdateProgram">
+    <Key>
+      <PropertyRef Name="ProjectUpdateProgramID" />
+    </Key>
+    <Property Name="ProjectUpdateProgramID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_Program_ProgramID" FromRole="ProjectUpdatePrograms" ToRole="Program" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdatePrograms" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -3734,7 +3757,6 @@
     <Property Name="TreatmentFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="TreatmentNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <Property Name="TreatmentTypeID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentAreaID" Type="Int32" />
     <Property Name="TreatmentTreatedAcres" Type="Decimal" Precision="38" Scale="10" />
     <Property Name="TreatmentTypeImportedText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="CreateGisUploadAttemptID" Type="Int32" />
@@ -3743,12 +3765,13 @@
     <Property Name="TreatmentDetailedActivityTypeImportedText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="ProgramID" Type="Int32" />
     <Property Name="ImportedFromGis" Type="Boolean" />
+    <Property Name="ProjectLocationID" Type="Int32" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="UpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" ToRole="UpdateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Treatments" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
-    <NavigationProperty Name="TreatmentArea" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="Treatments" ToRole="TreatmentArea" />
+    <NavigationProperty Name="ProjectLocation" Relationship="ProjectFirma.Web.Models.FK_Treatment_ProjectLocation_ProjectLocationID" FromRole="Treatments" ToRole="ProjectLocation" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -3757,7 +3780,6 @@
     <Property Name="TreatmentAreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TreatmentAreaFeature" Type="Geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="Int32" />
-    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_TreatmentArea_TreatmentAreaID" FromRole="TreatmentArea" ToRole="Treatments" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -6551,6 +6573,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectUpdateProgram_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="1" />
+    <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.ProjectUpdateProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectUpdatePrograms">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Treatment_Program_ProgramID">
     <End Role="Program" Type="ProjectFirma.Web.Models.Program" Multiplicity="0..1" />
     <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
@@ -7043,6 +7077,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Treatment_ProjectLocation_ProjectLocationID">
+    <End Role="ProjectLocation" Type="ProjectFirma.Web.Models.ProjectLocation" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectLocation">
+        <PropertyRef Name="ProjectLocationID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="ProjectLocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectLocationStagingUpdates" Type="ProjectFirma.Web.Models.ProjectLocationStagingUpdate" Multiplicity="*" />
@@ -7223,6 +7269,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectUpdatePrograms" Type="ProjectFirma.Web.Models.ProjectUpdateProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectUpdatePrograms">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
     <End Role="TaxonomyTrunk" Type="ProjectFirma.Web.Models.TaxonomyTrunk" Multiplicity="1" />
     <End Role="TaxonomyBranches" Type="ProjectFirma.Web.Models.TaxonomyBranch" Multiplicity="*" />
@@ -7232,18 +7290,6 @@
       </Principal>
       <Dependent Role="TaxonomyBranches">
         <PropertyRef Name="TaxonomyTrunkID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Treatment_TreatmentArea_TreatmentAreaID">
-    <End Role="TreatmentArea" Type="ProjectFirma.Web.Models.TreatmentArea" Multiplicity="0..1" />
-    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TreatmentArea">
-        <PropertyRef Name="TreatmentAreaID" />
-      </Principal>
-      <Dependent Role="Treatments">
-        <PropertyRef Name="TreatmentAreaID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Models
     public abstract partial class ProjectLocationType : IHavePrimaryKey
     {
         public static readonly ProjectLocationTypeProjectArea ProjectArea = ProjectLocationTypeProjectArea.Instance;
-        public static readonly ProjectLocationTypeTreatmentActivity TreatmentActivity = ProjectLocationTypeTreatmentActivity.Instance;
+        public static readonly ProjectLocationTypeTreatmentArea TreatmentArea = ProjectLocationTypeTreatmentArea.Instance;
         public static readonly ProjectLocationTypeResearchPlot ResearchPlot = ProjectLocationTypeResearchPlot.Instance;
         public static readonly ProjectLocationTypeTestSite TestSite = ProjectLocationTypeTestSite.Instance;
         public static readonly ProjectLocationTypeOther Other = ProjectLocationTypeOther.Instance;
@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectLocationType()
         {
-            All = new List<ProjectLocationType> { ProjectArea, TreatmentActivity, ResearchPlot, TestSite, Other };
+            All = new List<ProjectLocationType> { ProjectArea, TreatmentArea, ResearchPlot, TestSite, Other };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectLocationType>(All.ToDictionary(x => x.ProjectLocationTypeID));
         }
 
@@ -113,8 +113,8 @@ namespace ProjectFirma.Web.Models
                     return ResearchPlot;
                 case ProjectLocationTypeEnum.TestSite:
                     return TestSite;
-                case ProjectLocationTypeEnum.TreatmentActivity:
-                    return TreatmentActivity;
+                case ProjectLocationTypeEnum.TreatmentArea:
+                    return TreatmentArea;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -124,7 +124,7 @@ namespace ProjectFirma.Web.Models
     public enum ProjectLocationTypeEnum
     {
         ProjectArea = 1,
-        TreatmentActivity = 2,
+        TreatmentArea = 2,
         ResearchPlot = 3,
         TestSite = 4,
         Other = 5
@@ -136,10 +136,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectLocationTypeProjectArea Instance = new ProjectLocationTypeProjectArea(1, @"ProjectArea", @"Project Area", @"#2c96c3");
     }
 
-    public partial class ProjectLocationTypeTreatmentActivity : ProjectLocationType
+    public partial class ProjectLocationTypeTreatmentArea : ProjectLocationType
     {
-        private ProjectLocationTypeTreatmentActivity(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
-        public static readonly ProjectLocationTypeTreatmentActivity Instance = new ProjectLocationTypeTreatmentActivity(2, @"TreatmentActivity", @"Treatment Activity", @"#2b7ac3");
+        private ProjectLocationTypeTreatmentArea(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
+        public static readonly ProjectLocationTypeTreatmentArea Instance = new ProjectLocationTypeTreatmentArea(2, @"TreatmentArea", @"Treatment Area", @"#2b7ac3");
     }
 
     public partial class ProjectLocationTypeResearchPlot : ProjectLocationType

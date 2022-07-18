@@ -163,6 +163,7 @@ namespace ProjectFirma.Web.Controllers
             if (newProjectIsProposal)
             {
                 basicsViewModel.ProjectStageID = ProjectStage.Proposed.ProjectStageID;
+                basicsViewModel.ProjectProgramSimples = new List<ProjectProgramSimple>();
             }
             
             return ViewCreateAndEditBasics(basicsViewModel, !newProjectIsProposal);

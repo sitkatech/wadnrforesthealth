@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Project> _firmaFeatureWithContextImpl;
 
         public ProjectApproveFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward, Role.ProgramEditor })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Project>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -48,6 +49,11 @@ namespace ProjectFirma.Web.Security
             {
                 var organizationLabel = FieldDefinition.Organization.GetFieldDefinitionLabel();
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel} based on your relationship to the {projectLabel}'s {organizationLabel}.");
+            }
+
+            if (person.HasRole(Role.ProgramEditor) && !person.CanProgramEditorManageProject(contextModelObject))
+            {
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel} based on your relationship to the {projectLabel}'s Program.");
             }
 
             return PermissionCheckResult.MakeSuccessPermissionCheckResult();
