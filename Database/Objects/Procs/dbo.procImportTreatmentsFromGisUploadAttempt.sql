@@ -195,8 +195,13 @@ where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttribu
 
 --ProjectLocationTypeID 2 is TreatmentArea
 insert into dbo.ProjectLocation(ProjectLocationGeometry, TemporaryTreatmentCacheID, ProjectID, ProjectLocationTypeID, ProjectLocationName)
-
-select x.ProjectLocationGeometry, x.TemporaryTreatmentCacheID, x.ProjectID, 2 as ProjectLocationTypeID, CONCAT('Imported Treatment Area ', x.ProjectID, @@ROWCOUNT) as ProjectLocationName from #tempTreatments x
+select 
+	x.ProjectLocationGeometry
+	, x.TemporaryTreatmentCacheID
+	, x.ProjectID
+	, 2 as ProjectLocationTypeID
+	, CONCAT('Imported Treatment Area ', x.ProjectID, ' ', x.TemporaryTreatmentCacheID) as ProjectLocationName 
+from #tempTreatments x
 
 
 if(@isFlattened = 0)

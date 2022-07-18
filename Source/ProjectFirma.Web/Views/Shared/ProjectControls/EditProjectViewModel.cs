@@ -119,7 +119,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
-            project.ProjectGisIdentifier = ProgramIdentifier;
+            // 2022-7-18 TK&RO - adding this trim to prevent GIS Identifiers with leading or trailing spaces as this caused comparison issues in the bulk import
+            project.ProjectGisIdentifier = ProgramIdentifier.Trim();
             var projectType =
                 HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
                     x.ProjectTypeID == project.ProjectTypeID);
