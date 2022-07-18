@@ -67,11 +67,24 @@ namespace ProjectFirma.Web.Security
 
         public virtual bool HasPermissionByPerson(Person person)
         {
-            if (!_grantedRoles.Any()) // AnonymousUnclassifiedFeature case
+            //AnonymousUnclassifiedFeature case; no roles on feature
+            if (!_grantedRoles.Any()) 
             {
-                return true; 
+                return true;
             }
-            return person != null && person.PersonID != Person.AnonymousPersonID && _grantedRoles.Any(x => person.HasRoleID(x.RoleID));
+
+            //Anonymous/Unassigned user + Unassigned role on feature
+            if (person != null
+                && person.IsAnonymousOrUnassigned 
+                && _grantedRoles.Contains(Role.Unassigned)) 
+            {
+                return true;
+            }
+
+            //Otherwise check if non-anonymous user with any matching role
+            return person != null
+                   && !person.IsAnonymousUser
+                   && _grantedRoles.Any(x => person.HasRoleID(x.RoleID));
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
