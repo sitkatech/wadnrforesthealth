@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Views.Program
             NotificationsGridName = "programNotificationsGrid";
             NotificationsGridDataUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(tc => tc.ProgramNotificationGridJsonData(program));
 
-            ProjectsGridSpec = new ProjectListGridSpec(currentPerson);
+            ProjectsGridSpec = new ProjectListGridSpec(currentPerson, new Dictionary<int, List<Models.Program>>());
             ProjectsGridName = "projectsGrid";
             ProjectsGridDataUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.ProgramProjectListGridJson(program));
         }

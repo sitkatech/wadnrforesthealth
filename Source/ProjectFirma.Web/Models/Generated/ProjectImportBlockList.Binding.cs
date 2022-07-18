@@ -31,12 +31,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectImportBlockList(int projectImportBlockListID, int programID, string projectGisIdentifier, string projectName) : this()
+        public ProjectImportBlockList(int projectImportBlockListID, int programID, string projectGisIdentifier, string projectName, int? projectID) : this()
         {
             this.ProjectImportBlockListID = projectImportBlockListID;
             this.ProgramID = programID;
             this.ProjectGisIdentifier = projectGisIdentifier;
             this.ProjectName = projectName;
+            this.ProjectID = projectID;
         }
 
         /// <summary>
@@ -117,10 +118,12 @@ namespace ProjectFirma.Web.Models
         public int ProgramID { get; set; }
         public string ProjectGisIdentifier { get; set; }
         public string ProjectName { get; set; }
+        public int? ProjectID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectImportBlockListID; } set { ProjectImportBlockListID = value; } }
 
         public virtual Program Program { get; set; }
+        public virtual Project Project { get; set; }
 
         public static class FieldLengths
         {

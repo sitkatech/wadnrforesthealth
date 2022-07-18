@@ -1092,6 +1092,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectImages" EntitySet="ProjectImage" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectImportBlockList_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectImportBlockLists" EntitySet="ProjectImportBlockList" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectInternalNote_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectInternalNote_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectInternalNotes" EntitySet="ProjectInternalNote" />
@@ -2915,6 +2919,7 @@
     <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationExpenditures" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_Project_ProjectID" FromRole="Project" ToRole="ProjectImages" />
+    <NavigationProperty Name="ProjectImportBlockLists" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Project_ProjectID" FromRole="Project" ToRole="ProjectImportBlockLists" />
     <NavigationProperty Name="ProjectInternalNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectInternalNote_Project_ProjectID" FromRole="Project" ToRole="ProjectInternalNotes" />
     <NavigationProperty Name="ProjectLocations" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="Project" ToRole="ProjectLocations" />
     <NavigationProperty Name="ProjectLocationStagings" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationStaging_Project_ProjectID" FromRole="Project" ToRole="ProjectLocationStagings" />
@@ -3186,7 +3191,9 @@
     <Property Name="ProgramID" Type="Int32" Nullable="false" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectName" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectID" Type="Int32" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Program_ProgramID" FromRole="ProjectImportBlockLists" ToRole="Program" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Project_ProjectID" FromRole="ProjectImportBlockLists" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectInternalNote">
     <Key>
@@ -6708,6 +6715,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectImages">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectImportBlockList_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="0..1" />
+    <End Role="ProjectImportBlockLists" Type="ProjectFirma.Web.Models.ProjectImportBlockList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectImportBlockLists">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

@@ -14,38 +14,44 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Program
 {
-    public class ProjectListGridSpec : GridSpec<ProjectListViewModel>
+    public class ProjectListGridSpec : GridSpec<Models.Project>
     {
-        public ProjectListGridSpec(Person currentPerson)
+        public ProjectListGridSpec(Person currentPerson, Dictionary<int, List<Models.Program>> programsByProject)
         {
-            Add(string.Empty, x => x.ExistsOnImportBlockList
-                    ? ModalDialogFormHelper.ModalDialogFormLink("Remove from Block List",
+            Add(string.Empty, x => x.ProjectImportBlockLists.Any()
+                    ? ModalDialogFormHelper.ModalDialogFormLink(null, "Remove from Block List",
                         SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
-                            c.RemoveBlockListProject(x.Project)),
-                        $"Remove {x.Project.DisplayName} from Import Block List", 950, "Yes", "Cancel", null, null,
-                        null)
-                    : ModalDialogFormHelper.ModalDialogFormLink("Add to Block List",
+                            c.RemoveBlockListProject(x)),
+                        $"Remove {x.DisplayName} from Import Block List", 950,
+                        "btnRemoveImportBlockList", "Yes", "Cancel", null, null, null, null, "Allow project to be updated by the imports of its programs.")
+                    : ModalDialogFormHelper.ModalDialogFormLink(null, "Add to Block List",
                         SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
-                            c.BlockListProject(x.Project)), $"Add {x.Project.DisplayName} to Import Block List", 950,
-                        "Yes", "Cancel", null, null, null),
+                            c.BlockListProject(x)), $"Add {x.DisplayName} to Import Block List", 950,
+                        "btnAddImportBlockList", "Yes", "Cancel", null, null, null, null, "Block project from being updated by the imports of its programs."),
                 125, DhtmlxGridColumnFilterType.None, true);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(),
-                x => UrlTemplate.MakeHrefString(x.Project.GetDetailUrl(), x.Project.FhtProjectNumber), 105,
-                DhtmlxGridColumnFilterType.Text);
+                x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber),
+                105, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(),
-                x => UrlTemplate.MakeHrefString(x.Project.GetDetailUrl(), x.Project.ProjectName), 350,
-                DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.Project.ProjectType.DisplayName, 240,
-                DhtmlxGridColumnFilterType.SelectFilterStrict);
+                x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),
+                300, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName,
+                160, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(),
-                x => new HtmlString(x.Project.ProjectStage.ProjectStageDisplayName), 100,
-                DhtmlxGridColumnFilterType.SelectFilterStrict, DhtmlxGridColumnAlignType.Center, false);
+                x => new HtmlString(x.ProjectStage.ProjectStageDisplayName),
+                100, DhtmlxGridColumnFilterType.SelectFilterStrict, DhtmlxGridColumnAlignType.Center, false);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 180, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.UpdatesFromImport.ToGridHeaderString(),
-                x => x.ExistsOnImportBlockList
+                x => x.ProjectImportBlockLists.Any()
                     ? new HtmlString("<span class='red'>Blocked</span>")
                     : new HtmlString("Updates"),
-                90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict, DhtmlxGridColumnAlignType.Center, true);
+                80, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict, DhtmlxGridColumnAlignType.Center, true);
+        }
+
+        private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
+        {
+            return project.ProgramListDisplayHelper(programsByProject, false);
         }
     }
 }

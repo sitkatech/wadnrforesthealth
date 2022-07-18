@@ -388,27 +388,31 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [ProgramManageFeature]
-        public GridJsonNetJObjectResult<ProjectListViewModel> ProgramProjectListGridJson(ProgramPrimaryKey programPrimaryKey)
+        public GridJsonNetJObjectResult<Project> ProgramProjectListGridJson(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
-            var gridSpec = new ProjectListGridSpec(CurrentPerson);
-            var allProjectIDsUnderProgram =
-                HttpRequestStorage.DatabaseEntities.ProjectPrograms.Where(p => p.ProgramID == program.ProgramID);
+            var programProjectDictionary = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Include(x => x.Program).ToList()
+                .GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, x => x.ToList().Select(y => y.Program).ToList());
+
+            var gridSpec = new ProjectListGridSpec(CurrentPerson, programProjectDictionary);
+            var allProjectIDsUnderProgram = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Where(p => p.ProgramID == program.ProgramID);
             var projects = HttpRequestStorage.DatabaseEntities.Projects
                 .Join(allProjectIDsUnderProgram,
                     p => p.ProjectID,
                     ap => ap.ProjectID,
                     (p, ap) => p);
-            var projectsWithImportBlock = projects
-                .GroupJoin(HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists,
-                    project => new { project.ProjectGisIdentifier, program.ProgramID },
-                    bl => new { bl.ProjectGisIdentifier, bl.ProgramID },
-                    (project, bl) => new { Project = project, ImportBlockList = bl })
-                .SelectMany(pvm => pvm.ImportBlockList.DefaultIfEmpty(),
-                    (project, bl) => new ProjectListViewModel()
-                    { Project = project.Project, ProjectImportBlockListID = (bl != null) ? bl.ProjectImportBlockListID : 0 });
-            
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectListViewModel>(projectsWithImportBlock.ToList(), gridSpec);
+
+            //var projectsWithImportBlock = projects
+            //    .GroupJoin(HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists,
+            //        project => new { project.ProjectGisIdentifier, program.ProgramID },
+            //        bl => new { bl.ProjectGisIdentifier, bl.ProgramID },
+            //        (project, bl) => new { Project = project, ImportBlockList = bl })
+            //    .SelectMany(pvm => pvm.ImportBlockList.DefaultIfEmpty(),
+            //        (project, bl) => new ProjectListViewModel()
+            //        { Project = project.Project, ProjectImportBlockListID = (bl != null) ? bl.ProjectImportBlockListID : 0 });
+
+            //var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectListViewModel>(projectsWithImportBlock.ToList(), gridSpec);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects.ToList(), gridSpec);
             return gridJsonNetJObjectResult;
         }
 

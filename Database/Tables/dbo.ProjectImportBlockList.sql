@@ -7,6 +7,7 @@ CREATE TABLE [dbo].[ProjectImportBlockList](
 	[ProgramID] [int] NOT NULL,
 	[ProjectGisIdentifier] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectID] [int] NULL,
  CONSTRAINT [PK_ProjectImportBlockList_ProjectImportBlockListID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectImportBlockListID] ASC
@@ -18,6 +19,11 @@ ALTER TABLE [dbo].[ProjectImportBlockList]  WITH CHECK ADD  CONSTRAINT [FK_Proje
 REFERENCES [dbo].[Program] ([ProgramID])
 GO
 ALTER TABLE [dbo].[ProjectImportBlockList] CHECK CONSTRAINT [FK_ProjectImportBlockList_Program_ProgramID]
+GO
+ALTER TABLE [dbo].[ProjectImportBlockList]  WITH CHECK ADD  CONSTRAINT [FK_ProjectImportBlockList_Project_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[Project] ([ProjectID])
+GO
+ALTER TABLE [dbo].[ProjectImportBlockList] CHECK CONSTRAINT [FK_ProjectImportBlockList_Project_ProjectID]
 GO
 ALTER TABLE [dbo].[ProjectImportBlockList]  WITH CHECK ADD  CONSTRAINT [CK_ProjectImportBlockList_ProjectGisIdentifierOrProjectName_IsRequired] CHECK  (([ProjectGisIdentifier] IS NOT NULL OR [ProjectName] IS NOT NULL))
 GO

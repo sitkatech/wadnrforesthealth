@@ -51,8 +51,10 @@ namespace ProjectFirma.Web.Controllers
             {
                 var projectImportBlockList = new ProjectImportBlockList(projectProgram.Program)
                 {
+                    ProgramID = projectProgram.ProgramID,
                     ProjectGisIdentifier = project.ProjectGisIdentifier,
-                    ProjectName = project.ProjectName
+                    ProjectName = project.ProjectName,
+                    ProjectID = project.ProjectID,
                 };
 
                 HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(projectImportBlockList);
@@ -90,21 +92,29 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        public static bool ExistsInBlockList(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
-                .FirstOrDefault(p => p.ProjectGisIdentifier == project.ProjectGisIdentifier);
-
-            return existing != null;
-        }
-
         public static bool ExistsInBlockList(ProjectPrimaryKey projectPrimaryKey, ProgramPrimaryKey programPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var program = programPrimaryKey.EntityObject;
+            return ExistsInBlockList(programPrimaryKey.PrimaryKeyValue, project.ProjectGisIdentifier, project.ProjectName, project.ProjectID);
+        }
+
+        public static bool ExistsInBlockList(int programID, string projectGisIdentifier, string projectName,
+            int? projectID)
+        {
             var existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
-                .FirstOrDefault(p => p.ProjectGisIdentifier == project.ProjectGisIdentifier && p.ProgramID == program.ProgramID);
+                .FirstOrDefault(p => p.ProgramID == programID && p.ProjectGisIdentifier == projectGisIdentifier && p.ProjectName == projectName);
+
+            if (existing == null)
+            {
+                existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
+                    .FirstOrDefault(p => p.ProgramID == programID && p.ProjectGisIdentifier == projectGisIdentifier);
+            }
+
+            if (existing == null)
+            {
+                existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
+                    .FirstOrDefault(p => p.ProgramID == programID && p.ProjectName == projectName);
+            }
 
             return existing != null;
         }
