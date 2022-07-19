@@ -63,12 +63,20 @@ namespace ProjectFirma.Web.Security
                 }
             }
 
-            // "should only be visible and accessible to the following roles: Program Manager, Admin, Sitka Admin."
+            // "should only be visible and accessible to the following roles: Project Steward, Program Editor, Admin, Sitka Admin."
             bool projectCanOnlyBeSeenByAdmins = contextModelObject.ProjectType.LimitVisibilityToAdmin;
-            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.SitkaAdmin) || person.HasRole(Role.ProjectSteward);
-            if (projectCanOnlyBeSeenByAdmins && !personHasLimitedVisibilityRole)
+            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.SitkaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.ProgramEditor);
+            if (projectCanOnlyBeSeenByAdmins)
             {
-                return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
+                if (!personHasLimitedVisibilityRole)
+                {
+                    return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
+                }
+
+                if (person.HasRole(Role.ProgramEditor) && !person.CanProgramEditorManageProject(contextModelObject))
+                {
+                    return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
+                }
             }
 
             // Allowed
