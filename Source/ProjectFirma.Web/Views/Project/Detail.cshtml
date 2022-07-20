@@ -317,24 +317,18 @@
 
                             <br />
 
-                            @if (ViewDataTyped.Project.Treatments.Any())
-                            {
-                                <div>
-                                    <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
-                                </div>
-                            
-                                <div class="panel-body" id="treatmentGridNonFlattened">
-                                    @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                                </div>
+                            <div>
+                                <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
+                            </div>
+                        
+                            <div class="panel-body" id="treatmentGridNonFlattened">
+                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
 
-                                <div class="panel-body" id="treatmentGridFlattened">
-                                    @Html.DhtmlxGrid(ViewDataTyped.TreatmentGroupGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                                </div>
-                            }
-                            else
-                            {
-                                <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
-                            }
+                            <div class="panel-body" id="treatmentGridFlattened">
+                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentGroupGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
+     
                         </div>
                     </div>
                 }

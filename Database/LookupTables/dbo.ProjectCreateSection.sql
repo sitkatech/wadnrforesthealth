@@ -16,4 +16,5 @@ values
 (16, 'Contacts', 'Contacts', 26, 1, 1),
 (17, 'DNRUplandRegions', 'DNR Upland Regions', 50, 1, 2),
 (18, 'PriorityLandscapes', 'Priority Landscapes', 45, 1, 2),
-(19, 'ProjectAttributes', 'Project Attributes', 22, 1, 1)
+(19, 'ProjectAttributes', 'Project Attributes', 22, 1, 1),
+(20, 'Treatments', 'Treatments', 22, 105, 5)

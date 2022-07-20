@@ -285,4 +285,25 @@ namespace ProjectFirma.Web.Models
             return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Contacts(project.ProjectID)) : null;
         }
     }
+
+    public partial class ProjectCreateSectionTreatments
+    {
+        public override bool IsComplete(Project project)
+        {
+            if (project == null)
+            {
+                return false;
+            }
+
+            //todo: check for section completeness
+            //var validationResults = new TreatmentsViewModel(project, null).GetValidationResults().ToList();
+            //return !validationResults.Any();
+            return true;
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Treatments(project.ProjectID)) : null;
+        }
+    }
 }
