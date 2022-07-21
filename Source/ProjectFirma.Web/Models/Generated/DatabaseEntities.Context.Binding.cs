@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
+        public virtual DbSet<ForesterUnit> ForesterUnits { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual DbSet<GisExcludeIncludeColumn> GisExcludeIncludeColumns { get; set; }
@@ -433,6 +434,9 @@ namespace ProjectFirma.Web.Models
                     var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
+
+                case "ForesterUnit":
+                    return ForesterUnits.GetForesterUnit(primaryKey);
 
                 case "FundingSource":
                     var fundingSource = FundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

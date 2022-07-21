@@ -26,6 +26,7 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ForesterUnit" EntityType="ProjectFirma.Web.Models.Store.ForesterUnit" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.Store.GisDefaultMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" store:Type="Tables" Schema="dbo" />
@@ -1642,6 +1643,15 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ForesterUnit">
+    <Key>
+      <PropertyRef Name="ForesterUnitID" />
+    </Key>
+    <Property Name="ForesterUnitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ForesterUnitName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="RegionName" Type="varchar" MaxLength="100" />
+    <Property Name="ForesterUnitLocation" Type="geometry" Nullable="false" />
   </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>

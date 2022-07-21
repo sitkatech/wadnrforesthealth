@@ -26,6 +26,7 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
+    <EntitySet Name="ForesterUnit" EntityType="ProjectFirma.Web.Models.ForesterUnit" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.GisCrossWalkDefault" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.GisDefaultMapping" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.GisExcludeIncludeColumn" />
@@ -1617,6 +1618,15 @@
     <Property Name="FeatureClassName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
+  </EntityType>
+  <EntityType Name="ForesterUnit">
+    <Key>
+      <PropertyRef Name="ForesterUnitID" />
+    </Key>
+    <Property Name="ForesterUnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ForesterUnitName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="RegionName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ForesterUnitLocation" Type="Geometry" Nullable="false" />
   </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>

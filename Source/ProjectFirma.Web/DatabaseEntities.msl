@@ -273,6 +273,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ForesterUnit">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterUnit">
+        <MappingFragment StoreEntitySet="ForesterUnit">
+          <ScalarProperty Name="ForesterUnitID" ColumnName="ForesterUnitID" />
+          <ScalarProperty Name="ForesterUnitName" ColumnName="ForesterUnitName" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="ForesterUnitLocation" ColumnName="ForesterUnitLocation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisCrossWalkDefault">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisCrossWalkDefault">
         <MappingFragment StoreEntitySet="GisCrossWalkDefault">
