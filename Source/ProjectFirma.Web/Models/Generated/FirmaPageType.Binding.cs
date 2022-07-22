@@ -59,6 +59,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeDNRCostShareTreatments DNRCostShareTreatments = FirmaPageTypeDNRCostShareTreatments.Instance;
         public static readonly FirmaPageTypeProgramsList ProgramsList = FirmaPageTypeProgramsList.Instance;
         public static readonly FirmaPageTypeUploadLoaTabularDataExcel UploadLoaTabularDataExcel = FirmaPageTypeUploadLoaTabularDataExcel.Instance;
+        public static readonly FirmaPageTypeManageFindYourForester ManageFindYourForester = FirmaPageTypeManageFindYourForester.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -68,7 +69,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -178,6 +179,8 @@ namespace ProjectFirma.Web.Models
                     return InteractionEventList;
                 case FirmaPageTypeEnum.InternalSetupNotes:
                     return InternalSetupNotes;
+                case FirmaPageTypeEnum.ManageFindYourForester:
+                    return ManageFindYourForester;
                 case FirmaPageTypeEnum.ManageProjectCustomAttributeTypeInstructions:
                     return ManageProjectCustomAttributeTypeInstructions;
                 case FirmaPageTypeEnum.ManageProjectCustomAttributeTypesList:
@@ -267,7 +270,8 @@ namespace ProjectFirma.Web.Models
         GisUploadAttemptInstructions = 63,
         DNRCostShareTreatments = 64,
         ProgramsList = 65,
-        UploadLoaTabularDataExcel = 66
+        UploadLoaTabularDataExcel = 66,
+        ManageFindYourForester = 67
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -508,5 +512,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeUploadLoaTabularDataExcel(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeUploadLoaTabularDataExcel Instance = new FirmaPageTypeUploadLoaTabularDataExcel(66, @"UploadLoaTabularDataExcel", @"Upload Loa Tabular Data", 1);
+    }
+
+    public partial class FirmaPageTypeManageFindYourForester : FirmaPageType
+    {
+        private FirmaPageTypeManageFindYourForester(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeManageFindYourForester Instance = new FirmaPageTypeManageFindYourForester(67, @"ManageFindYourForester", @"Manage Find Your Forester", 1);
     }
 }

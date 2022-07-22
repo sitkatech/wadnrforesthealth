@@ -75,6 +75,14 @@ from
 	dbo.DNRUplandRegion as ur
 
 
+insert into dbo.FirmaPageType(FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeDisplayName, FirmaPageRenderTypeID)
+values (67, 'ManageFindYourForester', 'Manage Find Your Forester', 1)
+go
+
+insert into dbo.FirmaPage(FirmaPageTypeID, FirmaPageContent)
+values (67, null)
+
+
 
 /*
 
