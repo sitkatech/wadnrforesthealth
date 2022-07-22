@@ -202,6 +202,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
+        public virtual DbSet<vGeoServerFindYourForester> vGeoServerFindYourForesters { get; set; }
         public virtual DbSet<vGeoServerPclBoundaryLine> vGeoServerPclBoundaryLines { get; set; }
         public virtual DbSet<vGeoServerPclLandscapeTreatmentPriority> vGeoServerPclLandscapeTreatmentPriorities { get; set; }
         public virtual DbSet<vGeoServerPclVectorRanked> vGeoServerPclVectorRankeds { get; set; }

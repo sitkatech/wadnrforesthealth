@@ -174,6 +174,21 @@
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vGeoServerFindYourForester" EntityType="ProjectFirma.Web.Models.Store.vGeoServerFindYourForester" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerFindYourForester">
+      <DefiningQuery>SELECT 
+[vGeoServerFindYourForester].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerFindYourForester].[ForesterWorkUnitName] AS [ForesterWorkUnitName], 
+[vGeoServerFindYourForester].[ForesterWorkUnitLocation] AS [ForesterWorkUnitLocation], 
+[vGeoServerFindYourForester].[ForesterRoleID] AS [ForesterRoleID], 
+[vGeoServerFindYourForester].[ForesterRoleName] AS [ForesterRoleName], 
+[vGeoServerFindYourForester].[ForesterRoleDisplayName] AS [ForesterRoleDisplayName], 
+[vGeoServerFindYourForester].[PersonID] AS [PersonID], 
+[vGeoServerFindYourForester].[FirstName] AS [FirstName], 
+[vGeoServerFindYourForester].[LastName] AS [LastName], 
+[vGeoServerFindYourForester].[Email] AS [Email], 
+[vGeoServerFindYourForester].[Phone] AS [Phone]
+FROM [dbo].[vGeoServerFindYourForester] AS [vGeoServerFindYourForester]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclBoundaryLine" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclBoundaryLine">
       <DefiningQuery>SELECT 
 [vGeoServerPclBoundaryLine].[PclBoundaryLineID] AS [PclBoundaryLineID], 
@@ -3413,6 +3428,30 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerFindYourForester' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerFindYourForester">
+    <Key>
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="ForesterWorkUnitName" />
+      <PropertyRef Name="ForesterWorkUnitLocation" />
+      <PropertyRef Name="ForesterRoleID" />
+      <PropertyRef Name="ForesterRoleName" />
+      <PropertyRef Name="ForesterRoleDisplayName" />
+    </Key>
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="ForesterWorkUnitName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ForesterWorkUnitLocation" Type="geometry" Nullable="false" />
+    <Property Name="ForesterRoleID" Type="int" Nullable="false" />
+    <Property Name="ForesterRoleName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ForesterRoleDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PersonID" Type="int" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
+    <Property Name="Phone" Type="varchar" MaxLength="30" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclBoundaryLine' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
