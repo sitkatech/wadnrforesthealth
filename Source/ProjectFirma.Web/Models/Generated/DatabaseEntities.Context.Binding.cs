@@ -54,7 +54,9 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
-        public virtual DbSet<ForesterUnit> ForesterUnits { get; set; }
+        public virtual DbSet<ForesterRole> ForesterRoles { get; set; }
+        public virtual DbSet<ForesterWorkUnitPerson> ForesterWorkUnitPeople { get; set; }
+        public virtual DbSet<ForesterWorkUnit> ForesterWorkUnits { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual DbSet<GisExcludeIncludeColumn> GisExcludeIncludeColumns { get; set; }
@@ -435,8 +437,14 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
 
-                case "ForesterUnit":
-                    return ForesterUnits.GetForesterUnit(primaryKey);
+                case "ForesterRole":
+                    return ForesterRoles.GetForesterRole(primaryKey);
+
+                case "ForesterWorkUnitPerson":
+                    return ForesterWorkUnitPeople.GetForesterWorkUnitPerson(primaryKey);
+
+                case "ForesterWorkUnit":
+                    return ForesterWorkUnits.GetForesterWorkUnit(primaryKey);
 
                 case "FundingSource":
                     var fundingSource = FundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

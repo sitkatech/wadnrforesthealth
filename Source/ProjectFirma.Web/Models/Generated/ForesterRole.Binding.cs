@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ForesterUnit]
+//  Source Table: [dbo].[ForesterRole]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,48 +16,47 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ForesterUnit] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ForesterUnit]")]
-    public partial class ForesterUnit : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ForesterRole] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ForesterRole]")]
+    public partial class ForesterRole : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ForesterUnit()
+        protected ForesterRole()
         {
-
+            this.ForesterWorkUnits = new HashSet<ForesterWorkUnit>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ForesterUnit(int foresterUnitID, string foresterUnitName, string regionName, DbGeometry foresterUnitLocation) : this()
+        public ForesterRole(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : this()
         {
-            this.ForesterUnitID = foresterUnitID;
-            this.ForesterUnitName = foresterUnitName;
-            this.RegionName = regionName;
-            this.ForesterUnitLocation = foresterUnitLocation;
+            this.ForesterRoleID = foresterRoleID;
+            this.ForesterRoleDisplayName = foresterRoleDisplayName;
+            this.ForesterRoleName = foresterRoleName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ForesterUnit(string foresterUnitName, DbGeometry foresterUnitLocation) : this()
+        public ForesterRole(string foresterRoleDisplayName, string foresterRoleName) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ForesterUnitID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ForesterRoleID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ForesterUnitName = foresterUnitName;
-            this.ForesterUnitLocation = foresterUnitLocation;
+            this.ForesterRoleDisplayName = foresterRoleDisplayName;
+            this.ForesterRoleName = foresterRoleName;
         }
 
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ForesterUnit CreateNewBlank()
+        public static ForesterRole CreateNewBlank()
         {
-            return new ForesterUnit(default(string), default(DbGeometry));
+            return new ForesterRole(default(string), default(string));
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return ForesterWorkUnits.Any();
         }
 
         /// <summary>
@@ -76,13 +75,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(ForesterWorkUnits.Any())
+            {
+                dependentObjects.Add(typeof(ForesterWorkUnit).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ForesterUnit).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ForesterRole).Name, typeof(ForesterWorkUnit).Name};
 
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.ForesterUnits.Remove(this);
+            dbContext.ForesterRoles.Remove(this);
         }
         
         /// <summary>
@@ -98,24 +101,34 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in ForesterWorkUnits.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
-        public int ForesterUnitID { get; set; }
-        public string ForesterUnitName { get; set; }
-        public string RegionName { get; set; }
-        public DbGeometry ForesterUnitLocation { get; set; }
+        public int ForesterRoleID { get; set; }
+        public string ForesterRoleDisplayName { get; set; }
+        public string ForesterRoleName { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ForesterUnitID; } set { ForesterUnitID = value; } }
+        public int PrimaryKey { get { return ForesterRoleID; } set { ForesterRoleID = value; } }
 
-
+        public virtual ICollection<ForesterWorkUnit> ForesterWorkUnits { get; set; }
 
         public static class FieldLengths
         {
-            public const int ForesterUnitName = 100;
-            public const int RegionName = 100;
+            public const int ForesterRoleDisplayName = 100;
+            public const int ForesterRoleName = 100;
         }
     }
 }

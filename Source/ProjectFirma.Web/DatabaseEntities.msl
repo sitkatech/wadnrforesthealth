@@ -273,13 +273,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ForesterUnit">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterUnit">
-        <MappingFragment StoreEntitySet="ForesterUnit">
-          <ScalarProperty Name="ForesterUnitID" ColumnName="ForesterUnitID" />
-          <ScalarProperty Name="ForesterUnitName" ColumnName="ForesterUnitName" />
+    <EntitySetMapping Name="ForesterRole">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterRole">
+        <MappingFragment StoreEntitySet="ForesterRole">
+          <ScalarProperty Name="ForesterRoleID" ColumnName="ForesterRoleID" />
+          <ScalarProperty Name="ForesterRoleDisplayName" ColumnName="ForesterRoleDisplayName" />
+          <ScalarProperty Name="ForesterRoleName" ColumnName="ForesterRoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForesterWorkUnit">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterWorkUnit">
+        <MappingFragment StoreEntitySet="ForesterWorkUnit">
+          <ScalarProperty Name="ForesterWorkUnitID" ColumnName="ForesterWorkUnitID" />
+          <ScalarProperty Name="ForesterRoleID" ColumnName="ForesterRoleID" />
+          <ScalarProperty Name="ForesterWorkUnitName" ColumnName="ForesterWorkUnitName" />
           <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-          <ScalarProperty Name="ForesterUnitLocation" ColumnName="ForesterUnitLocation" />
+          <ScalarProperty Name="ForesterWorkUnitLocation" ColumnName="ForesterWorkUnitLocation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForesterWorkUnitPerson">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterWorkUnitPerson">
+        <MappingFragment StoreEntitySet="ForesterWorkUnitPerson">
+          <ScalarProperty Name="ForesterWorkUnitPersonID" ColumnName="ForesterWorkUnitPersonID" />
+          <ScalarProperty Name="ForesterWorkUnitID" ColumnName="ForesterWorkUnitID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
