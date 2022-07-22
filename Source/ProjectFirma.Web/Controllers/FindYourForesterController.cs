@@ -36,10 +36,23 @@ namespace ProjectFirma.Web.Controllers
         [FindYourForesterManageFeature]
         public ViewResult Manage()
         {
-            var layerGeoJsons = new List<LayerGeoJson>
+            
+            var layerGeoJsons = new List<LayerGeoJson>();
+            var layerVisibility = LayerInitialVisibility.Show;
+            foreach (var role in ForesterRole.All)
             {
-                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
-            };
+                if (HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Any(x => x.ForesterRoleID == role.ForesterRoleID))
+                {
+                    var tempLayer = new LayerGeoJson(role.ForesterRoleDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
+                        FirmaWebConfiguration.GetFindYourForesterWmsLayerName(), "#59ACFF", 0.2m, layerVisibility, $"ForesterRoleID={role.ForesterRoleID}", true);
+                    if (layerVisibility == LayerInitialVisibility.Show)
+                    {
+                        layerVisibility = LayerInitialVisibility.Hide;
+                    }
+                    layerGeoJsons.Add(tempLayer);
+                }
+            }
+            
 
             var mapInitJson = new MapInitJson("manageFindYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ManageFindYourForester);

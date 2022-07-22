@@ -54,7 +54,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
-        public virtual DbSet<ForesterRole> ForesterRoles { get; set; }
         public virtual DbSet<ForesterWorkUnitPerson> ForesterWorkUnitPeople { get; set; }
         public virtual DbSet<ForesterWorkUnit> ForesterWorkUnits { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
@@ -202,7 +201,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
-        public virtual DbSet<vGeoServerFindYourForester> vGeoServerFindYourForesters { get; set; }
         public virtual DbSet<vGeoServerPclBoundaryLine> vGeoServerPclBoundaryLines { get; set; }
         public virtual DbSet<vGeoServerPclLandscapeTreatmentPriority> vGeoServerPclLandscapeTreatmentPriorities { get; set; }
         public virtual DbSet<vGeoServerPclVectorRanked> vGeoServerPclVectorRankeds { get; set; }
@@ -439,7 +437,9 @@ namespace ProjectFirma.Web.Models
                     return focusAreaStatus;
 
                 case "ForesterRole":
-                    return ForesterRoles.GetForesterRole(primaryKey);
+                    var foresterRole = ForesterRole.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(foresterRole, "ForesterRole", primaryKey);
+                    return foresterRole;
 
                 case "ForesterWorkUnitPerson":
                     return ForesterWorkUnitPeople.GetForesterWorkUnitPerson(primaryKey);

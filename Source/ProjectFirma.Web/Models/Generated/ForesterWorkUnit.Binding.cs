@@ -61,8 +61,6 @@ namespace ProjectFirma.Web.Models
             // Mark this as a new object by setting primary key with special value
             this.ForesterWorkUnitID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ForesterRoleID = foresterRole.ForesterRoleID;
-            this.ForesterRole = foresterRole;
-            foresterRole.ForesterWorkUnits.Add(this);
             this.ForesterWorkUnitName = foresterWorkUnitName;
             this.ForesterWorkUnitLocation = foresterWorkUnitLocation;
         }
@@ -142,7 +140,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ForesterWorkUnitID; } set { ForesterWorkUnitID = value; } }
 
         public virtual ICollection<ForesterWorkUnitPerson> ForesterWorkUnitPeople { get; set; }
-        public virtual ForesterRole ForesterRole { get; set; }
+        public ForesterRole ForesterRole { get { return ForesterRole.AllLookupDictionary[ForesterRoleID]; } }
 
         public static class FieldLengths
         {

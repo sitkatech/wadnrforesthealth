@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[ForesterRole]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using CodeFirstStoreFunctions;
@@ -16,119 +17,164 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ForesterRole] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ForesterRole]")]
-    public partial class ForesterRole : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class ForesterRole : IHavePrimaryKey
     {
+        public static readonly ForesterRoleServiceForester ServiceForester = ForesterRoleServiceForester.Instance;
+        public static readonly ForesterRoleServiceForestrySpecialist ServiceForestrySpecialist = ForesterRoleServiceForestrySpecialist.Instance;
+        public static readonly ForesterRoleForestPracticesForester ForestPracticesForester = ForesterRoleForestPracticesForester.Instance;
+        public static readonly ForesterRoleStewardshipBiologist StewardshipBiologist = ForesterRoleStewardshipBiologist.Instance;
+        public static readonly ForesterRoleUrbanForestryTechnician UrbanForestryTechnician = ForesterRoleUrbanForestryTechnician.Instance;
+        public static readonly ForesterRoleCommunityWildfirePreparednessSpecialist CommunityWildfirePreparednessSpecialist = ForesterRoleCommunityWildfirePreparednessSpecialist.Instance;
+        public static readonly ForesterRoleRegulationAssistanceForester RegulationAssistanceForester = ForesterRoleRegulationAssistanceForester.Instance;
+
+        public static readonly List<ForesterRole> All;
+        public static readonly ReadOnlyDictionary<int, ForesterRole> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected ForesterRole()
+        static ForesterRole()
         {
-            this.ForesterWorkUnits = new HashSet<ForesterWorkUnit>();
+            All = new List<ForesterRole> { ServiceForester, ServiceForestrySpecialist, ForestPracticesForester, StewardshipBiologist, UrbanForestryTechnician, CommunityWildfirePreparednessSpecialist, RegulationAssistanceForester };
+            AllLookupDictionary = new ReadOnlyDictionary<int, ForesterRole>(All.ToDictionary(x => x.ForesterRoleID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public ForesterRole(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : this()
+        protected ForesterRole(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName)
         {
-            this.ForesterRoleID = foresterRoleID;
-            this.ForesterRoleDisplayName = foresterRoleDisplayName;
-            this.ForesterRoleName = foresterRoleName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public ForesterRole(string foresterRoleDisplayName, string foresterRoleName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.ForesterRoleID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.ForesterRoleDisplayName = foresterRoleDisplayName;
-            this.ForesterRoleName = foresterRoleName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static ForesterRole CreateNewBlank()
-        {
-            return new ForesterRole(default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return ForesterWorkUnits.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(ForesterWorkUnits.Any())
-            {
-                dependentObjects.Add(typeof(ForesterWorkUnit).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ForesterRole).Name, typeof(ForesterWorkUnit).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.ForesterRoles.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in ForesterWorkUnits.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            ForesterRoleID = foresterRoleID;
+            ForesterRoleDisplayName = foresterRoleDisplayName;
+            ForesterRoleName = foresterRoleName;
         }
 
         [Key]
-        public int ForesterRoleID { get; set; }
-        public string ForesterRoleDisplayName { get; set; }
-        public string ForesterRoleName { get; set; }
+        public int ForesterRoleID { get; private set; }
+        public string ForesterRoleDisplayName { get; private set; }
+        public string ForesterRoleName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return ForesterRoleID; } set { ForesterRoleID = value; } }
+        public int PrimaryKey { get { return ForesterRoleID; } }
 
-        public virtual ICollection<ForesterWorkUnit> ForesterWorkUnits { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(ForesterRole other)
         {
-            public const int ForesterRoleDisplayName = 100;
-            public const int ForesterRoleName = 100;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.ForesterRoleID == ForesterRoleID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ForesterRole);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return ForesterRoleID;
+        }
+
+        public static bool operator ==(ForesterRole left, ForesterRole right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ForesterRole left, ForesterRole right)
+        {
+            return !Equals(left, right);
+        }
+
+        public ForesterRoleEnum ToEnum { get { return (ForesterRoleEnum)GetHashCode(); } }
+
+        public static ForesterRole ToType(int enumValue)
+        {
+            return ToType((ForesterRoleEnum)enumValue);
+        }
+
+        public static ForesterRole ToType(ForesterRoleEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case ForesterRoleEnum.CommunityWildfirePreparednessSpecialist:
+                    return CommunityWildfirePreparednessSpecialist;
+                case ForesterRoleEnum.ForestPracticesForester:
+                    return ForestPracticesForester;
+                case ForesterRoleEnum.RegulationAssistanceForester:
+                    return RegulationAssistanceForester;
+                case ForesterRoleEnum.ServiceForester:
+                    return ServiceForester;
+                case ForesterRoleEnum.ServiceForestrySpecialist:
+                    return ServiceForestrySpecialist;
+                case ForesterRoleEnum.StewardshipBiologist:
+                    return StewardshipBiologist;
+                case ForesterRoleEnum.UrbanForestryTechnician:
+                    return UrbanForestryTechnician;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum ForesterRoleEnum
+    {
+        ServiceForester = 1,
+        ServiceForestrySpecialist = 2,
+        ForestPracticesForester = 3,
+        StewardshipBiologist = 4,
+        UrbanForestryTechnician = 5,
+        CommunityWildfirePreparednessSpecialist = 6,
+        RegulationAssistanceForester = 7
+    }
+
+    public partial class ForesterRoleServiceForester : ForesterRole
+    {
+        private ForesterRoleServiceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleServiceForester Instance = new ForesterRoleServiceForester(1, @"Service Forester", @"ServiceForester");
+    }
+
+    public partial class ForesterRoleServiceForestrySpecialist : ForesterRole
+    {
+        private ForesterRoleServiceForestrySpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleServiceForestrySpecialist Instance = new ForesterRoleServiceForestrySpecialist(2, @"Service Forestry Specialist", @"ServiceForestrySpecialist");
+    }
+
+    public partial class ForesterRoleForestPracticesForester : ForesterRole
+    {
+        private ForesterRoleForestPracticesForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleForestPracticesForester Instance = new ForesterRoleForestPracticesForester(3, @"Forest Practices Forester", @"ForestPracticesForester");
+    }
+
+    public partial class ForesterRoleStewardshipBiologist : ForesterRole
+    {
+        private ForesterRoleStewardshipBiologist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleStewardshipBiologist Instance = new ForesterRoleStewardshipBiologist(4, @"Stewardship Biologist", @"StewardshipBiologist");
+    }
+
+    public partial class ForesterRoleUrbanForestryTechnician : ForesterRole
+    {
+        private ForesterRoleUrbanForestryTechnician(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleUrbanForestryTechnician Instance = new ForesterRoleUrbanForestryTechnician(5, @"Urban Forestry Technician", @"UrbanForestryTechnician");
+    }
+
+    public partial class ForesterRoleCommunityWildfirePreparednessSpecialist : ForesterRole
+    {
+        private ForesterRoleCommunityWildfirePreparednessSpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleCommunityWildfirePreparednessSpecialist Instance = new ForesterRoleCommunityWildfirePreparednessSpecialist(6, @"Community Wildfire Preparedness Specialist", @"CommunityWildfirePreparednessSpecialist");
+    }
+
+    public partial class ForesterRoleRegulationAssistanceForester : ForesterRole
+    {
+        private ForesterRoleRegulationAssistanceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleRegulationAssistanceForester Instance = new ForesterRoleRegulationAssistanceForester(7, @"Regulation Assistance Forester", @"RegulationAssistanceForester");
     }
 }
