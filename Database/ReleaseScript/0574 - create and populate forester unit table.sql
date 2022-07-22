@@ -58,7 +58,16 @@ create table dbo.ForesterWorkUnitPerson(
 
 insert into dbo.ForesterWorkUnit(ForesterRoleID, ForesterWorkUnitName, RegionName, ForesterWorkUnitLocation)
 select
-	3 as ForesterRoleID,
+	4 as ForesterRoleID,
+	ur.DNRUplandRegionName as ForesterWorkUnitName,
+	ur.DNRUplandRegionName as RegionName,
+	ur.DNRUplandRegionLocation as ForesterWorkUnitLocation
+from
+	dbo.DNRUplandRegion as ur
+
+insert into dbo.ForesterWorkUnit(ForesterRoleID, ForesterWorkUnitName, RegionName, ForesterWorkUnitLocation)
+select
+	5 as ForesterRoleID,
 	ur.DNRUplandRegionName as ForesterWorkUnitName,
 	ur.DNRUplandRegionName as RegionName,
 	ur.DNRUplandRegionLocation as ForesterWorkUnitLocation
@@ -67,4 +76,3 @@ from
 
 
 
-select * from dbo.DNRUplandRegion
