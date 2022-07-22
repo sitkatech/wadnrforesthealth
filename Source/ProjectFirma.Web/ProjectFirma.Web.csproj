@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -154,7 +154,6 @@
     <Compile Include="Models\Generated\FocusAreaStatus.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatusPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ForesterRole.Binding.cs" />
-    <Compile Include="Models\Generated\ForesterRole.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ForesterRolePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ForesterWorkUnit.Binding.cs" />
     <Compile Include="Models\Generated\ForesterWorkUnit.DatabaseContextExtensions.cs" />
@@ -677,7 +676,6 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\vGeoServerFindYourForester.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPclBoundaryLine.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPclLandscapeTreatmentPriority.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPclVectorRanked.Binding.cs" />
