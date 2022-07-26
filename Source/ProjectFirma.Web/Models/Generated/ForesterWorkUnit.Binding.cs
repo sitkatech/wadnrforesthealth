@@ -25,16 +25,17 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ForesterWorkUnit()
         {
-            this.ForesterWorkUnitPeople = new HashSet<ForesterWorkUnitPerson>();
+
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ForesterWorkUnit(int foresterWorkUnitID, int foresterRoleID, string foresterWorkUnitName, string regionName, DbGeometry foresterWorkUnitLocation) : this()
+        public ForesterWorkUnit(int foresterWorkUnitID, int foresterRoleID, int? personID, string foresterWorkUnitName, string regionName, DbGeometry foresterWorkUnitLocation) : this()
         {
             this.ForesterWorkUnitID = foresterWorkUnitID;
             this.ForesterRoleID = foresterRoleID;
+            this.PersonID = personID;
             this.ForesterWorkUnitName = foresterWorkUnitName;
             this.RegionName = regionName;
             this.ForesterWorkUnitLocation = foresterWorkUnitLocation;
@@ -79,7 +80,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ForesterWorkUnitPeople.Any();
+            return false;
         }
 
         /// <summary>
@@ -89,17 +90,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(ForesterWorkUnitPeople.Any())
-            {
-                dependentObjects.Add(typeof(ForesterWorkUnitPerson).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ForesterWorkUnit).Name, typeof(ForesterWorkUnitPerson).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ForesterWorkUnit).Name};
 
 
         /// <summary>
@@ -115,32 +112,22 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in ForesterWorkUnitPeople.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
         public int ForesterWorkUnitID { get; set; }
         public int ForesterRoleID { get; set; }
+        public int? PersonID { get; set; }
         public string ForesterWorkUnitName { get; set; }
         public string RegionName { get; set; }
         public DbGeometry ForesterWorkUnitLocation { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ForesterWorkUnitID; } set { ForesterWorkUnitID = value; } }
 
-        public virtual ICollection<ForesterWorkUnitPerson> ForesterWorkUnitPeople { get; set; }
         public ForesterRole ForesterRole { get { return ForesterRole.AllLookupDictionary[ForesterRoleID]; } }
+        public virtual Person Person { get; set; }
 
         public static class FieldLengths
         {

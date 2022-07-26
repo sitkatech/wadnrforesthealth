@@ -54,7 +54,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
-        public virtual DbSet<ForesterWorkUnitPerson> ForesterWorkUnitPeople { get; set; }
         public virtual DbSet<ForesterWorkUnit> ForesterWorkUnits { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
@@ -440,9 +439,6 @@ namespace ProjectFirma.Web.Models
                     var foresterRole = ForesterRole.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(foresterRole, "ForesterRole", primaryKey);
                     return foresterRole;
-
-                case "ForesterWorkUnitPerson":
-                    return ForesterWorkUnitPeople.GetForesterWorkUnitPerson(primaryKey);
 
                 case "ForesterWorkUnit":
                     return ForesterWorkUnits.GetForesterWorkUnit(primaryKey);

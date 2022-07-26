@@ -24,7 +24,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.FindYourForester
 {
-    public class ManageFindYourForesterGridSpec : GridSpec<Models.ForesterWorkUnit>
+    public class ManageFindYourForesterGridSpec : GridSpec<FindYourForesterGridObject>
     {
         public ManageFindYourForesterGridSpec(Person currentPerson)
         {
@@ -32,8 +32,11 @@ namespace ProjectFirma.Web.Views.FindYourForester
             ObjectNameSingular = "Forester Work Unit";
             ObjectNamePlural = "Forester Work Units";
 
-
+            //AddCheckBoxColumn();
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
+            Add($"Role", a => a.ForesterRoleDisplayName, 165);
+            Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
+
         }
     }
 }

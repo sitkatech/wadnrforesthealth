@@ -29,6 +29,7 @@ SET IDENTITY_INSERT dbo.ForesterRole OFF;
 create table dbo.ForesterWorkUnit(
 	ForesterWorkUnitID int not null identity(1,1) constraint PK_ForesterWorkUnit_ForesterWorkUnitID primary key,
 	ForesterRoleID int not null constraint FK_ForesterWorkUnit_ForesterRole_ForesterRoleID foreign key references dbo.ForesterRole(ForesterRoleID),
+	PersonID int null constraint FK_ForesterWorkUnit_Person_PersonID foreign key references dbo.Person(PersonID),
 	ForesterWorkUnitName varchar(100) not null,
 	RegionName varchar(100),
 	ForesterWorkUnitLocation geometry not null
@@ -47,12 +48,17 @@ from
 
 
 
-create table dbo.ForesterWorkUnitPerson(
-	ForesterWorkUnitPersonID int not null identity(1,1) constraint PK_ForesterWorkUnitPerson_ForesterWorkUnitPersonID primary key,
-	ForesterWorkUnitID int not null constraint FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID foreign key references dbo.ForesterWorkUnit(ForesterWorkUnitID),
-	PersonID int not null constraint FK_ForesterWorkUnitPerson_Person_PersonID foreign key references dbo.Person(PersonID)
-)
+--create table dbo.ForesterWorkUnitPerson(
+--	ForesterWorkUnitPersonID int not null identity(1,1) constraint PK_ForesterWorkUnitPerson_ForesterWorkUnitPersonID primary key,
+--	ForesterWorkUnitID int not null constraint FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID foreign key references dbo.ForesterWorkUnit(ForesterWorkUnitID),
+--	PersonID int not null constraint FK_ForesterWorkUnitPerson_Person_PersonID foreign key references dbo.Person(PersonID)
+--)
 
+--ALTER TABLE [dbo].ForesterWorkUnitPerson ADD  CONSTRAINT [AK_ForesterWorkUnitPerson_ForesterWorkUnitID_PersonID] UNIQUE NONCLUSTERED 
+--(
+--	[ForesterWorkUnitID] ASC,
+--	[PersonID] ASC
+--)
 
 
 

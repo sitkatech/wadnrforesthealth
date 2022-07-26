@@ -27,7 +27,6 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ForesterWorkUnit" EntityType="ProjectFirma.Web.Models.Store.ForesterWorkUnit" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ForesterWorkUnitPerson" EntityType="ProjectFirma.Web.Models.Store.ForesterWorkUnitPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.Store.GisDefaultMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" store:Type="Tables" Schema="dbo" />
@@ -413,13 +412,9 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
     </AssociationSet>
-    <AssociationSet Name="FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID" Association="ProjectFirma.Web.Models.Store.FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID">
-      <End Role="ForesterWorkUnit" EntitySet="ForesterWorkUnit" />
-      <End Role="ForesterWorkUnitPeople" EntitySet="ForesterWorkUnitPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ForesterWorkUnitPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ForesterWorkUnitPerson_Person_PersonID">
+    <AssociationSet Name="FK_ForesterWorkUnit_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ForesterWorkUnit_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
-      <End Role="ForesterWorkUnitPeople" EntitySet="ForesterWorkUnitPerson" />
+      <End Role="ForesterWorkUnits" EntitySet="ForesterWorkUnit" />
     </AssociationSet>
     <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
@@ -1659,17 +1654,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </Key>
     <Property Name="ForesterWorkUnitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ForesterRoleID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" />
     <Property Name="ForesterWorkUnitName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="RegionName" Type="varchar" MaxLength="100" />
     <Property Name="ForesterWorkUnitLocation" Type="geometry" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ForesterWorkUnitPerson">
-    <Key>
-      <PropertyRef Name="ForesterWorkUnitPersonID" />
-    </Key>
-    <Property Name="ForesterWorkUnitPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ForesterWorkUnitID" Type="int" Nullable="false" />
-    <Property Name="PersonID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>
@@ -3942,26 +3930,14 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID">
-    <End Role="ForesterWorkUnit" Type="ProjectFirma.Web.Models.Store.ForesterWorkUnit" Multiplicity="1" />
-    <End Role="ForesterWorkUnitPeople" Type="ProjectFirma.Web.Models.Store.ForesterWorkUnitPerson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ForesterWorkUnit">
-        <PropertyRef Name="ForesterWorkUnitID" />
-      </Principal>
-      <Dependent Role="ForesterWorkUnitPeople">
-        <PropertyRef Name="ForesterWorkUnitID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ForesterWorkUnitPerson_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="ForesterWorkUnitPeople" Type="ProjectFirma.Web.Models.Store.ForesterWorkUnitPerson" Multiplicity="*" />
+  <Association Name="FK_ForesterWorkUnit_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="ForesterWorkUnits" Type="ProjectFirma.Web.Models.Store.ForesterWorkUnit" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Person">
         <PropertyRef Name="PersonID" />
       </Principal>
-      <Dependent Role="ForesterWorkUnitPeople">
+      <Dependent Role="ForesterWorkUnits">
         <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>

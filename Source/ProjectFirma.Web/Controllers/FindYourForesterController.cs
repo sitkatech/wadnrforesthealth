@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
@@ -62,11 +63,11 @@ namespace ProjectFirma.Web.Controllers
 
 
         [FindYourForesterManageFeature]
-        public GridJsonNetJObjectResult<ForesterWorkUnit> ManageFindYourForesterGridJsonData()
+        public GridJsonNetJObjectResult<FindYourForesterGridObject> ManageFindYourForesterGridJsonData()
         {
             var gridSpec = new ManageFindYourForesterGridSpec(CurrentPerson);
-            var foresterWorkUnits = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ForesterWorkUnit>(foresterWorkUnits, gridSpec);
+            var findYourForesterGridObjects = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.ToList().Select(x => new FindYourForesterGridObject(x)).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }
     }

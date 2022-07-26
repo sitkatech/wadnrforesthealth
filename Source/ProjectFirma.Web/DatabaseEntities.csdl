@@ -27,7 +27,6 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
     <EntitySet Name="ForesterWorkUnit" EntityType="ProjectFirma.Web.Models.ForesterWorkUnit" />
-    <EntitySet Name="ForesterWorkUnitPerson" EntityType="ProjectFirma.Web.Models.ForesterWorkUnitPerson" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.GisCrossWalkDefault" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.GisDefaultMapping" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.GisExcludeIncludeColumn" />
@@ -386,13 +385,9 @@
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID" Association="ProjectFirma.Web.Models.FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID">
-      <End Role="ForesterWorkUnit" EntitySet="ForesterWorkUnit" />
-      <End Role="ForesterWorkUnitPeople" EntitySet="ForesterWorkUnitPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ForesterWorkUnitPerson_Person_PersonID" Association="ProjectFirma.Web.Models.FK_ForesterWorkUnitPerson_Person_PersonID">
+    <AssociationSet Name="FK_ForesterWorkUnit_Person_PersonID" Association="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
-      <End Role="ForesterWorkUnitPeople" EntitySet="ForesterWorkUnitPerson" />
+      <End Role="ForesterWorkUnits" EntitySet="ForesterWorkUnit" />
     </AssociationSet>
     <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
@@ -1634,20 +1629,11 @@
     </Key>
     <Property Name="ForesterWorkUnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ForesterRoleID" Type="Int32" Nullable="false" />
+    <Property Name="PersonID" Type="Int32" />
     <Property Name="ForesterWorkUnitName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RegionName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="ForesterWorkUnitLocation" Type="Geometry" Nullable="false" />
-    <NavigationProperty Name="ForesterWorkUnitPeople" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID" FromRole="ForesterWorkUnit" ToRole="ForesterWorkUnitPeople" />
-  </EntityType>
-  <EntityType Name="ForesterWorkUnitPerson">
-    <Key>
-      <PropertyRef Name="ForesterWorkUnitPersonID" />
-    </Key>
-    <Property Name="ForesterWorkUnitPersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ForesterWorkUnitID" Type="Int32" Nullable="false" />
-    <Property Name="PersonID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ForesterWorkUnit" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID" FromRole="ForesterWorkUnitPeople" ToRole="ForesterWorkUnit" />
-    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnitPerson_Person_PersonID" FromRole="ForesterWorkUnitPeople" ToRole="Person" />
+    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="ForesterWorkUnits" ToRole="Person" />
   </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>
@@ -2659,7 +2645,7 @@
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
-    <NavigationProperty Name="ForesterWorkUnitPeople" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnitPerson_Person_PersonID" FromRole="Person" ToRole="ForesterWorkUnitPeople" />
+    <NavigationProperty Name="ForesterWorkUnits" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="Person" ToRole="ForesterWorkUnits" />
     <NavigationProperty Name="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptCreatePerson" ToRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="PeopleWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
@@ -4626,26 +4612,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ForesterWorkUnitPerson_ForesterWorkUnit_ForesterWorkUnitID">
-    <End Role="ForesterWorkUnit" Type="ProjectFirma.Web.Models.ForesterWorkUnit" Multiplicity="1" />
-    <End Role="ForesterWorkUnitPeople" Type="ProjectFirma.Web.Models.ForesterWorkUnitPerson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ForesterWorkUnit">
-        <PropertyRef Name="ForesterWorkUnitID" />
-      </Principal>
-      <Dependent Role="ForesterWorkUnitPeople">
-        <PropertyRef Name="ForesterWorkUnitID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ForesterWorkUnitPerson_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
-    <End Role="ForesterWorkUnitPeople" Type="ProjectFirma.Web.Models.ForesterWorkUnitPerson" Multiplicity="*" />
+  <Association Name="FK_ForesterWorkUnit_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="ForesterWorkUnits" Type="ProjectFirma.Web.Models.ForesterWorkUnit" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Person">
         <PropertyRef Name="PersonID" />
       </Principal>
-      <Dependent Role="ForesterWorkUnitPeople">
+      <Dependent Role="ForesterWorkUnits">
         <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>

@@ -5,13 +5,13 @@ go
 create view [dbo].vGeoServerFindYourForester
 as
 select
-	fwu.ForesterWorkUnitID as PrimaryKey,
+	ISNULL(fwu.ForesterWorkUnitID, -1) as PrimaryKey,
 	fwu.ForesterWorkUnitName,
-	fwu.ForesterWorkUnitLocation,
+	COALESCE (fwu.ForesterWorkUnitLocation, '') as ForesterWorkUnitLocation,
 	fr.ForesterRoleID,
 	fr.ForesterRoleName,
 	fr.ForesterRoleDisplayName,
-	wup.PersonID,
+	p.PersonID,
 	p.FirstName,
 	p.LastName,
 	p.Email,
@@ -20,7 +20,6 @@ select
 from
 	dbo.ForesterWorkUnit as fwu
 	join dbo.ForesterRole as fr on fwu.ForesterRoleID = fr.ForesterRoleID
-	left join dbo.ForesterWorkUnitPerson as wup on wup.ForesterWorkUnitID = fwu.ForesterWorkUnitID
-	left join dbo.Person as p on wup.PersonID = p.PersonID
-	   	  
+	left join dbo.Person as p on fwu.PersonID = p.PersonID
+
 GO

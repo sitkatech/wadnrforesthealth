@@ -278,18 +278,10 @@
         <MappingFragment StoreEntitySet="ForesterWorkUnit">
           <ScalarProperty Name="ForesterWorkUnitID" ColumnName="ForesterWorkUnitID" />
           <ScalarProperty Name="ForesterRoleID" ColumnName="ForesterRoleID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="ForesterWorkUnitName" ColumnName="ForesterWorkUnitName" />
           <ScalarProperty Name="RegionName" ColumnName="RegionName" />
           <ScalarProperty Name="ForesterWorkUnitLocation" ColumnName="ForesterWorkUnitLocation" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ForesterWorkUnitPerson">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterWorkUnitPerson">
-        <MappingFragment StoreEntitySet="ForesterWorkUnitPerson">
-          <ScalarProperty Name="ForesterWorkUnitPersonID" ColumnName="ForesterWorkUnitPersonID" />
-          <ScalarProperty Name="ForesterWorkUnitID" ColumnName="ForesterWorkUnitID" />
-          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
