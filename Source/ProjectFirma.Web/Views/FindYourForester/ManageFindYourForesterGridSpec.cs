@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             ObjectNameSingular = "Forester Work Unit";
             ObjectNamePlural = "Forester Work Units";
 
-            //AddCheckBoxColumn();
+            AddCheckBoxColumn();
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
             Add($"Role", a => a.ForesterRoleDisplayName, 165);
             Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);

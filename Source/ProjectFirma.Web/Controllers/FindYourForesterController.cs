@@ -10,6 +10,7 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.FindYourForester;
+using ProjectFirma.Web.Views.Invoice;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
 
@@ -70,5 +71,39 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+        [HttpGet]
+        public PartialViewResult UnassignForester(ForesterWorkUnitPrimaryKey foresterWorkUnitPrimaryKey)
+        {
+            /*var foresterWorkUnit = foresterWorkUnitPrimaryKey.EntityObject;
+            var viewModel = new ConfirmDialogFormViewModel(foresterWorkUnit.ForesterWorkUnitID);
+            return ViewUnassignForester(foresterWorkUnit, viewModel);
+            */
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult UnassignForester(ForesterWorkUnitPrimaryKey foresterWorkUnitPrimaryKey,
+            ConfirmDialogFormViewModel viewModel)
+        {
+            /*var foresterWorkUnit = foresterWorkUnitPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewUnassignForester(foresterWorkUnit, viewModel);
+            }
+
+            foresterWorkUnit.PersonID = null;
+
+            return new ModalDialogFormJsonResult();*/
+            throw new NotImplementedException();
+        }
+        private PartialViewResult ViewUnassignForester(ForesterWorkUnit foresterWorkUnit, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this '{foresterWorkUnit.Person.FirstName}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
     }
 }
