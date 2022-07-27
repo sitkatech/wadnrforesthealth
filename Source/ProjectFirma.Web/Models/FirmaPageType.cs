@@ -234,4 +234,8 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(c => c.Manage());
     }
+    public partial class FirmaPageTypeFindYourForester
+    {
+        public override string GetViewUrl() => SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(c => c.Index());
+    }
 }
