@@ -149,20 +149,35 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="@Html.Raw("heading" + question.FindYourForesterQuestionID)">
                 <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@Html.Raw("#collapse" + question.FindYourForesterQuestionID)" aria-expanded="true" aria-controls="@Html.Raw("collapse" + question.FindYourForesterQuestionID)">
                         @question.QuestionText
                     </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div id="@Html.Raw("collapse" + question.FindYourForesterQuestionID)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@Html.Raw("heading" + question.FindYourForesterQuestionID)">
                 <div class="panel-body">
                     @if (question.FindYourForesterQuestionsWhereYouAreTheParentQuestion.Any())
                     {
-                        // for loop to OutputQuestion(child)
+                        foreach (var childQuestion in question.FindYourForesterQuestionsWhereYouAreTheParentQuestion)
+                        {
+                            @OutputQuestion(childQuestion)
+                        }
                     }
                     else
                     {
                         //output role and contact info for location entered and bonus content
+                        if (question.ForesterRoleID.HasValue)
+                        {
+                            <p>@question.ForesterRole.ForesterRoleDisplayName</p>
+                            //output foresters in this role and intersect with the location entered(if entered)
+                        }
+
+                        if (!string.IsNullOrEmpty(question.ResultsBonusContent))
+                        {
+
+                            @question.ResultsBonusContentHtmlString
+                        }
+
                     }
                 </div>
             </div>
