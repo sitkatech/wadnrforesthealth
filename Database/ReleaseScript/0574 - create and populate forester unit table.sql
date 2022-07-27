@@ -88,11 +88,13 @@ from
 
 
 insert into dbo.FirmaPageType(FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeDisplayName, FirmaPageRenderTypeID)
-values (67, 'ManageFindYourForester', 'Manage Find Your Forester', 1)
+values 
+(67, 'ManageFindYourForester', 'Manage Find Your Forester', 1),
+(68, 'FindYourForester', 'Find Your Forester', 1)
 go
 
 insert into dbo.FirmaPage(FirmaPageTypeID, FirmaPageContent)
-values (67, null)
+values (67, null),(68, null)
 
 
 
