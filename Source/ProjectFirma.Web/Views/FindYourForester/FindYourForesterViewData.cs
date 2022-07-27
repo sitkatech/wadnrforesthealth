@@ -29,13 +29,15 @@ namespace ProjectFirma.Web.Views.FindYourForester
     {
         public readonly MapInitJson MapInitJson;
 
-        public readonly string GridName;
-        public readonly string GridDataUrl;
+        public string GeocodeAddressUrl { get; }
+
 
         public FindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = "Find Your Forester";
             MapInitJson = mapInitJson;
+            GeocodeAddressUrl = SitkaRoute<ResultsController>.BuildAbsoluteUrlHttpsFromExpression(x => x.GeocodeAddress(null, null));
+
 
 
         }
