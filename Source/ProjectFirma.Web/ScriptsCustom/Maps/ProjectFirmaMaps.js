@@ -506,7 +506,8 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 console.log("error getting wms feature info");
             }
         );
-};
+        return ajaxCalls;
+    };
 
 
 ProjectFirmaMaps.Map.prototype.carryOutPromises = function (deferreds) {
@@ -616,7 +617,8 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             labelText = firstFeature.properties.ForesterRoleDisplayName;
             deferred.resolve({
                 label: labelText,
-                link: linkText
+                link: linkText,
+                properties: firstFeature.properties
             });
             break;
         default:

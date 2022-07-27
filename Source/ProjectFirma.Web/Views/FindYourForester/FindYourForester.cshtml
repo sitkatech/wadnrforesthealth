@@ -96,6 +96,19 @@
             findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
         }
 
+        //findYourForesterFirmaMap.map.on("click", function (e) {
+        //    var latlong = e.target.getLatLng();
+        //    var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlong);
+        //    findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
+        //        // do something here with them
+        //        results.forEach(result => {
+
+        //            jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]').text(result.properties.FirstName);
+
+        //        });
+        //    }); 
+        //});
+
 
         var geocodeMarker = L.marker();
 
@@ -127,7 +140,15 @@
                             geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(findYourForesterFirmaMap.map);
                             findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
                             window.setTimeout(function() {
-                                    findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), { lng: msg.Long, lat: msg.Lat });
+                                var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), { lng: msg.Long, lat: msg.Lat });
+                                findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
+                                    // do something here with them
+                                    results.forEach(result => {
+
+                                        jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]').text(result.properties.FirstName);
+
+                                    });
+                                });
                                 },
                                 1250);
 
@@ -175,6 +196,7 @@
                         if (question.ForesterRoleID.HasValue)
                         {
                             <p>@question.ForesterRole.ForesterRoleDisplayName</p>
+                            <div data-forester-role-id="@question.ForesterRoleID"></div>
                             //output foresters in this role and intersect with the location entered(if entered)
                         }
 
