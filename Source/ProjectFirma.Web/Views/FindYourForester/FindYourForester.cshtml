@@ -125,7 +125,13 @@
 
                             //Add a marker to show where you clicked.
                             geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(findYourForesterFirmaMap.map);
-                            findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12);
+                            findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
+                            window.setTimeout(function() {
+                                    findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), { lng: msg.Long, lat: msg.Lat });
+                                },
+                                1250);
+
+
                         } else {
                             console.log(msg.ErrorStatus);
                             alert(msg.ErrorStatus);
