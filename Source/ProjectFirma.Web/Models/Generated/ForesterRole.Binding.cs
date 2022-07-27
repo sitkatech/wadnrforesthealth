@@ -26,6 +26,12 @@ namespace ProjectFirma.Web.Models
         public static readonly ForesterRoleUrbanForestryTechnician UrbanForestryTechnician = ForesterRoleUrbanForestryTechnician.Instance;
         public static readonly ForesterRoleCommunityWildfirePreparednessSpecialist CommunityWildfirePreparednessSpecialist = ForesterRoleCommunityWildfirePreparednessSpecialist.Instance;
         public static readonly ForesterRoleRegulationAssistanceForester RegulationAssistanceForester = ForesterRoleRegulationAssistanceForester.Instance;
+        public static readonly ForesterRoleFamilyForestFishPassageProgram FamilyForestFishPassageProgram = ForesterRoleFamilyForestFishPassageProgram.Instance;
+        public static readonly ForesterRoleForestryRiparianEasementProgram ForestryRiparianEasementProgram = ForesterRoleForestryRiparianEasementProgram.Instance;
+        public static readonly ForesterRoleRiversAndHabitatOpenSpaceProgramManager RiversAndHabitatOpenSpaceProgramManager = ForesterRoleRiversAndHabitatOpenSpaceProgramManager.Instance;
+        public static readonly ForesterRoleServiceForestryProgramManager ServiceForestryProgramManager = ForesterRoleServiceForestryProgramManager.Instance;
+        public static readonly ForesterRoleUcfStatewideSpecialist UcfStatewideSpecialist = ForesterRoleUcfStatewideSpecialist.Instance;
+        public static readonly ForesterRoleSmallForestLandownerOfficeProgramManager SmallForestLandownerOfficeProgramManager = ForesterRoleSmallForestLandownerOfficeProgramManager.Instance;
 
         public static readonly List<ForesterRole> All;
         public static readonly ReadOnlyDictionary<int, ForesterRole> AllLookupDictionary;
@@ -35,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ForesterRole()
         {
-            All = new List<ForesterRole> { ServiceForester, ServiceForestrySpecialist, ForestPracticesForester, StewardshipBiologist, UrbanForestryTechnician, CommunityWildfirePreparednessSpecialist, RegulationAssistanceForester };
+            All = new List<ForesterRole> { ServiceForester, ServiceForestrySpecialist, ForestPracticesForester, StewardshipBiologist, UrbanForestryTechnician, CommunityWildfirePreparednessSpecialist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, ServiceForestryProgramManager, UcfStatewideSpecialist, SmallForestLandownerOfficeProgramManager };
             AllLookupDictionary = new ReadOnlyDictionary<int, ForesterRole>(All.ToDictionary(x => x.ForesterRoleID));
         }
 
@@ -107,16 +113,28 @@ namespace ProjectFirma.Web.Models
             {
                 case ForesterRoleEnum.CommunityWildfirePreparednessSpecialist:
                     return CommunityWildfirePreparednessSpecialist;
+                case ForesterRoleEnum.FamilyForestFishPassageProgram:
+                    return FamilyForestFishPassageProgram;
                 case ForesterRoleEnum.ForestPracticesForester:
                     return ForestPracticesForester;
+                case ForesterRoleEnum.ForestryRiparianEasementProgram:
+                    return ForestryRiparianEasementProgram;
                 case ForesterRoleEnum.RegulationAssistanceForester:
                     return RegulationAssistanceForester;
+                case ForesterRoleEnum.RiversAndHabitatOpenSpaceProgramManager:
+                    return RiversAndHabitatOpenSpaceProgramManager;
                 case ForesterRoleEnum.ServiceForester:
                     return ServiceForester;
+                case ForesterRoleEnum.ServiceForestryProgramManager:
+                    return ServiceForestryProgramManager;
                 case ForesterRoleEnum.ServiceForestrySpecialist:
                     return ServiceForestrySpecialist;
+                case ForesterRoleEnum.SmallForestLandownerOfficeProgramManager:
+                    return SmallForestLandownerOfficeProgramManager;
                 case ForesterRoleEnum.StewardshipBiologist:
                     return StewardshipBiologist;
+                case ForesterRoleEnum.UcfStatewideSpecialist:
+                    return UcfStatewideSpecialist;
                 case ForesterRoleEnum.UrbanForestryTechnician:
                     return UrbanForestryTechnician;
                 default:
@@ -133,7 +151,13 @@ namespace ProjectFirma.Web.Models
         StewardshipBiologist = 4,
         UrbanForestryTechnician = 5,
         CommunityWildfirePreparednessSpecialist = 6,
-        RegulationAssistanceForester = 7
+        RegulationAssistanceForester = 7,
+        FamilyForestFishPassageProgram = 8,
+        ForestryRiparianEasementProgram = 9,
+        RiversAndHabitatOpenSpaceProgramManager = 10,
+        ServiceForestryProgramManager = 11,
+        UcfStatewideSpecialist = 12,
+        SmallForestLandownerOfficeProgramManager = 13
     }
 
     public partial class ForesterRoleServiceForester : ForesterRole
@@ -176,5 +200,41 @@ namespace ProjectFirma.Web.Models
     {
         private ForesterRoleRegulationAssistanceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
         public static readonly ForesterRoleRegulationAssistanceForester Instance = new ForesterRoleRegulationAssistanceForester(7, @"Regulation Assistance Forester", @"RegulationAssistanceForester");
+    }
+
+    public partial class ForesterRoleFamilyForestFishPassageProgram : ForesterRole
+    {
+        private ForesterRoleFamilyForestFishPassageProgram(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleFamilyForestFishPassageProgram Instance = new ForesterRoleFamilyForestFishPassageProgram(8, @"Family Forest Fish Passage Program", @"FamilyForestFishPassageProgram");
+    }
+
+    public partial class ForesterRoleForestryRiparianEasementProgram : ForesterRole
+    {
+        private ForesterRoleForestryRiparianEasementProgram(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleForestryRiparianEasementProgram Instance = new ForesterRoleForestryRiparianEasementProgram(9, @"Forestry Riparian Easement Program", @"ForestryRiparianEasementProgram");
+    }
+
+    public partial class ForesterRoleRiversAndHabitatOpenSpaceProgramManager : ForesterRole
+    {
+        private ForesterRoleRiversAndHabitatOpenSpaceProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleRiversAndHabitatOpenSpaceProgramManager Instance = new ForesterRoleRiversAndHabitatOpenSpaceProgramManager(10, @"Rivers and Habitat Open Space Program Manager", @"RiversAndHabitatOpenSpaceProgramManager");
+    }
+
+    public partial class ForesterRoleServiceForestryProgramManager : ForesterRole
+    {
+        private ForesterRoleServiceForestryProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleServiceForestryProgramManager Instance = new ForesterRoleServiceForestryProgramManager(11, @"Service Forestry Program Manager", @"ServiceForestryProgramManager");
+    }
+
+    public partial class ForesterRoleUcfStatewideSpecialist : ForesterRole
+    {
+        private ForesterRoleUcfStatewideSpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleUcfStatewideSpecialist Instance = new ForesterRoleUcfStatewideSpecialist(12, @"UCF Statewide Specialist", @"UcfStatewideSpecialist");
+    }
+
+    public partial class ForesterRoleSmallForestLandownerOfficeProgramManager : ForesterRole
+    {
+        private ForesterRoleSmallForestLandownerOfficeProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
+        public static readonly ForesterRoleSmallForestLandownerOfficeProgramManager Instance = new ForesterRoleSmallForestLandownerOfficeProgramManager(13, @"Small Forest Landowner Office Program Manager", @"SmallForestLandownerOfficeProgramManager");
     }
 }

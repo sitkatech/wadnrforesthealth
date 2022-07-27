@@ -223,6 +223,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FindYourForesterQuestion">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FindYourForesterQuestion">
+        <MappingFragment StoreEntitySet="FindYourForesterQuestion">
+          <ScalarProperty Name="FindYourForesterQuestionID" ColumnName="FindYourForesterQuestionID" />
+          <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+          <ScalarProperty Name="ParentQuestionID" ColumnName="ParentQuestionID" />
+          <ScalarProperty Name="ForesterRoleID" ColumnName="ForesterRoleID" />
+          <ScalarProperty Name="ResultsBonusContent" ColumnName="ResultsBonusContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FirmaHomePageImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaHomePageImage">
         <MappingFragment StoreEntitySet="FirmaHomePageImage">

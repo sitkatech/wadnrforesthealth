@@ -21,6 +21,7 @@
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.FileResource" />
     <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.FileResourceMimeTypeFileExtension" />
+    <EntitySet Name="FindYourForesterQuestion" EntityType="ProjectFirma.Web.Models.FindYourForesterQuestion" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.FirmaHomePageImage" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
@@ -1567,6 +1568,16 @@
     <Property Name="FileResourceMimeTypeFileExtensionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FileResourceMimeTypeID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceMimeTypeFileExtensionText" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="FindYourForesterQuestion">
+    <Key>
+      <PropertyRef Name="FindYourForesterQuestionID" />
+    </Key>
+    <Property Name="FindYourForesterQuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionText" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="ParentQuestionID" Type="Int32" />
+    <Property Name="ForesterRoleID" Type="Int32" />
+    <Property Name="ResultsBonusContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>

@@ -21,6 +21,7 @@
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.Store.FileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.Store.FileResourceMimeTypeFileExtension" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FindYourForesterQuestion" EntityType="ProjectFirma.Web.Models.Store.FindYourForesterQuestion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaHomePageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.Store.FirmaPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
@@ -1602,6 +1603,16 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="FileResourceMimeTypeFileExtensionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="FileResourceMimeTypeID" Type="int" Nullable="false" />
     <Property Name="FileResourceMimeTypeFileExtensionText" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="FindYourForesterQuestion">
+    <Key>
+      <PropertyRef Name="FindYourForesterQuestionID" />
+    </Key>
+    <Property Name="FindYourForesterQuestionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionText" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ParentQuestionID" Type="int" />
+    <Property Name="ForesterRoleID" Type="int" />
+    <Property Name="ResultsBonusContent" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>

@@ -49,6 +49,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
         public virtual DbSet<FileResourceMimeTypeFileExtension> FileResourceMimeTypeFileExtensions { get; set; }
         public virtual DbSet<FileResource> FileResources { get; set; }
+        public virtual DbSet<FindYourForesterQuestion> FindYourForesterQuestions { get; set; }
         public virtual DbSet<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual DbSet<FirmaPageImage> FirmaPageImages { get; set; }
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
@@ -404,6 +405,9 @@ namespace ProjectFirma.Web.Models
 
                 case "FileResource":
                     return FileResources.GetFileResource(primaryKey);
+
+                case "FindYourForesterQuestion":
+                    return FindYourForesterQuestions.GetFindYourForesterQuestion(primaryKey);
 
                 case "FirmaHomePageImage":
                     return FirmaHomePageImages.GetFirmaHomePageImage(primaryKey);
