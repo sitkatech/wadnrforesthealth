@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -30,16 +32,15 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public readonly MapInitJson MapInitJson;
 
         public string GeocodeAddressUrl { get; }
+        public List<FindYourForesterQuestion> RootQuestions { get; }
 
-
-        public FindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public FindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage,
+            List<FindYourForesterQuestion> findYourForesterQuestions) : base(currentPerson, firmaPage)
         {
             PageTitle = "Find Your Forester";
             MapInitJson = mapInitJson;
             GeocodeAddressUrl = SitkaRoute<ResultsController>.BuildAbsoluteUrlHttpsFromExpression(x => x.GeocodeAddress(null, null));
-
-
-
+            RootQuestions = findYourForesterQuestions;
         }
 
     }

@@ -36,7 +36,11 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = new MapInitJson("findYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FindYourForester);
-            var viewData = new FindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage);
+
+            var rootQuestions =
+                HttpRequestStorage.DatabaseEntities.FindYourForesterQuestions.Where(x => !x.ParentQuestionID.HasValue).ToList();
+
+            var viewData = new FindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage, rootQuestions);
             return RazorView<FindYourForester, FindYourForesterViewData>(viewData);
 
         }

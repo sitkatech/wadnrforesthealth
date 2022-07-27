@@ -39,7 +39,7 @@
         <div class="col-md-12">
             <fieldset style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;">
                 <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Map to Zip Code or Mailing Address with Zip Code</legend>
-                <label for="txtZoomAddress">Street address, City, and State</label> 
+                <label for="txtZoomAddress">Street address, City, and State</label>
                 <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA" />
                 <label for="txtZoomZip">Zip Code</label>
                 <input id="txtZoomZip" type="text" style="width: 80px;" placeholder="12345" />
@@ -61,6 +61,30 @@
 
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Questions</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                @foreach (var question in ViewDataTyped.RootQuestions)
+                {
+
+                    @OutputQuestion(question)
+
+                }
+
+            </div>
+
+
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -71,7 +95,6 @@
         if (!findYourForesterFirmaMap) {
             findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
         }
-        //window.Sitka.map = new ProjectFirmaMaps.Map(mapInitJson);
 
 
         var geocodeMarker = L.marker();
@@ -114,3 +137,38 @@
         });
     });
 </script>
+
+
+
+
+@helper OutputQuestion(FindYourForesterQuestion question)
+{
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="@Html.Raw("heading" + question.FindYourForesterQuestionID)">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        @question.QuestionText
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    @if (question.FindYourForesterQuestionsWhereYouAreTheParentQuestion.Any())
+                    {
+                        // for loop to OutputQuestion(child)
+                    }
+                    else
+                    {
+                        //output role and contact info for location entered and bonus content
+                    }
+                </div>
+            </div>
+        </div>
+  
+
+    </div>
+
+}
