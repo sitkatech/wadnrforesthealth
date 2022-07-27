@@ -6,7 +6,7 @@
 create table dbo.FindYourForesterQuestion(
 	FindYourForesterQuestionID int not null identity(1,1) constraint PK_FindYourForesterQuestion_FindYourForesterQuestionID primary key,
 	QuestionText varchar(500) not null,
-	ParentQuestionID int,-- constraint FK_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestion_FindYourForesterQuestionID foreign key references dbo.FindYourForesterQuestion(FindYourForesterQuestionID),
+	ParentQuestionID int constraint FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID foreign key references dbo.FindYourForesterQuestion(FindYourForesterQuestionID),
 	ForesterRoleID int constraint FK_FindYourForesterQuestion_ForesterRole_ForesterRoleID foreign key references dbo.ForesterRole(ForesterRoleID),
 	ResultsBonusContent html
 

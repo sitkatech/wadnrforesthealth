@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected FindYourForesterQuestion()
         {
-
+            this.FindYourForesterQuestionsWhereYouAreTheParentQuestion = new HashSet<FindYourForesterQuestion>();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return FindYourForesterQuestionsWhereYouAreTheParentQuestion.Any();
         }
 
         /// <summary>
@@ -76,6 +76,10 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(FindYourForesterQuestionsWhereYouAreTheParentQuestion.Any())
+            {
+                dependentObjects.Add(typeof(FindYourForesterQuestion).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
@@ -98,8 +102,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in FindYourForesterQuestionsWhereYouAreTheParentQuestion.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -117,6 +132,8 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FindYourForesterQuestionID; } set { FindYourForesterQuestionID = value; } }
 
+        public virtual ICollection<FindYourForesterQuestion> FindYourForesterQuestionsWhereYouAreTheParentQuestion { get; set; }
+        public virtual FindYourForesterQuestion ParentQuestion { get; set; }
         public ForesterRole ForesterRole { get { return ForesterRoleID.HasValue ? ForesterRole.AllLookupDictionary[ForesterRoleID.Value] : null; } }
 
         public static class FieldLengths

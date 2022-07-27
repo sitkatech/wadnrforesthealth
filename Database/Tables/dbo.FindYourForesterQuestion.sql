@@ -15,6 +15,11 @@ CREATE TABLE [dbo].[FindYourForesterQuestion](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+ALTER TABLE [dbo].[FindYourForesterQuestion]  WITH CHECK ADD  CONSTRAINT [FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID] FOREIGN KEY([ParentQuestionID])
+REFERENCES [dbo].[FindYourForesterQuestion] ([FindYourForesterQuestionID])
+GO
+ALTER TABLE [dbo].[FindYourForesterQuestion] CHECK CONSTRAINT [FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID]
+GO
 ALTER TABLE [dbo].[FindYourForesterQuestion]  WITH CHECK ADD  CONSTRAINT [FK_FindYourForesterQuestion_ForesterRole_ForesterRoleID] FOREIGN KEY([ForesterRoleID])
 REFERENCES [dbo].[ForesterRole] ([ForesterRoleID])
 GO
