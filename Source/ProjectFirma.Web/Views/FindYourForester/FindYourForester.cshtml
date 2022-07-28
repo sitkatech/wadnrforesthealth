@@ -116,7 +116,6 @@
                         foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
                         foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
                         foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
-
                     });
                 }); 
         }
@@ -142,12 +141,6 @@
                     .done(function (msg) {
                         if (!msg.ErrorStatus) {
 
-                            //if (geocodeMarker != undefined) {
-                            //    geocodeMarker.remove();
-                            //};
-
-                            ////Add a marker to show where you clicked.
-                            //geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(findYourForesterFirmaMap.map);
                             findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
                             window.setTimeout(populateForesterInformationAndDropMarker({ lng: msg.Long, lat: msg.Lat }), 1250);
 
@@ -190,7 +183,6 @@
                     }
                     else
                     {
-                        //output role and contact info for location entered and bonus content
                         if (question.ForesterRoleID.HasValue)
                         {
                             
@@ -212,7 +204,7 @@
                                     <span data-forester-phone=""> </span>
                                 </div>
                             </div>                                                     
-                            //output foresters in this role and intersect with the location entered(if entered)
+
                         }
 
                         if (!string.IsNullOrEmpty(question.ResultsBonusContent))
