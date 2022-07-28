@@ -223,6 +223,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FindYourForesterQuestion">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FindYourForesterQuestion">
+        <MappingFragment StoreEntitySet="FindYourForesterQuestion">
+          <ScalarProperty Name="FindYourForesterQuestionID" ColumnName="FindYourForesterQuestionID" />
+          <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+          <ScalarProperty Name="ParentQuestionID" ColumnName="ParentQuestionID" />
+          <ScalarProperty Name="ForesterRoleID" ColumnName="ForesterRoleID" />
+          <ScalarProperty Name="ResultsBonusContent" ColumnName="ResultsBonusContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FirmaHomePageImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaHomePageImage">
         <MappingFragment StoreEntitySet="FirmaHomePageImage">
@@ -270,6 +281,18 @@
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="FeatureClassName" ColumnName="FeatureClassName" />
           <ScalarProperty Name="GeoJson" ColumnName="GeoJson" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForesterWorkUnit">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ForesterWorkUnit">
+        <MappingFragment StoreEntitySet="ForesterWorkUnit">
+          <ScalarProperty Name="ForesterWorkUnitID" ColumnName="ForesterWorkUnitID" />
+          <ScalarProperty Name="ForesterRoleID" ColumnName="ForesterRoleID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="ForesterWorkUnitName" ColumnName="ForesterWorkUnitName" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="ForesterWorkUnitLocation" ColumnName="ForesterWorkUnitLocation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

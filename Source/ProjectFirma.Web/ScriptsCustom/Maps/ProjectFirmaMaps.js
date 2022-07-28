@@ -21,10 +21,11 @@ Source code is available upon request via <support@sitkatech.com>.
 var ProjectFirmaMaps = {};
 
 /* ====== Main Map ====== */
-ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
+ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, callbackFn)
 {
     var self = this;
     this.MapDivId = mapInitJson.MapDivID;
+    this.callBackFn = callbackFn;
 
     var esriAerialUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     var esriAerial = new L.TileLayer(esriAerialUrl, {});
@@ -310,20 +311,32 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         jQuery("#" + this.MapDivId).unblock();
     };
 
+    ProjectFirmaMaps.Map.prototype.getWmsLayers = function (filterToActive) {
+        var self = this;
+        var wmsLayers = this.vectorLayers.filter(function(layer) {
+            return layer.hasOwnProperty('wmsParams') && (!filterToActive || self.map.hasLayer(layer));
+        });
+        return wmsLayers;
+    };
+
+    ProjectFirmaMaps.Map.prototype.getVectorLayers = function (filterToActive) {
+        var self = this;
+        var vectorLayers = this.vectorLayers.filter(function (layer) {
+            return !layer.hasOwnProperty('wmsParams') && (!filterToActive || self.map.hasLayer(layer));
+        });
+        return vectorLayers;
+    };
+
     ProjectFirmaMaps.Map.prototype.getFeatureInfo = function(e) {
         var latlng = e.latlng;
         var self = this;
 
-        var wmsLayers = this.vectorLayers.filter(function(layer) {
-            return layer.hasOwnProperty('wmsParams') && self.map.hasLayer(layer);
-        });
+        var wmsLayers = this.getWmsLayers(true);
 
-        var vecLayers = this.vectorLayers.filter(function(layer) {
-            return !layer.hasOwnProperty('wmsParams') && self.map.hasLayer(layer);
-        });
+        var vecLayers = this.getVectorLayers(true);
 
         if (wmsLayers.length > 0) {
-            this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng);
+            this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng, self.callBackFn);
         } else {
             this.popupForVectorLayers(vecLayers, latlng);
         }
@@ -418,7 +431,7 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
         };
     };
 
-    ProjectFirmaMaps.Map.prototype.popupForWMSAndVectorLayers = function(wmsLayers, vecLayers, latlng) {
+    ProjectFirmaMaps.Map.prototype.popupForWMSAndVectorLayers = function(wmsLayers, vecLayers, latlng, callbackFn) {
         var self = this;
 
         var point = this.map.latLngToContainerPoint(latlng, this.map.getZoom()),
@@ -448,15 +461,22 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
             geospatialAreaWMSParams.layers = wmsLayers[j].wmsParams.layers;
             geospatialAreaWMSParams.query_layers = wmsLayers[j].wmsParams.layers;
 
+            if (wmsLayers[j].wmsParams.cql_filter) {
+                geospatialAreaWMSParams.cql_filter = wmsLayers[j].wmsParams.cql_filter;
+            }
             var query = layer._url + L.Util.getParamString(geospatialAreaWMSParams, null, true);            
             ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query }))
-                .then(function(response) {
+                .then(function (response) {
                     return self.formatGeospatialAreaResponse(response).then(function(status) {
                             return status;
                         });
                 }));
      
-        }        
+        }
+
+        if (callbackFn) {
+            callbackFn(latlng);
+        }
 
         this.carryOutPromises(ajaxCalls).then(
             function (responses) {
@@ -491,7 +511,8 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 console.log("error getting wms feature info");
             }
         );
-};
+        return ajaxCalls;
+    };
 
 
 ProjectFirmaMaps.Map.prototype.carryOutPromises = function (deferreds) {
@@ -590,6 +611,19 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             deferred.resolve({
                 label: labelText,
                 link: linkText
+            });
+                break;
+        case "ForesterWorkUnitLocation":
+            if (firstFeature.properties.FirstName != null) {
+                linkText = firstFeature.properties.FirstName + " " + firstFeature.properties.LastName;
+            } else {
+                linkText = "";
+            }
+            labelText = firstFeature.properties.ForesterRoleDisplayName;
+            deferred.resolve({
+                label: labelText,
+                link: linkText,
+                properties: firstFeature.properties
             });
             break;
         default:

@@ -1,0 +1,224 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="ManageFindYourForester.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using LtInfo.Common.DhtmlWrappers
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Models
+@inherits ProjectFirma.Web.Views.FindYourForester.FindYourForester
+@section JavascriptAndStylesContent
+{
+    @{ MapJavascriptIncludes.RenderPartialView(Html); }
+}
+
+<div>
+    @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <fieldset style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;">
+                <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Map to Zip Code or Mailing Address with Zip Code</legend>
+                <label for="txtZoomAddress">Street address, City, and State</label>
+                <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA" />
+                <label for="txtZoomZip">Zip Code</label>
+                <input id="txtZoomZip" type="text" style="width: 80px;" placeholder="12345" />
+                <button id="btnZoomToAddress">
+                    Zoom to Address
+                </button>
+                <span style="display:none; color: red;" id="errZoomNoZipCode">Please provide a zip code for zooming the Project Map.</span>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 500px; margin: 5px 0 5px 0">
+            </div>
+            <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Questions</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                @foreach (var question in ViewDataTyped.RootQuestions)
+                {
+
+                    @OutputQuestion(question)
+
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function()
+    {
+
+        var findYourForesterFirmaMap = null;
+        var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
+        if (!findYourForesterFirmaMap) {
+            findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson, null, populateForesterInformationAndDropMarker);
+        }
+
+        var geocodeMarker = L.marker();
+
+        function populateForesterInformationAndDropMarker(latlng) {
+
+            if (geocodeMarker != undefined) {
+                geocodeMarker.remove();
+            };
+
+            //Add a marker to show where you clicked.
+            geocodeMarker = L.marker(latlng).addTo(findYourForesterFirmaMap.map);
+
+            var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
+                findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
+                    results.forEach(result => {
+
+                        var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
+                        foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
+                        foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
+                        foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
+                    });
+                }); 
+        }
+
+        
+        //zoom to address
+        jQuery('#btnZoomToAddress').click(function() {
+
+
+            var dataAddress = jQuery('#txtZoomAddress').val();
+            var dataZip = jQuery('#txtZoomZip').val();
+
+            if (jQuery.trim(dataZip).length === 0) {
+                jQuery('#errZoomNoZipCode').show();
+            } else {
+
+                jQuery('#errZoomNoZipCode').hide();
+                $.ajax({
+                        method: "POST",
+                        url: "@ViewDataTyped.GeocodeAddressUrl",
+                        data: { address: dataAddress, zip: dataZip }
+                    })
+                    .done(function (msg) {
+                        if (!msg.ErrorStatus) {
+
+                            findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
+                            window.setTimeout(populateForesterInformationAndDropMarker({ lng: msg.Long, lat: msg.Lat }), 1250);
+
+                        } else {
+                            console.log(msg.ErrorStatus);
+                            alert(msg.ErrorStatus);
+                        }
+
+                    });
+            }
+
+        });
+    });
+</script>
+
+
+
+
+@helper OutputQuestion(FindYourForesterQuestion question)
+{
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="@Html.Raw("heading" + question.FindYourForesterQuestionID)">
+                <h4 class="panel-title">
+                    <a a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@Html.Raw("#collapse" + question.FindYourForesterQuestionID)" aria-expanded="true" aria-controls="@Html.Raw("collapse" + question.FindYourForesterQuestionID)">
+                        @question.QuestionText
+                    </a>
+                </h4>
+            </div>
+            <div id="@Html.Raw("collapse" + question.FindYourForesterQuestionID)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@Html.Raw("heading" + question.FindYourForesterQuestionID)">
+                <div class="panel-body">
+                    @if (question.FindYourForesterQuestionsWhereYouAreTheParentQuestion.Any())
+                    {
+                        foreach (var childQuestion in question.FindYourForesterQuestionsWhereYouAreTheParentQuestion)
+                        {
+                            @OutputQuestion(childQuestion)
+                        }
+                    }
+                    else
+                    {
+                        if (question.ForesterRoleID.HasValue)
+                        {
+                            
+                            <div data-forester-role-id="@question.ForesterRoleID">
+                                <div>
+                                    <strong>Role:</strong>
+                                    <span>@question.ForesterRole.ForesterRoleDisplayName</span>
+                                </div>
+                                <div>
+                                    <strong>Name:</strong>
+                                    <span data-forester-name=""> </span>
+                                </div>
+                                <div>
+                                    <strong>Email:</strong>
+                                    <span data-forester-email=""> </span>
+                                </div>
+                                <div>
+                                    <strong>Phone:</strong>
+                                    <span data-forester-phone=""> </span>
+                                </div>
+                            </div>                                                     
+
+                        }
+
+                        if (!string.IsNullOrEmpty(question.ResultsBonusContent))
+                        {
+
+                            @question.ResultsBonusContentHtmlString
+                        }
+
+                    }
+                </div>
+            </div>
+        </div>
+  
+
+    </div>
+
+}

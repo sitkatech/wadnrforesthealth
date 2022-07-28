@@ -49,11 +49,13 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
         public virtual DbSet<FileResourceMimeTypeFileExtension> FileResourceMimeTypeFileExtensions { get; set; }
         public virtual DbSet<FileResource> FileResources { get; set; }
+        public virtual DbSet<FindYourForesterQuestion> FindYourForesterQuestions { get; set; }
         public virtual DbSet<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual DbSet<FirmaPageImage> FirmaPageImages { get; set; }
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
+        public virtual DbSet<ForesterWorkUnit> ForesterWorkUnits { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual DbSet<GisExcludeIncludeColumn> GisExcludeIncludeColumns { get; set; }
@@ -404,6 +406,9 @@ namespace ProjectFirma.Web.Models
                 case "FileResource":
                     return FileResources.GetFileResource(primaryKey);
 
+                case "FindYourForesterQuestion":
+                    return FindYourForesterQuestions.GetFindYourForesterQuestion(primaryKey);
+
                 case "FirmaHomePageImage":
                     return FirmaHomePageImages.GetFirmaHomePageImage(primaryKey);
 
@@ -433,6 +438,14 @@ namespace ProjectFirma.Web.Models
                     var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
+
+                case "ForesterRole":
+                    var foresterRole = ForesterRole.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(foresterRole, "ForesterRole", primaryKey);
+                    return foresterRole;
+
+                case "ForesterWorkUnit":
+                    return ForesterWorkUnits.GetForesterWorkUnit(primaryKey);
 
                 case "FundingSource":
                     var fundingSource = FundingSource.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

@@ -21,11 +21,13 @@
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.Store.FileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.Store.FileResourceMimeTypeFileExtension" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FindYourForesterQuestion" EntityType="ProjectFirma.Web.Models.Store.FindYourForesterQuestion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaHomePageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.Store.FirmaPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ForesterWorkUnit" EntityType="ProjectFirma.Web.Models.Store.ForesterWorkUnit" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.Store.GisDefaultMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" store:Type="Tables" Schema="dbo" />
@@ -391,6 +393,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="CreatePerson" EntitySet="Person" />
       <End Role="FileResourcesWhereYouAreTheCreatePerson" EntitySet="FileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" Association="ProjectFirma.Web.Models.Store.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID">
+      <End Role="ParentQuestion" EntitySet="FindYourForesterQuestion" />
+      <End Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion" EntitySet="FindYourForesterQuestion" />
+    </AssociationSet>
     <AssociationSet Name="FK_FirmaHomePageImage_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_FirmaHomePageImage_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="FirmaHomePageImages" EntitySet="FirmaHomePageImage" />
@@ -410,6 +416,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ForesterWorkUnit_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ForesterWorkUnit_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="ForesterWorkUnits" EntitySet="ForesterWorkUnit" />
     </AssociationSet>
     <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
@@ -1598,6 +1608,16 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="FileResourceMimeTypeID" Type="int" Nullable="false" />
     <Property Name="FileResourceMimeTypeFileExtensionText" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
+  <EntityType Name="FindYourForesterQuestion">
+    <Key>
+      <PropertyRef Name="FindYourForesterQuestionID" />
+    </Key>
+    <Property Name="FindYourForesterQuestionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionText" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ParentQuestionID" Type="int" />
+    <Property Name="ForesterRoleID" Type="int" />
+    <Property Name="ResultsBonusContent" Type="varchar(max)" />
+  </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>
       <PropertyRef Name="FirmaHomePageImageID" />
@@ -1642,6 +1662,17 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ForesterWorkUnit">
+    <Key>
+      <PropertyRef Name="ForesterWorkUnitID" />
+    </Key>
+    <Property Name="ForesterWorkUnitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ForesterRoleID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" />
+    <Property Name="ForesterWorkUnitName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="RegionName" Type="varchar" MaxLength="100" />
+    <Property Name="ForesterWorkUnitLocation" Type="geometry" Nullable="false" />
   </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>
@@ -3373,6 +3404,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerFindYourForester' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclBoundaryLine' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <EntityType Name="vGeoServerPclBoundaryLine">
@@ -3851,6 +3885,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID">
+    <End Role="ParentQuestion" Type="ProjectFirma.Web.Models.Store.FindYourForesterQuestion" Multiplicity="0..1" />
+    <End Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion" Type="ProjectFirma.Web.Models.Store.FindYourForesterQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParentQuestion">
+        <PropertyRef Name="FindYourForesterQuestionID" />
+      </Principal>
+      <Dependent Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion">
+        <PropertyRef Name="ParentQuestionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FirmaHomePageImage_FileResource_FileResourceID">
     <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
     <End Role="FirmaHomePageImages" Type="ProjectFirma.Web.Models.Store.FirmaHomePageImage" Multiplicity="*" />
@@ -3908,6 +3954,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="FocusAreaLocationStagings">
         <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ForesterWorkUnit_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="ForesterWorkUnits" Type="ProjectFirma.Web.Models.Store.ForesterWorkUnit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ForesterWorkUnits">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -7041,6 +7099,24 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpCostTypeMapping' does n
   <Property Name="SUB_OBJECT_CODE" Type="nvarchar" MaxLength="255" />
   <Property Name="SUB_OBJECT_NAME" Type="nvarchar" MaxLength="255" />
   <Property Name="CostTypeDescription" Type="nvarchar" MaxLength="255" />
+</EntityType>
+Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpForesterUnit' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpForesterUnit">
+  <Property Name="OBJECTID_1" Type="int" />
+  <Property Name="OBJECTID" Type="int" />
+  <Property Name="FP_UNIT_NM" Type="varchar" MaxLength="50" />
+  <Property Name="JURISDICT_" Type="smallint" />
+  <Property Name="REGION_NM" Type="varchar" MaxLength="50" />
+  <Property Name="JOB_POSN_N" Type="varchar" MaxLength="5" />
+  <Property Name="FP_FORESTE" Type="varchar" MaxLength="38" />
+  <Property Name="FP_FORES_1" Type="varchar" MaxLength="13" />
+  <Property Name="FP_FORES_2" Type="varchar" MaxLength="24" />
+  <Property Name="PHONE_NO" Type="varchar" MaxLength="14" />
+  <Property Name="Shape_Length" Type="float" />
+  <Property Name="Shape_Area" Type="float" />
+  <Property Name="GEOM" Type="geometry" />
 </EntityType>
 Errors Found During Generation:
 warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProgramIndex' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
