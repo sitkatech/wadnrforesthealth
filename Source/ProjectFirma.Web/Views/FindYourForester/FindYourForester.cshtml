@@ -94,17 +94,25 @@
         var findYourForesterFirmaMap = null;
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
         if (!findYourForesterFirmaMap) {
-            findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson, null, populateForesterInformation);
+            findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson, null, populateForesterInformationAndDropMarker);
         }
 
-        function populateForesterInformation(latlng) {
-            console.log('called back');
+        var geocodeMarker = L.marker();
+
+        function populateForesterInformationAndDropMarker(latlng) {
+
+            if (geocodeMarker != undefined) {
+                geocodeMarker.remove();
+            };
+
+            //Add a marker to show where you clicked.
+            geocodeMarker = L.marker(latlng).addTo(findYourForesterFirmaMap.map);
+
             var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
                 findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
-                    // do something here with them
                     results.forEach(result => {
 
-                        var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');//.text(result.properties.FirstName);
+                        var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
                         foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
                         foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
                         foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
@@ -113,8 +121,7 @@
                 }); 
         }
 
-
-        var geocodeMarker = L.marker();
+        
         //zoom to address
         jQuery('#btnZoomToAddress').click(function() {
 
@@ -135,14 +142,14 @@
                     .done(function (msg) {
                         if (!msg.ErrorStatus) {
 
-                            if (geocodeMarker != undefined) {
-                                geocodeMarker.remove();
-                            };
+                            //if (geocodeMarker != undefined) {
+                            //    geocodeMarker.remove();
+                            //};
 
-                            //Add a marker to show where you clicked.
-                            geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(findYourForesterFirmaMap.map);
+                            ////Add a marker to show where you clicked.
+                            //geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(findYourForesterFirmaMap.map);
                             findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
-                            window.setTimeout(populateForesterInformation({ lng: msg.Long, lat: msg.Lat }), 1250);
+                            window.setTimeout(populateForesterInformationAndDropMarker({ lng: msg.Long, lat: msg.Lat }), 1250);
 
                         } else {
                             console.log(msg.ErrorStatus);
