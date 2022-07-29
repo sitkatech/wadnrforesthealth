@@ -615,11 +615,13 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 break;
         case "ForesterWorkUnitLocation":
             if (firstFeature.properties.FirstName != null) {
-                linkText = firstFeature.properties.FirstName + " " + firstFeature.properties.LastName;
+                linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>" + firstFeature.properties.Phone + " <br/>" + firstFeature.properties.Email;
+                labelText = firstFeature.properties.ForesterRoleDisplayName;
             } else {
                 linkText = "";
+                labelText = "";
             }
-            labelText = firstFeature.properties.ForesterRoleDisplayName;
+            
             deferred.resolve({
                 label: labelText,
                 link: linkText,

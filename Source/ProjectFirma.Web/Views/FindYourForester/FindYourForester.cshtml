@@ -94,13 +94,19 @@
         var findYourForesterFirmaMap = null;
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
         if (!findYourForesterFirmaMap) {
-            findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson, null, populateForesterInformationAndDropMarker);
+
+            findYourForesterFirmaMap = new ProjectFirmaMaps.Map(mapInitJson, null);
         }
+
+        findYourForesterFirmaMap.map.on('click', function (evt) {
+
+            populateForesterInformationAndDropMarker(evt.latlng);
+        });
 
         var geocodeMarker = L.marker();
 
         function populateForesterInformationAndDropMarker(latlng) {
-
+            
             if (geocodeMarker != undefined) {
                 geocodeMarker.remove();
             };
@@ -112,7 +118,7 @@
                 findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
                     results.forEach(result => {
                         //check we have some data before updating
-                        if(result.properties.FirstName){
+                        if(result && result.properties && result.properties.FirstName){
                             var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
                             foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
                             foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
