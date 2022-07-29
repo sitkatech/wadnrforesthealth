@@ -111,11 +111,15 @@
             var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
                 findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
                     results.forEach(result => {
-
-                        var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
-                        foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
-                        foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
-                        foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
+                        //check we have some data before updating
+                        if(result.properties.FirstName){
+                            var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
+                            foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
+                            foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
+                            foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
+                            foresterDefinitionList.find('[data-forester-container]').show();
+                            foresterDefinitionList.find('[data-forester-no-data]').hide();
+                        }
                     });
                 }); 
         }
@@ -191,17 +195,20 @@
                                     <strong>Role:</strong>
                                     <span>@question.ForesterRole.ForesterRoleDisplayName</span>
                                 </div>
-                                <div>
+                                <div data-forester-container="" style="display: none;">
                                     <strong>Name:</strong>
                                     <span data-forester-name=""> </span>
                                 </div>
-                                <div>
+                                <div data-forester-container="" style="display: none;">
                                     <strong>Email:</strong>
                                     <span data-forester-email=""> </span>
                                 </div>
-                                <div>
+                                <div data-forester-container="" style="display: none;">
                                     <strong>Phone:</strong>
                                     <span data-forester-phone=""> </span>
+                                </div>
+                                <div data-forester-no-data="" style="display: block;">
+                                    <p>Please enter your address or place a marker on the map to get Forester contact info for the @question.ForesterRole.ForesterRoleDisplayName in your area.</p>
                                 </div>
                             </div>                                                     
 
