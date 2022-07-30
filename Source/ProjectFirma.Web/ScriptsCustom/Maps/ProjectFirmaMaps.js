@@ -359,7 +359,9 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         });
     
         this.map.setView(latlng);
-        this.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(this.htmlPopupContents(allLayers)).openOn(this.map)); 
+        if (!jQuery('#findYourForesterContainer')) {
+            this.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(this.htmlPopupContents(allLayers)).openOn(this.map));
+        }
     };
 
 ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
@@ -505,7 +507,11 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 });
 
                 self.map.setView(latlng);
-                self.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                if (jQuery('#findYourForesterContainer')) {
+                    jQuery('#findYourForesterContainer').html(self.htmlPopupContents(allLayers));
+                } else {
+                    self.map.openPopup(L.popup({ maxWidth: 200, maxHeight: 250 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                }
             },
             function(responses) {
                 console.log("error getting wms feature info");
@@ -614,12 +620,16 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             });
                 break;
         case "ForesterWorkUnitLocation":
-            if (firstFeature.properties.FirstName != null) {
-                linkText = firstFeature.properties.FirstName + " " + firstFeature.properties.LastName;
+            if (firstFeature.properties.FirstName) {
+                linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>";
+                linkText += "<a href=\"tel:" + firstFeature.properties.Phone + "\">" + firstFeature.properties.Phone + "</a> <br/>";
+                linkText += "<a href=\"mailto:" + firstFeature.properties.Email + "\">" + firstFeature.properties.Email + "</a> <br/>";
+                labelText = firstFeature.properties.ForesterRoleDisplayName;
             } else {
                 linkText = "";
+                labelText = "";
             }
-            labelText = firstFeature.properties.ForesterRoleDisplayName;
+            
             deferred.resolve({
                 label: labelText,
                 link: linkText,
