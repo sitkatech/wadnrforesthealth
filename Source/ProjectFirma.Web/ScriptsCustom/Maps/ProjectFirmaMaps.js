@@ -505,7 +505,7 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 });
 
                 self.map.setView(latlng);
-                self.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                self.map.openPopup(L.popup({ maxWidth: 200, maxHeight: 250 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
             },
             function(responses) {
                 console.log("error getting wms feature info");
@@ -614,7 +614,7 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             });
                 break;
         case "ForesterWorkUnitLocation":
-            if (firstFeature.properties.FirstName != null) {
+            if (firstFeature.properties.FirstName) {
                 linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>" + firstFeature.properties.Phone + " <br/>" + firstFeature.properties.Email;
                 labelText = firstFeature.properties.ForesterRoleDisplayName;
             } else {
