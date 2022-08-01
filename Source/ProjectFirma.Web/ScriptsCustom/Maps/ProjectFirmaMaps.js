@@ -21,11 +21,10 @@ Source code is available upon request via <support@sitkatech.com>.
 var ProjectFirmaMaps = {};
 
 /* ====== Main Map ====== */
-ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, callbackFn)
+ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
 {
     var self = this;
     this.MapDivId = mapInitJson.MapDivID;
-    this.callBackFn = callbackFn;
 
     var esriAerialUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     var esriAerial = new L.TileLayer(esriAerialUrl, {});
@@ -336,7 +335,7 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         var vecLayers = this.getVectorLayers(true);
 
         if (wmsLayers.length > 0) {
-            this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng, self.callBackFn);
+            this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng);
         } else {
             this.popupForVectorLayers(vecLayers, latlng);
         }
@@ -433,7 +432,7 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
         };
     };
 
-    ProjectFirmaMaps.Map.prototype.popupForWMSAndVectorLayers = function(wmsLayers, vecLayers, latlng, callbackFn) {
+    ProjectFirmaMaps.Map.prototype.popupForWMSAndVectorLayers = function(wmsLayers, vecLayers, latlng) {
         var self = this;
 
         var point = this.map.latLngToContainerPoint(latlng, this.map.getZoom()),
@@ -474,10 +473,6 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                         });
                 }));
      
-        }
-
-        if (callbackFn) {
-            callbackFn(latlng);
         }
 
         this.carryOutPromises(ajaxCalls).then(
