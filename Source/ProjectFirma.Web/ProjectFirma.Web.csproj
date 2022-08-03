@@ -1057,8 +1057,12 @@
     <Compile Include="Views\ExcelUpload\ManageExcelUploadsAndEtlViewModel.cs" />
     <Compile Include="Views\ExcelUpload\ImportLoaExcelFileViewModel.cs" />
     <Compile Include="Views\ExcelUpload\LoaImportHelper.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForestersViewModel.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForestersModalDialogForm.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForesters.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForester.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForesterGridSpec.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForestersViewData.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForesterViewData.cs" />
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
     <Compile Include="Views\GisFeature\Detail.cs" />
@@ -1468,6 +1472,7 @@
     <Content Include="Views\ExcelUpload\ImportLoaExcelFile.cshtml" />
     <Content Include="Views\ExcelUpload\ManageExcelUploadsAndEtl.cshtml" />
     <Content Include="Views\FindYourForester\ManageFindYourForester.cshtml" />
+    <Content Include="Views\FindYourForester\BulkAssignForesters.cshtml" />
     <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />

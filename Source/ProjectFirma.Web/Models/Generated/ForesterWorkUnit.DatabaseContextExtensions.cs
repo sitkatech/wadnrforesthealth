@@ -39,8 +39,8 @@ namespace ProjectFirma.Web.Models
         {
             if(foresterWorkUnitsToDelete.Any())
             {
-                var foresterWorkUnitIDList = foresterWorkUnitsToDelete.Select(x => x.ForesterWorkUnitID).ToList();
-                var foresterWorkUnitsToDeleteFromSourceList = foresterWorkUnits.Where(x => foresterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
+                var ForesterWorkUnitIDList = foresterWorkUnitsToDelete.Select(x => x.ForesterWorkUnitID).ToList();
+                var foresterWorkUnitsToDeleteFromSourceList = foresterWorkUnits.Where(x => ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
 
                 foreach (var foresterWorkUnitToDelete in foresterWorkUnitsToDeleteFromSourceList)
                 {

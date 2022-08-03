@@ -38,7 +38,8 @@ namespace ProjectFirma.Web.Controllers
         [FindYourForesterManageFeature]
         public ViewResult Manage()
         {
-            
+            var bulkAssignForestersUrl =
+                SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x => x.BulkAssignForesters(null));
             var layerGeoJsons = new List<LayerGeoJson>();
             var layerVisibility = LayerInitialVisibility.Show;
             foreach (var role in ForesterRole.All)
@@ -58,7 +59,7 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = new MapInitJson("manageFindYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ManageFindYourForester);
-            var viewData = new ManageFindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage);
+            var viewData = new ManageFindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage, bulkAssignForestersUrl);
             return RazorView<ManageFindYourForester, ManageFindYourForesterViewData>(viewData);
         }
 
@@ -71,23 +72,45 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
+        //@BulkAssignForestersModalDialogForm = new BulkAssignForestersModalDialogForm(SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x=>x.BulkAssignForesters(null)), 'test', 'test')
         [HttpGet]
-        public PartialViewResult UnassignForester(ForesterWorkUnitPrimaryKey foresterWorkUnitPrimaryKey)
+        public ContentResult BulkAssignForesters()
         {
-            /*var foresterWorkUnit = foresterWorkUnitPrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(foresterWorkUnit.ForesterWorkUnitID);
-            return ViewUnassignForester(foresterWorkUnit, viewModel);
-            */
-            throw new NotImplementedException();
+
+            return new ContentResult();
         }
 
+        [HttpPost]
+        public PartialViewResult BulkAssignForesters(BulkAssignForestersViewModel viewModel)
+        {
+
+            var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+            var selectedForesterWorkUnitIDs =
+                HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();//.Select(x => x.PersonID).ToList();
+            var viewData = new BulkAssignForestersViewData(CurrentPerson, people, selectedForesterWorkUnitIDs);
+            return RazorPartialView<BulkAssignForesters, BulkAssignForestersViewData, BulkAssignForestersViewModel>(viewData, viewModel);
+
+        }
+        /*
+        [HttpPost]
+        [FirmaAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ViewResult BulkUnassignForesters(BulkUnassignForestersViewModel viewModel)
+        {
+            var viewData = new BulkUnassignForestersViewData();
+            if (!ModelState.IsValid)
+            {
+                return RazorPartialView<BulkUnassignForesters, BulkUnassignForestersViewData, BulkUnassignForestersViewModel>(viewData, viewModel);
+            }
+            ModalDialogFormJsonResult(SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x => x.BulkUnassignForesters(null)));
+        }*/
+        /*
         [HttpPost]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult UnassignForester(ForesterWorkUnitPrimaryKey foresterWorkUnitPrimaryKey,
             ConfirmDialogFormViewModel viewModel)
         {
-            /*var foresterWorkUnit = foresterWorkUnitPrimaryKey.EntityObject;
+            var foresterWorkUnit = foresterWorkUnitPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
                 return ViewUnassignForester(foresterWorkUnit, viewModel);
@@ -95,15 +118,39 @@ namespace ProjectFirma.Web.Controllers
 
             foresterWorkUnit.PersonID = null;
 
-            return new ModalDialogFormJsonResult();*/
-            throw new NotImplementedException();
+            return new ModalDialogFormJsonResult();
+            //throw new NotImplementedException();
         }
-        private PartialViewResult ViewUnassignForester(ForesterWorkUnit foresterWorkUnit, ConfirmDialogFormViewModel viewModel)
+        
+        private PartialViewResult ViewUnassignForester(ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this '{foresterWorkUnit.Person.FirstName}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
+        /*
+        [HttpGet]
+        [FirmaAdminFeature]
+        public ContentResult BulkUnassignForesters()
+        {
+            return new ContentResult();
+        }
+        */
 
+
+        /*public 
+        var forestersWorkUnitDisplayNames = new List<string>();
+
+            if (viewModel.ForesterWorkUnitIDList != null)
+            {
+                var forestersWorkUnits = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
+                foreach (var forestersWorkUnit in forestersWorkUnits)
+                {
+                    forestersWorkUnit.PersonID = null;
+                }
+
+                forestersWorkUnitDisplayNames = forestersWorkUnits.Select(x => x.ForesterWorkUnitName).ToList();
+            }
+            var viewData = new BulkUnassignForestersViewData(forestersWorkUnitDisplayNames);
+            return RazorPartialView<BulkUnassignForesters, BulkUnassignForestersViewData, BulkUnassignForestersViewModel>(viewData, viewModel);
+        }*/
     }
 }

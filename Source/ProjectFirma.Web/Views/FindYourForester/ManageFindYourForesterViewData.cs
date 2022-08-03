@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -32,13 +34,30 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public readonly string GridName;
         public readonly string GridDataUrl;
 
-        public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage, string bulkAssignForestersUrl) : base(currentPerson, firmaPage)
         {
             PageTitle = "Manage Find Your Forester";
             MapInitJson = mapInitJson;
             GridSpec = new ManageFindYourForesterGridSpec(currentPerson);
             GridName = "manageFindYourForesterGrid";
             GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData());
+
+            var getForesterWorkUnitID =
+                $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({1}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
+
+            var modalDialogFormLink = ModalDialogFormHelper.ModalDialogFormLink(
+                "<span class=\"glyphicon glyphicon-envelope\" style=\"margin-right:5px\"></span>Assign Forester",
+                bulkAssignForestersUrl,
+                "Assign Forester",
+                700,
+                "Save",
+                "Cancel",
+                new List<string>(),
+                null,
+                getForesterWorkUnitID);
+
+            GridSpec.ArbitraryHtml = new List<string> { modalDialogFormLink.ToString() };
+
         }
 
     }
