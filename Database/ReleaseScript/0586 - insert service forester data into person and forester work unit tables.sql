@@ -47,3 +47,4 @@ where
 
 
 
+delete from dbo.ForesterWorkUnit where ForesterRoleID = 5 and PersonID is null
