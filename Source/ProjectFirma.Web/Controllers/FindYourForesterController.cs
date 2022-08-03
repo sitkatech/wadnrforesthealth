@@ -103,66 +103,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<BulkAssignForesters, BulkAssignForestersViewData, BulkAssignForestersViewModel>(viewData, viewModel);
 
         }
-        /*
-        [HttpPost]
-        [FirmaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ViewResult BulkUnassignForesters(BulkUnassignForestersViewModel viewModel)
-        {
-            var viewData = new BulkUnassignForestersViewData();
-            if (!ModelState.IsValid)
-            {
-                return RazorPartialView<BulkUnassignForesters, BulkUnassignForestersViewData, BulkUnassignForestersViewModel>(viewData, viewModel);
-            }
-            ModalDialogFormJsonResult(SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x => x.BulkUnassignForesters(null)));
-        }*/
-        /*
-        [HttpPost]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult UnassignForester(ForesterWorkUnitPrimaryKey foresterWorkUnitPrimaryKey,
-            ConfirmDialogFormViewModel viewModel)
-        {
-            var foresterWorkUnit = foresterWorkUnitPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewUnassignForester(foresterWorkUnit, viewModel);
-            }
 
-            foresterWorkUnit.PersonID = null;
-
-            return new ModalDialogFormJsonResult();
-            //throw new NotImplementedException();
-        }
-        
-        private PartialViewResult ViewUnassignForester(ConfirmDialogFormViewModel viewModel)
-        {
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-        /*
-        [HttpGet]
-        [FirmaAdminFeature]
-        public ContentResult BulkUnassignForesters()
-        {
-            return new ContentResult();
-        }
-        */
-
-
-        /*public 
-        var forestersWorkUnitDisplayNames = new List<string>();
-
-            if (viewModel.ForesterWorkUnitIDList != null)
-            {
-                var forestersWorkUnits = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
-                foreach (var forestersWorkUnit in forestersWorkUnits)
-                {
-                    forestersWorkUnit.PersonID = null;
-                }
-
-                forestersWorkUnitDisplayNames = forestersWorkUnits.Select(x => x.ForesterWorkUnitName).ToList();
-            }
-            var viewData = new BulkUnassignForestersViewData(forestersWorkUnitDisplayNames);
-            return RazorPartialView<BulkUnassignForesters, BulkUnassignForestersViewData, BulkUnassignForestersViewModel>(viewData, viewModel);
-        }*/
     }
 }
