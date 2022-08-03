@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ManageFindYourForesterGridSpec.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ManageFindYourForesterViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,27 +19,30 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.DhtmlWrappers;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.FindYourForester
 {
-    public class ManageFindYourForesterGridSpec : GridSpec<FindYourForesterGridObject>
+    public class BulkAssignForestersViewModel : FormViewModel
     {
-        public ManageFindYourForesterGridSpec(Person currentPerson)
+        [Required]
+        public readonly List<int> ForesterWorkUnitIDList;
+
+
+        public BulkAssignForestersViewModel(Person currentPerson,  List<int> foresterWorkUnitIDList)
         {
-
-            ObjectNameSingular = "Forester Work Unit";
-            ObjectNamePlural = "Forester Work Units";
-
-            AddCheckBoxColumn();
-            Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
-            Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Role", a => a.ForesterRoleDisplayName, 165);
-            Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
-
+            ForesterWorkUnitIDList = foresterWorkUnitIDList;
         }
+
+        public BulkAssignForestersViewModel()
+        {
+            ForesterWorkUnitIDList = new List<int>();
+        }
+
     }
 }
