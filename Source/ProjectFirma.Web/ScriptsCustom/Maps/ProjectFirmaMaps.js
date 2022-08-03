@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 var ProjectFirmaMaps = {};
 
 /* ====== Main Map ====== */
-ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
+ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLayersAsBaseLayers)
 {
     var self = this;
     this.MapDivId = mapInitJson.MapDivID;
@@ -82,7 +82,7 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
         }
     }
 
-    this.addLayersToMapLayersControl(baseLayers, overlayLayers);
+    this.addLayersToMapLayersControl(baseLayers, overlayLayers, treatAllLayersAsBaseLayers);
 
     var modalDialog = jQuery(".modal");
     if (!Sitka.Methods.isUndefinedNullOrEmpty(modalDialog))
@@ -181,9 +181,33 @@ ProjectFirmaMaps.Map.prototype.wfsParams = {
     SrsName: "EPSG:4326"
 };
 
-ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function(baseLayers, overlayLayers) {
-    this.layerControl = L.control.layers(baseLayers, overlayLayers);
-    this.layerControl.addTo(this.map);
+ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function (baseLayers, overlayLayers, treatAllLayersAsBaseLayers) {
+
+    if (treatAllLayersAsBaseLayers) {
+
+        var groupName = "Find Your Forester";
+        var options = {
+            // Make the "Landmarks" group exclusive (use radio inputs)
+            exclusiveGroups: [groupName],
+            // Show a checkbox next to non-exclusive group labels for toggling all
+            groupCheckboxes: true
+        };
+
+        var groupedOverlays = {
+            "Find Your Forester" : overlayLayers
+
+        };
+
+        // Use the custom grouped layer control, not "L.control.layers"
+        L.control.groupedLayers(baseLayers, groupedOverlays, options).addTo(this.map);
+
+
+        //L.control.layers(baseLayers).addTo(this.map);
+        //L.control.layers(overlayLayers).addTo(this.map);
+    } else {
+        this.layerControl = L.control.layers(baseLayers, overlayLayers);
+        this.layerControl.addTo(this.map);
+    }
 };
 
 ProjectFirmaMaps.Map.prototype.setMapBounds = function(mapInitJson) {
