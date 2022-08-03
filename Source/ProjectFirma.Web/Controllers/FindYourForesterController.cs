@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Controllers
                 if (HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Any(x => x.ForesterRoleID == role.ForesterRoleID))
                 {
                     var tempLayer = new LayerGeoJson(role.ForesterRoleDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
-                        FirmaWebConfiguration.GetFindYourForesterWmsLayerName(), "#59ACFF", 0.2m, layerVisibility, $"ForesterRoleID={role.ForesterRoleID}", true);
+                        FirmaWebConfiguration.GetFindYourForesterWmsLayerName(), "#59ACFF", 0.2m, layerVisibility, $"ForesterRoleID={role.ForesterRoleID}", true, role.ForesterRoleID);
                     if (layerVisibility == LayerInitialVisibility.Show)
                     {
                         layerVisibility = LayerInitialVisibility.Hide;
@@ -77,10 +77,15 @@ namespace ProjectFirma.Web.Controllers
 
 
         [FindYourForesterManageFeature]
-        public GridJsonNetJObjectResult<FindYourForesterGridObject> ManageFindYourForesterGridJsonData()
+        public GridJsonNetJObjectResult<FindYourForesterGridObject> ManageFindYourForesterGridJsonData(ForesterRolePrimaryKey foresterRolePrimaryKey)
         {
+            if (foresterRolePrimaryKey == null || foresterRolePrimaryKey.EntityObject == null)
+            {
+                return null;
+            }
+            var foresterRole = foresterRolePrimaryKey.EntityObject;
             var gridSpec = new ManageFindYourForesterGridSpec(CurrentPerson);
-            var findYourForesterGridObjects = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.ToList().Select(x => new FindYourForesterGridObject(x)).ToList();
+            var findYourForesterGridObjects = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => x.ForesterRoleID == foresterRole.ForesterRoleID).ToList().Select(x => new FindYourForesterGridObject(x)).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }

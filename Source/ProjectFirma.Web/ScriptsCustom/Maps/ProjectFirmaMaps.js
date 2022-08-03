@@ -38,7 +38,11 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
     var streetLabelsLayer = new L.TileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {});
 
     var baseLayers = { 'Aerial': esriAerial, 'Street': esriStreet, 'Terrain': esriTerrain };
-    var overlayLayers = { 'Street Labels': streetLabelsLayer };
+    var overlayLayers = {};
+    if (!treatAllLayersAsBaseLayers) {
+       overlayLayers = { 'Street Labels': streetLabelsLayer }
+    }
+    
 
     var streetLayerGroup;
     if (initialBaseLayerShown === "Hybrid")
@@ -96,7 +100,7 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
     if (!mapInitJson.DisablePopups) {
         this.map.on("click", function (e) { self.getFeatureInfo(e); });
     }
-     
+   
     self.setMapBounds(mapInitJson);
 };
 
@@ -142,12 +146,18 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     var layerGroup = new L.LayerGroup();
     var wmsParams;
     if (currentLayer.HasCqlFilter) {
-        wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter });
+        wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter});
     } else {
         wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName});
     }
 
     var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
+
+    if (currentLayer.ContextObjectId) {
+        wmsLayer.ContextObjectId = currentLayer.ContextObjectId;
+    }
+
+   
 
     if (currentLayer.LayerInitialVisibility === 1) {
         layerGroup.addTo(this.map);
@@ -199,8 +209,8 @@ ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function (baseLayer
         };
 
         // Use the custom grouped layer control, not "L.control.layers"
-        L.control.groupedLayers(baseLayers, groupedOverlays, options).addTo(this.map);
-
+        this.layerControl = L.control.groupedLayers(baseLayers, groupedOverlays, options);
+        this.layerControl.addTo(this.map);
 
         //L.control.layers(baseLayers).addTo(this.map);
         //L.control.layers(overlayLayers).addTo(this.map);

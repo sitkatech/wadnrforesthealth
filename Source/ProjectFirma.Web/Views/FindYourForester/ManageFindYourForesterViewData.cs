@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using LtInfo.Common;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -33,6 +34,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public readonly ManageFindYourForesterGridSpec GridSpec;
         public readonly string GridName;
         public readonly string GridDataUrl;
+        public string GridDataUrlTemplate { get; }
 
         public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage, string bulkAssignForestersUrl) : base(currentPerson, firmaPage)
         {
@@ -40,7 +42,8 @@ namespace ProjectFirma.Web.Views.FindYourForester
             MapInitJson = mapInitJson;
             GridSpec = new ManageFindYourForesterGridSpec(currentPerson);
             GridName = "manageFindYourForesterGrid";
-            GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData());
+            GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(ForesterRole.ServiceForester));
+            GridDataUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(UrlTemplate.Parameter1Int));
 
             var getForesterWorkUnitID =
                 $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({1}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
@@ -60,5 +63,6 @@ namespace ProjectFirma.Web.Views.FindYourForester
 
         }
 
+        
     }
 }
