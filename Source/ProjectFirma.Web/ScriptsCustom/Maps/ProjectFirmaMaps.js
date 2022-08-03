@@ -310,17 +310,29 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         jQuery("#" + this.MapDivId).unblock();
     };
 
+    ProjectFirmaMaps.Map.prototype.getWmsLayers = function (filterToActive) {
+        var self = this;
+        var wmsLayers = this.vectorLayers.filter(function(layer) {
+            return layer.hasOwnProperty('wmsParams') && (!filterToActive || self.map.hasLayer(layer));
+        });
+        return wmsLayers;
+    };
+
+    ProjectFirmaMaps.Map.prototype.getVectorLayers = function (filterToActive) {
+        var self = this;
+        var vectorLayers = this.vectorLayers.filter(function (layer) {
+            return !layer.hasOwnProperty('wmsParams') && (!filterToActive || self.map.hasLayer(layer));
+        });
+        return vectorLayers;
+    };
+
     ProjectFirmaMaps.Map.prototype.getFeatureInfo = function(e) {
         var latlng = e.latlng;
         var self = this;
 
-        var wmsLayers = this.vectorLayers.filter(function(layer) {
-            return layer.hasOwnProperty('wmsParams') && self.map.hasLayer(layer);
-        });
+        var wmsLayers = this.getWmsLayers(true);
 
-        var vecLayers = this.vectorLayers.filter(function(layer) {
-            return !layer.hasOwnProperty('wmsParams') && self.map.hasLayer(layer);
-        });
+        var vecLayers = this.getVectorLayers(true);
 
         if (wmsLayers.length > 0) {
             this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng);
@@ -346,7 +358,9 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         });
     
         this.map.setView(latlng);
-        this.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(this.htmlPopupContents(allLayers)).openOn(this.map)); 
+        if (!jQuery('#findYourForesterContainer')) {
+            this.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(this.htmlPopupContents(allLayers)).openOn(this.map));
+        }
     };
 
 ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
@@ -448,15 +462,18 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
             geospatialAreaWMSParams.layers = wmsLayers[j].wmsParams.layers;
             geospatialAreaWMSParams.query_layers = wmsLayers[j].wmsParams.layers;
 
+            if (wmsLayers[j].wmsParams.cql_filter) {
+                geospatialAreaWMSParams.cql_filter = wmsLayers[j].wmsParams.cql_filter;
+            }
             var query = layer._url + L.Util.getParamString(geospatialAreaWMSParams, null, true);            
             ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query }))
-                .then(function(response) {
+                .then(function (response) {
                     return self.formatGeospatialAreaResponse(response).then(function(status) {
                             return status;
                         });
                 }));
      
-        }        
+        }
 
         this.carryOutPromises(ajaxCalls).then(
             function (responses) {
@@ -485,13 +502,18 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 });
 
                 self.map.setView(latlng);
-                self.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                if (jQuery('#findYourForesterContainer')) {
+                    jQuery('#findYourForesterContainer').html(self.htmlPopupContents(allLayers));
+                } else {
+                    self.map.openPopup(L.popup({ maxWidth: 200, maxHeight: 250 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                }
             },
             function(responses) {
                 console.log("error getting wms feature info");
             }
         );
-};
+        return ajaxCalls;
+    };
 
 
 ProjectFirmaMaps.Map.prototype.carryOutPromises = function (deferreds) {
@@ -590,6 +612,23 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             deferred.resolve({
                 label: labelText,
                 link: linkText
+            });
+                break;
+        case "ForesterWorkUnitLocation":
+            if (firstFeature.properties.FirstName) {
+                linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>";
+                linkText += "<a href=\"tel:" + firstFeature.properties.Phone + "\">" + firstFeature.properties.Phone + "</a> <br/>";
+                linkText += "<a href=\"mailto:" + firstFeature.properties.Email + "\">" + firstFeature.properties.Email + "</a> <br/>";
+                labelText = firstFeature.properties.ForesterRoleDisplayName;
+            } else {
+                linkText = "";
+                labelText = "";
+            }
+            
+            deferred.resolve({
+                label: labelText,
+                link: linkText,
+                properties: firstFeature.properties
             });
             break;
         default:

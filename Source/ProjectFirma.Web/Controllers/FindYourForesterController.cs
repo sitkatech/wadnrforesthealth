@@ -21,16 +21,28 @@ namespace ProjectFirma.Web.Controllers
         [FindYourForesterViewFeature]
         public ViewResult Index()
         {
-            //var layerGeoJsons = new List<LayerGeoJson>
-            //{
-            //    DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
-            //};
+            var layerGeoJsons = new List<LayerGeoJson>();
+            var layerVisibility = LayerInitialVisibility.Hide;
+            foreach (var role in ForesterRole.All)
+            {
+                if (HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Any(x => x.ForesterRoleID == role.ForesterRoleID))
+                {
+                    var tempLayer = new LayerGeoJson(role.ForesterRoleDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
+                        FirmaWebConfiguration.GetFindYourForesterWmsLayerName(), "#59ACFF", 0.2m, layerVisibility, $"ForesterRoleID={role.ForesterRoleID}", true);
 
-            //var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
-            //var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.RegionsList);
-            //var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
-            //return RazorView<Index, IndexViewData>(viewData);
-            throw new NotImplementedException();
+                    layerGeoJsons.Add(tempLayer);
+                }
+            }
+
+            var mapInitJson = new MapInitJson("findYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FindYourForester);
+
+            var rootQuestions =
+                HttpRequestStorage.DatabaseEntities.FindYourForesterQuestions.Where(x => !x.ParentQuestionID.HasValue).ToList();
+
+            var viewData = new FindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage, rootQuestions);
+            return RazorView<FindYourForester, FindYourForesterViewData>(viewData);
+
         }
 
 

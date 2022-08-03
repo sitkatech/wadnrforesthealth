@@ -131,6 +131,9 @@
     <Compile Include="Models\Generated\FileResourceMimeTypeFileExtensionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FileResourceMimeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FileResourcePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\FindYourForesterQuestion.Binding.cs" />
+    <Compile Include="Models\Generated\FindYourForesterQuestion.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\FindYourForesterQuestionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImage.Binding.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImage.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImagePrimaryKey.Binding.cs" />
@@ -1060,9 +1063,11 @@
     <Compile Include="Views\FindYourForester\BulkAssignForestersViewModel.cs" />
     <Compile Include="Views\FindYourForester\BulkAssignForestersModalDialogForm.cs" />
     <Compile Include="Views\FindYourForester\BulkAssignForesters.cs" />
+    <Compile Include="Views\FindYourForester\FindYourForester.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForester.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForesterGridSpec.cs" />
     <Compile Include="Views\FindYourForester\BulkAssignForestersViewData.cs" />
+    <Compile Include="Views\FindYourForester\FindYourForesterViewData.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForesterViewData.cs" />
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
     <Compile Include="Views\GisFeature\Detail.cs" />
@@ -1473,6 +1478,7 @@
     <Content Include="Views\ExcelUpload\ManageExcelUploadsAndEtl.cshtml" />
     <Content Include="Views\FindYourForester\ManageFindYourForester.cshtml" />
     <Content Include="Views\FindYourForester\BulkAssignForesters.cshtml" />
+    <Content Include="Views\FindYourForester\FindYourForester.cshtml" />
     <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />

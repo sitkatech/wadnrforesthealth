@@ -21,6 +21,7 @@
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.FileResource" />
     <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.FileResourceMimeTypeFileExtension" />
+    <EntitySet Name="FindYourForesterQuestion" EntityType="ProjectFirma.Web.Models.FindYourForesterQuestion" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.FirmaHomePageImage" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
@@ -364,6 +365,10 @@
     <AssociationSet Name="FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID">
       <End Role="SquareLogoFileResource" EntitySet="FileResource" />
       <End Role="SystemAttributesWhereYouAreTheSquareLogoFileResource" EntitySet="SystemAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" Association="ProjectFirma.Web.Models.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID">
+      <End Role="ParentQuestion" EntitySet="FindYourForesterQuestion" />
+      <End Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion" EntitySet="FindYourForesterQuestion" />
     </AssociationSet>
     <AssociationSet Name="FK_FirmaPageImage_FirmaPage_FirmaPageID" Association="ProjectFirma.Web.Models.FK_FirmaPageImage_FirmaPage_FirmaPageID">
       <End Role="FirmaPage" EntitySet="FirmaPage" />
@@ -1567,6 +1572,18 @@
     <Property Name="FileResourceMimeTypeFileExtensionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FileResourceMimeTypeID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceMimeTypeFileExtensionText" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="FindYourForesterQuestion">
+    <Key>
+      <PropertyRef Name="FindYourForesterQuestionID" />
+    </Key>
+    <Property Name="FindYourForesterQuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionText" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="ParentQuestionID" Type="Int32" />
+    <Property Name="ForesterRoleID" Type="Int32" />
+    <Property Name="ResultsBonusContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FindYourForesterQuestionsWhereYouAreTheParentQuestion" Relationship="ProjectFirma.Web.Models.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" FromRole="ParentQuestion" ToRole="FindYourForesterQuestionsWhereYouAreTheParentQuestion" />
+    <NavigationProperty Name="ParentQuestion" Relationship="ProjectFirma.Web.Models.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" FromRole="FindYourForesterQuestionsWhereYouAreTheParentQuestion" ToRole="ParentQuestion" />
   </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>
@@ -4549,6 +4566,18 @@
       </Principal>
       <Dependent Role="SystemAttributesWhereYouAreTheSquareLogoFileResource">
         <PropertyRef Name="SquareLogoFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID">
+    <End Role="ParentQuestion" Type="ProjectFirma.Web.Models.FindYourForesterQuestion" Multiplicity="0..1" />
+    <End Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion" Type="ProjectFirma.Web.Models.FindYourForesterQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParentQuestion">
+        <PropertyRef Name="FindYourForesterQuestionID" />
+      </Principal>
+      <Dependent Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion">
+        <PropertyRef Name="ParentQuestionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
