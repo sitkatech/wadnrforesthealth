@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Models
             LayerOpacity = layerOpacity;
             LayerInitialVisibility = layerInitialVisibility;
             LayerType = LayerGeoJsonType.Vector;
-            HasCustomPopups = geoJsonFeatureCollection.Features.Any(x => x.Properties.ContainsKey("PopupUrl"));
+            HasCustomPopups = geoJsonFeatureCollection?.Features.Any(x => x.Properties.ContainsKey("PopupUrl")) ?? false;
         }
         /// <summary>
         /// Constructor for LayerGeoJson with WMS Type
