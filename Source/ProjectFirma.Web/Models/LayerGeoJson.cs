@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
         public string LayerIconImageLocation;
         public bool HasCqlFilter;
         public string CqlFilter;
+        public int ContextObjectId;
 
         /// <summary>
         /// Constructor for LayerGeoJson with Vector Type
@@ -95,8 +96,17 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string cqlFilter, bool hasCqlFilter) : this(layerName, mapServerUrl, mapServerLayerName, layerColor, layerOpacity, layerInitialVisibility, cqlFilter, hasCqlFilter, string.Empty)
         {
-
+            
         }
+
+        /// <summary>
+        /// Constructor for LayerGeoJson with WMS Type
+        /// </summary>
+        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility, string cqlFilter, bool hasCqlFilter, int contextObjectId) : this(layerName, mapServerUrl, mapServerLayerName, layerColor, layerOpacity, layerInitialVisibility, cqlFilter, hasCqlFilter, string.Empty)
+        {
+            ContextObjectId = contextObjectId;
+        }
+
 
         /// <summary>
         /// Constructor for LayerGeoJson with WMS Type

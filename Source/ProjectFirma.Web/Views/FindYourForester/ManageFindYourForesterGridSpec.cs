@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -37,7 +38,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             AddCheckBoxColumn();
             Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 165);
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Role", a => a.ForesterRoleDisplayName, 165);
+            Add($"Role", a => a.ForesterRoleDisplayName, 165, DhtmlxGridColumnFilterType.None);
             Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
 
         }

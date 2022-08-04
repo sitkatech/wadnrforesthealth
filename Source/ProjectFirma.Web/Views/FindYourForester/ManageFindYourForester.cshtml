@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
@@ -64,6 +65,26 @@
     jQuery(document).ready(function()
     {
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
-        window.Sitka.map = new ProjectFirmaMaps.Map(mapInitJson);
+        var sitkaMap = new ProjectFirmaMaps.Map(mapInitJson, null, true);
+
+        var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.GridDataUrlTemplate.ToJS()));
+        
+        sitkaMap.map.on("overlayadd", function (e) {
+            @*var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
+            
+            console.log(@ViewDataTyped.GridDataUrl);*@
+            var layer = Object.values(e.layer._layers)[0];
+            var findYourForesterRoleID = layer.ContextObjectId;
+            
+            var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
+            SitkaAjax.get( dataUrl, (result) => {
+                // update the grid data
+
+                console.log(result);
+            }, (error) => {
+                
+            });
+            
+        });
     });
 </script>
