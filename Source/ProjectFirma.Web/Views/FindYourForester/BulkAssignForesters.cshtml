@@ -46,9 +46,9 @@ else
 {
     <div style="max-height: 200px; overflow-y: auto; overflow-x: hidden">
         <ul>
-            @foreach (var foresterWorkUnitID in ViewDataTyped.ForesterWorkUnitIDList)
+            @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
             {
-                <li>@foresterWorkUnitID.PersonID</li>
+                <li>@foresterWorkUnit.PersonID</li>
             }
         </ul>
     </div>

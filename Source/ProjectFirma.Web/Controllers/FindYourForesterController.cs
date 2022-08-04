@@ -84,7 +84,6 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }
-        //@BulkAssignForestersModalDialogForm = new BulkAssignForestersModalDialogForm(SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x=>x.BulkAssignForesters(null)), 'test', 'test')
         [HttpGet]
         public ContentResult BulkAssignForesters()
         {
