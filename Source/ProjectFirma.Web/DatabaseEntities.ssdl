@@ -7166,6 +7166,21 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProjectCode' does not h
   <Property Name="create_date" Type="varchar" MaxLength="200" />
 </EntityType>
 Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpServiceForesterData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpServiceForesterData">
+  <Property Name="ForesterRoleID" Type="int" />
+  <Property Name="ForesterWorkUnitName" Type="varchar" MaxLength="100" />
+  <Property Name="RegionName" Type="varchar" MaxLength="100" />
+  <Property Name="ForesterWorkUnitLocation" Type="geometry" />
+  <Property Name="ForesterFullName" Type="varchar" MaxLength="500" />
+  <Property Name="ForesterFirstName" Type="varchar" MaxLength="250" />
+  <Property Name="ForesterLastName" Type="varchar" MaxLength="250" />
+  <Property Name="ForesterPhone" Type="varchar" MaxLength="250" />
+  <Property Name="ForesterEmail" Type="varchar" MaxLength="250" />
+  <Property Name="PersonID" Type="int" />
+</EntityType>
+Errors Found During Generation:
 warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
 
 <EntityType Name="tmpTreatmentsFromArcGis">

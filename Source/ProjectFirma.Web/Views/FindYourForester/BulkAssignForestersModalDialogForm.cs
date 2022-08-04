@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ManageFindYourForesterGridSpec.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="CustomNotificationModalDialogForm.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,28 +18,25 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using LtInfo.Common.DhtmlWrappers;
-using LtInfo.Common.Views;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
-
 namespace ProjectFirma.Web.Views.FindYourForester
 {
-    public class ManageFindYourForesterGridSpec : GridSpec<FindYourForesterGridObject>
+    public class BulkAssignForestersModalDialogForm
     {
-        public ManageFindYourForesterGridSpec(Person currentPerson)
+        public string DialogUrl;
+        public string DialogLinkText;
+        public string DialogTitle;
+        public int CheckboxColumnIndex;
+        public string ValueColumnName;
+        public string ReturnListName;
+
+        public BulkAssignForestersModalDialogForm(string dialogUrl)
         {
-
-            ObjectNameSingular = "Forester Work Unit";
-            ObjectNamePlural = "Forester Work Units";
-
-            AddCheckBoxColumn();
-            Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
-            Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Role", a => a.ForesterRoleDisplayName, 165, DhtmlxGridColumnFilterType.None);
-            Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
+            DialogUrl = dialogUrl;
+            DialogLinkText = "Assign Forester";
+            DialogTitle = "Assign Forester to Forester Work Unit";
+            CheckboxColumnIndex = 0;
+            ValueColumnName = "ForesterWorkUnitID";
+            ReturnListName = "ForesterWorkUnitIDList";
 
         }
     }

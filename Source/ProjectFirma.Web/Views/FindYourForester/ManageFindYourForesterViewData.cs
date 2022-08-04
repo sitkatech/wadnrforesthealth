@@ -19,6 +19,9 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using LtInfo.Common;
+using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -29,17 +32,37 @@ namespace ProjectFirma.Web.Views.FindYourForester
     {
         public readonly MapInitJson MapInitJson;
         public readonly ManageFindYourForesterGridSpec GridSpec;
-        public readonly string GridName;
+        public string GridName { get; }
         public readonly string GridDataUrl;
+        public string GridDataUrlTemplate { get; }
 
-        public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage, string bulkAssignForestersUrl) : base(currentPerson, firmaPage)
         {
             PageTitle = "Manage Find Your Forester";
             MapInitJson = mapInitJson;
             GridSpec = new ManageFindYourForesterGridSpec(currentPerson);
             GridName = "manageFindYourForesterGrid";
-            GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData());
+            GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(ForesterRole.ServiceForester));
+            GridDataUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(UrlTemplate.Parameter1Int));
+
+            var getForesterWorkUnitID =
+                $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({0}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
+ 
+            var modalDialogFormLink = ModalDialogFormHelper.ModalDialogFormLink(
+                "<span class=\"glyphicon glyphicon-envelope\" style=\"margin-right:5px\"></span>Assign Forester",
+                bulkAssignForestersUrl,
+                "Assign Forester",
+                700,
+                "Save",
+                "Cancel",
+                new List<string>(),
+                null,
+                getForesterWorkUnitID);
+
+            GridSpec.ArbitraryHtml = new List<string> { modalDialogFormLink.ToString() };
+
         }
 
+        
     }
 }

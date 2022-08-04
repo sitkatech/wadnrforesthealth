@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ManageFindYourForesterGridSpec.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ManageFindYourForesterViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,28 +19,26 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.DhtmlWrappers;
-using LtInfo.Common.Views;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.FindYourForester
 {
-    public class ManageFindYourForesterGridSpec : GridSpec<FindYourForesterGridObject>
+    public class BulkAssignForestersViewData
     {
-        public ManageFindYourForesterGridSpec(Person currentPerson)
+        public readonly List<ForesterWorkUnit> ForesterWorkUnitIDList;
+        public readonly IEnumerable<SelectListItem> AllPossibleForesters;
+
+        public BulkAssignForestersViewData(Person currentPerson, List<Person> allPossibleForesters, List<ForesterWorkUnit> foresterWorkUnitIDList)
         {
-
-            ObjectNameSingular = "Forester Work Unit";
-            ObjectNamePlural = "Forester Work Units";
-
-            AddCheckBoxColumn();
-            Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
-            Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Role", a => a.ForesterRoleDisplayName, 165, DhtmlxGridColumnFilterType.None);
-            Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
-
+            ForesterWorkUnitIDList = foresterWorkUnitIDList;
+            AllPossibleForesters = allPossibleForesters.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast, "None"); ;
         }
+
     }
 }
