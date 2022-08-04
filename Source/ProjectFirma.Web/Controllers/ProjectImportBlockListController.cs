@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -18,22 +19,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
-            return ConfirmBlockListProjectAction(projectPrimaryKey.EntityObject, viewModel, $"Are you sure you want to add the project '{project.ProjectName}' to the import block list?");
-        }
-
-        [HttpGet]
-        [ProgramManageFeature]
-        public PartialViewResult RemoveBlockListProject(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
-            return ConfirmBlockListProjectAction(projectPrimaryKey.EntityObject, viewModel, $"Are you sure you want to remove the project '{project.ProjectName}' from the import block list?");
-        }
-
-        private PartialViewResult ConfirmBlockListProjectAction(Project project, ConfirmDialogFormViewModel viewModel, string message)
-        {
-            var viewData = new ConfirmDialogFormViewData(message, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+            return ConfirmBlockListProjectAction(viewModel, $"Are you sure you want to add the project '{project.ProjectName}' to the import block list?");
         }
 
         [HttpPost]
@@ -44,7 +30,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ConfirmBlockListProjectAction(project, viewModel, $"ModelState is invalid. Refresh the page and try again.");
+                return ConfirmBlockListProjectAction(viewModel, $"ModelState is invalid. Refresh the page and try again.");
             }
 
             foreach (var projectProgram in project.ProjectPrograms)
@@ -65,6 +51,15 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult RemoveBlockListProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
+            return ConfirmBlockListProjectAction(viewModel, $"Are you sure you want to remove the project '{project.ProjectName}' from the import block list?");
+        }
+
         [HttpPost]
         [ProgramManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
@@ -73,7 +68,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ConfirmBlockListProjectAction(project, viewModel, $"ModelState is invalid. Refresh the page and try again.");
+                return ConfirmBlockListProjectAction(viewModel, $"ModelState is invalid. Refresh the page and try again.");
             }
 
             foreach (var projectProgram in project.ProjectPrograms)
@@ -92,32 +87,41 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        public static bool ExistsInBlockList(ProjectPrimaryKey projectPrimaryKey, ProgramPrimaryKey programPrimaryKey)
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult RemoveBlockListEntry(ProjectImportBlockListPrimaryKey blockListPrimaryKey)
         {
-            var project = projectPrimaryKey.EntityObject;
-            return ExistsInBlockList(programPrimaryKey.PrimaryKeyValue, project.ProjectGisIdentifier, project.ProjectName, project.ProjectID);
+            var blockListEntry = blockListPrimaryKey.EntityObject;
+            var viewModel = new ConfirmDialogFormViewModel(blockListPrimaryKey.PrimaryKeyValue);
+            return ConfirmBlockListProjectAction(viewModel, $"Are you sure you want to remove the project '{blockListEntry.ProjectName}' ({blockListEntry.ProjectGisIdentifier}) from the import block list?");
         }
 
-        public static bool ExistsInBlockList(int programID, string projectGisIdentifier, string projectName,
-            int? projectID)
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult RemoveBlockListEntry(ProjectImportBlockListPrimaryKey blockListPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
+            var blockListEntry = blockListPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ConfirmBlockListProjectAction(viewModel, $"ModelState is invalid. Refresh the page and try again.");
+            }
+
             var existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
-                .FirstOrDefault(p => p.ProgramID == programID && p.ProjectGisIdentifier == projectGisIdentifier && p.ProjectName == projectName);
+                .FirstOrDefault(p => p.ProjectImportBlockListID == blockListEntry.ProjectImportBlockListID);
 
-            if (existing == null)
-            {
-                existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
-                    .FirstOrDefault(p => p.ProgramID == programID && p.ProjectGisIdentifier == projectGisIdentifier);
-            }
+            if (existing != null)
+                HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Remove(existing);
 
-            if (existing == null)
-            {
-                existing = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
-                    .FirstOrDefault(p => p.ProgramID == programID && p.ProjectName == projectName);
-            }
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            return existing != null;
+            return new ModalDialogFormJsonResult();
         }
 
+        private PartialViewResult ConfirmBlockListProjectAction(ConfirmDialogFormViewModel viewModel, string message)
+        {
+            var viewData = new ConfirmDialogFormViewData(message, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
     }
 }

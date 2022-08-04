@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -1185,6 +1185,10 @@
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
+    <Compile Include="Views\Program\EditProjectImportBlockList.cs" />
+    <Compile Include="Views\Program\EditProjectImportBlockListViewData.cs" />
+    <Compile Include="Views\Program\EditProjectImportBlockListViewModel.cs" />
+    <Compile Include="Views\Program\ProjectBlockListGridSpec.cs" />
     <Compile Include="Views\Program\EditProgramPeople.cs" />
     <Compile Include="Views\Program\Edit.cs" />
     <Compile Include="Views\Program\EditProgramPeopleViewData.cs" />
@@ -1196,7 +1200,6 @@
     <Compile Include="Views\Program\EditViewModel.cs" />
     <Compile Include="Views\Program\EditViewModelValidator.cs" />
     <Compile Include="Views\Program\ProgramNotificationGridSpec.cs" />
-    <Compile Include="Views\Program\ProjectListViewModel.cs" />
     <Compile Include="Views\Program\ProgramViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
@@ -1238,6 +1241,7 @@
     <Compile Include="Views\Program\Index.cs" />
     <Compile Include="Views\Program\ProgramGridSpec.cs" />
     <Compile Include="Views\Program\IndexViewData.cs" />
+    <Compile Include="Views\Program\ProjectImportBlockListViewModel.cs" />
     <Compile Include="Views\Program\ProjectListGridSpec.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
@@ -2584,6 +2588,7 @@
     <Content Include="Views\Program\EditProgramNotificationConfiguration.cshtml" />
     <Content Include="Views\Treatment\EditTreatmentsForAProject.cshtml" />
     <Content Include="Views\Treatment\EditTreatment.cshtml" />
+    <Content Include="Views\Program\EditProjectImportBlockList.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
