@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.Program
                 Add(string.Empty, x => ModalDialogFormHelper.ModalDialogFormLink(null, "Remove from Block List",
                     SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
                         c.RemoveBlockListEntry(x.PrimaryKey)),
-                    $"Remove '{x.Project}' ({x.ProjectGisIdentifier}) from Import Block List", 950,
+                    $"Remove '{x.ProjectName}' ({x.ProjectGisIdentifier}) from Import Block List", 950,
                     "btnRemoveImportBlockList", "Yes", "Cancel", null, null, null, null,
                     "Allow project to be updated by the imports of its programs."),
                     125, DhtmlxGridColumnFilterType.None, true);
