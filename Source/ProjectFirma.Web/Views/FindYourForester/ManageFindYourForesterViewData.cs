@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
     {
         public readonly MapInitJson MapInitJson;
         public readonly ManageFindYourForesterGridSpec GridSpec;
-        public readonly string GridName;
+        public string GridName { get; }
         public readonly string GridDataUrl;
         public string GridDataUrlTemplate { get; }
 
@@ -46,8 +46,8 @@ namespace ProjectFirma.Web.Views.FindYourForester
             GridDataUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(UrlTemplate.Parameter1Int));
 
             var getForesterWorkUnitID =
-                $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({1}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
-
+                $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({0}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
+ 
             var modalDialogFormLink = ModalDialogFormHelper.ModalDialogFormLink(
                 "<span class=\"glyphicon glyphicon-envelope\" style=\"margin-right:5px\"></span>Assign Forester",
                 bulkAssignForestersUrl,

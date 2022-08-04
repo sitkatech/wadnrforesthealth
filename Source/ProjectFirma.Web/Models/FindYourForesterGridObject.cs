@@ -36,6 +36,7 @@ namespace ProjectFirma.Web.Models
 
         public FindYourForesterGridObject(ForesterWorkUnit foresterWorkUnit)
         {
+            this.ForesterWorkUnitID = foresterWorkUnit.ForesterWorkUnitID;
             this.ForesterWorkUnitName = foresterWorkUnit.ForesterWorkUnitName;
             this.ForesterRoleName = foresterWorkUnit.ForesterRole.ForesterRoleName;
             this.ForesterRoleDisplayName = foresterWorkUnit.ForesterRole.ForesterRoleDisplayName;

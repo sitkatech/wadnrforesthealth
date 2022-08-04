@@ -31,13 +31,8 @@ namespace ProjectFirma.Web.Views.FindYourForester
     public class BulkAssignForestersViewModel : FormViewModel
     {
         [Required]
-        public readonly List<int> ForesterWorkUnitIDList;
+        public List<int> ForesterWorkUnitIDList { get; set; }
 
-
-        public BulkAssignForestersViewModel(Person currentPerson,  List<int> foresterWorkUnitIDList)
-        {
-            ForesterWorkUnitIDList = foresterWorkUnitIDList;
-        }
 
         public BulkAssignForestersViewModel()
         {
