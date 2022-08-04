@@ -29,28 +29,44 @@
     ViewBag.Title = "BulkAssignForesters";
 }
 
-@if (Model.ForesterWorkUnitIDList == null || !Model.ForesterWorkUnitIDList.Any())
+@using (Html.BeginForm())
 {
-    <p>
-        No forester work units selected to be modified.
-    </p>
+    
+    if (Model.ForesterWorkUnitIDList == null || !Model.ForesterWorkUnitIDList.Any())
+    {
+        <p>
+            No forester work units selected to be modified.
+        </p>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
         // <![CDATA[
         var saveButtonId = "@ModalDialogFormHelper.SaveButtonID";
         jQuery("#" + saveButtonId).hide();
         // ]]>
-    </script>
-}
-else
-{
-    <div style="max-height: 200px; overflow-y: auto; overflow-x: hidden">
-        <ul>
-            @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
+        </script>
+    }
+    else
+    {
+
+
+        <div style="max-height: 200px; overflow-y: auto; overflow-x: hidden">
+            <ul>
+                @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
+                {
+                    <li>@foresterWorkUnit.PersonID</li>
+                }
+            </ul>
+            <div>
+                @Html.DropDownListFor(m => m.SelectedForesterPersonID, ViewDataTyped.AllPossibleForesters, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                @Html.ValidationMessageFor(m => m.SelectedForesterPersonID)
+            </div>
+            @foreach (var foresterWorkUnit in Model.ForesterWorkUnitIDList)
             {
-                <li>@foresterWorkUnit.PersonID</li>
-            }
-        </ul>
-    </div>
+                @Html.Hidden("ForesterWorkUnitIDList[]", foresterWorkUnit)
+            }   
+                
+        </div>
+    }
+
 
 }

@@ -101,8 +101,9 @@ namespace ProjectFirma.Web.Controllers
         {
 
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+            
             var selectedForesterWorkUnitIDs =
-                HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();//.Select(x => x.PersonID).ToList();
+                HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
             var viewData = new BulkAssignForestersViewData(CurrentPerson, people, selectedForesterWorkUnitIDs);
             return RazorPartialView<BulkAssignForesters, BulkAssignForestersViewData, BulkAssignForestersViewModel>(viewData, viewModel);
 

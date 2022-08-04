@@ -20,6 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Globalization;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -29,12 +32,12 @@ namespace ProjectFirma.Web.Views.FindYourForester
     public class BulkAssignForestersViewData
     {
         public readonly List<ForesterWorkUnit> ForesterWorkUnitIDList;
-        public readonly List<Person> AllPossibleForesters;
+        public readonly IEnumerable<SelectListItem> AllPossibleForesters;
 
         public BulkAssignForestersViewData(Person currentPerson, List<Person> allPossibleForesters, List<ForesterWorkUnit> foresterWorkUnitIDList)
         {
             ForesterWorkUnitIDList = foresterWorkUnitIDList;
-            AllPossibleForesters = allPossibleForesters;
+            AllPossibleForesters = allPossibleForesters.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast); ;
         }
 
     }

@@ -33,6 +33,9 @@ namespace ProjectFirma.Web.Views.FindYourForester
         [Required]
         public List<int> ForesterWorkUnitIDList { get; set; }
 
+        [Required] 
+        public int SelectedForesterPersonID { get; set; }
+
 
         public BulkAssignForestersViewModel()
         {
