@@ -89,25 +89,61 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
         [HttpGet]
+        [FindYourForesterManageFeature]
         public ContentResult BulkAssignForesters()
         {
-
             return new ContentResult();
         }
 
         [HttpPost]
+        [FindYourForesterManageFeature]
         public PartialViewResult BulkAssignForesters(BulkAssignForestersViewModel viewModel)
         {
+            
 
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+
+            var selectedForesterWorkUnitIDs = new List<ForesterWorkUnit>();
+
+            if (viewModel.ForesterWorkUnitIDList != null)
+            {
+                selectedForesterWorkUnitIDs =
+                    HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
+
+            }
             
-            var selectedForesterWorkUnitIDs =
-                HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
             var viewData = new BulkAssignForestersViewData(CurrentPerson, people, selectedForesterWorkUnitIDs);
             return RazorPartialView<BulkAssignForesters, BulkAssignForestersViewData, BulkAssignForestersViewModel>(viewData, viewModel);
 
         }
+
+        /// <summary>
+        /// Dummy get signature so that it can find the post action
+        /// </summary>
+        [HttpGet]
+        [FirmaAdminFeature]
+        public ContentResult UpdateBulkAssignedForesters()
+        {
+            return new ContentResult();
+        }
+
+        [HttpPost]
+        [FirmaAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult UpdateBulkAssignedForesters(BulkAssignForestersViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult();
+            }
+
+            viewModel.UpdateModel();
+
+            return new ModalDialogFormJsonResult();
+        }
+
 
     }
 }

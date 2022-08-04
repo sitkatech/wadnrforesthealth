@@ -29,7 +29,7 @@
     ViewBag.Title = "BulkAssignForesters";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm<FindYourForesterController>(c => c.UpdateBulkAssignedForesters(null)))
 {
     
     if (Model.ForesterWorkUnitIDList == null || !Model.ForesterWorkUnitIDList.Any())
@@ -47,8 +47,6 @@
     }
     else
     {
-
-
         <div style="max-height: 200px; overflow-y: auto; overflow-x: hidden">
             <ul>
                 @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
@@ -58,7 +56,6 @@
             </ul>
             <div>
                 @Html.DropDownListFor(m => m.SelectedForesterPersonID, ViewDataTyped.AllPossibleForesters, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                @Html.ValidationMessageFor(m => m.SelectedForesterPersonID)
             </div>
             @foreach (var foresterWorkUnit in Model.ForesterWorkUnitIDList)
             {

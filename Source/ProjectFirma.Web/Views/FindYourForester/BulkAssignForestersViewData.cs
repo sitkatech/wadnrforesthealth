@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public BulkAssignForestersViewData(Person currentPerson, List<Person> allPossibleForesters, List<ForesterWorkUnit> foresterWorkUnitIDList)
         {
             ForesterWorkUnitIDList = foresterWorkUnitIDList;
-            AllPossibleForesters = allPossibleForesters.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast); ;
+            AllPossibleForesters = allPossibleForesters.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast, "None"); ;
         }
 
     }

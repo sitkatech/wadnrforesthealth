@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -30,17 +31,29 @@ namespace ProjectFirma.Web.Views.FindYourForester
 {
     public class BulkAssignForestersViewModel : FormViewModel
     {
-        [Required]
-        public List<int> ForesterWorkUnitIDList { get; set; }
-
-        [Required] 
-        public int SelectedForesterPersonID { get; set; }
-
 
         public BulkAssignForestersViewModel()
         {
-            ForesterWorkUnitIDList = new List<int>();
+
         }
 
+        [Required]
+        public List<int> ForesterWorkUnitIDList { get; set; }
+
+        public int? SelectedForesterPersonID { get; set; }
+
+
+        public void UpdateModel()
+        {
+            var foresterWorkUnits =
+                HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x =>
+                    ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID));
+
+            foreach (var foresterWorkUnit in foresterWorkUnits)
+            {
+                foresterWorkUnit.PersonID = SelectedForesterPersonID;
+            }
+           
+        }
     }
 }
