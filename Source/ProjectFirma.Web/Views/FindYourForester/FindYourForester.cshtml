@@ -58,10 +58,10 @@
             <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
 
         </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
+        <div class="col-md-3" style="padding-left: 0; padding-right: 0;">
+            <div class="panel panel-default" style="height: 600px; margin: 5px 0 5px 0">
                 <div class="panel-heading"><strong>Forester Contact Information:</strong></div>
-                <div id="findYourForesterContainer" class="panel-body" style="max-height: 580px; overflow-y: scroll; ">
+                <div id="findYourForesterContainer" class="panel-body" style="max-height: 559px; overflow-y: scroll; ">
 
                 </div>
             </div>
@@ -125,14 +125,31 @@
             var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
                 findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
                     results.forEach(result => {
+                        var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
                         //check we have some data before updating
-                        if(result && result.properties && result.properties.FirstName){
-                            var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
+                        if (result && result.properties && result.properties.FirstName) {
                             foresterDefinitionList.find('[data-forester-name]').text(result.properties.FirstName + " " + result.properties.LastName);
-                            foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
-                            foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
+                            if (result.properties.Email) {
+                                foresterDefinitionList.find('[data-forester-email]').text(result.properties.Email);
+                            } else {
+                                foresterDefinitionList.find('[data-forester-email]').text("No email available");
+                            }
+                            if (result.properties.Phone) {
+                                foresterDefinitionList.find('[data-forester-phone]').text(result.properties.Phone);
+                            } else {
+                                foresterDefinitionList.find('[data-forester-phone]').text("No phone number available");
+                            }
+                            
                             foresterDefinitionList.find('[data-forester-container]').show();
                             foresterDefinitionList.find('[data-forester-no-data]').hide();
+                            foresterDefinitionList.find('[data-forester-initial]').hide();
+                        } else {
+                            foresterDefinitionList.find('[data-forester-name]').text("");
+                            foresterDefinitionList.find('[data-forester-email]').text("");
+                            foresterDefinitionList.find('[data-forester-phone]').text("");
+                            foresterDefinitionList.find('[data-forester-container]').hide();
+                            foresterDefinitionList.find('[data-forester-no-data]').show();
+                            foresterDefinitionList.find('[data-forester-initial]').hide();
                         }
                     });
                 }); 
@@ -221,8 +238,11 @@
                                     <strong>Phone:</strong>
                                     <span data-forester-phone=""> </span>
                                 </div>
-                                <div data-forester-no-data="" style="display: block;">
+                                <div data-forester-initial="" style="display: block;">
                                     <p>Please enter your address or place a marker on the map to get Forester contact info for the @question.ForesterRole.ForesterRoleDisplayName in your area.</p>
+                                </div>
+                                <div data-forester-no-data="" style="display: none;">
+                                    <p>The @question.ForesterRole.ForesterRoleDisplayName role is unassigned for the region you selected.</p>
                                 </div>
                             </div>                                                     
 
