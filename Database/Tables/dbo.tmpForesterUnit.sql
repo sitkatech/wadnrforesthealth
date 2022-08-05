@@ -15,5 +15,6 @@ CREATE TABLE [dbo].[tmpForesterUnit](
 	[PHONE_NO] [varchar](14) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Shape_Length] [float] NULL,
 	[Shape_Area] [float] NULL,
-	[GEOM] [geometry] NULL
+	[GEOM] [geometry] NULL,
+	[PersonID] [int] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
