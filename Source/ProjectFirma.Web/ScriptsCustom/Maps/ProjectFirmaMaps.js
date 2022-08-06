@@ -197,7 +197,7 @@ ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function (baseLayer
 
         var groupName = "Find Your Forester";
         var options = {
-            // Make the "Landmarks" group exclusive (use radio inputs)
+            // Make the "Find Your Forester" group exclusive (use radio inputs)
             exclusiveGroups: [groupName],
             // Show a checkbox next to non-exclusive group labels for toggling all
             groupCheckboxes: true
@@ -212,8 +212,6 @@ ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function (baseLayer
         this.layerControl = L.control.groupedLayers(baseLayers, groupedOverlays, options);
         this.layerControl.addTo(this.map);
 
-        //L.control.layers(baseLayers).addTo(this.map);
-        //L.control.layers(overlayLayers).addTo(this.map);
     } else {
         this.layerControl = L.control.layers(baseLayers, overlayLayers);
         this.layerControl.addTo(this.map);
@@ -649,14 +647,19 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             });
                 break;
         case "ForesterWorkUnitLocation":
+            labelText = firstFeature.properties.ForesterRoleDisplayName;
             if (firstFeature.properties.FirstName) {
                 linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>";
-                linkText += "<a href=\"tel:" + firstFeature.properties.Phone + "\">" + firstFeature.properties.Phone + "</a> <br/>";
-                linkText += "<a href=\"mailto:" + firstFeature.properties.Email + "\">" + firstFeature.properties.Email + "</a> <br/>";
-                labelText = firstFeature.properties.ForesterRoleDisplayName;
+
+                if (firstFeature.properties.Phone) {
+                    linkText += "<a href=\"tel:" + firstFeature.properties.Phone + "\">" + firstFeature.properties.Phone + "</a> <br/>";
+                }
+
+                if (firstFeature.properties.Email) {
+                    linkText += "<a href=\"mailto:" + firstFeature.properties.Email + "\">" + firstFeature.properties.Email + "</a> <br/>";
+                }
             } else {
-                linkText = "";
-                labelText = "";
+                linkText = "<br/>This role is unassigned for this region.<br/>";
             }
             
             deferred.resolve({
