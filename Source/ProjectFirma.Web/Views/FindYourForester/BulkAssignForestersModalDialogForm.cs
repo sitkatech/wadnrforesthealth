@@ -32,8 +32,8 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public BulkAssignForestersModalDialogForm(string dialogUrl)
         {
             DialogUrl = dialogUrl;
-            DialogLinkText = "Assign Forester";
-            DialogTitle = "Assign Forester to Forester Work Unit";
+            DialogLinkText = "Manage Forester Assignments";
+            DialogTitle = "Assign Forester to Forester Work Units";
             CheckboxColumnIndex = 0;
             ValueColumnName = "ForesterWorkUnitID";
             ReturnListName = "ForesterWorkUnitIDList";
