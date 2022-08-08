@@ -116,5 +116,10 @@ namespace ProjectFirma.Web.Common
         {
             return "WADNRForestHealth:DualBenefitPrioritization";//todo: move layer name to web config
         }
+
+        public static string GetFindYourForesterWmsLayerName()
+        {
+            return "WADNRForestHealth:FindYourForester"; //todo: move layer name to web config
+        }
     }
 }

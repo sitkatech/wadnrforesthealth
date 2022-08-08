@@ -215,6 +215,12 @@ namespace ProjectFirma.Web.Models
                 return false;
             }
 
+            if (!this.ProgramPeople.Any())
+            {
+                //they are not assigned any programs, no permission!
+                return false;
+            }
+
             var personsProgramIDs = this.ProgramPeople.Select(x => x.ProgramID);
             var projectsProgramIDs = project.ProjectPrograms.Select(x => x.ProgramID);
 

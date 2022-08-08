@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 var ProjectFirmaMaps = {};
 
 /* ====== Main Map ====== */
-ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
+ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLayersAsBaseLayers)
 {
     var self = this;
     this.MapDivId = mapInitJson.MapDivID;
@@ -38,7 +38,11 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
     var streetLabelsLayer = new L.TileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {});
 
     var baseLayers = { 'Aerial': esriAerial, 'Street': esriStreet, 'Terrain': esriTerrain };
-    var overlayLayers = { 'Street Labels': streetLabelsLayer };
+    var overlayLayers = {};
+    if (!treatAllLayersAsBaseLayers) {
+       overlayLayers = { 'Street Labels': streetLabelsLayer }
+    }
+    
 
     var streetLayerGroup;
     if (initialBaseLayerShown === "Hybrid")
@@ -82,7 +86,7 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
         }
     }
 
-    this.addLayersToMapLayersControl(baseLayers, overlayLayers);
+    this.addLayersToMapLayersControl(baseLayers, overlayLayers, treatAllLayersAsBaseLayers);
 
     var modalDialog = jQuery(".modal");
     if (!Sitka.Methods.isUndefinedNullOrEmpty(modalDialog))
@@ -96,7 +100,7 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown)
     if (!mapInitJson.DisablePopups) {
         this.map.on("click", function (e) { self.getFeatureInfo(e); });
     }
-     
+   
     self.setMapBounds(mapInitJson);
 };
 
@@ -142,12 +146,18 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     var layerGroup = new L.LayerGroup();
     var wmsParams;
     if (currentLayer.HasCqlFilter) {
-        wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter });
+        wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter});
     } else {
         wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName});
     }
 
     var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
+
+    if (currentLayer.ContextObjectId) {
+        wmsLayer.ContextObjectId = currentLayer.ContextObjectId;
+    }
+
+   
 
     if (currentLayer.LayerInitialVisibility === 1) {
         layerGroup.addTo(this.map);
@@ -181,9 +191,31 @@ ProjectFirmaMaps.Map.prototype.wfsParams = {
     SrsName: "EPSG:4326"
 };
 
-ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function(baseLayers, overlayLayers) {
-    this.layerControl = L.control.layers(baseLayers, overlayLayers);
-    this.layerControl.addTo(this.map);
+ProjectFirmaMaps.Map.prototype.addLayersToMapLayersControl = function (baseLayers, overlayLayers, treatAllLayersAsBaseLayers) {
+
+    if (treatAllLayersAsBaseLayers) {
+
+        var groupName = "Find Your Forester";
+        var options = {
+            // Make the "Find Your Forester" group exclusive (use radio inputs)
+            exclusiveGroups: [groupName],
+            // Show a checkbox next to non-exclusive group labels for toggling all
+            groupCheckboxes: true
+        };
+
+        var groupedOverlays = {
+            "Find Your Forester" : overlayLayers
+
+        };
+
+        // Use the custom grouped layer control, not "L.control.layers"
+        this.layerControl = L.control.groupedLayers(baseLayers, groupedOverlays, options);
+        this.layerControl.addTo(this.map);
+
+    } else {
+        this.layerControl = L.control.layers(baseLayers, overlayLayers);
+        this.layerControl.addTo(this.map);
+    }
 };
 
 ProjectFirmaMaps.Map.prototype.setMapBounds = function(mapInitJson) {
@@ -310,17 +342,29 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         jQuery("#" + this.MapDivId).unblock();
     };
 
+    ProjectFirmaMaps.Map.prototype.getWmsLayers = function (filterToActive) {
+        var self = this;
+        var wmsLayers = this.vectorLayers.filter(function(layer) {
+            return layer.hasOwnProperty('wmsParams') && (!filterToActive || self.map.hasLayer(layer));
+        });
+        return wmsLayers;
+    };
+
+    ProjectFirmaMaps.Map.prototype.getVectorLayers = function (filterToActive) {
+        var self = this;
+        var vectorLayers = this.vectorLayers.filter(function (layer) {
+            return !layer.hasOwnProperty('wmsParams') && (!filterToActive || self.map.hasLayer(layer));
+        });
+        return vectorLayers;
+    };
+
     ProjectFirmaMaps.Map.prototype.getFeatureInfo = function(e) {
         var latlng = e.latlng;
         var self = this;
 
-        var wmsLayers = this.vectorLayers.filter(function(layer) {
-            return layer.hasOwnProperty('wmsParams') && self.map.hasLayer(layer);
-        });
+        var wmsLayers = this.getWmsLayers(true);
 
-        var vecLayers = this.vectorLayers.filter(function(layer) {
-            return !layer.hasOwnProperty('wmsParams') && self.map.hasLayer(layer);
-        });
+        var vecLayers = this.getVectorLayers(true);
 
         if (wmsLayers.length > 0) {
             this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng);
@@ -346,7 +390,9 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
         });
     
         this.map.setView(latlng);
-        this.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(this.htmlPopupContents(allLayers)).openOn(this.map)); 
+        if (!jQuery('#findYourForesterContainer')) {
+            this.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(this.htmlPopupContents(allLayers)).openOn(this.map));
+        }
     };
 
 ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
@@ -448,15 +494,18 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
             geospatialAreaWMSParams.layers = wmsLayers[j].wmsParams.layers;
             geospatialAreaWMSParams.query_layers = wmsLayers[j].wmsParams.layers;
 
+            if (wmsLayers[j].wmsParams.cql_filter) {
+                geospatialAreaWMSParams.cql_filter = wmsLayers[j].wmsParams.cql_filter;
+            }
             var query = layer._url + L.Util.getParamString(geospatialAreaWMSParams, null, true);            
             ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query }))
-                .then(function(response) {
+                .then(function (response) {
                     return self.formatGeospatialAreaResponse(response).then(function(status) {
                             return status;
                         });
                 }));
      
-        }        
+        }
 
         this.carryOutPromises(ajaxCalls).then(
             function (responses) {
@@ -485,13 +534,18 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 });
 
                 self.map.setView(latlng);
-                self.map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                if (jQuery('#findYourForesterContainer')) {
+                    jQuery('#findYourForesterContainer').html(self.htmlPopupContents(allLayers));
+                } else {
+                    self.map.openPopup(L.popup({ maxWidth: 200, maxHeight: 250 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
+                }
             },
             function(responses) {
                 console.log("error getting wms feature info");
             }
         );
-};
+        return ajaxCalls;
+    };
 
 
 ProjectFirmaMaps.Map.prototype.carryOutPromises = function (deferreds) {
@@ -590,6 +644,28 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             deferred.resolve({
                 label: labelText,
                 link: linkText
+            });
+                break;
+        case "ForesterWorkUnitLocation":
+            labelText = firstFeature.properties.ForesterRoleDisplayName;
+            if (firstFeature.properties.FirstName) {
+                linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>";
+
+                if (firstFeature.properties.Phone) {
+                    linkText += "<a href=\"tel:" + firstFeature.properties.Phone + "\">" + firstFeature.properties.Phone + "</a> <br/>";
+                }
+
+                if (firstFeature.properties.Email) {
+                    linkText += "<a href=\"mailto:" + firstFeature.properties.Email + "\">" + firstFeature.properties.Email + "</a> <br/>";
+                }
+            } else {
+                linkText = "<br/>This role is unassigned for this region.<br/>";
+            }
+            
+            deferred.resolve({
+                label: labelText,
+                link: linkText,
+                properties: firstFeature.properties
             });
             break;
         default:

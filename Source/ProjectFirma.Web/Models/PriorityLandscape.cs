@@ -84,7 +84,10 @@ namespace ProjectFirma.Web.Models
                 layerGeoJsons.Add(projectDetailedLocationsLayerGeoJson);
 
                 var projectTreatmentAreasLayerGeoJson = Project.ProjectTreatmentAreasToGeoJsonFeatureCollection(projects);
-                layerGeoJsons.Add(projectTreatmentAreasLayerGeoJson);
+                if (projectTreatmentAreasLayerGeoJson != null)
+                {
+                    layerGeoJsons.Add(projectTreatmentAreasLayerGeoJson);
+                }
             }
 
 

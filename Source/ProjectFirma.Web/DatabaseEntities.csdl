@@ -21,11 +21,13 @@
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.FileResource" />
     <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.FileResourceMimeTypeFileExtension" />
+    <EntitySet Name="FindYourForesterQuestion" EntityType="ProjectFirma.Web.Models.FindYourForesterQuestion" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.FirmaHomePageImage" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
+    <EntitySet Name="ForesterWorkUnit" EntityType="ProjectFirma.Web.Models.ForesterWorkUnit" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.GisCrossWalkDefault" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.GisDefaultMapping" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.GisExcludeIncludeColumn" />
@@ -365,6 +367,10 @@
       <End Role="SquareLogoFileResource" EntitySet="FileResource" />
       <End Role="SystemAttributesWhereYouAreTheSquareLogoFileResource" EntitySet="SystemAttribute" />
     </AssociationSet>
+    <AssociationSet Name="FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" Association="ProjectFirma.Web.Models.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID">
+      <End Role="ParentQuestion" EntitySet="FindYourForesterQuestion" />
+      <End Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion" EntitySet="FindYourForesterQuestion" />
+    </AssociationSet>
     <AssociationSet Name="FK_FirmaPageImage_FirmaPage_FirmaPageID" Association="ProjectFirma.Web.Models.FK_FirmaPageImage_FirmaPage_FirmaPageID">
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
@@ -384,6 +390,10 @@
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ForesterWorkUnit_Person_PersonID" Association="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="ForesterWorkUnits" EntitySet="ForesterWorkUnit" />
     </AssociationSet>
     <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
@@ -1572,6 +1582,18 @@
     <Property Name="FileResourceMimeTypeID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceMimeTypeFileExtensionText" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
   </EntityType>
+  <EntityType Name="FindYourForesterQuestion">
+    <Key>
+      <PropertyRef Name="FindYourForesterQuestionID" />
+    </Key>
+    <Property Name="FindYourForesterQuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionText" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="ParentQuestionID" Type="Int32" />
+    <Property Name="ForesterRoleID" Type="Int32" />
+    <Property Name="ResultsBonusContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FindYourForesterQuestionsWhereYouAreTheParentQuestion" Relationship="ProjectFirma.Web.Models.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" FromRole="ParentQuestion" ToRole="FindYourForesterQuestionsWhereYouAreTheParentQuestion" />
+    <NavigationProperty Name="ParentQuestion" Relationship="ProjectFirma.Web.Models.FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID" FromRole="FindYourForesterQuestionsWhereYouAreTheParentQuestion" ToRole="ParentQuestion" />
+  </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>
       <PropertyRef Name="FirmaHomePageImageID" />
@@ -1626,6 +1648,18 @@
     <Property Name="FeatureClassName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
+  </EntityType>
+  <EntityType Name="ForesterWorkUnit">
+    <Key>
+      <PropertyRef Name="ForesterWorkUnitID" />
+    </Key>
+    <Property Name="ForesterWorkUnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ForesterRoleID" Type="Int32" Nullable="false" />
+    <Property Name="PersonID" Type="Int32" />
+    <Property Name="ForesterWorkUnitName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="RegionName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ForesterWorkUnitLocation" Type="Geometry" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="ForesterWorkUnits" ToRole="Person" />
   </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>
@@ -2637,6 +2671,7 @@
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
+    <NavigationProperty Name="ForesterWorkUnits" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="Person" ToRole="ForesterWorkUnits" />
     <NavigationProperty Name="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptCreatePerson" ToRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="PeopleWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
@@ -4557,6 +4592,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FindYourForesterQuestion_FindYourForesterQuestion_ParentQuestionID_FindYourForesterQuestionID">
+    <End Role="ParentQuestion" Type="ProjectFirma.Web.Models.FindYourForesterQuestion" Multiplicity="0..1" />
+    <End Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion" Type="ProjectFirma.Web.Models.FindYourForesterQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParentQuestion">
+        <PropertyRef Name="FindYourForesterQuestionID" />
+      </Principal>
+      <Dependent Role="FindYourForesterQuestionsWhereYouAreTheParentQuestion">
+        <PropertyRef Name="ParentQuestionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FirmaPageImage_FirmaPage_FirmaPageID">
     <End Role="FirmaPage" Type="ProjectFirma.Web.Models.FirmaPage" Multiplicity="1" />
     <End Role="FirmaPageImages" Type="ProjectFirma.Web.Models.FirmaPageImage" Multiplicity="*" />
@@ -4614,6 +4661,18 @@
       </Principal>
       <Dependent Role="ProjectUpdates">
         <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ForesterWorkUnit_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="ForesterWorkUnits" Type="ProjectFirma.Web.Models.ForesterWorkUnit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="ForesterWorkUnits">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

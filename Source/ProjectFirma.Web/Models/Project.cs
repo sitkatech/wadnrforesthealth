@@ -547,6 +547,11 @@ namespace ProjectFirma.Web.Models
                 .Include(x => x.ProjectLocation)
                 .ToList();
 
+            if (!projectTreatments.Any())
+            {
+                return null;
+            }
+
 
             var detailedLocationsByTypeGeoJsonFeatureCollection = projectTreatments.ToGeoJsonFeatureCollectionWithPopupUrl();
             var layerName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Treatment Areas";
@@ -693,8 +698,8 @@ namespace ProjectFirma.Web.Models
             {
                 if (!_hasCheckedLastUpdateDate)
                 {
-                    LastUpdateDate = HttpRequestStorage.DatabaseEntities.AuditLogs.GetAuditLogEntriesForProject(this)
-                        .Max(x => x.AuditLogDate);
+                    var auditLogEntriesForProject = HttpRequestStorage.DatabaseEntities.AuditLogs.GetAuditLogEntriesForProject(this);
+                    LastUpdateDate = auditLogEntriesForProject.Any() ? auditLogEntriesForProject.Max(x => x.AuditLogDate) : _lastUpdateDate;
                 }
 
                 return _lastUpdateDate;

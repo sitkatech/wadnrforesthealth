@@ -229,4 +229,13 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<GrantAllocationAwardLandownerCostShareLineItemController>.BuildUrlFromExpression(c => c.Index());
     }
+
+    public partial class FirmaPageTypeManageFindYourForester
+    {
+        public override string GetViewUrl() => SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(c => c.Manage());
+    }
+    public partial class FirmaPageTypeFindYourForester
+    {
+        public override string GetViewUrl() => SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(c => c.Index());
+    }
 }
