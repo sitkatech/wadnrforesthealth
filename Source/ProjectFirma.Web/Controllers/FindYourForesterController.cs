@@ -103,7 +103,7 @@ namespace ProjectFirma.Web.Controllers
         {
             
 
-            var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+            var people = HttpRequestStorage.DatabaseEntities.People.Where(x => x.OrganizationID == OrganizationModelExtensions.WadnrID).ToList();
 
             var selectedForesterWorkUnitIDs = new List<ForesterWorkUnit>();
 

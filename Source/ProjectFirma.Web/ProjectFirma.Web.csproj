@@ -695,7 +695,6 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
-    <Compile Include="Models\FindYourForesterGridObject.cs" />
     <Compile Include="Controllers\FindYourForesterController.cs" />
     <Compile Include="Controllers\TreatmentController.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\CellFormulaProxy.cs" />
