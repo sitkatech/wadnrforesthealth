@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [FindYourForesterManageFeature]
-        public GridJsonNetJObjectResult<FindYourForesterGridObject> ManageFindYourForesterGridJsonData(ForesterRolePrimaryKey foresterRolePrimaryKey)
+        public GridJsonNetJObjectResult<ForesterWorkUnit> ManageFindYourForesterGridJsonData(ForesterRolePrimaryKey foresterRolePrimaryKey)
         {
             if (foresterRolePrimaryKey == null || foresterRolePrimaryKey.EntityObject == null)
             {
@@ -85,8 +85,8 @@ namespace ProjectFirma.Web.Controllers
             }
             var foresterRole = foresterRolePrimaryKey.EntityObject;
             var gridSpec = new ManageFindYourForesterGridSpec(CurrentPerson);
-            var findYourForesterGridObjects = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => x.ForesterRoleID == foresterRole.ForesterRoleID).ToList().Select(x => new FindYourForesterGridObject(x)).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FindYourForesterGridObject>(findYourForesterGridObjects, gridSpec);
+            var findYourForesterGridObjects = HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => x.ForesterRoleID == foresterRole.ForesterRoleID).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ForesterWorkUnit>(findYourForesterGridObjects, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
