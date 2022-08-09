@@ -48,21 +48,26 @@ namespace ProjectFirma.Web.Controllers
 
 
         [FindYourForesterManageFeature]
-        public ViewResult Manage()
+        public ViewResult Manage(int? foresterRoleID)
         {
-            var bulkAssignForestersUrl =
-                SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x => x.BulkAssignForesters(null));
+            var bulkAssignForestersUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(x => x.BulkAssignForesters(null));
             var layerGeoJsons = new List<LayerGeoJson>();
-            var layerVisibility = LayerInitialVisibility.Show;
+            var layerVisibility = foresterRoleID.HasValue ? LayerInitialVisibility.Hide : LayerInitialVisibility.Show;
+            var initialForesterRoleIdToLoad = 1;
             foreach (var role in ForesterRole.All)
             {
                 if (HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Any(x => x.ForesterRoleID == role.ForesterRoleID))
                 {
+                    if (foresterRoleID.HasValue && foresterRoleID.Value == role.ForesterRoleID)
+                    {
+                        layerVisibility = LayerInitialVisibility.Show;
+                    }
                     var tempLayer = new LayerGeoJson(role.ForesterRoleDisplayName, FirmaWebConfiguration.WebMapServiceUrl,
                         FirmaWebConfiguration.GetFindYourForesterWmsLayerName(), "#59ACFF", 0.2m, layerVisibility, $"ForesterRoleID={role.ForesterRoleID}", true, role.ForesterRoleID);
                     if (layerVisibility == LayerInitialVisibility.Show)
                     {
                         layerVisibility = LayerInitialVisibility.Hide;
+                        initialForesterRoleIdToLoad = role.ForesterRoleID;
                     }
                     layerGeoJsons.Add(tempLayer);
                 }
@@ -71,9 +76,10 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = new MapInitJson("manageFindYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ManageFindYourForester);
-            var viewData = new ManageFindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage, bulkAssignForestersUrl);
+            var viewData = new ManageFindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage, bulkAssignForestersUrl, foresterRoleID ?? initialForesterRoleIdToLoad);
             return RazorView<ManageFindYourForester, ManageFindYourForesterViewData>(viewData);
         }
+
 
 
         [FindYourForesterManageFeature]
@@ -105,16 +111,17 @@ namespace ProjectFirma.Web.Controllers
 
             var people = HttpRequestStorage.DatabaseEntities.People.Where(x => x.OrganizationID == OrganizationModelExtensions.WadnrID).ToList();
 
-            var selectedForesterWorkUnitIDs = new List<ForesterWorkUnit>();
+            var selectedForesterWorkUnits = new List<ForesterWorkUnit>();
 
             if (viewModel.ForesterWorkUnitIDList != null)
             {
-                selectedForesterWorkUnitIDs =
+                selectedForesterWorkUnits =
                     HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Where(x => viewModel.ForesterWorkUnitIDList.Contains(x.ForesterWorkUnitID)).ToList();
+                viewModel.ForesterRoleID = selectedForesterWorkUnits.First().ForesterRoleID;
 
             }
             
-            var viewData = new BulkAssignForestersViewData(CurrentPerson, people, selectedForesterWorkUnitIDs);
+            var viewData = new BulkAssignForestersViewData(CurrentPerson, people, selectedForesterWorkUnits);
             return RazorPartialView<BulkAssignForesters, BulkAssignForestersViewData, BulkAssignForestersViewModel>(viewData, viewModel);
 
         }
@@ -141,7 +148,14 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel();
 
-            return new ModalDialogFormJsonResult();
+            if (viewModel.ForesterRoleID.HasValue)
+            {
+                return new ModalDialogFormJsonResult(SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.Manage(viewModel.ForesterRoleID)));
+            }
+            else
+            {
+                return new ModalDialogFormJsonResult();
+            }
         }
 
 

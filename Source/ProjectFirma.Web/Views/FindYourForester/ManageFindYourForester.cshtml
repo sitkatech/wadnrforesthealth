@@ -68,6 +68,7 @@
         var sitkaMap = new ProjectFirmaMaps.Map(mapInitJson, null, true);
 
         var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.GridDataUrlTemplate.ToJS()));
+        var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
 
         
         sitkaMap.map.on("overlayadd", function (e) {
@@ -76,6 +77,7 @@
             var findYourForesterRoleID = layer.ContextObjectId;
 
             var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
+            window.history.pushState({}, '', pageUrlTemplate.ParameterReplace(findYourForesterRoleID));
             var myGrid = Sitka.@ViewDataTyped.GridName;
 
             myGrid.grid.clearAndLoad(dataUrl, function(){}, 'json');

@@ -48,14 +48,14 @@
     }
     else
     {
-        <div style="max-height: 250px; overflow-y: auto; overflow-x: hidden">
+        <div >
             <div style="margin: 5px 0">Assign the following @ViewDataTyped.ForesterWorkUnitIDList[0].ForesterRole.ForesterRoleDisplayName Work Units:</div>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-4 stylizeLikeTH">Forester Work Unit Name</div>
                 <div class="col-md-4 stylizeLikeTH">Current Forester Assignment</div>
             </div>
-            <div class ="pre-scrollable" style="max-height: 100px; overflow-x: hidden; margin-bottom: 25px; ">
+            <div class ="pre-scrollable" style="max-height: 200px; overflow-x: hidden; margin-bottom: 25px; ">
                 @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
                 {
                     <div class="row">
@@ -82,6 +82,7 @@
                 {
                     @Html.Hidden("ForesterWorkUnitIDList[]", foresterWorkUnit)
                 }
+                @Html.HiddenFor(x => x.ForesterRoleID)
             </div>
             <div style="margin: 5px 0">
                 All the above work units will be reassigned to this selection

@@ -43,6 +43,8 @@ namespace ProjectFirma.Web.Views.FindYourForester
 
         public int? SelectedForesterPersonID { get; set; }
 
+        public int? ForesterRoleID { get; set; }
+
 
         public void UpdateModel()
         {

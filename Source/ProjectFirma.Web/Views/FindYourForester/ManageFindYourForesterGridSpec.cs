@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Web;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -40,7 +41,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
             Add($"Role", a => a.ForesterRole.ForesterRoleDisplayName, 225, DhtmlxGridColumnFilterType.None);
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Assigned to Person", a => a.Person.GetFullNameFirstLastAsUrl() , 200, DhtmlxGridColumnFilterType.Html);
+            Add($"Assigned to Person", a => a.PersonID.HasValue ? a.Person.GetFullNameFirstLastAsUrl() : new HtmlString("unassigned") , 200, DhtmlxGridColumnFilterType.Html);
         }
     }
 }
