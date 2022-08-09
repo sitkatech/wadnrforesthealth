@@ -71,25 +71,14 @@
 
         
         sitkaMap.map.on("overlayadd", function (e) {
-            @*var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
-            
-            console.log(@ViewDataTyped.GridDataUrl);*@
+
             var layer = Object.values(e.layer._layers)[0];
             var findYourForesterRoleID = layer.ContextObjectId;
 
-
             var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
             var myGrid = Sitka.@ViewDataTyped.GridName;
-            //debugger;
-            myGrid.grid.clearAndLoad(dataUrl);
-            //myGrid.load(dataUrl);
-            //SitkaAjax.get( dataUrl, (result) => {
-            //    // update the grid data
 
-            //    console.log(result);
-            //}, (error) => {
-
-            //});
+            myGrid.grid.clearAndLoad(dataUrl, function(){}, 'json');
 
         });
 
