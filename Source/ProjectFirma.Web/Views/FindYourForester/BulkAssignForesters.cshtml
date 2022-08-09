@@ -31,7 +31,7 @@
 
 @using (Html.BeginForm<FindYourForesterController>(c => c.UpdateBulkAssignedForesters(null)))
 {
-    
+
     if (Model.ForesterWorkUnitIDList == null || !Model.ForesterWorkUnitIDList.Any())
     {
         <p>
@@ -47,22 +47,47 @@
     }
     else
     {
-        <div style="max-height: 200px; overflow-y: auto; overflow-x: hidden">
-            <ul>
-                @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
-                {
-                    <li>@foresterWorkUnit.PersonID</li>
-                }
-            </ul>
-            <div>
-                @Html.DropDownListFor(m => m.SelectedForesterPersonID, ViewDataTyped.AllPossibleForesters, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-            </div>
-            @foreach (var foresterWorkUnit in Model.ForesterWorkUnitIDList)
-            {
-                @Html.Hidden("ForesterWorkUnitIDList[]", foresterWorkUnit)
-            }   
-                
-        </div>
+            <div style="max-height: 250px; overflow-y: auto; overflow-x: hidden">
+                <div style="margin: 5px 0">Assign the following @ViewDataTyped.ForesterWorkUnitIDList[0].ForesterRole.ForesterRoleDisplayName Work Units:</div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 stylizeLikeTH">Forester Work Unit Name</div>
+                    <div class="col-md-4 stylizeLikeTH">Current Forester Assignment</div>
+                </div>
+                <div class ="pre-scrollable" style="max-height: 100px; overflow-x: hidden; margin-bottom: 25px; ">
+                    @foreach (var foresterWorkUnit in ViewDataTyped.ForesterWorkUnitIDList)
+                    {
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">@foresterWorkUnit.ForesterWorkUnitName</div>
+                            @if (@foresterWorkUnit.PersonID != null)
+                            {
+                                <div class="col-md-4">@foresterWorkUnit.Person.FullNameFirstLast</div>
+                            }
+                            else
+                            {
+                                <div class="col-md-4">Unassigned</div>
+                            }
+                            <div class="col-md-2"></div>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="margin: 5px 0">To:</div>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.SelectedForesterPersonID, ViewDataTyped.AllPossibleForesters, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    </div>
+                    @foreach (var foresterWorkUnit in Model.ForesterWorkUnitIDList)
+                    {
+                        @Html.Hidden("ForesterWorkUnitIDList[]", foresterWorkUnit)
+                    }
+                </div>
+                <div style="margin: 5px 0">
+                    All the above work units will be reassigned to this selection
+                </div>
+
+                </div>
+
     }
 
 
