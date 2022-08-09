@@ -23,7 +23,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var layerGeoJsons = new List<LayerGeoJson>();
             var layerVisibility = LayerInitialVisibility.Hide;
-            foreach (var role in ForesterRole.All)
+            foreach (var role in ForesterRole.All.OrderBy(x => x.SortOrder))
             {
                 if (HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Any(x => x.ForesterRoleID == role.ForesterRoleID))
                 {
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
             var layerGeoJsons = new List<LayerGeoJson>();
             var layerVisibility = foresterRoleID.HasValue ? LayerInitialVisibility.Hide : LayerInitialVisibility.Show;
             var initialForesterRoleIdToLoad = 1;
-            foreach (var role in ForesterRole.All)
+            foreach (var role in ForesterRole.All.OrderBy(x => x.SortOrder))
             {
                 if (HttpRequestStorage.DatabaseEntities.ForesterWorkUnits.Any(x => x.ForesterRoleID == role.ForesterRoleID))
                 {
