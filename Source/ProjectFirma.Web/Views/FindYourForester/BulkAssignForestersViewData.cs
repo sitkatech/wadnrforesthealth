@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
@@ -38,7 +39,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public BulkAssignForestersViewData(Person currentPerson, List<Person> allPossibleForesters, List<ForesterWorkUnit> foresterWorkUnitIDList)
         {
             ForesterWorkUnitIDList = foresterWorkUnitIDList;
-            AllPossibleForesters = allPossibleForesters.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast, "Unassigned"); 
+            AllPossibleForesters = allPossibleForesters.ToSelectListWithEmptyFirstRowCustom(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast, "Unassigned");
         }
 
     }

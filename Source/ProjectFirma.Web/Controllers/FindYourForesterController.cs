@@ -136,7 +136,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return new JsonResult();
+                return BulkAssignForesters(viewModel);
             }
 
             viewModel.UpdateModel();
