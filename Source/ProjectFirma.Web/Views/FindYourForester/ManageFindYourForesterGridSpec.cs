@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -35,12 +36,11 @@ namespace ProjectFirma.Web.Views.FindYourForester
             ObjectNameSingular = "Forester Work Unit";
             ObjectNamePlural = "Forester Work Units";
 
-            AddCheckBoxColumn();
+            AddMasterCheckBoxColumn();
             Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
             Add($"Role", a => a.ForesterRoleDisplayName, 165, DhtmlxGridColumnFilterType.None);
             Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
-
         }
     }
 }

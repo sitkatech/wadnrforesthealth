@@ -49,9 +49,9 @@ namespace ProjectFirma.Web.Views.FindYourForester
                 $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({0}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
  
             var modalDialogFormLink = ModalDialogFormHelper.ModalDialogFormLink(
-                "<span class=\"glyphicon glyphicon-envelope\" style=\"margin-right:5px\"></span>Assign Forester",
+                "<span style=\"margin-right:5px\"></span>Manage Forester Assignments",
                 bulkAssignForestersUrl,
-                "Assign Forester",
+                "Manage Forester Assignments",
                 700,
                 "Save",
                 "Cancel",

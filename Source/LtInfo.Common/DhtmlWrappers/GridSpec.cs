@@ -411,6 +411,13 @@ namespace LtInfo.Common.DhtmlWrappers
             Add(columnSpec);
             return columnSpec;
         }
+        public ColumnSpec<T> AddMasterCheckBoxColumn()
+        {
+            var columnSpec = new ColumnSpec<T>("#master_checkbox", x => 0.ToString(), 28, DhtmlxGridColumnDataType.Checkbox,
+                DhtmlxGridColumnFormatType.None, DhtmlxGridColumnAlignType.Center, new DhtmlxGridColumnSortType("ch"), DhtmlxGridColumnFilterType.None, null, null, null);
+            Add(columnSpec);
+            return columnSpec;
+        }
         #endregion
     }
 
