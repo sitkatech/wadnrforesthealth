@@ -88,10 +88,7 @@
             </div>
 
             </div>
-
     }
-
-
 }
 
 <script type="text/javascript">
@@ -101,19 +98,16 @@
 
     function SelectedUserToChangeEvents()
     {
-        console.log('HookupAgreementNumberToChangeEvents');
-
         selectedUser.change(selectedUserChanged);
     }
     function selectedUserChanged() { 
         var currentSelectedPersonNumber = jQuery('#' + '@Html.IdFor(m => m.SelectedForesterPersonID)' + ' option:selected' ).index();
-        if (currentSelectedPersonNumber == 0) {
+        if (currentSelectedPersonNumber === 0) {
             jQuery("#" + saveButtonId).enable(false);
         } else {
             jQuery("#" + saveButtonId).enable();
         }
     }
-
     jQuery(document).ready(function ()
     {
         SelectedUserToChangeEvents();
