@@ -48,17 +48,19 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ForesterRole(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName)
+        protected ForesterRole(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder)
         {
             ForesterRoleID = foresterRoleID;
             ForesterRoleDisplayName = foresterRoleDisplayName;
             ForesterRoleName = foresterRoleName;
+            SortOrder = sortOrder;
         }
 
         [Key]
         public int ForesterRoleID { get; private set; }
         public string ForesterRoleDisplayName { get; private set; }
         public string ForesterRoleName { get; private set; }
+        public int SortOrder { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ForesterRoleID; } }
 
@@ -162,79 +164,79 @@ namespace ProjectFirma.Web.Models
 
     public partial class ForesterRoleServiceForester : ForesterRole
     {
-        private ForesterRoleServiceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleServiceForester Instance = new ForesterRoleServiceForester(1, @"Service Forester", @"ServiceForester");
+        private ForesterRoleServiceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleServiceForester Instance = new ForesterRoleServiceForester(1, @"Service Forester", @"ServiceForester", 10);
     }
 
     public partial class ForesterRoleServiceForestrySpecialist : ForesterRole
     {
-        private ForesterRoleServiceForestrySpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleServiceForestrySpecialist Instance = new ForesterRoleServiceForestrySpecialist(2, @"Service Forestry Specialist", @"ServiceForestrySpecialist");
+        private ForesterRoleServiceForestrySpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleServiceForestrySpecialist Instance = new ForesterRoleServiceForestrySpecialist(2, @"Service Forestry Specialist", @"ServiceForestrySpecialist", 130);
     }
 
     public partial class ForesterRoleForestPracticesForester : ForesterRole
     {
-        private ForesterRoleForestPracticesForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleForestPracticesForester Instance = new ForesterRoleForestPracticesForester(3, @"Forest Practices Forester", @"ForestPracticesForester");
+        private ForesterRoleForestPracticesForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleForestPracticesForester Instance = new ForesterRoleForestPracticesForester(3, @"Forest Practices Forester", @"ForestPracticesForester", 90);
     }
 
     public partial class ForesterRoleStewardshipBiologist : ForesterRole
     {
-        private ForesterRoleStewardshipBiologist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleStewardshipBiologist Instance = new ForesterRoleStewardshipBiologist(4, @"Stewardship Biologist", @"StewardshipBiologist");
+        private ForesterRoleStewardshipBiologist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleStewardshipBiologist Instance = new ForesterRoleStewardshipBiologist(4, @"Stewardship Biologist", @"StewardshipBiologist", 20);
     }
 
     public partial class ForesterRoleUrbanForestryTechnician : ForesterRole
     {
-        private ForesterRoleUrbanForestryTechnician(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleUrbanForestryTechnician Instance = new ForesterRoleUrbanForestryTechnician(5, @"Urban Forestry Technician", @"UrbanForestryTechnician");
+        private ForesterRoleUrbanForestryTechnician(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleUrbanForestryTechnician Instance = new ForesterRoleUrbanForestryTechnician(5, @"Urban Forestry Technician", @"UrbanForestryTechnician", 80);
     }
 
     public partial class ForesterRoleCommunityWildfirePreparednessSpecialist : ForesterRole
     {
-        private ForesterRoleCommunityWildfirePreparednessSpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleCommunityWildfirePreparednessSpecialist Instance = new ForesterRoleCommunityWildfirePreparednessSpecialist(6, @"Community Wildfire Preparedness Specialist", @"CommunityWildfirePreparednessSpecialist");
+        private ForesterRoleCommunityWildfirePreparednessSpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleCommunityWildfirePreparednessSpecialist Instance = new ForesterRoleCommunityWildfirePreparednessSpecialist(6, @"Community Wildfire Preparedness Specialist", @"CommunityWildfirePreparednessSpecialist", 70);
     }
 
     public partial class ForesterRoleRegulationAssistanceForester : ForesterRole
     {
-        private ForesterRoleRegulationAssistanceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleRegulationAssistanceForester Instance = new ForesterRoleRegulationAssistanceForester(7, @"Regulation Assistance Forester", @"RegulationAssistanceForester");
+        private ForesterRoleRegulationAssistanceForester(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleRegulationAssistanceForester Instance = new ForesterRoleRegulationAssistanceForester(7, @"Regulation Assistance Forester", @"RegulationAssistanceForester", 30);
     }
 
     public partial class ForesterRoleFamilyForestFishPassageProgram : ForesterRole
     {
-        private ForesterRoleFamilyForestFishPassageProgram(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleFamilyForestFishPassageProgram Instance = new ForesterRoleFamilyForestFishPassageProgram(8, @"Family Forest Fish Passage Program", @"FamilyForestFishPassageProgram");
+        private ForesterRoleFamilyForestFishPassageProgram(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleFamilyForestFishPassageProgram Instance = new ForesterRoleFamilyForestFishPassageProgram(8, @"Family Forest Fish Passage Program", @"FamilyForestFishPassageProgram", 40);
     }
 
     public partial class ForesterRoleForestryRiparianEasementProgram : ForesterRole
     {
-        private ForesterRoleForestryRiparianEasementProgram(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleForestryRiparianEasementProgram Instance = new ForesterRoleForestryRiparianEasementProgram(9, @"Forestry Riparian Easement Program", @"ForestryRiparianEasementProgram");
+        private ForesterRoleForestryRiparianEasementProgram(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleForestryRiparianEasementProgram Instance = new ForesterRoleForestryRiparianEasementProgram(9, @"Forestry Riparian Easement Program", @"ForestryRiparianEasementProgram", 50);
     }
 
     public partial class ForesterRoleRiversAndHabitatOpenSpaceProgramManager : ForesterRole
     {
-        private ForesterRoleRiversAndHabitatOpenSpaceProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleRiversAndHabitatOpenSpaceProgramManager Instance = new ForesterRoleRiversAndHabitatOpenSpaceProgramManager(10, @"Rivers and Habitat Open Space Program Manager", @"RiversAndHabitatOpenSpaceProgramManager");
+        private ForesterRoleRiversAndHabitatOpenSpaceProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleRiversAndHabitatOpenSpaceProgramManager Instance = new ForesterRoleRiversAndHabitatOpenSpaceProgramManager(10, @"Rivers and Habitat Open Space Program Manager", @"RiversAndHabitatOpenSpaceProgramManager", 60);
     }
 
     public partial class ForesterRoleServiceForestryProgramManager : ForesterRole
     {
-        private ForesterRoleServiceForestryProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleServiceForestryProgramManager Instance = new ForesterRoleServiceForestryProgramManager(11, @"Service Forestry Program Manager", @"ServiceForestryProgramManager");
+        private ForesterRoleServiceForestryProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleServiceForestryProgramManager Instance = new ForesterRoleServiceForestryProgramManager(11, @"Service Forestry Program Manager", @"ServiceForestryProgramManager", 100);
     }
 
     public partial class ForesterRoleUcfStatewideSpecialist : ForesterRole
     {
-        private ForesterRoleUcfStatewideSpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleUcfStatewideSpecialist Instance = new ForesterRoleUcfStatewideSpecialist(12, @"UCF Statewide Specialist", @"UcfStatewideSpecialist");
+        private ForesterRoleUcfStatewideSpecialist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleUcfStatewideSpecialist Instance = new ForesterRoleUcfStatewideSpecialist(12, @"UCF Statewide Specialist", @"UcfStatewideSpecialist", 120);
     }
 
     public partial class ForesterRoleSmallForestLandownerOfficeProgramManager : ForesterRole
     {
-        private ForesterRoleSmallForestLandownerOfficeProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName) {}
-        public static readonly ForesterRoleSmallForestLandownerOfficeProgramManager Instance = new ForesterRoleSmallForestLandownerOfficeProgramManager(13, @"Small Forest Landowner Office Program Manager", @"SmallForestLandownerOfficeProgramManager");
+        private ForesterRoleSmallForestLandownerOfficeProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleSmallForestLandownerOfficeProgramManager Instance = new ForesterRoleSmallForestLandownerOfficeProgramManager(13, @"Small Forest Landowner Office Program Manager", @"SmallForestLandownerOfficeProgramManager", 110);
     }
 }
