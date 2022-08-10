@@ -315,6 +315,19 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectGrantAllocationRequestPayAmount ProjectGrantAllocationRequestPayAmount = FieldDefinitionProjectGrantAllocationRequestPayAmount.Instance;
         public static readonly FieldDefinitionProjectApplicationDate ProjectApplicationDate = FieldDefinitionProjectApplicationDate.Instance;
         public static readonly FieldDefinitionProjectDecisionDate ProjectDecisionDate = FieldDefinitionProjectDecisionDate.Instance;
+        public static readonly FieldDefinitionServiceForester ServiceForester = FieldDefinitionServiceForester.Instance;
+        public static readonly FieldDefinitionStewardshipBiologist StewardshipBiologist = FieldDefinitionStewardshipBiologist.Instance;
+        public static readonly FieldDefinitionRegulationAssistanceForester RegulationAssistanceForester = FieldDefinitionRegulationAssistanceForester.Instance;
+        public static readonly FieldDefinitionFamilyForestFishPassageProgram FamilyForestFishPassageProgram = FieldDefinitionFamilyForestFishPassageProgram.Instance;
+        public static readonly FieldDefinitionForestryRiparianEasementProgram ForestryRiparianEasementProgram = FieldDefinitionForestryRiparianEasementProgram.Instance;
+        public static readonly FieldDefinitionRiversAndHabitatOpenSpaceProgramManager RiversAndHabitatOpenSpaceProgramManager = FieldDefinitionRiversAndHabitatOpenSpaceProgramManager.Instance;
+        public static readonly FieldDefinitionCommunityWildfirePreparednessSpecialist CommunityWildfirePreparednessSpecialist = FieldDefinitionCommunityWildfirePreparednessSpecialist.Instance;
+        public static readonly FieldDefinitionUrbanForestryTechnician UrbanForestryTechnician = FieldDefinitionUrbanForestryTechnician.Instance;
+        public static readonly FieldDefinitionForestPracticesForester ForestPracticesForester = FieldDefinitionForestPracticesForester.Instance;
+        public static readonly FieldDefinitionSmallForestLandownerOfficeProgramManager SmallForestLandownerOfficeProgramManager = FieldDefinitionSmallForestLandownerOfficeProgramManager.Instance;
+        public static readonly FieldDefinitionSmallForestLandownerProgramManager SmallForestLandownerProgramManager = FieldDefinitionSmallForestLandownerProgramManager.Instance;
+        public static readonly FieldDefinitionUcfStatewideSpecialist UcfStatewideSpecialist = FieldDefinitionUcfStatewideSpecialist.Instance;
+        public static readonly FieldDefinitionServiceForestrySpecialist ServiceForestrySpecialist = FieldDefinitionServiceForestrySpecialist.Instance;
 
         public static readonly List<FieldDefinition> All;
         public static readonly ReadOnlyDictionary<int, FieldDefinition> AllLookupDictionary;
@@ -324,7 +337,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, DNRUplandRegion, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, TotalRequestedInvoicePaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectBalance, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationBalance, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsName, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationBalance, GrantAllocationAwardTravelName, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationBalance, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundBalance, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationBalance, GrantAllocationAwardContractorInvoiceLandownerCostShareBalance, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationBalance, GrantAllocationAwardLandownerCostShareStatus, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, GrantAllocationAwardLandownerCostShareNotes, GrantAllocationAwardLandownerCostShareAllocatedAmount, GrantAllocationAwardLandownerCostShareTotalCost, GrantAllocationAwardLandownerCostShareGrantCost, GrantAllocationAwardContractorInvoiceDescription, GrantAllocationAwardContractorInvoiceNumber, GrantAllocationAwardContractorInvoiceDate, GrantAllocationAwardContractorInvoiceType, GrantAllocationAwardContractorInvoiceForemanHours, GrantAllocationAwardContractorInvoiceForemanRate, GrantAllocationAwardContractorInvoiceLaborHours, GrantAllocationAwardContractorInvoiceLaborRate, GrantAllocationAwardContractorInvoiceGrappleHours, GrantAllocationAwardContractorInvoiceGrappleRate, GrantAllocationAwardContractorInvoiceMasticationHours, GrantAllocationAwardContractorInvoiceMasticationRate, GrantAllocationAwardContractorInvoiceTotal, GrantAllocationAwardContractorInvoiceTaxRate, GrantAllocationAwardContractorInvoiceAcresReported, GrantAllocationAwardContractorInvoiceDocumentUpload, GrantAllocationAwardContractorInvoiceNotes, GrantAllocationAwardContractual, GrantAllocationAwardContractualAllocationTotal, GrantAllocationAwardContractualAllocationBalance, GrantAllocationAwardSuppliesLineItem, GrantAllocationAwardPersonnelAndBenefitsLineItem, GrantAllocationAwardTravelLineItem, GrantAllocationAwardLandownerCostShareLineItem, GrantAllocationAwardContractorInvoiceLineItem, GrantAllocationAwardSpentAmount, GrantAllocationAwardBalance, GrantAllocationAwardLandownerCostShareActualMatch, GrantAllocationAwardCalendarStartYear, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, DNRUplandRegion, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, TotalRequestedInvoicePaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectBalance, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationBalance, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsName, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationBalance, GrantAllocationAwardTravelName, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationBalance, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundBalance, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationBalance, GrantAllocationAwardContractorInvoiceLandownerCostShareBalance, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationBalance, GrantAllocationAwardLandownerCostShareStatus, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, GrantAllocationAwardLandownerCostShareNotes, GrantAllocationAwardLandownerCostShareAllocatedAmount, GrantAllocationAwardLandownerCostShareTotalCost, GrantAllocationAwardLandownerCostShareGrantCost, GrantAllocationAwardContractorInvoiceDescription, GrantAllocationAwardContractorInvoiceNumber, GrantAllocationAwardContractorInvoiceDate, GrantAllocationAwardContractorInvoiceType, GrantAllocationAwardContractorInvoiceForemanHours, GrantAllocationAwardContractorInvoiceForemanRate, GrantAllocationAwardContractorInvoiceLaborHours, GrantAllocationAwardContractorInvoiceLaborRate, GrantAllocationAwardContractorInvoiceGrappleHours, GrantAllocationAwardContractorInvoiceGrappleRate, GrantAllocationAwardContractorInvoiceMasticationHours, GrantAllocationAwardContractorInvoiceMasticationRate, GrantAllocationAwardContractorInvoiceTotal, GrantAllocationAwardContractorInvoiceTaxRate, GrantAllocationAwardContractorInvoiceAcresReported, GrantAllocationAwardContractorInvoiceDocumentUpload, GrantAllocationAwardContractorInvoiceNotes, GrantAllocationAwardContractual, GrantAllocationAwardContractualAllocationTotal, GrantAllocationAwardContractualAllocationBalance, GrantAllocationAwardSuppliesLineItem, GrantAllocationAwardPersonnelAndBenefitsLineItem, GrantAllocationAwardTravelLineItem, GrantAllocationAwardLandownerCostShareLineItem, GrantAllocationAwardContractorInvoiceLineItem, GrantAllocationAwardSpentAmount, GrantAllocationAwardBalance, GrantAllocationAwardLandownerCostShareActualMatch, GrantAllocationAwardCalendarStartYear, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityWildfirePreparednessSpecialist, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -444,6 +457,8 @@ namespace ProjectFirma.Web.Models
                     return ClassificationSystem;
                 case FieldDefinitionEnum.ClassificationSystemName:
                     return ClassificationSystemName;
+                case FieldDefinitionEnum.CommunityWildfirePreparednessSpecialist:
+                    return CommunityWildfirePreparednessSpecialist;
                 case FieldDefinitionEnum.CompletionDate:
                     return CompletionDate;
                 case FieldDefinitionEnum.Contact:
@@ -482,6 +497,8 @@ namespace ProjectFirma.Web.Models
                     return ExpirationDate;
                 case FieldDefinitionEnum.ExternalLinks:
                     return ExternalLinks;
+                case FieldDefinitionEnum.FamilyForestFishPassageProgram:
+                    return FamilyForestFishPassageProgram;
                 case FieldDefinitionEnum.FederalFundCode:
                     return FederalFundCode;
                 case FieldDefinitionEnum.FhtProjectNumber:
@@ -502,6 +519,10 @@ namespace ProjectFirma.Web.Models
                     return FocusAreaTotalProjectReportedExpendiures;
                 case FieldDefinitionEnum.FootprintAcres:
                     return FootprintAcres;
+                case FieldDefinitionEnum.ForestPracticesForester:
+                    return ForestPracticesForester;
+                case FieldDefinitionEnum.ForestryRiparianEasementProgram:
+                    return ForestryRiparianEasementProgram;
                 case FieldDefinitionEnum.FundedAmount:
                     return FundedAmount;
                 case FieldDefinitionEnum.FundingSource:
@@ -944,6 +965,8 @@ namespace ProjectFirma.Web.Models
                     return ProjectUpdateReminderInterval;
                 case FieldDefinitionEnum.PurchaseAuthority:
                     return PurchaseAuthority;
+                case FieldDefinitionEnum.RegulationAssistanceForester:
+                    return RegulationAssistanceForester;
                 case FieldDefinitionEnum.ReportedExpenditure:
                     return ReportedExpenditure;
                 case FieldDefinitionEnum.ReportedValue:
@@ -952,16 +975,28 @@ namespace ProjectFirma.Web.Models
                     return ReportingYear;
                 case FieldDefinitionEnum.RequestorName:
                     return RequestorName;
+                case FieldDefinitionEnum.RiversAndHabitatOpenSpaceProgramManager:
+                    return RiversAndHabitatOpenSpaceProgramManager;
                 case FieldDefinitionEnum.RoleName:
                     return RoleName;
+                case FieldDefinitionEnum.ServiceForester:
+                    return ServiceForester;
+                case FieldDefinitionEnum.ServiceForestrySpecialist:
+                    return ServiceForestrySpecialist;
                 case FieldDefinitionEnum.ShowApplicationsToThePublic:
                     return ShowApplicationsToThePublic;
                 case FieldDefinitionEnum.ShowLeadImplementerLogoOnFactSheet:
                     return ShowLeadImplementerLogoOnFactSheet;
+                case FieldDefinitionEnum.SmallForestLandownerOfficeProgramManager:
+                    return SmallForestLandownerOfficeProgramManager;
+                case FieldDefinitionEnum.SmallForestLandownerProgramManager:
+                    return SmallForestLandownerProgramManager;
                 case FieldDefinitionEnum.SpendingAssociatedWithPM:
                     return SpendingAssociatedWithPM;
                 case FieldDefinitionEnum.StatewideVendorNumber:
                     return StatewideVendorNumber;
+                case FieldDefinitionEnum.StewardshipBiologist:
+                    return StewardshipBiologist;
                 case FieldDefinitionEnum.TagDescription:
                     return TagDescription;
                 case FieldDefinitionEnum.TagName:
@@ -986,10 +1021,14 @@ namespace ProjectFirma.Web.Models
                     return TreatmentDetailedActivityType;
                 case FieldDefinitionEnum.TreatmentType:
                     return TreatmentType;
+                case FieldDefinitionEnum.UcfStatewideSpecialist:
+                    return UcfStatewideSpecialist;
                 case FieldDefinitionEnum.UnfundedNeed:
                     return UnfundedNeed;
                 case FieldDefinitionEnum.UnsecuredFunding:
                     return UnsecuredFunding;
+                case FieldDefinitionEnum.UrbanForestryTechnician:
+                    return UrbanForestryTechnician;
                 case FieldDefinitionEnum.Username:
                     return Username;
                 case FieldDefinitionEnum.Vendor:
@@ -1297,7 +1336,20 @@ namespace ProjectFirma.Web.Models
         ProjectGrantAllocationRequestMatchAmount = 476,
         ProjectGrantAllocationRequestPayAmount = 477,
         ProjectApplicationDate = 478,
-        ProjectDecisionDate = 479
+        ProjectDecisionDate = 479,
+        ServiceForester = 480,
+        StewardshipBiologist = 481,
+        RegulationAssistanceForester = 482,
+        FamilyForestFishPassageProgram = 483,
+        ForestryRiparianEasementProgram = 484,
+        RiversAndHabitatOpenSpaceProgramManager = 485,
+        CommunityWildfirePreparednessSpecialist = 486,
+        UrbanForestryTechnician = 487,
+        ForestPracticesForester = 488,
+        SmallForestLandownerOfficeProgramManager = 489,
+        SmallForestLandownerProgramManager = 490,
+        UcfStatewideSpecialist = 491,
+        ServiceForestrySpecialist = 492
     }
 
     public partial class FieldDefinitionProjectType : FieldDefinition
@@ -3074,5 +3126,83 @@ namespace ProjectFirma.Web.Models
     {
         private FieldDefinitionProjectDecisionDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
         public static readonly FieldDefinitionProjectDecisionDate Instance = new FieldDefinitionProjectDecisionDate(479, @"ProjectDecisionDate", @"Project Decision Date", @"<p>The date on which the project was decided/approved.");
+    }
+
+    public partial class FieldDefinitionServiceForester : FieldDefinition
+    {
+        private FieldDefinitionServiceForester(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionServiceForester Instance = new FieldDefinitionServiceForester(480, @"ServiceForester", @"Service Forester", @"Placeholder definition for forester role, Service Forester");
+    }
+
+    public partial class FieldDefinitionStewardshipBiologist : FieldDefinition
+    {
+        private FieldDefinitionStewardshipBiologist(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionStewardshipBiologist Instance = new FieldDefinitionStewardshipBiologist(481, @"StewardshipBiologist", @"Stewardship Biologist", @"Placeholder definition for forester role, Stewardship Biologist");
+    }
+
+    public partial class FieldDefinitionRegulationAssistanceForester : FieldDefinition
+    {
+        private FieldDefinitionRegulationAssistanceForester(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionRegulationAssistanceForester Instance = new FieldDefinitionRegulationAssistanceForester(482, @"RegulationAssistanceForester", @"Regulation Assistance Forester", @"Placeholder definition for forester role, Regulation Assistance Forester");
+    }
+
+    public partial class FieldDefinitionFamilyForestFishPassageProgram : FieldDefinition
+    {
+        private FieldDefinitionFamilyForestFishPassageProgram(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFamilyForestFishPassageProgram Instance = new FieldDefinitionFamilyForestFishPassageProgram(483, @"FamilyForestFishPassageProgram", @"Family Forest Fish Passage Program", @"Placeholder definition for forester role, Family Forest Fish Passage Program");
+    }
+
+    public partial class FieldDefinitionForestryRiparianEasementProgram : FieldDefinition
+    {
+        private FieldDefinitionForestryRiparianEasementProgram(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionForestryRiparianEasementProgram Instance = new FieldDefinitionForestryRiparianEasementProgram(484, @"ForestryRiparianEasementProgram", @"Forestry Riparian Easement Program", @"Placeholder definition for forester role, Forestry Riparian Easement Program");
+    }
+
+    public partial class FieldDefinitionRiversAndHabitatOpenSpaceProgramManager : FieldDefinition
+    {
+        private FieldDefinitionRiversAndHabitatOpenSpaceProgramManager(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionRiversAndHabitatOpenSpaceProgramManager Instance = new FieldDefinitionRiversAndHabitatOpenSpaceProgramManager(485, @"RiversAndHabitatOpenSpaceProgramManager", @"Rivers and Habitat Open Space Program Manager", @"Placeholder definition for forester role, Rivers and Habitat Open Space Program Manager");
+    }
+
+    public partial class FieldDefinitionCommunityWildfirePreparednessSpecialist : FieldDefinition
+    {
+        private FieldDefinitionCommunityWildfirePreparednessSpecialist(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionCommunityWildfirePreparednessSpecialist Instance = new FieldDefinitionCommunityWildfirePreparednessSpecialist(486, @"CommunityWildfirePreparednessSpecialist", @"Community Wildfire Preparedness Specialist", @"Placeholder definition for forester role, Community Wildfire Preparedness Specialist");
+    }
+
+    public partial class FieldDefinitionUrbanForestryTechnician : FieldDefinition
+    {
+        private FieldDefinitionUrbanForestryTechnician(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionUrbanForestryTechnician Instance = new FieldDefinitionUrbanForestryTechnician(487, @"UrbanForestryTechnician", @"Urban Forestry Technician", @"Placeholder definition for forester role, Urban Forestry Technician");
+    }
+
+    public partial class FieldDefinitionForestPracticesForester : FieldDefinition
+    {
+        private FieldDefinitionForestPracticesForester(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionForestPracticesForester Instance = new FieldDefinitionForestPracticesForester(488, @"ForestPracticesForester", @"Forest Practices Forester", @"Placeholder definition for forester role, Forest Practices Forester");
+    }
+
+    public partial class FieldDefinitionSmallForestLandownerOfficeProgramManager : FieldDefinition
+    {
+        private FieldDefinitionSmallForestLandownerOfficeProgramManager(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionSmallForestLandownerOfficeProgramManager Instance = new FieldDefinitionSmallForestLandownerOfficeProgramManager(489, @"SmallForestLandownerOfficeProgramManager", @"Small Forest Landowner Office Program Manager", @"Placeholder definition for forester role, Small Forest Landowner Office Program Manager");
+    }
+
+    public partial class FieldDefinitionSmallForestLandownerProgramManager : FieldDefinition
+    {
+        private FieldDefinitionSmallForestLandownerProgramManager(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionSmallForestLandownerProgramManager Instance = new FieldDefinitionSmallForestLandownerProgramManager(490, @"SmallForestLandownerProgramManager", @"Small Forest Landowner Program Manager", @"Placeholder definition for forester role, Small Forest Landowner Program Manager");
+    }
+
+    public partial class FieldDefinitionUcfStatewideSpecialist : FieldDefinition
+    {
+        private FieldDefinitionUcfStatewideSpecialist(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionUcfStatewideSpecialist Instance = new FieldDefinitionUcfStatewideSpecialist(491, @"UcfStatewideSpecialist", @"UCF Statewide Specialist", @"Placeholder definition for forester role, UCF Statewide Specialist");
+    }
+
+    public partial class FieldDefinitionServiceForestrySpecialist : FieldDefinition
+    {
+        private FieldDefinitionServiceForestrySpecialist(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionServiceForestrySpecialist Instance = new FieldDefinitionServiceForestrySpecialist(492, @"ServiceForestrySpecialist", @"Service Forestry Specialist", @"Placeholder definition for forester role, Service Forestry Specialist");
     }
 }
