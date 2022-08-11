@@ -193,7 +193,7 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     if (currentLayer.HasCqlFilter) {
         wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter});
     } else {
-        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName});
+        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: '1=1' });
     }
 
     var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
@@ -693,6 +693,9 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 break;
         case "ForesterWorkUnitLocation":
             labelText = firstFeature.properties.ForesterRoleDisplayName;
+            if (firstFeature.properties.ForesterRoleDefinition) {
+                labelText += " <span tabindex=\"0\" class=\"helpicon glyphicon glyphicon-question-sign\" onmouseover=\"jQuery(this).popover('show')\" data-content=\"" + firstFeature.properties.ForesterRoleDefinition + "\" data-html=\"true\" data-toggle=\"popover\" data-placement=\"top\" data-trigger=\"hover focus\"></span>";
+            }
             if (firstFeature.properties.FirstName) {
                 linkText = "<br/>" + firstFeature.properties.FirstName + " " + firstFeature.properties.LastName + "<br/>";
 
