@@ -148,7 +148,7 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     if (currentLayer.HasCqlFilter) {
         wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter});
     } else {
-        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName});
+        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: '1=1' });
     }
 
     var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
