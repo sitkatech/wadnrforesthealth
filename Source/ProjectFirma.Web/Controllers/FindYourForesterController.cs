@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Controllers
         {
             
 
-            var people = HttpRequestStorage.DatabaseEntities.People.Where(x => x.OrganizationID == OrganizationModelExtensions.WadnrID).ToList();
+            var people = HttpRequestStorage.DatabaseEntities.People.Where(x => x.OrganizationID == OrganizationModelExtensions.WadnrID).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
 
             var selectedForesterWorkUnits = new List<ForesterWorkUnit>();
 
@@ -130,14 +130,14 @@ namespace ProjectFirma.Web.Controllers
         /// Dummy get signature so that it can find the post action
         /// </summary>
         [HttpGet]
-        [FirmaAdminFeature]
+        [FindYourForesterManageFeature]
         public ContentResult UpdateBulkAssignedForesters()
         {
             return new ContentResult();
         }
 
         [HttpPost]
-        [FirmaAdminFeature]
+        [FindYourForesterManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult UpdateBulkAssignedForesters(BulkAssignForestersViewModel viewModel)
         {
