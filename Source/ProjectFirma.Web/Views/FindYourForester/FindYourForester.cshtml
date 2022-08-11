@@ -21,6 +21,7 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.HtmlHelperExtensions
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Models
@@ -97,8 +98,9 @@
 </div>
 
 <script type="text/javascript">
-    jQuery(document).ready(function()
-    {
+    jQuery(document).ready(function () {
+
+        
 
         var findYourForesterFirmaMap = null;
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
@@ -159,7 +161,8 @@
                         jQuery('#outOfStateAddressError').show();
                     }
                    
-                }); 
+            });
+
         }
 
         
@@ -230,8 +233,12 @@
                             
                             <div data-forester-role-id="@question.ForesterRoleID">
                                 <div>
+                                    @{
+                                        var fieldDef = question.ForesterRole.GetFieldDefinition();
+                                    }
+
                                     <strong>Role:</strong>
-                                    <span>@question.ForesterRole.ForesterRoleDisplayName</span>
+                                    <span>@question.ForesterRole.ForesterRoleDisplayName @(fieldDef != null ? Html.LabelWithSugarFor(fieldDef, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) : MvcHtmlString.Empty)</span>
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Name:</strong>

@@ -299,4 +299,17 @@ VALUES
 (477, N'ProjectGrantAllocationRequestPayAmount', N'PayAmount', N'<p>Funding that has been acquired for a project.</p>'),
 (478, N'ProjectApplicationDate', N'Project Application Date', N'<p>The date on which the application for the project was submitted.'),
 (479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.'),
-(480, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>')
+(480, N'ServiceForester', 'Service Forester', N'Placeholder definition for forester role, Service Forester'),
+(481, N'StewardshipBiologist', 'Stewardship Biologist', N'Placeholder definition for forester role, Stewardship Biologist'),
+(482, N'RegulationAssistanceForester', 'Regulation Assistance Forester', N'Placeholder definition for forester role, Regulation Assistance Forester'),
+(483, N'FamilyForestFishPassageProgram', 'Family Forest Fish Passage Program', N'Placeholder definition for forester role, Family Forest Fish Passage Program'),
+(484, N'ForestryRiparianEasementProgram', 'Forestry Riparian Easement Program', N'Placeholder definition for forester role, Forestry Riparian Easement Program'),
+(485, N'RiversAndHabitatOpenSpaceProgramManager', 'Rivers and Habitat Open Space Program Manager', N'Placeholder definition for forester role, Rivers and Habitat Open Space Program Manager'),
+(486, N'CommunityWildfirePreparednessSpecialist', 'Community Wildfire Preparedness Specialist', N'Placeholder definition for forester role, Community Wildfire Preparedness Specialist'),
+(487, N'UrbanForestryTechnician', 'Urban Forestry Technician', N'Placeholder definition for forester role, Urban Forestry Technician'),
+(488, N'ForestPracticesForester', 'Forest Practices Forester', N'Placeholder definition for forester role, Forest Practices Forester'),
+(489, N'SmallForestLandownerOfficeProgramManager', 'Small Forest Landowner Office Program Manager', N'Placeholder definition for forester role, Small Forest Landowner Office Program Manager'),
+(490, N'SmallForestLandownerProgramManager', 'Small Forest Landowner Program Manager', N'Placeholder definition for forester role, Small Forest Landowner Program Manager'),
+(491, N'UcfStatewideSpecialist', 'UCF Statewide Specialist', N'Placeholder definition for forester role, UCF Statewide Specialist'),
+(492, N'ServiceForestrySpecialist', 'Service Forestry Specialist', N'Placeholder definition for forester role, Service Forestry Specialist'),
+(493, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>')

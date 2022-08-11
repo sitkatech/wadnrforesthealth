@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Web;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -27,7 +29,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.FindYourForester
 {
-    public class ManageFindYourForesterGridSpec : GridSpec<FindYourForesterGridObject>
+    public class ManageFindYourForesterGridSpec : GridSpec<ForesterWorkUnit>
     {
         public ManageFindYourForesterGridSpec(Person currentPerson)
         {
@@ -35,12 +37,11 @@ namespace ProjectFirma.Web.Views.FindYourForester
             ObjectNameSingular = "Forester Work Unit";
             ObjectNamePlural = "Forester Work Units";
 
-            AddCheckBoxColumn();
+            AddMasterCheckBoxColumn();
             Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
+            Add($"Role", a => a.ForesterRole.ForesterRoleDisplayName, 225, DhtmlxGridColumnFilterType.None);
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Role", a => a.ForesterRoleDisplayName, 165, DhtmlxGridColumnFilterType.None);
-            Add($"Assigned to Person", a => a.FirstName + " " + a.LastName, 165);
-
+            Add($"Assigned to Person", a => a.PersonID.HasValue ? a.Person.GetFullNameFirstLastAsUrl() : new HtmlString("unassigned") , 200, DhtmlxGridColumnFilterType.Html);
         }
     }
 }

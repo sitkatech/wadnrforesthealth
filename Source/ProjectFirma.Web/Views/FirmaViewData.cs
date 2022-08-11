@@ -243,11 +243,11 @@ namespace ProjectFirma.Web.Views
                 manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}", "Group5"));
             }
 
-            // 8/5/2022 TK - commenting this out until this admin editor is completed WADNR-1907
-            //if (new FindYourForesterManageFeature().HasPermissionByPerson(currentPerson))
-            //{
-            //    manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FindYourForesterController>(c => c.Manage()), currentPerson, "Manage Find Your Forester", "Group5"));
-            //}
+
+            if (new FindYourForesterManageFeature().HasPermissionByPerson(currentPerson))
+            {
+                manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FindYourForesterController>(c => c.Manage(null)), currentPerson, "Manage Find Your Forester", "Group5"));
+            }
 
             // Group 6 - Jobs
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JobController>(c => c.JobIndex()), currentPerson, Models.FieldDefinition.Job.GetFieldDefinitionLabelPluralized(), "Group6"));

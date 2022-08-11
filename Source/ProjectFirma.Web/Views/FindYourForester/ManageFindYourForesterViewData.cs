@@ -35,23 +35,25 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public string GridName { get; }
         public readonly string GridDataUrl;
         public string GridDataUrlTemplate { get; }
+        public string PageUrlTemplate { get; }
 
-        public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage, string bulkAssignForestersUrl) : base(currentPerson, firmaPage)
+        public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage, string bulkAssignForestersUrl, int initialForesterRoleIdToLoad) : base(currentPerson, firmaPage)
         {
             PageTitle = "Manage Find Your Forester";
             MapInitJson = mapInitJson;
             GridSpec = new ManageFindYourForesterGridSpec(currentPerson);
             GridName = "manageFindYourForesterGrid";
-            GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(ForesterRole.ServiceForester));
+            GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(initialForesterRoleIdToLoad));
             GridDataUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(UrlTemplate.Parameter1Int));
+            PageUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.Manage(UrlTemplate.Parameter1Int));
 
             var getForesterWorkUnitID =
                 $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({0}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
  
             var modalDialogFormLink = ModalDialogFormHelper.ModalDialogFormLink(
-                "<span class=\"glyphicon glyphicon-envelope\" style=\"margin-right:5px\"></span>Assign Forester",
+                "<span class=\"glyphicon glyphicon-edit\" style=\"margin-right:5px\"></span>Manage Forester Assignments",
                 bulkAssignForestersUrl,
-                "Assign Forester",
+                "Manage Forester Assignments",
                 700,
                 "Save",
                 "Cancel",

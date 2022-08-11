@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[ForesterRole](
 	[ForesterRoleID] [int] IDENTITY(1,1) NOT NULL,
 	[ForesterRoleDisplayName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ForesterRoleName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[SortOrder] [int] NOT NULL,
  CONSTRAINT [PK_ForesterRole_ForesterRoleID] PRIMARY KEY CLUSTERED 
 (
 	[ForesterRoleID] ASC
