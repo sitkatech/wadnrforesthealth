@@ -16,6 +16,7 @@
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DNRUplandRegion" EntityType="ProjectFirma.Web.Models.Store.DNRUplandRegion" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ExternalMapLayer" EntityType="ProjectFirma.Web.Models.Store.ExternalMapLayer" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.Store.FederalFundCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionData" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
@@ -1561,6 +1562,21 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="DNRUplandRegionAbbrev" Type="nvarchar" MaxLength="10" />
     <Property Name="DNRUplandRegionName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="DNRUplandRegionLocation" Type="geometry" />
+  </EntityType>
+  <EntityType Name="ExternalMapLayer">
+    <Key>
+      <PropertyRef Name="ExternalMapLayerID" />
+    </Key>
+    <Property Name="ExternalMapLayerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="75" />
+    <Property Name="LayerUrl" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="LayerDescription" Type="varchar" MaxLength="200" />
+    <Property Name="FeatureNameField" Type="varchar" MaxLength="100" />
+    <Property Name="DisplayOnPriorityLandscape" Type="bit" Nullable="false" />
+    <Property Name="DisplayOnProjectMap" Type="bit" Nullable="false" />
+    <Property Name="DisplayOnAllOthers" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsTiledMapService" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="FederalFundCode">
     <Key>

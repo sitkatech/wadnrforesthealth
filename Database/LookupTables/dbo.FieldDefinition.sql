@@ -298,6 +298,14 @@ VALUES
 (476, N'ProjectGrantAllocationRequestMatchAmount', N'MatchAmount', N'<p>Funding that has been acquired for a project.</p>'),
 (477, N'ProjectGrantAllocationRequestPayAmount', N'PayAmount', N'<p>Funding that has been acquired for a project.</p>'),
 (478, N'ProjectApplicationDate', N'Project Application Date', N'<p>The date on which the application for the project was submitted.'),
-(479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.')
-
-
+(479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.'),
+(480, N'ExternalMapLayer', 'External Map Layer', 'An administrator can add a connection to a web service link (feature service) provided by ESRI ArcGIS Online to pull in spatial information that is stored in ArcGIS Online. Once the connection is added the reference layer will be available on maps throughout the system.'),
+(481, N'ExternalMapLayerDisplayName', 'Display Name', 'The layer display name will appear in map legends and popups.'),
+(482, N'ExternalMapLayerUrl', 'Url', 'The external map web service URL (E.g https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer/3 (National 6-digit HUC boundaries).'),
+(483, N'ExternalMapLayerDescription', 'Internal Layer Description', 'Add helpful background information for other administrators (E.g who to contact if there is a problem with this external map service in the future).'),
+(484, N'ExternalMapLayerFeatureNameField', 'Field to use as source for feature names', 'This setting will populate the map pop-ups with names from the feature service. This is field is case-sensitive (E.g. Name or NAME) and must match a field in the web service. Please leave this field blank for tile services since pop-ups are not supported.'),
+(485, N'ExternalMapLayerDisplayOnPriorityLandscape', 'Display on Priority Landscape maps?', 'When this option is set, the external map layer will appear on Priority Landscape maps.'),
+(486, N'ExternalMapLayerDisplayOnProjectMap', 'Display on project maps?', 'When this option is set, the external map layer will appear on Project maps.'),
+(487, N'ExternalMapLayerDisplayOnAllOthers', 'Display on All Other Maps?', 'When this option is set, the external map layer will appear on maps throughout the system, except for the Priority Landscape and Project maps (which have their own settings).'),
+(488, N'ExternalMapLayerIsATiledMapService', 'Is a Tiled Map Service', 'Please turn on this setting if the external map layer is a tiled layer (raster). Note: Pop-ups will not appear on maps for tiled layers.'),
+(489, N'ExternalMapLayerIsActive', 'Is Active?', 'If this is not set, the layer will not appear on any maps. If there is a problem with the external map service an administrator can uncheck this box to hide the layer until it is resolved.')
