@@ -207,7 +207,7 @@ namespace ProjectFirma.Web.Controllers
                 x.FeatureClassName, x.ToGeoJsonFeatureCollection(),
                 FirmaHelpers.DefaultColorRange[index], 0.8m,
                 index == 0 ? LayerInitialVisibility.Show : LayerInitialVisibility.Hide)).ToList();
-            var mapInitJson = new MapInitJson("focusAreaLocationApproveUploadGisMap", 10, layers, BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers));
+            var mapInitJson = new MapInitJson("focusAreaLocationApproveUploadGisMap", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers));
 
             var viewData = new ApproveUploadGisViewData(CurrentPerson, focusArea, mapInitJson);
             return RazorPartialView<ApproveUploadGis, ApproveUploadGisViewData, ApproveUploadGisViewModel>(viewData, viewModel);
@@ -300,7 +300,7 @@ namespace ProjectFirma.Web.Controllers
 
             var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
 
-            return new MapInitJson($"focusArea_{focusArea.FocusAreaID}_Map", 10, layers, boundingBox);
+            return new MapInitJson($"focusArea_{focusArea.FocusAreaID}_Map", 10, layers,  MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
         }
 
         private static MapInitJson GetMapInitJson(out bool hasSpatialData)
@@ -330,7 +330,7 @@ namespace ProjectFirma.Web.Controllers
 
             var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
 
-            return new MapInitJson("focusAreaIndex", 10, layers, boundingBox);
+            return new MapInitJson("focusAreaIndex", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
         }
     }
 }

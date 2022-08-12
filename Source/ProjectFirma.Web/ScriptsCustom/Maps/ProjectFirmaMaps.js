@@ -64,14 +64,32 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
     };
     this.map = L.map(this.MapDivId, options);
 
+    // Initialize the map
     if (streetLayerGroup != null)
     {
         streetLayerGroup.addTo(this.map);
     }
 
+    // Add external tile layers from ArcGIS Online
+    for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
+        var layerConfig = mapInitJson.ExternalMapLayers[i];
+        if (layerConfig.IsTiledMapService) {
+            this.addTiledLayerFromAGOL(layerConfig, overlayLayers);
+        }
+    }
+
     // add vector layers
     this.vectorLayers = [];
 
+    // Add external vector layers from ArcGIS Online 
+    for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
+        var layerConfig = mapInitJson.ExternalMapLayers[i];
+        if (!layerConfig.IsTiledMapService) {
+            this.addVectorLayerFromAGOL(layerConfig, overlayLayers);
+        }
+    }
+
+    // Add main layers from geojson
     for (var i = 0; i < mapInitJson.Layers.length; ++i) {
         var currentLayer = mapInitJson.Layers[i];
         switch (currentLayer.LayerType) {
@@ -103,6 +121,33 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
    
     self.setMapBounds(mapInitJson);
 };
+
+ProjectFirmaMaps.Map.prototype.addTiledLayerFromAGOL = function (layerConfig, overlayLayers) {
+    var tileLayer = L.esri.tiledMapLayer({ url: layerConfig.LayerUrl });
+    overlayLayers[layerConfig.DisplayName] = tileLayer;
+    // Add to map if layer is on by default
+    if (layerConfig.LayerIsOnByDefault) {
+        tileLayer.addTo(this.map);
+    }
+}
+
+ProjectFirmaMaps.Map.prototype.addVectorLayerFromAGOL = function (layerConfig, overlayLayers) {
+    var featureLayer = L.esri.featureLayer({ url: layerConfig.LayerUrl });
+    if (layerConfig.FeatureNameField) {
+        featureLayer.bindPopup(function (evt) {
+            var latlng = this.getLatLng();
+            if (evt.feature.properties[layerConfig.FeatureNameField]) {
+                return L.Util.template('<strong>' + layerConfig.DisplayName + ': </strong> {' + layerConfig.FeatureNameField + '}<br \><strong>Location: </strong>' + latlng.lat.toFixed(4) + ', ' + latlng.lng.toFixed(4), evt.feature.properties);
+            }
+            return L.Util.template('<div class="alert alert-danger">The configured Feature Name was not found.', evt.feature.properties);
+        });
+    }
+    overlayLayers[layerConfig.DisplayName] = featureLayer;
+    // Add to map if layer is on by default
+    if (layerConfig.LayerIsOnByDefault) {
+        featureLayer.addTo(this.map);
+    }
+}
 
 ProjectFirmaMaps.Map.prototype.addVectorLayer = function (currentLayer, overlayLayers) {
     var self = this;

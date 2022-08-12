@@ -249,6 +249,8 @@ namespace ProjectFirma.Web.Views
                 manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FindYourForesterController>(c => c.Manage(null)), currentPerson, "Manage Find Your Forester", "Group5"));
             }
 
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<MapLayerController>(c => c.Index()), currentPerson, "Map Layers", "Group5"));
+
             // Group 6 - Jobs
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JobController>(c => c.JobIndex()), currentPerson, Models.FieldDefinition.Job.GetFieldDefinitionLabelPluralized(), "Group6"));
 

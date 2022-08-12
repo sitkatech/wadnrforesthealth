@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -109,6 +109,9 @@
     <Compile Include="Models\Generated\DNRUplandRegion.Binding.cs" />
     <Compile Include="Models\Generated\DNRUplandRegion.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\DNRUplandRegionPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ExternalMapLayer.Binding.cs" />
+    <Compile Include="Models\Generated\ExternalMapLayer.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ExternalMapLayerPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />
@@ -695,6 +698,9 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
+    <Compile Include="Models\ExternalMapLayer.cs" />
+    <Compile Include="Models\ExternalMapLayerModelExtensions.cs" />
+    <Compile Include="Controllers\MapLayerController.cs" />
     <Compile Include="Models\ForesterRoleModelExtensions.cs" />
     <Compile Include="Controllers\FindYourForesterController.cs" />
     <Compile Include="Controllers\TreatmentController.cs" />
@@ -1198,6 +1204,12 @@
     <Compile Include="Views\Grant\NewGrant.cs" />
     <Compile Include="Views\Grant\NewGrantViewData.cs" />
     <Compile Include="Views\Grant\NewGrantViewModel.cs" />
+    <Compile Include="Views\MapLayer\EditExternalMapLayer.cs" />
+    <Compile Include="Views\MapLayer\EditExternalMapLayerViewData.cs" />
+    <Compile Include="Views\MapLayer\EditExternalMapLayerViewModel.cs" />
+    <Compile Include="Views\MapLayer\ExternalMapLayerGridSpec.cs" />
+    <Compile Include="Views\MapLayer\Index.cs" />
+    <Compile Include="Views\MapLayer\IndexViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
@@ -1380,6 +1392,8 @@
       <Link>phantomjs.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\esri-leaflet\esri-leaflet-renderers.js" />
+    <Content Include="Content\esri-leaflet\esri-leaflet.js" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -1395,6 +1409,7 @@
     <Content Include="Content\img\SAW-logo.jpg" />
     <Content Include="Content\img\wadnr-logo-cropped.png" />
     <Content Include="Content\img\wadnr-logo.jpg" />
+    <Content Include="Content\esri-leaflet\esri-leaflet.js.map" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
@@ -1991,6 +2006,8 @@
     <Content Include="Views\GisFeature\Detail.cshtml" />
     <Content Include="Views\Grant\DuplicateGrant.cshtml" />
     <Content Include="Views\GrantModification\DuplicateGrantModification.cshtml" />
+    <Content Include="Views\MapLayer\EditExternalMapLayer.cshtml" />
+    <Content Include="Views\MapLayer\Index.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

@@ -61,6 +61,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeUploadLoaTabularDataExcel UploadLoaTabularDataExcel = FirmaPageTypeUploadLoaTabularDataExcel.Instance;
         public static readonly FirmaPageTypeManageFindYourForester ManageFindYourForester = FirmaPageTypeManageFindYourForester.Instance;
         public static readonly FirmaPageTypeFindYourForester FindYourForester = FirmaPageTypeFindYourForester.Instance;
+        public static readonly FirmaPageTypeExternalMapLayers ExternalMapLayers = FirmaPageTypeExternalMapLayers.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -70,7 +71,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -150,6 +151,8 @@ namespace ProjectFirma.Web.Models
                     return DNRCostShareTreatments;
                 case FirmaPageTypeEnum.EnterHistoricProjectInstructions:
                     return EnterHistoricProjectInstructions;
+                case FirmaPageTypeEnum.ExternalMapLayers:
+                    return ExternalMapLayers;
                 case FirmaPageTypeEnum.FactSheetCustomText:
                     return FactSheetCustomText;
                 case FirmaPageTypeEnum.FeaturedProjectList:
@@ -275,7 +278,8 @@ namespace ProjectFirma.Web.Models
         ProgramsList = 65,
         UploadLoaTabularDataExcel = 66,
         ManageFindYourForester = 67,
-        FindYourForester = 68
+        FindYourForester = 68,
+        ExternalMapLayers = 69
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -528,5 +532,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeFindYourForester(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeFindYourForester Instance = new FirmaPageTypeFindYourForester(68, @"FindYourForester", @"Find Your Forester", 1);
+    }
+
+    public partial class FirmaPageTypeExternalMapLayers : FirmaPageType
+    {
+        private FirmaPageTypeExternalMapLayers(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeExternalMapLayers Instance = new FirmaPageTypeExternalMapLayers(69, @"ExternalMapLayers", @"External Map Layers", 1);
     }
 }
