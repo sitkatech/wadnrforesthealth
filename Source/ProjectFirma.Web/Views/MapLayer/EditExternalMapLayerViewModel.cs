@@ -44,23 +44,18 @@ namespace ProjectFirma.Web.Views.MapLayer
         [DisplayName("Url")]
         public string LayerUrl { get; set; }
 
-        [Required]
         [DisplayName("Display on Priority Landscape Map?")]
         public bool DisplayOnPriorityLandscape { get; set; }
 
-        [Required]
         [DisplayName("Display on Project Map?")]
         public bool DisplayOnProjectMap { get; set; }
 
-        [Required]
         [DisplayName("Display on All Other Maps?")]
         public bool DisplayOnAllOthers { get; set; }
 
-        [Required]
         [DisplayName("Is Active?")]
         public bool IsActive { get; set; }
 
-        [Required]
         [DisplayName("Is a Tiled Map Service?")]
         public bool IsTiledMapService { get; set; }
 
