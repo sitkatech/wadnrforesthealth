@@ -3261,7 +3261,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionExternalMapLayerUrl : FieldDefinition
     {
         private FieldDefinitionExternalMapLayerUrl(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionExternalMapLayerUrl Instance = new FieldDefinitionExternalMapLayerUrl(495, @"ExternalMapLayerUrl", @"Url", @"The external map web service URL (E.g https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer/3 (National 6-digit HUC boundaries).");
+        public static readonly FieldDefinitionExternalMapLayerUrl Instance = new FieldDefinitionExternalMapLayerUrl(495, @"ExternalMapLayerUrl", @"Url", @"The external map web service Url.");
     }
 
     public partial class FieldDefinitionExternalMapLayerDescription : FieldDefinition
@@ -3285,7 +3285,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionExternalMapLayerDisplayOnProjectMap : FieldDefinition
     {
         private FieldDefinitionExternalMapLayerDisplayOnProjectMap(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionExternalMapLayerDisplayOnProjectMap Instance = new FieldDefinitionExternalMapLayerDisplayOnProjectMap(499, @"ExternalMapLayerDisplayOnProjectMap", @"Display on project maps?", @"When this option is set, the external map layer will appear on Project maps.");
+        public static readonly FieldDefinitionExternalMapLayerDisplayOnProjectMap Instance = new FieldDefinitionExternalMapLayerDisplayOnProjectMap(499, @"ExternalMapLayerDisplayOnProjectMap", @"Display on Project maps?", @"When this option is set, the external map layer will appear on Project maps.");
     }
 
     public partial class FieldDefinitionExternalMapLayerDisplayOnAllOthers : FieldDefinition
