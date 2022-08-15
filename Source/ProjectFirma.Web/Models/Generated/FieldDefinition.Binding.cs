@@ -3279,13 +3279,13 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionExternalMapLayerDisplayOnPriorityLandscape : FieldDefinition
     {
         private FieldDefinitionExternalMapLayerDisplayOnPriorityLandscape(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionExternalMapLayerDisplayOnPriorityLandscape Instance = new FieldDefinitionExternalMapLayerDisplayOnPriorityLandscape(498, @"ExternalMapLayerDisplayOnPriorityLandscape", @"Display on Priority Landscape maps?", @"When this option is set, the external map layer will appear on Priority Landscape maps.");
+        public static readonly FieldDefinitionExternalMapLayerDisplayOnPriorityLandscape Instance = new FieldDefinitionExternalMapLayerDisplayOnPriorityLandscape(498, @"ExternalMapLayerDisplayOnPriorityLandscape", @"Display on Priority Landscape Maps?", @"When this option is set, the external map layer will appear on Priority Landscape maps.");
     }
 
     public partial class FieldDefinitionExternalMapLayerDisplayOnProjectMap : FieldDefinition
     {
         private FieldDefinitionExternalMapLayerDisplayOnProjectMap(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionExternalMapLayerDisplayOnProjectMap Instance = new FieldDefinitionExternalMapLayerDisplayOnProjectMap(499, @"ExternalMapLayerDisplayOnProjectMap", @"Display on Project maps?", @"When this option is set, the external map layer will appear on Project maps.");
+        public static readonly FieldDefinitionExternalMapLayerDisplayOnProjectMap Instance = new FieldDefinitionExternalMapLayerDisplayOnProjectMap(499, @"ExternalMapLayerDisplayOnProjectMap", @"Display on Project Map?", @"When this option is set, the external map layer will appear on the Project Map.");
     }
 
     public partial class FieldDefinitionExternalMapLayerDisplayOnAllOthers : FieldDefinition
@@ -3297,7 +3297,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionExternalMapLayerIsATiledMapService : FieldDefinition
     {
         private FieldDefinitionExternalMapLayerIsATiledMapService(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionExternalMapLayerIsATiledMapService Instance = new FieldDefinitionExternalMapLayerIsATiledMapService(501, @"ExternalMapLayerIsATiledMapService", @"Is a Tiled Map Service", @"Please turn on this setting if the external map layer is a tiled layer (raster). Note: Pop-ups will not appear on maps for tiled layers.");
+        public static readonly FieldDefinitionExternalMapLayerIsATiledMapService Instance = new FieldDefinitionExternalMapLayerIsATiledMapService(501, @"ExternalMapLayerIsATiledMapService", @"Is a Tiled Map Service?", @"Please turn on this setting if the external map layer is a tiled layer (raster). Note: Pop-ups will not appear on maps for tiled layers.");
     }
 
     public partial class FieldDefinitionExternalMapLayerIsActive : FieldDefinition
