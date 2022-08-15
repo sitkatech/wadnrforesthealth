@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.MapLayer
         [DisplayName("Url")]
         public string LayerUrl { get; set; }
 
-        [DisplayName("Display on Priority Landscape Map?")]
+        [DisplayName("Display on Priority Landscape Maps?")]
         public bool DisplayOnPriorityLandscape { get; set; }
 
         [DisplayName("Display on Project Map?")]
