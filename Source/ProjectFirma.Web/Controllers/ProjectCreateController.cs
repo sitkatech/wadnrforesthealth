@@ -646,7 +646,7 @@ namespace ProjectFirma.Web.Controllers
         private ViewResult ViewEditLocationSimple(Project project, LocationSimpleViewModel viewModel)
         {
             var layerGeoJsons = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide);
-            var mapInitJson = new MapInitJson($"project_{project.ProjectID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) {AllowFullScreen = false, DisablePopups = true };
+            var mapInitJson = new MapInitJson($"project_{project.ProjectID}_EditMap", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox(), false) {AllowFullScreen = false, DisablePopups = true };
             
             var mapPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationSimpleFormID(project);
@@ -705,7 +705,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleMapLayer(project));
-            var mapInitJson = new MapInitJson(mapDivID, 10, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true};
 
             var mapFormID = GenerateEditProjectLocationFormID(project.ProjectID);
             var uploadGisFileUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.ImportGdbFile(project.EntityID));
@@ -811,7 +811,7 @@ namespace ProjectFirma.Web.Controllers
 
             var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layerGeoJsons);
 
-            var mapInitJson = new MapInitJson($"project_{project.ProjectID}_PreviewMap", 10, layerGeoJsons, boundingBox, false) {AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson($"project_{project.ProjectID}_PreviewMap", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox, false) {AllowFullScreen = false, DisablePopups = true};
             var mapFormID = GenerateEditProjectLocationFormID(project.ProjectID);
             var approveGisUploadUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.ApproveGisUpload(project, null));
 
@@ -890,7 +890,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
-            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true};
             var regionIDs = viewModel.DNRUplandRegionIDs ?? new List<int>();
             var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.Regions(project, null));
@@ -941,7 +941,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetPriorityLandscapeMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
-            var mapInitJson = new MapInitJson("projectPriorityLandscapeMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true };
+            var mapInitJson = new MapInitJson("projectPriorityLandscapeMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true };
             var priorityLandscapeIDs = viewModel.PriorityLandscapeIDs ?? new List<int>();
             var priorityLandscapesInViewModel = HttpRequestStorage.DatabaseEntities.PriorityLandscapes.Where(x => priorityLandscapeIDs.Contains(x.PriorityLandscapeID)).ToList();
             var editProjectPriorityLandscapesPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.PriorityLandscapes(project, null));

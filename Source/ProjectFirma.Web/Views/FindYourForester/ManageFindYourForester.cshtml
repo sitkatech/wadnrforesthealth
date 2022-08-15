@@ -1,0 +1,89 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="ManageFindYourForester.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using LtInfo.Common.DhtmlWrappers
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Models
+@inherits ProjectFirma.Web.Views.FindYourForester.ManageFindYourForester
+@section JavascriptAndStylesContent
+{
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ MapJavascriptIncludes.RenderPartialView(Html); }
+}
+
+<div>
+    @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 500px; margin: 5px 0 5px 0">
+            </div>
+            <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
+
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h2>Forester Work Units</h2>
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function()
+    {
+        var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
+        var sitkaMap = new ProjectFirmaMaps.Map(mapInitJson, null, true);
+
+        var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.GridDataUrlTemplate.ToJS()));
+        var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
+
+        
+        sitkaMap.map.on("overlayadd", function (e) {
+
+            var layer = Object.values(e.layer._layers)[0];
+            var findYourForesterRoleID = layer.ContextObjectId;
+
+            var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
+            window.history.pushState({}, '', pageUrlTemplate.ParameterReplace(findYourForesterRoleID));
+            var myGrid = Sitka.@ViewDataTyped.GridName;
+
+            myGrid.grid.clearAndLoad(dataUrl, function(){}, 'json');
+
+        });
+
+
+    });
+</script>

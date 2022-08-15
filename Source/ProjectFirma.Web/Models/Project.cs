@@ -547,6 +547,11 @@ namespace ProjectFirma.Web.Models
                 .Include(x => x.ProjectLocation)
                 .ToList();
 
+            if (!projectTreatments.Any())
+            {
+                return null;
+            }
+
 
             var detailedLocationsByTypeGeoJsonFeatureCollection = projectTreatments.ToGeoJsonFeatureCollectionWithPopupUrl();
             var layerName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Treatment Areas";

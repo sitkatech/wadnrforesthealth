@@ -827,6 +827,7 @@ namespace ProjectFirma.Web.Controllers
             var mapInitJsonForEdit = new MapInitJson($"project_{project.ProjectID}_EditMap",
                 10,
                 MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide),
+                MapInitJson.GetExternalMapLayersForOtherMaps(),
                 BoundingBox.MakeNewDefaultBoundingBox(),
                 false) {DisablePopups = true};
             var locationSimpleValidationResult = projectUpdateBatch.ValidateProjectLocationSimple();
@@ -932,7 +933,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleMapLayer(projectUpdate));
-            var mapInitJson = new MapInitJson(mapDivID, 10, layers, boundingBox) {AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) {AllowFullScreen = false, DisablePopups = true};
             var mapFormID = ProjectLocationController.GenerateEditProjectLocationFormID(projectUpdateBatch.ProjectID);
             var uploadGisFileUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.ImportGdbFile(project.ProjectID));
             var saveFeatureCollectionUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.LocationDetailed(project.ProjectID, null));
@@ -1059,7 +1060,7 @@ namespace ProjectFirma.Web.Controllers
 
             var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layerGeoJsons);
 
-            var mapInitJson = new MapInitJson($"project_{projectUpdateBatch.ProjectID}_PreviewMap", 10, layerGeoJsons, boundingBox, false) {AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson($"project_{projectUpdateBatch.ProjectID}_PreviewMap", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox, false) {AllowFullScreen = false, DisablePopups = true};
             var mapFormID = ProjectLocationController.GenerateEditProjectLocationFormID(projectUpdateBatch.ProjectID);
             var approveGisUploadUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.ApproveGisUpload(projectUpdateBatch.Project, null));
 
@@ -1166,7 +1167,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
             var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(projectUpdate));
-            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true};
            
             var regionValidationResult = projectUpdateBatch.ValidateProjectRegion();
             var regions = projectUpdate.GetProjectRegions().ToList();
@@ -1278,7 +1279,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
             var layers = MapInitJson.GetPriorityLandscapeMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(projectUpdate));
-            var mapInitJson = new MapInitJson("projectPriorityLandscapeMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson("projectPriorityLandscapeMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true};
            
             var priorityLandscapeValidationResult = projectUpdateBatch.ValidateProjectPriorityLandscape();
             var priorityLandscapes = projectUpdate.GetProjectPriorityLandscapes().ToList();

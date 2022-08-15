@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Controllers
 
             var layers = GisFeature.GetGisFeatureLayers(gisFeature);
 
-            var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(feature));
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), new BoundingBox(feature));
             var viewData = new DetailViewData(CurrentPerson, gisFeature, mapInitJson);
             return RazorView<Detail, DetailViewData>(viewData);
         }

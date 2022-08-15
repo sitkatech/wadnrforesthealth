@@ -167,7 +167,9 @@ namespace ProjectFirma.Web.Views
         private static LtInfoMenuItem BuildProgramInfoMenu(Person currentPerson)
         {
             var programInfoMenu = new LtInfoMenuItem("Program Info");
-            
+
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FindYourForesterController>(c => c.Index()), currentPerson, "Find Your Forester", "Group1"));
+
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<PriorityLandscapeController>(c => c.Index()), currentPerson, "Priority Landscapes", "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<DNRUplandRegionController>(c => c.Index()), currentPerson, Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FocusAreaController>(c => c.Index()), currentPerson, Models.FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized(), "Group2"));
@@ -240,6 +242,14 @@ namespace ProjectFirma.Web.Views
             {
                 manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}", "Group5"));
             }
+
+
+            if (new FindYourForesterManageFeature().HasPermissionByPerson(currentPerson))
+            {
+                manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FindYourForesterController>(c => c.Manage(null)), currentPerson, "Manage Find Your Forester", "Group5"));
+            }
+
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<MapLayerController>(c => c.Index()), currentPerson, "Map Layers", "Group5"));
 
             // Group 6 - Jobs
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JobController>(c => c.JobIndex()), currentPerson, Models.FieldDefinition.Job.GetFieldDefinitionLabelPluralized(), "Group6"));

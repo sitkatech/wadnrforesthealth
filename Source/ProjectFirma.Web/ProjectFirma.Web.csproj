@@ -109,6 +109,9 @@
     <Compile Include="Models\Generated\DNRUplandRegion.Binding.cs" />
     <Compile Include="Models\Generated\DNRUplandRegion.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\DNRUplandRegionPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ExternalMapLayer.Binding.cs" />
+    <Compile Include="Models\Generated\ExternalMapLayer.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ExternalMapLayerPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />
@@ -131,6 +134,9 @@
     <Compile Include="Models\Generated\FileResourceMimeTypeFileExtensionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FileResourceMimeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FileResourcePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\FindYourForesterQuestion.Binding.cs" />
+    <Compile Include="Models\Generated\FindYourForesterQuestion.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\FindYourForesterQuestionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImage.Binding.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImage.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImagePrimaryKey.Binding.cs" />
@@ -153,6 +159,11 @@
     <Compile Include="Models\Generated\FocusAreaPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatus.Binding.cs" />
     <Compile Include="Models\Generated\FocusAreaStatusPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ForesterRole.Binding.cs" />
+    <Compile Include="Models\Generated\ForesterRolePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ForesterWorkUnit.Binding.cs" />
+    <Compile Include="Models\Generated\ForesterWorkUnit.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ForesterWorkUnitPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FundingSource.Binding.cs" />
     <Compile Include="Models\Generated\FundingSourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisCrossWalkDefault.Binding.cs" />
@@ -687,6 +698,11 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
+    <Compile Include="Models\ExternalMapLayer.cs" />
+    <Compile Include="Models\ExternalMapLayerModelExtensions.cs" />
+    <Compile Include="Controllers\MapLayerController.cs" />
+    <Compile Include="Models\ForesterRoleModelExtensions.cs" />
+    <Compile Include="Controllers\FindYourForesterController.cs" />
     <Compile Include="Controllers\TreatmentController.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\CellFormulaProxy.cs" />
     <Compile Include="Models\DhtmlxExcelDownload\CellProxy.cs" />
@@ -833,6 +849,8 @@
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
     <Compile Include="Security\ContactCreateAndViewFeature.cs" />
+    <Compile Include="Security\FindYourForesterManageFeature.cs" />
+    <Compile Include="Security\FindYourForesterViewFeature.cs" />
     <Compile Include="Security\FirmaNormalUserAndAboveFeature.cs" />
     <Compile Include="Security\FirmaProjectStewardAndAdminFeature.cs" />
     <Compile Include="Security\GisFeatureViewFeature.cs" />
@@ -1048,6 +1066,15 @@
     <Compile Include="Views\ExcelUpload\ManageExcelUploadsAndEtlViewModel.cs" />
     <Compile Include="Views\ExcelUpload\ImportLoaExcelFileViewModel.cs" />
     <Compile Include="Views\ExcelUpload\LoaImportHelper.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForestersViewModel.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForestersModalDialogForm.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForesters.cs" />
+    <Compile Include="Views\FindYourForester\FindYourForester.cs" />
+    <Compile Include="Views\FindYourForester\ManageFindYourForester.cs" />
+    <Compile Include="Views\FindYourForester\ManageFindYourForesterGridSpec.cs" />
+    <Compile Include="Views\FindYourForester\BulkAssignForestersViewData.cs" />
+    <Compile Include="Views\FindYourForester\FindYourForesterViewData.cs" />
+    <Compile Include="Views\FindYourForester\ManageFindYourForesterViewData.cs" />
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
     <Compile Include="Views\GisFeature\Detail.cs" />
     <Compile Include="Views\GisFeature\DetailViewData.cs" />
@@ -1177,6 +1204,12 @@
     <Compile Include="Views\Grant\NewGrant.cs" />
     <Compile Include="Views\Grant\NewGrantViewData.cs" />
     <Compile Include="Views\Grant\NewGrantViewModel.cs" />
+    <Compile Include="Views\MapLayer\EditExternalMapLayer.cs" />
+    <Compile Include="Views\MapLayer\EditExternalMapLayerViewData.cs" />
+    <Compile Include="Views\MapLayer\EditExternalMapLayerViewModel.cs" />
+    <Compile Include="Views\MapLayer\ExternalMapLayerGridSpec.cs" />
+    <Compile Include="Views\MapLayer\Index.cs" />
+    <Compile Include="Views\MapLayer\IndexViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
@@ -1362,6 +1395,8 @@
       <Link>phantomjs.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\esri-leaflet\esri-leaflet-renderers.js" />
+    <Content Include="Content\esri-leaflet\esri-leaflet.js" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -1377,6 +1412,7 @@
     <Content Include="Content\img\SAW-logo.jpg" />
     <Content Include="Content\img\wadnr-logo-cropped.png" />
     <Content Include="Content\img\wadnr-logo.jpg" />
+    <Content Include="Content\esri-leaflet\esri-leaflet.js.map" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
@@ -1458,6 +1494,9 @@
     <Content Include="Scripts\jquery-1.11.0.min.map" />
     <Content Include="Views\ExcelUpload\ImportLoaExcelFile.cshtml" />
     <Content Include="Views\ExcelUpload\ManageExcelUploadsAndEtl.cshtml" />
+    <Content Include="Views\FindYourForester\ManageFindYourForester.cshtml" />
+    <Content Include="Views\FindYourForester\BulkAssignForesters.cshtml" />
+    <Content Include="Views\FindYourForester\FindYourForester.cshtml" />
     <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
@@ -1970,6 +2009,8 @@
     <Content Include="Views\GisFeature\Detail.cshtml" />
     <Content Include="Views\Grant\DuplicateGrant.cshtml" />
     <Content Include="Views\GrantModification\DuplicateGrantModification.cshtml" />
+    <Content Include="Views\MapLayer\EditExternalMapLayer.cshtml" />
+    <Content Include="Views\MapLayer\Index.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

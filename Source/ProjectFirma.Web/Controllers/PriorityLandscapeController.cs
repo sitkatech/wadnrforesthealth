@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Controllers
                 MapInitJson.GetAllProjectTreatments()
             };
 
-            var mapInitJson = new MapInitJson("priorityLandscapeIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
+            var mapInitJson = new MapInitJson("priorityLandscapeIndex", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForPriorityLandscape(), BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.PriorityLandscapesList);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Controllers
 
             var associatedProjects = priorityLandscape.GetAssociatedProjectsVisibleToUser(CurrentPerson);
             var layers = PriorityLandscape.GetPriorityLandscapeAndAssociatedProjectLayers(priorityLandscape, associatedProjects);
-            var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(priorityLandscape.PriorityLandscapeLocation));
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForPriorityLandscape(), new BoundingBox(priorityLandscape.PriorityLandscapeLocation));
 
             var projectGrantAllocationExpenditures = associatedProjects.SelectMany(x => x.ProjectGrantAllocationExpenditures);
             var organizationTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypes.ToList();

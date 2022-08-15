@@ -71,7 +71,7 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
-            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true};
             var regionIDs = viewModel.DNRUplandRegionIDs ?? new List<int>();
             var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project, null));

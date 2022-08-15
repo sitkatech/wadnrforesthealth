@@ -42,6 +42,9 @@ values
 (63, 'GisUploadAttemptInstructions', 'GIS Upload Attempt Instructions', 1),
 (64, 'DNRCostShareTreatments', 'DNR Cost Share Treatments', 1),
 (65, 'ProgramsList', 'Programs List', 1),
-(66, 'UploadLoaTabularDataExcel', 'Upload Loa Tabular Data', 1)
+(66, 'UploadLoaTabularDataExcel', 'Upload Loa Tabular Data', 1),
+(67, 'ManageFindYourForester', 'Manage Find Your Forester', 1),
+(68, 'FindYourForester', 'Find Your Forester', 1),
+(69, 'ExternalMapLayers', 'External Map Layers', 1)
 
 
