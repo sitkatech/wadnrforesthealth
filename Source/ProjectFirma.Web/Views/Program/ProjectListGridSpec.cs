@@ -23,18 +23,8 @@ namespace ProjectFirma.Web.Views.Program
 
             if (hasProgramManagePermissions)
             {
-                Add(string.Empty, x => x.ProjectImportBlockLists.Any(b => b.ProgramID == currentProgram.ProgramID)
-                        ? ModalDialogFormHelper.ModalDialogFormLink(null, "Remove from Block List",
-                            SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
-                                c.RemoveBlockListProject(x)),
-                            $"Remove '{x.DisplayName}' from Import Block List", 950,
-                            "btnRemoveImportBlockList", "Yes", "Cancel", null, null, null, null,
-                            "Allow project to be updated by the imports of its programs.")
-                        : ModalDialogFormHelper.ModalDialogFormLink(null, "Add to Block List",
-                            SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
-                                c.BlockListProject(x)), $"Add '{x.DisplayName}' to Import Block List", 950,
-                            "btnAddImportBlockList", "Yes", "Cancel", null, null, null, null,
-                            "Block project from being updated by the imports of its programs."),
+                Add(string.Empty, x => x.ProjectImportBlockLists
+                        .Any(b => b.ProgramID == currentProgram.ProgramID) ? RemoveFromBlockListModalLink(x) : AddToBlockListModalLink(x),
                     125, DhtmlxGridColumnFilterType.None, true);
             }
 
@@ -60,6 +50,26 @@ namespace ProjectFirma.Web.Views.Program
         private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
         {
             return project.ProgramListDisplayHelper(programsByProject, false);
+        }
+
+        private static HtmlString RemoveFromBlockListModalLink(Models.Project project)
+        {
+            return ModalDialogFormHelper.ModalDialogFormLink(null, "Remove from Block List",
+                SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
+                    c.RemoveBlockListProject(project)),
+                $"Remove '{project.DisplayName}' from Import Block List", 950,
+                "btnRemoveImportBlockList", "Yes", "Cancel", null, null, null, null,
+                "Allow project to be updated by the imports of its programs.");
+        }
+
+        private static HtmlString AddToBlockListModalLink(Models.Project project)
+        {
+            return ModalDialogFormHelper.ModalDialogFormLink(null, "Add to Block List",
+                SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
+                    c.BlockListProject(project)), 
+                $"Add '{project.DisplayName}' to Import Block List", 950,
+                "btnAddImportBlockList", "Yes", "Cancel", null, null, null, null,
+                "Block project from being updated by the imports of its programs.");
         }
     }
 }
