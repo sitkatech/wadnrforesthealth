@@ -16,6 +16,7 @@
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
     <EntitySet Name="DNRUplandRegion" EntityType="ProjectFirma.Web.Models.DNRUplandRegion" />
+    <EntitySet Name="ExternalMapLayer" EntityType="ProjectFirma.Web.Models.ExternalMapLayer" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.FederalFundCode" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.FieldDefinitionData" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
@@ -1509,6 +1510,21 @@
     <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="PersonStewardRegions" />
     <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="ProjectRegionUpdates" />
+  </EntityType>
+  <EntityType Name="ExternalMapLayer">
+    <Key>
+      <PropertyRef Name="ExternalMapLayerID" />
+    </Key>
+    <Property Name="ExternalMapLayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="75" Unicode="false" FixedLength="false" />
+    <Property Name="LayerUrl" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="LayerDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="FeatureNameField" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DisplayOnPriorityLandscape" Type="Boolean" Nullable="false" />
+    <Property Name="DisplayOnProjectMap" Type="Boolean" Nullable="false" />
+    <Property Name="DisplayOnAllOthers" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsTiledMapService" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="FederalFundCode">
     <Key>

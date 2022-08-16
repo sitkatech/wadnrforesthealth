@@ -37,23 +37,27 @@ namespace ProjectFirma.Web.Models
         public BoundingBox BoundingBox;
         public int ZoomLevel;
         public List<LayerGeoJson> Layers;
+        public List<ExternalMapLayer> ExternalMapLayers;
         public readonly bool TurnOnFeatureIdentify;
         public bool AllowFullScreen = true;
         public bool DisablePopups = false;
+        public string RequestSupportUrl;
 
-        public MapInitJson(string mapDivID, int zoomLevel, List<LayerGeoJson> layers, BoundingBox boundingBox, bool turnOnFeatureIdentify)
+        public MapInitJson(string mapDivID, int zoomLevel, List<LayerGeoJson> layers, List<ExternalMapLayer> externalMapLayers, BoundingBox boundingBox, bool turnOnFeatureIdentify)
         {
             MapDivID = mapDivID;
             ZoomLevel = zoomLevel;
             Layers = layers;
+            ExternalMapLayers = externalMapLayers;
             BoundingBox = boundingBox;
             TurnOnFeatureIdentify = turnOnFeatureIdentify;
+            RequestSupportUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.Support());
         }
 
         /// <summary>
         /// Summary maps with no editing should use this constructor
         /// </summary>
-        public MapInitJson(string mapDivID, int zoomLevel, List<LayerGeoJson> layers, BoundingBox boundingBox) : this(mapDivID, zoomLevel, layers, boundingBox, true)
+        public MapInitJson(string mapDivID, int zoomLevel, List<LayerGeoJson> layers, List<ExternalMapLayer> externalMapLayers, BoundingBox boundingBox) : this(mapDivID, zoomLevel, layers, externalMapLayers, boundingBox, true)
         {
         }
 
@@ -67,9 +71,29 @@ namespace ProjectFirma.Web.Models
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.East),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.West),
                 DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
-                
+
             };
             return layerGeoJsons;
+        }
+
+        public static List<ExternalMapLayer> GetExternalMapLayersForOtherMaps()
+        {
+            return HttpRequestStorage.DatabaseEntities.ExternalMapLayers.Where(x => x.IsActive && x.DisplayOnAllOthers).ToList();
+        }
+
+        public static List<ExternalMapLayer> GetExternalMapLayersForPriorityLandscape()
+        {
+            return HttpRequestStorage.DatabaseEntities.ExternalMapLayers.Where(x => x.IsActive && x.DisplayOnPriorityLandscape).ToList();
+        }
+
+        public static List<ExternalMapLayer> GetExternalMapLayersForProjectMap()
+        {
+            return HttpRequestStorage.DatabaseEntities.ExternalMapLayers.Where(x => x.IsActive && x.DisplayOnProjectMap).ToList();
+        }
+
+        public static List<ExternalMapLayer> GetAllExternalMapLayers()
+        {
+            return HttpRequestStorage.DatabaseEntities.ExternalMapLayers.Where(x => x.IsActive).ToList();
         }
 
         public static List<LayerGeoJson> GetRegionMapLayers( LayerInitialVisibility layerInitialVisibility)

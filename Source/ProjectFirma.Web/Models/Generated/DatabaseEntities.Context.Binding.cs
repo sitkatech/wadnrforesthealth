@@ -44,6 +44,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
         public virtual DbSet<DNRUplandRegion> DNRUplandRegions { get; set; }
+        public virtual DbSet<ExternalMapLayer> ExternalMapLayers { get; set; }
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
         public virtual DbSet<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
@@ -381,6 +382,9 @@ namespace ProjectFirma.Web.Models
 
                 case "DNRUplandRegion":
                     return DNRUplandRegions.GetDNRUplandRegion(primaryKey);
+
+                case "ExternalMapLayer":
+                    return ExternalMapLayers.GetExternalMapLayer(primaryKey);
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);

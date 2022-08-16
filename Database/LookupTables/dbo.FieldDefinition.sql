@@ -312,4 +312,14 @@ VALUES
 (490, N'SmallForestLandownerProgramManager', 'Small Forest Landowner Program Manager', N'Placeholder definition for forester role, Small Forest Landowner Program Manager'),
 (491, N'UcfStatewideSpecialist', 'UCF Statewide Specialist', N'Placeholder definition for forester role, UCF Statewide Specialist'),
 (492, N'ServiceForestrySpecialist', 'Service Forestry Specialist', N'Placeholder definition for forester role, Service Forestry Specialist'),
-(493, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>')
+(493, N'ExternalMapLayer', 'External Map Layer', 'An administrator can add a connection to a web service link (feature service) provided by ESRI ArcGIS Online to pull in spatial information that is stored in ArcGIS Online. Once the connection is added the reference layer will be available on maps throughout the system.'),
+(494, N'ExternalMapLayerDisplayName', 'Display Name', 'The layer display name will appear in map legends and popups.'),
+(495, N'ExternalMapLayerUrl', 'Url', 'The external map web service Url.'),
+(496, N'ExternalMapLayerDescription', 'Internal Layer Description', 'Add helpful background information for other administrators (E.g who to contact if there is a problem with this external map service in the future).'),
+(497, N'ExternalMapLayerFeatureNameField', 'Field to use as source for feature names', 'This setting will populate the map pop-ups with names from the feature service. This is field is case-sensitive (E.g. Name or NAME) and must match a field in the web service. Please leave this field blank for tile services since pop-ups are not supported.'),
+(498, N'ExternalMapLayerDisplayOnPriorityLandscape', 'Display on Priority Landscape Maps?', 'When this option is set, the external map layer will appear on Priority Landscape maps.'),
+(499, N'ExternalMapLayerDisplayOnProjectMap', 'Display on Project Map?', 'When this option is set, the external map layer will appear on the Project Map.'),
+(500, N'ExternalMapLayerDisplayOnAllOthers', 'Display on All Other Maps?', 'When this option is set, the external map layer will appear on maps throughout the system, except for the Priority Landscape and Project maps (which have their own settings).'),
+(501, N'ExternalMapLayerIsATiledMapService', 'Is a Tiled Map Service?', 'Please turn on this setting if the external map layer is a tiled layer (raster). Note: Pop-ups will not appear on maps for tiled layers.'),
+(502, N'ExternalMapLayerIsActive', 'Is Active?', 'If this is not set, the layer will not appear on any maps. If there is a problem with the external map service an administrator can uncheck this box to hide the layer until it is resolved.'),
+(503, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>')

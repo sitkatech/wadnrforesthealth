@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
-using MoreLinq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.FindYourForester;
-using ProjectFirma.Web.Views.Invoice;
-using ProjectFirma.Web.Views.Project;
-using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -34,7 +27,7 @@ namespace ProjectFirma.Web.Controllers
                 }
             }
 
-            var mapInitJson = new MapInitJson("findYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
+            var mapInitJson = new MapInitJson("findYourForester", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FindYourForester);
 
             var rootQuestions =
@@ -74,7 +67,7 @@ namespace ProjectFirma.Web.Controllers
             }
             
 
-            var mapInitJson = new MapInitJson("manageFindYourForester", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
+            var mapInitJson = new MapInitJson("manageFindYourForester", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.ManageFindYourForester);
             var viewData = new ManageFindYourForesterViewData(CurrentPerson, mapInitJson, firmaPage, bulkAssignForestersUrl, foresterRoleID ?? initialForesterRoleIdToLoad);
             return RazorView<ManageFindYourForester, ManageFindYourForesterViewData>(viewData);

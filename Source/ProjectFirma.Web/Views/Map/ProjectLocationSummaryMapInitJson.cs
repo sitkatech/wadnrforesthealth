@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.Map
         /* used by ProjectFirmaMaps.ProjectLocationSummary.js */
 
         public ProjectLocationSummaryMapInitJson(IProject project, string mapDivID, bool addProjectProperties) 
-            : base(mapDivID, DefaultZoomLevel, GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide), GetProjectBoundingBox(project))
+            : base(mapDivID, DefaultZoomLevel, GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide), GetExternalMapLayersForOtherMaps(), GetProjectBoundingBox(project))
         {
             var simpleLocationGeoJsonFeatureCollection = project.SimpleLocationToGeoJsonFeatureCollection(addProjectProperties);
             HasSimpleLocation = simpleLocationGeoJsonFeatureCollection.Features.Any();

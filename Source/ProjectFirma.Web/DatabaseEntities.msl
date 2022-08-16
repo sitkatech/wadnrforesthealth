@@ -172,6 +172,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ExternalMapLayer">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ExternalMapLayer">
+        <MappingFragment StoreEntitySet="ExternalMapLayer">
+          <ScalarProperty Name="ExternalMapLayerID" ColumnName="ExternalMapLayerID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="LayerUrl" ColumnName="LayerUrl" />
+          <ScalarProperty Name="LayerDescription" ColumnName="LayerDescription" />
+          <ScalarProperty Name="FeatureNameField" ColumnName="FeatureNameField" />
+          <ScalarProperty Name="DisplayOnPriorityLandscape" ColumnName="DisplayOnPriorityLandscape" />
+          <ScalarProperty Name="DisplayOnProjectMap" ColumnName="DisplayOnProjectMap" />
+          <ScalarProperty Name="DisplayOnAllOthers" ColumnName="DisplayOnAllOthers" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsTiledMapService" ColumnName="IsTiledMapService" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FederalFundCode">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FederalFundCode">
         <MappingFragment StoreEntitySet="FederalFundCode">

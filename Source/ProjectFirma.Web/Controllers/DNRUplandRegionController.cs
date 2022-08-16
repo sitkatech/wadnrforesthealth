@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Controllers
                 DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
             };
 
-            var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
+            var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox());
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.RegionsList);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Controllers
 
             var associatedProjects = region.GetAssociatedProjects(CurrentPerson);
             var layers = DNRUplandRegion.GetRegionAndAssociatedProjectLayers(region, associatedProjects);
-            var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(region.DNRUplandRegionLocation));
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), new BoundingBox(region.DNRUplandRegionLocation));
 
             var grantAllocationExpenditures = new List<GrantAllocationExpenditure>();
             region.GrantAllocations.ForEach(x => grantAllocationExpenditures.AddRange(x.GrantAllocationExpenditures));
