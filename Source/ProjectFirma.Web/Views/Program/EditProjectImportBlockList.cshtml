@@ -1,0 +1,61 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="EditProgramNotificationConfiguration.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Common
+@inherits ProjectFirma.Web.Views.Program.EditProjectImportBlockList
+
+
+<style>
+
+</style>
+
+@using (Html.BeginForm())
+{
+<div class="form-horizontal">
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        <div class="col-xs-12">
+            <p>Preemptively prevent projects from being added when this program is imported by providing either/both of the two identifying values below.</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectName)</div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(m => m.ProjectName)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectGisIdentifier)</div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(m => m.ProjectGisIdentifier)
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.ProgramID)
+
+    @Html.HiddenFor(m => m.ProjectID)
+
+</div>
+
+}

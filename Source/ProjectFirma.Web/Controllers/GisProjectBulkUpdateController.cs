@@ -163,12 +163,13 @@ namespace ProjectFirma.Web.Controllers
             var projectStageDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectStageMetadataAttributeID);
 
             var distinctProjectIdentifiers = GetDistinctProjectIdentifiers(projectIdentifierMetadataAttribute, gisFeatureIDs);
-
+            var projectImportBlockList = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Where(x => x.ProgramID == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
           
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x => string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             var existingProjectCount = 0;
+            var skippedProjectCount = 0;
             var projectList = new List<Project>();
             var newPersonList = new List<Person>();
             var newProjectPersonList = new List<ProjectPerson>();
@@ -193,14 +194,19 @@ namespace ProjectFirma.Web.Controllers
                 existingProjects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.Treatments).Where(x => allMergeGroupingProjects.Contains(x.ProjectID)).ToList();
             }
 
+            //Skip projects by removing distinctProjectIdentifiers which are matches in import block list, strictly by ProjectGisIdentifier (no ProjectName criteria)
+            foreach (var blockListEntry in projectImportBlockList)
+            {
+                if (!string.IsNullOrEmpty(blockListEntry.ProjectGisIdentifier) && string.IsNullOrEmpty(blockListEntry.ProjectName))
+                    if (distinctProjectIdentifiers.Remove(blockListEntry.ProjectGisIdentifier))
+                        skippedProjectCount++;
+            }
 
-            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program,currentCounter, ref existingProjectCount);
+            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program,currentCounter, ref existingProjectCount, ref skippedProjectCount);
 
             MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID);
 
-
             MakeProjectPeopleAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList);
-
 
             MakeProjectOrganizationsAndSave(gisUploadAttempt, distinctProjectIdentifiers);
 
@@ -229,19 +235,16 @@ namespace ProjectFirma.Web.Controllers
                     , viewModel.CompletionDateMetadataAttributeID);
             }
 
-
-
             UpdateProjectPriorityLandscapes(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
 
             UpdateProjectRegions(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
-
 
             UpdateProjectTypesIfNeeded(gisUploadAttempt);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             ExecPClearGisImportTables();
 
-            SetMessageForDisplay($"Successfully imported {projectList.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
+            SetMessageForDisplay($"Successfully imported {projectList.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -378,19 +381,19 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
-        private static void MakeProjectsAndSave(List<string> distinctProjectIdentifiers, List<Project> existingProjects,
+        private static void MakeProjectsAndSave(List<string> distinctProjectIdentifiers, List<Project> existingProjects, List<ProjectImportBlockList> projectImportBlockList,
             GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary,
             Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
             List<GisCrossWalkDefault> gisCrossWalkDefaultList, GisUploadAttempt gisUploadAttempt, ProjectType otherProjectType, List<Project> projectList, Program program,
-            int currentCounter, ref int existingProjectCounter)
+            int currentCounter, ref int existingProjectCounter, ref int skippedProjectCounter)
         {
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
-                MakeProject(existingProjects, projectIdentifierMetadataAttribute, distinctProjectIdentifier,
+                MakeProject(existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, distinctProjectIdentifier,
                     completionDateDictionary, startDateDictionary, projectNameDictionary,
                     projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType,
                     gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, program,
-                    ref currentCounter, ref existingProjectCounter);
+                    ref currentCounter, ref existingProjectCounter, ref skippedProjectCounter);
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
@@ -627,6 +630,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         private static void MakeProject(List<Project> existingProjects,
+                                        List<ProjectImportBlockList> projectImportBlockList,
                                         GisMetadataAttribute projectIdentifierMetadataAttribute, 
                                         string distinctGisValue, 
                                         Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary, 
@@ -641,7 +645,8 @@ namespace ProjectFirma.Web.Controllers
                                         GisUploadSourceOrganization gisUploadSourceOrganization,
                                         Program program,
                                         ref int newProjectNumberCounter,
-                                        ref int existingProjectCounter)
+                                        ref int existingProjectCounter,
+                                        ref int skippedProjectCounter)
         {
 
             var gisFeaturesIdListWithProjectIdentifier =
@@ -669,8 +674,22 @@ namespace ProjectFirma.Web.Controllers
             var projectDescription = gisUploadAttempt.GisUploadSourceOrganization.ProjectDescriptionDefaultText;
 
 
+            //Skip projects which match the import block list on ProjectName and, if provided on the block list, ProjectGisIdentifier
+            if(projectImportBlockList.Any(x => x.ProjectName == projectName && (x.ProjectGisIdentifier == null || x.ProjectGisIdentifier == distinctGisValue)))
+            {
+                skippedProjectCounter++;
+                return;
+            }
+            
             if (projectAlreadyExists)
             {
+                //Skip projects which match on the FK ProjectID
+                if (projectImportBlockList.Any(x => x.ProjectID == project.ProjectID))
+                {
+                    skippedProjectCounter++;
+                    return;
+                }
+
                 project.ProjectType = otherProjectType;
                 project.ProjectTypeID = otherProjectType.ProjectTypeID;
                 project.ProjectStageID = projectStage.ProjectStageID;

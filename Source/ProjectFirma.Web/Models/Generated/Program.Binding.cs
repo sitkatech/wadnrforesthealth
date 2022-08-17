@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.Models
             this.GisUploadSourceOrganizations = new HashSet<GisUploadSourceOrganization>();
             this.ProgramNotificationConfigurations = new HashSet<ProgramNotificationConfiguration>();
             this.ProgramPeople = new HashSet<ProgramPerson>();
+            this.ProjectImportBlockLists = new HashSet<ProjectImportBlockList>();
             this.ProjectLocations = new HashSet<ProjectLocation>();
             this.ProjectPrograms = new HashSet<ProjectProgram>();
             this.ProjectUpdatePrograms = new HashSet<ProjectUpdateProgram>();
@@ -101,7 +102,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any() || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || ProjectUpdatePrograms.Any() || Treatments.Any();
+            return GisUploadSourceOrganizations.Any() || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectImportBlockLists.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || ProjectUpdatePrograms.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -124,6 +125,11 @@ namespace ProjectFirma.Web.Models
             if(ProgramPeople.Any())
             {
                 dependentObjects.Add(typeof(ProgramPerson).Name);
+            }
+
+            if(ProjectImportBlockLists.Any())
+            {
+                dependentObjects.Add(typeof(ProjectImportBlockList).Name);
             }
 
             if(ProjectLocations.Any())
@@ -151,7 +157,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProgramNotificationConfiguration).Name, typeof(ProgramPerson).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(ProjectUpdateProgram).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProgramNotificationConfiguration).Name, typeof(ProgramPerson).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(ProjectUpdateProgram).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -187,6 +193,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in ProgramPeople.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in ProjectImportBlockLists.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -232,6 +243,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual ICollection<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
         public virtual ICollection<ProgramPerson> ProgramPeople { get; set; }
+        public virtual ICollection<ProjectImportBlockList> ProjectImportBlockLists { get; set; }
         public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }
         public virtual ICollection<ProjectProgram> ProjectPrograms { get; set; }
         public virtual ICollection<ProjectUpdateProgram> ProjectUpdatePrograms { get; set; }

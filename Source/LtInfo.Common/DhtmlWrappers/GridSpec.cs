@@ -155,6 +155,11 @@ namespace LtInfo.Common.DhtmlWrappers
             return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, dhtmlxGridColumnAlignType, false);
         }
 
+        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType, DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType, bool hiddenColumnForCsv)
+        {
+            return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, dhtmlxGridColumnAlignType, hiddenColumnForCsv);
+        }
+
         private ColumnSpec<T> Add(string columnName,
             Func<T, HtmlString> valueFunction,
             Func<T, string> cssClassFunction,

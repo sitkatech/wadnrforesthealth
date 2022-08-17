@@ -132,6 +132,7 @@
     <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.Store.ProjectImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImageUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectImageUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectImportBlockList" EntityType="ProjectFirma.Web.Models.Store.ProjectImportBlockList" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectInternalNote" EntityType="ProjectFirma.Web.Models.Store.ProjectInternalNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocation" EntityType="ProjectFirma.Web.Models.Store.ProjectLocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationStaging" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationStaging" store:Type="Tables" Schema="dbo" />
@@ -1141,6 +1142,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectImageUpdates" EntitySet="ProjectImageUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectImportBlockList_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_ProjectImportBlockList_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="ProjectImportBlockLists" EntitySet="ProjectImportBlockList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectImportBlockList_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectImportBlockList_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectImportBlockLists" EntitySet="ProjectImportBlockList" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectInternalNote_Person_CreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectInternalNote_Person_CreatePersonID_PersonID">
       <End Role="CreatePerson" EntitySet="Person" />
@@ -2894,6 +2903,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="IsKeyPhoto" Type="bit" Nullable="false" />
     <Property Name="ExcludeFromFactSheet" Type="bit" Nullable="false" />
     <Property Name="ProjectImageID" Type="int" />
+  </EntityType>
+  <EntityType Name="ProjectImportBlockList">
+    <Key>
+      <PropertyRef Name="ProjectImportBlockListID" />
+    </Key>
+    <Property Name="ProjectImportBlockListID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
+    <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
+    <Property Name="ProjectName" Type="varchar" MaxLength="140" />
+    <Property Name="ProjectID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectInternalNote">
     <Key>
@@ -6148,6 +6167,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectImageUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectImportBlockList_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="1" />
+    <End Role="ProjectImportBlockLists" Type="ProjectFirma.Web.Models.Store.ProjectImportBlockList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="ProjectImportBlockLists">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectImportBlockList_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="0..1" />
+    <End Role="ProjectImportBlockLists" Type="ProjectFirma.Web.Models.Store.ProjectImportBlockList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectImportBlockLists">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

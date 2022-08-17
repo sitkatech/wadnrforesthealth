@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,7 +13,10 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Program;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
+using Detail = ProjectFirma.Web.Views.Program.Detail;
+using DetailViewData = ProjectFirma.Web.Views.Program.DetailViewData;
 using EditViewData = ProjectFirma.Web.Views.Program.EditViewData;
 using EditViewModel = ProjectFirma.Web.Views.Program.EditViewModel;
 using Index = ProjectFirma.Web.Views.Program.Index;
@@ -100,7 +104,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult NewProgram(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;
-            var viewModel = new Views.Program.EditViewModel { IsActive = true, OrganizationID = organization.OrganizationID};
+            var viewModel = new Views.Program.EditViewModel { IsActive = true, OrganizationID = organization.OrganizationID };
             return ViewEdit(viewModel, null, organization);
         }
 
@@ -115,7 +119,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, null, organization);
             }
-            
+
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
@@ -136,7 +140,7 @@ namespace ProjectFirma.Web.Controllers
         [ProgramManageFeature]
         public PartialViewResult New()
         {
-            var viewModel = new Views.Program.EditViewModel { IsActive = true};
+            var viewModel = new Views.Program.EditViewModel { IsActive = true };
             return ViewEdit(viewModel, null, null);
         }
 
@@ -271,7 +275,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel)
         {
             var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
-            
+
             var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
 
             var viewData = new EditProgramPeopleViewData(people);
@@ -383,5 +387,79 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        [ProgramManageFeature]
+        public GridJsonNetJObjectResult<Project> ProgramProjectListGridJson(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var programProjectDictionary = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Include(x => x.Program).ToList()
+                .GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, x => x.ToList().Select(y => y.Program).ToList());
+
+            var gridSpec = new ProjectListGridSpec(CurrentPerson, program, programProjectDictionary);
+            var allProjectIDsUnderProgram = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Where(p => p.ProgramID == program.ProgramID);
+            var projects = HttpRequestStorage.DatabaseEntities.Projects
+                .Join(allProjectIDsUnderProgram,
+                    p => p.ProjectID,
+                    ap => ap.ProjectID,
+                    (p, ap) => p);
+
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [ProgramManageFeature]
+        public GridJsonNetJObjectResult<ProjectImportBlockList> ProgramProjectBlockListGridJson(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var projectImportBlockList = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists
+                .Where(x => x.ProgramID == program.ProgramID).ToList();
+
+            var gridSpec = new ProjectBlockListGridSpec(CurrentPerson, program);
+
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectImportBlockList>(projectImportBlockList, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult NewBlockListEntry(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var viewModel = new EditProjectImportBlockListViewModel()
+            {
+                ProgramID = program.ProgramID,
+            };
+            var viewData = new EditProjectImportBlockListViewData(CurrentPerson);
+            return RazorPartialView<EditProjectImportBlockList, EditProjectImportBlockListViewData, EditProjectImportBlockListViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewBlockListEntry(ProgramPrimaryKey programPrimaryKey, EditProjectImportBlockListViewModel viewModel)
+        {
+            if (string.IsNullOrEmpty(viewModel.ProjectName) && string.IsNullOrEmpty(viewModel.ProjectGisIdentifier))
+            {
+                var validationMessage = "You must provide Project Name and/or Project GIS Identifier.";
+                this.ModelState.AddModelError("Required", validationMessage);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return NewBlockListEntry(programPrimaryKey);
+            }
+
+            var program = programPrimaryKey.EntityObject;
+            var blockListEntry = new ProjectImportBlockList(viewModel.ProgramID)
+            {
+                ProjectImportBlockListID = viewModel.ProjectImportBlockListID,
+                ProjectID = viewModel.ProjectID,
+                ProjectName = viewModel.ProjectName,
+                ProjectGisIdentifier = viewModel.ProjectGisIdentifier
+            };
+            HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(blockListEntry);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            return new ModalDialogFormJsonResult();
+        }
     }
 }
