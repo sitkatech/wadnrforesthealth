@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.Program
 
             Add("Notes",
                 x => (!string.IsNullOrEmpty(x.Notes)) ? x.Notes : string.Empty,
-                500, DhtmlxGridColumnFilterType.Html);
+                500, DhtmlxGridColumnFilterType.Text);
         }
     }
 }
