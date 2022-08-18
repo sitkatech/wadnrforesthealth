@@ -428,8 +428,46 @@ namespace ProjectFirma.Web.Controllers
             {
                 ProgramID = program.ProgramID,
             };
-            var viewData = new EditProjectImportBlockListViewData(CurrentPerson);
+            var viewData = new EditProjectImportBlockListViewData(CurrentPerson, null);
             return RazorPartialView<EditProjectImportBlockList, EditProjectImportBlockListViewData, EditProjectImportBlockListViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult NewBlockListEntryFromProject(ProgramPrimaryKey programPrimaryKey, ProjectPrimaryKey projectPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new EditProjectImportBlockListViewModel()
+            {
+                ProgramID = program.ProgramID,
+                ProjectID = project.ProjectID,
+                ProjectName = project.ProjectName,
+                ProjectGisIdentifier = project.ProjectGisIdentifier
+            };
+            var viewData = new EditProjectImportBlockListViewData(CurrentPerson, project);
+            return RazorPartialView<EditProjectImportBlockList, EditProjectImportBlockListViewData, EditProjectImportBlockListViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewBlockListEntryFromProject(ProgramPrimaryKey programPrimaryKey, ProjectPrimaryKey projectPrimaryKey, EditProjectImportBlockListViewModel viewModel)
+        {
+            if (string.IsNullOrEmpty(viewModel.ProjectName) && string.IsNullOrEmpty(viewModel.ProjectGisIdentifier))
+            {
+                var validationMessage = "You must provide Project Name and/or Project GIS Identifier.";
+                this.ModelState.AddModelError("Required", validationMessage);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return NewBlockListEntryFromProject(programPrimaryKey, projectPrimaryKey);
+            }
+
+            SaveBlockListEntry(viewModel);
+
+            return new ModalDialogFormJsonResult();
         }
 
         [HttpPost]
@@ -448,18 +486,23 @@ namespace ProjectFirma.Web.Controllers
                 return NewBlockListEntry(programPrimaryKey);
             }
 
-            var program = programPrimaryKey.EntityObject;
+            SaveBlockListEntry(viewModel);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private void SaveBlockListEntry(EditProjectImportBlockListViewModel viewModel)
+        {
             var blockListEntry = new ProjectImportBlockList(viewModel.ProgramID)
             {
                 ProjectImportBlockListID = viewModel.ProjectImportBlockListID,
                 ProjectID = viewModel.ProjectID,
                 ProjectName = viewModel.ProjectName,
-                ProjectGisIdentifier = viewModel.ProjectGisIdentifier
+                ProjectGisIdentifier = viewModel.ProjectGisIdentifier,
+                Notes = viewModel.Notes,
             };
             HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(blockListEntry);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-            return new ModalDialogFormJsonResult();
         }
     }
 }

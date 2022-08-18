@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[ProjectImportBlockList](
 	[ProjectGisIdentifier] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectID] [int] NULL,
+	[Notes] [varchar](500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectImportBlockList_ProjectImportBlockListID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectImportBlockListID] ASC

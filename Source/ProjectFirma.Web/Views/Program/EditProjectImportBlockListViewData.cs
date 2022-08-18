@@ -8,9 +8,11 @@ namespace ProjectFirma.Web.Views.Program
 {
     public class EditProjectImportBlockListViewData : FirmaViewData
     {
-        public EditProjectImportBlockListViewData(Person currentPerson) : base(currentPerson)
-        {
+        public bool LockIdentifierFields { get; set; }
 
+        public EditProjectImportBlockListViewData(Person currentPerson, Models.Project project) : base(currentPerson)
+        {
+            LockIdentifierFields = (project != null);
         }
     }
 }

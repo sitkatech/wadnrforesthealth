@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Views.Program
                 var contentUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewBlockListEntry(currentProgram.PrimaryKey));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new Project Import Block List entry");
                 
-
                 Add(string.Empty, x => ModalDialogFormHelper.ModalDialogFormLink(null, "Remove from Block List",
                     SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
                         c.RemoveBlockListEntry(x.PrimaryKey)),
@@ -41,7 +40,11 @@ namespace ProjectFirma.Web.Views.Program
 
             Add(Models.FieldDefinition.ProjectIdentifier.ToGridHeaderString(),
                 x => (x.Project != null) ? x.Project.ProjectGisIdentifier : x.ProjectGisIdentifier,
-                300, DhtmlxGridColumnFilterType.Html);
+                200, DhtmlxGridColumnFilterType.Html);
+
+            Add("Notes",
+                x => (!string.IsNullOrEmpty(x.Notes)) ? x.Notes : string.Empty,
+                500, DhtmlxGridColumnFilterType.Html);
         }
     }
 }

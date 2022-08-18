@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Views.Program
             if (hasProgramManagePermissions)
             {
                 Add(string.Empty, x => x.ProjectImportBlockLists
-                        .Any(b => b.ProgramID == currentProgram.ProgramID) ? RemoveFromBlockListModalLink(x) : AddToBlockListModalLink(x),
+                        .Any(b => b.ProgramID == currentProgram.ProgramID) ? RemoveFromBlockListModalLink(x) : AddToBlockListModalLink(currentProgram, x),
                     125, DhtmlxGridColumnFilterType.None, true);
             }
 
@@ -62,13 +62,13 @@ namespace ProjectFirma.Web.Views.Program
                 "Allow project to be updated by the imports of its programs.");
         }
 
-        private static HtmlString AddToBlockListModalLink(Models.Project project)
+        private static HtmlString AddToBlockListModalLink(Models.Program program, Models.Project project)
         {
+            var contentUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewBlockListEntryFromProject(program.PrimaryKey, project.PrimaryKey));
             return ModalDialogFormHelper.ModalDialogFormLink(null, "Add to Block List",
-                SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
-                    c.BlockListProject(project)), 
+                contentUrl, 
                 $"Add '{project.DisplayName}' to Import Block List", 950,
-                "btnAddImportBlockList", "Yes", "Cancel", null, null, null, null,
+                "btnAddImportBlockList", "Save", "Cancel", null, null, null, null,
                 "Block project from being updated by the imports of its programs.");
         }
     }

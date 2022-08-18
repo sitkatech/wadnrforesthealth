@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Controllers
                     ProgramID = projectProgram.ProgramID,
                     ProjectGisIdentifier = project.ProjectGisIdentifier,
                     ProjectName = project.ProjectName,
-                    ProjectID = project.ProjectID,
+                    ProjectID = project.ProjectID
                 };
 
                 HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(projectImportBlockList);

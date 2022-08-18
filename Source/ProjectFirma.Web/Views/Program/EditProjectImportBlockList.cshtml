@@ -33,22 +33,51 @@
     @Html.ValidationSummary()
 
     <div class="form-group">
-        <div class="col-xs-12">
-            <p>Preemptively prevent projects from being added when this program is imported by providing either/both of the two identifying values below.</p>
+        <div class="col-xs-2">
+        </div>
+        <div class="col-xs-8">
+            <p>Prevent projects from being added or updated when their associated program is imported by providing the Project Name or Project GIS Identifier, then providing a remark to explain the exclusion.</p>
+        </div>
+        <div class="col-xs-2">
         </div>
     </div>
+
 
     <div class="form-group">
         <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectName)</div>
         <div class="col-xs-8">
-            @Html.TextBoxFor(m => m.ProjectName)
+            @if (ViewDataTyped.LockIdentifierFields)
+            {
+                @Html.TextBoxFor(m => m.ProjectName, new { @readonly = "readonly" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.ProjectName)
+            }
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectGisIdentifier)</div>
         <div class="col-xs-8">
-            @Html.TextBoxFor(m => m.ProjectGisIdentifier)
+            @if (ViewDataTyped.LockIdentifierFields)
+            {
+                @Html.TextBoxFor(m => m.ProjectGisIdentifier, new { @readonly = "readonly" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.ProjectGisIdentifier)
+            }
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.Notes)
+        </div>
+        <div class="col-xs-8">
+            @Html.TextAreaFor(m => m.Notes, 3, 40, new { @maxlength = 500 })
         </div>
     </div>
 
