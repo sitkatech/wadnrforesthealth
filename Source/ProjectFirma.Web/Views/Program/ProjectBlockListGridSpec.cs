@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Program
 
             Add(Models.FieldDefinition.ProjectIdentifier.ToGridHeaderString(),
                 x => (x.Project != null) ? x.Project.ProjectGisIdentifier : x.ProjectGisIdentifier,
-                200, DhtmlxGridColumnFilterType.Html);
+                200, DhtmlxGridColumnFilterType.Text);
 
             Add("Notes",
                 x => (!string.IsNullOrEmpty(x.Notes)) ? x.Notes : string.Empty,
