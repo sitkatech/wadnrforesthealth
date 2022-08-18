@@ -3253,6 +3253,7 @@
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectName" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectID" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Program_ProgramID" FromRole="ProjectImportBlockLists" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Project_ProjectID" FromRole="ProjectImportBlockLists" ToRole="Project" />
   </EntityType>

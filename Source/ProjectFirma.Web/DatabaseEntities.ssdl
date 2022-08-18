@@ -2913,6 +2913,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectName" Type="varchar" MaxLength="140" />
     <Property Name="ProjectID" Type="int" />
+    <Property Name="Notes" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="ProjectInternalNote">
     <Key>
