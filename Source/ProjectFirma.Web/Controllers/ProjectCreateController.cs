@@ -1122,6 +1122,14 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteProject(project, viewModel);
             }
+
+            //Unlink ProjectImportBlockLists before delete
+            foreach (var blockListEntry in project.ProjectImportBlockLists)
+            {
+                blockListEntry.ProjectID = null;
+            }
+            project.ProjectImportBlockLists.Clear();
+
             var message = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
             project.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);

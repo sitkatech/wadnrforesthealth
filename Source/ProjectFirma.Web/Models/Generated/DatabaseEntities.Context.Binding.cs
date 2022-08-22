@@ -159,6 +159,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectImageUpdate> ProjectImageUpdates { get; set; }
+        public virtual DbSet<ProjectImportBlockList> ProjectImportBlockLists { get; set; }
         public virtual DbSet<ProjectInternalNote> ProjectInternalNotes { get; set; }
         public virtual DbSet<ProjectLocation> ProjectLocations { get; set; }
         public virtual DbSet<ProjectLocationStaging> ProjectLocationStagings { get; set; }
@@ -886,6 +887,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectImageUpdate":
                     return ProjectImageUpdates.GetProjectImageUpdate(primaryKey);
+
+                case "ProjectImportBlockList":
+                    return ProjectImportBlockLists.GetProjectImportBlockList(primaryKey);
 
                 case "ProjectInternalNote":
                     return ProjectInternalNotes.GetProjectInternalNote(primaryKey);

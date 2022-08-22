@@ -45,6 +45,14 @@ namespace ProjectFirma.Web.Views.Program
         public string NotificationsGridName { get; }
         public string NotificationsGridDataUrl { get; }
 
+        public ProjectListGridSpec ProjectsGridSpec { get; }
+        public string ProjectsGridName { get; }
+        public string ProjectsGridDataUrl { get; }
+
+        public ProjectBlockListGridSpec ProjectsBlockedGridSpec { get; }
+        public string ProjectsBlockedGridName { get; }
+        public string ProjectsBlockedGridDataUrl { get; }
+
         public DetailViewData(Person currentPerson,
                               Models.Program program)
                               : base(currentPerson, program)
@@ -64,6 +72,13 @@ namespace ProjectFirma.Web.Views.Program
             NotificationsGridName = "programNotificationsGrid";
             NotificationsGridDataUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(tc => tc.ProgramNotificationGridJsonData(program));
 
+            ProjectsGridSpec = new ProjectListGridSpec(currentPerson, program, new Dictionary<int, List<Models.Program>>());
+            ProjectsGridName = "projectsGrid";
+            ProjectsGridDataUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.ProgramProjectListGridJson(program));
+
+            ProjectsBlockedGridSpec = new ProjectBlockListGridSpec(currentPerson, program);
+            ProjectsBlockedGridName = "projectsBlockedGrid";
+            ProjectsBlockedGridDataUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.ProgramProjectBlockListGridJson(program));
         }
         private string GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition fieldDefinition)
         {

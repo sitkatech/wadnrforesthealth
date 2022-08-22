@@ -75,6 +75,19 @@
 
 @section RightOfPageTitle
 {
+
+    @if (ViewDataTyped.UserHasProjectAdminPermissions)
+    {
+        if (!ViewDataTyped.ExistsInImportBlockList)
+        {
+            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle red").ToString() + " Add to Block List", ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
+        }
+        else
+        {
+            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-exclamation-sign").ToString() + " Remove from Block List", ViewDataTyped.ProjectImportRemoveBlockListUrl, string.Format("Remove {0} from Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-warning" }, null, null)
+        }
+    }
+
     @if (ViewDataTyped.CanLaunchProjectOrProposalWizard)
     {
         <a class="btn btn-firma" href="@ViewDataTyped.ProjectWizardUrl" title="@ViewDataTyped.ProjectUpdateButtonText">@DhtmlxGridHtmlHelpers.EditIconBootstrap @ViewDataTyped.ProjectUpdateButtonText</a>
@@ -300,7 +313,8 @@
                     </div>
                 </div>
 
-                @if(new ProjectActivitiesSectionViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson)) { 
+                @if (new ProjectActivitiesSectionViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+                {
                     <h2 class="sectionHeader">Activities</h2>
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
@@ -317,13 +331,15 @@
 
                             <br />
 
-                            <div>
-                                <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
-                            </div>
-                        
-                            <div class="panel-body" id="treatmentGridNonFlattened">
-                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                            </div>
+                            @if (ViewDataTyped.Project.Treatments.Any())
+                            {
+                                <div>
+                                    <input id="displayFlattenedByTreatmentArea" type="checkbox" /> <span> Display Flattened By Treatment Area</span>
+                                </div>
+
+                                <div class="panel-body" id="treatmentGridNonFlattened">
+                                    @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                </div>
 
                             <div class="panel-body" id="treatmentGridFlattened">
                                 @Html.DhtmlxGrid(ViewDataTyped.TreatmentGroupGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
@@ -492,7 +508,7 @@
 
             jQuery('#displayFlattenedByTreatmentArea').prop('checked', '');
 
-            jQuery('#displayFlattenedByTreatmentArea').change(function() {
+            jQuery('#displayFlattenedByTreatmentArea').change(function () {
                 if (this.checked) {
                     jQuery("#treatmentGridNonFlattened").hide();
                     jQuery("#treatmentGridFlattened").show();

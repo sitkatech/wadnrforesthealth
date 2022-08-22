@@ -1605,6 +1605,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectImportBlockList">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectImportBlockList">
+        <MappingFragment StoreEntitySet="ProjectImportBlockList">
+          <ScalarProperty Name="ProjectImportBlockListID" ColumnName="ProjectImportBlockListID" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProjectInternalNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectInternalNote">
         <MappingFragment StoreEntitySet="ProjectInternalNote">

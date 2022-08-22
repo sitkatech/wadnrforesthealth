@@ -40,11 +40,12 @@ into #tempTreatmentsForDelete
 from dbo.Project p
 join dbo.Treatment t on t.ProjectID = p.ProjectID
 join dbo.ProjectLocation pl on t.ProjectLocationID = pl.ProjectLocationID
-where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
-                        join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
-                        where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
-               and t.ProgramID = @programID
-
+where  p.ProjectGisIdentifier in (
+	select distinct gfma.GisFeatureMetadataAttributeValue 
+	from dbo.GisFeature gf 
+    join dbo.GisFeatureMetadataAttribute gfma on gfma.GisFeatureID = gf.GisFeatureID 
+    where gfma.GisMetadataAttributeID = @projectIdentifierGisMetadataAttributeID and gf.GisUploadAttemptID = @piGisUploadAttemptID)
+		and t.ProgramID = @programID
 
 delete from dbo.Treatment where TreatmentID in (select TreatmentID from #tempTreatmentsForDelete)
 
@@ -190,9 +191,6 @@ where  p.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttribu
                and pp.ProgramID = @programID
 
 
-
-
-
 --ProjectLocationTypeID 2 is TreatmentArea
 insert into dbo.ProjectLocation(ProjectLocationGeometry, TemporaryTreatmentCacheID, ProjectID, ProjectLocationTypeID, ProjectLocationName)
 select 
@@ -200,7 +198,7 @@ select
 	, x.TemporaryTreatmentCacheID
 	, x.ProjectID
 	, 2 as ProjectLocationTypeID
-	, CONCAT('Imported Treatment Area ', x.ProjectID, ' ', x.TemporaryTreatmentCacheID) as ProjectLocationName 
+	, CONCAT('Imported Treatment Area ', x.ProjectID, ' ', x.TemporaryTreatmentCacheID, @piGisUploadAttemptID) as ProjectLocationName 
 from #tempTreatments x
 
 
@@ -716,10 +714,7 @@ begin
 end
 
 
-
-
-
-update dbo.TreatmentArea
+update dbo.ProjectLocation
 set TemporaryTreatmentCacheID = null
 
 
