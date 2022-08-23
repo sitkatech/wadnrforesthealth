@@ -70,16 +70,16 @@
         var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.GridDataUrlTemplate.ToJS()));
         var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
 
-        
+        var myGrid = Sitka.@ViewDataTyped.GridName;
+
         sitkaMap.map.on("overlayadd", function (e) {
 
             var layer = Object.values(e.layer._layers)[0];
             var findYourForesterRoleID = layer.ContextObjectId;
 
-            var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
             window.history.pushState({}, '', pageUrlTemplate.ParameterReplace(findYourForesterRoleID));
-            var myGrid = Sitka.@ViewDataTyped.GridName;
 
+            var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
             myGrid.grid.clearAndLoad(dataUrl, function(){}, 'json');
 
         });
