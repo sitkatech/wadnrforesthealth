@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using LtInfo.Common.Models;
 
-namespace ProjectFirma.Web.Views.Program
+namespace ProjectFirma.Web.Views.Shared.ProjectImportBlockList
 {
     public class EditProjectImportBlockListViewModel
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ProjectFirma.Web.Views.Program
+namespace ProjectFirma.Web.Views.Shared.ProjectImportBlockList
 {
     public class ProjectImportBlockListViewModel
     {

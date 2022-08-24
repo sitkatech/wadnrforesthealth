@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Program
+namespace ProjectFirma.Web.Views.Shared.ProjectImportBlockList
 {
     public class EditProjectImportBlockListViewData : FirmaViewData
     {

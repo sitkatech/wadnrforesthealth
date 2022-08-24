@@ -175,7 +175,7 @@ namespace ProjectFirma.Web.Views.Project
 
             ExistsInImportBlockList = project.ProjectImportBlockLists.Any();
             ProjectImportBlockListUrl =
-                SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
+                SitkaRoute<ProjectController>.BuildUrlFromExpression(c =>
                     c.BlockListProject(project.ProjectID));
             ProjectImportRemoveBlockListUrl =
                 SitkaRoute<ProjectImportBlockListController>.BuildUrlFromExpression(c =>
