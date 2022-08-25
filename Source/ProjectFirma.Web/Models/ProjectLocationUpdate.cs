@@ -23,6 +23,7 @@ using System.Data.Entity.Spatial;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
+using LtInfo.Common.Models;
 using Microsoft.SqlServer.Types;
 
 namespace ProjectFirma.Web.Models
@@ -93,7 +94,7 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             var projectLocationsFromProjectUpdate = projectUpdateBatch.ProjectLocationUpdates.Select(
-                plu => new ProjectLocation(project, (plu.ProjectLocationID ?? -1), plu.ProjectLocationUpdateName, plu.ProjectLocationUpdateGeometry, plu.ProjectLocationTypeID, plu.ProjectLocationUpdateNotes)
+                plu => new ProjectLocation(project, (plu.ProjectLocationID ?? ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue()), plu.ProjectLocationUpdateName, plu.ProjectLocationUpdateGeometry, plu.ProjectLocationTypeID, plu.ProjectLocationUpdateNotes)
             ).ToList();
             project.ProjectLocations.Merge(
                 projectLocationsFromProjectUpdate,

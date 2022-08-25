@@ -4,7 +4,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class Treatment : IAuditableEntity, ITreatment
     {
-        public Treatment(int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis, int? projectLocationID) : this()
+        public Treatment(int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis, ProjectLocation projectLocation) : this()
         {
             ProjectID = projectID;
             GrantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItemID;
@@ -21,7 +21,7 @@ namespace ProjectFirma.Web.Models
             TreatmentDetailedActivityTypeImportedText = treatmentDetailedActivityTypeImportedText;
             ProgramID = programID;
             ImportedFromGis = importedFromGis;
-            ProjectLocationID = projectLocationID;
+            ProjectLocation = projectLocation;
         }
 
         public string AuditDescriptionString =>  $"TreatmentID:{TreatmentID} -  ProjectLocationID:{ProjectLocationID}  - TreatmentTypeID:{TreatmentTypeID} - :TreatmentStartDate: {this.TreatmentStartDate} - TreatmentEndDate: {TreatmentEndDate}";

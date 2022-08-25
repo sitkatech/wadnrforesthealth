@@ -73,9 +73,11 @@ namespace ProjectFirma.Web.Models
                 // Completely rebuild the list
                 projectUpdateBatch.TreatmentUpdates.ToList().ForEach(tu =>
                 {
-                    var projectLocationID = HttpRequestStorage.DatabaseEntities.ProjectLocations
-                        .SingleOrDefault(x => x.ProjectID == project.ProjectID && x.ProjectLocationID == tu.ProjectLocationUpdate.ProjectLocationID)
-                        ?.ProjectLocationID;
+                    var projectLocation = project.ProjectLocations
+                        .SingleOrDefault(x =>
+                            (tu.ProjectLocationUpdate.ProjectLocationID.HasValue && x.ProjectLocationID == tu.ProjectLocationUpdate.ProjectLocationID) ||
+                            (!tu.ProjectLocationUpdate.ProjectLocationID.HasValue && x.ProjectLocationName == tu.ProjectLocationUpdate.ProjectLocationUpdateName)
+                        );
                     var treatment = new Treatment(
                         project.ProjectID,
                         tu.GrantAllocationAwardLandownerCostShareLineItemID,
@@ -92,7 +94,7 @@ namespace ProjectFirma.Web.Models
                         tu.TreatmentDetailedActivityTypeImportedText,
                         tu.ProgramID,
                         tu.ImportedFromGis,
-                        projectLocationID
+                        projectLocation
                     );
                     allTreatments.Add(treatment);
                 });
