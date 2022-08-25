@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public bool IsNotesUpdated { get; }
         public bool IsOrganizationsUpdated { get; }
         public bool IsContactsUpdated { get; }
+        public bool IsTreatmentsUpdated { get; }
 
         public UpdateStatus(bool isBasicsUpdated,
             bool isPerformanceMeasuresUpdated,
@@ -52,7 +53,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             bool isNotesUpdated,
             bool isExpectedFundingUpdated,
             bool isOrganizationsUpdated,
-            bool isContactsUpdated)
+            bool isContactsUpdated,
+            bool isTreatmentsUpdated
+            )
         {
             IsBasicsUpdated = isBasicsUpdated;
             IsPerformanceMeasuresUpdated = isPerformanceMeasuresUpdated;
@@ -69,6 +72,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             IsExpectedFundingUpdated = isExpectedFundingUpdated;
             IsOrganizationsUpdated = isOrganizationsUpdated;
             IsContactsUpdated = isContactsUpdated;
+            IsTreatmentsUpdated = isTreatmentsUpdated;
         }
     }
 }

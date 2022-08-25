@@ -287,4 +287,23 @@ namespace ProjectFirma.Web.Models
             return updateStatus.IsExpectedFundingUpdated;
         }
     }
+
+    public partial class ProjectUpdateSectionTreatments
+    {
+        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+        {
+            return true;
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Treatments(project)) : null;
+        }
+
+        public override bool SectionIsUpdated(UpdateStatus updateStatus)
+        {
+            return false;  // MCS the ability to diff treatments will be covered in a separate story
+        }
+    }
 }

@@ -23,29 +23,35 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using ProjectFirma.Web.Views.Shared.ProjectPerson
-@inherits ProjectFirma.Web.Views.ProjectCreate.Treatments
+@using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Models
+@inherits ProjectFirma.Web.Views.ProjectUpdate.Treatments
 
 @section JavascriptAndStylesContent
 {
+
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+
 }
 <div class="row">
     <div class="col-xs-12">
         <div class="panel-body" id="treatmentGridNonFlattened">
-            @Html.DhtmlxGrid(ViewDataTyped.TreatmentGridSpec, ViewDataTyped.TreatmentGrid, ViewDataTyped.TreatmentGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-        </div>
-
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <hr />
-        <div class="pull-right">
-            <a class="btn btn-xs btn-firma" href="@ViewDataTyped.ProposalTreatmentsUrl">Save</a>
-            <a class="btn btn-xs btn-firma" href="@ViewDataTyped.ProposalClassificationsUrl">Save &amp; Continue</a>
+            @Html.DhtmlxGrid(ViewDataTyped.TreatmentUpdateGridSpec, ViewDataTyped.TreatmentUpdateGrid, ViewDataTyped.TreatmentUpdateGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
         </div>
     </div>
 </div>
 
+@if (@ViewDataTyped.IsEditable)
+{
+    <hr />
+    <div class="row">
+        <div class="col-sm-5">
+            @ModalDialogFormHelper.ModalDialogFormLink("revert-button", "Revert Current Page", ViewDataTyped.RefreshUrl, "Refresh this section", 500, "Continue", "Continue", "Cancel", new List<string> { "btn btn-xs btn-firma" }, null, null, null, "Undo all changes on this page")
+        </div>
+        <div class="col-sm-7 text-right">
+            <a href="@ViewDataTyped.ContinueUrl" title="Save changes and continue to next page" class="btn btn-xs btn-firma">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></a>
+        </div>
+    </div>
+}
 
 

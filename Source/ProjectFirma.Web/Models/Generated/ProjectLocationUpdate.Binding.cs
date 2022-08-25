@@ -25,13 +25,13 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectLocationUpdate()
         {
-
+            this.TreatmentUpdates = new HashSet<TreatmentUpdate>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocationUpdate(int projectLocationUpdateID, int projectUpdateBatchID, DbGeometry projectLocationUpdateGeometry, string projectLocationUpdateNotes, int projectLocationTypeID, string projectLocationUpdateName, int? arcGisObjectID, string arcGisGlobalID) : this()
+        public ProjectLocationUpdate(int projectLocationUpdateID, int projectUpdateBatchID, DbGeometry projectLocationUpdateGeometry, string projectLocationUpdateNotes, int projectLocationTypeID, string projectLocationUpdateName, int? arcGisObjectID, string arcGisGlobalID, int? projectLocationID) : this()
         {
             this.ProjectLocationUpdateID = projectLocationUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -41,6 +41,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectLocationUpdateName = projectLocationUpdateName;
             this.ArcGisObjectID = arcGisObjectID;
             this.ArcGisGlobalID = arcGisGlobalID;
+            this.ProjectLocationID = projectLocationID;
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return TreatmentUpdates.Any();
         }
 
         /// <summary>
@@ -96,13 +97,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(TreatmentUpdates.Any())
+            {
+                dependentObjects.Add(typeof(TreatmentUpdate).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocationUpdate).Name, typeof(TreatmentUpdate).Name};
 
 
         /// <summary>
@@ -118,8 +123,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in TreatmentUpdates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -131,11 +147,14 @@ namespace ProjectFirma.Web.Models
         public string ProjectLocationUpdateName { get; set; }
         public int? ArcGisObjectID { get; set; }
         public string ArcGisGlobalID { get; set; }
+        public int? ProjectLocationID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationUpdateID; } set { ProjectLocationUpdateID = value; } }
 
+        public virtual ICollection<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public ProjectLocationType ProjectLocationType { get { return ProjectLocationType.AllLookupDictionary[ProjectLocationTypeID]; } }
+        public virtual ProjectLocation ProjectLocation { get; set; }
 
         public static class FieldLengths
         {

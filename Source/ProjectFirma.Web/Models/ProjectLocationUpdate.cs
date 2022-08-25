@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
 using Microsoft.SqlServer.Types;
 
@@ -30,6 +31,14 @@ namespace ProjectFirma.Web.Models
     {
         public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, string projectLocationNotes, ProjectLocationType projectLocationType, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID) : this(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationName)
         {
+            ProjectLocationUpdateNotes = projectLocationNotes;
+            ArcGisObjectID = arcGisObjectID;
+            ArcGisGlobalID = arcGisGlobalID;
+        }
+
+        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, int projectLocationID, DbGeometry projectLocationGeometry, string projectLocationNotes, ProjectLocationType projectLocationType, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID) : this(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationName)
+        {
+            ProjectLocationID = projectLocationID;
             ProjectLocationUpdateNotes = projectLocationNotes;
             ArcGisObjectID = arcGisObjectID;
             ArcGisGlobalID = arcGisGlobalID;
@@ -70,7 +79,8 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectLocationUpdates = project.ProjectLocations.Select(
-                                                                      projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, 
+                                                                      projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch,
+                                                                                                    projectLocationToClone.ProjectLocationID,
                                                                                                     projectLocationToClone.ProjectLocationGeometry, 
                                                                                                     projectLocationToClone.ProjectLocationNotes, 
                                                                                                     projectLocationToClone.ProjectLocationType, 
@@ -82,22 +92,21 @@ namespace ProjectFirma.Web.Models
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectLocation> allProjectLocations)
         {
             var project = projectUpdateBatch.Project;
-            var currentProjectLocations = project.ProjectLocations.ToList();
-            currentProjectLocations.ForEach(projectLocation =>
-            {
-                allProjectLocations.Remove(projectLocation);
-            });
-            currentProjectLocations.Clear();
-
-            if (projectUpdateBatch.ProjectLocationUpdates.Any())
-            {
-                // Completely rebuild the list
-                projectUpdateBatch.ProjectLocationUpdates.ToList().ForEach(x =>
+            var projectLocationsFromProjectUpdate = projectUpdateBatch.ProjectLocationUpdates.Select(
+                plu => new ProjectLocation(project, (plu.ProjectLocationID ?? -1), plu.ProjectLocationUpdateName, plu.ProjectLocationUpdateGeometry, plu.ProjectLocationTypeID, plu.ProjectLocationUpdateNotes)
+            ).ToList();
+            project.ProjectLocations.Merge(
+                projectLocationsFromProjectUpdate,
+                allProjectLocations,
+                (x, y) => x.ProjectID == y.ProjectID && x.ProjectLocationID == y.ProjectLocationID,
+                (x, y) =>
                 {
-                    var projectLocation = new ProjectLocation(project, x.ProjectLocationUpdateName, x.ProjectLocationUpdateGeometry, x.ProjectLocationType, x.ProjectLocationUpdateNotes);
-                    allProjectLocations.Add(projectLocation);
-                });
-            }
+                    x.ProjectLocationName = y.ProjectLocationName;
+                    x.ProjectLocationGeometry = y.ProjectLocationGeometry;
+                    x.ProjectLocationTypeID = y.ProjectLocationTypeID;
+                    x.ProjectLocationNotes = y.ProjectLocationNotes;
+                }
+            );
         }
     }
 }

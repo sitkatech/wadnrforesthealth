@@ -44,6 +44,16 @@ namespace ProjectFirma.Web.Models
             ProjectID = project.PrimaryKey;
         }
 
+        public ProjectLocation(Project project, int projectLocationID, string projectlocationName, DbGeometry projectLocationGeometry, int projectLocationTypeID, string projectLocationNotes)
+        {
+            ProjectLocationID = projectLocationID;
+            ProjectLocationNotes = projectLocationNotes;
+            ProjectLocationName = projectlocationName;
+            ProjectLocationGeometry = projectLocationGeometry;
+            ProjectLocationTypeID = projectLocationTypeID;
+            ProjectID = project.PrimaryKey;
+        }
+
         public string AuditDescriptionString
         {
             get

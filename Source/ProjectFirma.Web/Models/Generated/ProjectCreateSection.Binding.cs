@@ -261,6 +261,6 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectCreateSectionTreatments : ProjectCreateSection
     {
         private ProjectCreateSectionTreatments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionTreatments Instance = new ProjectCreateSectionTreatments(20, @"Treatments", @"Treatments", 22, true, 5);
+        public static readonly ProjectCreateSectionTreatments Instance = new ProjectCreateSectionTreatments(20, @"Treatments", @"Treatments", 90, false, 5);
     }
 }

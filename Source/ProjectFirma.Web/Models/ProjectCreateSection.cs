@@ -294,10 +294,6 @@ namespace ProjectFirma.Web.Models
             {
                 return false;
             }
-
-            //todo: check for section completeness
-            //var validationResults = new TreatmentsViewModel(project, null).GetValidationResults().ToList();
-            //return !validationResults.Any();
             return true;
         }
 
