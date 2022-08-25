@@ -47,6 +47,7 @@ using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
+using ProjectFirma.Web.Views.Shared.ProjectImportBlockList;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
@@ -991,6 +992,60 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         }
 
         #endregion
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult BlockListProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+
+            var viewModel = new EditProjectImportBlockListViewModel()
+            {
+                ProgramID = -1,
+                ProjectID = project.ProjectID,
+                ProjectGisIdentifier = project.ProjectGisIdentifier,
+                ProjectName = project.ProjectName
+            };
+            var viewData = new EditProjectImportBlockListViewData(CurrentPerson, project);
+            return RazorPartialView<EditProjectImportBlockList, EditProjectImportBlockListViewData, EditProjectImportBlockListViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult BlockListProject(ProjectPrimaryKey projectPrimaryKey, EditProjectImportBlockListViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+
+            if (string.IsNullOrEmpty(viewModel.ProjectName) && string.IsNullOrEmpty(viewModel.ProjectGisIdentifier))
+            {
+                var validationMessage = "You must provide Project Name and/or Project GIS Identifier.";
+                this.ModelState.AddModelError("Required", validationMessage);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BlockListProject(project);
+            }
+
+            foreach (var projectProgram in project.ProjectPrograms)
+            {
+                var projectImportBlockList = new ProjectImportBlockList(projectProgram.Program)
+                {
+                    ProgramID = projectProgram.ProgramID,
+                    ProjectGisIdentifier = viewModel.ProjectGisIdentifier,
+                    ProjectName = viewModel.ProjectName,
+                    ProjectID = viewModel.ProjectID,
+                    Notes = viewModel.Notes
+                };
+
+                HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(projectImportBlockList);
+            }
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            return new ModalDialogFormJsonResult();
+        }
 
     }
 }
