@@ -31,14 +31,17 @@ namespace ProjectFirma.Web.Views.FindYourForester
 {
     public class ManageFindYourForesterGridSpec : GridSpec<ForesterWorkUnit>
     {
+        public const string ForesterWorkUnitIDColumnName = "ForesterWorkUnitID";
+
         public ManageFindYourForesterGridSpec(Person currentPerson)
         {
-
+            DisableSmartRendering = true;
             ObjectNameSingular = "Forester Work Unit";
             ObjectNamePlural = "Forester Work Units";
+            
 
             AddMasterCheckBoxColumn();
-            Add("ForesterWorkUnitID", x => x.ForesterWorkUnitID, 0);
+            Add(ForesterWorkUnitIDColumnName, x => x.ForesterWorkUnitID, 0);
             Add($"Role", a => a.ForesterRole.ForesterRoleDisplayName, 225, DhtmlxGridColumnFilterType.None);
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
             Add($"Assigned to Person", a => a.PersonID.HasValue ? a.Person.GetFullNameFirstLastAsUrl() : new HtmlString("unassigned") , 200, DhtmlxGridColumnFilterType.Html);

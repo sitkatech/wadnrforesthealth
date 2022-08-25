@@ -25,6 +25,7 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.FindYourForester
 @inherits ProjectFirma.Web.Views.FindYourForester.ManageFindYourForester
 @section JavascriptAndStylesContent
 {
@@ -84,6 +85,32 @@
 
         });
 
+        sitkaMap.map.on("click", function (e) {
+            console.log(e);
+            highlightForester(e.latlng);
+        });
 
+        function highlightForester(latlng) {
+            
+            var ajaxCalls = sitkaMap.popupForWMSAndVectorLayers(sitkaMap.getWmsLayers(true), sitkaMap.getVectorLayers(true), latlng);
+            sitkaMap.carryOutPromises(ajaxCalls).then(results => {
+                results.forEach(result => {
+                    var foresterWorkUnitID = result.properties.PrimaryKey;
+                    var numberOfRows = myGrid.grid.getRowsNum();
+                    console.log(numberOfRows);
+                    for (var i = 0; i < numberOfRows; i++) {
+                        var id = myGrid.grid.getRowId(i);
+                        var columnIndex = myGrid.getColumnIndexByName('@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName');
+                        var cell = myGrid.grid.cellById(id, columnIndex);
+                        var cellValue = cell.getValue();
+                        console.log(foresterWorkUnitID, cellValue, i);
+                        if (foresterWorkUnitID == cellValue) {
+                            var row = myGrid.grid.selectRowById(id);
+                        }
+                    }
+                });
+
+            });
+        }
     });
 </script>
