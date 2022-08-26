@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected GrantAllocationAwardLandownerCostShareLineItem()
         {
             this.Treatments = new HashSet<Treatment>();
+            this.TreatmentUpdates = new HashSet<TreatmentUpdate>();
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Treatments.Any();
+            return Treatments.Any() || TreatmentUpdates.Any();
         }
 
         /// <summary>
@@ -99,13 +100,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(Treatment).Name);
             }
+
+            if(TreatmentUpdates.Any())
+            {
+                dependentObjects.Add(typeof(TreatmentUpdate).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(Treatment).Name, typeof(TreatmentUpdate).Name};
 
 
         /// <summary>
@@ -134,6 +140,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in TreatmentUpdates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -148,6 +159,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantAllocationAwardLandownerCostShareLineItemID; } set { GrantAllocationAwardLandownerCostShareLineItemID = value; } }
 
         public virtual ICollection<Treatment> Treatments { get; set; }
+        public virtual ICollection<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual GrantAllocationAward GrantAllocationAward { get; set; }
         public virtual Project Project { get; set; }
         public LandownerCostShareLineItemStatus LandownerCostShareLineItemStatus { get { return LandownerCostShareLineItemStatus.AllLookupDictionary[LandownerCostShareLineItemStatusID]; } }

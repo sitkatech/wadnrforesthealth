@@ -78,13 +78,16 @@
 
     @if (ViewDataTyped.UserHasProjectAdminPermissions)
     {
-        if (!ViewDataTyped.ExistsInImportBlockList)
+        if (ViewDataTyped.HasPrograms)
         {
-            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle red").ToString() + " Add to Block List", ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
-        }
-        else
-        {
-            @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-exclamation-sign").ToString() + " Remove from Block List", ViewDataTyped.ProjectImportRemoveBlockListUrl, string.Format("Remove {0} from Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-warning" }, null, null)
+            if (!ViewDataTyped.ExistsInImportBlockList)
+            {
+                @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle red").ToString() + " Add to Block List", ViewDataTyped.ProjectImportBlockListUrl, string.Format("Add {0} to Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
+            }
+            else
+            {
+                @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-exclamation-sign").ToString() + " Remove from Block List", ViewDataTyped.ProjectImportRemoveBlockListUrl, string.Format("Remove {0} from Import Block List", ViewDataTyped.Project.DisplayName), 950, "Yes", "Cancel", new List<string>() { "btn", "btn-warning" }, null, null)
+            }
         }
     }
 
@@ -345,10 +348,7 @@
                                     @Html.DhtmlxGrid(ViewDataTyped.TreatmentGroupGridSpec, ViewDataTyped.TreatmentAreaGrid, ViewDataTyped.TreatmentAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                                 </div>
                             }
-                            else
-                            {
-                                <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
-                            }
+
                         </div>
                     </div>
                 }

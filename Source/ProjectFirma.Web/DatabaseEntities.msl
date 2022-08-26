@@ -1684,6 +1684,7 @@
           <ScalarProperty Name="ProjectLocationUpdateName" ColumnName="ProjectLocationUpdateName" />
           <ScalarProperty Name="ArcGisObjectID" ColumnName="ArcGisObjectID" />
           <ScalarProperty Name="ArcGisGlobalID" ColumnName="ArcGisGlobalID" />
+          <ScalarProperty Name="ProjectLocationID" ColumnName="ProjectLocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2131,6 +2132,29 @@
           <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
           <ScalarProperty Name="TreatmentAreaFeature" ColumnName="TreatmentAreaFeature" />
           <ScalarProperty Name="TemporaryTreatmentCacheID" ColumnName="TemporaryTreatmentCacheID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentUpdate">
+        <MappingFragment StoreEntitySet="TreatmentUpdate">
+          <ScalarProperty Name="TreatmentUpdateID" ColumnName="TreatmentUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemID" ColumnName="GrantAllocationAwardLandownerCostShareLineItemID" />
+          <ScalarProperty Name="TreatmentStartDate" ColumnName="TreatmentStartDate" />
+          <ScalarProperty Name="TreatmentEndDate" ColumnName="TreatmentEndDate" />
+          <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
+          <ScalarProperty Name="TreatmentNotes" ColumnName="TreatmentNotes" />
+          <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
+          <ScalarProperty Name="TreatmentTreatedAcres" ColumnName="TreatmentTreatedAcres" />
+          <ScalarProperty Name="TreatmentTypeImportedText" ColumnName="TreatmentTypeImportedText" />
+          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
+          <ScalarProperty Name="UpdateGisUploadAttemptID" ColumnName="UpdateGisUploadAttemptID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeID" ColumnName="TreatmentDetailedActivityTypeID" />
+          <ScalarProperty Name="TreatmentDetailedActivityTypeImportedText" ColumnName="TreatmentDetailedActivityTypeImportedText" />
+          <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+          <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
+          <ScalarProperty Name="ProjectLocationUpdateID" ColumnName="ProjectLocationUpdateID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

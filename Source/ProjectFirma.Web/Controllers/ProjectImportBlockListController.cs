@@ -6,8 +6,8 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
-using ProjectFirma.Web.Views.Program;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.ProjectImportBlockList;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -18,19 +18,36 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult BlockListProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
-            return ConfirmBlockListProjectAction(viewModel, $"Are you sure you want to add the project '{project.ProjectName}' to the import block list?");
+            //var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
+            //return ConfirmBlockListProjectAction(viewModel, $"Are you sure you want to add the project '{project.ProjectName}' to the import block list?");
+
+            var viewModel = new EditProjectImportBlockListViewModel()
+            {
+                ProgramID = -1,
+                ProjectID = project.ProjectID,
+                ProjectGisIdentifier = project.ProjectGisIdentifier,
+                ProjectName = project.ProjectName
+            };
+            var viewData = new EditProjectImportBlockListViewData(CurrentPerson, null);
+            return RazorPartialView<EditProjectImportBlockList, EditProjectImportBlockListViewData, EditProjectImportBlockListViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [ProgramManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult BlockListProject(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult BlockListProject(ProjectPrimaryKey projectPrimaryKey, EditProjectImportBlockListViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
+
+            if (string.IsNullOrEmpty(viewModel.ProjectName) && string.IsNullOrEmpty(viewModel.ProjectGisIdentifier))
+            {
+                var validationMessage = "You must provide Project Name and/or Project GIS Identifier.";
+                this.ModelState.AddModelError("Required", validationMessage);
+            }
+
             if (!ModelState.IsValid)
             {
-                return ConfirmBlockListProjectAction(viewModel, $"ModelState is invalid. Refresh the page and try again.");
+                return BlockListProject(project);
             }
 
             foreach (var projectProgram in project.ProjectPrograms)
@@ -38,9 +55,10 @@ namespace ProjectFirma.Web.Controllers
                 var projectImportBlockList = new ProjectImportBlockList(projectProgram.Program)
                 {
                     ProgramID = projectProgram.ProgramID,
-                    ProjectGisIdentifier = project.ProjectGisIdentifier,
-                    ProjectName = project.ProjectName,
-                    ProjectID = project.ProjectID
+                    ProjectGisIdentifier = viewModel.ProjectGisIdentifier,
+                    ProjectName = viewModel.ProjectName,
+                    ProjectID = viewModel.ProjectID,
+                    Notes = viewModel.Notes
                 };
 
                 HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(projectImportBlockList);

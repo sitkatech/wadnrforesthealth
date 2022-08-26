@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsProjectContactsSectionComplete { get; set; }
         public bool IsRegionSectionComplete { get; set; }
         public bool IsPriorityLandscapeSectionComplete { get; set; }
+        public bool IsProjectTreatmentsSectionComplete { get; set; }
 
         public ProposalSectionsStatus(Models.Project project)
         {

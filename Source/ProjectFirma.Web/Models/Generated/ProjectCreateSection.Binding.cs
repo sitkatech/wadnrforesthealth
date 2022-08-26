@@ -33,6 +33,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionDNRUplandRegions DNRUplandRegions = ProjectCreateSectionDNRUplandRegions.Instance;
         public static readonly ProjectCreateSectionPriorityLandscapes PriorityLandscapes = ProjectCreateSectionPriorityLandscapes.Instance;
         public static readonly ProjectCreateSectionProjectAttributes ProjectAttributes = ProjectCreateSectionProjectAttributes.Instance;
+        public static readonly ProjectCreateSectionTreatments Treatments = ProjectCreateSectionTreatments.Instance;
 
         public static readonly List<ProjectCreateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectCreateSection> AllLookupDictionary;
@@ -42,7 +43,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes, Treatments };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -146,6 +147,8 @@ namespace ProjectFirma.Web.Models
                     return ProjectAttributes;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
                     return ReportedPerformanceMeasures;
+                case ProjectCreateSectionEnum.Treatments:
+                    return Treatments;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -167,7 +170,8 @@ namespace ProjectFirma.Web.Models
         Contacts = 16,
         DNRUplandRegions = 17,
         PriorityLandscapes = 18,
-        ProjectAttributes = 19
+        ProjectAttributes = 19,
+        Treatments = 20
     }
 
     public partial class ProjectCreateSectionBasics : ProjectCreateSection
@@ -252,5 +256,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionProjectAttributes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionProjectAttributes Instance = new ProjectCreateSectionProjectAttributes(19, @"ProjectAttributes", @"Project Attributes", 22, true, 1);
+    }
+
+    public partial class ProjectCreateSectionTreatments : ProjectCreateSection
+    {
+        private ProjectCreateSectionTreatments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionTreatments Instance = new ProjectCreateSectionTreatments(20, @"Treatments", @"Treatments", 90, false, 5);
     }
 }

@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -74,6 +73,7 @@ using PerformanceMeasures = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeas
 using PerformanceMeasuresViewData = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeasuresViewData;
 using PerformanceMeasuresViewModel = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeasuresViewModel;
 using Photos = ProjectFirma.Web.Views.ProjectUpdate.Photos;
+using ProjectFirma.Web.Views.GrantAllocationAward;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -563,7 +563,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             // 5/15/2019 TK - WADNR no longer uses "ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName". but may need to in phase 2
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.Photos.ProjectUpdateSectionDisplayName);
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.ExpectedFunding.ProjectUpdateSectionDisplayName);
         }
 
         private ViewResult ViewExpenditures(ProjectUpdateBatch projectUpdateBatch, List<int> calendarYearRange, ExpendituresViewModel viewModel)
@@ -1087,27 +1087,49 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveProjectLocationUpdates(ProjectLocationDetailViewModel viewModel, ProjectUpdateBatch projectUpdateBatch)
         {
-            var projectLocationUpdatesToDelete = projectUpdateBatch.ProjectLocationUpdates.Where(x => !x.ArcGisObjectID.HasValue).ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdatesToDelete);
-            projectLocationUpdatesToDelete.ForEach(plutd => projectUpdateBatch.ProjectLocationUpdates.Remove(plutd)); 
+            // MCS: This code is based on ProjectLocationController.SaveProjectDetailedLocations(); it cannot simply use a Merge because of the way the code branches based on ArcGisObjectID
 
+            //update the editable ProjectLocations
             if (viewModel.ProjectLocationJsons != null)
             {
-                foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
+                var projectLocationUpdatesFromViewModel = new List<ProjectLocationUpdate>();
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons.Where(x => !x.ArcGisObjectID.HasValue))
                 {
                     var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
-                    var projectLocationType = ProjectLocationType.All.FirstOrDefault(x => x.ProjectLocationTypeID == projectLocationJson.ProjectLocationTypeID);
-                    var projectLocationUpdate = new ProjectLocationUpdate(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationJson.ProjectLocationName);
-                    if (!string.IsNullOrEmpty(projectLocationJson.ProjectLocationNotes))
+                    var projectLocationUpdateInDB = projectUpdateBatch.ProjectLocationUpdates.SingleOrDefault(x => x.ProjectLocationUpdateID == projectLocationJson.ProjectLocationID);  // projectLocationJson.ProjectLocationID is actually a ProjectLocationUpdateID
+                    if (projectLocationUpdateInDB == null)  // creating a new ProjectLocationUpdate
                     {
-                        projectLocationUpdate.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
+                        var projectLocationType = ProjectLocationType.All.FirstOrDefault(x => x.ProjectLocationTypeID == projectLocationJson.ProjectLocationTypeID);
+                        var projectLocationUpdate = new ProjectLocationUpdate(
+                            projectUpdateBatch,
+                            projectLocationGeometry,
+                            projectLocationJson.ProjectLocationNotes,
+                            projectLocationType,
+                            projectLocationJson.ProjectLocationName,
+                            null,
+                            null
+                        );
+                        projectLocationUpdatesFromViewModel.Add(projectLocationUpdate);
                     }
-                    projectUpdateBatch.ProjectLocationUpdates.Add(projectLocationUpdate);
+                    else  // updating existing ProjectLocationUpdate after applying updates from incoming ProjectLocationJson
+                    {
+                        projectLocationUpdateInDB.ProjectLocationGeometry = projectLocationGeometry;
+                        projectLocationUpdateInDB.ProjectLocationTypeID = projectLocationJson.ProjectLocationTypeID;
+                        projectLocationUpdateInDB.ProjectLocationUpdateName = projectLocationJson.ProjectLocationName;
+                        projectLocationUpdateInDB.ProjectLocationNotes = projectLocationJson.ProjectLocationNotes;
+                        projectLocationUpdatesFromViewModel.Add(projectLocationUpdateInDB);
+                    }
                 }
+
+                HttpRequestStorage.DatabaseEntities.ProjectLocations.Load();
+                var allProjectLocationUpdates = HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.Local;
+                projectUpdateBatch.ProjectLocationUpdates
+                    .Merge(projectLocationUpdatesFromViewModel, allProjectLocationUpdates, (x, y) => x.ProjectLocationUpdateID == y.ProjectLocationUpdateID);
             }
 
+            // update ProjectLocationNotes for ones from ArcGIS
             foreach (var matched in viewModel.ArcGisProjectLocationJsons.Where(x => x.ArcGisObjectID.HasValue)
-                .Join(projectUpdateBatch.ProjectLocationUpdates, plj => plj.ProjectLocationID, pl => pl.ProjectLocationUpdateID,
+                .Join(projectUpdateBatch.ProjectLocationUpdates, plj => plj.ProjectLocationID, plu => plu.ProjectLocationUpdateID,
                     (lhs, rhs) => new { ProjectLocationJson = lhs, ProjectLocationUpdate = rhs }))
             {
                 matched.ProjectLocationUpdate.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
@@ -1538,6 +1560,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectCustomAttributeValues = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.Local;
             HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
             var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
+            HttpRequestStorage.DatabaseEntities.Treatments.Load();
+            var allTreatments = HttpRequestStorage.DatabaseEntities.Treatments.Local;
 
             projectUpdateBatch.Approve(CurrentPerson,
                 DateTime.Now,
@@ -1560,7 +1584,8 @@ namespace ProjectFirma.Web.Controllers
                 allProjectCustomAttributes,
                 allProjectCustomAttributeValues,
                 allProjectPeople,
-                allProjectPrograms);
+                allProjectPrograms,
+                allTreatments);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
@@ -2853,6 +2878,7 @@ namespace ProjectFirma.Web.Controllers
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isProjectAttributesUpdated = DiffProjectAttributesImpl(projectUpdateBatch.ProjectID).HasChanged;
+            var isTreatmentsUpdated = false;  // MCS the ability to diff treatments will be added in a different story
             //Must be called last, since basics actually changes the Project object which can break the other Diff functions
             var isBasicsUpdated = DiffBasicsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
@@ -2876,7 +2902,9 @@ namespace ProjectFirma.Web.Controllers
                 isNotesUpdated,
                 isExpectedFundingUpdated,
                 isOrganizationsUpdated,
-                isContactsUpdated);
+                isContactsUpdated,
+                isTreatmentsUpdated
+                );
         }
 
         private static bool IsRegionUpdated(ProjectUpdateBatch projectUpdateBatch)
@@ -3239,6 +3267,63 @@ namespace ProjectFirma.Web.Controllers
                 MultiTenantHelpers.GetToolDisplayName()).GetEmailContentPreview();
 
             return emailContentPreview;
+        }
+
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
+        public ActionResult Treatments(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            if (projectUpdateBatch == null)
+            {
+                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+            }
+            var updateStatus = GetUpdateStatus(projectUpdateBatch);
+
+            return ViewTreatmentUpdates(projectUpdateBatch, updateStatus);
+        }
+
+        private ActionResult ViewTreatmentUpdates(ProjectUpdateBatch projectUpdateBatch, UpdateStatus updateStatus)
+        {
+            var treatmentUpdateGridSpec = new TreatmentUpdateGridSpec(CurrentPerson, projectUpdateBatch);
+            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentUpdateProjectDetailGridJsonData(projectUpdateBatch));
+            var viewData = new TreatmentsViewData(CurrentPerson, projectUpdateBatch, treatmentUpdateGridSpec, treatmentGridDataUrl, updateStatus);
+
+            return RazorView<Treatments, TreatmentsViewData>(viewData);
+        }
+
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
+        public PartialViewResult RefreshTreatments(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
+            var viewModel = new ConfirmDialogFormViewModel(projectUpdateBatch.ProjectUpdateBatchID);
+            return ViewRefreshTreatments(viewModel);
+        }
+
+        [HttpPost]
+        [ProjectUpdateCreateEditSubmitFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult RefreshTreatments(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
+            projectUpdateBatch.DeleteTreatmentUpdates();
+            // finally create a new project update record, refreshing with the current project data at this point in time
+            TreatmentUpdate.CreateFromProject(projectUpdateBatch);
+            projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewRefreshTreatments(ConfirmDialogFormViewModel viewModel)
+        {
+            var viewData =
+                new ConfirmDialogFormViewData(
+                    $"Are you sure you want to refresh the treatments for this {FieldDefinition.Project.GetFieldDefinitionLabel()}? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and any updates made in this section will be lost.");
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
     }
 }

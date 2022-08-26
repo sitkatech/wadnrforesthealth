@@ -1,6 +1,6 @@
 ﻿using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Program
+namespace ProjectFirma.Web.Views.Shared.ProjectImportBlockList
 {
     public abstract class EditProjectImportBlockList : TypedWebPartialViewPage<EditProjectImportBlockListViewData,
         EditProjectImportBlockListViewModel>
