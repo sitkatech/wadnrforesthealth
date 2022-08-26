@@ -33,6 +33,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectPrograms = new HashSet<ProjectProgram>();
             this.ProjectUpdatePrograms = new HashSet<ProjectUpdateProgram>();
             this.Treatments = new HashSet<Treatment>();
+            this.TreatmentUpdates = new HashSet<TreatmentUpdate>();
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any() || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectImportBlockLists.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || ProjectUpdatePrograms.Any() || Treatments.Any();
+            return GisUploadSourceOrganizations.Any() || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectImportBlockLists.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || ProjectUpdatePrograms.Any() || Treatments.Any() || TreatmentUpdates.Any();
         }
 
         /// <summary>
@@ -151,13 +152,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(Treatment).Name);
             }
+
+            if(TreatmentUpdates.Any())
+            {
+                dependentObjects.Add(typeof(TreatmentUpdate).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProgramNotificationConfiguration).Name, typeof(ProgramPerson).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(ProjectUpdateProgram).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Program).Name, typeof(GisUploadSourceOrganization).Name, typeof(ProgramNotificationConfiguration).Name, typeof(ProgramPerson).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectLocation).Name, typeof(ProjectProgram).Name, typeof(ProjectUpdateProgram).Name, typeof(Treatment).Name, typeof(TreatmentUpdate).Name};
 
 
         /// <summary>
@@ -221,6 +227,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in TreatmentUpdates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -248,6 +259,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectProgram> ProjectPrograms { get; set; }
         public virtual ICollection<ProjectUpdateProgram> ProjectUpdatePrograms { get; set; }
         public virtual ICollection<Treatment> Treatments { get; set; }
+        public virtual ICollection<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Person ProgramCreatePerson { get; set; }
         public virtual Person ProgramLastUpdatedByPerson { get; set; }

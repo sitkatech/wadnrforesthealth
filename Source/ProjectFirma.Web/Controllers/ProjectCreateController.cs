@@ -38,6 +38,7 @@ using LtInfo.Common.DbSpatial;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
@@ -1411,6 +1412,49 @@ namespace ProjectFirma.Web.Controllers
 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.Contact.GetFieldDefinitionLabelPluralized()} successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.Contacts.ProjectCreateSectionDisplayName);
+        }
+
+
+        [HttpGet]
+        [ProjectCreateFeature]
+        public ViewResult Treatments(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new TreatmentsViewModel(project, CurrentPerson);
+            return ViewTreatments(project, viewModel);
+        }
+
+        private ViewResult ViewTreatments(Project project, TreatmentsViewModel viewModel)
+        {
+
+            var proposalSectionsStatus = GetProposalSectionsStatus(project);
+            proposalSectionsStatus.IsProjectTreatmentsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectTreatmentsSectionComplete;
+            var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson, project);
+            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
+            var viewData = new TreatmentsViewData(CurrentPerson, project, proposalSectionsStatus, treatmentGridSpec, treatmentGridDataUrl);
+
+            return RazorView<Treatments, TreatmentsViewData, TreatmentsViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Treatments(ProjectPrimaryKey projectPrimaryKey, TreatmentsViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewTreatments(project, viewModel);
+            }
+
+            HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
+            var allProjectTreatments = HttpRequestStorage.DatabaseEntities.ProjectPeople.Local;
+
+            viewModel.UpdateModel(project, allProjectTreatments);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.Contact.GetFieldDefinitionLabelPluralized()} successfully saved.");
+            return GoToNextSection(viewModel, project, ProjectCreateSection.Treatments.ProjectCreateSectionDisplayName);
         }
     }
 }

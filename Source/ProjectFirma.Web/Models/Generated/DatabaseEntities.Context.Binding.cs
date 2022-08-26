@@ -200,6 +200,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentArea> TreatmentAreas { get; set; }
         public virtual DbSet<Treatment> Treatments { get; set; }
+        public virtual DbSet<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
@@ -1095,6 +1096,9 @@ namespace ProjectFirma.Web.Models
                     var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(treatmentType, "TreatmentType", primaryKey);
                     return treatmentType;
+
+                case "TreatmentUpdate":
+                    return TreatmentUpdates.GetTreatmentUpdate(primaryKey);
 
                 case "Vendor":
                     return Vendors.GetVendor(primaryKey);

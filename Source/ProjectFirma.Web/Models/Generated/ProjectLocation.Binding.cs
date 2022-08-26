@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectLocation()
         {
+            this.ProjectLocationUpdates = new HashSet<ProjectLocationUpdate>();
             this.Treatments = new HashSet<Treatment>();
         }
 
@@ -89,7 +90,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Treatments.Any();
+            return ProjectLocationUpdates.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -99,6 +100,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(ProjectLocationUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocationUpdate).Name);
+            }
+
             if(Treatments.Any())
             {
                 dependentObjects.Add(typeof(Treatment).Name);
@@ -109,7 +115,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocation).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocation).Name, typeof(ProjectLocationUpdate).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -134,6 +140,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
+            foreach(var x in ProjectLocationUpdates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in Treatments.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -155,6 +166,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationID; } set { ProjectLocationID = value; } }
 
+        public virtual ICollection<ProjectLocationUpdate> ProjectLocationUpdates { get; set; }
         public virtual ICollection<Treatment> Treatments { get; set; }
         public virtual Project Project { get; set; }
         public ProjectLocationType ProjectLocationType { get { return ProjectLocationType.AllLookupDictionary[ProjectLocationTypeID]; } }

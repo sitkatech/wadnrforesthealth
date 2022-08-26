@@ -566,6 +566,16 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        [ProjectActivitiesSectionViewFeature]
+        public GridJsonNetJObjectResult<TreatmentUpdate> TreatmentUpdateProjectDetailGridJsonData(ProjectUpdateBatchPrimaryKey projectUpdateBatchPrimaryKey)
+        {
+            var projectUpdateBatch = projectUpdateBatchPrimaryKey.EntityObject;
+            var treatmentUpdates = projectUpdateBatch.TreatmentUpdates.ToList();
+            var gridSpec = new TreatmentUpdateGridSpec(CurrentPerson, projectUpdateBatch);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentUpdate>(treatmentUpdates, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
         [HttpGet]
         [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
         public PartialViewResult NewLandownerCostShareLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)

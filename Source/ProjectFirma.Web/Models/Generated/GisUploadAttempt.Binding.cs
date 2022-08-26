@@ -33,6 +33,8 @@ namespace ProjectFirma.Web.Models
             this.ProjectPeopleWhereYouAreTheCreateGisUploadAttempt = new HashSet<ProjectPerson>();
             this.TreatmentsWhereYouAreTheCreateGisUploadAttempt = new HashSet<Treatment>();
             this.TreatmentsWhereYouAreTheUpdateGisUploadAttempt = new HashSet<Treatment>();
+            this.TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt = new HashSet<TreatmentUpdate>();
+            this.TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt = new HashSet<TreatmentUpdate>();
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any() || PeopleWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.Any() || ProjectPeopleWhereYouAreTheCreateGisUploadAttempt.Any() || TreatmentsWhereYouAreTheCreateGisUploadAttempt.Any() || TreatmentsWhereYouAreTheUpdateGisUploadAttempt.Any();
+            return GisFeatures.Any() || GisUploadAttemptGisMetadataAttributes.Any() || PeopleWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheCreateGisUploadAttempt.Any() || ProjectsWhereYouAreTheLastUpdateGisUploadAttempt.Any() || ProjectPeopleWhereYouAreTheCreateGisUploadAttempt.Any() || TreatmentsWhereYouAreTheCreateGisUploadAttempt.Any() || TreatmentsWhereYouAreTheUpdateGisUploadAttempt.Any() || TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt.Any() || TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt.Any();
         }
 
         /// <summary>
@@ -144,13 +146,23 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(Treatment).Name);
             }
+
+            if(TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt.Any())
+            {
+                dependentObjects.Add(typeof(TreatmentUpdate).Name);
+            }
+
+            if(TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt.Any())
+            {
+                dependentObjects.Add(typeof(TreatmentUpdate).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name, typeof(Person).Name, typeof(Project).Name, typeof(ProjectPerson).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttempt).Name, typeof(GisFeature).Name, typeof(GisUploadAttemptGisMetadataAttribute).Name, typeof(Person).Name, typeof(Project).Name, typeof(ProjectPerson).Name, typeof(Treatment).Name, typeof(TreatmentUpdate).Name};
 
 
         /// <summary>
@@ -214,6 +226,16 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -238,6 +260,8 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectPerson> ProjectPeopleWhereYouAreTheCreateGisUploadAttempt { get; set; }
         public virtual ICollection<Treatment> TreatmentsWhereYouAreTheCreateGisUploadAttempt { get; set; }
         public virtual ICollection<Treatment> TreatmentsWhereYouAreTheUpdateGisUploadAttempt { get; set; }
+        public virtual ICollection<TreatmentUpdate> TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt { get; set; }
+        public virtual ICollection<TreatmentUpdate> TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt { get; set; }
         public virtual GisUploadSourceOrganization GisUploadSourceOrganization { get; set; }
         public virtual Person GisUploadAttemptCreatePerson { get; set; }
 

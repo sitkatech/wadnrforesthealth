@@ -132,6 +132,9 @@ namespace ProjectFirma.Web.Models
             // project region
             ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
 
+            // treatments
+            TreatmentUpdate.CreateFromProject(projectUpdateBatch);
+
             // photos
             ProjectImageUpdate.CreateFromProject(projectUpdateBatch);
             projectUpdateBatch.IsPhotosUpdated = false;
@@ -311,6 +314,12 @@ namespace ProjectFirma.Web.Models
         {
             HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.DeleteProjectPersonUpdate(ProjectPersonUpdates);
             RefreshFromDatabase(ProjectPersonUpdates);
+        }
+
+        public void DeleteTreatmentUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.TreatmentUpdates.DeleteTreatmentUpdate(TreatmentUpdates);
+            RefreshFromDatabase(TreatmentUpdates);
         }
 
         public void DeleteAll()
@@ -557,7 +566,8 @@ namespace ProjectFirma.Web.Models
             IList<ProjectCustomAttribute> allProjectCustomAttributes,
             IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
             IList<ProjectPerson> allProjectPersons,
-            IList<ProjectProgram> allProjectPrograms)
+            IList<ProjectProgram> allProjectPrograms,
+            IList<Treatment> allTreatments)
         {
             Check.Require(IsSubmitted, $"You cannot approve a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted!");
             CommitChangesToProject(projectExemptReportingYears,
@@ -579,7 +589,8 @@ namespace ProjectFirma.Web.Models
                 allProjectCustomAttributes,
                 allProjectCustomAttributeValues,
                 allProjectPersons,
-                allProjectPrograms);
+                allProjectPrograms,
+                allTreatments);
             CreateNewTransitionRecord(this, ProjectUpdateState.Approved, currentPerson, transitionDate);
             PushTransitionRecordsToAuditLog();
         }
@@ -616,7 +627,8 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectCustomAttribute> allProjectCustomAttributes,
                 IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
                 IList<ProjectPerson> allProjectPeople,
-                IList<ProjectProgram> allProjectPrograms)
+                IList<ProjectProgram> allProjectPrograms,
+                IList<Treatment> allTreatments)
         {
             // basics
             ProjectUpdate.CommitChangesToProject(Project);
@@ -685,6 +697,9 @@ namespace ProjectFirma.Web.Models
 
             // Project Custom Attributes
             ProjectCustomAttributeUpdate.CommitChangesToProject(this, allProjectCustomAttributes, allProjectCustomAttributeValues);
+
+            // Treatments
+            TreatmentUpdate.CommitChangesToProject(this, allTreatments);
         }
 
         public void RejectSubmission(Person currentPerson, DateTime transitionDate)

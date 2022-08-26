@@ -172,6 +172,7 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Store.Treatment" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.Store.TreatmentArea" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.Store.TreatmentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
@@ -1187,6 +1188,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationStagingUpdates" EntitySet="ProjectLocationStagingUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectLocationUpdate_ProjectLocation_ProjectLocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationUpdate_ProjectLocation_ProjectLocationID">
+      <End Role="ProjectLocation" EntitySet="ProjectLocation" />
+      <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
@@ -1414,6 +1419,30 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_Treatment_ProjectLocation_ProjectLocationID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_ProjectLocation_ProjectLocationID">
       <End Role="ProjectLocation" EntitySet="ProjectLocation" />
       <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+      <End Role="UpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
+      <End Role="TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
+      <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_Program_ProgramID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_Program_ProgramID">
+      <End Role="Program" EntitySet="Program" />
+      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_ProjectLocationUpdate_ProjectLocationUpdateID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_ProjectLocationUpdate_ProjectLocationUpdateID">
+      <End Role="ProjectLocationUpdate" EntitySet="ProjectLocationUpdate" />
+      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Agreement">
@@ -2979,6 +3008,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationUpdateName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="ArcGisObjectID" Type="int" />
     <Property Name="ArcGisGlobalID" Type="varchar" MaxLength="50" />
+    <Property Name="ProjectLocationID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectNote">
     <Key>
@@ -3392,6 +3422,28 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="int" />
+  </EntityType>
+  <EntityType Name="TreatmentUpdate">
+    <Key>
+      <PropertyRef Name="TreatmentUpdateID" />
+    </Key>
+    <Property Name="TreatmentUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="int" />
+    <Property Name="TreatmentStartDate" Type="datetime" />
+    <Property Name="TreatmentEndDate" Type="datetime" />
+    <Property Name="TreatmentFootprintAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="TreatmentNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentTreatedAcres" Type="decimal" Precision="38" Scale="10" />
+    <Property Name="TreatmentTypeImportedText" Type="varchar" MaxLength="200" />
+    <Property Name="CreateGisUploadAttemptID" Type="int" />
+    <Property Name="UpdateGisUploadAttemptID" Type="int" />
+    <Property Name="TreatmentDetailedActivityTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentDetailedActivityTypeImportedText" Type="varchar" MaxLength="200" />
+    <Property Name="ProgramID" Type="int" />
+    <Property Name="ImportedFromGis" Type="bit" />
+    <Property Name="ProjectLocationUpdateID" Type="int" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -6303,6 +6355,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectLocationUpdate_ProjectLocation_ProjectLocationID">
+    <End Role="ProjectLocation" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="0..1" />
+    <End Role="ProjectLocationUpdates" Type="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectLocation">
+        <PropertyRef Name="ProjectLocationID" />
+      </Principal>
+      <Dependent Role="ProjectLocationUpdates">
+        <PropertyRef Name="ProjectLocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectLocationUpdates" Type="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" Multiplicity="*" />
@@ -6984,6 +7048,78 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProjectLocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt">
+        <PropertyRef Name="CreateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID">
+    <End Role="UpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
+    <End Role="TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UpdateGisUploadAttempt">
+        <PropertyRef Name="GisUploadAttemptID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt">
+        <PropertyRef Name="UpdateGisUploadAttemptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
+    <End Role="GrantAllocationAwardLandownerCostShareLineItem" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="0..1" />
+    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAwardLandownerCostShareLineItem">
+        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdates">
+        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_Program_ProgramID">
+    <End Role="Program" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="0..1" />
+    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdates">
+        <PropertyRef Name="ProgramID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_ProjectLocationUpdate_ProjectLocationUpdateID">
+    <End Role="ProjectLocationUpdate" Type="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" Multiplicity="0..1" />
+    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectLocationUpdate">
+        <PropertyRef Name="ProjectLocationUpdateID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdates">
+        <PropertyRef Name="ProjectLocationUpdateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
