@@ -23,8 +23,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             bool hasCreatePermission = new GrantAllocationAwardLandownerCostShareLineItemCreateFeature().HasPermissionByPerson(currentPerson);
             if (hasCreatePermission)
             {
-                var newTreatmentsUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.NewTreatmentsForAProject(projectToCreateNewTreatments));
-                CreateEntityModalDialogForm = new ModalDialogForm(newTreatmentsUrl, $"Create new Treatments for {projectToCreateNewTreatments.DisplayName}");
+                var newTreatmentsUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.NewTreatmentFromProject(projectToCreateNewTreatments));
+                CreateEntityModalDialogForm = new ModalDialogForm(newTreatmentsUrl, 950, $"Create new Treatments for {projectToCreateNewTreatments.DisplayName}");                
             }
             //int buttonGridWidth = 30;
 
