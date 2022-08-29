@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
             TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
             TreatmentDetailedActivityTypeList = treatmentDetailedActivityTypesList.ToSelectList(x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentDetailedActivityTypeDisplayName);
             TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationUpdateID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationUpdateName);
-            TreatmentCodeList = treatmentCodesList.ToSelectList(x => x.TreatmentCodeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentCodeDisplayName);
+            TreatmentCodeList = treatmentCodesList.ToSelectListWithEmptyFirstRow(x => x.TreatmentCodeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentCodeDisplayName);
         }
     }
 

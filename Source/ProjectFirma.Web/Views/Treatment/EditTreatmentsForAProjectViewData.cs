@@ -32,13 +32,11 @@ namespace ProjectFirma.Web.Views.Treatment
     {
         public IEnumerable<SelectListItem> TreatmentTypeList { get; }
         public IEnumerable<SelectListItem> TreatmentAreaList { get; }
-        public IEnumerable<SelectListItem> TreatmentCodeList { get; }
 
-        public EditTreatmentsForAProjectViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<ProjectLocation> treatmentAreas, IEnumerable<TreatmentCode> treatmentCodesList)
+        public EditTreatmentsForAProjectViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<ProjectLocation> treatmentAreas)
         {
             TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
             TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationName);
-            TreatmentCodeList = treatmentCodesList.ToSelectList(x => x.TreatmentCodeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentCodeDisplayName);
         }
     }
 

@@ -52,9 +52,6 @@ namespace ProjectFirma.Web.Views.Treatment
         [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentType)]
         public int TreatmentTypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentCode)]
-        public int? TreatmentCodeID { get; set; }
-
         [Required]
         [DisplayName("Project Location - Treatment Area")]
         public int ProjectLocationID { get; set; }
@@ -106,8 +103,6 @@ namespace ProjectFirma.Web.Views.Treatment
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareSlashAcres)]
         public decimal SlashAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentCostPerAcre)]
-        public decimal? CostPerAcre { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -125,7 +120,6 @@ namespace ProjectFirma.Web.Views.Treatment
             StartDate = defaultTreatment?.TreatmentStartDate ?? DateTime.Today;
             EndDate = defaultTreatment?.TreatmentEndDate ?? DateTime.Today;
             FootprintAcres = (defaultTreatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
-            CostPerAcre = (defaultTreatment?.CostPerAcre ?? 0).ToDecimalFormatted();
             if (defaultTreatment.ProjectLocationID.HasValue)
             {
                 ProjectLocationID = defaultTreatment.ProjectLocationID.Value;
@@ -133,7 +127,6 @@ namespace ProjectFirma.Web.Views.Treatment
             
             ProjectID = defaultTreatment.ProjectID;
             Notes = defaultTreatment.TreatmentNotes;
-            TreatmentCodeID = defaultTreatment.TreatmentCodeID;
 
             var slashTreatment =
                 treatments.SingleOrDefault(x =>
@@ -250,12 +243,10 @@ namespace ProjectFirma.Web.Views.Treatment
 
             treatment.TreatmentFootprintAcres = FootprintAcres;
             treatment.TreatmentTreatedAcres = treatedAcres;
-            treatment.CostPerAcre = CostPerAcre;
             treatment.TreatmentStartDate = StartDate;
             treatment.TreatmentEndDate = EndDate;
             treatment.TreatmentNotes = Notes;
             treatment.ProjectID = ProjectID;
-            treatment.TreatmentCodeID = TreatmentCodeID;
             treatment.ProjectLocationID = ProjectLocationID;
             treatment.TreatmentTypeID = TreatmentTypeID;
 

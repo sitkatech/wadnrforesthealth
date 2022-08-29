@@ -46,8 +46,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult TreatmentsForAProjectViewEdit(EditTreatmentsForAProjectViewModel viewModel, IEnumerable<ProjectLocation> projectLocationTreatmentAreas)
         {
             var treatmentTypesList = TreatmentType.All;
-            var treatmentCodesList = HttpRequestStorage.DatabaseEntities.TreatmentCodes.ToList();
-            var viewData = new EditTreatmentsForAProjectViewData(treatmentTypesList, projectLocationTreatmentAreas, treatmentCodesList);
+            var viewData = new EditTreatmentsForAProjectViewData(treatmentTypesList, projectLocationTreatmentAreas);
             return RazorPartialView<EditTreatmentsForAProject, EditTreatmentsForAProjectViewData, EditTreatmentsForAProjectViewModel>(viewData, viewModel);
         }
 
@@ -77,8 +76,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult TreatmentsForProjectTreatmentAreaViewEdit(EditTreatmentsForAProjectViewModel viewModel)
         {
             var treatmentTypesList = TreatmentType.All;
-            var treatmentCodesList = HttpRequestStorage.DatabaseEntities.TreatmentCodes.ToList();
-            var viewData = new EditTreatmentsForAProjectViewData(treatmentTypesList, new List<ProjectLocation>(), treatmentCodesList);
+            var viewData = new EditTreatmentsForAProjectViewData(treatmentTypesList, new List<ProjectLocation>());
             return RazorPartialView<EditTreatmentsForAProject, EditTreatmentsForAProjectViewData, EditTreatmentsForAProjectViewModel>(viewData, viewModel);
         }
 
