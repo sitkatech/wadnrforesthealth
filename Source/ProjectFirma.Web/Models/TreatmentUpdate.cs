@@ -45,7 +45,9 @@ namespace ProjectFirma.Web.Models
                     TreatmentFootprintAcres = t.TreatmentFootprintAcres,
                     TreatmentNotes = t.TreatmentNotes,
                     TreatmentTypeID = t.TreatmentTypeID,
+                    TreatmentCodeID = t.TreatmentCodeID,
                     TreatmentTreatedAcres = t.TreatmentTreatedAcres,
+                    CostPerAcre = t.CostPerAcre,
                     TreatmentTypeImportedText = t.TreatmentTypeImportedText,
                     CreateGisUploadAttemptID = t.CreateGisUploadAttemptID,
                     UpdateGisUploadAttemptID = t.UpdateGisUploadAttemptID,
@@ -94,7 +96,9 @@ namespace ProjectFirma.Web.Models
                         tu.TreatmentDetailedActivityTypeImportedText,
                         tu.ProgramID,
                         tu.ImportedFromGis,
-                        projectLocation
+                        projectLocation,
+                        tu.TreatmentCodeID,
+                        tu.CostPerAcre
                     );
                     allTreatments.Add(treatment);
                 });

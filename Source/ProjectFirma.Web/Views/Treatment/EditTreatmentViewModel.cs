@@ -23,10 +23,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
-using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -39,7 +37,6 @@ namespace ProjectFirma.Web.Views.Treatment
 
         public int ProjectID { get; set; }
 
-
         [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentDetailedActivityType)]
         public int TreatmentDetailedActivityTypeID { get; set; }
@@ -48,13 +45,12 @@ namespace ProjectFirma.Web.Views.Treatment
         [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentType)]
         public int TreatmentTypeID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentCode)]
+        public int? TreatmentCodeID { get; set; }
+
         [Required]
         [DisplayName("Project Location - Treatment Area")]
         public int ProjectLocationID { get; set; }
-
-
-
-
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareStartDate)]
         [Required]
@@ -67,16 +63,14 @@ namespace ProjectFirma.Web.Views.Treatment
         [StringLength(Models.Treatment.FieldLengths.TreatmentNotes)]
         public string Notes { get; set; }
 
-
-
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFootprintAcres)]
         public decimal FootprintAcres { get; set; }
 
         [DisplayName("Treated Acres")]
         public decimal TreatedAcres { get; set; }
 
-
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentCostPerAcre)]
+        public Money? CostPerAcre { get; set; }
 
 
         /// <summary>
@@ -94,6 +88,7 @@ namespace ProjectFirma.Web.Views.Treatment
             EndDate = treatment?.TreatmentEndDate ?? DateTime.Today;
             FootprintAcres = (treatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
             TreatedAcres = (treatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
+            CostPerAcre = (treatment?.CostPerAcre ?? 0).ToDecimalFormatted();
             if (treatment.ProjectLocationID.HasValue)
             {
                 ProjectLocationID = treatment.ProjectLocationID.Value;
@@ -101,6 +96,7 @@ namespace ProjectFirma.Web.Views.Treatment
 
             TreatmentDetailedActivityTypeID = treatment.TreatmentDetailedActivityTypeID;
             TreatmentTypeID = treatment.TreatmentTypeID;
+            TreatmentCodeID = treatment.TreatmentCodeID;
             Notes = treatment.TreatmentNotes;
             TreatmentID = treatment.TreatmentID;
             ProjectID = treatment.ProjectID;
@@ -114,30 +110,23 @@ namespace ProjectFirma.Web.Views.Treatment
                 yield return new ValidationResult("End Date cannot be before Start Date");
             }
 
-
-
         }
-
-
 
         public void UpdateModel(Models.Treatment treatment)
         {
             treatment.TreatmentFootprintAcres = FootprintAcres;
             treatment.TreatmentTreatedAcres = TreatedAcres;
+            treatment.CostPerAcre = CostPerAcre;
             treatment.TreatmentStartDate = StartDate;
             treatment.TreatmentEndDate = EndDate;
             treatment.TreatmentNotes = Notes;
 
             treatment.ProjectLocationID = ProjectLocationID;
             treatment.TreatmentTypeID = TreatmentTypeID;
+            treatment.TreatmentCodeID = TreatmentCodeID;
             treatment.TreatmentDetailedActivityTypeID = TreatmentDetailedActivityTypeID;
             treatment.ProjectID = ProjectID;
-
-
         }
-
-
-
 
     }
 

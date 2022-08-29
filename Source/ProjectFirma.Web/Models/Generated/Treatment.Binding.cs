@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis, int? projectLocationID) : this()
+        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis, int? projectLocationID, int? treatmentCodeID, decimal? costPerAcre) : this()
         {
             this.TreatmentID = treatmentID;
             this.ProjectID = projectID;
@@ -50,6 +50,8 @@ namespace ProjectFirma.Web.Models
             this.ProgramID = programID;
             this.ImportedFromGis = importedFromGis;
             this.ProjectLocationID = projectLocationID;
+            this.TreatmentCodeID = treatmentCodeID;
+            this.CostPerAcre = costPerAcre;
         }
 
         /// <summary>
@@ -149,6 +151,8 @@ namespace ProjectFirma.Web.Models
         public int? ProgramID { get; set; }
         public bool? ImportedFromGis { get; set; }
         public int? ProjectLocationID { get; set; }
+        public int? TreatmentCodeID { get; set; }
+        public decimal? CostPerAcre { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentID; } set { TreatmentID = value; } }
 
@@ -160,6 +164,7 @@ namespace ProjectFirma.Web.Models
         public TreatmentDetailedActivityType TreatmentDetailedActivityType { get { return TreatmentDetailedActivityType.AllLookupDictionary[TreatmentDetailedActivityTypeID]; } }
         public virtual Program Program { get; set; }
         public virtual ProjectLocation ProjectLocation { get; set; }
+        public virtual TreatmentCode TreatmentCode { get; set; }
 
         public static class FieldLengths
         {
