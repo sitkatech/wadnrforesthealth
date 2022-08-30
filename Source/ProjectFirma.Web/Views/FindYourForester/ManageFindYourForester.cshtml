@@ -70,13 +70,19 @@
 
         var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.GridDataUrlTemplate.ToJS()));
         var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
+        var rootUrl = "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms"; //'http://geoserver.capecodgis.com/geoserver/capecodgis/ows';
 
         var myGrid = Sitka.@ViewDataTyped.GridName;
+        var findYourForesterRoleID = @ViewDataTyped.DefaultForesterRoleID;
+        var selectedPolygon = null;
 
         sitkaMap.map.on("overlayadd", function (e) {
+            if (selectedPolygon) {
+                selectedPolygon.removeFrom(sitkaMap.map);
+            }
 
             var layer = Object.values(e.layer._layers)[0];
-            var findYourForesterRoleID = layer.ContextObjectId;
+            findYourForesterRoleID = layer.ContextObjectId;
 
             window.history.pushState({}, '', pageUrlTemplate.ParameterReplace(findYourForesterRoleID));
 
@@ -86,24 +92,43 @@
         });
 
         sitkaMap.map.on("click", function (e) {
-            console.log(e);
-            highlightForester(e.latlng);
+
+            highlightForester(e);
         });
 
-        function highlightForester(latlng) {
+
+        var defaultWmsParameters = {
+            service: 'WMS',
+            version: '1.1.1',
+            request: 'GetFeatureInfo',
+            maxFeatures: 100,
+            info_format: 'application/json',
+            format_options: 'callback:getJson',
+            LAYERS: 'WADNRForestHealth:FindYourForester',
+            QUERY_LAYERS: 'WADNRForestHealth:FindYourForester'
+
+        };
+
+        var selectedStyle = {
+            weight: 2,
+            color: '#525252',
+            fill: false,
+        };
+
+        var selectedPolygon = null;
+
+        function highlightForester(e) {
             
-            var ajaxCalls = sitkaMap.popupForWMSAndVectorLayers(sitkaMap.getWmsLayers(true), sitkaMap.getVectorLayers(true), latlng);
+            var ajaxCalls = sitkaMap.popupForWMSAndVectorLayers(sitkaMap.getWmsLayers(true), sitkaMap.getVectorLayers(true), e.latlng);
             sitkaMap.carryOutPromises(ajaxCalls).then(results => {
                 results.forEach(result => {
                     var foresterWorkUnitID = result.properties.PrimaryKey;
                     var numberOfRows = myGrid.grid.getRowsNum();
-                    console.log(numberOfRows);
                     for (var i = 0; i < numberOfRows; i++) {
                         var id = myGrid.grid.getRowId(i);
                         var columnIndex = myGrid.getColumnIndexByName('@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName');
                         var cell = myGrid.grid.cellById(id, columnIndex);
                         var cellValue = cell.getValue();
-                        console.log(foresterWorkUnitID, cellValue, i);
                         if (foresterWorkUnitID == cellValue) {
                             var row = myGrid.grid.selectRowById(id);
                         }
@@ -111,6 +136,43 @@
                 });
 
             });
+ 
+
+            var customWmsParams = {
+                bbox: sitkaMap.map.getBounds().toBBoxString(),
+                cql_filter: 'ForesterRoleID=' + findYourForesterRoleID,
+                width: Math.trunc(e.target._size.x),
+                height: Math.trunc(e.target._size.y),
+                x: Math.trunc(e.layerPoint.x),
+                y: Math.trunc(e.layerPoint.y)
+            };
+
+            var parametersWMS = L.Util.extend(defaultWmsParameters, customWmsParams);
+
+            jQuery.ajax({
+                url : rootUrl + L.Util.getParamString(parametersWMS),
+                dataType : 'json'
+            }).done(function(data) {
+               
+
+                // Check for previous selected polygon layer and possibly remove it
+                if (selectedPolygon) {
+                    selectedPolygon.removeFrom(sitkaMap.map);
+                }
+
+                // Create the newly selected polygon layer using WFS
+                if (data.features.length > 0) {
+
+                    selectedPolygon = L.geoJSON(data);
+
+                    selectedPolygon.addTo(sitkaMap.map);
+
+                }
+
+
+            });
+
         }
+
     });
 </script>

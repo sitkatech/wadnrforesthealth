@@ -37,6 +37,8 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public string GridDataUrlTemplate { get; }
         public string PageUrlTemplate { get; }
 
+        public int DefaultForesterRoleID { get; }
+
         public ManageFindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage, string bulkAssignForestersUrl, int initialForesterRoleIdToLoad) : base(currentPerson, firmaPage)
         {
             PageTitle = "Manage Find Your Forester";
@@ -46,6 +48,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             GridDataUrl = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(initialForesterRoleIdToLoad));
             GridDataUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.ManageFindYourForesterGridJsonData(UrlTemplate.Parameter1Int));
             PageUrlTemplate = SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(tc => tc.Manage(UrlTemplate.Parameter1Int));
+            DefaultForesterRoleID = initialForesterRoleIdToLoad;
 
             var getForesterWorkUnitID =
                 $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({0}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
