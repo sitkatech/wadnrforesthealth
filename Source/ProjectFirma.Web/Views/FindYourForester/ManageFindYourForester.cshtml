@@ -136,15 +136,20 @@
                 });
 
             });
- 
 
+            // Check for previous selected polygon layer and possibly remove it
+            if (selectedPolygon) {
+                selectedPolygon.removeFrom(sitkaMap.map);
+            }
+            //console.log("event inside highlightForester");
+            //console.log(e);
             var customWmsParams = {
                 bbox: sitkaMap.map.getBounds().toBBoxString(),
                 cql_filter: 'ForesterRoleID=' + findYourForesterRoleID,
-                width: Math.trunc(e.target._size.x),
-                height: Math.trunc(e.target._size.y),
-                x: Math.trunc(e.layerPoint.x),
-                y: Math.trunc(e.layerPoint.y)
+                width: e.target._size.x,
+                height: e.target._size.y,
+                x: Math.trunc(e.containerPoint.x),
+                y: Math.trunc(e.containerPoint.y)
             };
 
             var parametersWMS = L.Util.extend(defaultWmsParameters, customWmsParams);
@@ -153,23 +158,18 @@
                 url : rootUrl + L.Util.getParamString(parametersWMS),
                 dataType : 'json'
             }).done(function(data) {
-               
 
-                // Check for previous selected polygon layer and possibly remove it
-                if (selectedPolygon) {
-                    selectedPolygon.removeFrom(sitkaMap.map);
-                }
-
+                console.log(data);
                 // Create the newly selected polygon layer using WFS
                 if (data.features.length > 0) {
 
                     selectedPolygon = L.geoJSON(data);
-
                     selectedPolygon.addTo(sitkaMap.map);
 
                 }
 
-
+            }).fail(function (data) {
+                console.log(data);
             });
 
         }
