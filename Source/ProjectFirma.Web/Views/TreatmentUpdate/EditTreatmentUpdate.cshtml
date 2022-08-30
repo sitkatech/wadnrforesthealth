@@ -102,37 +102,37 @@
             </div>
         </div>
     </div>
-    <br />
+
     <div class="form-horizontal">
-        <div class="form-group no-margin-top col-md-6">
-            <div class="col-sm-7 text-right control-label">
+        <div class="form-group no-margin-top">
+            <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.FootprintAcres)
             </div>
-            <div class="input-group col-sm-5">
-                @Html.TextBoxFor(m => m.FootprintAcres, new { @class = "form-control", style = "width:100%" })
-                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
-                @Html.ValidationMessageFor(m => m.FootprintAcres)
-
+            <div class="col-sm-2">
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.FootprintAcres, new { @class = "form-control", style = "width:100%" })
+                    <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                    @Html.ValidationMessageFor(m => m.FootprintAcres)
+                </div>
             </div>
-        </div>
-        <div class="form-group no-margin-top col-md-6">
-            <div class="col-sm-7 text-right control-label">
+            <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatedAcres)
             </div>
-            <div class="input-group col-sm-5">
-                @Html.TextBoxFor(m => m.TreatedAcres, new { @class = "form-control", style = "width:100%" })
-                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
-                @Html.ValidationMessageFor(m => m.TreatedAcres)
+            <div class="col-sm-2">
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.TreatedAcres, new { @class = "form-control", style = "width:100%" })
+                    <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                    @Html.ValidationMessageFor(m => m.TreatedAcres)
+                </div>
             </div>
         </div>
-        <div class="form-group no-margin-top col-md-6">
-            <div class="col-sm-7 text-right control-label">
+        <div class="form-group no-margin-top">
+            <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.CostPerAcre)
             </div>
-            <div class="input-group col-sm-5">
-                @Html.TextBoxFor(m => m.CostPerAcre, new { @class = "form-control", style = "width:100%" })
+            <div class="col-sm-2">
+                @Html.EditorFor(m => m.CostPerAcre, new { @class = "form-control", style = "width:100%" })
                 @Html.ValidationMessageFor(m => m.CostPerAcre)
-
             </div>
         </div>
     </div>

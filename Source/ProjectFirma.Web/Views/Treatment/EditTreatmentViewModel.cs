@@ -88,12 +88,12 @@ namespace ProjectFirma.Web.Views.Treatment
             EndDate = treatment?.TreatmentEndDate ?? DateTime.Today;
             FootprintAcres = (treatment?.TreatmentFootprintAcres ?? 0).ToDecimalFormatted();
             TreatedAcres = (treatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-            CostPerAcre = (treatment?.CostPerAcre ?? 0).ToDecimalFormatted();
             if (treatment.ProjectLocationID.HasValue)
             {
                 ProjectLocationID = treatment.ProjectLocationID.Value;
             }
 
+            CostPerAcre = treatment?.CostPerAcre;
             TreatmentDetailedActivityTypeID = treatment.TreatmentDetailedActivityTypeID;
             TreatmentTypeID = treatment.TreatmentTypeID;
             TreatmentCodeID = treatment.TreatmentCodeID;
