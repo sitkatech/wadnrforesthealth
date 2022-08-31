@@ -78,6 +78,7 @@
         sitkaMap.map.on("overlayadd", function (e) {
             if (selectedPolygon) {
                 selectedPolygon.removeFrom(sitkaMap.map);
+                sitkaMap.map.closePopup();
             }
 
             var layer = Object.values(e.layer._layers)[0];
@@ -115,6 +116,7 @@
             // Check for previous selected polygon layer and possibly remove it
             if (selectedPolygon) {
                 selectedPolygon.removeFrom(sitkaMap.map);
+                sitkaMap.map.closePopup();
             }
 
             var customWfsParams = {
@@ -202,6 +204,19 @@
 
                     selectedPolygon = L.geoJSON(data);
                     selectedPolygon.addTo(sitkaMap.map);
+
+
+                    var properties = data.features[0].properties;
+                    var roleLine = "<strong>" + properties.ForesterRoleDisplayName + "</strong><br/>";
+                    var nameLine = properties.FirstName + " " + properties.LastName + "<br/>";
+                    var workUnitLine = properties.ForesterWorkUnitName + "<br/>";
+
+                    var dataString = "<p>" + roleLine + nameLine + workUnitLine + "</p>";
+
+                    L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent(dataString)
+                        .openOn(sitkaMap.map);
 
                 }
 
