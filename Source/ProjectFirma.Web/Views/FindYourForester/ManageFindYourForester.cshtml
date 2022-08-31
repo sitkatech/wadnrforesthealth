@@ -70,7 +70,7 @@
 
         var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.GridDataUrlTemplate.ToJS()));
         var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
-        var rootUrl = "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms"; //'http://geoserver.capecodgis.com/geoserver/capecodgis/ows';
+        var rootUrl = "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms";
 
         var myGrid = Sitka.@ViewDataTyped.GridName;
         var findYourForesterRoleID = @ViewDataTyped.DefaultForesterRoleID;
@@ -92,9 +92,54 @@
         });
 
         sitkaMap.map.on("click", function (e) {
-
             highlightForester(e);
         });
+
+        function getForesterWorkUnitIDFromRowID(rowId) {
+            var columnIndex = myGrid.getColumnIndexByName('@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName');
+            var cell = myGrid.grid.cellById(rowId, columnIndex);
+            var cellValue = cell.getValue();
+            return cellValue;
+        }
+
+        var defaultWfsParameters = {
+            service: 'WFS',
+            version: '1.1.1',
+            request: 'GetFeature',
+            maxFeatures: 100,
+            outputFormat: 'application/json',
+            typeNames: 'WADNRForestHealth:FindYourForester',
+        };
+
+        function highlightMapFromGridClick(rowId, colIndex) {
+            var foresterWorkUnitId = getForesterWorkUnitIDFromRowID(rowId);
+            // Check for previous selected polygon layer and possibly remove it
+            if (selectedPolygon) {
+                selectedPolygon.removeFrom(sitkaMap.map);
+            }
+
+            var customWfsParams = {
+                cql_filter: 'PrimaryKey=' + foresterWorkUnitId
+            };
+
+            var parametersWFS = L.Util.extend(defaultWfsParameters, customWfsParams);
+            jQuery.ajax({
+                url : rootUrl + L.Util.getParamString(parametersWFS),
+                dataType : 'json'
+            }).done(function(data) {
+                // Create the newly selected polygon layer using WFS
+                if (data.features.length > 0) {
+                    selectedPolygon = L.geoJSON(data);
+                    selectedPolygon.addTo(sitkaMap.map);
+
+                }
+
+            }).fail(function (data) {
+                console.log(data);
+            });
+
+        };
+        myGrid.grid.attachEvent("onRowSelect", highlightMapFromGridClick);
 
 
         var defaultWmsParameters = {
@@ -109,6 +154,8 @@
 
         };
 
+      
+
         var selectedStyle = {
             weight: 2,
             color: '#525252',
@@ -122,13 +169,14 @@
             var ajaxCalls = sitkaMap.popupForWMSAndVectorLayers(sitkaMap.getWmsLayers(true), sitkaMap.getVectorLayers(true), e.latlng);
             sitkaMap.carryOutPromises(ajaxCalls).then(results => {
                 results.forEach(result => {
+
+                    if (!result || !result.properties) return;
+
                     var foresterWorkUnitID = result.properties.PrimaryKey;
                     var numberOfRows = myGrid.grid.getRowsNum();
                     for (var i = 0; i < numberOfRows; i++) {
                         var id = myGrid.grid.getRowId(i);
-                        var columnIndex = myGrid.getColumnIndexByName('@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName');
-                        var cell = myGrid.grid.cellById(id, columnIndex);
-                        var cellValue = cell.getValue();
+                        var cellValue = getForesterWorkUnitIDFromRowID(id);
                         if (foresterWorkUnitID == cellValue) {
                             var row = myGrid.grid.selectRowById(id);
                         }
