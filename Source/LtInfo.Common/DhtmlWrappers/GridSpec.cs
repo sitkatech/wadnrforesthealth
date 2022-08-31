@@ -33,9 +33,11 @@ namespace LtInfo.Common.DhtmlWrappers
         {
             ShowFilterBar = true;
             GridInstructionsWhenEmpty = "No records available"; // default no records available message
+            DisableSmartRendering = false;
         }
 
         public string LoadingBarHtml { get; set; }
+        public bool DisableSmartRendering { get; set; }
         public string ObjectNameSingular { get; set; }
         public string ObjectNamePlural { get; set; }
         public string CreateEntityActionPhrase { get; set; }

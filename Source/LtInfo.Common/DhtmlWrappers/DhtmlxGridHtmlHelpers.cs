@@ -479,7 +479,8 @@ namespace LtInfo.Common.DhtmlWrappers
         /// <returns></returns>
         public static bool IsUsingSmartRendering<T>(GridSpec<T> gridSpec)
         {
-            return !gridSpec.HasColumnTotals;
+            var isUsingSmartRendering = !gridSpec.DisableSmartRendering;
+            return isUsingSmartRendering;
         }
 
         /// <summary>
