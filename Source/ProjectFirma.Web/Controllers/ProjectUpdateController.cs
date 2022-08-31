@@ -908,6 +908,16 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewLocationDetailed(projectUpdateBatch, viewModel);
             }
+
+            // MCS: This check needs to be done separate from the other validation checks; if it fails we need to recreate the ViewModel
+            // This is necessary to add back the ProjectLocationUpdates that should not have been deleted
+            var deletionErrors = ValidateProjectLocationUpdateDeletions(projectUpdateBatch, viewModel);
+            deletionErrors.ForEach(x => ModelState.AddModelError("Validation", x));
+            if (!ModelState.IsValid)
+            {
+                return ViewLocationDetailed(projectUpdateBatch, new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment, projectUpdateBatch.ProjectLocationUpdates));
+            }
+
             SaveProjectLocationUpdates(viewModel, projectUpdateBatch);
 
             if (projectUpdateBatch.IsSubmitted)
@@ -916,6 +926,27 @@ namespace ProjectFirma.Web.Controllers
             }
             projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.LocationDetailed.ProjectUpdateSectionDisplayName);
+        }
+
+        private List<string> ValidateProjectLocationUpdateDeletions(ProjectUpdateBatch projectUpdateBatch, LocationDetailedViewModel viewModel)
+        {
+            var result = new List<string>();
+
+            var existingProjectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates;
+            // ProjectLocationJson.ProjectLocationID is actually a ProjectLocationUpdateID
+            var updatedProjectLocationUpdateIDs = viewModel.ProjectLocationJsons.Select(x => x.ProjectLocationID)
+                .Union(viewModel.ArcGisProjectLocationJsons.Select(y => y.ProjectLocationID))
+                .ToList();
+            var deletedProjectLocationUpdates = existingProjectLocationUpdates.Where(x => !updatedProjectLocationUpdateIDs.Contains(x.ProjectLocationUpdateID)).ToList();
+            foreach (var dplu in deletedProjectLocationUpdates)
+            {
+                if (dplu.TreatmentUpdates.Any())
+                {
+                    result.Add($"Project Location Update {dplu.ProjectLocationUpdateName} cannot be deleted because it has Treatment Updates.");
+                }
+            }
+
+            return result;
         }
 
         private ViewResult ViewLocationDetailed(ProjectUpdateBatch projectUpdateBatch, LocationDetailedViewModel viewModel)
