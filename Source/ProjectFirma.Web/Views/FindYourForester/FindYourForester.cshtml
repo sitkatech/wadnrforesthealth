@@ -128,7 +128,8 @@
             var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
             findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
                 jQuery('#outOfStateAddressError').hide();
-                if (!results.every(element => element === null)) {
+                if (!results.every(element => element === null))
+                {
                     results.forEach(result => {
                             var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
                             //check we have some data before updating
@@ -157,9 +158,16 @@
                                 foresterDefinitionList.find('[data-forester-initial]').hide();
                             }
                         });
-                    } else {
-                        jQuery('#outOfStateAddressError').show();
-                    }
+                } else {
+                    var allForesterDefinitionLists = jQuery('[data-forester-role-id]');
+                    jQuery('#outOfStateAddressError').show();
+                    allForesterDefinitionLists.find('[data-forester-name]').text("");
+                    allForesterDefinitionLists.find('[data-forester-email]').text("");
+                    allForesterDefinitionLists.find('[data-forester-phone]').text("");
+                    allForesterDefinitionLists.find('[data-forester-container]').hide();
+                    allForesterDefinitionLists.find('[data-forester-no-data]').show();
+                    allForesterDefinitionLists.find('[data-forester-initial]').hide();
+                }
                    
             });
 
