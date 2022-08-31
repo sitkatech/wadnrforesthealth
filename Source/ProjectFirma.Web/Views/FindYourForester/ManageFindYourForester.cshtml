@@ -24,7 +24,6 @@
 @using LtInfo.Common.DhtmlWrappers
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
-@using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.FindYourForester
 @inherits ProjectFirma.Web.Views.FindYourForester.ManageFindYourForester
 @section JavascriptAndStylesContent
@@ -122,9 +121,9 @@
                 cql_filter: 'PrimaryKey=' + foresterWorkUnitId
             };
 
-            var parametersWFS = L.Util.extend(defaultWfsParameters, customWfsParams);
+            var parametersWfs = L.Util.extend(defaultWfsParameters, customWfsParams);
             jQuery.ajax({
-                url : rootUrl + L.Util.getParamString(parametersWFS),
+                url : rootUrl + L.Util.getParamString(parametersWfs),
                 dataType : 'json'
             }).done(function(data) {
                 // Create the newly selected polygon layer using WFS
@@ -154,16 +153,6 @@
 
         };
 
-      
-
-        var selectedStyle = {
-            weight: 2,
-            color: '#525252',
-            fill: false,
-        };
-
-        var selectedPolygon = null;
-
         function highlightForester(e) {
             
             var ajaxCalls = sitkaMap.popupForWMSAndVectorLayers(sitkaMap.getWmsLayers(true), sitkaMap.getVectorLayers(true), e.latlng);
@@ -178,7 +167,7 @@
                         var id = myGrid.grid.getRowId(i);
                         var cellValue = getForesterWorkUnitIDFromRowID(id);
                         if (foresterWorkUnitID == cellValue) {
-                            var row = myGrid.grid.selectRowById(id);
+                            myGrid.grid.selectRowById(id);
                         }
                     }
                 });
@@ -200,10 +189,10 @@
                 y: Math.trunc(e.containerPoint.y)
             };
 
-            var parametersWMS = L.Util.extend(defaultWmsParameters, customWmsParams);
+            var parametersWms = L.Util.extend(defaultWmsParameters, customWmsParams);
 
             jQuery.ajax({
-                url : rootUrl + L.Util.getParamString(parametersWMS),
+                url : rootUrl + L.Util.getParamString(parametersWms),
                 dataType : 'json'
             }).done(function(data) {
 
