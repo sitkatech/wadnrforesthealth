@@ -179,9 +179,9 @@
             // Check for previous selected polygon layer and possibly remove it
             if (selectedPolygon) {
                 selectedPolygon.removeFrom(sitkaMap.map);
+                sitkaMap.map.closePopup();
             }
-            //console.log("event inside highlightForester");
-            //console.log(e);
+
             var customWmsParams = {
                 bbox: sitkaMap.map.getBounds().toBBoxString(),
                 cql_filter: 'ForesterRoleID=' + findYourForesterRoleID,
@@ -197,14 +197,11 @@
                 url : rootUrl + L.Util.getParamString(parametersWms),
                 dataType : 'json'
             }).done(function(data) {
-
-                console.log(data);
                 // Create the newly selected polygon layer using WFS
                 if (data.features.length > 0) {
 
                     selectedPolygon = L.geoJSON(data);
                     selectedPolygon.addTo(sitkaMap.map);
-
 
                     var properties = data.features[0].properties;
                     var roleLine = "<strong>" + properties.ForesterRoleDisplayName + "</strong><br/>";
