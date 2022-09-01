@@ -129,8 +129,7 @@
             var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
             findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
                 jQuery('#outOfStateAddressError').hide();
-                console.log("latlng" + latlng.lat + "," + latlng.lng);
-                console.log(results);
+                jQuery('[data-forester-info-field]').text("");
                 if (!results.every(element => element === null))
                 {
                     results.forEach(result => {
@@ -261,15 +260,15 @@
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Name:</strong>
-                                    <span data-forester-name=""> </span>
+                                    <span data-forester-name=""  data-forester-info-field=""> </span>
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Email:</strong>
-                                    <span data-forester-email=""> </span>
+                                    <span data-forester-email=""  data-forester-info-field=""> </span>
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Phone:</strong>
-                                    <span data-forester-phone=""> </span>
+                                    <span data-forester-phone=""  data-forester-info-field=""> </span>
                                 </div>
                                 <div data-forester-initial="" style="display: block;">
                                     <p>Please enter your address or place a marker on the map to get Forester contact info for the @question.ForesterRole.ForesterRoleDisplayName in your area.</p>
