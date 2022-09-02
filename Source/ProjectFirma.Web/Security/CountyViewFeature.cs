@@ -24,7 +24,7 @@ using ProjectFirma.Web.Security.Shared;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View Counties")]
-    public class CountiesViewFeature : AnonymousUnclassifiedFeature
+    public class CountyViewFeature : AnonymousUnclassifiedFeature
     {
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="CountiesController.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="CountyController.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -41,34 +41,34 @@ namespace ProjectFirma.Web.Controllers
 {
     public class CountyController : FirmaBaseController
     {
-        [CountiesViewFeature]
+        [CountyViewFeature]
         public ViewResult Index()
         {
             var layerGeoJsons = new List<LayerGeoJson>
             {
-                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
+                County.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
             };
 
-            var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox());
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.RegionsList);
+            var mapInitJson = new MapInitJson("countyIndex", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox());
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.RegionsList);//var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.County);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [CountiesViewFeature]
+        [CountyViewFeature]
         public GridJsonNetJObjectResult<County> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var countiesList = HttpRequestStorage.DatabaseEntities.Counties.OrderBy(x => x.CountyName).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<County>(countiesList, gridSpec);
+            var countyList = HttpRequestStorage.DatabaseEntities.Counties.OrderBy(x => x.CountyName).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<County>(countyList, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
-        [CountiesViewFeature]
+        [CountyViewFeature]
         public ViewResult Detail(CountyPrimaryKey countyPrimaryKey)
         {
             var county = countyPrimaryKey.EntityObject;
-            var mapDivID = $"region_{county.CountyID}_Map";
+            var mapDivID = $"county_{county.CountyID}_Map";
 
             var associatedProjects = county.GetAssociatedProjects(CurrentPerson);
             var layers = County.GetRegionAndAssociatedProjectLayers(county, associatedProjects);
@@ -98,41 +98,9 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
-        //[HttpGet]
-        //[DNRUplandRegionManageFeature]
-        //public PartialViewResult DeleteRegion(CountyPrimaryKey countyPrimaryKey)
-        //{
-        //    var counties = countyPrimaryKey.EntityObject;
-        //    var viewModel = new ConfirmDialogFormViewModel(counties.CountyID);
-        //    return ViewDeleteRegion(counties, viewModel);
-        //}
+        
 
-        //private PartialViewResult ViewDeleteRegion(DNRUplandRegion dnrUplandRegion, ConfirmDialogFormViewModel viewModel)
-        //{
-        //    var canDelete = !dnrUplandRegion.HasDependentObjects();
-        //    var confirmMessage = canDelete
-        //        ? $"Are you sure you want to delete this {FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName} '{dnrUplandRegion.DNRUplandRegionName}'?"
-        //        : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"<p>Washington State Department of Natural Resources has&nbsp;six upland region offices&nbsp;that help to&nbsp;provide localized services throughout Washington.</p>", SitkaRoute<CountiesController>.BuildLinkFromExpression(x => x.Detail(dnrUplandRegion), "here"));
-
-        //    var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
-        //    return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        //}
-
-        //[HttpPost]
-        //[DNRUplandRegionManageFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult DeleteRegion(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        //{
-        //    var region = dnrUplandRegionPrimaryKey.EntityObject;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewDeleteRegion(region, viewModel);
-        //    }
-        //    region.DeleteFull(HttpRequestStorage.DatabaseEntities);
-        //    return new ModalDialogFormJsonResult();
-        //}
-
-        [CountiesViewFeature]
+        [CountyViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(CountyPrimaryKey countyPrimaryKey)
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);
@@ -142,9 +110,9 @@ namespace ProjectFirma.Web.Controllers
         }
         
         [AnonymousUnclassifiedFeature]
-        public PartialViewResult MapTooltip(CountyPrimaryKey countiesPrimaryKey)
+        public PartialViewResult MapTooltip(CountyPrimaryKey countyPrimaryKey)
         {
-            var viewData = new MapTooltipViewData(CurrentPerson, countiesPrimaryKey.EntityObject);
+            var viewData = new MapTooltipViewData(CurrentPerson, countyPrimaryKey.EntityObject);
             return RazorPartialView<MapTooltip, MapTooltipViewData>(viewData);
         }
     }

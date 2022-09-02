@@ -62,9 +62,9 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("All DNR Upland Regions", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetDNRUplandRegionWmsLayerName(), layerColor, layerOpacity,
-                layerInitialVisibility, "/Content/leaflet/images/washington_upland_region.png");
+            return new LayerGeoJson("All Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), layerColor, layerOpacity,
+                layerInitialVisibility, "/Content/leaflet/images/washington_county.png");
         }
 
         public static List<LayerGeoJson> GetRegionAndAssociatedProjectLayers(County county, List<Project> projects)

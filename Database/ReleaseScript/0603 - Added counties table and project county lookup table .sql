@@ -37,3 +37,5 @@ GO
 
 ALTER TABLE [dbo].[ProjectCounty] CHECK CONSTRAINT [FK_ProjectCounty_Project_ProjectID]
 GO
+
+insert into [dbo].[FirmaPage] values(510,70,'<p>Counties in Washington</p>')
