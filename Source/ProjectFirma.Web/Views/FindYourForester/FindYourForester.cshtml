@@ -50,7 +50,7 @@
                 <span style="display:none; color: red;" id="errZoomNoZipCode">Please provide a zip code for zooming the Find Your Forester Map.</span>
             </fieldset>
         </div>
-        <div id="outOfStateAddressError" class="col-md-12 alert alert-danger" style="display: none;">Please enter an address or place a marker in the State of Washington.</div>
+        <div id="outOfStateAddressError" class="col-md-12 alert alert-danger" style="display: none;">There was a problem finding your address. Either the request failed or you selected a location outside the State of Washington. Try hitting Find Your Forester again or update your selection to be inside the State of Washington</div>
     </div>
     <div class="row">
         <div class="col-md-9">
@@ -111,12 +111,13 @@
 
         findYourForesterFirmaMap.map.on('click', function (evt) {
 
-            populateForesterInformationAndDropMarker(evt.latlng);
+            populateForesterInformationAndDropMarker(evt.latlng, true);
         });
 
         var geocodeMarker = L.marker();
 
-        function populateForesterInformationAndDropMarker(latlng) {
+
+        function populateForesterInformationAndDropMarker(latlng, failRetry) {
             
             if (geocodeMarker != undefined) {
                 geocodeMarker.remove();
@@ -128,9 +129,11 @@
             var ajaxCalls = findYourForesterFirmaMap.popupForWMSAndVectorLayers(findYourForesterFirmaMap.getWmsLayers(false), findYourForesterFirmaMap.getVectorLayers(false), latlng);
             findYourForesterFirmaMap.carryOutPromises(ajaxCalls).then(results => {
                 jQuery('#outOfStateAddressError').hide();
+                jQuery('[data-forester-info-field]').text("");
                 if (!results.every(element => element === null))
                 {
                     results.forEach(result => {
+                        if (result) {
                             var foresterDefinitionList = jQuery('[data-forester-role-id="' + result.properties.ForesterRoleID + '"]');
                             //check we have some data before updating
                             if (result && result.properties && result.properties.FirstName) {
@@ -157,16 +160,23 @@
                                 foresterDefinitionList.find('[data-forester-no-data]').show();
                                 foresterDefinitionList.find('[data-forester-initial]').hide();
                             }
-                        });
+
+                        } 
+                            
+                    });
                 } else {
-                    var allForesterDefinitionLists = jQuery('[data-forester-role-id]');
-                    jQuery('#outOfStateAddressError').show();
-                    allForesterDefinitionLists.find('[data-forester-name]').text("");
-                    allForesterDefinitionLists.find('[data-forester-email]').text("");
-                    allForesterDefinitionLists.find('[data-forester-phone]').text("");
-                    allForesterDefinitionLists.find('[data-forester-container]').hide();
-                    allForesterDefinitionLists.find('[data-forester-no-data]').show();
-                    allForesterDefinitionLists.find('[data-forester-initial]').hide();
+                    if (failRetry) {
+                        populateForesterInformationAndDropMarker(latlng, false);
+                    } else {
+                        var allForesterDefinitionLists = jQuery('[data-forester-role-id]');
+                        jQuery('#outOfStateAddressError').show();
+                        allForesterDefinitionLists.find('[data-forester-name]').text("");
+                        allForesterDefinitionLists.find('[data-forester-email]').text("");
+                        allForesterDefinitionLists.find('[data-forester-phone]').text("");
+                        allForesterDefinitionLists.find('[data-forester-container]').hide();
+                        allForesterDefinitionLists.find('[data-forester-no-data]').show();
+                        allForesterDefinitionLists.find('[data-forester-initial]').hide();
+                    }
                 }
                    
             });
@@ -195,7 +205,7 @@
                         if (!msg.ErrorStatus) {
 
                             findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
-                            window.setTimeout(populateForesterInformationAndDropMarker({ lng: msg.Long, lat: msg.Lat }), 1250);
+                            window.setTimeout(populateForesterInformationAndDropMarker({ lng: msg.Long, lat: msg.Lat }, true), 1250);
 
                         } else {
                             console.log(msg.ErrorStatus);
@@ -250,15 +260,15 @@
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Name:</strong>
-                                    <span data-forester-name=""> </span>
+                                    <span data-forester-name=""  data-forester-info-field=""> </span>
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Email:</strong>
-                                    <span data-forester-email=""> </span>
+                                    <span data-forester-email=""  data-forester-info-field=""> </span>
                                 </div>
                                 <div data-forester-container="" style="display: none;">
                                     <strong>Phone:</strong>
-                                    <span data-forester-phone=""> </span>
+                                    <span data-forester-phone=""  data-forester-info-field=""> </span>
                                 </div>
                                 <div data-forester-initial="" style="display: block;">
                                     <p>Please enter your address or place a marker on the map to get Forester contact info for the @question.ForesterRole.ForesterRoleDisplayName in your area.</p>
