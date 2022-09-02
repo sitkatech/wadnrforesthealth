@@ -322,4 +322,5 @@ VALUES
 (500, N'ExternalMapLayerDisplayOnAllOthers', 'Display on All Other Maps?', 'When this option is set, the external map layer will appear on maps throughout the system, except for the Priority Landscape and Project maps (which have their own settings).'),
 (501, N'ExternalMapLayerIsATiledMapService', 'Is a Tiled Map Service?', 'Please turn on this setting if the external map layer is a tiled layer (raster). Note: Pop-ups will not appear on maps for tiled layers.'),
 (502, N'ExternalMapLayerIsActive', 'Is Active?', 'If this is not set, the layer will not appear on any maps. If there is a problem with the external map service an administrator can uncheck this box to hide the layer until it is resolved.'),
-(503, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>')
+(503, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>'),
+(504, N'County', N'County', N'<p>Counties of Washington</p>')

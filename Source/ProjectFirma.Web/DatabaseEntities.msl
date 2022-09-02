@@ -134,10 +134,10 @@
     <EntitySetMapping Name="County">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.County">
         <MappingFragment StoreEntitySet="County">
-          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
           <ScalarProperty Name="CountyName" ColumnName="CountyName" />
           <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
           <ScalarProperty Name="CountyFeature" ColumnName="CountyFeature" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1391,6 +1391,15 @@
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="ProjectStartDate" ColumnName="ProjectStartDate" />
           <ScalarProperty Name="ProjectEndDate" ColumnName="ProjectEndDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectCounty">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCounty">
+        <MappingFragment StoreEntitySet="ProjectCounty">
+          <ScalarProperty Name="ProjectCountyID" ColumnName="ProjectCountyID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

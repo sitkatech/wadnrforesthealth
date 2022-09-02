@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[County]
+//  Source Table: [dbo].[ProjectCounty]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,60 +16,61 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[County] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[County]")]
-    public partial class County : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectCounty] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectCounty]")]
+    public partial class ProjectCounty : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected County()
+        protected ProjectCounty()
         {
-            this.ProjectCounties = new HashSet<ProjectCounty>();
+
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public County(string countyName, int stateProvinceID, DbGeometry countyFeature, int countyID) : this()
+        public ProjectCounty(int projectCountyID, int projectID, int countyID) : this()
         {
-            this.CountyName = countyName;
-            this.StateProvinceID = stateProvinceID;
-            this.CountyFeature = countyFeature;
+            this.ProjectCountyID = projectCountyID;
+            this.ProjectID = projectID;
             this.CountyID = countyID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public County(string countyName, int stateProvinceID) : this()
+        public ProjectCounty(int projectID, int countyID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.CountyID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectCountyID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.CountyName = countyName;
-            this.StateProvinceID = stateProvinceID;
+            this.ProjectID = projectID;
+            this.CountyID = countyID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public County(string countyName, StateProvince stateProvince) : this()
+        public ProjectCounty(Project project, County county) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.CountyID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.CountyName = countyName;
-            this.StateProvinceID = stateProvince.StateProvinceID;
-            this.StateProvince = stateProvince;
-            stateProvince.Counties.Add(this);
+            this.ProjectCountyID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectID = project.ProjectID;
+            this.Project = project;
+            project.ProjectCounties.Add(this);
+            this.CountyID = county.CountyID;
+            this.County = county;
+            county.ProjectCounties.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static County CreateNewBlank(StateProvince stateProvince)
+        public static ProjectCounty CreateNewBlank(Project project, County county)
         {
-            return new County(default(string), stateProvince);
+            return new ProjectCounty(project, county);
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectCounties.Any();
+            return false;
         }
 
         /// <summary>
@@ -88,17 +89,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(ProjectCounties.Any())
-            {
-                dependentObjects.Add(typeof(ProjectCounty).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(County).Name, typeof(ProjectCounty).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCounty).Name};
 
 
         /// <summary>
@@ -106,7 +103,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.Counties.Remove(this);
+            dbContext.ProjectCounties.Remove(this);
         }
         
         /// <summary>
@@ -114,35 +111,23 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
         }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
 
-            foreach(var x in ProjectCounties.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-        }
-
-        public string CountyName { get; set; }
-        public int StateProvinceID { get; set; }
-        public DbGeometry CountyFeature { get; set; }
         [Key]
+        public int ProjectCountyID { get; set; }
+        public int ProjectID { get; set; }
         public int CountyID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return CountyID; } set { CountyID = value; } }
+        public int PrimaryKey { get { return ProjectCountyID; } set { ProjectCountyID = value; } }
 
-        public virtual ICollection<ProjectCounty> ProjectCounties { get; set; }
-        public virtual StateProvince StateProvince { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual County County { get; set; }
 
         public static class FieldLengths
         {
-            public const int CountyName = 100;
+
         }
     }
 }
