@@ -868,6 +868,7 @@
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
     <Compile Include="Security\ContactCreateAndViewFeature.cs" />
     <Compile Include="Security\CountyViewFeature.cs" />
+    <Compile Include="Security\CountyManageFeature.cs" />
     <Compile Include="Security\FindYourForesterManageFeature.cs" />
     <Compile Include="Security\FindYourForesterViewFeature.cs" />
     <Compile Include="Security\FirmaNormalUserAndAboveFeature.cs" />

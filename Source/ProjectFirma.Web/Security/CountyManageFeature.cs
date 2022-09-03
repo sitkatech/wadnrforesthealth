@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionModelExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionManageFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,24 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using GeoJSON.Net.Feature;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LtInfo.Common;
 
-namespace ProjectFirma.Web.Models
+namespace ProjectFirma.Web.Security
 {
-    public static class CountyModelExtensions
+    [SecurityFeatureDescription("Manage Counties")]
+    public class CountyManageFeature : FirmaAdminFeature
     {
-        public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<County> county)
-        {
-            return new FeatureCollection(county.Select(x => x.MakeFeatureWithRelevantProperties()).ToList());
-        }
-
-        public static HtmlString GetCountyDisplayNameAsUrl(this County county)
-        {
-            return county != null ? UrlTemplate.MakeHrefString(county.GetDetailUrl(), county.DisplayName) : new HtmlString(null);
-        }
     }
 }

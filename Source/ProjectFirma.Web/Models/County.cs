@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectCounties.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return ProjectCounties.Select(ptc => ptc.Project).ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public string AuditDescriptionString => CountyName;
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
         public Feature MakeFeatureWithRelevantProperties()
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(CountyFeature);
-            feature.Properties.Add("Region", this.GetRegionDisplayNameAsUrl().ToString());
+            feature.Properties.Add("County", this.GetCountyDisplayNameAsUrl().ToString());
             return feature;
         }
 
@@ -60,27 +60,27 @@ namespace ProjectFirma.Web.Models
             return urlTemplateString.Replace(UrlTemplate.Parameter1Int.ToString(), this.CountyID.ToString());
         }
 
-        public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
+        public static LayerGeoJson GetCountyWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
             return new LayerGeoJson("All Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility, "/Content/leaflet/images/washington_county.png");
         }
 
-        public static List<LayerGeoJson> GetRegionAndAssociatedProjectLayers(County county, List<Project> projects)
+        public static List<LayerGeoJson> GetCountyAndAssociatedProjectLayers(County county, List<Project> projects)
         {
             var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
                 Project.MappedPointsToGeoJsonFeatureCollection(projects, true, false),
                 "#ffff00", 1, LayerInitialVisibility.Show);
-            var regionLayerGeoJson = new LayerGeoJson(county.DisplayName,
+            var countyLayerGeoJson = new LayerGeoJson(county.DisplayName,
                 new List<County> { county }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
 
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 projectLayerGeoJson,
-                regionLayerGeoJson,
-                GetRegionWmsLayerGeoJson("#59ACFF", 0.6m,
+                countyLayerGeoJson,
+                GetCountyWmsLayerGeoJson("#59ACFF", 0.6m,
                     LayerInitialVisibility.Show)
             };
 

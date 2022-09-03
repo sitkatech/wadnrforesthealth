@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.County
             PageTitle = Models.FieldDefinition.County.GetFieldDefinitionLabelPluralized();
             MapInitJson = mapInitJson;
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = Models.FieldDefinition.County.FieldDefinitionDisplayName, ObjectNamePlural = Models.FieldDefinition.County.GetFieldDefinitionLabelPluralized(), SaveFiltersInCookie = true};
-            GridName = "regionsGrid";
+            GridName = "countiesGrid";
             GridDataUrl = SitkaRoute<CountyController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
         }
 

@@ -75,7 +75,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    This map displays the location of any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() associated with this @FieldDefinition.County.GetFieldDefinitionLabel()
+                    This map displays the location of any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() associated with this @FieldDefinition.County.GetFieldDefinitionLabel()
                 </p>
                 <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 320px; margin: 5px 0 5px 0">
                 </div>
@@ -85,26 +85,6 @@
             </div>
         </div>
     </div>
-    @*<div class="col-lg-7">
-        <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-                <h2>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by @FieldDefinition.CostType.GetFieldDefinitionLabel()</h2>
-            </div>
-            <div class="panel-body">
-                @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
-                {
-                    <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
-                        @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
-                    </div>
-
-                }
-                else
-                {
-            <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.County.GetFieldDefinitionLabel().</p>
-                }
-            </div>
-        </div>
-    </div>*@
 </div>
 <div class="row">
     <div class="col-md-12">

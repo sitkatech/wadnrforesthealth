@@ -46,11 +46,11 @@ namespace ProjectFirma.Web.Controllers
         {
             var layerGeoJsons = new List<LayerGeoJson>
             {
-                County.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
+                County.GetCountyWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
             };
 
             var mapInitJson = new MapInitJson("countyIndex", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForOtherMaps(), BoundingBox.MakeNewDefaultBoundingBox());
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.RegionsList);//var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.County);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.County);//var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.County);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
@@ -71,30 +71,10 @@ namespace ProjectFirma.Web.Controllers
             var mapDivID = $"county_{county.CountyID}_Map";
 
             var associatedProjects = county.GetAssociatedProjects(CurrentPerson);
-            var layers = County.GetRegionAndAssociatedProjectLayers(county, associatedProjects);
+            var layers = County.GetCountyAndAssociatedProjectLayers(county, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), new BoundingBox(county.CountyFeature));
 
-            //var grantAllocationExpenditures = new List<GrantAllocationExpenditure>();
-            //county.GrantAllocations.ForEach(x => grantAllocationExpenditures.AddRange(x.GrantAllocationExpenditures));
-            var costTypes = CostType.GetLineItemCostTypes();
-
-            const string chartTitle = "Grant Allocation Expenditures By Cost Type";
-            var chartContainerID = chartTitle.Replace(" ", "");
-            //var googleChart = grantAllocationExpenditures.ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
-            //    costTypes.Select(ct => ct.CostTypeDisplayName).ToList(),
-            //    x => x.CostType?.CostTypeDisplayName,
-            //    chartContainerID,
-            //    chartTitle);
-
-            //var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 405, true);
-
-            var performanceMeasures = associatedProjects
-                .SelectMany(x => x.PerformanceMeasureActuals)
-                .Select(x => x.PerformanceMeasure).Distinct()
-                .OrderBy(x => x.PerformanceMeasureDisplayName)
-                .ToList();
-
-            var viewData = new DetailViewData(CurrentPerson, county, mapInitJson, performanceMeasures);
+            var viewData = new DetailViewData(CurrentPerson, county, mapInitJson);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
@@ -104,8 +84,8 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(CountyPrimaryKey countyPrimaryKey)
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);
-            var projectRegions = countyPrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectRegions, gridSpec);
+            var projectCounties = countyPrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectCounties, gridSpec);
             return gridJsonNetJObjectResult;
         }
         

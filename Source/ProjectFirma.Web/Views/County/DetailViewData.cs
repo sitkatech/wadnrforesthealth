@@ -34,23 +34,20 @@ namespace ProjectFirma.Web.Views.County
     public class DetailViewData : FirmaViewData
     {
         public readonly Models.County County;
-        public readonly bool UserHasRegionManagePermissions;
+        public readonly bool UserHasCountyManagePermissions;
         public readonly string IndexUrl;
         public readonly BasicProjectInfoGridSpec BasicProjectInfoGridSpec;
         public readonly string BasicProjectInfoGridName;
         public readonly string BasicProjectInfoGridDataUrl;
         public readonly MapInitJson MapInitJson;
-        public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
-        public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
 
-        public DetailViewData(Person currentPerson, Models.County county, MapInitJson mapInitJson, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
+        public DetailViewData(Person currentPerson, Models.County county, MapInitJson mapInitJson) : base(currentPerson)
         {
             County = county;
             MapInitJson = mapInitJson;
-            //ViewGoogleChartViewData = viewGoogleChartViewData;
-            PageTitle = county.CountyName;
+            PageTitle = county.CountyName + $" {Models.FieldDefinition.County.FieldDefinitionName}";
             EntityName = Models.FieldDefinition.County.GetFieldDefinitionLabel();
-            UserHasRegionManagePermissions = new DNRUplandRegionManageFeature().HasPermissionByPerson(currentPerson);
+            UserHasCountyManagePermissions = new CountyManageFeature().HasPermissionByPerson(currentPerson);
             IndexUrl = SitkaRoute<CountyController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "countyProjectListGrid";
@@ -62,8 +59,6 @@ namespace ProjectFirma.Web.Views.County
             };
           
             BasicProjectInfoGridDataUrl = SitkaRoute<CountyController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(county));
-
-            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>county.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
         }
 
         
