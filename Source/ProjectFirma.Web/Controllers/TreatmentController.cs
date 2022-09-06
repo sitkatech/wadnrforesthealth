@@ -109,7 +109,8 @@ namespace ProjectFirma.Web.Controllers
             var treatmentTypesList = TreatmentType.All;
             var treatmentDetailedActivityTypesList = TreatmentDetailedActivityType.All;
             var treatmentAreas = project.ProjectLocations.Where(x => x.ProjectLocationTypeID == (int)ProjectLocationTypeEnum.TreatmentArea);
-            var viewData = new EditTreatmentViewData(treatmentTypesList, treatmentDetailedActivityTypesList, treatmentAreas);
+            var treatmentCodesList = HttpRequestStorage.DatabaseEntities.TreatmentCodes.ToList();
+            var viewData = new EditTreatmentViewData(treatmentTypesList, treatmentDetailedActivityTypesList, treatmentAreas, treatmentCodesList);
             return RazorPartialView<EditTreatment, EditTreatmentViewData, EditTreatmentViewModel>(viewData, viewModel);
         }
 

@@ -33,12 +33,14 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
         public IEnumerable<SelectListItem> TreatmentTypeList { get; }
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeList { get; }
         public IEnumerable<SelectListItem> TreatmentAreaList { get; }
+        public IEnumerable<SelectListItem> TreatmentCodeList { get; }
 
-        public EditTreatmentUpdateViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<TreatmentDetailedActivityType> treatmentDetailedActivityTypesList, IEnumerable<ProjectLocationUpdate> treatmentAreas)
+        public EditTreatmentUpdateViewData(IEnumerable<TreatmentType> treatmentTypesList, IEnumerable<TreatmentDetailedActivityType> treatmentDetailedActivityTypesList, IEnumerable<ProjectLocationUpdate> treatmentAreas, IEnumerable<TreatmentCode> treatmentCodesList)
         {
             TreatmentTypeList = treatmentTypesList.ToSelectList(x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentTypeDisplayName);
             TreatmentDetailedActivityTypeList = treatmentDetailedActivityTypesList.ToSelectList(x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentDetailedActivityTypeDisplayName);
             TreatmentAreaList = treatmentAreas.ToSelectList(x => x.ProjectLocationUpdateID.ToString(CultureInfo.InvariantCulture), y => y.ProjectLocationUpdateName);
+            TreatmentCodeList = treatmentCodesList.ToSelectListWithEmptyFirstRow(x => x.TreatmentCodeID.ToString(CultureInfo.InvariantCulture), y => y.TreatmentCodeDisplayName);
         }
     }
 
