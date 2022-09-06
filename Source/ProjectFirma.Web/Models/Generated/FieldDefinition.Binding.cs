@@ -3323,6 +3323,6 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionCounty : FieldDefinition
     {
         private FieldDefinitionCounty(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionCounty Instance = new FieldDefinitionCounty(504, @"County", @"County", @"<p>Click on a county to see a map and list of forest health projects within the area.</p>");
+        public static readonly FieldDefinitionCounty Instance = new FieldDefinitionCounty(504, @"County", @"County", @"<p>A political and administrative division of a state, providing certain local governmental services.</p>");
     }
 }
