@@ -710,13 +710,10 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
-<<<<<<< HEAD
     <Compile Include="Controllers\CountyController.cs" />
     <Compile Include="Models\County.cs" />
-=======
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\TreatmentCode.cs" />
->>>>>>> develop
     <Compile Include="Controllers\TreatmentUpdateController.cs" />
     <Compile Include="Models\ExternalMapLayer.cs" />
     <Compile Include="Models\ExternalMapLayerModelExtensions.cs" />
