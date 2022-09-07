@@ -22,6 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectPersonRelationshipTypePrimaryContact PrimaryContact = ProjectPersonRelationshipTypePrimaryContact.Instance;
         public static readonly ProjectPersonRelationshipTypePrivateLandowner PrivateLandowner = ProjectPersonRelationshipTypePrivateLandowner.Instance;
         public static readonly ProjectPersonRelationshipTypeContractor Contractor = ProjectPersonRelationshipTypeContractor.Instance;
+        public static readonly ProjectPersonRelationshipTypeCoordinator Coordinator = ProjectPersonRelationshipTypeCoordinator.Instance;
 
         public static readonly List<ProjectPersonRelationshipType> All;
         public static readonly ReadOnlyDictionary<int, ProjectPersonRelationshipType> AllLookupDictionary;
@@ -31,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectPersonRelationshipType()
         {
-            All = new List<ProjectPersonRelationshipType> { PrimaryContact, PrivateLandowner, Contractor };
+            All = new List<ProjectPersonRelationshipType> { PrimaryContact, PrivateLandowner, Contractor, Coordinator };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectPersonRelationshipType>(All.ToDictionary(x => x.ProjectPersonRelationshipTypeID));
         }
 
@@ -111,6 +112,8 @@ namespace ProjectFirma.Web.Models
             {
                 case ProjectPersonRelationshipTypeEnum.Contractor:
                     return Contractor;
+                case ProjectPersonRelationshipTypeEnum.Coordinator:
+                    return Coordinator;
                 case ProjectPersonRelationshipTypeEnum.PrimaryContact:
                     return PrimaryContact;
                 case ProjectPersonRelationshipTypeEnum.PrivateLandowner:
@@ -125,7 +128,8 @@ namespace ProjectFirma.Web.Models
     {
         PrimaryContact = 1,
         PrivateLandowner = 2,
-        Contractor = 3
+        Contractor = 3,
+        Coordinator = 4
     }
 
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
@@ -144,5 +148,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
         public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false, false, 20);
+    }
+
+    public partial class ProjectPersonRelationshipTypeCoordinator : ProjectPersonRelationshipType
+    {
+        private ProjectPersonRelationshipTypeCoordinator(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypeCoordinator Instance = new ProjectPersonRelationshipTypeCoordinator(4, @"Coordinator", @"Coordinator", 507, false, false, 40);
     }
 }

@@ -173,6 +173,7 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Store.Treatment" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.Store.TreatmentArea" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.Store.TreatmentCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.Store.TreatmentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
@@ -1429,6 +1430,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectLocation" EntitySet="ProjectLocation" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
+    <AssociationSet Name="FK_Treatment_TreatmentCode_TreatmentCodeID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentCode_TreatmentCodeID">
+      <End Role="TreatmentCode" EntitySet="TreatmentCode" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
     <AssociationSet Name="FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" EntitySet="TreatmentUpdate" />
@@ -1451,6 +1456,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_TreatmentCode_TreatmentCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_TreatmentCode_TreatmentCodeID">
+      <End Role="TreatmentCode" EntitySet="TreatmentCode" />
       <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
     </AssociationSet>
   </EntityContainer>
@@ -3431,6 +3440,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGis" Type="bit" />
     <Property Name="ProjectLocationID" Type="int" />
+    <Property Name="TreatmentCodeID" Type="int" />
+    <Property Name="CostPerAcre" Type="money" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -3439,6 +3450,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="int" />
+  </EntityType>
+  <EntityType Name="TreatmentCode">
+    <Key>
+      <PropertyRef Name="TreatmentCodeID" />
+    </Key>
+    <Property Name="TreatmentCodeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentCodeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="TreatmentCodeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="TreatmentUpdate">
     <Key>
@@ -3461,6 +3480,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGis" Type="bit" />
     <Property Name="ProjectLocationUpdateID" Type="int" />
+    <Property Name="TreatmentCodeID" Type="int" />
+    <Property Name="CostPerAcre" Type="money" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -7092,6 +7113,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Treatment_TreatmentCode_TreatmentCodeID">
+    <End Role="TreatmentCode" Type="ProjectFirma.Web.Models.Store.TreatmentCode" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentCode">
+        <PropertyRef Name="TreatmentCodeID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="TreatmentCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
     <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
     <End Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
@@ -7161,6 +7194,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="TreatmentUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_TreatmentCode_TreatmentCodeID">
+    <End Role="TreatmentCode" Type="ProjectFirma.Web.Models.Store.TreatmentCode" Multiplicity="0..1" />
+    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentCode">
+        <PropertyRef Name="TreatmentCodeID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdates">
+        <PropertyRef Name="TreatmentCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

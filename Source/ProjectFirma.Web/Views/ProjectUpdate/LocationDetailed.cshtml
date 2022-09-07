@@ -68,7 +68,14 @@ else
     <table style="width: 100%">
         <tr>
             <td>
-                @ModalDialogFormHelper.ModalDialogFormLink("revert-button", "Revert Current Page", ViewDataTyped.RefreshUrl, "Refresh this section", 500, "Continue", "Continue", "Cancel", new List<string> { "btn btn-xs btn-firma" }, null, null, null, "Undo all changes on this page")
+                @if (ViewDataTyped.CanRevert)
+                {
+                    @ModalDialogFormHelper.ModalDialogFormLink("revert-button", "Revert Current Page", ViewDataTyped.RefreshUrl, "Refresh this section", 500, "Continue", "Continue", "Cancel", new List<string> { "btn btn-xs btn-firma" }, null, null, null, "Undo all changes on this page")
+                }
+                else
+                {
+                    <button id="revert-button" class="btn btn-xs btn-firma" title="Reverting locations would remove treatment areas linked to treatments." type="button" disabled>Revert Current Page</button>
+                }
             </td>
             <td style="text-align: right">
                 <button id="UpdateLocationDetailedSaveButtonID" class="btn btn-xs btn-firma" title="Save changes made on this page" type="button" onclick="saveForm(false)">Save</button>

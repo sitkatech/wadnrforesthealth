@@ -20,6 +20,8 @@ CREATE TABLE [dbo].[Treatment](
 	[ProgramID] [int] NULL,
 	[ImportedFromGis] [bit] NULL,
 	[ProjectLocationID] [int] NULL,
+	[TreatmentCodeID] [int] NULL,
+	[CostPerAcre] [money] NULL,
  CONSTRAINT [PK_Treatment_TreatmentID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentID] ASC
@@ -56,6 +58,11 @@ ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_ProjectL
 REFERENCES [dbo].[ProjectLocation] ([ProjectLocationID])
 GO
 ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_ProjectLocation_ProjectLocationID]
+GO
+ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentCode_TreatmentCodeID] FOREIGN KEY([TreatmentCodeID])
+REFERENCES [dbo].[TreatmentCode] ([TreatmentCodeID])
+GO
+ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_TreatmentCode_TreatmentCodeID]
 GO
 ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_TreatmentDetailedActivityType_TreatmentDetailedActivityTypeID] FOREIGN KEY([TreatmentDetailedActivityTypeID])
 REFERENCES [dbo].[TreatmentDetailedActivityType] ([TreatmentDetailedActivityTypeID])

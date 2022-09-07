@@ -323,4 +323,9 @@ VALUES
 (501, N'ExternalMapLayerIsATiledMapService', 'Is a Tiled Map Service?', 'Please turn on this setting if the external map layer is a tiled layer (raster). Note: Pop-ups will not appear on maps for tiled layers.'),
 (502, N'ExternalMapLayerIsActive', 'Is Active?', 'If this is not set, the layer will not appear on any maps. If there is a problem with the external map service an administrator can uncheck this box to hide the layer until it is resolved.'),
 (503, N'UpdatesFromImport', N'Updates From Import', N'<p>Projects can be updated via the bulk-import process. They can be blocked from updating in this way.</p>'),
-(504, N'County', N'County', N'<p>A political and administrative division of a state, providing certain local governmental services.</p>')
+(504, N'TreatmentCode', 'Treatment Code', N'<p>The code for the treatment, e.g., BR-1: Brush Control.</p>'),
+(505, N'TreatmentCostPerAcre', 'Treatment Cost Per Acre', N'<p>The cost of the treatment on a per acre basis.</p>'),
+(506, N'TreatmentTotalCost', 'Treatment Total Cost', N'<p>The treatment acres multiplied by the cost per acre.</p>'),
+(507, N'Coordinator', 'Coordinator', 'Placeholder definition for Coordinator.'),
+(508, N'County', N'County', N'<p>A political and administrative division of a state, providing certain local governmental services.</p>')
+

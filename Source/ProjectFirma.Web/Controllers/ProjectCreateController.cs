@@ -737,9 +737,40 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditLocationDetailed(project, viewModel);
             }
+
+            // MCS: This check needs to be done separate from the other validation checks; if it fails we need to recreate the ViewModel
+            // This is necessary to add back the ProjectLocations that should not have been deleted
+            var deletionErrors = ValidateProjectLocationDeletions(project, viewModel);
+            deletionErrors.ForEach(x => ModelState.AddModelError("Validation", x));
+            if (!ModelState.IsValid)
+            {
+                var projectLocationsDetailed = project.ProjectLocations;
+                return ViewEditLocationDetailed(project, new LocationDetailedViewModel(projectLocationsDetailed));
+            }
+
             SaveDetailedLocations(viewModel, project);
             SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes and DNR Upland Regions were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationDetailed.ProjectCreateSectionDisplayName);
+        }
+
+        private List<string> ValidateProjectLocationDeletions(Project project, LocationDetailedViewModel viewModel)
+        {
+            var result = new List<string>();
+
+            var existingProjectLocations = project.ProjectLocations;
+            var updatedProjectLocationIDs = viewModel.ProjectLocationJsons.Select(x => x.ProjectLocationID)
+                .Union(viewModel.ArcGisProjectLocationJsons.Select(y => y.ProjectLocationID))
+                .ToList();
+            var deletedProjectLocations = existingProjectLocations.Where(x => !updatedProjectLocationIDs.Contains(x.ProjectLocationID)).ToList();
+            foreach (var dpl in deletedProjectLocations)
+            {
+                if (dpl.Treatments.Any())
+                {
+                    result.Add($"Project Location {dpl.ProjectLocationName} cannot be deleted because it has Treatments.");
+                }
+            }
+
+            return result;
         }
 
         [HttpGet]
@@ -837,25 +868,32 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
-            var currentProjectLocationsThatAreEditable = project.ProjectLocations.Where(x => !x.ArcGisObjectID.HasValue).ToList();
-            foreach (var currentProjectLocation in currentProjectLocationsThatAreEditable)
-            {
-                currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                project.ProjectLocations.Remove(currentProjectLocation);
-            }
             //update the editable ProjectLocations
             if (viewModel.ProjectLocationJsons != null)
             {
+                var projectLocationsFromViewModel = new List<ProjectLocation>();
                 foreach (var projectLocationJson in viewModel.ProjectLocationJsons.Where(x => !x.ArcGisObjectID.HasValue))
                 {
-                    var projectLocationGeometry =
-                        DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText,
-                            FirmaWebConfiguration.GeoSpatialReferenceID);
-                    var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName,
-                        projectLocationGeometry, projectLocationJson.ProjectLocationTypeID,
-                        projectLocationJson.ProjectLocationNotes);
-                    project.ProjectLocations.Add(projectLocation);
+                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
+                    var projectLocationInDB = project.ProjectLocations.SingleOrDefault(x => x.ProjectLocationID == projectLocationJson.ProjectLocationID);
+                    if (projectLocationInDB == null)  // creating a new ProjectLocation
+                    {
+                        var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName, projectLocationGeometry, projectLocationJson.ProjectLocationTypeID, projectLocationJson.ProjectLocationNotes);
+                        projectLocationsFromViewModel.Add(projectLocation);
+                    }
+                    else  // updating existing ProjectLocation after applying updates from incoming ProjectLocationJson
+                    {
+                        projectLocationInDB.ProjectLocationGeometry = projectLocationGeometry;
+                        projectLocationInDB.ProjectLocationTypeID = projectLocationJson.ProjectLocationTypeID;
+                        projectLocationInDB.ProjectLocationName = projectLocationJson.ProjectLocationName;
+                        projectLocationInDB.ProjectLocationNotes = projectLocationJson.ProjectLocationNotes;
+                        projectLocationsFromViewModel.Add(projectLocationInDB);
+                    }
                 }
+
+                HttpRequestStorage.DatabaseEntities.ProjectLocations.Load();
+                var allProjectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations.Local;
+                project.ProjectLocations.Merge(projectLocationsFromViewModel, allProjectLocations, (x, y) => x.ProjectLocationID == y.ProjectLocationID);
             }
 
             //update arcGIS ProjectLocations for the notes

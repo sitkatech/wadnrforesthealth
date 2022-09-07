@@ -200,6 +200,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentArea> TreatmentAreas { get; set; }
+        public virtual DbSet<TreatmentCode> TreatmentCodes { get; set; }
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
@@ -1087,6 +1088,9 @@ namespace ProjectFirma.Web.Models
 
                 case "TreatmentArea":
                     return TreatmentAreas.GetTreatmentArea(primaryKey);
+
+                case "TreatmentCode":
+                    return TreatmentCodes.GetTreatmentCode(primaryKey);
 
                 case "TreatmentDetailedActivityType":
                     var treatmentDetailedActivityType = TreatmentDetailedActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

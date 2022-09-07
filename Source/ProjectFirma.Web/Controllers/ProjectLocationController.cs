@@ -121,8 +121,39 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectLocationDetailed(project, viewModel);
             }
+
+            // MCS: This check needs to be done separate from the other validation checks; if it fails we need to recreate the ViewModel
+            // This is necessary to add back the ProjectLocations that should not have been deleted
+            var deletionErrors = ValidateProjectLocationDeletions(project, viewModel);
+            deletionErrors.ForEach(x => ModelState.AddModelError("Validation", x));
+            if (!ModelState.IsValid)
+            {
+                var projectLocationsDetailed = project.ProjectLocations;
+                return ViewEditProjectLocationDetailed(project, new ProjectLocationDetailViewModel(projectLocationsDetailed));
+            }
+
             SaveProjectDetailedLocations(viewModel, project);
             return new ModalDialogFormJsonResult();
+        }
+
+        private List<string> ValidateProjectLocationDeletions(Project project, ProjectLocationDetailViewModel viewModel)
+        {
+            var result = new List<string>();
+
+            var existingProjectLocations = project.ProjectLocations;
+            var updatedProjectLocationIDs = viewModel.ProjectLocationJsons.Select(x => x.ProjectLocationID)
+                .Union(viewModel.ArcGisProjectLocationJsons.Select(y => y.ProjectLocationID))
+                .ToList();
+            var deletedProjectLocations = existingProjectLocations.Where(x => !updatedProjectLocationIDs.Contains(x.ProjectLocationID)).ToList();
+            foreach (var dpl in deletedProjectLocations)
+            {
+                if (dpl.Treatments.Any())
+                {
+                    result.Add($"Project Location {dpl.ProjectLocationName} cannot be deleted because it has Treatments.");
+                }
+            }
+
+            return result;
         }
 
         [HttpGet]
@@ -250,6 +281,10 @@ namespace ProjectFirma.Web.Controllers
                     }
                     else
                     {
+                        projectLocationInDB.ProjectLocationGeometry = projectLocationGeometry;
+                        projectLocationInDB.ProjectLocationTypeID = projectLocationJson.ProjectLocationTypeID;
+                        projectLocationInDB.ProjectLocationName = projectLocationJson.ProjectLocationName;
+                        projectLocationInDB.ProjectLocationNotes = projectLocationJson.ProjectLocationNotes;
                         projectLocationsFromViewModel.Add(projectLocationInDB);
                     }
                 }
