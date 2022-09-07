@@ -19,9 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity.Spatial;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
@@ -78,6 +76,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
                 {
                     results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Location Type must be selected.", x => x.ProjectLocationTypeID));
                 }
+
+                if (plj.HasTreatments.HasValue && plj.HasTreatments.Value && plj.ProjectLocationTypeID != ProjectLocationType.TreatmentArea.ProjectLocationTypeID)
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Location Type cannot be changed for Treatment Areas associated with Treatments.", x => x.ProjectLocationTypeID));
+                }
             }
 
             
@@ -104,6 +107,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             IsGeometryFromArcGis = x.ArcGisObjectID.HasValue;
             ArcGisObjectID = x.ArcGisObjectID;
             ArcGisGlobalID = x.ArcGisGlobalID;
+            HasTreatments = x.Treatments.Any();
         }
 
         public ProjectLocationJson(Models.ProjectLocationUpdate x)
@@ -118,6 +122,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             IsGeometryFromArcGis = x.ArcGisObjectID.HasValue;
             ArcGisObjectID = x.ArcGisObjectID;
             ArcGisGlobalID = x.ArcGisGlobalID;
+            HasTreatments = x.TreatmentUpdates.Any();
         }
 
         public string ProjectLocationGeometryWellKnownText { get; set; }
@@ -130,5 +135,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public int? ArcGisObjectID { get; set; }
         public string ArcGisGlobalID { get; set; }
         public bool IsGeometryFromArcGis { get; set; }
+        public bool? HasTreatments { get; set; }
     }
 }
