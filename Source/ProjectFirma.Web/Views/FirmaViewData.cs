@@ -173,6 +173,8 @@ namespace ProjectFirma.Web.Views
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<PriorityLandscapeController>(c => c.Index()), currentPerson, "Priority Landscapes", "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<DNRUplandRegionController>(c => c.Index()), currentPerson, Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FocusAreaController>(c => c.Index()), currentPerson, Models.FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized(), "Group2"));
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CountyController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.County.GetFieldDefinitionLabelPluralized()}", "Group2"));
+
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectStewardOrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.ProjectStewardOrganizationDisplayName.GetFieldDefinitionLabelPluralized()}", "Group3"));

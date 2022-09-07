@@ -113,6 +113,7 @@
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.Store.ProjectCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
@@ -1029,6 +1030,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectClassifications" EntitySet="ProjectClassification" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCounty_County_CountyID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCounty_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCounty_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCounty_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttribute_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
@@ -1577,10 +1586,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Key>
       <PropertyRef Name="CountyID" />
     </Key>
-    <Property Name="CountyID" Type="int" Nullable="false" />
     <Property Name="CountyName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
     <Property Name="CountyFeature" Type="geometry" />
+    <Property Name="CountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>
@@ -2749,6 +2758,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="ProjectStartDate" Type="datetime" />
     <Property Name="ProjectEndDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectCounty">
+    <Key>
+      <PropertyRef Name="ProjectCountyID" />
+    </Key>
+    <Property Name="ProjectCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="CountyID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -5892,6 +5909,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectClassifications">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCounty_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.Store.County" Multiplicity="1" />
+    <End Role="ProjectCounties" Type="ProjectFirma.Web.Models.Store.ProjectCounty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCounties">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCounty_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="ProjectCounties" Type="ProjectFirma.Web.Models.Store.ProjectCounty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectCounties">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

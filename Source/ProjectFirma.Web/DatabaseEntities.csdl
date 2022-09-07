@@ -113,6 +113,7 @@
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
+    <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.ProjectCounty" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
@@ -257,6 +258,10 @@
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
       <End Role="Counties" EntitySet="County" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCounty_County_CountyID" Association="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCounties" EntitySet="ProjectCounty" />
     </AssociationSet>
     <AssociationSet Name="FK_CustomPageImage_CustomPage_CustomPageID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID">
       <End Role="CustomPage" EntitySet="CustomPage" />
@@ -1094,6 +1099,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectClassifications" EntitySet="ProjectClassification" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCounty_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
@@ -1506,11 +1515,12 @@
     <Key>
       <PropertyRef Name="CountyID" />
     </Key>
-    <Property Name="CountyID" Type="Int32" Nullable="false" />
     <Property Name="CountyName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
     <Property Name="CountyFeature" Type="Geometry" />
+    <Property Name="CountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="StateProvince" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="Counties" ToRole="StateProvince" />
+    <NavigationProperty Name="ProjectCounties" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="County" ToRole="ProjectCounties" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>
@@ -3014,6 +3024,7 @@
     <NavigationProperty Name="ProgramNotificationSentProjects" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSentProject_Project_ProjectID" FromRole="Project" ToRole="ProgramNotificationSentProjects" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="Projects" ToRole="ProjectType" />
     <NavigationProperty Name="ProjectClassifications" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="Project" ToRole="ProjectClassifications" />
+    <NavigationProperty Name="ProjectCounties" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID" FromRole="Project" ToRole="ProjectCounties" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID" FromRole="Project" ToRole="ProjectCustomAttributes" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID" FromRole="Project" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectExemptReportingYears" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID" FromRole="Project" ToRole="ProjectExemptReportingYears" />
@@ -3058,6 +3069,16 @@
     <Property Name="ProjectStartDate" Type="DateTime" />
     <Property Name="ProjectEndDate" Type="DateTime" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProgramIndexProjectCodes" />
+  </EntityType>
+  <EntityType Name="ProjectCounty">
+    <Key>
+      <PropertyRef Name="ProjectCountyID" />
+    </Key>
+    <Property Name="ProjectCountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="ProjectCounties" ToRole="County" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID" FromRole="ProjectCounties" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -4355,6 +4376,18 @@
       </Principal>
       <Dependent Role="Counties">
         <PropertyRef Name="StateProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCounty_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.County" Multiplicity="1" />
+    <End Role="ProjectCounties" Type="ProjectFirma.Web.Models.ProjectCounty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCounties">
+        <PropertyRef Name="CountyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -6868,6 +6901,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectClassifications">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCounty_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectCounties" Type="ProjectFirma.Web.Models.ProjectCounty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectCounties">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

@@ -140,6 +140,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
+        public virtual DbSet<ProjectCounty> ProjectCounties { get; set; }
         public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual DbSet<ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; set; }
         public virtual DbSet<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
@@ -812,6 +813,9 @@ namespace ProjectFirma.Web.Models
                     var projectCostType = ProjectCostType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectCostType, "ProjectCostType", primaryKey);
                     return projectCostType;
+
+                case "ProjectCounty":
+                    return ProjectCounties.GetProjectCounty(primaryKey);
 
                 case "ProjectCreateSection":
                     var projectCreateSection = ProjectCreateSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

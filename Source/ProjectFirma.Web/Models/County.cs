@@ -18,32 +18,79 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using LtInfo.Common.GeoJson;
+using GeoJSON.Net.Feature;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Views.PerformanceMeasure;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class County
+    public partial class County : IAuditableEntity
     {
-        public static GeoJSON.Net.Feature.FeatureCollection ToGeoJsonFeatureCollection(List<County> counties)
+        public string DisplayName => "Counties";
+
+        public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            var featureCollection = new GeoJSON.Net.Feature.FeatureCollection();
-            featureCollection.Features.AddRange(counties.Select(MakeFeatureWithRelevantProperties).ToList());
-            return featureCollection;
+            return ProjectCounties.Select(ptc => ptc.Project).ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
-        private static GeoJSON.Net.Feature.Feature MakeFeatureWithRelevantProperties(County county)
+        public string AuditDescriptionString => CountyName;
+
+        public Feature MakeFeatureWithRelevantProperties()
         {
-            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(county.CountyFeature);
-            feature.Properties.Add("State", county.StateProvince.StateProvinceAbbreviation);
-            feature.Properties.Add("County", county.CountyName);
+            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(CountyFeature);
+            feature.Properties.Add("County", this.GetCountyDisplayNameAsUrl().ToString());
             return feature;
         }
+
+        public HtmlString GetDisplayNameAsUrl()
+        {
+            return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
+        }
+
+        public string GetDetailUrl()
+        {
+            var urlTemplateString = SitkaRoute<CountyController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int));
+            return urlTemplateString.Replace(UrlTemplate.Parameter1Int.ToString(), this.CountyID.ToString());
+        }
+
+        public static LayerGeoJson GetCountyWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
+        {
+            return new LayerGeoJson("All Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), layerColor, layerOpacity,
+                layerInitialVisibility, "/Content/leaflet/images/washington_county.png");
+        }
+
+        public static List<LayerGeoJson> GetCountyAndAssociatedProjectLayers(County county, List<Project> projects)
+        {
+            var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
+                Project.MappedPointsToGeoJsonFeatureCollection(projects, true, false),
+                "#ffff00", 1, LayerInitialVisibility.Show);
+            var countyLayerGeoJson = new LayerGeoJson(county.DisplayName,
+                new List<County> { county }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
+                LayerInitialVisibility.Show);
+
+            var layerGeoJsons = new List<LayerGeoJson>
+            {
+                projectLayerGeoJson,
+                countyLayerGeoJson,
+                GetCountyWmsLayerGeoJson("#59ACFF", 0.6m,
+                    LayerInitialVisibility.Show)
+            };
+
+            return layerGeoJsons;
+        }
+
+        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
+        {
+            var projects = GetAssociatedProjects(currentPerson);
+            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
+        }
     }
-}
-
-
-namespace ProjectFirma.Web.Models
-{
 }
