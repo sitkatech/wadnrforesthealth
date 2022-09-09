@@ -34,6 +34,7 @@ using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -277,6 +278,7 @@ namespace ProjectFirma.Web.Controllers
                         var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName,
                             projectLocationGeometry, projectLocationJson.ProjectLocationTypeID,
                             projectLocationJson.ProjectLocationNotes);
+                        projectLocation.ProjectLocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
                         projectLocationsFromViewModel.Add(projectLocation);
                     }
                     else
