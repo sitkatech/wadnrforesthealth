@@ -814,7 +814,7 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.LocationSimpleComment = viewModel.Comments;
             }
 
-            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
 
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
                 ProjectUpdateSection.LocationSimple.ProjectUpdateSectionDisplayName);
@@ -924,7 +924,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectUpdateBatch.LocationDetailedComment = viewModel.Comments;
             }
-            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.LocationDetailed.ProjectUpdateSectionDisplayName);
         }
 

@@ -170,6 +170,7 @@ namespace ProjectFirma.Web.Models
             projectUpdateBatch.NoRegionsExplanation = project.NoRegionsExplanation;
             projectUpdateBatch.NoPriorityLandscapesExplanation = project.NoPriorityLandscapesExplanation;
 
+
             // create a project update history record
             CreateNewTransitionRecord(projectUpdateBatch, ProjectUpdateState.Created, currentPerson, DateTime.Now);
             return projectUpdateBatch;
@@ -737,7 +738,7 @@ namespace ProjectFirma.Web.Models
 
         public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
 
-        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegions()
+        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties()
         {
             var detailedProjectLocations = ProjectLocationUpdates.Select(x => x.ProjectLocationGeometry).ToList();
             var projectHasDetailedLocations = HasProjectLocationDetail;
@@ -783,6 +784,24 @@ namespace ProjectFirma.Web.Models
             }
 
             ProjectRegionUpdates.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.Local, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.DNRUplandRegionID == y.DNRUplandRegionID);
+
+            var updatedProjectCounties = HttpRequestStorage.DatabaseEntities.Counties
+                .Where(x => (projectHasDetailedLocations && x.CountyFeature.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.CountyFeature.Intersects(projectLocationPoint)))
+                .ToList()
+                .Select(x => new ProjectCountyUpdate(ProjectUpdateBatchID, x.CountyID))
+                .ToList();
+
+            if (!updatedProjectCounties.Any())
+            {
+                NoCountiesExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any County.";
+            }
+            else
+            {
+                NoCountiesExplanation = null;
+            }
+
+            ProjectCountyUpdates.Merge(updatedProjectCounties, HttpRequestStorage.DatabaseEntities.ProjectCountyUpdates.Local, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.CountyID == y.CountyID);
         }
     }
 }

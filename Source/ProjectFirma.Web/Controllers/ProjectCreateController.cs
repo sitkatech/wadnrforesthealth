@@ -673,7 +673,7 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(project);
 
-           project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+           project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
 
            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Simple Location successfully saved. Priority Landscapes and DNR Upland Regions were automatically updated based on the Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationSimple.ProjectCreateSectionDisplayName);
@@ -904,7 +904,7 @@ namespace ProjectFirma.Web.Controllers
                 matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
 
-            project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+            project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)

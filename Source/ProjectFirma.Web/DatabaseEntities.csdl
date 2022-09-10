@@ -114,6 +114,7 @@
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.ProjectCounty" />
+    <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.ProjectCountyUpdate" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
@@ -262,6 +263,10 @@
     <AssociationSet Name="FK_ProjectCounty_County_CountyID" Association="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID">
       <End Role="County" EntitySet="County" />
       <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_County_CountyID" Association="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_CustomPageImage_CustomPage_CustomPageID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID">
       <End Role="CustomPage" EntitySet="CustomPage" />
@@ -1187,6 +1192,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
@@ -1521,6 +1530,7 @@
     <Property Name="CountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="StateProvince" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="Counties" ToRole="StateProvince" />
     <NavigationProperty Name="ProjectCounties" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="County" ToRole="ProjectCounties" />
+    <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="County" ToRole="ProjectCountyUpdates" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>
@@ -3011,6 +3021,7 @@
     <Property Name="LastUpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
@@ -3079,6 +3090,16 @@
     <Property Name="CountyID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="ProjectCounties" ToRole="County" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID" FromRole="ProjectCounties" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectCountyUpdate">
+    <Key>
+      <PropertyRef Name="ProjectCountyUpdateID" />
+    </Key>
+    <Property Name="ProjectCountyUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="ProjectCountyUpdates" ToRole="County" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectCountyUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -3631,9 +3652,11 @@
     <Property Name="ProjectAttributesComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ProjectAttributesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityLandscapesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
+    <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCountyUpdates" />
     <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCustomAttributeUpdates" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectExemptReportingYearUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExemptReportingYearUpdates" />
@@ -4387,6 +4410,18 @@
         <PropertyRef Name="CountyID" />
       </Principal>
       <Dependent Role="ProjectCounties">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.County" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
         <PropertyRef Name="CountyID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7166,6 +7201,18 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

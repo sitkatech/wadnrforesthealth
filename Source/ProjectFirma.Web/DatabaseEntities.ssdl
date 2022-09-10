@@ -114,6 +114,7 @@
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.Store.ProjectCounty" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
@@ -1037,6 +1038,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectCounty_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCounty_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_County_CountyID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCountyUpdate_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttribute_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -2738,6 +2747,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
+    <Property Name="NoCountiesExplanation" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -2765,6 +2775,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="CountyID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectCountyUpdate">
+    <Key>
+      <PropertyRef Name="ProjectCountyUpdateID" />
+    </Key>
+    <Property Name="ProjectCountyUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="CountyID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
@@ -3228,6 +3246,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectAttributesComment" Type="varchar" MaxLength="1000" />
     <Property Name="ProjectAttributesDiffLog" Type="varchar(max)" />
     <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="NoCountiesExplanation" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
@@ -5934,6 +5953,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectCounties">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.Store.County" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

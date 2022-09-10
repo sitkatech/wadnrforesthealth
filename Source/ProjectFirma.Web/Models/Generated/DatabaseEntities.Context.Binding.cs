@@ -141,6 +141,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
         public virtual DbSet<ProjectCounty> ProjectCounties { get; set; }
+        public virtual DbSet<ProjectCountyUpdate> ProjectCountyUpdates { get; set; }
         public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual DbSet<ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; set; }
         public virtual DbSet<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
@@ -816,6 +817,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectCounty":
                     return ProjectCounties.GetProjectCounty(primaryKey);
+
+                case "ProjectCountyUpdate":
+                    return ProjectCountyUpdates.GetProjectCountyUpdate(primaryKey);
 
                 case "ProjectCreateSection":
                     var projectCreateSection = ProjectCreateSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

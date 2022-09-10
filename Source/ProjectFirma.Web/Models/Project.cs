@@ -430,7 +430,7 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityLandscapes.Select(x => x.PriorityLandscape);
         }
 
-        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegions()
+        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties()
         {
             var detailedProjectLocations = ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList();
             var projectHasDetailedLocations = HasProjectLocationDetail;
@@ -476,6 +476,24 @@ namespace ProjectFirma.Web.Models
             }
 
             ProjectRegions.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegions.Local, (x, y) => x.ProjectID == y.ProjectID && x.DNRUplandRegionID == y.DNRUplandRegionID);
+
+            var updatedProjectCounties= HttpRequestStorage.DatabaseEntities.Counties
+                .Where(x => (projectHasDetailedLocations && x.CountyFeature.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.CountyFeature.Intersects(projectLocationPoint)))
+                .ToList()
+                .Select(x => new ProjectCounty(ProjectID, x.CountyID))
+                .ToList();
+
+            if (!updatedProjectCounties.Any())
+            {
+                NoCountiesExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any County.";
+            }
+            else
+            {
+                NoCountiesExplanation = null;
+            }
+
+            ProjectCounties.Merge(updatedProjectCounties, HttpRequestStorage.DatabaseEntities.ProjectCounties.Local, (x, y) => x.ProjectID == y.ProjectID && x.CountyID == y.CountyID);
         }
 
         public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()

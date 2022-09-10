@@ -33,6 +33,7 @@ CREATE TABLE [dbo].[ProjectUpdateBatch](
 	[ProjectAttributesComment] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectAttributesDiffLog] [dbo].[html] NULL,
 	[NoPriorityLandscapesExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[NoCountiesExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectUpdateBatch_ProjectUpdateBatchID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateBatchID] ASC
