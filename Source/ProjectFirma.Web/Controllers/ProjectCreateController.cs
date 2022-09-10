@@ -879,6 +879,7 @@ namespace ProjectFirma.Web.Controllers
                     if (projectLocationInDB == null)  // creating a new ProjectLocation
                     {
                         var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName, projectLocationGeometry, projectLocationJson.ProjectLocationTypeID, projectLocationJson.ProjectLocationNotes);
+                        projectLocation.ProjectLocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
                         projectLocationsFromViewModel.Add(projectLocation);
                     }
                     else  // updating existing ProjectLocation after applying updates from incoming ProjectLocationJson
