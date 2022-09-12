@@ -794,7 +794,7 @@ namespace ProjectFirma.Web.Models
             if (!updatedProjectCounties.Any())
             {
                 NoCountiesExplanation =
-                    "Neither the simple location nor the detailed location on this project intersects with any County.";
+                    "Neither the simple location nor the detailed location on this project intersects with any county.";
             }
             else
             {

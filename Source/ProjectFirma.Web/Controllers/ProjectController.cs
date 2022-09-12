@@ -185,7 +185,8 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(project, $"project_{project.ProjectID}_Map", false);
             var mapFormID = GenerateEditProjectLocationFormID(project);
             var regions = project.ProjectRegions.Select(x => x.DNRUplandRegion).ToList();
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, priorityLandscapes, regions, project.NoRegionsExplanation, project.NoPriorityLandscapesExplanation);
+            var counties = project.ProjectCounties.Select(x=>x.County).ToList();
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, priorityLandscapes, regions, project.NoRegionsExplanation, project.NoPriorityLandscapesExplanation, counties, project.NoCountiesExplanation);
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);

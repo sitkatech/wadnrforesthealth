@@ -838,7 +838,7 @@ namespace ProjectFirma.Web.Controllers
             var mapPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.LocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationFormID(project);
             var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJsonForEdit, FirmaWebConfiguration.GetWmsLayerNames(), null, mapPostUrl, mapFormID, FirmaWebConfiguration.WebMapServiceUrl);
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), new List<DNRUplandRegion>(), string.Empty, string.Empty);
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), new List<DNRUplandRegion>(), string.Empty, string.Empty, new List<County>(), String.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new LocationSimpleViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, locationSimpleValidationResult, updateStatus);
             return RazorView<LocationSimple, LocationSimpleViewData, LocationSimpleViewModel>(viewData, viewModel);
@@ -1323,7 +1323,11 @@ namespace ProjectFirma.Web.Controllers
 
             var editProjectLocationViewData = new EditProjectRegionsViewData(CurrentPerson, mapInitJson, regionsInViewModel, editProjectRegionsPostUrl, editProjectRegionsFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
             var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), regions, noRegionsExplanation, string.Empty);
+
+            var counties = projectUpdate.GetProjectCounties().ToList();
+            var noCountiesExplanation = projectUpdateBatch.NoCountiesExplanation;
+
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), regions, noRegionsExplanation, string.Empty, counties, noCountiesExplanation);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new DNRUplandRegionsViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, regionValidationResult, updateStatus);
             return RazorView<Views.ProjectUpdate.DNRUplandRegions, DNRUplandRegionsViewData, DNRUplandRegionsViewModel>(viewData, viewModel);
@@ -1435,7 +1439,8 @@ namespace ProjectFirma.Web.Controllers
 
             var editProjectLocationViewData = new EditProjectPriorityLandscapesViewData(CurrentPerson, mapInitJson, priorityLandscapesInViewModel, editProjectPriorityLandscapesPostUrl, editProjectPriorityLandscapesFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
             var noPriorityLandscapesExplanation = projectUpdateBatch.NoPriorityLandscapesExplanation;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, priorityLandscapes, new List<DNRUplandRegion>(), string.Empty, noPriorityLandscapesExplanation);
+
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, priorityLandscapes, new List<DNRUplandRegion>(), string.Empty, noPriorityLandscapesExplanation, new List<County>(), string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new PriorityLandscapesViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, priorityLandscapeValidationResult, updateStatus);
             return RazorView<Views.ProjectUpdate.PriorityLandscapes, PriorityLandscapesViewData, PriorityLandscapesViewModel>(viewData, viewModel);
