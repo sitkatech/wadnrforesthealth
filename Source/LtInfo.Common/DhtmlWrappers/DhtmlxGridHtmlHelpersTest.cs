@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using ApprovalTests;
 using ApprovalTests.Reporters;
@@ -40,13 +42,6 @@ namespace LtInfo.Common.DhtmlWrappers
             var gridSpec = new TestGridSpec();
             var result = DhtmlxGridHtmlHelpers.BuildGridColumns(gridSpec, indent);
             Approvals.Verify(result);
-        }
-
-        [Test]
-        public void IsUsingSmartRenderingWithColumnsThatHaveTotalsTest()
-        {
-            var gridSpec = new TestGridSpec();
-            Assert.That(DhtmlxGridHtmlHelpers.IsUsingSmartRendering(gridSpec), Is.False, "Should not be using smart rendering because we have a grid spec that has a total column");
         }
 
         [Test]

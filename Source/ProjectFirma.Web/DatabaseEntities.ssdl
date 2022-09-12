@@ -7426,25 +7426,6 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpCostTypeMapping' does n
   <Property Name="CostTypeDescription" Type="nvarchar" MaxLength="255" />
 </EntityType>
 Errors Found During Generation:
-warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpForesterUnit' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-
-<EntityType Name="tmpForesterUnit">
-  <Property Name="OBJECTID_1" Type="int" />
-  <Property Name="OBJECTID" Type="int" />
-  <Property Name="FP_UNIT_NM" Type="varchar" MaxLength="50" />
-  <Property Name="JURISDICT_" Type="smallint" />
-  <Property Name="REGION_NM" Type="varchar" MaxLength="50" />
-  <Property Name="JOB_POSN_N" Type="varchar" MaxLength="5" />
-  <Property Name="FP_FORESTE" Type="varchar" MaxLength="38" />
-  <Property Name="FP_FORES_1" Type="varchar" MaxLength="13" />
-  <Property Name="FP_FORES_2" Type="varchar" MaxLength="24" />
-  <Property Name="PHONE_NO" Type="varchar" MaxLength="14" />
-  <Property Name="Shape_Length" Type="float" />
-  <Property Name="Shape_Area" Type="float" />
-  <Property Name="GEOM" Type="geometry" />
-  <Property Name="PersonID" Type="int" />
-</EntityType>
-Errors Found During Generation:
 warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProgramIndex' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
 
 <EntityType Name="tmpProgramIndex">
@@ -7490,21 +7471,6 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProjectCode' does not h
   <Property Name="cash_cntrl_type_ind" Type="varchar" MaxLength="200" />
   <Property Name="gl_project_level" Type="varchar" MaxLength="200" />
   <Property Name="create_date" Type="varchar" MaxLength="200" />
-</EntityType>
-Errors Found During Generation:
-warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpServiceForesterData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-
-<EntityType Name="tmpServiceForesterData">
-  <Property Name="ForesterRoleID" Type="int" />
-  <Property Name="ForesterWorkUnitName" Type="varchar" MaxLength="100" />
-  <Property Name="RegionName" Type="varchar" MaxLength="100" />
-  <Property Name="ForesterWorkUnitLocation" Type="geometry" />
-  <Property Name="ForesterFullName" Type="varchar" MaxLength="500" />
-  <Property Name="ForesterFirstName" Type="varchar" MaxLength="250" />
-  <Property Name="ForesterLastName" Type="varchar" MaxLength="250" />
-  <Property Name="ForesterPhone" Type="varchar" MaxLength="250" />
-  <Property Name="ForesterEmail" Type="varchar" MaxLength="250" />
-  <Property Name="PersonID" Type="int" />
 </EntityType>
 Errors Found During Generation:
 warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.

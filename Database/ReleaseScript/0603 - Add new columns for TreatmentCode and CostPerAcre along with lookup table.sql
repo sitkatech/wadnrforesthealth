@@ -1,6 +1,6 @@
 --create lookup for TreatmentCode(Name, DisplayName)
 CREATE TABLE TreatmentCode(
-TreatmentCodeID INT NOT NULL CONSTRAINT PK_TreatementCode_TreatmentCodeID PRIMARY KEY,
+TreatmentCodeID INT NOT NULL CONSTRAINT PK_TreatmentCode_TreatmentCodeID PRIMARY KEY,
 TreatmentCodeName VARCHAR(100) NOT NULL,
 TreatmentCodeDisplayName VARCHAR(100) NOT NULL,
 )
