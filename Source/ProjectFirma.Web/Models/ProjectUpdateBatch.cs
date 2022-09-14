@@ -290,7 +290,7 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.DeleteProjectRegionUpdate(ProjectRegionUpdates);
             RefreshFromDatabase(ProjectRegionUpdates);
         }
-
+        
         public void DeleteProjectOrganizationUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.DeleteProjectOrganizationUpdate(ProjectOrganizationUpdates);
@@ -519,9 +519,27 @@ namespace ProjectFirma.Web.Models
             return regionValidationResult;
         }
 
+        public CountiesValidationResult ValidateProjectCounty()
+        {
+            var incomplete = !ProjectCountyUpdates.Any() && string.IsNullOrWhiteSpace(NoCountiesExplanation);
+            var countyValidationResult = new CountiesValidationResult(incomplete);
+            return countyValidationResult;
+        }
+
         public bool IsProjectRegionValid()
         {
             return ValidateProjectRegion().IsValid;
+        }
+
+        public bool IsProjectCountyValid()
+        {
+            return ValidateProjectCounty().IsValid;
+        }
+
+        public void DeleteProjectCountyUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectCountyUpdates.DeleteProjectCountyUpdate(ProjectCountyUpdates);
+            RefreshFromDatabase(ProjectCountyUpdates);
         }
 
         public PriorityLandscapesValidationResult ValidateProjectPriorityLandscape()

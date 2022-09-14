@@ -4,7 +4,6 @@ ADD NoCountiesExplanation varchar(4000) null;
 ALTER TABLE dbo.ProjectUpdateBatch
 ADD NoCountiesExplanation varchar(4000) null;
 
-
 CREATE TABLE [dbo].[ProjectCountyUpdate](
 	[ProjectCountyUpdateID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,

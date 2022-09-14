@@ -145,6 +145,16 @@ namespace ProjectFirma.Web.Models
                 LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_county.png");
         }
 
+        public static List<LayerGeoJson> GetCountyMapLayers(LayerInitialVisibility layerInitialVisibility)
+        {
+            var layerGeoJsons = new List<LayerGeoJson>
+            {
+                County.GetCountyWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+            };
+
+            return layerGeoJsons;
+        }
+
         public static LayerGeoJson GetWashingtonLegislativeDistrictLayer()
         {
             return new LayerGeoJson($"Washington Legislative Districts", FirmaWebConfiguration.WebMapServiceUrl,
