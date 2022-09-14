@@ -45,6 +45,7 @@
     <add key="GrantExpendituresTempBaseUrl" value="${grant-expenditures-temp-base-url}" />
     <add key="LastLoadDateUrl" value="${last-load-date-url}" />
     <add key="ShapeFileRootDirectory" value="C:\Sitka\WADNRForestHealth\ShapeFiles" />
+    <add key="ArcGisApiKey" value="${arcgis-api-key}" />
   </appSettings>
   <system.net>
     <mailSettings>
