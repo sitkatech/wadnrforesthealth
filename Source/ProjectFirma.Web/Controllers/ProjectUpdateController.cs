@@ -1429,7 +1429,7 @@ namespace ProjectFirma.Web.Controllers
             var mapInitJson = new MapInitJson("projectCountyMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true };
 
             var countyValidationResult = projectUpdateBatch.ValidateProjectCounty();
-            var counties = projectUpdate.GetProjectCounties().ToList();
+            var counties = HttpRequestStorage.DatabaseEntities.Counties.ToList();
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate, $"project_{project.ProjectID}_EditMap", false);
             var countyIDs = viewModel.CountyIDs ?? new List<int>();
             var countiesInViewModel = HttpRequestStorage.DatabaseEntities.Counties.Where(x => countyIDs.Contains(x.CountyID)).ToList();

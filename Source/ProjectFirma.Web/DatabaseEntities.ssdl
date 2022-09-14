@@ -177,8 +177,16 @@
     <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.Store.TreatmentCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.Store.TreatmentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.Store.vGeoServerCounty" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerCounty">
+      <DefiningQuery>SELECT 
+[vGeoServerCounty].[CountyID] AS [CountyID], 
+[vGeoServerCounty].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerCounty].[CountyName] AS [CountyName], 
+[vGeoServerCounty].[CountyFeature] AS [CountyFeature], 
+[vGeoServerCounty].[Ogr_Geometry] AS [Ogr_Geometry]
+FROM [dbo].[vGeoServerCounty] AS [vGeoServerCounty]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclBoundaryLine" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclBoundaryLine">
       <DefiningQuery>SELECT 
 [vGeoServerPclBoundaryLine].[PclBoundaryLineID] AS [PclBoundaryLineID], 
@@ -3527,15 +3535,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxpayerIdNumber" Type="varchar" MaxLength="200" />
     <Property Name="Email" Type="varchar" MaxLength="200" />
   </EntityType>
-  <EntityType Name="WashingtonCounty">
-    <Key>
-      <PropertyRef Name="WashingtonCountyID" />
-    </Key>
-    <Property Name="WashingtonCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="WashingtonCountyLocation" Type="geometry" Nullable="false" />
-    <Property Name="WashingtonCountyName" Type="nvarchar" Nullable="false" MaxLength="200" />
-    <Property Name="WashingtonCountyFullName" Type="nvarchar" Nullable="false" MaxLength="200" />
-  </EntityType>
   <EntityType Name="WashingtonLegislativeDistrict">
     <Key>
       <PropertyRef Name="WashingtonLegislativeDistrictID" />
@@ -3544,6 +3543,21 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="WashingtonLegislativeDistrictLocation" Type="geometry" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictNumber" Type="int" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictName" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerCounty">
+    <Key>
+      <PropertyRef Name="CountyID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="CountyName" />
+    </Key>
+    <Property Name="CountyID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="CountyName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="CountyFeature" Type="geometry" />
+    <Property Name="Ogr_Geometry" Type="geometry" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3662,9 +3676,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatmentArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonLegislativeDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

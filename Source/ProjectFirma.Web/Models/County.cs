@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Models
         public static LayerGeoJson GetCountyWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
             return new LayerGeoJson("All Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), layerColor, layerOpacity,
+                FirmaWebConfiguration.GetCountyWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility, "/Content/leaflet/images/washington_county.png");
         }
 

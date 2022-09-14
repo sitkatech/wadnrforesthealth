@@ -177,8 +177,8 @@
     <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.TreatmentCode" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.TreatmentUpdate" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
-    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
+    <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.vGeoServerCounty" />
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.vGeoServerPclBoundaryLine" />
     <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.vGeoServerPclLandscapeTreatmentPriority" />
     <EntitySet Name="vGeoServerPclVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPclVectorRanked" />
@@ -3995,15 +3995,6 @@
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
-  <EntityType Name="WashingtonCounty">
-    <Key>
-      <PropertyRef Name="WashingtonCountyID" />
-    </Key>
-    <Property Name="WashingtonCountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="WashingtonCountyLocation" Type="Geometry" Nullable="false" />
-    <Property Name="WashingtonCountyName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-    <Property Name="WashingtonCountyFullName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-  </EntityType>
   <EntityType Name="WashingtonLegislativeDistrict">
     <Key>
       <PropertyRef Name="WashingtonLegislativeDistrictID" />
@@ -4012,6 +4003,18 @@
     <Property Name="WashingtonLegislativeDistrictLocation" Type="Geometry" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictNumber" Type="Int32" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="vGeoServerCounty">
+    <Key>
+      <PropertyRef Name="CountyID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="CountyName" />
+    </Key>
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="CountyName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CountyFeature" Type="Geometry" />
+    <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
   <EntityType Name="vGeoServerPclBoundaryLine">
     <Key>

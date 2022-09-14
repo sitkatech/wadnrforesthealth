@@ -38,10 +38,10 @@ namespace ProjectFirma.Web.Views.ProjectCounty
         public readonly string SimplePointMarkerImg;
 
         public EditProjectCountiesViewData(Person currentPerson, MapInitJson mapInitJson,
-            List<Models.County> dnrUplandCountiesInViewModel, string editProjectCountiesUrl,
+            List<Models.County> countiesInViewModel, string editProjectCountiesUrl,
             string editProjectCountiesFormID, bool hasProjectLocationPoint, bool hasProjectLocationDetail) : base(currentPerson)
         {
-            ViewDataForAngular = new EditProjectCountiesViewDataForAngular(mapInitJson, dnrUplandCountiesInViewModel);
+            ViewDataForAngular = new EditProjectCountiesViewDataForAngular(mapInitJson, countiesInViewModel);
             EditProjectCountiesFormID = editProjectCountiesFormID;
             EditProjectCountiesUrl = editProjectCountiesUrl;
             HasProjectLocationPoint = hasProjectLocationPoint;
@@ -60,13 +60,13 @@ namespace ProjectFirma.Web.Views.ProjectCounty
         public readonly string CountyMapServiceLayerName;
         public readonly string MapServiceUrl;
 
-        public EditProjectCountiesViewDataForAngular(MapInitJson mapInitJson, List<Models.County> dnrUplandCountiesInViewModel)
+        public EditProjectCountiesViewDataForAngular(MapInitJson mapInitJson, List<Models.County> countiesInViewModel)
         {
             MapInitJson = mapInitJson;
             FindCountyByNameUrl = SitkaRoute<ProjectCountyController>.BuildUrlFromExpression(c => c.FindCountyByName(null));
             TypeAheadInputId = "countySearch";
-            CountyNameByID = dnrUplandCountiesInViewModel.ToDictionary(x => x.CountyID, x => x.CountyName);
-            CountyMapServiceLayerName = FirmaWebConfiguration.GetWashingtonCountyWmsLayerName();
+            CountyNameByID = countiesInViewModel.ToDictionary(x => x.CountyID, x => x.CountyName);
+            CountyMapServiceLayerName = FirmaWebConfiguration.GetCountyWmsLayerName();
             MapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
         }
     }

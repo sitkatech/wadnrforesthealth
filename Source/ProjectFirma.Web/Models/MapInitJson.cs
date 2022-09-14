@@ -141,7 +141,7 @@ namespace ProjectFirma.Web.Models
         public static LayerGeoJson GetWashingtonCountyLayer()
         {
             return new LayerGeoJson($"Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), "orange", .2m,
+                FirmaWebConfiguration.GetCountyWmsLayerName(), "orange", .2m,
                 LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_county.png");
         }
 

@@ -1,12 +1,12 @@
-﻿//#sourceUrl=/Views/ProjectRegion/EditProjectRegionsController.js
+﻿//#sourceUrl=/Views/ProjectCounty/EditProjectCountiesController.js
 angular.module("ProjectFirmaApp")
-    .controller("EditProjectRegionsController",
+    .controller("EditProjectCountiesController",
         function ($scope, angularModelAndViewData) {
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
-            $scope.getDNRUplandRegionName = function (regionId) {
-                return $scope.AngularViewData.RegionNameByID[regionId];
+            $scope.getCountyName = function (countyId) {
+                return $scope.AngularViewData.CountyNameByID[countyId];
             };
 
             var typeaheadSearch = function (typeaheadSelector, typeaheadSelectorButton, summaryUrl) {
@@ -25,13 +25,13 @@ angular.module("ProjectFirmaApp")
                                 wildcard: "%QUERY"
                             }
                         }),
-                        display: "RegionName",
+                        display: "CountyName",
                         limit: Number.MAX_VALUE
                     });
 
                 finder.bind("typeahead:select",
                     function (event, suggestion) {
-                        $scope.toggleRegion(suggestion.RegionID, suggestion.RegionName, function() {
+                        $scope.toggleCounty(suggestion.CountyID, suggestion.CountyName, function() {
                             $scope.$apply();
                         });
                     });
@@ -55,17 +55,20 @@ angular.module("ProjectFirmaApp")
             };
 
             function onMapClick(event) {
-                var regionMapServiceLayerName = $scope.AngularViewData.RegionMapServiceLayerName,
-                    mapServiceUrl = $scope.AngularViewData.MapServiceUrl;
+                debugger;
 
-                if (!regionMapServiceLayerName || !mapServiceUrl)
+                var countyMapServiceLayerName = $scope.AngularViewData.CountyMapServiceLayerName,
+                    mapServiceUrl = $scope.AngularViewData.MapServiceUrl;
+                
+
+                if (!countyMapServiceLayerName || !mapServiceUrl)
                     return;
 
                 var latlng = event.latlng;
                 var latlngWrapped = latlng.wrap();
                 var parameters = L.Util.extend($scope.firmaMap.wfsParams,
                     {
-                        typeName: regionMapServiceLayerName,
+                        typeName: countyMapServiceLayerName,
                         cql_filter: "intersects(Ogr_Geometry, POINT(" + latlngWrapped.lat + " " + latlngWrapped.lng + "))"
                     });
                 SitkaAjax.ajax({
@@ -73,68 +76,71 @@ angular.module("ProjectFirmaApp")
                         dataType: "json",
                         jsonpCallback: "getJson"
                     },
-                    function(response) {
+                    function (response) {
+
+                        debugger;
+
                         if (response.features.length === 0)
                             return;
 
                         var mergedProperties = _.merge.apply(_, _.map(response.features, "properties"));
 
-                        $scope.toggleRegion(mergedProperties.DNRUplandRegionID, mergedProperties.DNRUplandRegionName, function() {
+                        $scope.toggleCounty(mergedProperties.CountyID, mergedProperties.CountyName, function() {
                             $scope.$apply();
                         });
 
                     },
                     function() {
-                        console.error("There was an error selecting the region from list");
+                        console.error("There was an error selecting the county from list");
                     });
             }
 
-            $scope.toggleRegion = function(regionId, regionName, callback) {
-                if (regionName && typeof $scope.AngularViewData.RegionNameByID[regionId] === "undefined") {
-                    $scope.AngularViewData.RegionNameByID[regionId] = regionName;
+            $scope.toggleCounty = function(countyId, countyName, callback) {
+                if (countyName && typeof $scope.AngularViewData.CountyNameByID[countyId] === "undefined") {
+                    $scope.AngularViewData.CountyNameByID[countyId] = countyName;
                 }
 
-                if (_.includes($scope.AngularModel.DNRUplandRegionIDs, regionId)) {
-                    _.pull($scope.AngularModel.DNRUplandRegionIDs, regionId);
+                if (_.includes($scope.AngularModel.CountyIDs, countyId)) {
+                    _.pull($scope.AngularModel.CountyIDs, countyId);
                 } else {
-                    $scope.AngularModel.DNRUplandRegionIDs.push(regionId);
+                    $scope.AngularModel.CountyIDs.push(countyId);
                 }
 
-                updateSelectedRegionLayer();
+                updateSelectedCountyLayer();
 
                 if (typeof callback === "function") {
                     callback.call();
                 }
             }
 
-            function updateSelectedRegionLayer() {
-                if ($scope.AngularModel.DNRUplandRegionIDs == null) {
-                    $scope.AngularModel.DNRUplandRegionIDs = [];
+            function updateSelectedCountyLayer() {
+                if ($scope.AngularModel.CountyIDs == null) {
+                    $scope.AngularModel.CountyIDs = [];
                 }
 
-                if ($scope.firmaMap.selectedRegionLayer) {
-                    $scope.firmaMap.layerControl.removeLayer($scope.firmaMap.selectedRegionLayer);
-                    $scope.firmaMap.map.removeLayer($scope.firmaMap.selectedRegionLayer);
+                if ($scope.firmaMap.selectedCountyLayer) {
+                    $scope.firmaMap.layerControl.removeLayer($scope.firmaMap.selectedCountyLayer);
+                    $scope.firmaMap.map.removeLayer($scope.firmaMap.selectedCountyLayer);
                 }
                 
                 var wmsParameters = L.Util.extend(
                     {
-                        layers: $scope.AngularViewData.RegionMapServiceLayerName,
-                        cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.DNRUplandRegionIDs.join(",") + ")",
-                        styles: "region_yellow"
+                        layers: $scope.AngularViewData.CountyMapServiceLayerName,
+                        cql_filter: "CountyID in (" + $scope.AngularModel.CountyIDs.join(",") + ")",
+                        styles: "county_yellow"
                     },
                     $scope.firmaMap.wmsParams);
 
-                $scope.firmaMap.selectedRegionLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
-                $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedRegionLayer, "Selected DNR Upland Regions");
-                $scope.firmaMap.map.addLayer($scope.firmaMap.selectedRegionLayer);
+                $scope.firmaMap.selectedCountyLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
+                $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedCountyLayer, "Selected Counties");
+                $scope.firmaMap.map.addLayer($scope.firmaMap.selectedCountyLayer);
 
-                // Update map extent to selected regions
-                if (_.any($scope.AngularModel.DNRUplandRegionIDs)) {
+                // Update map extent to selected countys
+                if (_.any($scope.AngularModel.CountyIDs)) {
                     var wfsParameters = L.Util.extend($scope.firmaMap.wfsParams,
                         {
-                            typeName: $scope.AngularViewData.RegionMapServiceLayerName,
-                            cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.DNRUplandRegionIDs.join(",") + ")"
+                            typeName: $scope.AngularViewData.CountyMapServiceLayerName,
+                            cql_filter: "CountyID in (" + $scope.AngularModel.CountyIDs.join(",") + ")"
                         });
                     SitkaAjax.ajax({
                             url: $scope.AngularViewData.MapServiceUrl + L.Util.getParamString(wfsParameters),
@@ -148,7 +154,7 @@ angular.module("ProjectFirmaApp")
                             $scope.firmaMap.map.fitBounds(new L.geoJSON(response).getBounds());
                         },
                         function () {
-                            console.error("There was an error setting map extent to the selected DNR Upland Regions");
+                            console.error("There was an error setting map extent to the selected Counties");
                         });
                 }
             };
@@ -165,9 +171,9 @@ angular.module("ProjectFirmaApp")
 
                 typeaheadSearch("#" + $scope.AngularViewData.TypeAheadInputId,
                     "#" + $scope.AngularViewData.TypeAheadInputId + "Button",
-                    $scope.AngularViewData.FindRegionByNameUrl);
+                    $scope.AngularViewData.FindCountyByNameUrl);
                 
-                updateSelectedRegionLayer();
+                updateSelectedCountyLayer();
             };
 
             initializeMap();

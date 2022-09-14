@@ -205,8 +205,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
-        public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
+        public virtual DbSet<vGeoServerCounty> vGeoServerCounties { get; set; }
         public virtual DbSet<vGeoServerPclBoundaryLine> vGeoServerPclBoundaryLines { get; set; }
         public virtual DbSet<vGeoServerPclLandscapeTreatmentPriority> vGeoServerPclLandscapeTreatmentPriorities { get; set; }
         public virtual DbSet<vGeoServerPclVectorRanked> vGeoServerPclVectorRankeds { get; set; }
@@ -1114,9 +1114,6 @@ namespace ProjectFirma.Web.Models
 
                 case "Vendor":
                     return Vendors.GetVendor(primaryKey);
-
-                case "WashingtonCounty":
-                    return WashingtonCounties.GetWashingtonCounty(primaryKey);
 
                 case "WashingtonLegislativeDistrict":
                     return WashingtonLegislativeDistricts.GetWashingtonLegislativeDistrict(primaryKey);

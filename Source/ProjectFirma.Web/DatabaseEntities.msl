@@ -2217,16 +2217,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="WashingtonCounty">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonCounty">
-        <MappingFragment StoreEntitySet="WashingtonCounty">
-          <ScalarProperty Name="WashingtonCountyID" ColumnName="WashingtonCountyID" />
-          <ScalarProperty Name="WashingtonCountyLocation" ColumnName="WashingtonCountyLocation" />
-          <ScalarProperty Name="WashingtonCountyName" ColumnName="WashingtonCountyName" />
-          <ScalarProperty Name="WashingtonCountyFullName" ColumnName="WashingtonCountyFullName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="WashingtonLegislativeDistrict">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonLegislativeDistrict">
         <MappingFragment StoreEntitySet="WashingtonLegislativeDistrict">
@@ -2234,6 +2224,17 @@
           <ScalarProperty Name="WashingtonLegislativeDistrictLocation" ColumnName="WashingtonLegislativeDistrictLocation" />
           <ScalarProperty Name="WashingtonLegislativeDistrictNumber" ColumnName="WashingtonLegislativeDistrictNumber" />
           <ScalarProperty Name="WashingtonLegislativeDistrictName" ColumnName="WashingtonLegislativeDistrictName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vGeoServerCounty">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerCounty">
+        <MappingFragment StoreEntitySet="vGeoServerCounty">
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CountyFeature" ColumnName="CountyFeature" />
+          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
