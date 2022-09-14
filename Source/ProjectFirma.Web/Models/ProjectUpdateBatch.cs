@@ -132,6 +132,9 @@ namespace ProjectFirma.Web.Models
             // project region
             ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
 
+            // project county
+            ProjectCountyUpdate.CreateFromProject(projectUpdateBatch);
+
             // treatments
             TreatmentUpdate.CreateFromProject(projectUpdateBatch);
 
@@ -579,6 +582,7 @@ namespace ProjectFirma.Web.Models
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
             IList<ProjectPriorityLandscape> projectPriorityLandscapes, 
             IList<ProjectRegion> projectRegions, 
+            IList<ProjectCounty> projectCounties,
             IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
@@ -602,6 +606,7 @@ namespace ProjectFirma.Web.Models
                 projectLocations,
                 projectPriorityLandscapes,
                 projectRegions,
+                projectCounties,
                 projectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
@@ -640,6 +645,7 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
                 IList<ProjectPriorityLandscape> projectPriorityLandscapes,
                 IList<ProjectRegion> projectRegions,
+                IList<ProjectCounty> projectCounties,
                 IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
@@ -694,6 +700,9 @@ namespace ProjectFirma.Web.Models
 
             // project region
             ProjectRegionUpdate.CommitChangesToProject(this, projectRegions);
+
+            // project county
+            ProjectCountyUpdate.CommitChangesToProject(this, projectCounties);
 
             // photos
             ProjectImageUpdate.CommitChangesToProject(this, projectImages);

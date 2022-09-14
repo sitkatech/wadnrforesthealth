@@ -1793,6 +1793,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectRegions.Load();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectCounties.Load();
+            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.Local;
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
             var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
             HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
@@ -1823,6 +1825,7 @@ namespace ProjectFirma.Web.Controllers
                 allProjectLocations,
                 allProjectPriorityLandscapes,
                 allProjectRegions,
+                allProjectCounties,
                 allprojectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,

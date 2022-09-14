@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             EditProjectCountiesViewData = editProjectCountiesViewData;
             ProjectLocationSummaryViewData = projectLocationSummaryViewData;
-            RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshProjectRegion(projectUpdate.ProjectUpdateBatch.Project));
+            RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshProjectCounty(projectUpdate.ProjectUpdateBatch.Project));
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdate.ProjectUpdateBatch.LocationSimpleComment, projectUpdate.ProjectUpdateBatch.IsReturned);
         } 
     }

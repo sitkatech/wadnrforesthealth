@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             var projectCountyUpdates = project.ProjectCounties.Select(
-                projectRegionToClone => new ProjectCountyUpdate(projectUpdateBatch, projectRegionToClone.County)).ToList();
+                projectCountyToClone => new ProjectCountyUpdate(projectUpdateBatch, projectCountyToClone.County)).ToList();
             projectUpdateBatch.ProjectCountyUpdates = projectCountyUpdates;
         }
 
