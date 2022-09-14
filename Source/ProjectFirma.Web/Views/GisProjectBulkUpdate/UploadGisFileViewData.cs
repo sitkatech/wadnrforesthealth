@@ -34,6 +34,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public string UploadUrl { get; set; }
         public string CheckInfoUrl { get; set; }
 
+        public string ProgramName { get; set; }
+
 		public UploadGisFileViewData(Person currentPerson,
             GisUploadAttempt gisUploadAttempt
             , GisImportSectionStatus gisImportSectionStatus
@@ -42,6 +44,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         {
             UploadUrl = uploadUrl;
             CheckInfoUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(c => c.CheckStatusOfGisUploadAttempt(gisUploadAttempt.GisUploadAttemptID));
+            ProgramName = gisUploadAttempt.GisUploadSourceOrganization.Program.DisplayName;
         }
 
 

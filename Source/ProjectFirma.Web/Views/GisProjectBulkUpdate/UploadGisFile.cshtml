@@ -47,6 +47,13 @@ Source code is available upon request via <support@sitkatech.com>.
 @Html.ValidationSummary()
 
 <p>
+    <strong>Program: @ViewDataTyped.ProgramName</strong>
+</p>
+
+<p>
+    Use this page to upload a geospatial data file for importing treatments and projects.
+</p>
+<p>
     After you upload your file you will be able to preview and verify the uploaded data. 
 </p>
 <hr />
@@ -72,7 +79,6 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <hr />
     <div class="pull-right">
-        <button id="uploadNoAdvance" class="btn btn-xs btn-firma" value="false" name="@Html.NameFor(x => x.AutoAdvance)">Upload</button>
         <button  id="uploadWithAdvance" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Upload &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
     </div>
 
@@ -149,7 +155,6 @@ Source code is available upon request via <support@sitkatech.com>.
     jQuery(document)
         .ready(function() {
             // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
-            jQuery("#uploadNoAdvance").click(uploadGisFileAndRefreshCurrentPage);
             jQuery("#uploadWithAdvance").click(uploadGisFileAndAdvanceCurrentPage);
 
 
