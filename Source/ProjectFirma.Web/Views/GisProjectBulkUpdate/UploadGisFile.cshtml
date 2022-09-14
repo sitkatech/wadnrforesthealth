@@ -50,6 +50,20 @@ Source code is available upon request via <support@sitkatech.com>.
     <strong>Program: @ViewDataTyped.ProgramName</strong>
 </p>
 
+@if (ViewDataTyped.ShowExampleGdbDownload)
+{
+<p>
+    <span>
+        Example Geospatial Upload:
+        <a href="@ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.FileResourceUrl" target="_blank">
+            @ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.OriginalCompleteFileName
+        </a>
+
+    </span>
+</p>
+    
+}
+
 <p>
     Use this page to upload a geospatial data file for importing treatments and projects.
 </p>

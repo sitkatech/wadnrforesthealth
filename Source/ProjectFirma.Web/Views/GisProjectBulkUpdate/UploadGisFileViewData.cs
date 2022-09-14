@@ -35,6 +35,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         public string CheckInfoUrl { get; set; }
 
         public string ProgramName { get; set; }
+        public Models.Program Program { get; set; }
+        public bool ShowExampleGdbDownload { get; set; }
 
 		public UploadGisFileViewData(Person currentPerson,
             GisUploadAttempt gisUploadAttempt
@@ -44,7 +46,10 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         {
             UploadUrl = uploadUrl;
             CheckInfoUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(c => c.CheckStatusOfGisUploadAttempt(gisUploadAttempt.GisUploadAttemptID));
-            ProgramName = gisUploadAttempt.GisUploadSourceOrganization.Program.DisplayName;
+            ProgramName = gisUploadAttempt?.GisUploadSourceOrganization?.Program?.DisplayName;
+            ShowExampleGdbDownload = gisUploadAttempt?.GisUploadSourceOrganization?.Program
+                ?.ProgramExampleGeospatialUploadFileResourceID.HasValue ?? false;
+            Program = gisUploadAttempt?.GisUploadSourceOrganization?.Program;
         }
 
 

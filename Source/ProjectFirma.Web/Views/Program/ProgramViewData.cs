@@ -13,6 +13,7 @@ namespace ProjectFirma.Web.Views.Program
         public Models.GisUploadSourceOrganization GisUploadSourceOrganization { get; }
         public string EditProgramUrl { get; set; }
         public string DeleteDocumentUrl { get; set; }
+        public string DeleteExampleGdbDocumentUrl { get; set; }
         public bool UserHasEditProgramPermissions { get; set; }
 
         public string BackToProgramsText { get; set; }
@@ -20,6 +21,7 @@ namespace ProjectFirma.Web.Views.Program
         public string ProgramsListUrl { get; set; }
 
         public bool ShowDownload { get; set; }
+        public bool ShowExampleGdbDownload { get; set; }
 
         protected ProgramViewData(Person currentPerson, Models.Program program) : base(currentPerson, null)
         {
@@ -28,11 +30,13 @@ namespace ProjectFirma.Web.Views.Program
             EntityName = $"{Models.FieldDefinition.Program.GetFieldDefinitionLabel()}";
             EditProgramUrl = program.GetEditUrl();
             DeleteDocumentUrl = program.GetDeleteDocumentUrl();
+            DeleteExampleGdbDocumentUrl = program.GetDeleteExampleDocumentUrl();
             UserHasEditProgramPermissions = new ProgramEditFeature().HasPermissionByPerson(currentPerson);
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
             GisUploadSourceOrganization = program.GisUploadSourceOrganizations.FirstOrDefault();
             ShowDownload = program.ProgramFileResource != null;
+            ShowExampleGdbDownload = program.ProgramExampleGeospatialUploadFileResource != null;
         }
 
         public string ProjectTypeDefaultName()

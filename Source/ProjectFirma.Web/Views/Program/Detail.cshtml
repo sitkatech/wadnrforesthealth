@@ -151,6 +151,28 @@
                                 </span>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 fieldLabel text-right">
+                                Program Example Geospatial Data File
+                            </div>
+                            <div class="col-xs-6">
+                                <span>
+                                    @if (ViewDataTyped.ShowExampleGdbDownload)
+                                    {
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteExampleGdbDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+
+                                        <a href="@ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.FileResourceUrl" target="_blank">
+                                            @ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.OriginalCompleteFileName
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span>No example geospatial documents uploaded yet.</span>
+                                    }
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
