@@ -56,6 +56,7 @@ namespace ProjectFirma.Web.Views.Project
         public string EditSimpleProjectLocationUrl { get; }
         public string EditDetailedProjectLocationUrl { get; }
         public string EditProjectRegionUrl { get; }
+        public string EditProjectCountyUrl { get; }
         public string EditProjectPriorityLandscapeUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
         public string EditPerformanceMeasureExpectedsUrl { get; }
@@ -102,6 +103,7 @@ namespace ProjectFirma.Web.Views.Project
 
         public string EditProjectPriorityLandscapeFormID { get; }
         public string EditProjectRegionFormID { get; }
+        public string EditProjectCountyFormID { get; }
         public string EditProjectBoundingBoxFormID { get; }
         public string ProjectStewardCannotEditUrl { get; }
         public string ProjectStewardCannotEditPendingApprovalUrl { get; }
@@ -161,6 +163,7 @@ namespace ProjectFirma.Web.Views.Project
             , TreatmentGridSpec treatmentGridSpec
             , string treatmentGridDataUrl
             , string editProjectRegionUrl
+            , string editProjectCountyUrl
             , string editProjectPriorityLandscapeUrl,
             InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl)
             : base(currentPerson, project)
@@ -313,6 +316,7 @@ namespace ProjectFirma.Web.Views.Project
             EditSimpleProjectLocationUrl = editSimpleProjectLocationUrl;
             EditDetailedProjectLocationUrl = editDetailedProjectLocationUrl;
             EditProjectRegionUrl = editProjectRegionUrl;
+            EditProjectCountyUrl = editProjectCountyUrl;
             EditProjectPriorityLandscapeUrl = editProjectPriorityLandscapeUrl;
 
             EditProjectBoundingBoxUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectBoundingBox(project));
@@ -365,6 +369,7 @@ namespace ProjectFirma.Web.Views.Project
            
             EditProjectPriorityLandscapeFormID = ProjectPriorityLandscapeController.GetEditProjectPriorityLandscapesFormID();
             EditProjectRegionFormID = ProjectRegionController.GetEditProjectRegionsFormID();
+            EditProjectCountyFormID = ProjectCountyController.GetEditProjectCountiesFormID();
 
             ProjectStewardCannotEditUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.ProjectStewardCannotEdit());

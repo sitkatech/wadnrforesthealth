@@ -174,6 +174,8 @@ namespace ProjectFirma.Web.Controllers
             var editSimpleProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project));
             var editDetailedProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationDetailed(project));
             var editProjectRegionUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project));
+            var editProjectCountyUrl =
+                SitkaRoute<ProjectCountyController>.BuildUrlFromExpression(c => c.EditProjectCounties(project));
             var editProjectPriorityLandscapeUrl = SitkaRoute<ProjectPriorityLandscapeController>.BuildUrlFromExpression(c => c.EditProjectPriorityLandscapes(project));
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
             var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
@@ -277,7 +279,9 @@ namespace ProjectFirma.Web.Controllers
                 , treatmentAreaGridDataUrl
                 , treatmentGridSpec
                 , treatmentGridDataUrl
-                , editProjectRegionUrl, editProjectPriorityLandscapeUrl,
+                , editProjectRegionUrl
+                , editProjectCountyUrl
+                ,editProjectPriorityLandscapeUrl,
                 projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
             return RazorView<Detail, DetailViewData>(viewData);
         }
