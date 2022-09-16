@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Models
             this.InvoicesWhereYouAreTheInvoiceFileResource = new HashSet<Invoice>();
             this.OrganizationsWhereYouAreTheLogoFileResource = new HashSet<Organization>();
             this.PriorityLandscapeFileResources = new HashSet<PriorityLandscapeFileResource>();
+            this.ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource = new HashSet<Program>();
             this.ProgramsWhereYouAreTheProgramFileResource = new HashSet<Program>();
             this.ProjectDocuments = new HashSet<ProjectDocument>();
             this.ProjectDocumentUpdates = new HashSet<ProjectDocumentUpdate>();
@@ -112,7 +113,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (GrantModificationFileResource != null) || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
+            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (GrantModificationFileResource != null) || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.Any() || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
@@ -190,6 +191,11 @@ namespace ProjectFirma.Web.Models
             if((PriorityLandscapeFileResource != null))
             {
                 dependentObjects.Add(typeof(PriorityLandscapeFileResource).Name);
+            }
+
+            if(ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.Any())
+            {
+                dependentObjects.Add(typeof(Program).Name);
             }
 
             if(ProgramsWhereYouAreTheProgramFileResource.Any())
@@ -327,6 +333,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProgramsWhereYouAreTheProgramFileResource.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -395,6 +406,7 @@ namespace ProjectFirma.Web.Models
         protected virtual ICollection<PriorityLandscapeFileResource> PriorityLandscapeFileResources { get; set; }
         [NotMapped]
         public PriorityLandscapeFileResource PriorityLandscapeFileResource { get { return PriorityLandscapeFileResources.SingleOrDefault(); } set { PriorityLandscapeFileResources = new List<PriorityLandscapeFileResource>{value};} }
+        public virtual ICollection<Program> ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource { get; set; }
         public virtual ICollection<Program> ProgramsWhereYouAreTheProgramFileResource { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
         public virtual ICollection<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }

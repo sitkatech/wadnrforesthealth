@@ -30,6 +30,41 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProgramManageFeature]
+        public PartialViewResult DeleteProgramExampleDocument(FileResourcePrimaryKey fileResourcePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(fileResourcePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteProgramExampleDocument(fileResourcePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteProgramExampleDocument(FileResource fileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this Program Geospatial Example Document '{fileResource.OriginalCompleteFileName}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteProgramExampleDocument(FileResourcePrimaryKey fileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var document = fileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteProgramExampleDocument(document, viewModel);
+            }
+
+            document.ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.ForEach(x => x.ProgramExampleGeospatialUploadFileResource = null);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            document.Delete(HttpRequestStorage.DatabaseEntities);
+            var message = $"Program Geospatial Example Document '{document.OriginalCompleteFileName}' successfully deleted.";
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        [HttpGet]
+        [ProgramManageFeature]
         public PartialViewResult DeleteProgramDocument(FileResourcePrimaryKey fileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(fileResourcePrimaryKey.PrimaryKeyValue);
@@ -131,6 +166,12 @@ namespace ProjectFirma.Web.Controllers
                 program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
             }
 
+            if (viewModel.ProgramExampleFileResourceData != null)
+            {
+
+                program.ProgramExampleGeospatialUploadFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramExampleFileResourceData, CurrentPerson);
+            }
+
             SetMessageForDisplay($"{FieldDefinition.Program.GetFieldDefinitionLabel()} {program.DisplayName} successfully created.");
             return new ModalDialogFormJsonResult();
         }
@@ -167,6 +208,12 @@ namespace ProjectFirma.Web.Controllers
             {
 
                 program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
+
+            if (viewModel.ProgramExampleFileResourceData != null)
+            {
+
+                program.ProgramExampleGeospatialUploadFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramExampleFileResourceData, CurrentPerson);
             }
             SetMessageForDisplay($"{FieldDefinition.Program.GetFieldDefinitionLabel()} {program.DisplayName} successfully created.");
             return new ModalDialogFormJsonResult();
@@ -223,6 +270,19 @@ namespace ProjectFirma.Web.Controllers
                     HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
                 }
                 program.ProgramFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramFileResourceData, CurrentPerson);
+            }
+
+            if (viewModel.ProgramExampleFileResourceData != null)
+            {
+                var currentAgreementFileResource = program.ProgramExampleGeospatialUploadFileResource;
+                program.ProgramExampleGeospatialUploadFileResource = null;
+                // Delete old Agreement file, if present
+                if (currentAgreementFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                }
+                program.ProgramExampleGeospatialUploadFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.ProgramExampleFileResourceData, CurrentPerson);
             }
             return new ModalDialogFormJsonResult();
         }

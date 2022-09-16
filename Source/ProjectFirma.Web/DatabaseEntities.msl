@@ -1279,6 +1279,7 @@
           <ScalarProperty Name="IsDefaultProgramForImportOnly" ColumnName="IsDefaultProgramForImportOnly" />
           <ScalarProperty Name="ProgramFileResourceID" ColumnName="ProgramFileResourceID" />
           <ScalarProperty Name="ProgramNotes" ColumnName="ProgramNotes" />
+          <ScalarProperty Name="ProgramExampleGeospatialUploadFileResourceID" ColumnName="ProgramExampleGeospatialUploadFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

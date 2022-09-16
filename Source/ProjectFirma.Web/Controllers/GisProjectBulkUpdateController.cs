@@ -1028,7 +1028,6 @@ namespace ProjectFirma.Web.Controllers
 
             if (shapeFileSuccessfullyExtractedToDisk)
             {
-                //importWasSuccesful = ImportExtractedShapefileToSql(shapeFilePath);
                 featureCollection = ImportShpToGeoJson(shapeFilePath);
             }
 
@@ -1074,6 +1073,7 @@ namespace ProjectFirma.Web.Controllers
 
         private void SaveGisUploadToNormalizedFieldsUsingGeoJson(GisUploadAttempt gisUploadAttempt, FeatureCollection featureCollection)
         {
+            ExecPClearGisImportTables();
             var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
             var listOfPropertiesFromFirstFeature = featureCollection.Features.FirstOrDefault() != null
                 ? featureCollection.Features.First().Properties.Select(x => x.Key).ToList()
