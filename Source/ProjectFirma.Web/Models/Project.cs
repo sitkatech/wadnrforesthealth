@@ -334,6 +334,11 @@ namespace ProjectFirma.Web.Models
             return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
         }
 
+        public bool IsProjectCountiesValid()
+        {
+            return ProjectCounties.Any() || !string.IsNullOrWhiteSpace(NoCountiesExplanation);
+        }
+
         public bool IsProjectPriorityLandscapeValid()
         {
             return ProjectPriorityLandscapes.Any() || !string.IsNullOrWhiteSpace(NoPriorityLandscapesExplanation);

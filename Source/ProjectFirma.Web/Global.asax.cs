@@ -46,23 +46,25 @@ namespace ProjectFirma.Web
                             null,
                             false)).ToList();
 
-            var viewLocations = new ViewEngineLocations { PartialViewLocations = new List<string>
-            {
-                "~/Views/Shared/TextControls/{0}.cshtml",
-                "~/Views/Shared/ExpenditureAndBudgetControls/{0}.cshtml",
-                "~/Views/Shared/PerformanceMeasureControls/{0}.cshtml",
-                "~/Views/Shared/ProjectControls/{0}.cshtml",
-                "~/Views/Shared/ProjectImportBlockList/{0}.cshtml",
-                "~/Views/Shared/ProjectLocationControls/{0}.cshtml",
-                "~/Views/Shared/ProjectGeospatialAreaControls/{0}.cshtml",
-                "~/Views/Shared/ProjectUpdateDiffControls/{0}.cshtml",
-                "~/Views/Shared/ProjectOrganization/{0}.cshtml",
-                "~/Views/Shared/ProjectPerson/{0}.cshtml",
-                "~/Views/Shared/SortOrder/{0}.cshtml",
-                "~/Views/Shared/ProjectDocument/{0}.cshtml",
-                "~/Views/Shared/UserStewardshipAreas/{0}.cshtml",
-                "~/Views/Shared/FileResourceControls/{0}.cshtml",
-            } };
+            var viewLocations = new ViewEngineLocations { 
+                PartialViewLocations = new List<string>
+                {
+                    "~/Views/Shared/ExpenditureAndBudgetControls/{0}.cshtml",
+                    "~/Views/Shared/FileResourceControls/{0}.cshtml",
+                    "~/Views/Shared/PerformanceMeasureControls/{0}.cshtml",
+                    "~/Views/Shared/ProjectControls/{0}.cshtml",
+                    "~/Views/Shared/ProjectImportBlockList/{0}.cshtml",
+                    "~/Views/Shared/ProjectLocationControls/{0}.cshtml",
+                    "~/Views/Shared/ProjectGeospatialAreaControls/{0}.cshtml",
+                    "~/Views/Shared/ProjectUpdateDiffControls/{0}.cshtml",
+                    "~/Views/Shared/ProjectOrganization/{0}.cshtml",
+                    "~/Views/Shared/ProjectPerson/{0}.cshtml",
+                    "~/Views/Shared/ProjectDocument/{0}.cshtml",
+                    "~/Views/Shared/SortOrder/{0}.cshtml",
+                    "~/Views/Shared/TextControls/{0}.cshtml",
+                    "~/Views/Shared/UserStewardshipAreas/{0}.cshtml",
+                }
+            };
             // read the log4net configuration from the web.config file
             XmlConfigurator.Configure();
 
