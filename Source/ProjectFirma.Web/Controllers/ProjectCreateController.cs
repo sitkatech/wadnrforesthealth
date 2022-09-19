@@ -965,56 +965,56 @@ namespace ProjectFirma.Web.Controllers
             return GoToNextSection(viewModel, project, ProjectCreateSection.DNRUplandRegions.ProjectCreateSectionDisplayName);
         }
 
-        // [HttpGet]
-        //[ProjectCreateFeature]
-        //public ViewResult Counties(ProjectPrimaryKey projectPrimaryKey)
-        //{
-        //    var project = projectPrimaryKey.EntityObject;
-        //    var countyIDs = project.ProjectCounties.Select(x => x.CountyID).ToList();
-        //    var noCountiesExplanation = project.NoCountiesExplanation;
-        //    var viewModel = new CountiesViewModel(countyIDs, noCountiesExplanation);
-        //    return ViewEditCounty(project, viewModel);
-        //}
+        [HttpGet]
+        [ProjectCreateFeature]
+        public ViewResult Counties(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var countyIDs = project.ProjectCounties.Select(x => x.CountyID).ToList();
+            var noCountiesExplanation = project.NoCountiesExplanation;
+            var viewModel = new CountiesViewModel(countyIDs, noCountiesExplanation);
+            return ViewEditCounty(project, viewModel);
+        }
 
-        //private ViewResult ViewEditCounty(Project project, CountiesViewModel viewModel)
-        //{
-        //    var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
-        //    var layers = MapInitJson.GetCountyMapLayers(LayerInitialVisibility.Show);
-        //    layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
-        //    var mapInitJson = new MapInitJson("projectCountyMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true};
-        //    var countyIDs = viewModel.CountyIDs ?? new List<int>();
-        //    var countiesInViewModel = HttpRequestStorage.DatabaseEntities.Counties.Where(x => countyIDs.Contains(x.CountyID)).ToList();
-        //    var editProjectCountiesPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.Counties(project, null));
-        //    var editProjectCountiesFormId = GenerateEditProjectCountiesFormID(project);
+        private ViewResult ViewEditCounty(Project project, CountiesViewModel viewModel)
+        {
+            var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
+            var layers = MapInitJson.GetCountyMapLayers(LayerInitialVisibility.Show);
+            layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
+            var mapInitJson = new MapInitJson("projectCountyMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true };
+            var countyIDs = viewModel.CountyIDs ?? new List<int>();
+            var countiesInViewModel = HttpRequestStorage.DatabaseEntities.Counties.Where(x => countyIDs.Contains(x.CountyID)).ToList();
+            var editProjectCountiesPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.Counties(project, null));
+            var editProjectCountiesFormId = GenerateEditProjectCountiesFormID(project);
 
-        //    var editProjectLocationViewData = new EditProjectCountiesViewData(CurrentPerson, mapInitJson, countiesInViewModel, editProjectCountiesPostUrl, editProjectCountiesFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail);
+            var editProjectLocationViewData = new EditProjectCountiesViewData(CurrentPerson, mapInitJson, countiesInViewModel, editProjectCountiesPostUrl, editProjectCountiesFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail);
 
-        //    var proposalSectionsStatus = GetProposalSectionsStatus(project);
-        //    proposalSectionsStatus.IsCountySectionComplete = ModelState.IsValid && proposalSectionsStatus.IsCountySectionComplete;
-        //    var viewData = new CountiesViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
+            var proposalSectionsStatus = GetProposalSectionsStatus(project);
+            proposalSectionsStatus.IsCountySectionComplete = ModelState.IsValid && proposalSectionsStatus.IsCountySectionComplete;
+            var viewData = new CountiesViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
 
-        //    return RazorView<Counties, CountiesViewData, CountiesViewModel>(viewData, viewModel);
-        //}
+            return RazorView<Counties, CountiesViewData, CountiesViewModel>(viewData, viewModel);
+        }
 
-        //[HttpPost]
-        //[ProjectCreateFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult Counties(ProjectPrimaryKey projectPrimaryKey, CountiesViewModel viewModel)
-        //{
-        //    var project = projectPrimaryKey.EntityObject;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewEditCounty(project, viewModel);
-        //    }
+        [HttpPost]
+        [ProjectCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Counties(ProjectPrimaryKey projectPrimaryKey, CountiesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditCounty(project, viewModel);
+            }
 
-        //    var currentProjectCounties = project.ProjectCounties.ToList();
-        //    var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.Local;
-        //    viewModel.UpdateModel(project, currentProjectCounties, allProjectCounties);
+            var currentProjectCounties = project.ProjectCounties.ToList();
+            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.Local;
+            viewModel.UpdateModel(project, currentProjectCounties, allProjectCounties);
 
-        //    project.NoCountiesExplanation = viewModel.NoCountiesExplanation;
-        //    SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.County.GetFieldDefinitionLabelPluralized()} successfully saved.");
-        //    return GoToNextSection(viewModel, project, ProjectCreateSection.Counties.ProjectCreateSectionDisplayName);
-        //}
+            project.NoCountiesExplanation = viewModel.NoCountiesExplanation;
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.County.GetFieldDefinitionLabelPluralized()} successfully saved.");
+            return GoToNextSection(viewModel, project, ProjectCreateSection.Counties.ProjectCreateSectionDisplayName);
+        }
 
         [HttpGet]
         [ProjectCreateFeature]
