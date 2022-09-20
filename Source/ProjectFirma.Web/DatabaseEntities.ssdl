@@ -113,6 +113,7 @@
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.Store.ProjectCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
@@ -175,6 +176,7 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatment" EntityType="ProjectFirma.Web.Models.Store.Treatment" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentArea" EntityType="ProjectFirma.Web.Models.Store.TreatmentArea" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.Store.TreatmentCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.Store.TreatmentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
@@ -951,6 +953,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID">
+      <End Role="ProgramExampleGeospatialUploadFileResource" EntitySet="FileResource" />
+      <End Role="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" EntitySet="Program" />
+    </AssociationSet>
     <AssociationSet Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
       <End Role="ProgramFileResource" EntitySet="FileResource" />
       <End Role="ProgramsWhereYouAreTheProgramFileResource" EntitySet="Program" />
@@ -1030,6 +1036,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectClassification_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectClassification_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectClassifications" EntitySet="ProjectClassification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCounty_County_CountyID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCounty_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCounty_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCounty_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectCounties" EntitySet="ProjectCounty" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttribute_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -1435,6 +1449,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectLocation" EntitySet="ProjectLocation" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
+    <AssociationSet Name="FK_Treatment_TreatmentCode_TreatmentCodeID" Association="ProjectFirma.Web.Models.Store.FK_Treatment_TreatmentCode_TreatmentCodeID">
+      <End Role="TreatmentCode" EntitySet="TreatmentCode" />
+      <End Role="Treatments" EntitySet="Treatment" />
+    </AssociationSet>
     <AssociationSet Name="FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" EntitySet="TreatmentUpdate" />
@@ -1457,6 +1475,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentUpdate_TreatmentCode_TreatmentCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentUpdate_TreatmentCode_TreatmentCodeID">
+      <End Role="TreatmentCode" EntitySet="TreatmentCode" />
       <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
     </AssociationSet>
   </EntityContainer>
@@ -1583,10 +1605,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Key>
       <PropertyRef Name="CountyID" />
     </Key>
-    <Property Name="CountyID" Type="int" Nullable="false" />
     <Property Name="CountyName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
     <Property Name="CountyFeature" Type="geometry" />
+    <Property Name="CountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>
@@ -2651,6 +2673,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="IsDefaultProgramForImportOnly" Type="bit" Nullable="false" />
     <Property Name="ProgramFileResourceID" Type="int" />
     <Property Name="ProgramNotes" Type="varchar(max)" />
+    <Property Name="ProgramExampleGeospatialUploadFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -2755,6 +2778,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="ProjectStartDate" Type="datetime" />
     <Property Name="ProjectEndDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectCounty">
+    <Key>
+      <PropertyRef Name="ProjectCountyID" />
+    </Key>
+    <Property Name="ProjectCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="CountyID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -3461,6 +3492,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGis" Type="bit" />
     <Property Name="ProjectLocationID" Type="int" />
+    <Property Name="TreatmentCodeID" Type="int" />
+    <Property Name="CostPerAcre" Type="money" />
   </EntityType>
   <EntityType Name="TreatmentArea">
     <Key>
@@ -3469,6 +3502,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TreatmentAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TreatmentAreaFeature" Type="geometry" Nullable="false" />
     <Property Name="TemporaryTreatmentCacheID" Type="int" />
+  </EntityType>
+  <EntityType Name="TreatmentCode">
+    <Key>
+      <PropertyRef Name="TreatmentCodeID" />
+    </Key>
+    <Property Name="TreatmentCodeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentCodeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="TreatmentCodeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="TreatmentUpdate">
     <Key>
@@ -3491,6 +3532,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramID" Type="int" />
     <Property Name="ImportedFromGis" Type="bit" />
     <Property Name="ProjectLocationUpdateID" Type="int" />
+    <Property Name="TreatmentCodeID" Type="int" />
+    <Property Name="CostPerAcre" Type="money" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -5682,6 +5725,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID">
+    <End Role="ProgramExampleGeospatialUploadFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramExampleGeospatialUploadFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource">
+        <PropertyRef Name="ProgramExampleGeospatialUploadFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
     <End Role="ProgramFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
     <End Role="ProgramsWhereYouAreTheProgramFileResource" Type="ProjectFirma.Web.Models.Store.Program" Multiplicity="*" />
@@ -5918,6 +5973,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectClassifications">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCounty_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.Store.County" Multiplicity="1" />
+    <End Role="ProjectCounties" Type="ProjectFirma.Web.Models.Store.ProjectCounty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCounties">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCounty_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="ProjectCounties" Type="ProjectFirma.Web.Models.Store.ProjectCounty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectCounties">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7134,6 +7213,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Treatment_TreatmentCode_TreatmentCodeID">
+    <End Role="TreatmentCode" Type="ProjectFirma.Web.Models.Store.TreatmentCode" Multiplicity="0..1" />
+    <End Role="Treatments" Type="ProjectFirma.Web.Models.Store.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentCode">
+        <PropertyRef Name="TreatmentCodeID" />
+      </Principal>
+      <Dependent Role="Treatments">
+        <PropertyRef Name="TreatmentCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
     <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
     <End Role="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
@@ -7203,6 +7294,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="TreatmentUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentUpdate_TreatmentCode_TreatmentCodeID">
+    <End Role="TreatmentCode" Type="ProjectFirma.Web.Models.Store.TreatmentCode" Multiplicity="0..1" />
+    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.Store.TreatmentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentCode">
+        <PropertyRef Name="TreatmentCodeID" />
+      </Principal>
+      <Dependent Role="TreatmentUpdates">
+        <PropertyRef Name="TreatmentCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -7279,6 +7382,12 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
   <Function Name="pClearSocrataDataMartRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pGeospatial_SpatialIndexCreate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="applyChanges" Type="bit" Mode="In" />
+    <Parameter Name="databaseNameOptional" Type="nvarchar" Mode="In" />
+    <Parameter Name="tableNameOptional" Type="nvarchar" Mode="In" />
+    <Parameter Name="geometryColumnName" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="pGrantExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
@@ -7380,25 +7489,6 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpCostTypeMapping' does n
   <Property Name="CostTypeDescription" Type="nvarchar" MaxLength="255" />
 </EntityType>
 Errors Found During Generation:
-warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpForesterUnit' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-
-<EntityType Name="tmpForesterUnit">
-  <Property Name="OBJECTID_1" Type="int" />
-  <Property Name="OBJECTID" Type="int" />
-  <Property Name="FP_UNIT_NM" Type="varchar" MaxLength="50" />
-  <Property Name="JURISDICT_" Type="smallint" />
-  <Property Name="REGION_NM" Type="varchar" MaxLength="50" />
-  <Property Name="JOB_POSN_N" Type="varchar" MaxLength="5" />
-  <Property Name="FP_FORESTE" Type="varchar" MaxLength="38" />
-  <Property Name="FP_FORES_1" Type="varchar" MaxLength="13" />
-  <Property Name="FP_FORES_2" Type="varchar" MaxLength="24" />
-  <Property Name="PHONE_NO" Type="varchar" MaxLength="14" />
-  <Property Name="Shape_Length" Type="float" />
-  <Property Name="Shape_Area" Type="float" />
-  <Property Name="GEOM" Type="geometry" />
-  <Property Name="PersonID" Type="int" />
-</EntityType>
-Errors Found During Generation:
 warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProgramIndex' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
 
 <EntityType Name="tmpProgramIndex">
@@ -7444,21 +7534,6 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProjectCode' does not h
   <Property Name="cash_cntrl_type_ind" Type="varchar" MaxLength="200" />
   <Property Name="gl_project_level" Type="varchar" MaxLength="200" />
   <Property Name="create_date" Type="varchar" MaxLength="200" />
-</EntityType>
-Errors Found During Generation:
-warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpServiceForesterData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-
-<EntityType Name="tmpServiceForesterData">
-  <Property Name="ForesterRoleID" Type="int" />
-  <Property Name="ForesterWorkUnitName" Type="varchar" MaxLength="100" />
-  <Property Name="RegionName" Type="varchar" MaxLength="100" />
-  <Property Name="ForesterWorkUnitLocation" Type="geometry" />
-  <Property Name="ForesterFullName" Type="varchar" MaxLength="500" />
-  <Property Name="ForesterFirstName" Type="varchar" MaxLength="250" />
-  <Property Name="ForesterLastName" Type="varchar" MaxLength="250" />
-  <Property Name="ForesterPhone" Type="varchar" MaxLength="250" />
-  <Property Name="ForesterEmail" Type="varchar" MaxLength="250" />
-  <Property Name="PersonID" Type="int" />
 </EntityType>
 Errors Found During Generation:
 warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.

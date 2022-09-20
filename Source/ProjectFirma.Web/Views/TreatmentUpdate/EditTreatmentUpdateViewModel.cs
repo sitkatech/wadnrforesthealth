@@ -45,6 +45,9 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentType)]
         public int TreatmentTypeID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentCode)]
+        public int? TreatmentCodeID { get; set; }
+
         [Required]
         [DisplayName("Project Location - Treatment Area")]
         public int ProjectLocationUpdateID { get; set; }
@@ -60,15 +63,14 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
         [StringLength(Models.Treatment.FieldLengths.TreatmentNotes)]
         public string Notes { get; set; }
 
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFootprintAcres)]
         public decimal FootprintAcres { get; set; }
 
         [DisplayName("Treated Acres")]
         public decimal TreatedAcres { get; set; }
 
-
-
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentCostPerAcre)]
+        public Money? CostPerAcre { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -90,8 +92,10 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
                 ProjectLocationUpdateID = treatmentUpdate.ProjectLocationUpdateID.Value;
             }
 
+            CostPerAcre = treatmentUpdate?.CostPerAcre;
             TreatmentDetailedActivityTypeID = treatmentUpdate.TreatmentDetailedActivityTypeID;
             TreatmentTypeID = treatmentUpdate.TreatmentTypeID;
+            TreatmentCodeID = treatmentUpdate.TreatmentCodeID;
             Notes = treatmentUpdate.TreatmentNotes;
             TreatmentUpdateID = treatmentUpdate.TreatmentUpdateID;
             ProjectUpdateBatchID = treatmentUpdate.ProjectUpdateBatchID;
@@ -110,12 +114,14 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
         {
             treatmentUpdate.TreatmentFootprintAcres = FootprintAcres;
             treatmentUpdate.TreatmentTreatedAcres = TreatedAcres;
+            treatmentUpdate.CostPerAcre = CostPerAcre;
             treatmentUpdate.TreatmentStartDate = StartDate;
             treatmentUpdate.TreatmentEndDate = EndDate;
             treatmentUpdate.TreatmentNotes = Notes;
 
             treatmentUpdate.ProjectLocationUpdateID = ProjectLocationUpdateID;
             treatmentUpdate.TreatmentTypeID = TreatmentTypeID;
+            treatmentUpdate.TreatmentCodeID = TreatmentCodeID;
             treatmentUpdate.TreatmentDetailedActivityTypeID = TreatmentDetailedActivityTypeID;
             treatmentUpdate.ProjectUpdateBatchID = ProjectUpdateBatchID;
         }

@@ -134,10 +134,10 @@
     <EntitySetMapping Name="County">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.County">
         <MappingFragment StoreEntitySet="County">
-          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
           <ScalarProperty Name="CountyName" ColumnName="CountyName" />
           <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
           <ScalarProperty Name="CountyFeature" ColumnName="CountyFeature" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1279,6 +1279,7 @@
           <ScalarProperty Name="IsDefaultProgramForImportOnly" ColumnName="IsDefaultProgramForImportOnly" />
           <ScalarProperty Name="ProgramFileResourceID" ColumnName="ProgramFileResourceID" />
           <ScalarProperty Name="ProgramNotes" ColumnName="ProgramNotes" />
+          <ScalarProperty Name="ProgramExampleGeospatialUploadFileResourceID" ColumnName="ProgramExampleGeospatialUploadFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1391,6 +1392,15 @@
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="ProjectStartDate" ColumnName="ProjectStartDate" />
           <ScalarProperty Name="ProjectEndDate" ColumnName="ProjectEndDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectCounty">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCounty">
+        <MappingFragment StoreEntitySet="ProjectCounty">
+          <ScalarProperty Name="ProjectCountyID" ColumnName="ProjectCountyID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2158,6 +2168,8 @@
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
           <ScalarProperty Name="ProjectLocationID" ColumnName="ProjectLocationID" />
+          <ScalarProperty Name="TreatmentCodeID" ColumnName="TreatmentCodeID" />
+          <ScalarProperty Name="CostPerAcre" ColumnName="CostPerAcre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2167,6 +2179,15 @@
           <ScalarProperty Name="TreatmentAreaID" ColumnName="TreatmentAreaID" />
           <ScalarProperty Name="TreatmentAreaFeature" ColumnName="TreatmentAreaFeature" />
           <ScalarProperty Name="TemporaryTreatmentCacheID" ColumnName="TemporaryTreatmentCacheID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentCode">
+        <MappingFragment StoreEntitySet="TreatmentCode">
+          <ScalarProperty Name="TreatmentCodeID" ColumnName="TreatmentCodeID" />
+          <ScalarProperty Name="TreatmentCodeName" ColumnName="TreatmentCodeName" />
+          <ScalarProperty Name="TreatmentCodeDisplayName" ColumnName="TreatmentCodeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2190,6 +2211,8 @@
           <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
           <ScalarProperty Name="ImportedFromGis" ColumnName="ImportedFromGis" />
           <ScalarProperty Name="ProjectLocationUpdateID" ColumnName="ProjectLocationUpdateID" />
+          <ScalarProperty Name="TreatmentCodeID" ColumnName="TreatmentCodeID" />
+          <ScalarProperty Name="CostPerAcre" ColumnName="CostPerAcre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

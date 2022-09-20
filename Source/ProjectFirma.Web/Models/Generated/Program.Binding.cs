@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Program(int programID, int organizationID, string programName, string programShortName, int? programPrimaryContactPersonID, bool programIsActive, DateTime programCreateDate, int programCreatePersonID, DateTime? programLastUpdatedDate, int? programLastUpdatedByPersonID, bool isDefaultProgramForImportOnly, int? programFileResourceID, string programNotes) : this()
+        public Program(int programID, int organizationID, string programName, string programShortName, int? programPrimaryContactPersonID, bool programIsActive, DateTime programCreateDate, int programCreatePersonID, DateTime? programLastUpdatedDate, int? programLastUpdatedByPersonID, bool isDefaultProgramForImportOnly, int? programFileResourceID, string programNotes, int? programExampleGeospatialUploadFileResourceID) : this()
         {
             this.ProgramID = programID;
             this.OrganizationID = organizationID;
@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
             this.IsDefaultProgramForImportOnly = isDefaultProgramForImportOnly;
             this.ProgramFileResourceID = programFileResourceID;
             this.ProgramNotes = programNotes;
+            this.ProgramExampleGeospatialUploadFileResourceID = programExampleGeospatialUploadFileResourceID;
         }
 
         /// <summary>
@@ -248,6 +249,7 @@ namespace ProjectFirma.Web.Models
         public bool IsDefaultProgramForImportOnly { get; set; }
         public int? ProgramFileResourceID { get; set; }
         public string ProgramNotes { get; set; }
+        public int? ProgramExampleGeospatialUploadFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProgramID; } set { ProgramID = value; } }
 
@@ -264,6 +266,7 @@ namespace ProjectFirma.Web.Models
         public virtual Person ProgramCreatePerson { get; set; }
         public virtual Person ProgramLastUpdatedByPerson { get; set; }
         public virtual Person ProgramPrimaryContactPerson { get; set; }
+        public virtual FileResource ProgramExampleGeospatialUploadFileResource { get; set; }
         public virtual FileResource ProgramFileResource { get; set; }
 
         public static class FieldLengths

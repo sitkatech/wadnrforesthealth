@@ -116,16 +116,25 @@ angular.module("ProjectFirmaApp")
                     $scope.firmaMap.layerControl.removeLayer($scope.firmaMap.selectedPriorityLandscapeLayer);
                     $scope.firmaMap.map.removeLayer($scope.firmaMap.selectedPriorityLandscapeLayer);
                 }
-                
-                var wmsParameters = L.Util.extend(
-                    {
-                        layers: $scope.AngularViewData.PriorityLandscapeMapServiceLayerName,
-                        cql_filter: "PriorityLandscapeID in (" + $scope.AngularModel.PriorityLandscapeIDs.join(",") + ")",
-                        styles: "priorityLandscape_yellow"
-                    },
-                    $scope.firmaMap.wmsParams);
 
-                $scope.firmaMap.selectedPriorityLandscapeLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
+                var selectedMapParameters = null;
+                if ($scope.AngularModel.PriorityLandscapeIDs.length > 0) {
+                    selectedMapParameters = L.Util.extend($scope.firmaMap.wmsParams,
+                        {
+                            layers: $scope.AngularViewData.PriorityLandscapeMapServiceLayerName,
+                            cql_filter: "PriorityLandscapeID in (" + $scope.AngularModel.PriorityLandscapeIDs.join(",") + ")",
+                            styles: "priorityLandscape_yellow"
+                        });
+                } else {
+                    selectedMapParameters = L.Util.extend($scope.firmaMap.wmsParams,
+                        {
+                            layers: $scope.AngularViewData.PriorityLandscapeMapServiceLayerName,
+                            cql_filter: ""
+                        });
+                }
+
+                
+                $scope.firmaMap.selectedPriorityLandscapeLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, selectedMapParameters);
                 $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedPriorityLandscapeLayer, "Selected Priority Landscapes");
                 $scope.firmaMap.map.addLayer($scope.firmaMap.selectedPriorityLandscapeLayer);
 

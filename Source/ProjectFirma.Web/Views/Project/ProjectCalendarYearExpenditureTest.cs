@@ -20,7 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
+using ApprovalTests;
 using ApprovalTests.Reporters;
+using Newtonsoft.Json;
 using ProjectFirma.Web.UnitTestCommon;
 using NUnit.Framework;
 
@@ -68,7 +70,7 @@ namespace ProjectFirma.Web.Views.Project
 
             // Assert
             Assert.That(result.Count, Is.EqualTo(projects.Count));
-            ObjectApproval.ObjectApprover.VerifyWithJson(result.Select(x => new {x.Project.DisplayName, x.CalendarYearExpenditure}));
+            Approvals.Verify(JsonConvert.SerializeObject(result.Select(x => new { x.Project.DisplayName, x.CalendarYearExpenditure }), Formatting.Indented));
         }
 
     }

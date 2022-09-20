@@ -92,9 +92,10 @@
                     data-ng-click="toggleProjectLocationDetails(projectFirmaMap.editableFeatureGroup, projectLocation.ProjectLocationLeafletID)">
                     @* trash icon for deleting *@
                     <td>
-                        <a data-ng-if="!projectLocation.IsGeometryFromArcGis" href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
+                        <a data-ng-if="!projectLocation.IsGeometryFromArcGis && !projectLocation.HasTreatments" href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
+                        <span data-ng-if="projectLocation.HasTreatments && !projectLocation.IsGeometryFromArcGis">*</span>
                         <span data-ng-if="projectLocation.IsGeometryFromArcGis">**</span>
                     </td>
                     @* feature name *@
@@ -119,7 +120,7 @@
                     <td>
                         <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
                                 ng-model="projectLocation.ProjectLocationTypeID"
-                                data-ng-if="!projectLocation.IsGeometryFromArcGis"
+                                data-ng-if="!projectLocation.IsGeometryFromArcGis && !projectLocation.HasTreatments"
                                 required>
                             <option value="">-- Select type --</option>
                             <option ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
@@ -128,7 +129,7 @@
                             </option>
                         </select>
 
-                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis || projectLocation.HasTreatments">
                             {{projectLocation.ProjectLocationTypeName}}
                             <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID" value="{{projectLocation.ProjectLocationTypeID}}" />
                         </span>
@@ -139,6 +140,7 @@
                         <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocation.ProjectLocationNotes" style="width: 100%" maxlength="500" />
                         <input type="hidden" name="ProjectLocationJsons[{{$index}}].ArcGisObjectID" value="{{projectLocation.ArcGisObjectID}}" />
                         <input type="hidden" name="ProjectLocationJsons[{{$index}}].ArcGisGlobalID" value="{{projectLocation.ArcGisGlobalID}}" />
+                        <input type="hidden" name="ProjectLocationJsons[{{$index}}].HasTreatments" value="{{projectLocation.HasTreatments}}" />
                     </td>
                 </tr>
                 <tr data-ng-repeat="projectLocationArc in AngularModel.ArcGisProjectLocationJsons" class="clickable-row"
@@ -175,10 +177,12 @@
                         <input type="text" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocationArc.ProjectLocationNotes" style="width: 100%" maxlength="500" />
                         <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ArcGisObjectID" value="{{projectLocationArc.ArcGisObjectID}}" />
                         <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ArcGisGlobalID" value="{{projectLocationArc.ArcGisGlobalID}}" />
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].HasTreatments" value="{{projectLocationArc.HasTreatments}}" />
                     </td>
                 </tr>
             </table>
             <p class="systemText">
+                * Project locations associated with Treatments cannot be deleted or have their Location Type changed. <br />
                 ** Geometries from ArcGIS are not editable, but you may add or edit the notes field.
             </p>
         </div>

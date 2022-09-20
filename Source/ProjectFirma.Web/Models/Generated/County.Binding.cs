@@ -25,18 +25,18 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected County()
         {
-
+            this.ProjectCounties = new HashSet<ProjectCounty>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public County(int countyID, string countyName, int stateProvinceID, DbGeometry countyFeature) : this()
+        public County(string countyName, int stateProvinceID, DbGeometry countyFeature, int countyID) : this()
         {
-            this.CountyID = countyID;
             this.CountyName = countyName;
             this.StateProvinceID = stateProvinceID;
             this.CountyFeature = countyFeature;
+            this.CountyID = countyID;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return ProjectCounties.Any();
         }
 
         /// <summary>
@@ -88,13 +88,17 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(ProjectCounties.Any())
+            {
+                dependentObjects.Add(typeof(ProjectCounty).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(County).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(County).Name, typeof(ProjectCounty).Name};
 
 
         /// <summary>
@@ -110,18 +114,30 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
         }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
 
-        [Key]
-        public int CountyID { get; set; }
+            foreach(var x in ProjectCounties.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+        }
+
         public string CountyName { get; set; }
         public int StateProvinceID { get; set; }
         public DbGeometry CountyFeature { get; set; }
+        [Key]
+        public int CountyID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return CountyID; } set { CountyID = value; } }
 
+        public virtual ICollection<ProjectCounty> ProjectCounties { get; set; }
         public virtual StateProvince StateProvince { get; set; }
 
         public static class FieldLengths

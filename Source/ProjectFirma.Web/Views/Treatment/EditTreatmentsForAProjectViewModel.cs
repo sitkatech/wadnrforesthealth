@@ -26,7 +26,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
-using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -103,7 +102,6 @@ namespace ProjectFirma.Web.Views.Treatment
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareSlashAcres)]
         public decimal SlashAcres { get; set; }
-
 
 
         /// <summary>
@@ -194,8 +192,6 @@ namespace ProjectFirma.Web.Views.Treatment
                 treatments.SingleOrDefault(x =>
                     x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Other);
             OtherTreatmentAcres = (otherTreatment?.TreatmentTreatedAcres ?? 0).ToDecimalFormatted();
-
-            
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
