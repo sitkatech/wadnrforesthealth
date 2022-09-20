@@ -2,13 +2,14 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[TreatmentArea](
-	[TreatmentAreaID] [int] IDENTITY(1,1) NOT NULL,
-	[TreatmentAreaFeature] [geometry] NOT NULL,
-	[TemporaryTreatmentCacheID] [int] NULL,
- CONSTRAINT [PK_TreatmentArea_TreatmentAreaID] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[WashingtonCounty](
+	[WashingtonCountyID] [int] IDENTITY(1,1) NOT NULL,
+	[WashingtonCountyLocation] [geometry] NOT NULL,
+	[WashingtonCountyName] [nvarchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[WashingtonCountyFullName] [nvarchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+ CONSTRAINT [PK_WashingtonCounty_WashingtonCountyID] PRIMARY KEY CLUSTERED 
 (
-	[TreatmentAreaID] ASC
+	[WashingtonCountyID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
@@ -22,9 +23,9 @@ SET ANSI_WARNINGS ON
 SET NUMERIC_ROUNDABORT OFF
 
 GO
-CREATE SPATIAL INDEX [SPATIAL_TreatmentArea_TreatmentAreaFeature] ON [dbo].[TreatmentArea]
+CREATE SPATIAL INDEX [SPATIAL_WashingtonCounty_WashingtonCountyLocation] ON [dbo].[WashingtonCounty]
 (
-	[TreatmentAreaFeature]
+	[WashingtonCountyLocation]
 )USING  GEOMETRY_AUTO_GRID 
-WITH (BOUNDING_BOX =(-125, 45, -117, 50), 
+WITH (BOUNDING_BOX =(-125, 45, -116, 50), 
 CELLS_PER_OBJECT = 8, PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
