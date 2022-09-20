@@ -430,6 +430,11 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityLandscapes.Select(x => x.PriorityLandscape);
         }
 
+        public IEnumerable<County> GetProjectCounties()
+        {
+            return ProjectCounties.Select(x => x.County);
+        }
+
         public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties()
         {
             var detailedProjectLocations = ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList();

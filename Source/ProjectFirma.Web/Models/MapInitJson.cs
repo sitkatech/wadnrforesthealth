@@ -70,7 +70,8 @@ namespace ProjectFirma.Web.Models
                 GetAllProjectTreatments(),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.East),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.West),
-                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
+                County.GetCountyWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
 
             };
             return layerGeoJsons;
