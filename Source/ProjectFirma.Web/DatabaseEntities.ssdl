@@ -7299,6 +7299,12 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
   <Function Name="pClearSocrataDataMartRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pGeospatial_SpatialIndexCreate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="applyChanges" Type="bit" Mode="In" />
+    <Parameter Name="databaseNameOptional" Type="nvarchar" Mode="In" />
+    <Parameter Name="tableNameOptional" Type="nvarchar" Mode="In" />
+    <Parameter Name="geometryColumnName" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="pGrantExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
