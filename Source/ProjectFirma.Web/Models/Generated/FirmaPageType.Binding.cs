@@ -62,13 +62,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeManageFindYourForester ManageFindYourForester = FirmaPageTypeManageFindYourForester.Instance;
         public static readonly FirmaPageTypeFindYourForester FindYourForester = FirmaPageTypeFindYourForester.Instance;
         public static readonly FirmaPageTypeExternalMapLayers ExternalMapLayers = FirmaPageTypeExternalMapLayers.Instance;
-<<<<<<< HEAD
+        public static readonly FirmaPageTypeCounty County = FirmaPageTypeCounty.Instance;
         public static readonly FirmaPageTypeReports Reports = FirmaPageTypeReports.Instance;
         public static readonly FirmaPageTypeReportProjects ReportProjects = FirmaPageTypeReportProjects.Instance;
         public static readonly FirmaPageTypeReportAddReport ReportAddReport = FirmaPageTypeReportAddReport.Instance;
-=======
-        public static readonly FirmaPageTypeCounty County = FirmaPageTypeCounty.Instance;
->>>>>>> develop
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -78,11 +75,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-<<<<<<< HEAD
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, Reports, ReportProjects, ReportAddReport };
-=======
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County };
->>>>>>> develop
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -299,13 +292,10 @@ namespace ProjectFirma.Web.Models
         ManageFindYourForester = 67,
         FindYourForester = 68,
         ExternalMapLayers = 69,
-<<<<<<< HEAD
-        Reports = 70,
-        ReportProjects = 71,
-        ReportAddReport = 72
-=======
-        County = 70
->>>>>>> develop
+        County = 70,
+        Reports = 71,
+        ReportProjects = 72,
+        ReportAddReport = 73
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -566,28 +556,27 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeExternalMapLayers Instance = new FirmaPageTypeExternalMapLayers(69, @"ExternalMapLayers", @"External Map Layers", 1);
     }
 
-<<<<<<< HEAD
+    public partial class FirmaPageTypeCounty : FirmaPageType
+    {
+        private FirmaPageTypeCounty(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeCounty Instance = new FirmaPageTypeCounty(70, @"County", @"Counties", 1);
+    }
+
     public partial class FirmaPageTypeReports : FirmaPageType
     {
         private FirmaPageTypeReports(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeReports Instance = new FirmaPageTypeReports(70, @"Reports", @"Reports", 1);
+        public static readonly FirmaPageTypeReports Instance = new FirmaPageTypeReports(71, @"Reports", @"Reports", 1);
     }
 
     public partial class FirmaPageTypeReportProjects : FirmaPageType
     {
         private FirmaPageTypeReportProjects(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeReportProjects Instance = new FirmaPageTypeReportProjects(71, @"ReportProjects", @"Report Projects", 1);
+        public static readonly FirmaPageTypeReportProjects Instance = new FirmaPageTypeReportProjects(72, @"ReportProjects", @"Report Projects", 1);
     }
 
     public partial class FirmaPageTypeReportAddReport : FirmaPageType
     {
         private FirmaPageTypeReportAddReport(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeReportAddReport Instance = new FirmaPageTypeReportAddReport(72, @"ReportAddReport", @"Add a Report", 2);
-=======
-    public partial class FirmaPageTypeCounty : FirmaPageType
-    {
-        private FirmaPageTypeCounty(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeCounty Instance = new FirmaPageTypeCounty(70, @"County", @"Counties", 1);
->>>>>>> develop
+        public static readonly FirmaPageTypeReportAddReport Instance = new FirmaPageTypeReportAddReport(73, @"ReportAddReport", @"Add a Report", 2);
     }
 }
