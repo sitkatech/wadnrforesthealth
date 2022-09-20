@@ -117,15 +117,25 @@ angular.module("ProjectFirmaApp")
                     $scope.firmaMap.map.removeLayer($scope.firmaMap.selectedRegionLayer);
                 }
                 
-                var wmsParameters = L.Util.extend(
-                    {
-                        layers: $scope.AngularViewData.RegionMapServiceLayerName,
-                        cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.DNRUplandRegionIDs.join(",") + ")",
-                        styles: "region_yellow"
-                    },
-                    $scope.firmaMap.wmsParams);
 
-                $scope.firmaMap.selectedRegionLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
+
+                var selectedMapParameters = null;
+                if ($scope.AngularModel.DNRUplandRegionIDs.length > 0) {
+                    selectedMapParameters = L.Util.extend($scope.firmaMap.wmsParams,
+                        {
+                            layers: $scope.AngularViewData.RegionMapServiceLayerName,
+                            cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.DNRUplandRegionIDs.join(",") + ")",
+                            styles: "region_yellow"
+                        });
+                } else {
+                    selectedMapParameters = L.Util.extend($scope.firmaMap.wmsParams,
+                        {
+                            layers: $scope.AngularViewData.RegionMapServiceLayerName,
+                            cql_filter: ""
+                        });
+                }
+                
+                $scope.firmaMap.selectedRegionLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, selectedMapParameters);
                 $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedRegionLayer, "Selected DNR Upland Regions");
                 $scope.firmaMap.map.addLayer($scope.firmaMap.selectedRegionLayer);
 
