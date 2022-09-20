@@ -118,6 +118,8 @@
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdateValue" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeValue" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCustomGridColumn" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomGridColumn" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCustomGridConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomGridConfiguration" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.Store.ProjectDocument" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.Store.ProjectExemptReportingYear" store:Type="Tables" Schema="dbo" />
@@ -159,6 +161,7 @@
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateHistory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateProgram" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.Store.RelationshipType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReportTemplate" EntityType="ProjectFirma.Web.Models.Store.ReportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.Store.SocrataDataMartRawJsonImport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.Store.StateProvince" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.Store.SupportRequestLog" store:Type="Tables" Schema="dbo" />
@@ -1052,6 +1055,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectCustomAttribute" EntitySet="ProjectCustomAttribute" />
       <End Role="ProjectCustomAttributeValues" EntitySet="ProjectCustomAttributeValue" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
+      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
+      <End Role="ProjectCustomGridConfigurations" EntitySet="ProjectCustomGridConfiguration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID">
+      <End Role="ProjectCustomGridColumn" EntitySet="ProjectCustomGridColumn" />
+      <End Role="ProjectCustomGridConfigurations" EntitySet="ProjectCustomGridConfiguration" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectDocument_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectDocument_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
@@ -1363,6 +1374,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdateProgram_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdatePrograms" EntitySet="ProjectUpdateProgram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReportTemplate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_ReportTemplate_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="ReportTemplates" EntitySet="ReportTemplate" />
     </AssociationSet>
     <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.Store.FK_StateProvince_Country_CountryID">
       <End Role="Country" EntitySet="Country" />
@@ -2786,6 +2801,26 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectCustomAttributeID" Type="int" Nullable="false" />
     <Property Name="AttributeValue" Type="varchar" Nullable="false" MaxLength="1000" />
   </EntityType>
+  <EntityType Name="ProjectCustomGridColumn">
+    <Key>
+      <PropertyRef Name="ProjectCustomGridColumnID" />
+    </Key>
+    <Property Name="ProjectCustomGridColumnID" Type="int" Nullable="false" />
+    <Property Name="ProjectCustomGridColumnName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectCustomGridColumnDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="IsOptional" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectCustomGridConfiguration">
+    <Key>
+      <PropertyRef Name="ProjectCustomGridConfigurationID" />
+    </Key>
+    <Property Name="ProjectCustomGridConfigurationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectCustomGridTypeID" Type="int" Nullable="false" />
+    <Property Name="ProjectCustomGridColumnID" Type="int" Nullable="false" />
+    <Property Name="ProjectCustomAttributeTypeID" Type="int" />
+    <Property Name="IsEnabled" Type="bit" Nullable="false" />
+    <Property Name="SortOrder" Type="int" />
+  </EntityType>
   <EntityType Name="ProjectDocument">
     <Key>
       <PropertyRef Name="ProjectDocumentID" />
@@ -3248,6 +3283,18 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="RelationshipTypeDescription" Type="varchar" MaxLength="360" />
     <Property Name="ReportInAccomplishmentsDashboard" Type="bit" Nullable="false" />
     <Property Name="ShowOnFactSheet" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReportTemplate">
+    <Key>
+      <PropertyRef Name="ReportTemplateID" />
+    </Key>
+    <Property Name="ReportTemplateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="ReportTemplateModelTypeID" Type="int" Nullable="false" />
+    <Property Name="ReportTemplateModelID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
     <Key>
@@ -5947,6 +5994,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
+    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" Multiplicity="0..1" />
+    <End Role="ProjectCustomGridConfigurations" Type="ProjectFirma.Web.Models.Store.ProjectCustomGridConfiguration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCustomAttributeType">
+        <PropertyRef Name="ProjectCustomAttributeTypeID" />
+      </Principal>
+      <Dependent Role="ProjectCustomGridConfigurations">
+        <PropertyRef Name="ProjectCustomAttributeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID">
+    <End Role="ProjectCustomGridColumn" Type="ProjectFirma.Web.Models.Store.ProjectCustomGridColumn" Multiplicity="1" />
+    <End Role="ProjectCustomGridConfigurations" Type="ProjectFirma.Web.Models.Store.ProjectCustomGridConfiguration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCustomGridColumn">
+        <PropertyRef Name="ProjectCustomGridColumnID" />
+      </Principal>
+      <Dependent Role="ProjectCustomGridConfigurations">
+        <PropertyRef Name="ProjectCustomGridColumnID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectDocument_FileResource_FileResourceID">
     <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
     <End Role="ProjectDocuments" Type="ProjectFirma.Web.Models.Store.ProjectDocument" Multiplicity="*" />
@@ -6880,6 +6951,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectUpdatePrograms">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReportTemplate_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
+    <End Role="ReportTemplates" Type="ProjectFirma.Web.Models.Store.ReportTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ReportTemplates">
+        <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

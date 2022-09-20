@@ -145,6 +145,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
         public virtual DbSet<ProjectCustomAttributeUpdateValue> ProjectCustomAttributeUpdateValues { get; set; }
         public virtual DbSet<ProjectCustomAttributeValue> ProjectCustomAttributeValues { get; set; }
+        public virtual DbSet<ProjectCustomGridColumn> ProjectCustomGridColumns { get; set; }
+        public virtual DbSet<ProjectCustomGridConfiguration> ProjectCustomGridConfigurations { get; set; }
         public virtual DbSet<ProjectDocument> ProjectDocuments { get; set; }
         public virtual DbSet<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
         public virtual DbSet<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
@@ -187,6 +189,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdateProgram> ProjectUpdatePrograms { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
+        public virtual DbSet<ReportTemplate> AllReportTemplates { get; set; }
+        public virtual IQueryable<ReportTemplate> ReportTemplates { get { return AllReportTemplates; } }
         public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
@@ -837,6 +841,17 @@ namespace ProjectFirma.Web.Models
                 case "ProjectCustomAttributeValue":
                     return ProjectCustomAttributeValues.GetProjectCustomAttributeValue(primaryKey);
 
+                case "ProjectCustomGridColumn":
+                    return ProjectCustomGridColumns.GetProjectCustomGridColumn(primaryKey);
+
+                case "ProjectCustomGridConfiguration":
+                    return ProjectCustomGridConfigurations.GetProjectCustomGridConfiguration(primaryKey);
+
+                case "ProjectCustomGridType":
+                    var projectCustomGridType = ProjectCustomGridType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(projectCustomGridType, "ProjectCustomGridType", primaryKey);
+                    return projectCustomGridType;
+
                 case "ProjectDocument":
                     return ProjectDocuments.GetProjectDocument(primaryKey);
 
@@ -1022,6 +1037,19 @@ namespace ProjectFirma.Web.Models
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);
+
+                case "ReportTemplateModel":
+                    var reportTemplateModel = ReportTemplateModel.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(reportTemplateModel, "ReportTemplateModel", primaryKey);
+                    return reportTemplateModel;
+
+                case "ReportTemplateModelType":
+                    var reportTemplateModelType = ReportTemplateModelType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(reportTemplateModelType, "ReportTemplateModelType", primaryKey);
+                    return reportTemplateModelType;
+
+                case "ReportTemplate":
+                    return ReportTemplates.GetReportTemplate(primaryKey);
 
                 case "Role":
                     var role = Role.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

@@ -44,6 +44,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectDocumentUpdates = new HashSet<ProjectDocumentUpdate>();
             this.ProjectImages = new HashSet<ProjectImage>();
             this.ProjectImageUpdates = new HashSet<ProjectImageUpdate>();
+            this.ReportTemplates = new HashSet<ReportTemplate>();
             this.SystemAttributesWhereYouAreTheBannerLogoFileResource = new HashSet<SystemAttribute>();
             this.SystemAttributesWhereYouAreTheSquareLogoFileResource = new HashSet<SystemAttribute>();
         }
@@ -112,7 +113,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (GrantModificationFileResource != null) || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
+            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (GrantModificationFileResource != null) || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || ReportTemplates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
@@ -217,6 +218,11 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(ProjectImageUpdate).Name);
             }
 
+            if(ReportTemplates.Any())
+            {
+                dependentObjects.Add(typeof(ReportTemplate).Name);
+            }
+
             if(SystemAttributesWhereYouAreTheBannerLogoFileResource.Any())
             {
                 dependentObjects.Add(typeof(SystemAttribute).Name);
@@ -232,7 +238,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantFileResource).Name, typeof(GrantModificationFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantFileResource).Name, typeof(GrantModificationFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -352,6 +358,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in ReportTemplates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in SystemAttributesWhereYouAreTheBannerLogoFileResource.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -400,6 +411,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
         public virtual ICollection<ProjectImage> ProjectImages { get; set; }
         public virtual ICollection<ProjectImageUpdate> ProjectImageUpdates { get; set; }
+        public virtual ICollection<ReportTemplate> ReportTemplates { get; set; }
         public virtual ICollection<SystemAttribute> SystemAttributesWhereYouAreTheBannerLogoFileResource { get; set; }
         public virtual ICollection<SystemAttribute> SystemAttributesWhereYouAreTheSquareLogoFileResource { get; set; }
         public FileResourceMimeType FileResourceMimeType { get { return FileResourceMimeType.AllLookupDictionary[FileResourceMimeTypeID]; } }

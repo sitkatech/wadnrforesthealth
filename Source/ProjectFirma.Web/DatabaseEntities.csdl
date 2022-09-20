@@ -118,6 +118,8 @@
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
     <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdateValue" />
     <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeValue" />
+    <EntitySet Name="ProjectCustomGridColumn" EntityType="ProjectFirma.Web.Models.ProjectCustomGridColumn" />
+    <EntitySet Name="ProjectCustomGridConfiguration" EntityType="ProjectFirma.Web.Models.ProjectCustomGridConfiguration" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.ProjectDocument" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.ProjectDocumentUpdate" />
     <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYear" />
@@ -159,6 +161,7 @@
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
     <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.ProjectUpdateProgram" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
+    <EntitySet Name="ReportTemplate" EntityType="ProjectFirma.Web.Models.ReportTemplate" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
@@ -360,6 +363,10 @@
     <AssociationSet Name="FK_ProjectImageUpdate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="ProjectImageUpdates" EntitySet="ProjectImageUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReportTemplate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="ReportTemplates" EntitySet="ReportTemplate" />
     </AssociationSet>
     <AssociationSet Name="FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID">
       <End Role="BannerLogoFileResource" EntitySet="FileResource" />
@@ -1189,6 +1196,10 @@
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
+      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
+      <End Role="ProjectCustomGridConfigurations" EntitySet="ProjectCustomGridConfiguration" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
@@ -1200,6 +1211,10 @@
     <AssociationSet Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
       <End Role="ProjectCustomAttributeUpdate" EntitySet="ProjectCustomAttributeUpdate" />
       <End Role="ProjectCustomAttributeUpdateValues" EntitySet="ProjectCustomAttributeUpdateValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" Association="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID">
+      <End Role="ProjectCustomGridColumn" EntitySet="ProjectCustomGridColumn" />
+      <End Role="ProjectCustomGridConfigurations" EntitySet="ProjectCustomGridConfiguration" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1616,6 +1631,7 @@
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImages" />
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImageUpdates" />
+    <NavigationProperty Name="ReportTemplates" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ReportTemplates" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheBannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="BannerLogoFileResource" ToRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheSquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SquareLogoFileResource" ToRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" />
   </EntityType>
@@ -3075,6 +3091,7 @@
     <Property Name="ApplyToAllProjectTypes" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributes" />
     <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributeUpdates" />
+    <NavigationProperty Name="ProjectCustomGridConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomGridConfigurations" />
     <NavigationProperty Name="ProjectTypeProjectCustomAttributeTypes" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectTypeProjectCustomAttributeTypes" />
   </EntityType>
   <EntityType Name="ProjectCustomAttributeUpdate">
@@ -3105,6 +3122,29 @@
     <Property Name="ProjectCustomAttributeID" Type="Int32" Nullable="false" />
     <Property Name="AttributeValue" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectCustomAttribute" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID" FromRole="ProjectCustomAttributeValues" ToRole="ProjectCustomAttribute" />
+  </EntityType>
+  <EntityType Name="ProjectCustomGridColumn">
+    <Key>
+      <PropertyRef Name="ProjectCustomGridColumnID" />
+    </Key>
+    <Property Name="ProjectCustomGridColumnID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCustomGridColumnName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectCustomGridColumnDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="IsOptional" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ProjectCustomGridConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" FromRole="ProjectCustomGridColumn" ToRole="ProjectCustomGridConfigurations" />
+  </EntityType>
+  <EntityType Name="ProjectCustomGridConfiguration">
+    <Key>
+      <PropertyRef Name="ProjectCustomGridConfigurationID" />
+    </Key>
+    <Property Name="ProjectCustomGridConfigurationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectCustomGridTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCustomGridColumnID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" />
+    <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" />
+    <NavigationProperty Name="ProjectCustomAttributeType" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomGridConfigurations" ToRole="ProjectCustomAttributeType" />
+    <NavigationProperty Name="ProjectCustomGridColumn" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" FromRole="ProjectCustomGridConfigurations" ToRole="ProjectCustomGridColumn" />
   </EntityType>
   <EntityType Name="ProjectDocument">
     <Key>
@@ -3677,6 +3717,19 @@
     <NavigationProperty Name="OrganizationTypeRelationshipTypes" Relationship="ProjectFirma.Web.Models.FK_OrganizationTypeRelationshipType_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="OrganizationTypeRelationshipTypes" />
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectOrganizationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizationUpdates" />
+  </EntityType>
+  <EntityType Name="ReportTemplate">
+    <Key>
+      <PropertyRef Name="ReportTemplateID" />
+    </Key>
+    <Property Name="ReportTemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="ReportTemplateModelTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ReportTemplateModelID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="ReportTemplates" ToRole="FileResource" />
   </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
     <Key>
@@ -4647,6 +4700,18 @@
         <PropertyRef Name="FileResourceID" />
       </Principal>
       <Dependent Role="ProjectImageUpdates">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReportTemplate_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1" />
+    <End Role="ReportTemplates" Type="ProjectFirma.Web.Models.ReportTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ReportTemplates">
         <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7135,6 +7200,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
+    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="0..1" />
+    <End Role="ProjectCustomGridConfigurations" Type="ProjectFirma.Web.Models.ProjectCustomGridConfiguration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCustomAttributeType">
+        <PropertyRef Name="ProjectCustomAttributeTypeID" />
+      </Principal>
+      <Dependent Role="ProjectCustomGridConfigurations">
+        <PropertyRef Name="ProjectCustomAttributeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
     <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="1" />
     <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
@@ -7168,6 +7245,18 @@
       </Principal>
       <Dependent Role="ProjectCustomAttributeUpdateValues">
         <PropertyRef Name="ProjectCustomAttributeUpdateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID">
+    <End Role="ProjectCustomGridColumn" Type="ProjectFirma.Web.Models.ProjectCustomGridColumn" Multiplicity="1" />
+    <End Role="ProjectCustomGridConfigurations" Type="ProjectFirma.Web.Models.ProjectCustomGridConfiguration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCustomGridColumn">
+        <PropertyRef Name="ProjectCustomGridColumnID" />
+      </Principal>
+      <Dependent Role="ProjectCustomGridConfigurations">
+        <PropertyRef Name="ProjectCustomGridColumnID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

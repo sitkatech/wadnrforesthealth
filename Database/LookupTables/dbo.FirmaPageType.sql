@@ -45,6 +45,7 @@ values
 (66, 'UploadLoaTabularDataExcel', 'Upload Loa Tabular Data', 1),
 (67, 'ManageFindYourForester', 'Manage Find Your Forester', 1),
 (68, 'FindYourForester', 'Find Your Forester', 1),
-(69, 'ExternalMapLayers', 'External Map Layers', 1)
-
-
+(69, 'ExternalMapLayers', 'External Map Layers', 1),
+(70, 'Reports', 'Reports', 1),
+(71, 'ReportProjects', 'Report Projects', 1),
+(72, 'ReportAddReport', 'Add a Report', 2)
