@@ -1370,6 +1370,7 @@
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
+          <ScalarProperty Name="PercentageMatch" ColumnName="PercentageMatch" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1869,6 +1870,7 @@
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
+          <ScalarProperty Name="PercentageMatch" ColumnName="PercentageMatch" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

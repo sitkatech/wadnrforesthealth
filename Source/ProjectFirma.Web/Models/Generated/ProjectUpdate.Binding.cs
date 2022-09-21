@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? focusAreaID, DateTime? expirationDate, string projectFundingSourceNotes) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? focusAreaID, DateTime? expirationDate, string projectFundingSourceNotes, int? percentageMatch) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
             this.FocusAreaID = focusAreaID;
             this.ExpirationDate = expirationDate;
             this.ProjectFundingSourceNotes = projectFundingSourceNotes;
+            this.PercentageMatch = percentageMatch;
         }
 
         /// <summary>
@@ -138,6 +139,7 @@ namespace ProjectFirma.Web.Models
         public int? FocusAreaID { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public string ProjectFundingSourceNotes { get; set; }
+        public int? PercentageMatch { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateID; } set { ProjectUpdateID = value; } }
 

@@ -34,6 +34,7 @@ CREATE TABLE [dbo].[Project](
 	[LastUpdateGisUploadAttemptID] [int] NULL,
 	[ProjectGisIdentifier] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectFundingSourceNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[PercentageMatch] [int] NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC
