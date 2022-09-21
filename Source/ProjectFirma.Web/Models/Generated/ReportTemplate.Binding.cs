@@ -16,9 +16,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ReportTemplate] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[ReportTemplate] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ReportTemplate]")]
-    public partial class ReportTemplate : IHavePrimaryKey, IHaveATenantID
+    public partial class ReportTemplate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -108,7 +108,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.AllReportTemplates.Remove(this);
+            dbContext.ReportTemplates.Remove(this);
         }
         
         /// <summary>
@@ -122,7 +122,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ReportTemplateID { get; set; }
-        public int TenantID { get; set; }
         public int FileResourceID { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }

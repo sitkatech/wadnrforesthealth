@@ -12,15 +12,6 @@ namespace ProjectFirma.Web.Models
     {
         public static readonly EnglishPluralizationService PluralizationService = new EnglishPluralizationService();
 
-        public static FieldDefinition ToType(this FieldDefinitionEnum fieldDefinitionEnum)
-        {
-            return ToType((int) fieldDefinitionEnum);
-        }
-        public static FieldDefinition ToType(int fieldDefinitionID)
-        {
-            return (FieldDefinition)Enum.ToObject(typeof(FieldDefinition), fieldDefinitionID);
-        }
-
         public static HtmlString GetFieldDefinitionDescription(this FieldDefinition fieldDefinition)
         {
             var fieldDefinitionData = fieldDefinition.GetFieldDefinitionData();

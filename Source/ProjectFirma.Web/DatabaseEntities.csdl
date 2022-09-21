@@ -3760,7 +3760,6 @@
       <PropertyRef Name="ReportTemplateID" />
     </Key>
     <Property Name="ReportTemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
     <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="Description" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />

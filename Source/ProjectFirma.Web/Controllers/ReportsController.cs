@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Controllers
         [ReportTemplateGenerateReportsFeature]
         public ViewResult Projects()
         {
-            var firmaPage = FirmaPageTypeEnum.ReportProjects.GetFirmaPage();
+            var firmaPage = FirmaPageType.ReportProjects.GetFirmaPage();
             var projectCustomReportsGridConfigurations = HttpRequestStorage.DatabaseEntities.ProjectCustomGridConfigurations.Where(x => x.IsEnabled && x.ProjectCustomGridTypeID == ProjectCustomGridType.Reports.ProjectCustomGridTypeID).OrderBy(x => x.SortOrder).ToList();
             var viewData = new ProjectsViewData(CurrentPerson, firmaPage, projectCustomReportsGridConfigurations);
             return RazorView<Projects, ProjectsViewData>(viewData);
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
         [FirmaAdminFeature]
         public ViewResult Index()
         {
-            var firmaPage = FirmaPageTypeEnum.Reports.GetFirmaPage();
+            var firmaPage = FirmaPageType.Reports.GetFirmaPage();
             var viewData = new IndexViewData(CurrentPerson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
@@ -140,14 +140,14 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEdit(EditViewModel viewModel)
         {
-            var firmaPage = FirmaPageTypeEnum.ReportAddReport.GetFirmaPage();
+            var firmaPage = FirmaPageType.ReportAddReport.GetFirmaPage();
             var viewData = new EditViewData(CurrentPerson, firmaPage);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 
         private PartialViewResult ViewEdit(EditViewModel viewModel, ReportTemplate reportTemplate)
         {
-            var firmaPage = FirmaPageTypeEnum.ReportAddReport.GetFirmaPage();
+            var firmaPage = FirmaPageType.ReportAddReport.GetFirmaPage();
             var viewData = new EditViewData(CurrentPerson, firmaPage, reportTemplate);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }

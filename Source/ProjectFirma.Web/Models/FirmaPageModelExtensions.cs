@@ -7,19 +7,10 @@ namespace ProjectFirma.Web.Models
 {
     public static class FirmaPageModelExtensions
     {
-        public static FirmaPageType ToType(this FirmaPageTypeEnum psInfoPageTypeEnum)
-        {
-            return ToType((int)psInfoPageTypeEnum);
-        }
-
-        public static FirmaPageType ToType(int fieldDefinitionID)
-        {
-            return (FirmaPageType)Enum.ToObject(typeof(FirmaPageType), fieldDefinitionID);
-        }
 
         public static FirmaPage GetFirmaPage(this FirmaPageType firmaPageType)
         {
-            var firmaPage = firmaPageType.GetFirmaPage() ??
+            var firmaPage = HttpRequestStorage.DatabaseEntities.FirmaPages.SingleOrDefault(x => x.FirmaPageTypeID == firmaPageType.FirmaPageTypeID) ??
                             MakePlaceholderFirmaPageForDisplay(firmaPageType);
             return firmaPage;
         }
@@ -37,9 +28,5 @@ namespace ProjectFirma.Web.Models
             return firmaPage;
         }
 
-        public static FirmaPage GetFirmaPage(this FirmaPageTypeEnum firmaPageTypeEnum)
-        {
-            return GetFirmaPage(firmaPageTypeEnum.ToType());
-        }
     }
 }

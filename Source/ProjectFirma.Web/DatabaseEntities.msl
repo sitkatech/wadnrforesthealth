@@ -1984,7 +1984,6 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ReportTemplate">
         <MappingFragment StoreEntitySet="ReportTemplate">
           <ScalarProperty Name="ReportTemplateID" ColumnName="ReportTemplateID" />
-          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
