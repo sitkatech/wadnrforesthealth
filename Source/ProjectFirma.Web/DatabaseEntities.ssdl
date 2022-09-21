@@ -2743,6 +2743,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
+    <Property Name="PercentageMatch" Type="int" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -3198,6 +3199,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FocusAreaID" Type="int" />
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
+    <Property Name="PercentageMatch" Type="int" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
     <Key>

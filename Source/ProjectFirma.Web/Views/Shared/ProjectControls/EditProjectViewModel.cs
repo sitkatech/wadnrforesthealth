@@ -75,6 +75,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
         public int? FocusAreaID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
+        public int? PercentageMatch { get; set; }
+
         public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
 
         /// <summary>
@@ -100,6 +103,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             FocusAreaID = project.FocusAreaID;
             ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
             ProgramIdentifier = project.ProjectGisIdentifier;
+            PercentageMatch = project.PercentageMatch;
         }
 
         public void UpdateModel(Models.Project project, Person currentPerson)
@@ -119,6 +123,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
+            project.PercentageMatch = PercentageMatch;
             // 2022-7-18 TK&RO - adding this trim to prevent GIS Identifiers with leading or trailing spaces as this caused comparison issues in the bulk import
             project.ProjectGisIdentifier = string.IsNullOrEmpty(ProgramIdentifier) ? string.Empty : ProgramIdentifier.Trim();
             var projectType =
@@ -207,6 +212,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                                    "Making this change can potentially affect that update in process.<br />" +
                                    $"Please delete the update if you want to change this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}'s stage.";
                 yield return new SitkaValidationResult<EditProjectViewModel, int>(errorMessage, m => m.ProjectStageID);
+            }
+
+            if (PercentageMatch.HasValue && (PercentageMatch.Value < 0 || PercentageMatch.Value > 100))
+            {
+                yield return new SitkaValidationResult<EditProjectViewModel, int?>("Percentage Match must be blank or between 0 and 100 inclusive.", m => m.PercentageMatch);
             }
         }
     }
