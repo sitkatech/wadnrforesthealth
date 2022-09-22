@@ -54,6 +54,8 @@ namespace ProjectFirma.Web.Models
         public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(this.GetDetailUrl(), DisplayName);
         public HtmlString DisplayNameAsUrlBlankTarget => UrlTemplate.MakeHrefStringBlankTarget(this.GetDetailUrl(), DisplayName);
 
+        public string PercentageMatchFormatted => PercentageMatch.HasValue ? $"{PercentageMatch}%" : String.Empty;
+
         public static bool IsProjectNameUnique(IEnumerable<Project> projects, string projectName, int? currentProjectID)
         {
             if (string.IsNullOrWhiteSpace(projectName))

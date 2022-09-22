@@ -208,6 +208,22 @@
 
                 
             </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.PercentageMatch)
+                </div>
+                <div class="col-xs-8">
+                    @Html.EditorFor(m => m.PercentageMatch, new {  
+                        htmlAttributes = new { 
+                            min="0", max="100"
+                        } 
+                    })
+                    @Html.ValidationMessageFor(m => m.PercentageMatch)
+                </div>
+            </div>
+
+
         </div>
         <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples">
             <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectID}}" />

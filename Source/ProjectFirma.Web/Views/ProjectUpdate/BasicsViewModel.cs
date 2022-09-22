@@ -65,6 +65,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
         public string Comments { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
+        public int? PercentageMatch { get; set; }
+
         public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
         public List<ProjectUpdateProgramSimple> ProjectUpdateProgramSimples { get; set; }
 
@@ -87,6 +90,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectID = projectUpdate.ProjectUpdateBatch.ProjectID;
             ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
             ProjectUpdateProgramSimples = projectUpdate.ProjectUpdateBatch.ProjectUpdatePrograms.Select(x=> new ProjectUpdateProgramSimple(x)).ToList();
+            PercentageMatch = projectUpdate.PercentageMatch;
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -97,7 +101,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ExpirationDate = ExpirationDate;
             projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.FocusAreaID = FocusAreaID;
-
+            projectUpdate.PercentageMatch = PercentageMatch;
 
             if (ProjectUpdateProgramSimples == null)
             {
@@ -147,6 +151,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Year needs to be less than or equal to the current year",
                     m => m.CompletionDate);
+            }
+
+            if (PercentageMatch.HasValue && (PercentageMatch.Value < 0 || PercentageMatch.Value > 100))
+            {
+                yield return new SitkaValidationResult<BasicsViewModel, int?>("Percentage Match must be blank or between 0 and 100 inclusive.", m => m.PercentageMatch);
             }
         }
     }

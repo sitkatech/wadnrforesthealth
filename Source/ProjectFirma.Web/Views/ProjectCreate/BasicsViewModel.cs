@@ -64,6 +64,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 		[FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
         public int? FocusAreaID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
+        public int? PercentageMatch { get; set; }
+
         public int? ImportExternalProjectStagingID { get; set; }
 
         public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
@@ -88,6 +91,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             CompletionDate = project.CompletionDate;
             FocusAreaID = project.FocusAreaID;
             ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
+            PercentageMatch = project.PercentageMatch;
 
         }
 
@@ -104,6 +108,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ExpirationDate = ExpirationDate;
             project.CompletionDate = CompletionDate;
             project.FocusAreaID = FocusAreaID;
+            project.PercentageMatch = PercentageMatch;
 
             var nonAllTypeAttributes = project.ProjectCustomAttributes.Where(x => !x.ProjectCustomAttributeType.ApplyToAllProjectTypes).ToList();
             if (nonAllTypeAttributes.Any())
@@ -208,6 +213,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the Planning / Design start year must be less than or equal to the current year",
                     m => m.PlannedDate);
+            }
+
+            if (PercentageMatch.HasValue && (PercentageMatch.Value < 0 || PercentageMatch.Value > 100))
+            {
+                yield return new SitkaValidationResult<BasicsViewModel, int?>("Percentage Match must be blank or between 0 and 100 inclusive.", m => m.PercentageMatch);
             }
         }
     }

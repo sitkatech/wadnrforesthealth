@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, string noCountiesExplanation) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, string noCountiesExplanation, int? percentageMatch) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -93,6 +93,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectGisIdentifier = projectGisIdentifier;
             this.ProjectFundingSourceNotes = projectFundingSourceNotes;
             this.NoCountiesExplanation = noCountiesExplanation;
+            this.PercentageMatch = percentageMatch;
         }
 
         /// <summary>
@@ -508,6 +509,7 @@ namespace ProjectFirma.Web.Models
         public string ProjectGisIdentifier { get; set; }
         public string ProjectFundingSourceNotes { get; set; }
         public string NoCountiesExplanation { get; set; }
+        public int? PercentageMatch { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
