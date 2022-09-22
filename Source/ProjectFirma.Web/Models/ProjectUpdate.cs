@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Models
         {
             this.FocusAreaID = projectUpdateBatch.Project.FocusAreaID;
             this.ProjectDescription = projectUpdateBatch.Project.ProjectDescription;
+            
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
             LoadSimpleLocationFromProject(project);
@@ -70,6 +71,7 @@ namespace ProjectFirma.Web.Models
             CompletionDate = project.CompletionDate;
             FocusAreaID = project.FocusAreaID;
             EstimatedTotalCost = project.EstimatedTotalCost;
+            PercentageMatch = project.PercentageMatch;
         }
 
         public void LoadSimpleLocationFromProject(Project project)
@@ -89,6 +91,7 @@ namespace ProjectFirma.Web.Models
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.ProjectFundingSourceNotes = ProjectFundingSourceNotes;
             project.FocusAreaID = FocusAreaID;
+            project.PercentageMatch = PercentageMatch;
 
         }
 
