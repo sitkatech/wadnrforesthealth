@@ -1253,6 +1253,9 @@
     <Compile Include="Views\ProjectCounty\EditProjectCounties.cs" />
     <Compile Include="Views\ProjectCounty\EditProjectCountiesViewData.cs" />
     <Compile Include="Views\ProjectCounty\EditProjectCountiesViewModel.cs" />
+    <Compile Include="Views\ProjectCreate\Counties.cs" />
+    <Compile Include="Views\ProjectCreate\CountiesViewData.cs" />
+    <Compile Include="Views\ProjectCreate\CountiesViewModel.cs" />
     <Compile Include="Views\ProjectUpdate\CountiesValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\CountiesViewModel.cs" />
     <Compile Include="Views\ProjectUpdate\CountiesViewData.cs" />
@@ -2687,6 +2690,7 @@
     <Content Include="Views\Shared\ProjectImportBlockList\EditProjectImportBlockList.cshtml" />
     <Content Include="Views\ProjectCounty\EditProjectCounties.cshtml" />
     <Content Include="Views\ProjectUpdate\Counties.cshtml" />
+    <Content Include="Views\ProjectCreate\Counties.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

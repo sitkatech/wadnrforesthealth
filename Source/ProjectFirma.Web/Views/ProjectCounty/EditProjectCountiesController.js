@@ -122,16 +122,26 @@ angular.module("ProjectFirmaApp")
                     $scope.firmaMap.layerControl.removeLayer($scope.firmaMap.selectedCountyLayer);
                     $scope.firmaMap.map.removeLayer($scope.firmaMap.selectedCountyLayer);
                 }
-                
-                var wmsParameters = L.Util.extend(
-                    {
-                        layers: $scope.AngularViewData.CountyMapServiceLayerName,
-                        cql_filter: "CountyID in (" + $scope.AngularModel.CountyIDs.join(",") + ")",
-                        styles: "county_yellow"
-                    },
-                    $scope.firmaMap.wmsParams);
 
-                $scope.firmaMap.selectedCountyLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
+                var selectedMapParameters = null;
+                if ($scope.AngularModel.CountyIDs.length > 0) {
+                    selectedMapParameters = L.Util.extend($scope.firmaMap.wmsParams,
+                        {
+                            layers: $scope.AngularViewData.CountyMapServiceLayerName,
+                            cql_filter: "CountyID in (" + $scope.AngularModel.CountyIDs.join(",") + ")",
+                            styles: "county_yellow"
+                        }
+                    );
+                }
+                else {
+                    selectedMapParameters = L.Util.extend($scope.firmaMap.wmsParams,
+                        {
+                            layers: $scope.AngularViewData.CountyMapServiceLayerName,
+                            cql_filter: ""
+                        });
+                }
+
+                $scope.firmaMap.selectedCountyLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, selectedMapParameters);
                 $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedCountyLayer, "Selected Counties");
                 $scope.firmaMap.map.addLayer($scope.firmaMap.selectedCountyLayer);
 

@@ -302,4 +302,17 @@ namespace ProjectFirma.Web.Models
             return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Treatments(project.ProjectID)) : null;
         }
     }
+
+    public partial class ProjectCreateSectionCounties
+    {
+        public override bool IsComplete(Project project)
+        {
+            return project != null && project.IsProjectCountiesValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Counties(project.ProjectID)) : null;
+        }
+    }
 }

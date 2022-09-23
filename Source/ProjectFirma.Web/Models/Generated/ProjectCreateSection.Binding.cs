@@ -34,6 +34,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionPriorityLandscapes PriorityLandscapes = ProjectCreateSectionPriorityLandscapes.Instance;
         public static readonly ProjectCreateSectionProjectAttributes ProjectAttributes = ProjectCreateSectionProjectAttributes.Instance;
         public static readonly ProjectCreateSectionTreatments Treatments = ProjectCreateSectionTreatments.Instance;
+        public static readonly ProjectCreateSectionCounties Counties = ProjectCreateSectionCounties.Instance;
 
         public static readonly List<ProjectCreateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectCreateSection> AllLookupDictionary;
@@ -43,7 +44,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes, Treatments };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes, Treatments, Counties };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -125,6 +126,8 @@ namespace ProjectFirma.Web.Models
                     return Classifications;
                 case ProjectCreateSectionEnum.Contacts:
                     return Contacts;
+                case ProjectCreateSectionEnum.Counties:
+                    return Counties;
                 case ProjectCreateSectionEnum.DNRUplandRegions:
                     return DNRUplandRegions;
                 case ProjectCreateSectionEnum.ExpectedFunding:
@@ -171,7 +174,8 @@ namespace ProjectFirma.Web.Models
         DNRUplandRegions = 17,
         PriorityLandscapes = 18,
         ProjectAttributes = 19,
-        Treatments = 20
+        Treatments = 20,
+        Counties = 21
     }
 
     public partial class ProjectCreateSectionBasics : ProjectCreateSection
@@ -262,5 +266,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionTreatments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionTreatments Instance = new ProjectCreateSectionTreatments(20, @"Treatments", @"Treatments", 90, false, 5);
+    }
+
+    public partial class ProjectCreateSectionCounties : ProjectCreateSection
+    {
+        private ProjectCreateSectionCounties(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionCounties Instance = new ProjectCreateSectionCounties(21, @"Counties", @"Counties", 55, true, 2);
     }
 }
