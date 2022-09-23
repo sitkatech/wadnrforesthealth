@@ -70,22 +70,25 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
         streetLayerGroup.addTo(this.map);
     }
 
-    // Add external tile layers from ArcGIS Online
-    for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
-        var layerConfig = mapInitJson.ExternalMapLayers[i];
-        if (layerConfig.IsTiledMapService) {
-            this.addTiledLayerFromAGOL(layerConfig, overlayLayers);
-        }
-    }
-
     // add vector layers
     this.vectorLayers = [];
 
-    // Add external vector layers from ArcGIS Online 
-    for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
-        var layerConfig = mapInitJson.ExternalMapLayers[i];
-        if (!layerConfig.IsTiledMapService) {
-            this.addVectorLayerFromAGOL(layerConfig, overlayLayers);
+
+    if (!treatAllLayersAsBaseLayers) {//ArcGIS layers should not be added to the Manage Find Your Forester Page
+        //Add external tile layers from ArcGIS Online
+        for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
+            var layerConfig = mapInitJson.ExternalMapLayers[i];
+            if (layerConfig.IsTiledMapService) {
+                this.addTiledLayerFromAGOL(layerConfig, overlayLayers);
+            }
+        }
+
+        //Add external vector layers from ArcGIS Online
+        for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
+            var layerConfig = mapInitJson.ExternalMapLayers[i];
+            if (!layerConfig.IsTiledMapService) {
+                this.addVectorLayerFromAGOL(layerConfig, overlayLayers);
+            }
         }
     }
 
