@@ -132,6 +132,9 @@ namespace ProjectFirma.Web.Models
             // project region
             ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
 
+            // project county
+            ProjectCountyUpdate.CreateFromProject(projectUpdateBatch);
+
             // treatments
             TreatmentUpdate.CreateFromProject(projectUpdateBatch);
 
@@ -169,6 +172,7 @@ namespace ProjectFirma.Web.Models
             //move optional fields to the project update batch
             projectUpdateBatch.NoRegionsExplanation = project.NoRegionsExplanation;
             projectUpdateBatch.NoPriorityLandscapesExplanation = project.NoPriorityLandscapesExplanation;
+
 
             // create a project update history record
             CreateNewTransitionRecord(projectUpdateBatch, ProjectUpdateState.Created, currentPerson, DateTime.Now);
@@ -289,7 +293,7 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.DeleteProjectRegionUpdate(ProjectRegionUpdates);
             RefreshFromDatabase(ProjectRegionUpdates);
         }
-
+        
         public void DeleteProjectOrganizationUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.DeleteProjectOrganizationUpdate(ProjectOrganizationUpdates);
@@ -518,9 +522,27 @@ namespace ProjectFirma.Web.Models
             return regionValidationResult;
         }
 
+        public CountiesValidationResult ValidateProjectCounty()
+        {
+            var incomplete = !ProjectCountyUpdates.Any() && string.IsNullOrWhiteSpace(NoCountiesExplanation);
+            var countyValidationResult = new CountiesValidationResult(incomplete);
+            return countyValidationResult;
+        }
+
         public bool IsProjectRegionValid()
         {
             return ValidateProjectRegion().IsValid;
+        }
+
+        public bool IsProjectCountyValid()
+        {
+            return ValidateProjectCounty().IsValid;
+        }
+
+        public void DeleteProjectCountyUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectCountyUpdates.DeleteProjectCountyUpdate(ProjectCountyUpdates);
+            RefreshFromDatabase(ProjectCountyUpdates);
         }
 
         public PriorityLandscapesValidationResult ValidateProjectPriorityLandscape()
@@ -560,6 +582,7 @@ namespace ProjectFirma.Web.Models
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
             IList<ProjectPriorityLandscape> projectPriorityLandscapes, 
             IList<ProjectRegion> projectRegions, 
+            IList<ProjectCounty> projectCounties,
             IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
@@ -583,6 +606,7 @@ namespace ProjectFirma.Web.Models
                 projectLocations,
                 projectPriorityLandscapes,
                 projectRegions,
+                projectCounties,
                 projectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
@@ -621,6 +645,7 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
                 IList<ProjectPriorityLandscape> projectPriorityLandscapes,
                 IList<ProjectRegion> projectRegions,
+                IList<ProjectCounty> projectCounties,
                 IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
@@ -675,6 +700,9 @@ namespace ProjectFirma.Web.Models
 
             // project region
             ProjectRegionUpdate.CommitChangesToProject(this, projectRegions);
+
+            // project county
+            ProjectCountyUpdate.CommitChangesToProject(this, projectCounties);
 
             // photos
             ProjectImageUpdate.CommitChangesToProject(this, projectImages);
@@ -737,7 +765,7 @@ namespace ProjectFirma.Web.Models
 
         public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
 
-        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegions()
+        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties()
         {
             var detailedProjectLocations = ProjectLocationUpdates.Select(x => x.ProjectLocationGeometry).ToList();
             var projectHasDetailedLocations = HasProjectLocationDetail;
@@ -783,6 +811,24 @@ namespace ProjectFirma.Web.Models
             }
 
             ProjectRegionUpdates.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.Local, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.DNRUplandRegionID == y.DNRUplandRegionID);
+
+            var updatedProjectCounties = HttpRequestStorage.DatabaseEntities.Counties
+                .Where(x => (projectHasDetailedLocations && x.CountyFeature.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.CountyFeature.Intersects(projectLocationPoint)))
+                .ToList()
+                .Select(x => new ProjectCountyUpdate(ProjectUpdateBatchID, x.CountyID))
+                .ToList();
+
+            if (!updatedProjectCounties.Any())
+            {
+                NoCountiesExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any county.";
+            }
+            else
+            {
+                NoCountiesExplanation = null;
+            }
+
+            ProjectCountyUpdates.Merge(updatedProjectCounties, HttpRequestStorage.DatabaseEntities.ProjectCountyUpdates.Local, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.CountyID == y.CountyID);
         }
     }
 }

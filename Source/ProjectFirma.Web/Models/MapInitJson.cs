@@ -70,7 +70,8 @@ namespace ProjectFirma.Web.Models
                 GetAllProjectTreatments(),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.East),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.West),
-                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
+                County.GetCountyWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
 
             };
             return layerGeoJsons;
@@ -141,8 +142,18 @@ namespace ProjectFirma.Web.Models
         public static LayerGeoJson GetWashingtonCountyLayer()
         {
             return new LayerGeoJson($"Washington Counties", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetWashingtonCountyWmsLayerName(), "orange", .2m,
+                FirmaWebConfiguration.GetCountyWmsLayerName(), "orange", .2m,
                 LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_county.png");
+        }
+
+        public static List<LayerGeoJson> GetCountyMapLayers(LayerInitialVisibility layerInitialVisibility)
+        {
+            var layerGeoJsons = new List<LayerGeoJson>
+            {
+                County.GetCountyWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+            };
+
+            return layerGeoJsons;
         }
 
         public static LayerGeoJson GetWashingtonLegislativeDistrictLayer()

@@ -114,6 +114,7 @@
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.Store.ProjectCounty" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
@@ -176,8 +177,16 @@
     <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.Store.TreatmentCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.Store.TreatmentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.Store.WashingtonCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.Store.vGeoServerCounty" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerCounty">
+      <DefiningQuery>SELECT 
+[vGeoServerCounty].[CountyID] AS [CountyID], 
+[vGeoServerCounty].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerCounty].[CountyName] AS [CountyName], 
+[vGeoServerCounty].[CountyFeature] AS [CountyFeature], 
+[vGeoServerCounty].[Ogr_Geometry] AS [Ogr_Geometry]
+FROM [dbo].[vGeoServerCounty] AS [vGeoServerCounty]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclBoundaryLine" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclBoundaryLine">
       <DefiningQuery>SELECT 
 [vGeoServerPclBoundaryLine].[PclBoundaryLineID] AS [PclBoundaryLineID], 
@@ -1041,6 +1050,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectCounty_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCounty_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_County_CountyID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCountyUpdate_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttribute_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -2743,6 +2760,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastUpdateGisUploadAttemptID" Type="int" />
     <Property Name="ProjectGisIdentifier" Type="varchar" MaxLength="140" />
     <Property Name="ProjectFundingSourceNotes" Type="varchar" MaxLength="4000" />
+    <Property Name="NoCountiesExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="PercentageMatch" Type="int" />
   </EntityType>
   <EntityType Name="ProjectClassification">
@@ -2771,6 +2789,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="CountyID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectCountyUpdate">
+    <Key>
+      <PropertyRef Name="ProjectCountyUpdateID" />
+    </Key>
+    <Property Name="ProjectCountyUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="CountyID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
@@ -3235,6 +3261,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectAttributesComment" Type="varchar" MaxLength="1000" />
     <Property Name="ProjectAttributesDiffLog" Type="varchar(max)" />
     <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="NoCountiesExplanation" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
@@ -3515,15 +3542,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxpayerIdNumber" Type="varchar" MaxLength="200" />
     <Property Name="Email" Type="varchar" MaxLength="200" />
   </EntityType>
-  <EntityType Name="WashingtonCounty">
-    <Key>
-      <PropertyRef Name="WashingtonCountyID" />
-    </Key>
-    <Property Name="WashingtonCountyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="WashingtonCountyLocation" Type="geometry" Nullable="false" />
-    <Property Name="WashingtonCountyName" Type="nvarchar" Nullable="false" MaxLength="200" />
-    <Property Name="WashingtonCountyFullName" Type="nvarchar" Nullable="false" MaxLength="200" />
-  </EntityType>
   <EntityType Name="WashingtonLegislativeDistrict">
     <Key>
       <PropertyRef Name="WashingtonLegislativeDistrictID" />
@@ -3532,6 +3550,21 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="WashingtonLegislativeDistrictLocation" Type="geometry" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictNumber" Type="int" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictName" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vGeoServerCounty">
+    <Key>
+      <PropertyRef Name="CountyID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="CountyName" />
+    </Key>
+    <Property Name="CountyID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="CountyName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="CountyFeature" Type="geometry" />
+    <Property Name="Ogr_Geometry" Type="geometry" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3650,9 +3683,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatmentArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonLegislativeDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -5953,6 +5983,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectCounties">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.Store.County" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

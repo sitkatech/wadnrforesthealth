@@ -127,6 +127,11 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegion);
         }
 
+        public IEnumerable<County> GetProjectCounties()
+        {
+            return ProjectUpdateBatch.ProjectCountyUpdates.Select(x => x.County);
+        }
+
         public IEnumerable<PriorityLandscape> GetProjectPriorityLandscapes()
         {
             return ProjectUpdateBatch.ProjectPriorityLandscapeUpdates.Select(x => x.PriorityLandscape);

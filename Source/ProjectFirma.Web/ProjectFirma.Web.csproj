@@ -462,6 +462,9 @@
     <Compile Include="Models\Generated\ProjectCounty.Binding.cs" />
     <Compile Include="Models\Generated\ProjectCounty.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectCountyPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectCountyUpdate.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectCountyUpdate.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectCountyUpdatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectCreateSection.Binding.cs" />
     <Compile Include="Models\Generated\ProjectCreateSectionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectCustomAttribute.Binding.cs" />
@@ -691,6 +694,7 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\vGeoServerCounty.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPclBoundaryLine.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPclLandscapeTreatmentPriority.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerPclVectorRanked.Binding.cs" />
@@ -704,14 +708,14 @@
     <Compile Include="Models\Generated\vSingularGrantAllocation.Binding.cs" />
     <Compile Include="Models\Generated\vSocrataDataMartRawJsonImportIndex.Binding.cs" />
     <Compile Include="Models\Generated\vTotalTreatedAcresByProject.Binding.cs" />
-    <Compile Include="Models\Generated\WashingtonCounty.Binding.cs" />
-    <Compile Include="Models\Generated\WashingtonCounty.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\WashingtonCountyPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
+    <Compile Include="Controllers\ProjectCountyController.cs" />
     <Compile Include="Controllers\CountyController.cs" />
     <Compile Include="Models\County.cs" />
+    <Compile Include="Models\ProjectCountyUpdate.cs" />
+    <Compile Include="Models\ProjectCounty.cs" />
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\TreatmentCode.cs" />
     <Compile Include="Controllers\TreatmentUpdateController.cs" />
@@ -1246,6 +1250,13 @@
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
+    <Compile Include="Views\ProjectCounty\EditProjectCounties.cs" />
+    <Compile Include="Views\ProjectCounty\EditProjectCountiesViewData.cs" />
+    <Compile Include="Views\ProjectCounty\EditProjectCountiesViewModel.cs" />
+    <Compile Include="Views\ProjectUpdate\CountiesValidationResult.cs" />
+    <Compile Include="Views\ProjectUpdate\CountiesViewModel.cs" />
+    <Compile Include="Views\ProjectUpdate\CountiesViewData.cs" />
+    <Compile Include="Views\ProjectUpdate\Counties.cs" />
     <Compile Include="Views\Shared\ProjectImportBlockList\EditProjectImportBlockList.cs" />
     <Compile Include="Views\Shared\ProjectImportBlockList\EditProjectImportBlockListViewData.cs" />
     <Compile Include="Views\Shared\ProjectImportBlockList\EditProjectImportBlockListViewModel.cs" />
@@ -1709,6 +1720,7 @@
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewModel.cs" />
     <Content Include="Views\ProjectPriorityLandscape\EditProjectPriorityLandscapesController.js" />
+    <Content Include="Views\ProjectCounty\EditProjectCountiesController.js" />
     <Content Include="Views\ProjectRegion\EditProjectRegionsController.js" />
     <Content Include="Views\ProjectUpdate\Contacts.cshtml" />
     <Content Include="Views\ProjectCreate\Contacts.cshtml" />
@@ -2673,6 +2685,8 @@
     <Content Include="Views\ProjectUpdate\Treatments.cshtml" />
     <Content Include="Views\TreatmentUpdate\EditTreatmentUpdate.cshtml" />
     <Content Include="Views\Shared\ProjectImportBlockList\EditProjectImportBlockList.cshtml" />
+    <Content Include="Views\ProjectCounty\EditProjectCounties.cshtml" />
+    <Content Include="Views\ProjectUpdate\Counties.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

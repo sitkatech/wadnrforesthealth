@@ -74,6 +74,7 @@ using PerformanceMeasuresViewData = ProjectFirma.Web.Views.ProjectUpdate.Perform
 using PerformanceMeasuresViewModel = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeasuresViewModel;
 using Photos = ProjectFirma.Web.Views.ProjectUpdate.Photos;
 using ProjectFirma.Web.Views.GrantAllocationAward;
+using ProjectFirma.Web.Views.ProjectCounty;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -814,7 +815,7 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.LocationSimpleComment = viewModel.Comments;
             }
 
-            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
 
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
                 ProjectUpdateSection.LocationSimple.ProjectUpdateSectionDisplayName);
@@ -838,7 +839,7 @@ namespace ProjectFirma.Web.Controllers
             var mapPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.LocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationFormID(project);
             var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJsonForEdit, FirmaWebConfiguration.GetWmsLayerNames(), null, mapPostUrl, mapFormID, FirmaWebConfiguration.WebMapServiceUrl);
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), new List<DNRUplandRegion>(), string.Empty, string.Empty);
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), new List<DNRUplandRegion>(), string.Empty, string.Empty, new List<County>(), String.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new LocationSimpleViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, locationSimpleValidationResult, updateStatus);
             return RazorView<LocationSimple, LocationSimpleViewData, LocationSimpleViewModel>(viewData, viewModel);
@@ -924,7 +925,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectUpdateBatch.LocationDetailedComment = viewModel.Comments;
             }
-            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegions();
+            projectUpdateBatch.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.LocationDetailed.ProjectUpdateSectionDisplayName);
         }
 
@@ -1323,7 +1324,8 @@ namespace ProjectFirma.Web.Controllers
 
             var editProjectLocationViewData = new EditProjectRegionsViewData(CurrentPerson, mapInitJson, regionsInViewModel, editProjectRegionsPostUrl, editProjectRegionsFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
             var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), regions, noRegionsExplanation, string.Empty);
+
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), regions, noRegionsExplanation, string.Empty, new List<County>(), string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new DNRUplandRegionsViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, regionValidationResult, updateStatus);
             return RazorView<Views.ProjectUpdate.DNRUplandRegions, DNRUplandRegionsViewData, DNRUplandRegionsViewModel>(viewData, viewModel);
@@ -1369,6 +1371,126 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
         #endregion
+
+
+        #region County functions
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
+        public ActionResult Counties(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            if (projectUpdateBatch == null)
+            {
+                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+            }
+
+            var countiesIDs = projectUpdateBatch.ProjectCountyUpdates.Select(x => x.CountyID).ToList();
+            var noCountiesExplanation = projectUpdateBatch.NoCountiesExplanation;
+            var viewModel = new CountiesViewModel(countiesIDs, noCountiesExplanation);
+            return ViewCounties(project, projectUpdateBatch, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectUpdateCreateEditSubmitFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Counties(ProjectPrimaryKey projectPrimaryKey, CountiesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            if (projectUpdateBatch == null)
+            {
+                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return ViewCounties(project, projectUpdateBatch, viewModel);
+            }
+            var currentProjectUpdateCounties = projectUpdateBatch.ProjectCountyUpdates.ToList();
+            var allProjectUpdateCounties = HttpRequestStorage.DatabaseEntities.ProjectCountyUpdates.Local;
+            viewModel.UpdateModelBatch(projectUpdateBatch, currentProjectUpdateCounties, allProjectUpdateCounties);
+
+            projectUpdateBatch.NoCountiesExplanation = viewModel.NoCountiesExplanation;
+            if (projectUpdateBatch.IsSubmitted)
+            {
+                projectUpdateBatch.NoCountiesExplanation = viewModel.NoCountiesExplanation;
+            }
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.Counties.ProjectUpdateSectionDisplayName);
+        }
+
+        private ViewResult ViewCounties(Project project, ProjectUpdateBatch projectUpdateBatch, CountiesViewModel viewModel)
+        {
+            var projectUpdate = projectUpdateBatch.ProjectUpdate;
+
+            var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
+            var layers = MapInitJson.GetCountyMapLayers(LayerInitialVisibility.Show);
+            layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(projectUpdate));
+            var mapInitJson = new MapInitJson("projectCountyMap", 0, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox) { AllowFullScreen = false, DisablePopups = true };
+
+            var countyValidationResult = projectUpdateBatch.ValidateProjectCounty();
+            var counties = HttpRequestStorage.DatabaseEntities.Counties.ToList();
+            var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate, $"project_{project.ProjectID}_EditMap", false);
+            var countyIDs = viewModel.CountyIDs ?? new List<int>();
+            var countiesInViewModel = HttpRequestStorage.DatabaseEntities.Counties.Where(x => countyIDs.Contains(x.CountyID)).ToList();
+            var editProjectCountiesPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Counties(project, null));
+            var editProjectCountiesFormId = GenerateEditProjectLocationFormID(project);
+
+            var editProjectLocationViewData = new EditProjectCountiesViewData(CurrentPerson, mapInitJson, countiesInViewModel, editProjectCountiesPostUrl, editProjectCountiesFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
+            var noCountiesExplanation = projectUpdateBatch.NoCountiesExplanation;
+
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), new List<DNRUplandRegion>(), string.Empty, string.Empty, counties, noCountiesExplanation);
+            var updateStatus = GetUpdateStatus(projectUpdateBatch);
+            var viewData = new CountiesViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, countyValidationResult, updateStatus);
+            return RazorView<Counties, CountiesViewData, CountiesViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
+        public PartialViewResult RefreshProjectCounty(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
+            var viewModel = new ConfirmDialogFormViewModel(projectUpdateBatch.ProjectUpdateBatchID);
+            return ViewRefreshProjectCounty(viewModel);
+        }
+
+        [HttpPost]
+        [ProjectUpdateCreateEditSubmitFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult RefreshProjectCounty(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
+            var projectUpdate = projectUpdateBatch.ProjectUpdate;
+            if (projectUpdate == null)
+            {
+                return new ModalDialogFormJsonResult();
+            }
+            projectUpdateBatch.DeleteProjectCountyUpdates();
+
+            // refresh the data
+            ProjectCountyUpdate.CreateFromProject(projectUpdateBatch);
+            projectUpdateBatch.NoCountiesExplanation = project.NoCountiesExplanation;
+            //ProjectGeospatialAreaTypeNoteUpdate.CreateFromProject(projectUpdateBatch);
+            projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewRefreshProjectCounty(ConfirmDialogFormViewModel viewModel)
+        {
+            var viewData =
+                new ConfirmDialogFormViewData(
+                    $"Are you sure you want to refresh the {FieldDefinition.County.FieldDefinitionDisplayName} data? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and any updates made in this section will be lost.");
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+        #endregion
+
+
+
+
+
+
 
         #region PriorityLandscape functions
         [HttpGet]
@@ -1435,7 +1557,8 @@ namespace ProjectFirma.Web.Controllers
 
             var editProjectLocationViewData = new EditProjectPriorityLandscapesViewData(CurrentPerson, mapInitJson, priorityLandscapesInViewModel, editProjectPriorityLandscapesPostUrl, editProjectPriorityLandscapesFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
             var noPriorityLandscapesExplanation = projectUpdateBatch.NoPriorityLandscapesExplanation;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, priorityLandscapes, new List<DNRUplandRegion>(), string.Empty, noPriorityLandscapesExplanation);
+
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, priorityLandscapes, new List<DNRUplandRegion>(), string.Empty, noPriorityLandscapesExplanation, new List<County>(), string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new PriorityLandscapesViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, priorityLandscapeValidationResult, updateStatus);
             return RazorView<Views.ProjectUpdate.PriorityLandscapes, PriorityLandscapesViewData, PriorityLandscapesViewModel>(viewData, viewModel);
@@ -1670,6 +1793,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectRegions.Load();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectCounties.Load();
+            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.Local;
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
             var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
             HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
@@ -1700,6 +1825,7 @@ namespace ProjectFirma.Web.Controllers
                 allProjectLocations,
                 allProjectPriorityLandscapes,
                 allProjectRegions,
+                allProjectCounties,
                 allprojectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
@@ -2996,6 +3122,8 @@ namespace ProjectFirma.Web.Controllers
             var isLocationSimpleUpdated = IsLocationSimpleUpdated(projectUpdateBatch.ProjectID);
             var isLocationDetailUpdated = IsLocationDetailedUpdated(projectUpdateBatch.ProjectID);
             var isRegionsUpdated = IsRegionUpdated(projectUpdateBatch);
+            var isCountiesUpdated = IsCountyUpdated(projectUpdateBatch);
+
             var isPriorityLandscapesUpdated = IsPriorityLandscapeUpdated(projectUpdateBatch);
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
@@ -3019,6 +3147,7 @@ namespace ProjectFirma.Web.Controllers
                 isLocationDetailUpdated,
                 isProjectAttributesUpdated,
                 isRegionsUpdated,
+                isCountiesUpdated,
                 isPriorityLandscapesUpdated,
                 isExternalLinksUpdated,
                 isNotesUpdated,
@@ -3042,6 +3171,22 @@ namespace ProjectFirma.Web.Controllers
                 return true;
 
             var enumerable = originalRegionIDs.Except(updatedRegionIDs);
+            return enumerable.Any();
+        }
+
+        private static bool IsCountyUpdated(ProjectUpdateBatch projectUpdateBatch)
+        {
+            var project = projectUpdateBatch.Project;
+            var originalCountyIDs = project.ProjectCounties.Select(x => x.CountyID).ToList();
+            var updatedCountyIDs = projectUpdateBatch.ProjectCountyUpdates.Select(x => x.CountyID).ToList();
+
+            if (!originalCountyIDs.Any() && !updatedCountyIDs.Any())
+                return false;
+
+            if (originalCountyIDs.Count != updatedCountyIDs.Count)
+                return true;
+
+            var enumerable = originalCountyIDs.Except(updatedCountyIDs);
             return enumerable.Any();
         }
         private static bool IsPriorityLandscapeUpdated(ProjectUpdateBatch projectUpdateBatch)
