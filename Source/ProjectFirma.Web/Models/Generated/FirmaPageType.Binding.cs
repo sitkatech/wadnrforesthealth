@@ -63,6 +63,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFindYourForester FindYourForester = FirmaPageTypeFindYourForester.Instance;
         public static readonly FirmaPageTypeExternalMapLayers ExternalMapLayers = FirmaPageTypeExternalMapLayers.Instance;
         public static readonly FirmaPageTypeCounty County = FirmaPageTypeCounty.Instance;
+        public static readonly FirmaPageTypeVendorsList VendorsList = FirmaPageTypeVendorsList.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -72,7 +73,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, VendorsList };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -232,6 +233,8 @@ namespace ProjectFirma.Web.Models
                     return Training;
                 case FirmaPageTypeEnum.UploadLoaTabularDataExcel:
                     return UploadLoaTabularDataExcel;
+                case FirmaPageTypeEnum.VendorsList:
+                    return VendorsList;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -283,7 +286,8 @@ namespace ProjectFirma.Web.Models
         ManageFindYourForester = 67,
         FindYourForester = 68,
         ExternalMapLayers = 69,
-        County = 70
+        County = 70,
+        VendorsList = 71
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -548,5 +552,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeCounty(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeCounty Instance = new FirmaPageTypeCounty(70, @"County", @"Counties", 1);
+    }
+
+    public partial class FirmaPageTypeVendorsList : FirmaPageType
+    {
+        private FirmaPageTypeVendorsList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeVendorsList Instance = new FirmaPageTypeVendorsList(71, @"VendorsList", @"Vendors List", 1);
     }
 }

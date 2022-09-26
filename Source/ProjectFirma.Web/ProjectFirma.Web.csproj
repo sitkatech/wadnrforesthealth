@@ -1396,6 +1396,9 @@
     <Compile Include="Views\Treatment\EditTreatmentsForAProjectViewModel.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
+    <Compile Include="Views\Vendor\Index.cs" />
+    <Compile Include="Views\Vendor\IndexGridSpec.cs" />
+    <Compile Include="Views\Vendor\IndexViewData.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
     <Compile Include="Views\Vendor\VendorSearchResultsViewData.cs" />
     <Compile Include="Views\DNRUplandRegion\Detail.cs" />
@@ -2691,6 +2694,7 @@
     <Content Include="Views\ProjectCounty\EditProjectCounties.cshtml" />
     <Content Include="Views\ProjectUpdate\Counties.cshtml" />
     <Content Include="Views\ProjectCreate\Counties.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
