@@ -31,18 +31,12 @@ namespace ProjectFirma.Web.Views.Vendor
         public string GridName { get; }
         public string GridDataUrl { get; }
 
-        //public bool UserIsSitkaAdmin { get; }
-
-        public IndexViewData(Person currentPerson) : base(currentPerson)
+        public IndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = "Vendors";
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Vendor", ObjectNamePlural = "Vendors", SaveFiltersInCookie = true};
             GridName = "VendorGrid";
             GridDataUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
-
-            //UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
-            //AddContactUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(x => x.AddContact());
-            //UserCanAddContact = new ContactCreateAndViewFeature().HasPermissionByPerson(currentPerson);
         }
     }
 }

@@ -33,41 +33,23 @@ namespace ProjectFirma.Web.Views.Vendor
     {
         public IndexGridSpec(Person currentPerson)
         {
-            var hasDeletePermission = new PersonDeleteFeature().HasPermissionByPerson(currentPerson);
-            Add("Vendor Name", a => a.VendorName, 100, DhtmlxGridColumnFilterType.Html);
-            Add($"{Models.FieldDefinition.StatewideVendorNumber.GetFieldDefinitionLabel()}", a => a.StatewideVendorNumber, 100, DhtmlxGridColumnFilterType.Html);
-            Add("Statewide Vendor Number Suffix", a => a.StatewideVendorNumberSuffix, 200, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Type", a => a.VendorType, 200, DhtmlxGridColumnFilterType.Html);
-            Add("Billing Agency", a => a.BillingAgency, 100, DhtmlxGridColumnFilterType.Html);
-            Add("Billing Sub Agency", a => a.BillingSubAgency, 120);
-            Add("Billing Fund", a => a.BillingFund, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Vendor ID", a => a.VendorID.ToString(), 100, DhtmlxGridColumnFilterType.Html);
+            Add("Vendor Type", a => a.VendorType, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Billing Agency", a => a.BillingAgency, 75, DhtmlxGridColumnFilterType.Html);
+            Add("Billing Sub Agency", a => a.BillingSubAgency, 75);
+            Add("Billing Fund", a => a.BillingFund, 75, DhtmlxGridColumnFilterType.Html);
             Add("Billing Fund Breakout", a => a.BillingFundBreakout, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Vendor Address Line 1", a => a.VendorAddressLine1, 100, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Address Line 2", a => a.VendorAddressLine2, 120, DhtmlxGridColumnFilterType.Html);
+            Add("Vendor Address Line 1", a => a.VendorAddressLine1, 150, DhtmlxGridColumnFilterType.Html);
+            Add("Vendor Address Line 2", a => a.VendorAddressLine2, 100, DhtmlxGridColumnFilterType.Html);
             Add("Vendor Address Line 3", a => a.VendorAddressLine3, 100, DhtmlxGridColumnFilterType.Html);
             Add("Vendor City", a => a.VendorCity, 75, DhtmlxGridColumnFilterType.Html);
             Add("Vendor State", a => a.VendorState, 75, DhtmlxGridColumnFilterType.Html);
             Add("Vendor Zip", a => a.VendorZip, 75, DhtmlxGridColumnFilterType.Html);
-            Add("Remarks", a => a.Remarks, 75, DhtmlxGridColumnFilterType.Html);
+            Add("Remarks", a => a.Remarks, 100, DhtmlxGridColumnFilterType.Html);
             Add("Vendor Phone", a => a.VendorPhone.ToPhoneNumberString(), 100, DhtmlxGridColumnFilterType.Html);
             Add("Vendor Status", a => a.VendorStatus, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Taxpayer ID Number", a => a.TaxpayerIdNumber, 75, DhtmlxGridColumnFilterType.Html);
             Add("Email", a => a.Email, 200, DhtmlxGridColumnFilterType.Html);
-        }
-
-        private static HtmlString GetOrganizationShortNameUrl(Person person)
-        {
-            if (person == null)
-            {
-                return new HtmlString(string.Empty);
-            }
-
-            if (person.Organization == null)
-            {
-                return new HtmlString(string.Empty);
-            }
-
-            return person.Organization.GetShortNameAsUrl();
         }
     }
 }

@@ -47,6 +47,6 @@ values
 (68, 'FindYourForester', 'Find Your Forester', 1),
 (69, 'ExternalMapLayers', 'External Map Layers', 1),
 (70, 'County', 'Counties', 1),
-(71, 'VendorsList', 'Vendors List', 1)
+(71, 'Vendor', 'Vendors', 1)
 
 

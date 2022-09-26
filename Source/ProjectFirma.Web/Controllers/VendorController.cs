@@ -25,14 +25,15 @@ namespace ProjectFirma.Web.Controllers
 
         }
 
-        //[ContactCreateAndViewFeature]
+        [AnonymousUnclassifiedFeature]
         public ViewResult Index()
         {
-            var viewData = new IndexViewData(CurrentPerson);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.Vendor);
+            var viewData = new IndexViewData(CurrentPerson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        //[ContactCreateAndViewFeature]
+        [AnonymousUnclassifiedFeature]
         public GridJsonNetJObjectResult<Vendor> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
