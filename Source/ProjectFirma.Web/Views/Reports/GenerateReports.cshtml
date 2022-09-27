@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
 @using Microsoft.Web.Mvc
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
@@ -41,7 +42,7 @@
         </div>
     </div>
 
-    <p>This report will be generated for the following @FieldDefinitionEnum.Project.ToType().GetFieldDefinitionLabelPluralized() (@ViewDataTyped.Projects.Count selected):</p>
+    <p>This report will be generated for the following @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() (@ViewDataTyped.Projects.Count selected):</p>
     <div style="max-height: 400px; overflow-y: scroll;">
         <ul>
             @foreach (var project in ViewDataTyped.Projects)

@@ -231,11 +231,20 @@ namespace ProjectFirma.Web.Controllers
         [ReportTemplateGenerateReportsFeature]
         public ActionResult GenerateReportsFromSelectedProjects(GenerateReportsViewModel viewModel)
         {
-            var reportTemplatePrimaryKey = (ReportTemplatePrimaryKey) viewModel.ReportTemplateID;
+            var reportTemplatePrimaryKey = (ReportTemplatePrimaryKey)viewModel.ReportTemplateID;
             var reportTemplate = reportTemplatePrimaryKey.EntityObject;
             var selectedModelIDs = viewModel.ProjectIDList;
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
+            //This is as ProjectFirma, but seems to be embedding file contents into modal
             return reportTemplateGenerator.GenerateAndDownload();
+
+            //After making FileResourceResult properties public,
+            //  Syntax error, unrecognized expression: [file contents, zipped, looks like]
+            
+            //var reportResult = (FileResourceResult)reportTemplateGenerator.GenerateAndDownload();
+            //return File(reportResult.MemoryStream.ToArray(),
+            //    reportResult.FileResourceMimeType.FileResourceMimeTypeContentTypeName,
+            //    reportResult.Filename);
         }
     }
 }

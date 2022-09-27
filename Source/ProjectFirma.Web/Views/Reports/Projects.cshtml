@@ -21,15 +21,20 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
-@using LtInfo.Common.ModalDialog
 @inherits ProjectFirma.Web.Views.Reports.Projects
 @section JavascriptAndStylesContent
 {
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
 }
+@section RightOfPageTitle
+{
+    @ViewDataTyped.GenerateReportString
+}
 
-<div>
-    @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
-</div>
+    <div>
+        <div>
+            @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
+        </div>
 
-@Html.DhtmlxGrid(ViewDataTyped.ProjectIndexGridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+        @Html.DhtmlxGrid(ViewDataTyped.ProjectIndexGridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+    </div>
