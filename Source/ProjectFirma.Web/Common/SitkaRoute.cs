@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Common
 
         public string BuildAbsoluteUrlFromExpression()
         {
-            return BuildAbsoluteUrlFromExpression(RouteExpression);
+            return BuildAbsoluteUrlHttpsFromExpression(RouteExpression);
         }
 
         public string BuildAbsoluteUrlHttpsFromExpression()
@@ -122,11 +122,6 @@ namespace ProjectFirma.Web.Common
         public static string BuildAbsoluteUrlHttpsFromExpression(Expression<Action<T>> routeExpression)
         {
             return BuildAbsoluteUrlFromExpressionImpl(routeExpression, "https");
-        }
-
-        public static string BuildAbsoluteUrlFromExpression(Expression<Action<T>> routeExpression)
-        {
-            return BuildAbsoluteUrlFromExpressionImpl(routeExpression, "http");
         }
 
 

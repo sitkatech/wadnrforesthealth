@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System;
+using System.Linq.Expressions;
 using System.Net;
 using NUnit.Framework;
 using ProjectFirma.Web.Common;
@@ -45,7 +46,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestProjectJsonApi()
         {
-            var projectJsonUrl = SitkaRoute<ProjectController>.BuildAbsoluteUrlFromExpression(c => c.ProjectJsonApi());
+            var projectJsonUrl = SitkaRoute<ProjectController>.BuildAbsoluteUrlHttpsFromExpression(c => c.ProjectJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(projectJsonUrl);
 
@@ -77,7 +78,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestInteractionEventJsonApi()
         {
-            var interactionEventJsonUrl = SitkaRoute<InteractionEventController>.BuildAbsoluteUrlFromExpression(c => c.InteractionEventJsonApi());
+            var interactionEventJsonUrl = SitkaRoute<InteractionEventController>.BuildAbsoluteUrlHttpsFromExpression(c => c.InteractionEventJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(interactionEventJsonUrl);
 
@@ -87,7 +88,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestInvoiceJsonApi()
         {
-            var invoiceJsonUrl = SitkaRoute<InvoiceController>.BuildAbsoluteUrlFromExpression(c => c.InvoiceJsonApi());
+            var invoiceJsonUrl = SitkaRoute<InvoiceController>.BuildAbsoluteUrlHttpsFromExpression(c => c.InvoiceJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(invoiceJsonUrl);
 
@@ -97,7 +98,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestInvoiceLineItemJsonApi()
         {
-            var invoiceLineItemJsonUrl = SitkaRoute<InvoiceController>.BuildAbsoluteUrlFromExpression(c => c.InvoiceLineItemJsonApi());
+            var invoiceLineItemJsonUrl = SitkaRoute<InvoiceController>.BuildAbsoluteUrlHttpsFromExpression(c => c.InvoiceLineItemJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(invoiceLineItemJsonUrl);
 
@@ -107,7 +108,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestAgreementJsonApi()
         {
-            var agreementJsonUrl = SitkaRoute<AgreementController>.BuildAbsoluteUrlFromExpression(c => c.AgreementJsonApi());
+            var agreementJsonUrl = SitkaRoute<AgreementController>.BuildAbsoluteUrlHttpsFromExpression(c => c.AgreementJsonApi());
             Console.WriteLine($"Attempting to retrieve JSON URL: {agreementJsonUrl}");
             var webClient = new WebClient();
             string jsonContent = null;
@@ -128,7 +129,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestGrantJsonApi()
         {
-            var grantJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlFromExpression(c => c.GrantJsonApi());
+            var grantJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(grantJsonUrl);
 
@@ -138,7 +139,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestGrantStatusJsonApi()
         {
-            var grantStatusJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlFromExpression(c => c.GrantStatusJsonApi());
+            var grantStatusJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantStatusJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(grantStatusJsonUrl);
 
@@ -148,7 +149,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestGrantAllocationJsonApi()
         {
-            var grantAllocationJsonUrl = SitkaRoute<GrantAllocationController>.BuildAbsoluteUrlFromExpression(c => c.GrantAllocationJsonApi());
+            var grantAllocationJsonUrl = SitkaRoute<GrantAllocationController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantAllocationJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(grantAllocationJsonUrl);
 
@@ -158,7 +159,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         [Test]
         public void TestGrantAllocationProgramIndexProjectCodeJsonApi()
         {
-            var grantAllocationProgramIndexProjectCodeJsonUrl = SitkaRoute<GrantAllocationProgramIndexProjectCodeController>.BuildAbsoluteUrlFromExpression(c => c.GrantAllocationProgramIndexProjectCodeJsonApi());
+            var grantAllocationProgramIndexProjectCodeJsonUrl = SitkaRoute<GrantAllocationProgramIndexProjectCodeController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantAllocationProgramIndexProjectCodeJsonApi());
             var webClient = new WebClient();
             var jsonContent = webClient.DownloadString(grantAllocationProgramIndexProjectCodeJsonUrl);
 

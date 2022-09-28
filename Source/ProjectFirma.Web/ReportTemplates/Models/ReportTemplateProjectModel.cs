@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             // Public properties
             ProjectID = Project.ProjectID;
             ProjectName = Project.ProjectName;
-            ProjectUrl = Project.GetDetailUrl();
+            ProjectUrl = Project.GetDetailUrlAbsolute();
             PrimaryContactOrganization = Project.GetPrimaryContactOrganization() != null ? new ReportTemplateOrganizationModel(Project.GetPrimaryContactOrganization()) : null;
             ProjectStage = Project.ProjectStage.ProjectStageDisplayName;
             NumberOfReportedPerformanceMeasures = Project.PerformanceMeasureActuals.Count;

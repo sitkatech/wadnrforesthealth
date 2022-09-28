@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -893,6 +893,7 @@
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectTechnicalAssistanceRequestModel.cs" />
     <Compile Include="ReportTemplates\ProjectFirmaDocxDocument.cs" />
     <Compile Include="ReportTemplates\ReportTemplateGenerator.cs" />
+    <Compile Include="ReportTemplates\ReportTemplateTests.cs" />
     <Compile Include="SawSamlResponseTest.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
@@ -1097,6 +1098,7 @@
     <Compile Include="Security\TreatmentActivityViewFeature.cs" />
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Security\ViewJsonApiLandingPageFeature.cs" />
+    <Compile Include="UnitTestCommon\HttpRequestStorageForTest.cs" />
     <Compile Include="UnitTestCommon\TestGrant.cs" />
     <Compile Include="UnitTestCommon\TestGrantModification.cs" />
     <Compile Include="UnitTestCommon\TestInvoice.cs" />
