@@ -65,7 +65,8 @@ namespace LtInfo.Common.ModalDialog
                 onJavascriptReadyFunction,
                 postData,
                 null,
-                null);
+                null,
+                false);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace LtInfo.Common.ModalDialog
         {
             return ModalDialogFormLink(linkID, linkText, dialogContentUrl, dialogTitle, dialogWidth, saveButtonID,
                 saveButtonText, cancelButtonText, extraCssClasses, onJavascriptReadyFunction, postData,
-                optionalDialogFormID, null);
+                optionalDialogFormID, null, false);
         }
 
         /// <summary>
@@ -133,7 +134,8 @@ namespace LtInfo.Common.ModalDialog
             string onJavascriptReadyFunction,
             string postData,
             string optionalDialogFormID,
-            string hoverText)
+            string hoverText,
+            bool skipAjax)
         {
             var builder = new TagBuilder("a");
             builder.InnerHtml += linkText;
@@ -176,7 +178,7 @@ namespace LtInfo.Common.ModalDialog
             {
                 builder.Attributes.Add("title", hoverText);
             }
-
+            builder.Attributes.Add("data-skip-ajax", skipAjax.ToString());
             return new HtmlString(builder.ToString());
         }
 
@@ -188,7 +190,7 @@ namespace LtInfo.Common.ModalDialog
         public static HtmlString ModalDialogFormLink(string linkText, string dialogUrl, string dialogTitle, int dialogWidth, bool hasPermission, string dialogFormID)
         {
             return hasPermission
-                ? ModalDialogFormLink(null, linkText, dialogUrl, dialogTitle, dialogWidth, SaveButtonID, "Save", "Cancel", new List<string>(), null, null, dialogFormID, null)
+                ? ModalDialogFormLink(null, linkText, dialogUrl, dialogTitle, dialogWidth, SaveButtonID, "Save", "Cancel", new List<string>(), null, null, dialogFormID, null, false)
                 : new HtmlString(string.Empty);
         }
 

@@ -34,16 +34,20 @@ namespace ProjectFirma.Web.Views.Reports
             var dialogTitle = "Confirm Generate Reports";
 
             GenerateReportString =
-               ModalDialogFormHelper.ModalDialogFormLink(
+               ModalDialogFormHelper.ModalDialogFormLink(null,
                    $"{tagIconHtml} Generate Reports",
                     dialogUrl,
                     dialogTitle,
                     ModalDialogFormHelper.DefaultDialogWidth,
+                   ModalDialogFormHelper.SaveButtonID,
                     "Generate",
                     "Close",
                    new List<string> { "btn", "btn-firma" },
                     null,
-                    getProjectIDFunctionString);
+                    getProjectIDFunctionString,
+                    null,
+                    null,
+                   true);
         }
     }
 }

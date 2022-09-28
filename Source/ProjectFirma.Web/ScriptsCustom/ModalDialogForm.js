@@ -75,6 +75,7 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
     var cancelButtonID = element.attr("data-cancel-button-id");
     var cancelButtonText = element.attr("data-cancel-button-text");
     var optionalDialogFormId = element.attr("data-optional-dialog-form-id");
+    var skipAjax = (element.attr("data-skip-ajax").toLowerCase() === 'true') ? true : false;
 
     var dialogDiv = jQuery(getModalDialogFromHtmlTemplate(dialogDivID, dialogTitle, htmlContentsOfDialogBox, width, saveButtonText, saveButtonId, cancelButtonText, cancelButtonID));
     dialogDiv.modal({ backdrop: "static" });
@@ -113,19 +114,26 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
     });
 
     // Setup the ajax submit logic, has to be done after the contents are loaded
-    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId);
+    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax);
 }
 
-function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId) {
+function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax) {
     // Enable client side validation
     jQuery.validator.unobtrusive.parse(dialogDiv);
     convertJQueryValidationErrorsToQtip();
+
+    if (Sitka.Methods.isUndefinedNullOrEmpty(skipAjax)) {
+        skipAjax = false;
+    }
 
     if (!Sitka.Methods.isUndefinedNullOrEmpty(javascriptReadyFunction)) {
         javascriptReadyFunction();
     }
 
     jQuery(".sitkaDatePicker").datepicker();
+    if (skipAjax) {
+        return;
+    }
 
     // Instead of the typical SitkaAjax we use jquery.form.js here because it handles all types of ajax form posting, including file uploads. (SitkaAjax does not handle file uploads).
     // Not using SitkaAjax is OK here because we call SitkaAjax for login redirect and error handling.
@@ -163,7 +171,7 @@ function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialo
                     dialogDiv.find('.modal-body').html(result);
 
                     // Setup the ajax submit logic
-                    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId);
+                    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax);
                 }
             });
         },
