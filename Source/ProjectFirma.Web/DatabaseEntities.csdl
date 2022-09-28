@@ -114,13 +114,12 @@
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.ProjectCounty" />
+    <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.ProjectCountyUpdate" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
     <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdateValue" />
     <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeValue" />
-    <EntitySet Name="ProjectCustomGridColumn" EntityType="ProjectFirma.Web.Models.ProjectCustomGridColumn" />
-    <EntitySet Name="ProjectCustomGridConfiguration" EntityType="ProjectFirma.Web.Models.ProjectCustomGridConfiguration" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.ProjectDocument" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.ProjectDocumentUpdate" />
     <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYear" />
@@ -179,8 +178,8 @@
     <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.TreatmentCode" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.TreatmentUpdate" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
-    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
+    <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.vGeoServerCounty" />
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.vGeoServerPclBoundaryLine" />
     <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.vGeoServerPclLandscapeTreatmentPriority" />
     <EntitySet Name="vGeoServerPclVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPclVectorRanked" />
@@ -265,6 +264,10 @@
     <AssociationSet Name="FK_ProjectCounty_County_CountyID" Association="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID">
       <End Role="County" EntitySet="County" />
       <End Role="ProjectCounties" EntitySet="ProjectCounty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_County_CountyID" Association="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_CustomPageImage_CustomPage_CustomPageID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID">
       <End Role="CustomPage" EntitySet="CustomPage" />
@@ -1198,6 +1201,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
@@ -1210,10 +1217,6 @@
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectCustomGridConfigurations" EntitySet="ProjectCustomGridConfiguration" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
@@ -1225,10 +1228,6 @@
     <AssociationSet Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
       <End Role="ProjectCustomAttributeUpdate" EntitySet="ProjectCustomAttributeUpdate" />
       <End Role="ProjectCustomAttributeUpdateValues" EntitySet="ProjectCustomAttributeUpdateValue" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" Association="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID">
-      <End Role="ProjectCustomGridColumn" EntitySet="ProjectCustomGridColumn" />
-      <End Role="ProjectCustomGridConfigurations" EntitySet="ProjectCustomGridConfiguration" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1540,6 +1539,7 @@
     <Property Name="CountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="StateProvince" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="Counties" ToRole="StateProvince" />
     <NavigationProperty Name="ProjectCounties" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="County" ToRole="ProjectCounties" />
+    <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="County" ToRole="ProjectCountyUpdates" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>
@@ -3034,6 +3034,8 @@
     <Property Name="LastUpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="PercentageMatch" Type="Int32" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
@@ -3103,6 +3105,16 @@
     <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="ProjectCounties" ToRole="County" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID" FromRole="ProjectCounties" ToRole="Project" />
   </EntityType>
+  <EntityType Name="ProjectCountyUpdate">
+    <Key>
+      <PropertyRef Name="ProjectCountyUpdateID" />
+    </Key>
+    <Property Name="ProjectCountyUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="ProjectCountyUpdates" ToRole="County" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectCountyUpdates" ToRole="ProjectUpdateBatch" />
+  </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
       <PropertyRef Name="ProjectCustomAttributeID" />
@@ -3128,7 +3140,6 @@
     <Property Name="ApplyToAllProjectTypes" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributes" />
     <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributeUpdates" />
-    <NavigationProperty Name="ProjectCustomGridConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomGridConfigurations" />
     <NavigationProperty Name="ProjectTypeProjectCustomAttributeTypes" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectTypeProjectCustomAttributeTypes" />
   </EntityType>
   <EntityType Name="ProjectCustomAttributeUpdate">
@@ -3159,29 +3170,6 @@
     <Property Name="ProjectCustomAttributeID" Type="Int32" Nullable="false" />
     <Property Name="AttributeValue" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectCustomAttribute" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID" FromRole="ProjectCustomAttributeValues" ToRole="ProjectCustomAttribute" />
-  </EntityType>
-  <EntityType Name="ProjectCustomGridColumn">
-    <Key>
-      <PropertyRef Name="ProjectCustomGridColumnID" />
-    </Key>
-    <Property Name="ProjectCustomGridColumnID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCustomGridColumnName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectCustomGridColumnDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="IsOptional" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="ProjectCustomGridConfigurations" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" FromRole="ProjectCustomGridColumn" ToRole="ProjectCustomGridConfigurations" />
-  </EntityType>
-  <EntityType Name="ProjectCustomGridConfiguration">
-    <Key>
-      <PropertyRef Name="ProjectCustomGridConfigurationID" />
-    </Key>
-    <Property Name="ProjectCustomGridConfigurationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomGridTypeID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCustomGridColumnID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" />
-    <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="SortOrder" Type="Int32" />
-    <NavigationProperty Name="ProjectCustomAttributeType" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomGridConfigurations" ToRole="ProjectCustomAttributeType" />
-    <NavigationProperty Name="ProjectCustomGridColumn" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID" FromRole="ProjectCustomGridConfigurations" ToRole="ProjectCustomGridColumn" />
   </EntityType>
   <EntityType Name="ProjectDocument">
     <Key>
@@ -3641,6 +3629,7 @@
     <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="ExpirationDate" Type="DateTime" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="PercentageMatch" Type="Int32" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
@@ -3678,9 +3667,11 @@
     <Property Name="ProjectAttributesComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ProjectAttributesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityLandscapesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
+    <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCountyUpdates" />
     <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCustomAttributeUpdates" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectExemptReportingYearUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExemptReportingYearUpdates" />
@@ -4031,15 +4022,6 @@
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
-  <EntityType Name="WashingtonCounty">
-    <Key>
-      <PropertyRef Name="WashingtonCountyID" />
-    </Key>
-    <Property Name="WashingtonCountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="WashingtonCountyLocation" Type="Geometry" Nullable="false" />
-    <Property Name="WashingtonCountyName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-    <Property Name="WashingtonCountyFullName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-  </EntityType>
   <EntityType Name="WashingtonLegislativeDistrict">
     <Key>
       <PropertyRef Name="WashingtonLegislativeDistrictID" />
@@ -4048,6 +4030,18 @@
     <Property Name="WashingtonLegislativeDistrictLocation" Type="Geometry" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictNumber" Type="Int32" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="vGeoServerCounty">
+    <Key>
+      <PropertyRef Name="CountyID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="CountyName" />
+    </Key>
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="CountyName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CountyFeature" Type="Geometry" />
+    <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
   <EntityType Name="vGeoServerPclBoundaryLine">
     <Key>
@@ -4446,6 +4440,18 @@
         <PropertyRef Name="CountyID" />
       </Principal>
       <Dependent Role="ProjectCounties">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.County" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
         <PropertyRef Name="CountyID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7252,6 +7258,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
     <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="1" />
     <End Role="ProjectCustomAttributes" Type="ProjectFirma.Web.Models.ProjectCustomAttribute" Multiplicity="*" />
@@ -7284,18 +7302,6 @@
         <PropertyRef Name="ProjectCustomAttributeTypeID" />
       </Principal>
       <Dependent Role="ProjectCustomAttributeUpdates">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomGridConfiguration_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="0..1" />
-    <End Role="ProjectCustomGridConfigurations" Type="ProjectFirma.Web.Models.ProjectCustomGridConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomGridConfigurations">
         <PropertyRef Name="ProjectCustomAttributeTypeID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7333,18 +7339,6 @@
       </Principal>
       <Dependent Role="ProjectCustomAttributeUpdateValues">
         <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomGridConfiguration_ProjectCustomGridColumn_ProjectCustomGridColumnID">
-    <End Role="ProjectCustomGridColumn" Type="ProjectFirma.Web.Models.ProjectCustomGridColumn" Multiplicity="1" />
-    <End Role="ProjectCustomGridConfigurations" Type="ProjectFirma.Web.Models.ProjectCustomGridConfiguration" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomGridColumn">
-        <PropertyRef Name="ProjectCustomGridColumnID" />
-      </Principal>
-      <Dependent Role="ProjectCustomGridConfigurations">
-        <PropertyRef Name="ProjectCustomGridColumnID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

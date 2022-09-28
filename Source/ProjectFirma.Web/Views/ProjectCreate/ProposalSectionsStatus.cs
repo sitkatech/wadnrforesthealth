@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Linq;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Views.ProjectCounty;
 using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
 
@@ -44,6 +45,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsProjectOrganizationsSectionComplete { get; set; }
         public bool IsProjectContactsSectionComplete { get; set; }
         public bool IsRegionSectionComplete { get; set; }
+        public bool IsCountySectionComplete { get; set; }
         public bool IsPriorityLandscapeSectionComplete { get; set; }
         public bool IsProjectTreatmentsSectionComplete { get; set; }
 
@@ -62,10 +64,19 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             var regionIDs = project.ProjectRegions
                 .Select(x => x.DNRUplandRegionID).ToList();
+
+            var countyIDs = project.ProjectCounties
+                .Select(x => x.CountyID).ToList();
+
             var editProjectRegionsValidationResults = new EditProjectRegionsViewModel(regionIDs,
                     project.NoRegionsExplanation).GetValidationResults();
 
+            var editProjectCountiesValidationResults = new EditProjectCountiesViewModel(countyIDs,
+                project.NoCountiesExplanation).GetValidationResults();
+
             IsRegionSectionComplete = !editProjectRegionsValidationResults.Any();
+
+            IsCountySectionComplete = !editProjectCountiesValidationResults.Any();
 
             var priorityLandscapeIDs = project.ProjectPriorityLandscapes
                 .Select(x => x.PriorityLandscapeID).ToList();
@@ -101,6 +112,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
             IsRegionSectionComplete = false;
+            IsCountySectionComplete = false;
             IsPriorityLandscapeSectionComplete = false;
             IsNotesSectionComplete = false;
         }

@@ -54,6 +54,8 @@ namespace ProjectFirma.Web.Models
         public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(this.GetDetailUrl(), DisplayName);
         public HtmlString DisplayNameAsUrlBlankTarget => UrlTemplate.MakeHrefStringBlankTarget(this.GetDetailUrl(), DisplayName);
 
+        public string PercentageMatchFormatted => PercentageMatch.HasValue ? $"{PercentageMatch}%" : String.Empty;
+
         public static bool IsProjectNameUnique(IEnumerable<Project> projects, string projectName, int? currentProjectID)
         {
             if (string.IsNullOrWhiteSpace(projectName))
@@ -334,6 +336,11 @@ namespace ProjectFirma.Web.Models
             return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
         }
 
+        public bool IsProjectCountiesValid()
+        {
+            return ProjectCounties.Any() || !string.IsNullOrWhiteSpace(NoCountiesExplanation);
+        }
+
         public bool IsProjectPriorityLandscapeValid()
         {
             return ProjectPriorityLandscapes.Any() || !string.IsNullOrWhiteSpace(NoPriorityLandscapesExplanation);
@@ -430,7 +437,12 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityLandscapes.Select(x => x.PriorityLandscape);
         }
 
-        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegions()
+        public IEnumerable<County> GetProjectCounties()
+        {
+            return ProjectCounties.Select(x => x.County);
+        }
+
+        public void AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties()
         {
             var detailedProjectLocations = ProjectLocations.Select(x => x.ProjectLocationGeometry).ToList();
             var projectHasDetailedLocations = HasProjectLocationDetail;
@@ -476,6 +488,24 @@ namespace ProjectFirma.Web.Models
             }
 
             ProjectRegions.Merge(updatedProjectRegions, HttpRequestStorage.DatabaseEntities.ProjectRegions.Local, (x, y) => x.ProjectID == y.ProjectID && x.DNRUplandRegionID == y.DNRUplandRegionID);
+
+            var updatedProjectCounties= HttpRequestStorage.DatabaseEntities.Counties
+                .Where(x => (projectHasDetailedLocations && x.CountyFeature.Intersects(detailedProjectLocationsAggregatedMadeValid)) || (projectLocationPointExists && x.CountyFeature.Intersects(projectLocationPoint)))
+                .ToList()
+                .Select(x => new ProjectCounty(ProjectID, x.CountyID))
+                .ToList();
+
+            if (!updatedProjectCounties.Any())
+            {
+                NoCountiesExplanation =
+                    "Neither the simple location nor the detailed location on this project intersects with any County.";
+            }
+            else
+            {
+                NoCountiesExplanation = null;
+            }
+
+            ProjectCounties.Merge(updatedProjectCounties, HttpRequestStorage.DatabaseEntities.ProjectCounties.Local, (x, y) => x.ProjectID == y.ProjectID && x.CountyID == y.CountyID);
         }
 
         public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()

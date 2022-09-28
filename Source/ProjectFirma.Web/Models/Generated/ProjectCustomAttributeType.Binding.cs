@@ -27,7 +27,6 @@ namespace ProjectFirma.Web.Models
         {
             this.ProjectCustomAttributes = new HashSet<ProjectCustomAttribute>();
             this.ProjectCustomAttributeUpdates = new HashSet<ProjectCustomAttributeUpdate>();
-            this.ProjectCustomGridConfigurations = new HashSet<ProjectCustomGridConfiguration>();
             this.ProjectTypeProjectCustomAttributeTypes = new HashSet<ProjectTypeProjectCustomAttributeType>();
         }
 
@@ -87,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectCustomAttributes.Any() || ProjectCustomAttributeUpdates.Any() || ProjectCustomGridConfigurations.Any() || ProjectTypeProjectCustomAttributeTypes.Any();
+            return ProjectCustomAttributes.Any() || ProjectCustomAttributeUpdates.Any() || ProjectTypeProjectCustomAttributeTypes.Any();
         }
 
         /// <summary>
@@ -107,11 +106,6 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(ProjectCustomAttributeUpdate).Name);
             }
 
-            if(ProjectCustomGridConfigurations.Any())
-            {
-                dependentObjects.Add(typeof(ProjectCustomGridConfiguration).Name);
-            }
-
             if(ProjectTypeProjectCustomAttributeTypes.Any())
             {
                 dependentObjects.Add(typeof(ProjectTypeProjectCustomAttributeType).Name);
@@ -122,7 +116,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCustomAttributeType).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectCustomAttributeUpdate).Name, typeof(ProjectCustomGridConfiguration).Name, typeof(ProjectTypeProjectCustomAttributeType).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCustomAttributeType).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectCustomAttributeUpdate).Name, typeof(ProjectTypeProjectCustomAttributeType).Name};
 
 
         /// <summary>
@@ -157,11 +151,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectCustomGridConfigurations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectTypeProjectCustomAttributeTypes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -182,7 +171,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual ICollection<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
-        public virtual ICollection<ProjectCustomGridConfiguration> ProjectCustomGridConfigurations { get; set; }
         public virtual ICollection<ProjectTypeProjectCustomAttributeType> ProjectTypeProjectCustomAttributeTypes { get; set; }
         public ProjectCustomAttributeDataType ProjectCustomAttributeDataType { get { return ProjectCustomAttributeDataType.AllLookupDictionary[ProjectCustomAttributeDataTypeID]; } }
         public MeasurementUnitType MeasurementUnitType { get { return MeasurementUnitTypeID.HasValue ? MeasurementUnitType.AllLookupDictionary[MeasurementUnitTypeID.Value] : null; } }

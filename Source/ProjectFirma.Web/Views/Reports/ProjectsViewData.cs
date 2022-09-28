@@ -19,7 +19,7 @@ namespace ProjectFirma.Web.Views.Reports
         public string GridDataUrl { get; }
         public HtmlString GenerateReportString { get; }
 
-        public ProjectsViewData(Person currentPerson, Models.FirmaPage firmaPage, List<ProjectCustomGridConfiguration> projectCustomFullGridConfigurations) : base(currentPerson, firmaPage)
+        public ProjectsViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             var projectDetails = HttpRequestStorage.DatabaseEntities.Projects;
             ProjectIndexGridSpec = new ProjectIndexGridSpec(currentPerson, true, true, new Dictionary<int, vTotalTreatedAcresByProject>(), new Dictionary<int, List<Models.Program>>())

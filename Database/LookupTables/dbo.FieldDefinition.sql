@@ -328,8 +328,9 @@ VALUES
 (506, N'TreatmentTotalCost', 'Treatment Total Cost', N'<p>The treatment acres multiplied by the cost per acre.</p>'),
 (507, N'Coordinator', 'Coordinator', 'Placeholder definition for Coordinator.'),
 (508, N'County', N'County', N'<p>A political and administrative division of a state, providing certain local governmental services.</p>'),
-(509, N'ReportTitle', N'Report Title', 'Report Title'),
-(510, N'ReportDescription', N'Report Description', 'Report Description'),
-(511, N'ReportFile', N'Report File', 'Report File'),
-(512, N'ReportModel', N'Report Model', 'Report Model'),
-(513, N'SelectedReportTemplate', N'Selected Report Template', 'Selected Report Template')
+(509, N'PercentageMatch', N'Percentage Match', N'<p>The percentage matched by WADNR for Service Forestry specific projects.</p>'),
+(510, N'ReportTitle', N'Report Title', 'Report Title'),
+(511, N'ReportDescription', N'Report Description', 'Report Description'),
+(512, N'ReportFile', N'Report File', 'Report File'),
+(513, N'ReportModel', N'Report Model', 'Report Model'),
+(514, N'SelectedReportTemplate', N'Selected Report Template', 'Selected Report Template')

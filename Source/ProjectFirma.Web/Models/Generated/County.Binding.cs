@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected County()
         {
             this.ProjectCounties = new HashSet<ProjectCounty>();
+            this.ProjectCountyUpdates = new HashSet<ProjectCountyUpdate>();
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectCounties.Any();
+            return ProjectCounties.Any() || ProjectCountyUpdates.Any();
         }
 
         /// <summary>
@@ -92,13 +93,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(ProjectCounty).Name);
             }
+
+            if(ProjectCountyUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectCountyUpdate).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(County).Name, typeof(ProjectCounty).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(County).Name, typeof(ProjectCounty).Name, typeof(ProjectCountyUpdate).Name};
 
 
         /// <summary>
@@ -127,6 +133,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in ProjectCountyUpdates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         public string CountyName { get; set; }
@@ -138,6 +149,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return CountyID; } set { CountyID = value; } }
 
         public virtual ICollection<ProjectCounty> ProjectCounties { get; set; }
+        public virtual ICollection<ProjectCountyUpdate> ProjectCountyUpdates { get; set; }
         public virtual StateProvince StateProvince { get; set; }
 
         public static class FieldLengths
