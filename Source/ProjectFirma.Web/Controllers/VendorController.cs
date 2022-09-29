@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.Vendor;
 
@@ -33,11 +34,11 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [AnonymousUnclassifiedFeature]
+        [VendorViewFeature]
         public GridJsonNetJObjectResult<Vendor> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.ToList().OrderBy(x => x.VendorName).ToList();
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Vendor>(vendors, gridSpec);
             return gridJsonNetJObjectResult;
         }
