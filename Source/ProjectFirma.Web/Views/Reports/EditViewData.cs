@@ -36,8 +36,8 @@ namespace ProjectFirma.Web.Views.Reports
 
         public EditViewData(Person currentPerson, Models.FirmaPage firmaPage) : base (currentPerson, firmaPage)
         {
-            AllReportTemplateModelTypeSelectItems = ReportTemplateModelType.All.ToSelectList(x => x.ReportTemplateModelTypeID.ToString(),x => x.ReportTemplateModelTypeDisplayName);
-            AllReportTemplateModelSelectItems = ReportTemplateModel.All.ToSelectList(x => x.ReportTemplateModelID.ToString(),x => x.ReportTemplateModelDisplayName);
+            ////AllReportTemplateModelTypeSelectItems = ReportTemplateModelType.All.ToSelectList(x => x.ReportTemplateModelTypeID.ToString(),x => x.ReportTemplateModelTypeDisplayName);
+            //AllReportTemplateModelSelectItems = ReportTemplateModel.All.ToSelectList(x => x.ReportTemplateModelID.ToString(),x => x.ReportTemplateModelDisplayName);
         }
 
         public EditViewData(Person currentPerson, Models.FirmaPage firmaPage, ReportTemplate reportTemplate) : this(currentPerson, firmaPage)

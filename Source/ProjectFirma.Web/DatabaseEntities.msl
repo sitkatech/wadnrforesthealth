@@ -1983,6 +1983,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ReportTemplateModel">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ReportTemplateModel">
+        <MappingFragment StoreEntitySet="ReportTemplateModel">
+          <ScalarProperty Name="ReportTemplateModelID" ColumnName="ReportTemplateModelID" />
+          <ScalarProperty Name="ReportTemplateModelName" ColumnName="ReportTemplateModelName" />
+          <ScalarProperty Name="ReportTemplateModelDisplayName" ColumnName="ReportTemplateModelDisplayName" />
+          <ScalarProperty Name="ReportTemplateModelDescription" ColumnName="ReportTemplateModelDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportTemplateModelType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ReportTemplateModelType">
+        <MappingFragment StoreEntitySet="ReportTemplateModelType">
+          <ScalarProperty Name="ReportTemplateModelTypeID" ColumnName="ReportTemplateModelTypeID" />
+          <ScalarProperty Name="ReportTemplateModelTypeName" ColumnName="ReportTemplateModelTypeName" />
+          <ScalarProperty Name="ReportTemplateModelTypeDisplayName" ColumnName="ReportTemplateModelTypeDisplayName" />
+          <ScalarProperty Name="ReportTemplateModelTypeDescription" ColumnName="ReportTemplateModelTypeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SocrataDataMartRawJsonImport">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport">
         <MappingFragment StoreEntitySet="SocrataDataMartRawJsonImport">

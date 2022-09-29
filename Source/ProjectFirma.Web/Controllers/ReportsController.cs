@@ -62,10 +62,10 @@ namespace ProjectFirma.Web.Controllers
         [FirmaAdminFeature]
         public PartialViewResult New()
         {
-            var viewModel = new EditViewModel
-            {
-                ReportTemplateModelTypeID = (int) ReportTemplateModelTypeEnum.MultipleModels
-            };
+            var viewModel = new EditViewModel();
+            //{
+            //    ReportTemplateModelTypeID = (int) ReportTemplateModelTypeEnum.MultipleModels
+            //};
             return ViewEdit(viewModel);
         }
 
@@ -79,22 +79,22 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var fileResourceInfo = FileResourceModelExtensions.CreateNewFromHttpPostedFileAndSave(viewModel.FileResourceData, CurrentPerson);
-            var reportTemplateModelType = ReportTemplateModelType.All.FirstOrDefault(x => x.ReportTemplateModelTypeID == viewModel.ReportTemplateModelTypeID);
-            var reportTemplateModel = ReportTemplateModel.All.FirstOrDefault(x => x.ReportTemplateModelID == viewModel.ReportTemplateModelID);
-            var reportTemplate = ReportTemplate.CreateNewBlank(fileResourceInfo, reportTemplateModelType, reportTemplateModel);
+            //var reportTemplateModelType = ReportTemplateModelType.All.FirstOrDefault(x => x.ReportTemplateModelTypeID == viewModel.ReportTemplateModelTypeID);
+            //var reportTemplateModel = ReportTemplateModel;//.All.FirstOrDefault(x => x.ReportTemplateModelID == viewModel.ReportTemplateModelID);
+            //var reportTemplate = ReportTemplate.CreateNewBlank(fileResourceInfo, reportTemplateModelType, reportTemplateModel);
 
-            ReportTemplateGenerator.ValidateReportTemplate(reportTemplate, out var reportIsValid, out var errorMessage, out var sourceCode);
+            //ReportTemplateGenerator.ValidateReportTemplate(reportTemplate, out var reportIsValid, out var errorMessage, out var sourceCode);
 
-            if (reportIsValid)
-            {
-                viewModel.UpdateModel(reportTemplate, fileResourceInfo, CurrentPerson, HttpRequestStorage.DatabaseEntities);
-                HttpRequestStorage.DatabaseEntities.SaveChanges();
-                SetMessageForDisplay($"Report Template \"{reportTemplate.DisplayName}\" successfully created.");
-            }
-            else
-            {
-                SetErrorForDisplay($"There was an error with this template: {errorMessage}");
-            }
+            //if (reportIsValid)
+            //{
+            //    viewModel.UpdateModel(reportTemplate, fileResourceInfo, CurrentPerson, HttpRequestStorage.DatabaseEntities);
+            //    HttpRequestStorage.DatabaseEntities.SaveChanges();
+            //    SetMessageForDisplay($"Report Template \"{reportTemplate.DisplayName}\" successfully created.");
+            //}
+            //else
+            //{
+            //    SetErrorForDisplay($"There was an error with this template: {errorMessage}");
+            //}
 
             return new ModalDialogFormJsonResult();
         }
@@ -205,19 +205,18 @@ namespace ProjectFirma.Web.Controllers
             return new PartialViewResult();
         }
 
-        [HttpPost]
-        [ReportTemplateGenerateReportsFeature]
-        public PartialViewResult SelectReportToGenerateFromSelectedProjects(GenerateReportsViewModel viewModel)
-        {
-            // Get the list of projects and then order them by the order they were received from the post request
-            var projectsList = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
-            projectsList = projectsList.OrderBy(p => viewModel.ProjectIDList.IndexOf(p.ProjectID)).ToList();
-            var reportTemplateSelectListItems =
-                HttpRequestStorage.DatabaseEntities.ReportTemplates.ToList().Where(x => x.ReportTemplateModel.ReportTemplateModelID == ReportTemplateModel.Project.PrimaryKey).OrderBy(x => x.DisplayName).ToSelectList(x => x.ReportTemplateID.ToString(),
-                    x => $"{x.DisplayName} - {x.Description}");
-            var viewData = new GenerateReportsViewData(CurrentPerson, projectsList, reportTemplateSelectListItems);
-            return RazorPartialView<GenerateReports, GenerateReportsViewData, GenerateReportsViewModel>(viewData, viewModel);
-        }
+        //[HttpPost]
+        //[ReportTemplateGenerateReportsFeature]
+        //public PartialViewResult SelectReportToGenerateFromSelectedProjects(GenerateReportsViewModel viewModel)
+        //{
+        //    // Get the list of projects and then order them by the order they were received from the post request
+        //    var projectsList = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
+        //    projectsList = projectsList.OrderBy(p => viewModel.ProjectIDList.IndexOf(p.ProjectID)).ToList();
+        //    //var reportTemplateSelectListItems = HttpRequestStorage.DatabaseEntities.ReportTemplates.ToList().Where(x => x.ReportTemplateModel.ReportTemplateModelID == ReportTemplateModel.Project.PrimaryKey).OrderBy(x => x.DisplayName).ToSelectList(x => x.ReportTemplateID.ToString(),
+        //    // x => $"{x.DisplayName} - {x.Description}");
+        //    //var viewData = new  //GenerateReportsViewData(CurrentPerson, projectsList, reportTemplateSelectListItems);
+        //    return RazorView();
+        //}
 
         [HttpGet]
         [ReportTemplateGenerateReportsFeature]

@@ -22,8 +22,8 @@ namespace ProjectFirma.Web.ReportTemplates
         public const string TemplateTempImageDirectoryName = "Images";
         public const int TemplateTempDirectoryFileLifespanInDays = 2;
         protected ReportTemplate ReportTemplate { get; set; }
-        protected ReportTemplateModelEnum ReportTemplateModelEnum { get; set; }
-        protected ReportTemplateModelTypeEnum ReportTemplateModelTypeEnum { get; set; }
+        //protected ReportTemplateModelEnum ReportTemplateModelEnum { get; set; }
+        //protected ReportTemplateModelTypeEnum ReportTemplateModelTypeEnum { get; set; }
         protected List<int> SelectedModelIDs { get; set; }
         protected string FullTemplateTempDirectory { get; set; }
         protected string FullTemplateTempImageDirectory { get; set; }
@@ -36,10 +36,10 @@ namespace ProjectFirma.Web.ReportTemplates
         public ReportTemplateGenerator(ReportTemplate reportTemplate, List<int> selectedModelIDs)
         {
             ReportTemplate = reportTemplate;
-            ReportTemplateModelEnum = reportTemplate.ReportTemplateModel.ToEnum;
-            ReportTemplateModelTypeEnum = reportTemplate.ReportTemplateModelType.ToEnum;
-            SelectedModelIDs = selectedModelIDs;
-            ReportTemplateUniqueIdentifier = Guid.NewGuid();
+            //ReportTemplateModelEnum = reportTemplate.ReportTemplateModel.ToEnum;
+            //ReportTemplateModelTypeEnum = reportTemplate.ReportTemplateModelType.ToEnum;
+            //SelectedModelIDs = selectedModelIDs;
+            //ReportTemplateUniqueIdentifier = Guid.NewGuid();
             InitializeTempFolders();
         }
 
@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.ReportTemplates
         public void Generate()
         {
             var templatePath = GetTemplatePath();
-            ProjectFirmaDocxDocument document;
+            //ProjectFirmaDocxDocument document;
             SaveTemplateFileToTempDirectory();
 
             // todo: if someone generates a report with all projects, the resulting .docx can get up to 3gb+ depending on the tenant, how do we want to handle this situation?
@@ -69,25 +69,25 @@ namespace ProjectFirma.Web.ReportTemplates
             // but this seems very necessary - 6/26/2020 SMG
             RemoveBookmarks(templatePath);
 
-            switch (ReportTemplateModelEnum)
-            {
-                case ReportTemplateModelEnum.Project:
-                    var baseViewModel = new ReportTemplateProjectBaseViewModel()
-                    {
-                        ReportTitle = ReportTemplate.DisplayName,
-                        ReportModel = GetListOfProjectModels()
-                    };
-                    document = DocumentFactory.Create<ProjectFirmaDocxDocument>(templatePath, baseViewModel);
-                    break;
-                default:
+            //switch (ReportTemplateModelEnum)
+            //{
+            //    case ReportTemplateModelEnum.Project:
+            //        var baseViewModel = new ReportTemplateProjectBaseViewModel()
+            //        {
+            //            ReportTitle = ReportTemplate.DisplayName,
+            //            ReportModel = GetListOfProjectModels()
+            //        };
+            //        document = DocumentFactory.Create<ProjectFirmaDocxDocument>(templatePath, baseViewModel);
+            //        break;
+            //    default:
                     throw new ArgumentOutOfRangeException();
-            }
+            //}
 
-            var compilePath = GetCompilePath();
-            document.ImageDirectory = FullTemplateTempImageDirectory;
-            document.Generate(compilePath);
+            //var compilePath = GetCompilePath();
+            //document.ImageDirectory = FullTemplateTempImageDirectory;
+            //document.Generate(compilePath);
 
-            CleanTempDirectoryOfOldFiles(FullTemplateTempDirectory);
+            //CleanTempDirectoryOfOldFiles(FullTemplateTempDirectory);
         }
 
         private void RemoveBookmarks(string templatePath)
@@ -134,20 +134,20 @@ namespace ProjectFirma.Web.ReportTemplates
         /// </summary>
         private void SaveImageFilesToTempDirectory()
         {
-            switch (ReportTemplateModelEnum)
-            {
-                case ReportTemplateModelEnum.Project:
-                    var projectsList = HttpRequestStorage.DatabaseEntities.Projects.Where(x => SelectedModelIDs.Contains(x.ProjectID)).ToList();
-                    var projectImages = projectsList.SelectMany(x => x.ProjectImages).ToList();
-                    foreach (var projectImage in projectImages)
-                    {
-                        var imagePath = $"{FullTemplateTempImageDirectory}\\{projectImage.FileResource.FullGuidBasedFilename}";
-                        CorrectImageProblemsAndSaveToDisk(projectImage, imagePath);
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            //switch (ReportTemplateModelEnum)
+            //{
+            //    case ReportTemplateModelEnum.Project:
+            //        var projectsList = HttpRequestStorage.DatabaseEntities.Projects.Where(x => SelectedModelIDs.Contains(x.ProjectID)).ToList();
+            //        var projectImages = projectsList.SelectMany(x => x.ProjectImages).ToList();
+            //        foreach (var projectImage in projectImages)
+            //        {
+            //            var imagePath = $"{FullTemplateTempImageDirectory}\\{projectImage.FileResource.FullGuidBasedFilename}";
+            //            CorrectImageProblemsAndSaveToDisk(projectImage, imagePath);
+            //        }
+            //        break;
+            //    default:
+            //        throw new ArgumentOutOfRangeException();
+            //}
         }
 
         /// <summary>
@@ -259,19 +259,19 @@ namespace ProjectFirma.Web.ReportTemplates
             errorMessage = "";
             sourceCode = "";
 
-            var reportTemplateModel = reportTemplate.ReportTemplateModel.ToEnum;
-            List<int> selectedModelIDs;
-            switch (reportTemplateModel)
-            {
-                case ReportTemplateModelEnum.Project:
-                    // select 10 random models to test the report with
-                    // SMG 2/17/2020 this can cause problems with templates failing only some of the time, but it feels costly to validate against every single model in the system
-                    selectedModelIDs = HttpRequestStorage.DatabaseEntities.Projects
-                        .Select(x => x.ProjectID).Take(10).ToList();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            //var reportTemplateModel = reportTemplate.ReportTemplateModel.ToEnum;
+            List<int> selectedModelIDs = new List<int>();
+            //switch (reportTemplateModel)
+            //{
+            //    case ReportTemplateModelEnum.Project:
+            //        // select 10 random models to test the report with
+            //        // SMG 2/17/2020 this can cause problems with templates failing only some of the time, but it feels costly to validate against every single model in the system
+            //        selectedModelIDs = HttpRequestStorage.DatabaseEntities.Projects
+            //            .Select(x => x.ProjectID).Take(10).ToList();
+            //        break;
+            //    default:
+            //        throw new ArgumentOutOfRangeException();
+            //}
 
             ValidateReportTemplateForSelectedModelIDs(reportTemplate, selectedModelIDs, out reportIsValid, out errorMessage, out sourceCode);
         }

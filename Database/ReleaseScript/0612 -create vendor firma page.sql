@@ -1,1 +1,0 @@
-insert into [dbo].[FirmaPage] values(71,'<p>Vendor information placeholder.</p>')
