@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using LtInfo.Common;
@@ -330,12 +331,41 @@ namespace ProjectFirma.Web.Common
 
         protected FileResult ExportGridToExcelImpl(string gridName)
         {
-            Check.EnsureNotNull(gridName);
+            var generator = new ExcelWriter { PrintFooter = false };
+            Stream req = Request.InputStream;
+            req.Seek(0, System.IO.SeekOrigin.Begin);
+            string json = new StreamReader(req).ReadToEnd();
+            var xml = Server.UrlDecode(json);
+
+            Check.EnsureNotNull(xml, "Could not find 'grid_xml' form element in form POST. Is this a properly formed POST request?"); 
+            xml = xml?.Replace("<![CDATA[$", "<![CDATA["); // RL 7/11/2015 Poor man's hack to remove currency and allow for total rows
+            xml = BlankRowFixup(xml);
+            Check.EnsureNotNull(xml);
+            var stream = generator.Generate(xml);
+            return File(stream.ToArray(), generator.ContentType, $"{gridName}-{DateTime.Now.ToStringDateTimeForFileName()}.xlsx");
+            /*
+             * Check.EnsureNotNull(gridName);
             // In DHTMLX Grid 4.2 Formulas don't work so PrintFooter true is not very useful, leaving off for now
             var generator = new ExcelWriter { PrintFooter = false };
             var xml = Request.Form["grid_xml"];
             Check.EnsureNotNull(xml, "Could not find 'grid_xml' form element in form POST. Is this a properly formed POST request?");
             xml = Server.UrlDecode(xml);
+            xml = xml?.Replace("<![CDATA[$", "<![CDATA["); // RL 7/11/2015 Poor man's hack to remove currency and allow for total rows
+            xml = BlankRowFixup(xml);
+            Check.EnsureNotNull(xml);
+            var stream = generator.Generate(xml);
+            return File(stream.ToArray(), generator.ContentType, $"{gridName}-{DateTime.Now.ToStringDateTimeForFileName()}.xlsx");
+            */
+        }
+        protected FileResult ExportGridToExcelImplStream(string gridName)
+        {
+            var generator = new ExcelWriter { PrintFooter = false };
+            Stream req = Request.InputStream;
+            req.Seek(0, System.IO.SeekOrigin.Begin);
+            string json = new StreamReader(req).ReadToEnd();
+            var xml = Server.UrlDecode(json);
+
+            Check.EnsureNotNull(xml, "Could not find 'grid_xml' form element in form POST. Is this a properly formed POST request?"); 
             xml = xml?.Replace("<![CDATA[$", "<![CDATA["); // RL 7/11/2015 Poor man's hack to remove currency and allow for total rows
             xml = BlankRowFixup(xml);
             Check.EnsureNotNull(xml);

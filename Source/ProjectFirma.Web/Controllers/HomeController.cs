@@ -36,9 +36,16 @@ namespace ProjectFirma.Web.Controllers
     public class HomeController : FirmaBaseController
     {
         [AnonymousUnclassifiedFeature]
-        public FileResult ExportGridToExcel(string gridName)
+        public ActionResult ExportGridToExcel(string gridName)
         {
             return ExportGridToExcelImpl(gridName);
+        }
+
+        [AnonymousUnclassifiedFeature]
+        [HttpPost]
+        public FileResult ExportGridToExcelStream(string gridName)
+        {
+            return ExportGridToExcelImplStream(gridName);
         }
 
         [HttpGet]
