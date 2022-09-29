@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Views.Reports
 {
     public class ProjectsViewData : FirmaViewData
     {
-        public ProjectIndexGridSpec ProjectIndexGridSpec { get; }
+        public ProjectListGridSpec ProjectListGridSpec { get; }
         public string GridName { get; }
         public string GridDataUrl { get; }
         public HtmlString GenerateReportString { get; }
@@ -22,11 +22,11 @@ namespace ProjectFirma.Web.Views.Reports
         public ProjectsViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             var projectDetails = HttpRequestStorage.DatabaseEntities.Projects;
-            ProjectIndexGridSpec = new ProjectIndexGridSpec(currentPerson, true, true, new Dictionary<int, vTotalTreatedAcresByProject>(), new Dictionary<int, List<Models.Program>>())
+            ProjectListGridSpec = new ProjectListGridSpec(currentPerson, new Dictionary<int, vTotalTreatedAcresByProject>(), new Dictionary<int, List<Models.Program>>())
             { ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true };
             GridName = "ReportProjects";
             PageTitle = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}";
-            GridDataUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
+            GridDataUrl = SitkaRoute<ReportsController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData());
 
             var tagIconHtml = $"<span style=\"margin-right:5px\">{BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file")}</span>";
             var getProjectIDFunctionString = $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows(0, 'ProjectID', 'ProjectIDList'); }}";

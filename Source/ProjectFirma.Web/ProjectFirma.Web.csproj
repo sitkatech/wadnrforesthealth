@@ -1289,6 +1289,7 @@
     <Compile Include="Views\Reports\GenerateReportsViewModel.cs" />
     <Compile Include="Views\Reports\Index.cs" />
     <Compile Include="Views\Reports\IndexViewData.cs" />
+    <Compile Include="Views\Reports\ProjectListGridSpec.cs" />
     <Compile Include="Views\Reports\Projects.cs" />
     <Compile Include="Views\Reports\ProjectsViewData.cs" />
     <Compile Include="Views\Reports\ReportTemplateGridSpec.cs" />

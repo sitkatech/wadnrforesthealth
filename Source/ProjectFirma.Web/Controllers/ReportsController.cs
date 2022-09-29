@@ -28,6 +28,8 @@ using ProjectFirma.Web.ReportTemplates;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Reports;
 using ProjectFirma.Web.Views.Shared;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -234,16 +236,32 @@ namespace ProjectFirma.Web.Controllers
             var reportTemplate = reportTemplatePrimaryKey.EntityObject;
             var selectedModelIDs = viewModel.ProjectIDList;
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
-            //This is as ProjectFirma, but seems to be embedding file contents into modal
             return reportTemplateGenerator.GenerateAndDownload();
+        }
 
-            //After making FileResourceResult properties public,
-            //  Syntax error, unrecognized expression: [file contents, zipped, looks like]
-            
-            //var reportResult = (FileResourceResult)reportTemplateGenerator.GenerateAndDownload();
-            //return File(reportResult.MemoryStream.ToArray(),
-            //    reportResult.FileResourceMimeType.FileResourceMimeTypeContentTypeName,
-            //    reportResult.Filename);
+        [ProjectsViewFullListFeature]
+        public GridJsonNetJObjectResult<Project> ProjectsGridJsonData()
+        {
+            var treatmentTotals = HttpRequestStorage.DatabaseEntities.vTotalTreatedAcresByProjects.ToList();
+            var treatmentDictionary = treatmentTotals.ToDictionary(x => x.ProjectID, y => y);
+            var programProjectDictionary = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Include(x => x.Program).ToList()
+                .GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, x => x.ToList().Select(y => y.Program).ToList());
+            var gridSpec = new ProjectListGridSpec(CurrentPerson, treatmentDictionary, programProjectDictionary);
+            var allProjectsVisibleToUser = GetListOfActiveProjectsVisibleToUser(CurrentPerson);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(allProjectsVisibleToUser, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        public List<Project> GetListOfActiveProjectsVisibleToUser(Person currentPerson)
+        {
+            var viewProjectFeature = new ProjectViewFeature();
+            var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests)
+                .Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages)
+                .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
+                .Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsVisibleToUser(currentPerson);
+
+            return allActiveProjectsWithIncludes;
         }
     }
 }
