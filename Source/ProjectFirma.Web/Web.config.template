@@ -33,6 +33,7 @@
     <add key="OgrInfoExecutable" value="C:\Program Files\GDAL\ogrinfo.exe" />
     <add key="DefaultSupportPersonID" value="2" />
     <add key="LogFileFolder" value="${application-root-dir}\Logs" />
+    <add key="TempFolder" value="${application-root-dir}\Temp"/>
     <add key="Saml2EntityID" value="${saw-saml-entity-id}" />
     <add key="SAWEndPoint" value="${saw-sso-endpoint}" />
     <add key="ADFSEndPoint" value="${adfs-sso-endpoint}" />

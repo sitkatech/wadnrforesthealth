@@ -238,10 +238,22 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<FindYourForesterController>.BuildUrlFromExpression(c => c.Index());
     }
-
     public partial class FirmaPageTypeExternalMapLayers
     {
         public override string GetViewUrl() => SitkaRoute<MapLayerController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeReports
+    {
+        public override string GetViewUrl() => SitkaRoute<ReportsController>.BuildUrlFromExpression(c => c.Index());
+    }
+    public partial class FirmaPageTypeReportProjects
+    {
+        public override string GetViewUrl() => SitkaRoute<ReportsController>.BuildUrlFromExpression(c => c.Projects());
+    }
+    public partial class FirmaPageTypeReportAddReport
+    {
+        public override string GetViewUrl() => SitkaRoute<ReportsController>.BuildUrlFromExpression(c => c.New());
     }
 
     public partial class FirmaPageTypeCounty

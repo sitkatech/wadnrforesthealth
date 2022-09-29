@@ -972,7 +972,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             {
                 var pdfConversionSettings = new PDFUtility.PdfConversionSettings(new HttpCookieCollection()) { Zoom = 0.9 };
                 PDFUtility.ConvertURLToPDF(
-                    new Uri(new SitkaRoute<ProjectController>(c => c.FactSheet(project)).BuildAbsoluteUrlFromExpression()),
+                    new Uri(new SitkaRoute<ProjectController>(c => c.FactSheet(project)).BuildAbsoluteUrlHttpsFromExpression()),
                     outputFile.FileInfo,
                     pdfConversionSettings);
 

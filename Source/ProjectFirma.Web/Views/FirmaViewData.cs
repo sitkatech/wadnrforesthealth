@@ -102,6 +102,7 @@ namespace ProjectFirma.Web.Views
                 BuildProgramInfoMenu(currentPerson)
             };
             TopLevelLtInfoMenuItems.Add(BuildManageMenu(currentPerson));
+            TopLevelLtInfoMenuItems.Add(BuildReportsMenu(currentPerson));
 
             TopLevelLtInfoMenuItems.ForEach(x => x.ExtraTopLevelMenuCssClasses = new List<string> { "navigation-root-item" });
             TopLevelLtInfoMenuItems.SelectMany(x => x.ChildMenus).ToList().ForEach(x => x.ExtraTopLevelMenuCssClasses = new List<string> { "navigation-dropdown-item" });
@@ -113,6 +114,8 @@ namespace ProjectFirma.Web.Views
             //5/24/2022 TK & AM Commenting out until new training videos are added
             //HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c=>c.Training()), currentPerson, "Training", "ToolHelp"));
             HelpMenu.AddMenuItem(LtInfoMenuItem.MakeItem("About ProjectFirma",@"<a href='http://www.sitkatech.com/products/ProjectFirma/projectfirma-faqs/' target='_blank'>About ProjectFirma <span class='glyphicon glyphicon-new-window'></span></a>", "ExternalHelp"));
+
+            
         }
 
         private static LtInfoMenuItem BuildAboutMenu(Person currentPerson)
@@ -305,6 +308,20 @@ namespace ProjectFirma.Web.Views
 
 
             return projectsMenu;
+        }
+
+        private static LtInfoMenuItem BuildReportsMenu(Person currentPerson)
+        {
+            var reportsMenu = new LtInfoMenuItem("Reports");
+
+            reportsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ReportsController>(c => c.Projects()), currentPerson, $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", "Group1"));
+
+            if (new FirmaAdminFeature().HasPermissionByPerson(currentPerson))
+            {
+                reportsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ReportsController>(c => c.Index()), currentPerson, "Manage Report Templates", "Group2"));
+            }
+
+            return reportsMenu;
         }
 
         public string GetBreadCrumbTitle()
