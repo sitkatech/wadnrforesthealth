@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Reports
             , Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary
             , Dictionary<int, List<Models.Program>> programsByProject)
         {
-            AddCheckBoxColumn(); //For selecting to generate reports
+            AddMasterCheckBoxColumn(); //For selecting to generate reports
             Add("ProjectID", x => x.ProjectID, 0);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, DhtmlxGridColumnFilterType.Text);
