@@ -62,5 +62,18 @@ namespace ProjectFirma.Web.Views
 
             return new HtmlString(dhtmlxGrid);
         }
+
+        public static HtmlString DhtmlxGridCustomGridHeadersOnly<T>(this HtmlHelper html, GridSpec<T> gridSpec, string gridName, string optionalGridDataUrl, string styleString, DhtmlxGridResizeType dhtmlxGridResizeType)
+        {
+            var dhtmlxGridHeader = DhtmlxGridHtmlHelpers.BuildDhtmlxGridHeader(gridSpec, gridName, null, null);
+
+            var dhtmlxGrid = DhtmlxGridHtmlHelpers.DhtmlxGridImpl(gridSpec,
+                gridName,
+                optionalGridDataUrl,
+                $"background-color:white;{styleString}",
+                null, dhtmlxGridHeader, dhtmlxGridResizeType);
+
+            return new HtmlString(dhtmlxGrid);
+        }
     }
 }

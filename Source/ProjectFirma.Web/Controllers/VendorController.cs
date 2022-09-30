@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -41,6 +43,26 @@ namespace ProjectFirma.Web.Controllers
             var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Vendor>(vendors, gridSpec);
             return gridJsonNetJObjectResult;
+        }
+
+        [VendorViewFeature]
+        public ExcelResult VendorsExcelDownloadImpl()
+        {
+
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.ToList();
+            var workbookTitle = FieldDefinition.Vendor.GetFieldDefinitionLabelPluralized();
+            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
+
+            // Agreements
+            var vendorExcelSpec = new VendorExcelSpec();
+            var vendorWorkSheet = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Vendor.GetFieldDefinitionLabelPluralized()}", vendorExcelSpec, vendors);
+            workSheets.Add(vendorWorkSheet);
+
+            // Overall excel file
+            var wbm = new ExcelWorkbookMaker(workSheets);
+            var excelWorkbook = wbm.ToXLWorkbook();
+
+            return new ExcelResult(excelWorkbook, workbookTitle);
         }
 
 

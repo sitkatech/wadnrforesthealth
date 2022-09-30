@@ -26,6 +26,8 @@ using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Vendor
 {
@@ -33,6 +35,7 @@ namespace ProjectFirma.Web.Views.Vendor
     {
         public IndexGridSpec(Person currentPerson)
         {
+            CustomExcelDownloadUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(vc => vc.VendorsExcelDownloadImpl());
             Add("Vendor ID", a => a.VendorID.ToString(), 100, DhtmlxGridColumnFilterType.Html);
             Add("Vendor Type", a => a.VendorType, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Billing Agency", a => a.BillingAgency, 75, DhtmlxGridColumnFilterType.Html);
