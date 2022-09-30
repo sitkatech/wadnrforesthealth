@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Edit.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DetailViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,9 +18,30 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.Organization
+
+using System.Linq;
+using System.Web;
+using LtInfo.Common.ModalDialog;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Agreement;
+using ProjectFirma.Web.Views.InteractionEvent;
+using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.User;
+
+namespace ProjectFirma.Web.Views.Vendor
 {
-    public abstract class Edit : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditViewData, SearchViewModel>
+    public class DetailViewData : FirmaViewData
     {
+        public Models.Vendor Vendor { get; }
+
+        public DetailViewData(Person currentPerson,
+            Models.Vendor vendorToView)
+            : base(currentPerson)
+        {
+            Vendor = vendorToView;
+        }
     }
 }

@@ -1,0 +1,309 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="Detail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using LtInfo.Common
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
+@using ProjectFirma.Web.Views.Vendor
+@inherits ProjectFirma.Web.Views.Vendor.Detail
+
+@functions
+{
+
+}
+
+@section JavascriptAndStylesContent
+{
+
+}
+
+@section RightOfPageTitle
+{
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, "Edit Contact", 950, ViewDataTyped.UserHasEditBasicsPermission)
+                Basics
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Name</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.FullNameFirstLastAndMiddle</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Email</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.Email</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Phone</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.Phone</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.Organization.GetDisplayNameAsUrl()</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Mailing Address</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.VendorAddress</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Vendor</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.Vendor.GetVendorNameWithFullStatewideVendorNumber()</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Notes</div>
+                    <div class="col-xs-7">@ViewDataTyped.Vendor.Notes</div>
+                </div>
+                @if (ViewDataTyped.UserHasEditBasicsPermission)
+                {
+                    if (!ViewDataTyped.VendorIsMereContact)
+                    {
+                        <div class="row">
+                            <div class="col-xs-5 fieldLabel text-right">Last Activity</div>
+                            <div class="col-xs-7">@ViewDataTyped.Vendor.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-xs-5 fieldLabel text-right">Added On</div>
+                        <div class="col-xs-7">@ViewDataTyped.Vendor.CreateDate.ToStringDateTimeNoLeadingZeros()</div>
+                    </div>
+                    if (ViewDataTyped.VendorIsMereContact)
+                    {
+                        <div class="row">
+                            <div class="col-xs-5 fieldLabel text-right">Added By</div>
+                            <div class="col-xs-7">@GetAddedByVendorFullName(ViewDataTyped)</div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-xs-5 fieldLabel text-right">Login Authenticators</div>
+                        <div class="col-xs-7">@ViewDataTyped.AuthenticatorsDisplayString</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (!ViewDataTyped.VendorIsMereContact && ViewDataTyped.UserHasAdminPermission || ViewDataTyped.IsViewingSelf)
+    {
+        <div class="col-md-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @ViewDataTyped.EditRolesLink Roles
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">Role</div>
+                        <div class="col-xs-8">
+                            @if (ViewDataTyped.UserHasViewEverythingPermissions)
+                            {
+                                @Html.Raw(string.Join(", ", ViewDataTyped.Vendor.VendorRoles.Select(x => x.Role.GetDisplayNameAsUrl())))
+                            }
+                            else
+                            {
+                                @(string.Join(", ", ViewDataTyped.Vendor.RoleNamesForDisplay))
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">Receive Support Emails</div>
+                        <div class="col-xs-8">@ViewDataTyped.Vendor.ReceiveSupportEmails.ToYesNo()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @if (ViewDataTyped.UserHasEditBasicsPermission && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Vendor.HasRole(Role.ProjectSteward))
+                    {
+                        <span>
+                            @ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditStewardshipAreas(ViewDataTyped.Vendor)),
+                                string.Format("Edit {1} for User - {0}", ViewDataTyped.Vendor.FullNameFirstLast, FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabelPluralized()),
+                                true)
+                        </span>
+                    }
+                    Assigned @FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabelPluralized()
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.Vendor.IsAdministrator())
+                    {
+                        <p class="systemText">
+                            @ViewDataTyped.Vendor.FullNameFirstLast is an Administrator and can manage all @FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabelPluralized().
+                        </p>
+                    }
+                    else if (ViewDataTyped.Vendor.IsAnonymousOrUnassigned)
+                    {
+                        <p class="systemText">
+                            @ViewDataTyped.Vendor.FullNameFirstLast is not assigned a role and cannot add or edit any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized().
+                        </p>
+                    }
+                    else if (ViewDataTyped.Vendor.HasRole(Role.Normal))
+                    {
+                        <p class="systemText">
+                            @ViewDataTyped.Vendor.FullNameFirstLast is a @FieldDefinition.NormalUser.GetFieldDefinitionLabel() and can add @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() to any @FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabel(), but cannot edit/manage @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() that are not their own.
+                        </p>
+                    }
+                    else
+                    {
+                        var projectStewardshipAreaHtmlStringList = ViewDataTyped.Vendor.GetProjectStewardshipAreaHtmlStringList();
+                        if (!ViewDataTyped.TenantHasStewardshipAreas)
+                        {
+                            <p class="systemText">@FieldDefinition.ProjectSteward.GetFieldDefinitionLabelPluralized() can approve @FieldDefinition.Project.GetFieldDefinitionLabel() Proposals, create new @FieldDefinition.Project.GetFieldDefinitionLabelPluralized(), and approve @FieldDefinition.Project.GetFieldDefinitionLabel() Updates for all @FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</p>
+                        }
+                        else if (projectStewardshipAreaHtmlStringList.Any())
+                        {
+                            <ul>
+                                @foreach (var link in projectStewardshipAreaHtmlStringList)
+                                {
+                                    <li>
+                                        @link
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="systemText">@ViewDataTyped.Vendor.FullNameFirstLast is not assigned to manage @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in any @FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabel().</p>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-md-6">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.Vendor.HasRole(Role.ProgramEditor))
+                    {
+                        if (ViewDataTyped.Vendor.ProgramPeople.Any())
+                        {
+                            <ul>
+                                @foreach (var program in ViewDataTyped.Vendor.ProgramPeople.Select(x => x.Program))
+                                {
+                                    <li>@program.GetDisplayNameAsUrl()</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="systemText">@ViewDataTyped.Vendor.FullNameFirstLast is not assigned to manage @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in any Program.</p>
+                        }
+
+                    }
+                    else
+                    {
+                        <p class="systemText">@ViewDataTyped.Vendor.FullNameFirstLast is not assigned to the Program Editor role.</p>
+                    }
+                </div>
+            </div>
+        </div>
+        
+    }
+</div>
+@if (!ViewDataTyped.VendorIsMereContact)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditVendorOrganizationPrimaryContactUrl, string.Format("Edit {0} for which {1} is a {2}", FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), ViewDataTyped.Vendor.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()), ViewDataTyped.UserHasAdminPermission) @string.Format("Organizations for which {0} is a {1}", ViewDataTyped.Vendor.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.Vendor.PrimaryContactOrganizations.Any())
+                    {
+                        <ul style="margin: 5px 0">
+                            @foreach (var organization in ViewDataTyped.Vendor.PrimaryContactOrganizations)
+                            {
+                                <li>@organization.GetDisplayNameAsUrl()</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                @ViewDataTyped.ProjectsForWhichUserIsAContactGridTitle
+            </div>
+            <div class="panel-body">
+                @Html.DhtmlxGrid(ViewDataTyped.BasicProjectInfoGridSpec, ViewDataTyped.BasicProjectInfoGridName, ViewDataTyped.BasicProjectInfoGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                @ViewDataTyped.AgreementsForWhichUserIsAContactGridTitle
+            </div>
+            <div class="panel-body">
+                @Html.DhtmlxGrid(ViewDataTyped.UserAgreementsGridSpec, ViewDataTyped.UserAgreementsGridName, ViewDataTyped.UserAgreementsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                @ViewDataTyped.InteractionEventsForWhichUserIsAContactGridTitle
+            </div>
+            <div class="panel-body">
+                @Html.DhtmlxGrid(ViewDataTyped.UserInteractionEventsGridSpec, ViewDataTyped.UserInteractionEventsGridName, ViewDataTyped.UserInteractionEventsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+            </div>
+        </div>
+    </div>
+</div>
+@if (!ViewDataTyped.VendorIsMereContact)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    System Communications
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.UserNotificationGridSpec, ViewDataTyped.UserNotificationGridName, ViewDataTyped.UserNotificationGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
+}

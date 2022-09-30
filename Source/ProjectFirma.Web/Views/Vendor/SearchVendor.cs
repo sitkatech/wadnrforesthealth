@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Edit.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="SearchVendor.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,9 +18,23 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.Organization
+
+using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
+
+namespace ProjectFirma.Web.Views.Vendor
 {
-    public abstract class Edit : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditViewData, SearchViewModel>
+    public abstract class SearchVendor : LtInfo.Common.Mvc.TypedWebPartialViewPage<SearchVendorViewData, ISearchVendorViewModel>
+    {
+        public static void RenderPartialView(HtmlHelper html, ISearchVendorViewModel viewModel)
+        {
+            html.RenderRazorSitkaPartial<SearchVendor, SearchVendorViewData, ISearchVendorViewModel>(new SearchVendorViewData(), viewModel);
+        }
+
+        
+    }
+    public class SearchVendorViewData
     {
     }
+
 }

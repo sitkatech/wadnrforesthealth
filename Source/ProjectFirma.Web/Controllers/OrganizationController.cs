@@ -68,14 +68,14 @@ namespace ProjectFirma.Web.Controllers
         [OrganizationManageFeature]
         public PartialViewResult New()
         {
-            var viewModel = new EditViewModel {IsActive = true, IsEditable = true};
+            var viewModel = new SearchViewModel {IsActive = true, IsEditable = true};
             return ViewEdit(viewModel, false, null);
         }
 
         [HttpPost]
         [OrganizationManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditViewModel viewModel)
+        public ActionResult New(SearchViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -95,14 +95,14 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult Edit(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;
-            var viewModel = new EditViewModel(organization);
+            var viewModel = new SearchViewModel(organization);
             return ViewEdit(viewModel, organization.IsInKeystone, organization.PrimaryContactPerson);
         }
 
         [HttpPost]
         [OrganizationManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Edit(OrganizationPrimaryKey organizationPrimaryKey, EditViewModel viewModel)
+        public ActionResult Edit(OrganizationPrimaryKey organizationPrimaryKey, SearchViewModel viewModel)
         {
             var organization = organizationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
@@ -113,7 +113,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditViewModel viewModel, bool isInKeystone, Person currentPrimaryContactPerson)
+        private PartialViewResult ViewEdit(SearchViewModel viewModel, bool isInKeystone, Person currentPrimaryContactPerson)
         {
             var organizationTypesAsSelectListItems = HttpRequestStorage.DatabaseEntities.OrganizationTypes
                 .OrderBy(x => x.OrganizationTypeName)
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
                 x => x.FullNameFirstLastAndOrg);
             bool isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
             var viewData = new EditViewData(organizationTypesAsSelectListItems, people, isInKeystone, isSitkaAdmin);
-            return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
+            return RazorPartialView<Edit, EditViewData, SearchViewModel>(viewData, viewModel);
         }
 
         [OrganizationViewFeature]

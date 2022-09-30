@@ -26,7 +26,7 @@ using FluentValidation;
 
 namespace ProjectFirma.Web.Views.Organization
 {
-    public class EditViewModelValidator : AbstractValidator<EditViewModel>
+    public class EditViewModelValidator : AbstractValidator<SearchViewModel>
     {
         // Validators are singletons, so this list must be initialized every time.
         public Func<IList<Models.Organization>> Organizations = () =>

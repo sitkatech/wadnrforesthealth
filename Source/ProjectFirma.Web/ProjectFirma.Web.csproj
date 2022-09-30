@@ -1438,9 +1438,11 @@
     <Compile Include="Views\Treatment\EditTreatmentsForAProjectViewData.cs" />
     <Compile Include="Views\Treatment\EditTreatmentViewModel.cs" />
     <Compile Include="Views\Treatment\EditTreatmentsForAProjectViewModel.cs" />
+    <Compile Include="Views\Vendor\Detail.cs" />
+    <Compile Include="Views\Vendor\DetailViewData.cs" />
     <Compile Include="Views\Vendor\VendorExcelSpec.cs" />
-    <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
-    <Compile Include="Views\Vendor\EditVendor.cs" />
+    <Compile Include="Views\Vendor\ISearchVendorViewModel.cs" />
+    <Compile Include="Views\Vendor\SearchVendor.cs" />
     <Compile Include="Views\Vendor\Index.cs" />
     <Compile Include="Views\Vendor\IndexGridSpec.cs" />
     <Compile Include="Views\Vendor\IndexViewData.cs" />
@@ -1474,7 +1476,7 @@
     <Compile Include="Views\Shared\ProjectPerson\ProjectPeopleDetailViewData.cs" />
     <Compile Include="Views\User\EditContact.cs" />
     <Compile Include="Views\User\EditContactViewData.cs" />
-    <Compile Include="Views\User\EditContactViewModel.cs" />
+    <Compile Include="Views\User\SearchContactViewModel.cs" />
     <Compile Include="Controllers\ProjectInternalNoteController.cs" />
     <Compile Include="Models\ProjectInternalNote.cs" />
     <Compile Include="Models\ProjectSectionSimple.cs" />
@@ -2719,7 +2721,7 @@
     <Content Include="Views\Shared\GrantAllocationControls\GrantAllocationBasics.cshtml" />
     <Content Include="Views\Shared\ProjectCostShare\ProjectCostShare.cshtml" />
     <Content Include="Views\Shared\InvoiceControls\InvoiceBasics.cshtml" />
-    <Content Include="Views\Vendor\EditVendor.cshtml" />
+    <Content Include="Views\Vendor\SearchVendor.cshtml" />
     <Content Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cshtml" />
     <Content Include="Views\ProgramIndex\EditProgramIndex.cshtml" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationsMap.cshtml" />
@@ -2748,6 +2750,7 @@
     <Content Include="Views\ProjectUpdate\Counties.cshtml" />
     <Content Include="Views\ProjectCreate\Counties.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Vendor\Detail.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
@@ -3372,7 +3375,7 @@
     <Compile Include="Views\User\UserNotificationGridSpec.cs" />
     <Compile Include="Views\Organization\Edit.cs" />
     <Compile Include="Views\Organization\EditViewData.cs" />
-    <Compile Include="Views\Organization\EditViewModel.cs" />
+    <Compile Include="Views\Organization\SearchViewModel.cs" />
     <Compile Include="Views\Organization\IndexGridSpec.cs" />
     <Compile Include="Views\Organization\Index.cs" />
     <Compile Include="Views\Organization\IndexViewData.cs" />

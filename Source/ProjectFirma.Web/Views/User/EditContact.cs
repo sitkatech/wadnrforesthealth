@@ -2,7 +2,7 @@
 
 namespace ProjectFirma.Web.Views.User
 {
-    public abstract class EditContact : TypedWebPartialViewPage<EditContactViewData, EditContactViewModel>
+    public abstract class EditContact : TypedWebPartialViewPage<EditContactViewData, SearchContactViewModel>
     {
     }
 }

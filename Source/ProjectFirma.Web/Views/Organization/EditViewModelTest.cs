@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.Organization
             var organization = TestFramework.TestOrganization.Create();
 
             // Act
-            var viewModel = new EditViewModel(organization);
+            var viewModel = new SearchViewModel(organization);
 
             // Assert
             Assert.That(viewModel.OrganizationID, Is.EqualTo(organization.OrganizationID));
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Organization
         {
             // Arrange
             var organization = TestFramework.TestOrganization.Create();
-            var viewModel = new EditViewModel(organization);
+            var viewModel = new SearchViewModel(organization);
             viewModel.OrganizationName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.OrganizationName), Models.Organization.FieldLengths.OrganizationName);
             viewModel.OrganizationShortName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.OrganizationShortName), Models.Organization.FieldLengths.OrganizationShortName);
 
