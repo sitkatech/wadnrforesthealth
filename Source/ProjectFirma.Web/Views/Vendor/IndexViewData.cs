@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditVendor.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="IndexViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,23 +18,25 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System.Web.Mvc;
-using LtInfo.Common.HtmlHelperExtensions;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Vendor
 {
-    public abstract class EditVendor : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditVendorViewData, IEditVendorViewModel>
+    public class IndexViewData : FirmaViewData
     {
-        public static void RenderPartialView(HtmlHelper html, IEditVendorViewModel viewModel)
+        public IndexGridSpec GridSpec { get; }
+        public string GridName { get; }
+        public string GridDataUrl { get; }
+
+        public IndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            html.RenderRazorSitkaPartial<EditVendor, EditVendorViewData, IEditVendorViewModel>(new EditVendorViewData(), viewModel);
+            PageTitle = "Vendors";
+            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Vendor", ObjectNamePlural = "Vendors", SaveFiltersInCookie = true};
+            GridName = "VendorGrid";
+            GridDataUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
         }
-
-        
     }
-    public class EditVendorViewData
-    {
-    }
-
 }

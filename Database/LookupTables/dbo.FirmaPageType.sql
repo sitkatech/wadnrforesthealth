@@ -49,4 +49,5 @@ values
 (70, 'County', 'Counties', 1),
 (71, 'Reports', 'Reports', 1),
 (72, 'ReportProjects', 'Report Projects', 1),
-(73, 'ReportAddReport', 'Add a Report', 2)
+(73, 'ReportAddReport', 'Add a Report', 2),
+(74, 'Vendor', 'Vendors', 1)
