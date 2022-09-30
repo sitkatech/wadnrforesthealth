@@ -891,8 +891,6 @@
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectOrganizationModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectReportedPerformanceMeasureModel.cs" />
-    <Compile Include="ReportTemplates\Models\ReportTemplateProjectStatusModel.cs" />
-    <Compile Include="ReportTemplates\Models\ReportTemplateProjectTechnicalAssistanceRequestModel.cs" />
     <Compile Include="ReportTemplates\ProjectFirmaDocxDocument.cs" />
     <Compile Include="ReportTemplates\ReportTemplateGenerator.cs" />
     <Compile Include="ReportTemplates\ReportTemplateTests.cs" />
@@ -1294,6 +1292,7 @@
     <Compile Include="Views\Reports\GenerateReportsViewModel.cs" />
     <Compile Include="Views\Reports\Index.cs" />
     <Compile Include="Views\Reports\IndexViewData.cs" />
+    <Compile Include="Views\Reports\ProjectListGridSpec.cs" />
     <Compile Include="Views\Reports\Projects.cs" />
     <Compile Include="Views\Reports\ProjectsViewData.cs" />
     <Compile Include="Views\Reports\ReportTemplateGridSpec.cs" />
