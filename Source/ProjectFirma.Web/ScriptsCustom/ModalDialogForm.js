@@ -83,6 +83,9 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
 
     var saveButton = jQuery("#" + saveButtonId); 
     saveButton.click(function () {
+        saveButton.attr("disabled", "disabled");
+        jQuery("#" + cancelButtonID).attr("disabled", "disabled");
+        jQuery("." + "modal-close-button").attr("disabled", "disabled");
         // Manually submit the form
         var form = findBootstrapDialogForm(optionalDialogFormId, dialogDiv);
         // Do not submit if the form
