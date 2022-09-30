@@ -97,10 +97,10 @@ namespace ProjectFirma.Web.Common
             return "WADNRForestHealth:ProjectTreatmentArea";//todo: move layer name to web config
         }
 
-        public static string GetWashingtonCountyWmsLayerName()
+        public static string GetCountyWmsLayerName()
         {
 
-            return "WADNRForestHealth:WashingtonCounty";//todo: move layer name to web config
+            return "WADNRForestHealth:County";//todo: move layer name to web config
         }
 
         public static string GetWashingtonLegislativeDistrictWmsLayerName()

@@ -141,6 +141,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
         public virtual DbSet<ProjectCounty> ProjectCounties { get; set; }
+        public virtual DbSet<ProjectCountyUpdate> ProjectCountyUpdates { get; set; }
         public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual DbSet<ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; set; }
         public virtual DbSet<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
@@ -188,6 +189,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdateProgram> ProjectUpdatePrograms { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
+        public virtual DbSet<ReportTemplate> ReportTemplates { get; set; }
         public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
@@ -204,8 +206,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Treatment> Treatments { get; set; }
         public virtual DbSet<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
-        public virtual DbSet<WashingtonCounty> WashingtonCounties { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
+        public virtual DbSet<vGeoServerCounty> vGeoServerCounties { get; set; }
         public virtual DbSet<vGeoServerPclBoundaryLine> vGeoServerPclBoundaryLines { get; set; }
         public virtual DbSet<vGeoServerPclLandscapeTreatmentPriority> vGeoServerPclLandscapeTreatmentPriorities { get; set; }
         public virtual DbSet<vGeoServerPclVectorRanked> vGeoServerPclVectorRankeds { get; set; }
@@ -817,6 +819,9 @@ namespace ProjectFirma.Web.Models
                 case "ProjectCounty":
                     return ProjectCounties.GetProjectCounty(primaryKey);
 
+                case "ProjectCountyUpdate":
+                    return ProjectCountyUpdates.GetProjectCountyUpdate(primaryKey);
+
                 case "ProjectCreateSection":
                     var projectCreateSection = ProjectCreateSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectCreateSection, "ProjectCreateSection", primaryKey);
@@ -1028,6 +1033,19 @@ namespace ProjectFirma.Web.Models
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);
 
+                case "ReportTemplateModel":
+                    var reportTemplateModel = ReportTemplateModel.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(reportTemplateModel, "ReportTemplateModel", primaryKey);
+                    return reportTemplateModel;
+
+                case "ReportTemplateModelType":
+                    var reportTemplateModelType = ReportTemplateModelType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(reportTemplateModelType, "ReportTemplateModelType", primaryKey);
+                    return reportTemplateModelType;
+
+                case "ReportTemplate":
+                    return ReportTemplates.GetReportTemplate(primaryKey);
+
                 case "Role":
                     var role = Role.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(role, "Role", primaryKey);
@@ -1110,9 +1128,6 @@ namespace ProjectFirma.Web.Models
 
                 case "Vendor":
                     return Vendors.GetVendor(primaryKey);
-
-                case "WashingtonCounty":
-                    return WashingtonCounties.GetWashingtonCounty(primaryKey);
 
                 case "WashingtonLegislativeDistrict":
                     return WashingtonLegislativeDistricts.GetWashingtonLegislativeDistrict(primaryKey);

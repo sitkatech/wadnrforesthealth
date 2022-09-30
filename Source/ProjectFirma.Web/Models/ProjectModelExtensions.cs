@@ -34,9 +34,14 @@ namespace ProjectFirma.Web.Models
     public static class ProjectModelExtensions
     {
         public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DetailUrlTemplateAbsolute = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildAbsoluteUrlHttpsFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
         public static string GetDetailUrl(this Project project)
         {
             return DetailUrlTemplate.ParameterReplace(project.ProjectID);
+        }
+        public static string GetDetailUrlAbsolute(this Project project)
+        {
+            return DetailUrlTemplateAbsolute.ParameterReplace(project.ProjectID);
         }
 
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));

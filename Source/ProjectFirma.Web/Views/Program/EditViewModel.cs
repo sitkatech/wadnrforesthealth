@@ -63,8 +63,10 @@ namespace ProjectFirma.Web.Views.Program
         public string ProgramNotes { get; set; }
 
         [DisplayName("Program File Upload")]
-        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase ProgramFileResourceData { get; set; }
+
+        [DisplayName("Program Example Geospatial Data File Upload")]
+        public HttpPostedFileBase ProgramExampleFileResourceData { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder

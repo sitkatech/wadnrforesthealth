@@ -1279,6 +1279,7 @@
           <ScalarProperty Name="IsDefaultProgramForImportOnly" ColumnName="IsDefaultProgramForImportOnly" />
           <ScalarProperty Name="ProgramFileResourceID" ColumnName="ProgramFileResourceID" />
           <ScalarProperty Name="ProgramNotes" ColumnName="ProgramNotes" />
+          <ScalarProperty Name="ProgramExampleGeospatialUploadFileResourceID" ColumnName="ProgramExampleGeospatialUploadFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1369,6 +1370,8 @@
           <ScalarProperty Name="LastUpdateGisUploadAttemptID" ColumnName="LastUpdateGisUploadAttemptID" />
           <ScalarProperty Name="ProjectGisIdentifier" ColumnName="ProjectGisIdentifier" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
+          <ScalarProperty Name="NoCountiesExplanation" ColumnName="NoCountiesExplanation" />
+          <ScalarProperty Name="PercentageMatch" ColumnName="PercentageMatch" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1399,6 +1402,15 @@
         <MappingFragment StoreEntitySet="ProjectCounty">
           <ScalarProperty Name="ProjectCountyID" ColumnName="ProjectCountyID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectCountyUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCountyUpdate">
+        <MappingFragment StoreEntitySet="ProjectCountyUpdate">
+          <ScalarProperty Name="ProjectCountyUpdateID" ColumnName="ProjectCountyUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="CountyID" ColumnName="CountyID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -1868,6 +1880,7 @@
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="ProjectFundingSourceNotes" ColumnName="ProjectFundingSourceNotes" />
+          <ScalarProperty Name="PercentageMatch" ColumnName="PercentageMatch" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1904,6 +1917,7 @@
           <ScalarProperty Name="ProjectAttributesComment" ColumnName="ProjectAttributesComment" />
           <ScalarProperty Name="ProjectAttributesDiffLog" ColumnName="ProjectAttributesDiffLog" />
           <ScalarProperty Name="NoPriorityLandscapesExplanation" ColumnName="NoPriorityLandscapesExplanation" />
+          <ScalarProperty Name="NoCountiesExplanation" ColumnName="NoCountiesExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1954,6 +1968,18 @@
           <ScalarProperty Name="RelationshipTypeDescription" ColumnName="RelationshipTypeDescription" />
           <ScalarProperty Name="ReportInAccomplishmentsDashboard" ColumnName="ReportInAccomplishmentsDashboard" />
           <ScalarProperty Name="ShowOnFactSheet" ColumnName="ShowOnFactSheet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportTemplate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ReportTemplate">
+        <MappingFragment StoreEntitySet="ReportTemplate">
+          <ScalarProperty Name="ReportTemplateID" ColumnName="ReportTemplateID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ReportTemplateModelTypeID" ColumnName="ReportTemplateModelTypeID" />
+          <ScalarProperty Name="ReportTemplateModelID" ColumnName="ReportTemplateModelID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2206,16 +2232,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="WashingtonCounty">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonCounty">
-        <MappingFragment StoreEntitySet="WashingtonCounty">
-          <ScalarProperty Name="WashingtonCountyID" ColumnName="WashingtonCountyID" />
-          <ScalarProperty Name="WashingtonCountyLocation" ColumnName="WashingtonCountyLocation" />
-          <ScalarProperty Name="WashingtonCountyName" ColumnName="WashingtonCountyName" />
-          <ScalarProperty Name="WashingtonCountyFullName" ColumnName="WashingtonCountyFullName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="WashingtonLegislativeDistrict">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.WashingtonLegislativeDistrict">
         <MappingFragment StoreEntitySet="WashingtonLegislativeDistrict">
@@ -2223,6 +2239,17 @@
           <ScalarProperty Name="WashingtonLegislativeDistrictLocation" ColumnName="WashingtonLegislativeDistrictLocation" />
           <ScalarProperty Name="WashingtonLegislativeDistrictNumber" ColumnName="WashingtonLegislativeDistrictNumber" />
           <ScalarProperty Name="WashingtonLegislativeDistrictName" ColumnName="WashingtonLegislativeDistrictName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vGeoServerCounty">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerCounty">
+        <MappingFragment StoreEntitySet="vGeoServerCounty">
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CountyFeature" ColumnName="CountyFeature" />
+          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

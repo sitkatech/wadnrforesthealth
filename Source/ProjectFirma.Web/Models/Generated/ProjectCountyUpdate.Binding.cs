@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[WashingtonCounty]
+//  Source Table: [dbo].[ProjectCountyUpdate]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,14 +16,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[WashingtonCounty] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[WashingtonCounty]")]
-    public partial class WashingtonCounty : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectCountyUpdate] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectCountyUpdate]")]
+    public partial class ProjectCountyUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected WashingtonCounty()
+        protected ProjectCountyUpdate()
         {
 
         }
@@ -31,34 +31,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public WashingtonCounty(int washingtonCountyID, DbGeometry washingtonCountyLocation, string washingtonCountyName, string washingtonCountyFullName) : this()
+        public ProjectCountyUpdate(int projectCountyUpdateID, int projectUpdateBatchID, int countyID) : this()
         {
-            this.WashingtonCountyID = washingtonCountyID;
-            this.WashingtonCountyLocation = washingtonCountyLocation;
-            this.WashingtonCountyName = washingtonCountyName;
-            this.WashingtonCountyFullName = washingtonCountyFullName;
+            this.ProjectCountyUpdateID = projectCountyUpdateID;
+            this.ProjectUpdateBatchID = projectUpdateBatchID;
+            this.CountyID = countyID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public WashingtonCounty(DbGeometry washingtonCountyLocation, string washingtonCountyName, string washingtonCountyFullName) : this()
+        public ProjectCountyUpdate(int projectUpdateBatchID, int countyID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.WashingtonCountyID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectCountyUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.WashingtonCountyLocation = washingtonCountyLocation;
-            this.WashingtonCountyName = washingtonCountyName;
-            this.WashingtonCountyFullName = washingtonCountyFullName;
+            this.ProjectUpdateBatchID = projectUpdateBatchID;
+            this.CountyID = countyID;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public ProjectCountyUpdate(ProjectUpdateBatch projectUpdateBatch, County county) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.ProjectCountyUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
+            this.ProjectUpdateBatch = projectUpdateBatch;
+            projectUpdateBatch.ProjectCountyUpdates.Add(this);
+            this.CountyID = county.CountyID;
+            this.County = county;
+            county.ProjectCountyUpdates.Add(this);
+        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static WashingtonCounty CreateNewBlank()
+        public static ProjectCountyUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, County county)
         {
-            return new WashingtonCounty(default(DbGeometry), default(string), default(string));
+            return new ProjectCountyUpdate(projectUpdateBatch, county);
         }
 
         /// <summary>
@@ -83,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(WashingtonCounty).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCountyUpdate).Name};
 
 
         /// <summary>
@@ -91,7 +103,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.WashingtonCounties.Remove(this);
+            dbContext.ProjectCountyUpdates.Remove(this);
         }
         
         /// <summary>
@@ -104,19 +116,18 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int WashingtonCountyID { get; set; }
-        public DbGeometry WashingtonCountyLocation { get; set; }
-        public string WashingtonCountyName { get; set; }
-        public string WashingtonCountyFullName { get; set; }
+        public int ProjectCountyUpdateID { get; set; }
+        public int ProjectUpdateBatchID { get; set; }
+        public int CountyID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return WashingtonCountyID; } set { WashingtonCountyID = value; } }
+        public int PrimaryKey { get { return ProjectCountyUpdateID; } set { ProjectCountyUpdateID = value; } }
 
-
+        public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
+        public virtual County County { get; set; }
 
         public static class FieldLengths
         {
-            public const int WashingtonCountyName = 200;
-            public const int WashingtonCountyFullName = 200;
+
         }
     }
 }

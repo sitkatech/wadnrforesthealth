@@ -112,6 +112,25 @@ namespace ProjectFirma.Web.Models
         }
     }
 
+    public partial class ProjectUpdateSectionCounties
+    {
+        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+        {
+            return projectUpdateBatch.IsProjectCountyValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Counties(project)) : null;
+        }
+
+        public override bool SectionIsUpdated(UpdateStatus updateStatus)
+        {
+            return updateStatus.IsCountiesUpdated;
+        }
+    }
+
     public partial class ProjectUpdateSectionPriorityLandscapes
     {
         public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)

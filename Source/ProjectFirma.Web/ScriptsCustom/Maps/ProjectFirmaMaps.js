@@ -70,22 +70,25 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
         streetLayerGroup.addTo(this.map);
     }
 
-    // Add external tile layers from ArcGIS Online
-    for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
-        var layerConfig = mapInitJson.ExternalMapLayers[i];
-        if (layerConfig.IsTiledMapService) {
-            this.addTiledLayerFromAGOL(layerConfig, overlayLayers);
-        }
-    }
-
     // add vector layers
     this.vectorLayers = [];
 
-    // Add external vector layers from ArcGIS Online 
-    for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
-        var layerConfig = mapInitJson.ExternalMapLayers[i];
-        if (!layerConfig.IsTiledMapService) {
-            this.addVectorLayerFromAGOL(layerConfig, overlayLayers);
+
+    if (!treatAllLayersAsBaseLayers) {//ArcGIS layers should not be added to the Manage Find Your Forester Page
+        //Add external tile layers from ArcGIS Online
+        for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
+            var layerConfig = mapInitJson.ExternalMapLayers[i];
+            if (layerConfig.IsTiledMapService) {
+                this.addTiledLayerFromAGOL(layerConfig, overlayLayers);
+            }
+        }
+
+        //Add external vector layers from ArcGIS Online
+        for (var i = 0; i < mapInitJson.ExternalMapLayers.length; ++i) {
+            var layerConfig = mapInitJson.ExternalMapLayers[i];
+            if (!layerConfig.IsTiledMapService) {
+                this.addVectorLayerFromAGOL(layerConfig, overlayLayers);
+            }
         }
     }
 
@@ -189,14 +192,14 @@ ProjectFirmaMaps.Map.prototype.addVectorLayer = function (currentLayer, overlayL
 
 ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLayers) {
     var layerGroup = new L.LayerGroup();
-    var wmsParams;
+    var tmpWmsParams;
     if (currentLayer.HasCqlFilter) {
-        wmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter});
+        tmpWmsParams  = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: currentLayer.CqlFilter});
     } else {
-        wmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: '1=1' });
+        tmpWmsParams = L.Util.extend(this.wmsParams, { layers: currentLayer.MapServerLayerName, cql_filter: '1=1' });
     }
 
-    var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, wmsParams).addTo(layerGroup);
+    var wmsLayer = L.tileLayer.wms(currentLayer.MapServerUrl, tmpWmsParams).addTo(layerGroup);
 
     if (currentLayer.ContextObjectId) {
         wmsLayer.ContextObjectId = currentLayer.ContextObjectId;

@@ -174,6 +174,8 @@ namespace ProjectFirma.Web.Controllers
             var editSimpleProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project));
             var editDetailedProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationDetailed(project));
             var editProjectRegionUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project));
+            var editProjectCountyUrl =
+                SitkaRoute<ProjectCountyController>.BuildUrlFromExpression(c => c.EditProjectCounties(project));
             var editProjectPriorityLandscapeUrl = SitkaRoute<ProjectPriorityLandscapeController>.BuildUrlFromExpression(c => c.EditProjectPriorityLandscapes(project));
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
             var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
@@ -185,7 +187,8 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(project, $"project_{project.ProjectID}_Map", false);
             var mapFormID = GenerateEditProjectLocationFormID(project);
             var regions = project.ProjectRegions.Select(x => x.DNRUplandRegion).ToList();
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, priorityLandscapes, regions, project.NoRegionsExplanation, project.NoPriorityLandscapesExplanation);
+            var counties = project.ProjectCounties.Select(x=>x.County).ToList();
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, priorityLandscapes, regions, project.NoRegionsExplanation, project.NoPriorityLandscapesExplanation, counties, project.NoCountiesExplanation);
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
@@ -276,7 +279,9 @@ namespace ProjectFirma.Web.Controllers
                 , treatmentAreaGridDataUrl
                 , treatmentGridSpec
                 , treatmentGridDataUrl
-                , editProjectRegionUrl, editProjectPriorityLandscapeUrl,
+                , editProjectRegionUrl
+                , editProjectCountyUrl
+                ,editProjectPriorityLandscapeUrl,
                 projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
             return RazorView<Detail, DetailViewData>(viewData);
         }
@@ -967,7 +972,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             {
                 var pdfConversionSettings = new PDFUtility.PdfConversionSettings(new HttpCookieCollection()) { Zoom = 0.9 };
                 PDFUtility.ConvertURLToPDF(
-                    new Uri(new SitkaRoute<ProjectController>(c => c.FactSheet(project)).BuildAbsoluteUrlFromExpression()),
+                    new Uri(new SitkaRoute<ProjectController>(c => c.FactSheet(project)).BuildAbsoluteUrlHttpsFromExpression()),
                     outputFile.FileInfo,
                     pdfConversionSettings);
 

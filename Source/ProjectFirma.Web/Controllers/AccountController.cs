@@ -258,7 +258,7 @@ namespace ProjectFirma.Web.Controllers
     <br />
     <p>
         You may want to <a href=""{
-                    SitkaRoute<UserController>.BuildAbsoluteUrlFromExpression(x => x.Detail(person.PersonID))
+                    SitkaRoute<UserController>.BuildAbsoluteUrlHttpsFromExpression(x => x.Detail(person.PersonID))
                 }"">assign this user roles</a> to allow them to work with specific areas of the site. Or you can leave the user with an unassigned role if they don't need special privileges.
     </p>
     <br />

@@ -114,6 +114,7 @@
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.ProjectCounty" />
+    <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.ProjectCountyUpdate" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
@@ -160,6 +161,7 @@
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
     <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.ProjectUpdateProgram" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
+    <EntitySet Name="ReportTemplate" EntityType="ProjectFirma.Web.Models.ReportTemplate" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
@@ -176,8 +178,8 @@
     <EntitySet Name="TreatmentCode" EntityType="ProjectFirma.Web.Models.TreatmentCode" />
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.TreatmentUpdate" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
-    <EntitySet Name="WashingtonCounty" EntityType="ProjectFirma.Web.Models.WashingtonCounty" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
+    <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.vGeoServerCounty" />
     <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.vGeoServerPclBoundaryLine" />
     <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.vGeoServerPclLandscapeTreatmentPriority" />
     <EntitySet Name="vGeoServerPclVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPclVectorRanked" />
@@ -263,6 +265,10 @@
       <End Role="County" EntitySet="County" />
       <End Role="ProjectCounties" EntitySet="ProjectCounty" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_County_CountyID" Association="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID">
+      <End Role="County" EntitySet="County" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_CustomPageImage_CustomPage_CustomPageID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID">
       <End Role="CustomPage" EntitySet="CustomPage" />
       <End Role="CustomPageImages" EntitySet="CustomPageImage" />
@@ -347,6 +353,10 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID">
+      <End Role="ProgramExampleGeospatialUploadFileResource" EntitySet="FileResource" />
+      <End Role="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" EntitySet="Program" />
+    </AssociationSet>
     <AssociationSet Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
       <End Role="ProgramFileResource" EntitySet="FileResource" />
       <End Role="ProgramsWhereYouAreTheProgramFileResource" EntitySet="Program" />
@@ -366,6 +376,10 @@
     <AssociationSet Name="FK_ProjectImageUpdate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="ProjectImageUpdates" EntitySet="ProjectImageUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReportTemplate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="ReportTemplates" EntitySet="ReportTemplate" />
     </AssociationSet>
     <AssociationSet Name="FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID">
       <End Role="BannerLogoFileResource" EntitySet="FileResource" />
@@ -1187,6 +1201,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="Treatments" EntitySet="Treatment" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
@@ -1521,6 +1539,7 @@
     <Property Name="CountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="StateProvince" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="Counties" ToRole="StateProvince" />
     <NavigationProperty Name="ProjectCounties" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="County" ToRole="ProjectCounties" />
+    <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="County" ToRole="ProjectCountyUpdates" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>
@@ -1630,11 +1649,13 @@
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="PriorityLandscapeFileResources" />
+    <NavigationProperty Name="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" Relationship="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID" FromRole="ProgramExampleGeospatialUploadFileResource" ToRole="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" />
     <NavigationProperty Name="ProgramsWhereYouAreTheProgramFileResource" Relationship="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramFileResourceID_FileResourceID" FromRole="ProgramFileResource" ToRole="ProgramsWhereYouAreTheProgramFileResource" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImages" />
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImageUpdates" />
+    <NavigationProperty Name="ReportTemplates" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ReportTemplates" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheBannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="BannerLogoFileResource" ToRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheSquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SquareLogoFileResource" ToRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" />
   </EntityType>
@@ -2903,6 +2924,8 @@
     <Property Name="IsDefaultProgramForImportOnly" Type="Boolean" Nullable="false" />
     <Property Name="ProgramFileResourceID" Type="Int32" />
     <Property Name="ProgramNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramExampleGeospatialUploadFileResourceID" Type="Int32" />
+    <NavigationProperty Name="ProgramExampleGeospatialUploadFileResource" Relationship="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID" FromRole="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" ToRole="ProgramExampleGeospatialUploadFileResource" />
     <NavigationProperty Name="ProgramFileResource" Relationship="ProjectFirma.Web.Models.FK_Program_FileResource_ProgramFileResourceID_FileResourceID" FromRole="ProgramsWhereYouAreTheProgramFileResource" ToRole="ProgramFileResource" />
     <NavigationProperty Name="GisUploadSourceOrganizations" Relationship="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_Program_ProgramID" FromRole="Program" ToRole="GisUploadSourceOrganizations" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Program_Organization_OrganizationID" FromRole="Programs" ToRole="Organization" />
@@ -3011,6 +3034,8 @@
     <Property Name="LastUpdateGisUploadAttemptID" Type="Int32" />
     <Property Name="ProjectGisIdentifier" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="PercentageMatch" Type="Int32" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
@@ -3079,6 +3104,16 @@
     <Property Name="CountyID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_County_CountyID" FromRole="ProjectCounties" ToRole="County" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID" FromRole="ProjectCounties" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectCountyUpdate">
+    <Key>
+      <PropertyRef Name="ProjectCountyUpdateID" />
+    </Key>
+    <Property Name="ProjectCountyUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="ProjectCountyUpdates" ToRole="County" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectCountyUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -3594,6 +3629,7 @@
     <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="ExpirationDate" Type="DateTime" />
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="PercentageMatch" Type="Int32" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
@@ -3631,9 +3667,11 @@
     <Property Name="ProjectAttributesComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ProjectAttributesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityLandscapesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
+    <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCountyUpdates" />
     <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCustomAttributeUpdates" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectExemptReportingYearUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExemptReportingYearUpdates" />
@@ -3707,6 +3745,18 @@
     <NavigationProperty Name="OrganizationTypeRelationshipTypes" Relationship="ProjectFirma.Web.Models.FK_OrganizationTypeRelationshipType_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="OrganizationTypeRelationshipTypes" />
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectOrganizationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizationUpdates" />
+  </EntityType>
+  <EntityType Name="ReportTemplate">
+    <Key>
+      <PropertyRef Name="ReportTemplateID" />
+    </Key>
+    <Property Name="ReportTemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="ReportTemplateModelTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ReportTemplateModelID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="ReportTemplates" ToRole="FileResource" />
   </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
     <Key>
@@ -3972,15 +4022,6 @@
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
-  <EntityType Name="WashingtonCounty">
-    <Key>
-      <PropertyRef Name="WashingtonCountyID" />
-    </Key>
-    <Property Name="WashingtonCountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="WashingtonCountyLocation" Type="Geometry" Nullable="false" />
-    <Property Name="WashingtonCountyName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-    <Property Name="WashingtonCountyFullName" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-  </EntityType>
   <EntityType Name="WashingtonLegislativeDistrict">
     <Key>
       <PropertyRef Name="WashingtonLegislativeDistrictID" />
@@ -3989,6 +4030,18 @@
     <Property Name="WashingtonLegislativeDistrictLocation" Type="Geometry" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictNumber" Type="Int32" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="vGeoServerCounty">
+    <Key>
+      <PropertyRef Name="CountyID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="CountyName" />
+    </Key>
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
+    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
+    <Property Name="CountyName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CountyFeature" Type="Geometry" />
+    <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
   <EntityType Name="vGeoServerPclBoundaryLine">
     <Key>
@@ -4391,6 +4444,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectCountyUpdate_County_CountyID">
+    <End Role="County" Type="ProjectFirma.Web.Models.County" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="CountyID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CustomPageImage_CustomPage_CustomPageID">
     <End Role="CustomPage" Type="ProjectFirma.Web.Models.CustomPage" Multiplicity="1" />
     <End Role="CustomPageImages" Type="ProjectFirma.Web.Models.CustomPageImage" Multiplicity="*" />
@@ -4649,6 +4714,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Program_FileResource_ProgramExampleGeospatialUploadFileResourceID_FileResourceID">
+    <End Role="ProgramExampleGeospatialUploadFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
+    <End Role="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource" Type="ProjectFirma.Web.Models.Program" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramExampleGeospatialUploadFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource">
+        <PropertyRef Name="ProgramExampleGeospatialUploadFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Program_FileResource_ProgramFileResourceID_FileResourceID">
     <End Role="ProgramFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
     <End Role="ProgramsWhereYouAreTheProgramFileResource" Type="ProjectFirma.Web.Models.Program" Multiplicity="*" />
@@ -4705,6 +4782,18 @@
         <PropertyRef Name="FileResourceID" />
       </Principal>
       <Dependent Role="ProjectImageUpdates">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReportTemplate_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1" />
+    <End Role="ReportTemplates" Type="ProjectFirma.Web.Models.ReportTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ReportTemplates">
         <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7166,6 +7255,18 @@
       </Principal>
       <Dependent Role="Treatments">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectCountyUpdates" Type="ProjectFirma.Web.Models.ProjectCountyUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectCountyUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

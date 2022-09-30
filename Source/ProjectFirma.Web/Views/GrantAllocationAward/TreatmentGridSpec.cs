@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             Add(string.Empty, x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUrl(), $"Edit Treatment"), userHasEditPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);
 
-            Add("Treatment Area Name", a => a.ProjectLocation.ProjectLocationName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Treatment Area Name", a => a.ProjectLocation?.ProjectLocationName ?? "", 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Treatment ID", a => a.TreatmentID.ToString(), 75, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.TreatmentType.GetFieldDefinitionLabel(), a => a.TreatmentType.TreatmentTypeDisplayName, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.TreatmentCode.GetFieldDefinitionLabel(), a => a.TreatmentCode?.TreatmentCodeDisplayName, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
