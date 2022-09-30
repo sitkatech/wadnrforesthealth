@@ -162,8 +162,6 @@
     <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.ProjectUpdateProgram" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
     <EntitySet Name="ReportTemplate" EntityType="ProjectFirma.Web.Models.ReportTemplate" />
-    <EntitySet Name="ReportTemplateModel" EntityType="ProjectFirma.Web.Models.ReportTemplateModel" />
-    <EntitySet Name="ReportTemplateModelType" EntityType="ProjectFirma.Web.Models.ReportTemplateModelType" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
@@ -1342,14 +1340,6 @@
     <AssociationSet Name="FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ReportTemplate_ReportTemplateModel_ReportTemplateModelID" Association="ProjectFirma.Web.Models.FK_ReportTemplate_ReportTemplateModel_ReportTemplateModelID">
-      <End Role="ReportTemplateModel" EntitySet="ReportTemplateModel" />
-      <End Role="ReportTemplates" EntitySet="ReportTemplate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ReportTemplate_ReportTemplateModelType_ReportTemplateModelTypeID" Association="ProjectFirma.Web.Models.FK_ReportTemplate_ReportTemplateModelType_ReportTemplateModelTypeID">
-      <End Role="ReportTemplateModelType" EntitySet="ReportTemplateModelType" />
-      <End Role="ReportTemplates" EntitySet="ReportTemplate" />
     </AssociationSet>
     <AssociationSet Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" Association="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
@@ -3767,28 +3757,6 @@
     <Property Name="ReportTemplateModelTypeID" Type="Int32" Nullable="false" />
     <Property Name="ReportTemplateModelID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="ReportTemplates" ToRole="FileResource" />
-    <NavigationProperty Name="ReportTemplateModel" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_ReportTemplateModel_ReportTemplateModelID" FromRole="ReportTemplates" ToRole="ReportTemplateModel" />
-    <NavigationProperty Name="ReportTemplateModelType" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_ReportTemplateModelType_ReportTemplateModelTypeID" FromRole="ReportTemplates" ToRole="ReportTemplateModelType" />
-  </EntityType>
-  <EntityType Name="ReportTemplateModel">
-    <Key>
-      <PropertyRef Name="ReportTemplateModelID" />
-    </Key>
-    <Property Name="ReportTemplateModelID" Type="Int32" Nullable="false" />
-    <Property Name="ReportTemplateModelName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ReportTemplateModelDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ReportTemplateModelDescription" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="ReportTemplates" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_ReportTemplateModel_ReportTemplateModelID" FromRole="ReportTemplateModel" ToRole="ReportTemplates" />
-  </EntityType>
-  <EntityType Name="ReportTemplateModelType">
-    <Key>
-      <PropertyRef Name="ReportTemplateModelTypeID" />
-    </Key>
-    <Property Name="ReportTemplateModelTypeID" Type="Int32" Nullable="false" />
-    <Property Name="ReportTemplateModelTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ReportTemplateModelTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ReportTemplateModelTypeDescription" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="ReportTemplates" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_ReportTemplateModelType_ReportTemplateModelTypeID" FromRole="ReportTemplateModelType" ToRole="ReportTemplates" />
   </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
     <Key>
@@ -7707,30 +7675,6 @@
       </Principal>
       <Dependent Role="TreatmentUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ReportTemplate_ReportTemplateModel_ReportTemplateModelID">
-    <End Role="ReportTemplateModel" Type="ProjectFirma.Web.Models.ReportTemplateModel" Multiplicity="1" />
-    <End Role="ReportTemplates" Type="ProjectFirma.Web.Models.ReportTemplate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ReportTemplateModel">
-        <PropertyRef Name="ReportTemplateModelID" />
-      </Principal>
-      <Dependent Role="ReportTemplates">
-        <PropertyRef Name="ReportTemplateModelID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ReportTemplate_ReportTemplateModelType_ReportTemplateModelTypeID">
-    <End Role="ReportTemplateModelType" Type="ProjectFirma.Web.Models.ReportTemplateModelType" Multiplicity="1" />
-    <End Role="ReportTemplates" Type="ProjectFirma.Web.Models.ReportTemplate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ReportTemplateModelType">
-        <PropertyRef Name="ReportTemplateModelTypeID" />
-      </Principal>
-      <Dependent Role="ReportTemplates">
-        <PropertyRef Name="ReportTemplateModelTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

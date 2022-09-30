@@ -67,11 +67,7 @@ namespace ProjectFirma.Web.Models
             fileResource.ReportTemplates.Add(this);
             this.DisplayName = displayName;
             this.ReportTemplateModelTypeID = reportTemplateModelType.ReportTemplateModelTypeID;
-            this.ReportTemplateModelType = reportTemplateModelType;
-            reportTemplateModelType.ReportTemplates.Add(this);
             this.ReportTemplateModelID = reportTemplateModel.ReportTemplateModelID;
-            this.ReportTemplateModel = reportTemplateModel;
-            reportTemplateModel.ReportTemplates.Add(this);
         }
 
         /// <summary>
@@ -135,8 +131,8 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ReportTemplateID; } set { ReportTemplateID = value; } }
 
         public virtual FileResource FileResource { get; set; }
-        public virtual ReportTemplateModelType ReportTemplateModelType { get; set; }
-        public virtual ReportTemplateModel ReportTemplateModel { get; set; }
+        public ReportTemplateModelType ReportTemplateModelType { get { return ReportTemplateModelType.AllLookupDictionary[ReportTemplateModelTypeID]; } }
+        public ReportTemplateModel ReportTemplateModel { get { return ReportTemplateModel.AllLookupDictionary[ReportTemplateModelID]; } }
 
         public static class FieldLengths
         {
