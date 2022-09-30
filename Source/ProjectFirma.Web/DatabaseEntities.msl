@@ -1971,6 +1971,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ReportTemplate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ReportTemplate">
+        <MappingFragment StoreEntitySet="ReportTemplate">
+          <ScalarProperty Name="ReportTemplateID" ColumnName="ReportTemplateID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ReportTemplateModelTypeID" ColumnName="ReportTemplateModelTypeID" />
+          <ScalarProperty Name="ReportTemplateModelID" ColumnName="ReportTemplateModelID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SocrataDataMartRawJsonImport">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport">
         <MappingFragment StoreEntitySet="SocrataDataMartRawJsonImport">

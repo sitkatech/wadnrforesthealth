@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.Program
                         c.RemoveBlockListEntry(x.PrimaryKey)),
                     $"Remove '{x.ProjectName}' ({x.ProjectGisIdentifier}) from Import Block List", 950,
                     "btnRemoveImportBlockList", "Yes", "Cancel", null, null, null, null,
-                    "Allow project to be updated by the imports of its programs."),
+                    "Allow project to be updated by the imports of its programs.", false),
                     125, DhtmlxGridColumnFilterType.None, true);
             }
 

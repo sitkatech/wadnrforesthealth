@@ -189,6 +189,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdateProgram> ProjectUpdatePrograms { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
+        public virtual DbSet<ReportTemplate> ReportTemplates { get; set; }
         public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
@@ -1031,6 +1032,19 @@ namespace ProjectFirma.Web.Models
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);
+
+                case "ReportTemplateModel":
+                    var reportTemplateModel = ReportTemplateModel.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(reportTemplateModel, "ReportTemplateModel", primaryKey);
+                    return reportTemplateModel;
+
+                case "ReportTemplateModelType":
+                    var reportTemplateModelType = ReportTemplateModelType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(reportTemplateModelType, "ReportTemplateModelType", primaryKey);
+                    return reportTemplateModelType;
+
+                case "ReportTemplate":
+                    return ReportTemplates.GetReportTemplate(primaryKey);
 
                 case "Role":
                     var role = Role.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

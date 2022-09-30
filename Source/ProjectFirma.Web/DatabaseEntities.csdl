@@ -161,6 +161,7 @@
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
     <EntitySet Name="ProjectUpdateProgram" EntityType="ProjectFirma.Web.Models.ProjectUpdateProgram" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
+    <EntitySet Name="ReportTemplate" EntityType="ProjectFirma.Web.Models.ReportTemplate" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
@@ -375,6 +376,10 @@
     <AssociationSet Name="FK_ProjectImageUpdate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="ProjectImageUpdates" EntitySet="ProjectImageUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReportTemplate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="ReportTemplates" EntitySet="ReportTemplate" />
     </AssociationSet>
     <AssociationSet Name="FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID">
       <End Role="BannerLogoFileResource" EntitySet="FileResource" />
@@ -1650,6 +1655,7 @@
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImages" />
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImageUpdates" />
+    <NavigationProperty Name="ReportTemplates" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ReportTemplates" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheBannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="BannerLogoFileResource" ToRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheSquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SquareLogoFileResource" ToRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" />
   </EntityType>
@@ -3740,6 +3746,18 @@
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectOrganizationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizationUpdates" />
   </EntityType>
+  <EntityType Name="ReportTemplate">
+    <Key>
+      <PropertyRef Name="ReportTemplateID" />
+    </Key>
+    <Property Name="ReportTemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="ReportTemplateModelTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ReportTemplateModelID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="ReportTemplates" ToRole="FileResource" />
+  </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
     <Key>
       <PropertyRef Name="SocrataDataMartRawJsonImportID" />
@@ -4764,6 +4782,18 @@
         <PropertyRef Name="FileResourceID" />
       </Principal>
       <Dependent Role="ProjectImageUpdates">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReportTemplate_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1" />
+    <End Role="ReportTemplates" Type="ProjectFirma.Web.Models.ReportTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="ReportTemplates">
         <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>

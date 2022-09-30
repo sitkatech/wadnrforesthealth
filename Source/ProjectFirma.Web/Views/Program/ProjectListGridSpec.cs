@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.Program
                     c.RemoveBlockListProject(project)),
                 $"Remove '{project.DisplayName}' from Import Block List", 950,
                 "btnRemoveImportBlockList", "Yes", "Cancel", null, null, null, null,
-                "Allow project to be updated by the imports of its programs.");
+                "Allow project to be updated by the imports of its programs.", false);
         }
 
         private static HtmlString AddToBlockListModalLink(Models.Program program, Models.Project project)
@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.Program
                 contentUrl, 
                 $"Add '{project.DisplayName}' to Import Block List", 950,
                 "btnAddImportBlockList", "Save", "Cancel", null, null, null, null,
-                "Block project from being updated by the imports of its programs.");
+                "Block project from being updated by the imports of its programs.", false);
         }
     }
 }

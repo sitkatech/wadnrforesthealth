@@ -632,6 +632,13 @@
     <Compile Include="Models\Generated\RelationshipType.Binding.cs" />
     <Compile Include="Models\Generated\RelationshipType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\RelationshipTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ReportTemplate.Binding.cs" />
+    <Compile Include="Models\Generated\ReportTemplate.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ReportTemplateModel.Binding.cs" />
+    <Compile Include="Models\Generated\ReportTemplateModelPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ReportTemplateModelType.Binding.cs" />
+    <Compile Include="Models\Generated\ReportTemplateModelTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ReportTemplatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Role.Binding.cs" />
     <Compile Include="Models\Generated\RolePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\SocrataDataMartRawJsonImport.Binding.cs" />
@@ -711,6 +718,8 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
+    <Compile Include="Models\FirmaPageModelExtensions.cs" />
+    <Compile Include="Models\FieldDefinitionModelExtensions.cs" />
     <Compile Include="Controllers\ProjectCountyController.cs" />
     <Compile Include="Controllers\CountyController.cs" />
     <Compile Include="Models\County.cs" />
@@ -719,6 +728,7 @@
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\TreatmentCode.cs" />
     <Compile Include="Controllers\TreatmentUpdateController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Models\ExternalMapLayer.cs" />
     <Compile Include="Models\ExternalMapLayerModelExtensions.cs" />
     <Compile Include="Controllers\MapLayerController.cs" />
@@ -783,6 +793,10 @@
     <Compile Include="Models\ProjectProgramSimple.cs" />
     <Compile Include="Models\ProjectUpdateProgram.cs" />
     <Compile Include="Models\ProjectUpdateProgramSimple.cs" />
+    <Compile Include="Models\ReportTemplate.cs" />
+    <Compile Include="Models\ReportTemplateModel.cs" />
+    <Compile Include="Models\ReportTemplateModelExtensions.cs" />
+    <Compile Include="Models\ReportTemplateModelType.cs" />
     <Compile Include="Models\CountyModelExtensions.cs" />
     <Compile Include="Models\RoleSimple.cs" />
     <Compile Include="Models\TabularDataImport.cs" />
@@ -865,6 +879,19 @@
     <Compile Include="Models\TreatmentUpdateModelExtensions.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
     <Compile Include="ADFSSamlResponseTest.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateBaseModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateOrganizationModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplatePersonModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectBaseViewModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectContactModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectExpectedPerformanceMeasureModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectImageModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectOrganizationModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectReportedPerformanceMeasureModel.cs" />
+    <Compile Include="ReportTemplates\ProjectFirmaDocxDocument.cs" />
+    <Compile Include="ReportTemplates\ReportTemplateGenerator.cs" />
+    <Compile Include="ReportTemplates\ReportTemplateTests.cs" />
     <Compile Include="SawSamlResponseTest.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
@@ -1062,10 +1089,14 @@
     <Compile Include="Security\DNRUplandRegionManageFeature.cs" />
     <Compile Include="Security\PriorityLandscapeViewFeature.cs" />
     <Compile Include="Security\DNRUplandRegionViewFeature.cs" />
+    <Compile Include="Security\ReportTemplateGenerateReportsFeature.cs" />
+    <Compile Include="Security\ReportTemplateManageFeature.cs" />
+    <Compile Include="Security\ReportTemplateViewListFeature.cs" />
     <Compile Include="Security\TreatmentActivityManageFeature.cs" />
     <Compile Include="Security\TreatmentActivityViewFeature.cs" />
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Security\ViewJsonApiLandingPageFeature.cs" />
+    <Compile Include="UnitTestCommon\HttpRequestStorageForTest.cs" />
     <Compile Include="UnitTestCommon\TestGrant.cs" />
     <Compile Include="UnitTestCommon\TestGrantModification.cs" />
     <Compile Include="UnitTestCommon\TestInvoice.cs" />
@@ -1250,6 +1281,18 @@
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
+    <Compile Include="Views\Reports\Edit.cs" />
+    <Compile Include="Views\Reports\EditViewData.cs" />
+    <Compile Include="Views\Reports\EditViewModel.cs" />
+    <Compile Include="Views\Reports\GenerateReports.cs" />
+    <Compile Include="Views\Reports\GenerateReportsViewData.cs" />
+    <Compile Include="Views\Reports\GenerateReportsViewModel.cs" />
+    <Compile Include="Views\Reports\Index.cs" />
+    <Compile Include="Views\Reports\IndexViewData.cs" />
+    <Compile Include="Views\Reports\ProjectListGridSpec.cs" />
+    <Compile Include="Views\Reports\Projects.cs" />
+    <Compile Include="Views\Reports\ProjectsViewData.cs" />
+    <Compile Include="Views\Reports\ReportTemplateGridSpec.cs" />
     <Compile Include="Views\ProjectCounty\EditProjectCounties.cs" />
     <Compile Include="Views\ProjectCounty\EditProjectCountiesViewData.cs" />
     <Compile Include="Views\ProjectCounty\EditProjectCountiesViewModel.cs" />
@@ -1471,6 +1514,10 @@
     <Content Include="Content\img\wadnr-logo-cropped.png" />
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Content\esri-leaflet\esri-leaflet.js.map" />
+    <Content Include="Content\documents\Reports-Example-Report.docx" />
+    <Content Include="Content\documents\Reports-Model-Documentation.xlsx" />
+    <Content Include="Content\documents\Reports-User-Guide.docx" />
+    <Content Include="Content\documents\Reports-User-Guide.pdf" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
@@ -2688,6 +2735,10 @@
     <Content Include="Views\ProjectUpdate\Treatments.cshtml" />
     <Content Include="Views\TreatmentUpdate\EditTreatmentUpdate.cshtml" />
     <Content Include="Views\Shared\ProjectImportBlockList\EditProjectImportBlockList.cshtml" />
+    <Content Include="Views\Reports\Edit.cshtml" />
+    <Content Include="Views\Reports\GenerateReports.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\Projects.cshtml" />
     <Content Include="Views\ProjectCounty\EditProjectCounties.cshtml" />
     <Content Include="Views\ProjectUpdate\Counties.cshtml" />
     <Content Include="Views\ProjectCreate\Counties.cshtml" />
@@ -2855,6 +2906,9 @@
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDocx, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\SharpDocx.2.0.1\lib\net45\SharpDocx.dll</HintPath>
     </Reference>
     <Reference Include="Sustainsys.Saml2, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Sustainsys.Saml2.2.7.0\lib\net47\Sustainsys.Saml2.dll</HintPath>
