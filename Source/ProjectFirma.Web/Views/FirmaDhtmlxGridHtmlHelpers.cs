@@ -63,6 +63,17 @@ namespace ProjectFirma.Web.Views
             return new HtmlString(dhtmlxGrid);
         }
 
+        /// <summary>
+        /// Temp method creates grids that exclude a download filtered grid option for 1992
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="html"></param>
+        /// <param name="gridSpec"></param>
+        /// <param name="gridName"></param>
+        /// <param name="optionalGridDataUrl"></param>
+        /// <param name="styleString"></param>
+        /// <param name="dhtmlxGridResizeType"></param>
+        /// <returns></returns>
         public static HtmlString DhtmlxGridCustomGridHeadersOnly<T>(this HtmlHelper html, GridSpec<T> gridSpec, string gridName, string optionalGridDataUrl, string styleString, DhtmlxGridResizeType dhtmlxGridResizeType)
         {
             var dhtmlxGridHeader = DhtmlxGridHtmlHelpers.BuildDhtmlxGridHeader(gridSpec, gridName, null, null);
