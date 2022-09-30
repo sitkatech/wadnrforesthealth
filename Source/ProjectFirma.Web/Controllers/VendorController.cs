@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Controllers
 
         }
 
-        [AnonymousUnclassifiedFeature]
+        [VendorViewFeature]
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.Vendor);
