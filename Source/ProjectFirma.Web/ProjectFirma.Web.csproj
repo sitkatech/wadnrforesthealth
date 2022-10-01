@@ -893,6 +893,8 @@
     <Compile Include="ReportTemplates\ReportTemplateGenerator.cs" />
     <Compile Include="ReportTemplates\ReportTemplateTests.cs" />
     <Compile Include="SawSamlResponseTest.cs" />
+    <Compile Include="ScheduledJobs\ArcGisOnlineUtility.cs" />
+    <Compile Include="ScheduledJobs\LoaDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProgramIndexImportHangfireBackgroundJob.cs" />
