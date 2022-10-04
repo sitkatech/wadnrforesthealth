@@ -46,7 +46,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             var result = new LoaProjectGeometriesDto();
 
             var url = FirmaWebConfiguration.ArcGisLoaDataEasternUrl; //_configuration["ARCGIS_METRO_SITE_URL"];
-            url += "?f=json&outFields=OBJECTID,Landowner,Approval_ID,Project_Status&where=1=1&outSr=4326";
+            url += "?f=json&where=Approval_ID is not null&outSr=4326";
+            url += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
             HttpResponseMessage response;
             LoaProjectGeometriesDto processedResponse;
             try
