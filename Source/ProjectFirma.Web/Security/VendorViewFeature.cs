@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditVendor.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="VendorViewFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,23 +18,18 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using System.Collections.Generic;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
-using System.Web.Mvc;
-using LtInfo.Common.HtmlHelperExtensions;
-
-namespace ProjectFirma.Web.Views.Vendor
+namespace ProjectFirma.Web.Security
 {
-    public abstract class EditVendor : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditVendorViewData, IEditVendorViewModel>
+    [SecurityFeatureDescription("View Vendor Grid")]
+    public class VendorViewFeature : FirmaFeature
     {
-        public static void RenderPartialView(HtmlHelper html, IEditVendorViewModel viewModel)
+        public VendorViewFeature()
+            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
         {
-            html.RenderRazorSitkaPartial<EditVendor, EditVendorViewData, IEditVendorViewModel>(new EditVendorViewData(), viewModel);
         }
-
-        
     }
-    public class EditVendorViewData
-    {
-    }
-
 }

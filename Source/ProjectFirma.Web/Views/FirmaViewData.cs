@@ -184,6 +184,10 @@ namespace ProjectFirma.Web.Views
             }
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", "Group3"));
 
+            if (new VendorViewFeature().HasPermissionByPerson(currentPerson))
+            {
+                programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<VendorController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Vendor.GetFieldDefinitionLabelPluralized()}", "Group3"));
+            }
 
             MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.ProgramInfo).ForEach(x =>
             {

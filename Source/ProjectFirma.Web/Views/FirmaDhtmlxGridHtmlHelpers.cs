@@ -62,5 +62,29 @@ namespace ProjectFirma.Web.Views
 
             return new HtmlString(dhtmlxGrid);
         }
+
+        /// <summary>
+        /// Method creates grids that exclude a download filtered grid option for WADNR-1992
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="html"></param>
+        /// <param name="gridSpec"></param>
+        /// <param name="gridName"></param>
+        /// <param name="optionalGridDataUrl"></param>
+        /// <param name="styleString"></param>
+        /// <param name="dhtmlxGridResizeType"></param>
+        /// <returns></returns>
+        public static HtmlString DhtmlxGridCustomGridHeadersOnly<T>(this HtmlHelper html, GridSpec<T> gridSpec, string gridName, string optionalGridDataUrl, string styleString, DhtmlxGridResizeType dhtmlxGridResizeType)
+        {
+            var dhtmlxGridHeader = DhtmlxGridHtmlHelpers.BuildDhtmlxGridHeader(gridSpec, gridName, null, null);
+
+            var dhtmlxGrid = DhtmlxGridHtmlHelpers.DhtmlxGridImpl(gridSpec,
+                gridName,
+                optionalGridDataUrl,
+                $"background-color:white;{styleString}",
+                null, dhtmlxGridHeader, dhtmlxGridResizeType);
+
+            return new HtmlString(dhtmlxGrid);
+        }
     }
 }
