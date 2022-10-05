@@ -14,7 +14,6 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Run bash script
         run: |
-          chmod +x ./.github/workflows/license-action.sh
           ./.github/workflows/license-action.sh
         shell: bash
       - run: echo "🍏 This job's status is ${{ job.status }}."
