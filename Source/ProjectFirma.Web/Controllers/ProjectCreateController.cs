@@ -676,7 +676,7 @@ namespace ProjectFirma.Web.Controllers
 
            project.AutoAssignProjectPriorityLandscapesAndDnrUplandRegionsAndCounties();
 
-           SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Simple Location successfully saved. Priority Landscapes and DNR Upland Regions were automatically updated based on the Detailed Location and the Simple Location. Please review both sections to verify.");
+           SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Simple Location successfully saved. Priority Landscapes, DNR Upland Regions, and Counties were automatically updated based on the Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationSimple.ProjectCreateSectionDisplayName);
         }
 
@@ -750,7 +750,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             SaveDetailedLocations(viewModel, project);
-            SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes and DNR Upland Regions were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
+            SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes, DNR Upland Regions, and Counties were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.LocationDetailed.ProjectCreateSectionDisplayName);
         }
 
@@ -863,7 +863,7 @@ namespace ProjectFirma.Web.Controllers
             }
             SaveDetailedLocations(viewModel, project);
             DbSpatialHelper.Reduce(new List<IHaveSqlGeometry>(project.ProjectLocations.ToList()));
-            SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes and DNR Upland Regions were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
+            SetMessageForDisplay($"Successfully updated Project Detailed Location. Priority Landscapes, DNR Upland Regions, and Counties were automatically updated based on Project Detailed Location and the Simple Location. Please review both sections to verify.");
             return new ModalDialogFormJsonResult();
         }
 

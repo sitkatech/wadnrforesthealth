@@ -64,7 +64,8 @@ namespace ProjectFirma.Web.Views
         }
 
         /// <summary>
-        /// Temp method creates grids that exclude a download filtered grid option for 1992
+        /// Method creates grids that exclude a download filtered grid option for WADNR-1992
+        /// This method will probably go away - long term solution solution is to allow downloading the grid with filters. 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="html"></param>
