@@ -55,4 +55,20 @@
     {
         <input type="hidden" name="@Html.NameFor(x => x.ProjectIDList)" value="@projectID"/>
     }
+
+    <script type="text/javascript">
+        @*Handle closing the modal when "generate" button is clicked. Required since the controller action doesn't actually close the modal by returning a default ModalDialogFormJsonResult.'*@
+        jQuery(document).ready(function() {
+            jQuery("#ltinfo-modal-dialog-save-button-id").on("click",
+                function () {
+                    jQuery(".progress-bar").html("Generating...");
+                    jQuery(".progress").show();
+
+                    setTimeout(() => {
+                            jQuery(".firma-modal").modal("hide");
+                        },
+                        3000);
+                });
+        });
+    </script>
 }
