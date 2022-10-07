@@ -9,6 +9,8 @@ CREATE PROCEDURE dbo.pVendorImportJson
 AS
 begin
 
+--drop table #VendorFKs
+--drop table #vendorSocrataTemp
     SELECT vendorTemp.*
     into #vendorSocrataTemp
     --FROM OPENROWSET (BULK '{pathToVendorJsonFile}', SINGLE_CLOB) as j
@@ -44,17 +46,25 @@ begin
 
 	--select * from #vendorSocrataTemp
 
+--create temp table to track which vendor records have a fk from another table
+select distinct o.VendorID into #VendorFKs
+from dbo.Organization o
+
+insert into #VendorFKs
+select distinct p.VendorId from Person p
+
 -- DELETE (2nd attempt)
 -- Delete Vendors in our table not found in incoming temp table
+
+
 delete from dbo.Vendor 
 where VendorID in 
 (
-	select dbv.VendorID
+	select dbv.VendorID 
 	from dbo.Vendor as dbv
 	full outer join #vendorSocrataTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
 	where (tv.vendor_num is null or tv.vendor_num_suffix is null) 
-		and dbv.VendorID not in (select distinct org.VendorID from dbo.Organization as org where org.VendorID is not null) 
-		and dbv.VendorID not in (select distinct per.VendorID from dbo.Person as per where per.VendorID is not null)
+	and not exists (select 1 from #VendorFKs where dbv.VendorID = #VendorFKs.VendorID)
 )
 
 -- UPDATE (2nd attempt)
