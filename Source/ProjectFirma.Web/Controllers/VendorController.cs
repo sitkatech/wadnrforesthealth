@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Vendor> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.Where(x =>x.VendorStatus == "A").OrderBy(x => x.VendorName).ToList();
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Vendor>(vendors, gridSpec);
             return gridJsonNetJObjectResult;
         }
