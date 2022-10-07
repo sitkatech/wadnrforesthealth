@@ -36,12 +36,18 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation) : this()
+        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation, string regionAddress, string regionCity, string regionState, string regionZip, string phone, string email) : this()
         {
             this.DNRUplandRegionID = dNRUplandRegionID;
             this.DNRUplandRegionAbbrev = dNRUplandRegionAbbrev;
             this.DNRUplandRegionName = dNRUplandRegionName;
             this.DNRUplandRegionLocation = dNRUplandRegionLocation;
+            this.RegionAddress = regionAddress;
+            this.RegionCity = regionCity;
+            this.RegionState = regionState;
+            this.RegionZip = regionZip;
+            this.Phone = phone;
+            this.Email = email;
         }
 
         /// <summary>
@@ -176,6 +182,12 @@ namespace ProjectFirma.Web.Models
         public string DNRUplandRegionAbbrev { get; set; }
         public string DNRUplandRegionName { get; set; }
         public DbGeometry DNRUplandRegionLocation { get; set; }
+        public string RegionAddress { get; set; }
+        public string RegionCity { get; set; }
+        public string RegionState { get; set; }
+        public string RegionZip { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return DNRUplandRegionID; } set { DNRUplandRegionID = value; } }
 
@@ -190,6 +202,12 @@ namespace ProjectFirma.Web.Models
         {
             public const int DNRUplandRegionAbbrev = 10;
             public const int DNRUplandRegionName = 100;
+            public const int RegionAddress = 255;
+            public const int RegionCity = 30;
+            public const int RegionState = 30;
+            public const int RegionZip = 10;
+            public const int Phone = 30;
+            public const int Email = 255;
         }
     }
 }

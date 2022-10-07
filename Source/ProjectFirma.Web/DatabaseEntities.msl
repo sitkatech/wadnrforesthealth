@@ -169,6 +169,12 @@
           <ScalarProperty Name="DNRUplandRegionAbbrev" ColumnName="DNRUplandRegionAbbrev" />
           <ScalarProperty Name="DNRUplandRegionName" ColumnName="DNRUplandRegionName" />
           <ScalarProperty Name="DNRUplandRegionLocation" ColumnName="DNRUplandRegionLocation" />
+          <ScalarProperty Name="RegionAddress" ColumnName="RegionAddress" />
+          <ScalarProperty Name="RegionCity" ColumnName="RegionCity" />
+          <ScalarProperty Name="RegionState" ColumnName="RegionState" />
+          <ScalarProperty Name="RegionZip" ColumnName="RegionZip" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

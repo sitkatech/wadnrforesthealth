@@ -23,6 +23,8 @@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.ModalDialog
 @using MoreLinq
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
@@ -114,6 +116,68 @@
             </div>
             <div class="panel-body">
                 @Html.DhtmlxGrid(ViewDataTyped.BasicProjectInfoGridSpec, ViewDataTyped.BasicProjectInfoGridName, ViewDataTyped.BasicProjectInfoGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h2>
+                    @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectPeopleUrl, "Edit Contact", ViewDataTyped.UserHasRegionManagePermissions)*@
+                    @FieldDefinition.Contact.GetFieldDefinitionLabel()
+                </h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        "Address"
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionAddress
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        "City"
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.Raw(ViewDataTyped.DNRUplandRegion.RegionCity)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        State
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.Raw(ViewDataTyped.DNRUplandRegion.RegionState)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        Zip
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.Raw(ViewDataTyped.DNRUplandRegion.RegionZip)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        "Phone"
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.Raw(ViewDataTyped.DNRUplandRegion.Phone)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        Email
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.Raw(ViewDataTyped.DNRUplandRegion.Email)
+                    </div>
+                </div>
             </div>
         </div>
     </div>

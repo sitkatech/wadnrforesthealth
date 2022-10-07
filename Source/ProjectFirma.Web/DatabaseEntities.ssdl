@@ -1644,6 +1644,12 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="DNRUplandRegionAbbrev" Type="nvarchar" MaxLength="10" />
     <Property Name="DNRUplandRegionName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="DNRUplandRegionLocation" Type="geometry" />
+    <Property Name="RegionAddress" Type="varchar" MaxLength="255" />
+    <Property Name="RegionCity" Type="varchar" MaxLength="30" />
+    <Property Name="RegionState" Type="varchar" MaxLength="30" />
+    <Property Name="RegionZip" Type="varchar" MaxLength="10" />
+    <Property Name="Phone" Type="varchar" MaxLength="30" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="ExternalMapLayer">
     <Key>
