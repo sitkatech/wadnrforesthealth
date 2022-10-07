@@ -9,8 +9,6 @@ CREATE PROCEDURE dbo.pVendorImportJson
 AS
 begin
 
---drop table #VendorFKs
---drop table #vendorSocrataTemp
     SELECT vendorTemp.*
     into #vendorSocrataTemp
     --FROM OPENROWSET (BULK '{pathToVendorJsonFile}', SINGLE_CLOB) as j
@@ -55,8 +53,6 @@ select distinct p.VendorId from Person p
 
 -- DELETE (2nd attempt)
 -- Delete Vendors in our table not found in incoming temp table
-
-
 delete from dbo.Vendor 
 where VendorID in 
 (
