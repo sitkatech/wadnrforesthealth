@@ -121,41 +121,41 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-5">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
                 <h2>
-                    @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectPeopleUrl, "Edit Contact", ViewDataTyped.UserHasRegionManagePermissions)*@
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, "Edit Contact", ViewDataTyped.UserHasRegionManagePermissions)
                     @FieldDefinition.Contact.GetFieldDefinitionLabel()
                 </h2>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-3">
-                        "Address"
+                    <div class="col-sm-3 fieldLabel text-right">
+                        Address
                     </div>
                     <div class="col-sm-9">
                         @ViewDataTyped.DNRUplandRegion.RegionAddress
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
-                        "City"
+                    <div class="col-sm-3 fieldLabel text-right">
+                        City
                     </div>
                     <div class="col-sm-9">
-                        @Html.Raw(ViewDataTyped.DNRUplandRegion.RegionCity)
+                        @ViewDataTyped.DNRUplandRegion.RegionCity
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 fieldLabel text-right">
                         State
                     </div>
                     <div class="col-sm-9">
-                        @Html.Raw(ViewDataTyped.DNRUplandRegion.RegionState)
+                        @ViewDataTyped.DNRUplandRegion.RegionState
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 fieldLabel text-right">
                         Zip
                     </div>
                     <div class="col-sm-9">
@@ -163,15 +163,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
-                        "Phone"
+                    <div class="col-xs-3 fieldLabel text-right">
+                        Phone
                     </div>
                     <div class="col-sm-9">
-                        @Html.Raw(ViewDataTyped.DNRUplandRegion.Phone)
+                        @ViewDataTyped.DNRUplandRegion.Phone
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 fieldLabel text-right">
                         Email
                     </div>
                     <div class="col-sm-9">

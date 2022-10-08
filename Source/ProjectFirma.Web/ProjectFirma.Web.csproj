@@ -1127,6 +1127,9 @@
     <Compile Include="Views\County\IndexViewData.cs" />
     <Compile Include="Views\County\MapTooltip.cs" />
     <Compile Include="Views\County\MapTooltipViewData.cs" />
+    <Compile Include="Views\DNRUplandRegion\EditContact.cs" />
+    <Compile Include="Views\DNRUplandRegion\EditContactViewData.cs" />
+    <Compile Include="Views\DNRUplandRegion\EditContactViewModel.cs" />
     <Compile Include="Views\ExcelUpload\ImportLoaExcelFileViewData.cs" />
     <Compile Include="Views\ExcelUpload\ImportLoaExcelFile.cs" />
     <Compile Include="Views\ExcelUpload\ManageExcelUploadsAndEtlViewData.cs" />
@@ -1610,6 +1613,7 @@
     <Content Include="Views\County\Detail.cshtml" />
     <Content Include="Views\County\Index.cshtml" />
     <Content Include="Views\County\MapTooltip.cshtml" />
+    <Content Include="Views\DNRUplandRegion\EditContact.cshtml" />
     <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
