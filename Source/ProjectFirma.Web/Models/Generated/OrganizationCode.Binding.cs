@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProjectCode]
+//  Source Table: [dbo].[OrganizationCode]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,50 +16,36 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProjectCode]")]
-    public partial class ProjectCode : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[OrganizationCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[OrganizationCode]")]
+    public partial class OrganizationCode : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProjectCode()
+        protected OrganizationCode()
         {
-            this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
             this.Invoices = new HashSet<Invoice>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(int projectCodeID, string projectCodeName, string projectCodeTitle, DateTime? createDate, DateTime? projectStartDate, DateTime? projectEndDate) : this()
+        public OrganizationCode(int organizationCodeID, string organizationCodeName, string organizationCodeValue) : this()
         {
-            this.ProjectCodeID = projectCodeID;
-            this.ProjectCodeName = projectCodeName;
-            this.ProjectCodeTitle = projectCodeTitle;
-            this.CreateDate = createDate;
-            this.ProjectStartDate = projectStartDate;
-            this.ProjectEndDate = projectEndDate;
+            this.OrganizationCodeID = organizationCodeID;
+            this.OrganizationCodeName = organizationCodeName;
+            this.OrganizationCodeValue = organizationCodeValue;
         }
 
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public ProjectCode(string projectCodeName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.ProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.ProjectCodeName = projectCodeName;
-        }
 
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectCode CreateNewBlank()
+        public static OrganizationCode CreateNewBlank()
         {
-            return new ProjectCode(default(string));
+            return new OrganizationCode();
         }
 
         /// <summary>
@@ -68,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationProgramIndexProjectCodes.Any() || Invoices.Any();
+            return Invoices.Any();
         }
 
         /// <summary>
@@ -78,11 +64,6 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(GrantAllocationProgramIndexProjectCodes.Any())
-            {
-                dependentObjects.Add(typeof(GrantAllocationProgramIndexProjectCode).Name);
-            }
-
             if(Invoices.Any())
             {
                 dependentObjects.Add(typeof(Invoice).Name);
@@ -93,7 +74,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(Invoice).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(OrganizationCode).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -101,7 +82,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.ProjectCodes.Remove(this);
+            dbContext.OrganizationCodes.Remove(this);
         }
         
         /// <summary>
@@ -118,11 +99,6 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocationProgramIndexProjectCodes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in Invoices.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -130,22 +106,18 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int ProjectCodeID { get; set; }
-        public string ProjectCodeName { get; set; }
-        public string ProjectCodeTitle { get; set; }
-        public DateTime? CreateDate { get; set; }
-        public DateTime? ProjectStartDate { get; set; }
-        public DateTime? ProjectEndDate { get; set; }
+        public int OrganizationCodeID { get; set; }
+        public string OrganizationCodeName { get; set; }
+        public string OrganizationCodeValue { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
+        public int PrimaryKey { get { return OrganizationCodeID; } set { OrganizationCodeID = value; } }
 
-        public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
 
         public static class FieldLengths
         {
-            public const int ProjectCodeName = 100;
-            public const int ProjectCodeTitle = 255;
+            public const int OrganizationCodeName = 250;
+            public const int OrganizationCodeValue = 20;
         }
     }
 }

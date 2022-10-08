@@ -5,18 +5,23 @@ GO
 CREATE TABLE [dbo].[Invoice](
 	[InvoiceID] [int] IDENTITY(1,1) NOT NULL,
 	[InvoiceIdentifyingName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[RequestorName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[InvoiceDate] [datetime] NOT NULL,
-	[PurchaseAuthority] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TotalPaymentAmount] [money] NULL,
-	[PreparedByPersonID] [int] NOT NULL,
 	[InvoiceApprovalStatusID] [int] NOT NULL,
 	[InvoiceApprovalStatusComment] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[PurchaseAuthorityIsLandownerCostShareAgreement] [bit] NOT NULL,
 	[InvoiceMatchAmountTypeID] [int] NOT NULL,
 	[MatchAmount] [money] NULL,
 	[InvoiceStatusID] [int] NOT NULL,
 	[InvoiceFileResourceID] [int] NULL,
+	[InvoicePaymentRequestID] [int] NOT NULL,
+	[GrantID] [int] NULL,
+	[ProgramIndexID] [int] NULL,
+	[ProjectCodeID] [int] NULL,
+	[OrganizationCodeID] [int] NULL,
+	[InvoiceNumber] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Fund] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Appn] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[SubObject] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Invoice_InvoiceID] PRIMARY KEY CLUSTERED 
 (
 	[InvoiceID] ASC
@@ -29,6 +34,11 @@ REFERENCES [dbo].[FileResource] ([FileResourceID])
 GO
 ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID]
 GO
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_Grant_GrantID] FOREIGN KEY([GrantID])
+REFERENCES [dbo].[Grant] ([GrantID])
+GO
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_Grant_GrantID]
+GO
 ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID] FOREIGN KEY([InvoiceApprovalStatusID])
 REFERENCES [dbo].[InvoiceApprovalStatus] ([InvoiceApprovalStatusID])
 GO
@@ -39,12 +49,27 @@ REFERENCES [dbo].[InvoiceMatchAmountType] ([InvoiceMatchAmountTypeID])
 GO
 ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID]
 GO
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID] FOREIGN KEY([InvoicePaymentRequestID])
+REFERENCES [dbo].[InvoicePaymentRequest] ([InvoicePaymentRequestID])
+GO
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID]
+GO
 ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_InvoiceStatus_InvoiceStatusID] FOREIGN KEY([InvoiceStatusID])
 REFERENCES [dbo].[InvoiceStatus] ([InvoiceStatusID])
 GO
 ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_InvoiceStatus_InvoiceStatusID]
 GO
-ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_Person_PreparedByPersonID_PersonID] FOREIGN KEY([PreparedByPersonID])
-REFERENCES [dbo].[Person] ([PersonID])
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_OrganizationCode_OrganizationCodeID] FOREIGN KEY([OrganizationCodeID])
+REFERENCES [dbo].[OrganizationCode] ([OrganizationCodeID])
 GO
-ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_Person_PreparedByPersonID_PersonID]
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_OrganizationCode_OrganizationCodeID]
+GO
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
+REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
+GO
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_ProgramIndex_ProgramIndexID]
+GO
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_ProjectCode_ProjectCodeID] FOREIGN KEY([ProjectCodeID])
+REFERENCES [dbo].[ProjectCode] ([ProjectCodeID])
+GO
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_ProjectCode_ProjectCodeID]

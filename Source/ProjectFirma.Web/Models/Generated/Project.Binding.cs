@@ -27,6 +27,7 @@ namespace ProjectFirma.Web.Models
         {
             this.GrantAllocationAwardLandownerCostShareLineItems = new HashSet<GrantAllocationAwardLandownerCostShareLineItem>();
             this.InteractionEventProjects = new HashSet<InteractionEventProject>();
+            this.InvoicePaymentRequests = new HashSet<InvoicePaymentRequest>();
             this.NotificationProjects = new HashSet<NotificationProject>();
             this.PerformanceMeasureActuals = new HashSet<PerformanceMeasureActual>();
             this.PerformanceMeasureExpecteds = new HashSet<PerformanceMeasureExpected>();
@@ -145,7 +146,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProgramNotificationSentProjects.Any() || ProjectClassifications.Any() || ProjectCounties.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectImportBlockLists.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
+            return GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || InvoicePaymentRequests.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProgramNotificationSentProjects.Any() || ProjectClassifications.Any() || ProjectCounties.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectImportBlockLists.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -163,6 +164,11 @@ namespace ProjectFirma.Web.Models
             if(InteractionEventProjects.Any())
             {
                 dependentObjects.Add(typeof(InteractionEventProject).Name);
+            }
+
+            if(InvoicePaymentRequests.Any())
+            {
+                dependentObjects.Add(typeof(InvoicePaymentRequest).Name);
             }
 
             if(NotificationProjects.Any())
@@ -305,7 +311,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProgramNotificationSentProject).Name, typeof(ProjectClassification).Name, typeof(ProjectCounty).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(InvoicePaymentRequest).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProgramNotificationSentProject).Name, typeof(ProjectClassification).Name, typeof(ProjectCounty).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -336,6 +342,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in InteractionEventProjects.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in InvoicePaymentRequests.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -515,6 +526,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
         public virtual ICollection<InteractionEventProject> InteractionEventProjects { get; set; }
+        public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequests { get; set; }
         public virtual ICollection<NotificationProject> NotificationProjects { get; set; }
         public virtual ICollection<PerformanceMeasureActual> PerformanceMeasureActuals { get; set; }
         public virtual ICollection<PerformanceMeasureExpected> PerformanceMeasureExpecteds { get; set; }

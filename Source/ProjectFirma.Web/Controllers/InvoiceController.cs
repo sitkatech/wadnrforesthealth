@@ -146,33 +146,33 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        //TODO: 10/7/22 TK - include the IPR ID on creation of a new Invoice to keep the hierarchy 
+        //[HttpGet]
+        //[InvoiceCreateFeature]
+        //public PartialViewResult New()
+        //{
+        //    var viewModel = new EditInvoiceViewModel();
+        //    return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
+        //}
 
-        [HttpGet]
-        [InvoiceCreateFeature]
-        public PartialViewResult New()
-        {
-            var viewModel = new EditInvoiceViewModel();
-            return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
-        }
+        //[HttpPost]
+        //[InvoiceCreateFeature]
+        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        //public ActionResult New(EditInvoiceViewModel viewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
+        //    }
 
-        [HttpPost]
-        [InvoiceCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditInvoiceViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
-            }
-
-            var preparedByPerson = HttpRequestStorage.DatabaseEntities.People.Single(g => g.PersonID == viewModel.PreparedByPersonID);
-            var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
-            var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
-            var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
-            var invoice = Invoice.CreateNewBlank(preparedByPerson, invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus);
-            viewModel.UpdateModel(invoice, CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
+        //    var preparedByPerson = HttpRequestStorage.DatabaseEntities.People.Single(g => g.PersonID == viewModel.PreparedByPersonID);
+        //    var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
+        //    var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
+        //    var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
+        //    var invoice = Invoice.CreateNewBlank(invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus, )
+        //    viewModel.UpdateModel(invoice, CurrentPerson);
+        //    return new ModalDialogFormJsonResult();
+        //}
 
         [InvoicesViewFullListFeature]
         public ViewResult Index()

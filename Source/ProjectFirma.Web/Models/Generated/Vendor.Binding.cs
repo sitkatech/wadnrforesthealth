@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Vendor()
         {
+            this.InvoicePaymentRequests = new HashSet<InvoicePaymentRequest>();
             this.Organizations = new HashSet<Organization>();
             this.People = new HashSet<Person>();
         }
@@ -84,7 +85,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Organizations.Any() || People.Any();
+            return InvoicePaymentRequests.Any() || Organizations.Any() || People.Any();
         }
 
         /// <summary>
@@ -94,6 +95,11 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(InvoicePaymentRequests.Any())
+            {
+                dependentObjects.Add(typeof(InvoicePaymentRequest).Name);
+            }
+
             if(Organizations.Any())
             {
                 dependentObjects.Add(typeof(Organization).Name);
@@ -109,7 +115,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Vendor).Name, typeof(Organization).Name, typeof(Person).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Vendor).Name, typeof(InvoicePaymentRequest).Name, typeof(Organization).Name, typeof(Person).Name};
 
 
         /// <summary>
@@ -133,6 +139,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in InvoicePaymentRequests.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in Organizations.ToList())
             {
@@ -169,6 +180,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return VendorID; } set { VendorID = value; } }
 
+        public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequests { get; set; }
         public virtual ICollection<Organization> Organizations { get; set; }
         public virtual ICollection<Person> People { get; set; }
 
