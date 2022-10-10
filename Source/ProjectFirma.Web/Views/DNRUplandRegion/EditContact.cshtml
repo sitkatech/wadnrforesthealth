@@ -30,11 +30,17 @@
         </div>
         <div class="form-group row">
             <div class="col-xs-4 fieldLabel text-right">@Html.LabelWithSugarFor(m => m.Phone)</div>
-            <div class="col-xs-8">@Html.TextBoxFor(m => m.Phone, new { @class = "form-control", style = "width:auto;", id = "phone"})</div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", style = "width:auto;", id = "Phone" })
+                @Html.ValidationMessageFor(m => m.Phone)
+                </div>
         </div>
         <div class="form-group row">
             <div class="col-xs-4 fieldLabel text-right">@Html.LabelWithSugarFor(m => m.Email)</div>
-            <div class="col-xs-8">@Html.TextBoxFor(m => m.Email, new {@class = "form-control", style = "width:100%;"})</div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "width:100%;" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
         </div>
     </div>
 }
@@ -42,6 +48,6 @@
 <script src="@Url.Content("~/Content/JQuery/jquery.mask.min.js")"></script>
 <script type="text/javascript">
     jQuery(function() {
-        jQuery("#phone").mask("(000) 000-0000");
+        jQuery("#Phone").mask("(000) 000-0000");
     })
 </script>

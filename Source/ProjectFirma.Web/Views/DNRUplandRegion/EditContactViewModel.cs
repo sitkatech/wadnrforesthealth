@@ -81,14 +81,14 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 if (phoneNumberToTest.Length != 10 || //number of digits in an american phone number
                     !phoneNumberToTest.All(char.IsDigit)) // phone numbers must be digits
                 {
-                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number was invalid.", m => m.Phone);
+                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number is invalid.", m => m.Phone);
                 }
             }
 
             bool emailProvided = Email != null;
             if (emailProvided && !FirmaHelpers.IsValidEmail(Email))
             {
-                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address was invalid.", m => m.Email);
+                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address is invalid.", m => m.Email);
             }
         }
     }
