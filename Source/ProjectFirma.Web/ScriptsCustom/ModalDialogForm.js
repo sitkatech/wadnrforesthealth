@@ -83,11 +83,11 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
 
     var saveButton = jQuery("#" + saveButtonId); 
     saveButton.click(function () {
-        if (dialogDiv[0] && dialogDiv[0].baseURI.includes('ProjectUpdate')) {// 10/10/2022 AM - Disable save, cancel and exit buttons on modal for slow loading project update workflow to prevent user to submitting a form multiple times. 
-            saveButton.attr("disabled", "disabled");
-            jQuery("#" + cancelButtonID).attr("disabled", "disabled");
-            jQuery("." + "modal-close-button").attr("disabled", "disabled");
-        }
+
+        saveButton.attr("disabled", "disabled");
+        jQuery("#" + cancelButtonID).attr("disabled", "disabled");
+        jQuery("." + "modal-close-button").attr("disabled", "disabled");
+
         // Manually submit the form
         var form = findBootstrapDialogForm(optionalDialogFormId, dialogDiv);
         // Do not submit if the form
@@ -119,10 +119,10 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
     });
 
     // Setup the ajax submit logic, has to be done after the contents are loaded
-    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax);
+    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax, element);
 }
 
-function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax) {
+function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax, element) {
     // Enable client side validation
     jQuery.validator.unobtrusive.parse(dialogDiv);
     convertJQueryValidationErrorsToQtip();
@@ -173,10 +173,16 @@ function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialo
                 else
                 {
                     // Reload the dialog to show model errors
-                    dialogDiv.find('.modal-body').html(result);
+                    dialogDiv.find(".modal-body").html(result);
+                    //re-enable save and cancel buttons after failed server side validation
+                    var saveButtonId = element.attr("data-save-button-id");
+                    var cancelButtonID = element.attr("data-cancel-button-id");
+                    dialogDiv.find("#" + saveButtonId).attr("disabled", false);
+                    dialogDiv.find("#" + cancelButtonID).attr("disabled", false);
+                    dialogDiv.find(".modal-close-button").attr("disabled", false);
 
                     // Setup the ajax submit logic
-                    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax);
+                    wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialogFormId, skipAjax, element);
                 }
             });
         },
@@ -186,6 +192,7 @@ function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialo
             dialogDiv.modal("hide");
             // Piggy back off the centralized error Ajax handling in SitkaAjax
             SitkaAjax.errorHandler(xhr, statusText);
+
         }
     });
 }
