@@ -73,12 +73,13 @@
     <EntitySet Name="InteractionEventProject" EntityType="ProjectFirma.Web.Models.Store.InteractionEventProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.Store.InvoiceLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoicePaymentRequest" EntityType="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LoaStage" EntityType="ProjectFirma.Web.Models.Store.LoaStage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationBoundaryStaging" EntityType="ProjectFirma.Web.Models.Store.OrganizationBoundaryStaging" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrganizationCode" EntityType="ProjectFirma.Web.Models.Store.OrganizationCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationType" EntityType="ProjectFirma.Web.Models.Store.OrganizationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationTypeRelationshipType" EntityType="ProjectFirma.Web.Models.Store.OrganizationTypeRelationshipType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.PclBoundaryLine" store:Type="Tables" Schema="dbo" />
@@ -740,17 +741,41 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="InvoiceFileResource" EntitySet="FileResource" />
       <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
+    <AssociationSet Name="FK_Invoice_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID">
+      <End Role="InvoicePaymentRequest" EntitySet="InvoicePaymentRequest" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_OrganizationCode_OrganizationCodeID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_OrganizationCode_OrganizationCodeID">
+      <End Role="OrganizationCode" EntitySet="OrganizationCode" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_ProgramIndex_ProgramIndexID">
+      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
+      <End Role="ApprovedByPerson" EntitySet="Person" />
+      <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" EntitySet="InvoicePaymentRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
-      <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
+      <End Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" EntitySet="InvoicePaymentRequest" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
+    <AssociationSet Name="FK_InvoicePaymentRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_InvoicePaymentRequest_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="InvoicePaymentRequests" EntitySet="InvoicePaymentRequest" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_Invoice_InvoiceID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_Invoice_InvoiceID">
-      <End Role="Invoice" EntitySet="Invoice" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
+    <AssociationSet Name="FK_InvoicePaymentRequest_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_InvoicePaymentRequest_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="InvoicePaymentRequests" EntitySet="InvoicePaymentRequest" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -2301,29 +2326,39 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </Key>
     <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceIdentifyingName" Type="varchar" MaxLength="255" />
-    <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
-    <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
     <Property Name="TotalPaymentAmount" Type="money" />
-    <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
-    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="bit" Nullable="false" />
     <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
     <Property Name="MatchAmount" Type="money" />
     <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceFileResourceID" Type="int" />
+    <Property Name="InvoicePaymentRequestID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" />
+    <Property Name="ProgramIndexID" Type="int" />
+    <Property Name="ProjectCodeID" Type="int" />
+    <Property Name="OrganizationCodeID" Type="int" />
+    <Property Name="InvoiceNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Fund" Type="varchar" MaxLength="255" />
+    <Property Name="Appn" Type="varchar" MaxLength="255" />
+    <Property Name="SubObject" Type="varchar" MaxLength="255" />
   </EntityType>
-  <EntityType Name="InvoiceLineItem">
+  <EntityType Name="InvoicePaymentRequest">
     <Key>
-      <PropertyRef Name="InvoiceLineItemID" />
+      <PropertyRef Name="InvoicePaymentRequestID" />
     </Key>
-    <Property Name="InvoiceLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="InvoiceID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="CostTypeID" Type="int" Nullable="false" />
-    <Property Name="InvoiceLineItemAmount" Type="money" Nullable="false" />
-    <Property Name="InvoiceLineItemNote" Type="varchar" />
+    <Property Name="InvoicePaymentRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="VendorID" Type="int" />
+    <Property Name="PreparedByPersonID" Type="int" />
+    <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="bit" Nullable="false" />
+    <Property Name="Duns" Type="varchar" MaxLength="20" />
+    <Property Name="InvoicePaymentRequestDate" Type="datetime" Nullable="false" />
+    <Property Name="Notes" Type="varchar(max)" />
+    <Property Name="ApprovedByPersonID" Type="int" />
+    <Property Name="ApprovedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="LoaStage">
     <Key>
@@ -2391,6 +2426,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrganizationCode">
+    <Key>
+      <PropertyRef Name="OrganizationCodeID" />
+    </Key>
+    <Property Name="OrganizationCodeID" Type="int" Nullable="false" />
+    <Property Name="OrganizationCodeName" Type="varchar" MaxLength="250" />
+    <Property Name="OrganizationCodeValue" Type="varchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="OrganizationType">
     <Key>
@@ -5070,39 +5113,111 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
-    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+  <Association Name="FK_Invoice_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID">
+    <End Role="InvoicePaymentRequest" Type="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" Multiplicity="1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoicePaymentRequest">
+        <PropertyRef Name="InvoicePaymentRequestID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="InvoicePaymentRequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_OrganizationCode_OrganizationCodeID">
+    <End Role="OrganizationCode" Type="ProjectFirma.Web.Models.Store.OrganizationCode" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganizationCode">
+        <PropertyRef Name="OrganizationCodeID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="OrganizationCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_ProgramIndex_ProgramIndexID">
+    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramIndex">
+        <PropertyRef Name="ProgramIndexID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="ProgramIndexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
+    <End Role="ApprovedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" Type="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApprovedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson">
+        <PropertyRef Name="ApprovedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID">
+    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PreparedByPerson">
         <PropertyRef Name="PersonID" />
       </Principal>
-      <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
+      <Dependent Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson">
         <PropertyRef Name="PreparedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.Store.InvoiceLineItem" Multiplicity="*" />
+  <Association Name="FK_InvoicePaymentRequest_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="InvoicePaymentRequests" Type="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
       </Principal>
-      <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="GrantAllocationID" />
+      <Dependent Role="InvoicePaymentRequests">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InvoiceLineItem_Invoice_InvoiceID">
-    <End Role="Invoice" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.Store.InvoiceLineItem" Multiplicity="*" />
+  <Association Name="FK_InvoicePaymentRequest_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Store.Vendor" Multiplicity="0..1" />
+    <End Role="InvoicePaymentRequests" Type="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Invoice">
-        <PropertyRef Name="InvoiceID" />
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
       </Principal>
-      <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="InvoiceID" />
+      <Dependent Role="InvoicePaymentRequests">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected ProgramIndex()
         {
             this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
+            this.Invoices = new HashSet<Invoice>();
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationProgramIndexProjectCodes.Any();
+            return GrantAllocationProgramIndexProjectCodes.Any() || Invoices.Any();
         }
 
         /// <summary>
@@ -85,13 +86,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(GrantAllocationProgramIndexProjectCode).Name);
             }
+
+            if(Invoices.Any())
+            {
+                dependentObjects.Add(typeof(Invoice).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(GrantAllocationProgramIndexProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -120,6 +126,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in Invoices.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -135,6 +146,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 
         public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
 
         public static class FieldLengths
         {

@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
             this.GrantModifications = new HashSet<GrantModification>();
             this.GrantNotes = new HashSet<GrantNote>();
             this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
+            this.Invoices = new HashSet<Invoice>();
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantFileResources.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
+            return GrantFileResources.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any() || Invoices.Any();
         }
 
         /// <summary>
@@ -122,13 +123,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(GrantNoteInternal).Name);
             }
+
+            if(Invoices.Any())
+            {
+                dependentObjects.Add(typeof(Invoice).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantFileResource).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantFileResource).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -172,6 +178,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in Invoices.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -194,6 +205,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantModification> GrantModifications { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual GrantType GrantType { get; set; }
         public virtual GrantStatus GrantStatus { get; set; }
         public virtual Organization Organization { get; set; }

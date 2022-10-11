@@ -38,16 +38,16 @@ namespace ProjectFirma.Web.Models.ApiJson
         {
             InvoiceID = invoice.InvoiceID;
             InvoiceIdentifyingName = invoice.InvoiceIdentifyingName;
-            RequestorName = invoice.RequestorName;
+            //RequestorName = invoice.RequestorName;
             InvoiceDate = invoice.InvoiceDate;
-            PurchaseAuthority = invoice.PurchaseAuthority;
+            //PurchaseAuthority = invoice.PurchaseAuthority;
             TotalPaymentAmount = invoice.TotalPaymentAmount;
-            PreparedByPersonID = invoice.PreparedByPersonID;
-            PreparedByPersonName = invoice.PreparedByPerson.FullNameFirstLastAndOrgShortName;
+            //PreparedByPersonID = invoice.PreparedByPersonID;
+            //PreparedByPersonName = invoice.PreparedByPerson.FullNameFirstLastAndOrgShortName;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusName = invoice.InvoiceApprovalStatus.InvoiceApprovalStatusName;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
-            PurchaseAuthorityIsLandownerCostShareAgreement = invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
+            //PurchaseAuthorityIsLandownerCostShareAgreement = invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
             MatchAmount = invoice.MatchAmount;
             InvoiceStatusID = invoice.InvoiceStatusID;
