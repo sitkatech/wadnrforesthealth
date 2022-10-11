@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -311,9 +311,6 @@
     <Compile Include="Models\Generated\Invoice.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\InvoiceApprovalStatus.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceApprovalStatusPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\InvoiceLineItem.Binding.cs" />
-    <Compile Include="Models\Generated\InvoiceLineItem.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\InvoiceLineItemPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceMatchAmountType.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceMatchAmountTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InvoicePaymentRequest.Binding.cs" />
@@ -851,7 +848,6 @@
     <Compile Include="Models\GrantFileResource.cs" />
     <Compile Include="Models\GrantModificationFileResource.cs" />
     <Compile Include="Models\InteractionEventFileResource.cs" />
-    <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="Models\ApiJson\ApiJsonTest.cs" />
@@ -862,7 +858,6 @@
     <Compile Include="Models\ApiJson\ProjectCodeApiJson.cs" />
     <Compile Include="Models\ApiJson\ProgramIndexApiJson.cs" />
     <Compile Include="Models\ApiJson\InteractionEvent.cs" />
-    <Compile Include="Models\ApiJson\InvoiceLineItemApiJson.cs" />
     <Compile Include="Models\ApiJson\InvoiceApiJson.cs" />
     <Compile Include="Models\ApiJson\ProjectApiJson.cs" />
     <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
@@ -998,8 +993,6 @@
     <Compile Include="Models\GrantNoteInternal.cs" />
     <Compile Include="Models\GrantStatus.cs" />
     <Compile Include="Models\GrantType.cs" />
-    <Compile Include="Models\InvoiceLineItem.cs" />
-    <Compile Include="Models\InvoiceLineItemExtensions.cs" />
     <Compile Include="Models\InvoiceModelExtensions.cs" />
     <Compile Include="Models\PriorityLandscape.cs" />
     <Compile Include="Models\PriorityLandscapeModelExtensions.cs" />
@@ -1107,7 +1100,6 @@
     <Compile Include="UnitTestCommon\TestGrant.cs" />
     <Compile Include="UnitTestCommon\TestGrantModification.cs" />
     <Compile Include="UnitTestCommon\TestInvoice.cs" />
-    <Compile Include="UnitTestCommon\TestInvoiceLineItem.cs" />
     <Compile Include="UnitTestCommon\TestGrantAllocation.cs" />
     <Compile Include="Views\Agreement\AgreementExcelSpec.cs" />
     <Compile Include="Views\Agreement\AgreementGridSpec.cs" />
@@ -1336,10 +1328,6 @@
     <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimpleViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventMapPopup.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventMapPopupViewData.cs" />
-    <Compile Include="Views\Invoice\EditInvoiceLineItem.cs" />
-    <Compile Include="Views\Invoice\EditInvoiceLineItemViewData.cs" />
-    <Compile Include="Views\Invoice\EditInvoiceLineItemViewModel.cs" />
-    <Compile Include="Views\Invoice\InvoiceLineItemGridSpec.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventViewData.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEvent.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventViewModel.cs" />
@@ -2097,7 +2085,6 @@
     <Content Include="Views\GrantAllocation\EditGrantAllocationNoteInternal.cshtml" />
     <Content Include="Views\Invoice\Detail.cshtml" />
     <Content Include="Views\Invoice\EditInvoice.cshtml" />
-    <Content Include="Views\Invoice\EditInvoiceLineItem.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />

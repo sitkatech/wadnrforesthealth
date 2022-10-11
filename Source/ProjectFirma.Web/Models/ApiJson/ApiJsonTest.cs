@@ -95,15 +95,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {invoiceJsonUrl}");
         }
 
-        [Test]
-        public void TestInvoiceLineItemJsonApi()
-        {
-            var invoiceLineItemJsonUrl = SitkaRoute<InvoiceController>.BuildAbsoluteUrlHttpsFromExpression(c => c.InvoiceLineItemJsonApi());
-            var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(invoiceLineItemJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {invoiceLineItemJsonUrl}");
-        }
 
         [Test]
         public void TestAgreementJsonApi()

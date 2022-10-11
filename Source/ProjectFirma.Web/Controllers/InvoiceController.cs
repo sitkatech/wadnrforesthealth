@@ -37,115 +37,6 @@ namespace ProjectFirma.Web.Controllers
     public class InvoiceController : FirmaBaseController
     {
 
-        [HttpGet]
-        [InvoiceLineItemDeleteFeature]
-        public PartialViewResult DeleteInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
-        {
-            var viewModel = new ConfirmDialogFormViewModel(invoiceLineItemPrimaryKey.PrimaryKeyValue);
-            return ViewDeleteInvoiceLineItem(invoiceLineItemPrimaryKey.EntityObject, viewModel);
-        }
-
-        private PartialViewResult ViewDeleteInvoiceLineItem(InvoiceLineItem invoiceLineItem, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to remove this {FieldDefinition.Invoice.GetFieldDefinitionLabel()} Line Item from this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [InvoiceLineItemDeleteFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewDeleteInvoiceLineItem(invoiceLineItem, viewModel);
-            }
-
-            var message = $"{FieldDefinition.Invoice.GetFieldDefinitionLabel()} Line Item successfully removed from this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}.";
-
-            invoiceLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
-
-            SetMessageForDisplay(message);
-            return new ModalDialogFormJsonResult();
-        }
-
-        [HttpGet]
-        [InvoiceEditFeature]
-        public PartialViewResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey)
-        {
-            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
-            var viewModel = new EditInvoiceLineItemViewModel(invoiceID);
-            return ViewEditInvoiceLineItem(viewModel);
-        }
-
-        [HttpPost]
-        [InvoiceEditFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceLineItemViewModel viewModel)
-        {
-            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInvoiceLineItem(viewModel);
-            }
-
-            var invoiceLineItem = new InvoiceLineItem(invoiceID, viewModel.GrantAllocationID, viewModel.CostTypeID,
-                viewModel.InvoiceLineItemAmount);
-            viewModel.UpdateModel(invoiceLineItem);
-            HttpRequestStorage.DatabaseEntities.InvoiceLineItems.Add(invoiceLineItem);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Invoice Line Item successfully added to this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}.");
-
-            return new ModalDialogFormJsonResult();
-        }
-
-
-        [HttpGet]
-        [InvoiceLineItemEditFeature]
-        public PartialViewResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
-        {
-            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
-            var viewModel = new EditInvoiceLineItemViewModel(invoiceLineItem);
-            return ViewEditInvoiceLineItem(viewModel);
-        }
-
-        [HttpPost]
-        [InvoiceLineItemEditFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, EditInvoiceLineItemViewModel viewModel)
-        {
-            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInvoiceLineItem(viewModel);
-            }
-            viewModel.UpdateModel(invoiceLineItem);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditInvoiceLineItem(EditInvoiceLineItemViewModel viewModel)
-        {
-            var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).ToList();
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var viewData = new EditInvoiceLineItemViewData(grantAllocations, costTypes);
-            return RazorPartialView<EditInvoiceLineItem, EditInvoiceLineItemViewData, EditInvoiceLineItemViewModel>(viewData, viewModel);
-        }
-
-        [InvoiceViewFeature]
-        public GridJsonNetJObjectResult<InvoiceLineItem> InvoiceLineItemGridJsonData(InvoicePrimaryKey invoicePrimaryKey)
-        {
-            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
-            var gridSpec = new InvoiceLineItemGridSpec(CurrentPerson);
-            var invoice = HttpRequestStorage.DatabaseEntities.Invoices.FirstOrDefault(x => x.InvoiceID == invoiceID);
-            var invoiceLineItems = invoice != null
-                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDisplayName).ToList()
-                : new List<InvoiceLineItem>();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InvoiceLineItem>(invoiceLineItems, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
         //TODO: 10/7/22 TK - include the IPR ID on creation of a new Invoice to keep the hierarchy 
         //[HttpGet]
         //[InvoiceCreateFeature]
@@ -253,14 +144,6 @@ namespace ProjectFirma.Web.Controllers
             var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
             var jsonApiInvoices = InvoiceApiJson.MakeInvoiceApiJsonsFromAgreements(invoices, false);
             return new JsonNetJArrayResult(jsonApiInvoices);
-        }
-
-        [InvoicesViewJsonApiFeature]
-        public JsonNetJArrayResult InvoiceLineItemJsonApi()
-        {
-            var invoiceLineItems = HttpRequestStorage.DatabaseEntities.InvoiceLineItems.ToList();
-            var jsonApiInvoiceLineItems = InvoiceLineItemApiJson.MakeInvoiceLineItemApiJsonsFromAgreements(invoiceLineItems);
-            return new JsonNetJArrayResult(jsonApiInvoiceLineItems);
         }
 
         #endregion

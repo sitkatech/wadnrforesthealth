@@ -78,6 +78,17 @@ namespace ProjectFirma.Web.Views.Invoice
         [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
         [Required]
         public int PreparedByPersonID { get; set; }
+
+
+        public int InvoicePaymentRequestID { get; set; }
+        
+        public int? GrantID { get; set; }
+        public int? ProgramIndexID { get; set; }
+        public int? ProjectCodeID { get; set; }
+        public string InvoiceNumber { get; set; }
+        public string Fund { get; set; }
+        public string Appn { get; set; }
+        public string SubObject { get; set; }
         
         [DisplayName("Invoice Voucher Upload")]
         //[SitkaFileExtensions("jpg|jpeg|gif|png")]
@@ -96,32 +107,44 @@ namespace ProjectFirma.Web.Views.Invoice
         public EditInvoiceViewModel(Models.Invoice invoice)
         {
             InvoiceIdentifyingName = invoice.InvoiceIdentifyingName;
-            RequestorName = invoice.RequestorName;
             InvoiceDate = invoice.InvoiceDate;
-            PurchaseAuthority = invoice.PurchaseAuthority;
             InvoiceAmount = invoice.TotalPaymentAmount;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
-            PurchaseAuthorityIsLandownerCostShareAgreement =
-                invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
             MatchAmount = invoice.MatchAmount;
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
-            PreparedByPersonID = invoice.PreparedByPersonID;
+            InvoiceStatusID = invoice.InvoiceStatusID;
+            InvoicePaymentRequestID = invoice.InvoicePaymentRequestID;
+            GrantID = invoice.GrantID;
+            ProgramIndexID = invoice.ProgramIndexID;
+            ProjectCodeID = invoice.ProjectCodeID;
+            InvoiceNumber = invoice.InvoiceNumber;
+            Fund = invoice.Fund;
+            Appn = invoice.Appn;
+            SubObject = invoice.SubObject;
+
         }
 
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)
         {
             invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
-            invoice.RequestorName = RequestorName;
             invoice.InvoiceDate = InvoiceDate.Value;
-            invoice.PurchaseAuthority = PurchaseAuthority;
             invoice.TotalPaymentAmount = InvoiceAmount;
             invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
             invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
-            invoice.PurchaseAuthorityIsLandownerCostShareAgreement = PurchaseAuthorityIsLandownerCostShareAgreement.Value;
             invoice.MatchAmount = MatchAmount;
             invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
-            invoice.PreparedByPersonID = PreparedByPersonID;
+
+            // 10/10/22 TK - TODO: uncomment these to update model, once editors are completed
+            //invoice.InvoiceStatusID = InvoiceStatusID;
+            //invoice.GrantID = GrantID;
+            //invoice.ProgramIndexID = ProgramIndexID;
+            //invoice.ProjectCodeID = ProjectCodeID;
+            //invoice.InvoiceNumber = InvoiceNumber;
+            //invoice.Fund = Fund;
+            //invoice.Appn = Appn;
+            //invoice.SubObject = SubObject;
+
             if (InvoiceFileResourceData != null)
             {
                 var currentInvoiceFileResource = invoice.InvoiceFileResource;

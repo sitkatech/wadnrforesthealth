@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Invoice()
         {
-            this.InvoiceLineItems = new HashSet<InvoiceLineItem>();
+
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return InvoiceLineItems.Any();
+            return false;
         }
 
         /// <summary>
@@ -109,17 +109,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(InvoiceLineItems.Any())
-            {
-                dependentObjects.Add(typeof(InvoiceLineItem).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Invoice).Name, typeof(InvoiceLineItem).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Invoice).Name};
 
 
         /// <summary>
@@ -135,19 +131,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in InvoiceLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -173,7 +158,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }
 
-        public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
         public InvoiceApprovalStatus InvoiceApprovalStatus { get { return InvoiceApprovalStatus.AllLookupDictionary[InvoiceApprovalStatusID]; } }
         public InvoiceMatchAmountType InvoiceMatchAmountType { get { return InvoiceMatchAmountType.AllLookupDictionary[InvoiceMatchAmountTypeID]; } }
         public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }

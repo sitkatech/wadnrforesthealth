@@ -897,18 +897,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceLineItem">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceLineItem">
-        <MappingFragment StoreEntitySet="InvoiceLineItem">
-          <ScalarProperty Name="InvoiceLineItemID" ColumnName="InvoiceLineItemID" />
-          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="InvoiceLineItemAmount" ColumnName="InvoiceLineItemAmount" />
-          <ScalarProperty Name="InvoiceLineItemNote" ColumnName="InvoiceLineItemNote" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="InvoicePaymentRequest">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoicePaymentRequest">
         <MappingFragment StoreEntitySet="InvoicePaymentRequest">

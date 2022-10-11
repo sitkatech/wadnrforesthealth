@@ -35,7 +35,7 @@ values
 delete from dbo.InvoiceLineItem
 delete from dbo.Invoice
 
-
+drop table dbo.InvoiceLineItem
 
 ALTER TABLE dbo.Invoice
 DROP CONSTRAINT FK_Invoice_Person_PreparedByPersonID_PersonID;

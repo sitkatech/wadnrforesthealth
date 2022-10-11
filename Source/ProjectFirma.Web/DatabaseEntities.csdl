@@ -73,7 +73,6 @@
     <EntitySet Name="InteractionEventProject" EntityType="ProjectFirma.Web.Models.InteractionEventProject" />
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.InteractionEventType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
-    <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.InvoiceLineItem" />
     <EntitySet Name="InvoicePaymentRequest" EntityType="ProjectFirma.Web.Models.InvoicePaymentRequest" />
     <EntitySet Name="LoaStage" EntityType="ProjectFirma.Web.Models.LoaStage" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
@@ -591,10 +590,6 @@
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
@@ -766,10 +761,6 @@
     <AssociationSet Name="FK_Invoice_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_Invoice_ProjectCode_ProjectCodeID">
       <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="Invoices" EntitySet="Invoice" />
-    </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_Invoice_InvoiceID" Association="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID">
-      <End Role="Invoice" EntitySet="Invoice" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
       <End Role="ApprovedByPerson" EntitySet="Person" />
@@ -1989,7 +1980,6 @@
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramIndexProjectCodes" />
     <NavigationProperty Name="GrantAllocationProgramManagers" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramManagers" />
-    <NavigationProperty Name="InvoiceLineItems" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="InvoiceLineItems" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditures" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditureUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequests" />
@@ -2458,20 +2448,6 @@
     <NavigationProperty Name="OrganizationCode" Relationship="ProjectFirma.Web.Models.FK_Invoice_OrganizationCode_OrganizationCodeID" FromRole="Invoices" ToRole="OrganizationCode" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_Invoice_ProgramIndex_ProgramIndexID" FromRole="Invoices" ToRole="ProgramIndex" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_Invoice_ProjectCode_ProjectCodeID" FromRole="Invoices" ToRole="ProjectCode" />
-    <NavigationProperty Name="InvoiceLineItems" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID" FromRole="Invoice" ToRole="InvoiceLineItems" />
-  </EntityType>
-  <EntityType Name="InvoiceLineItem">
-    <Key>
-      <PropertyRef Name="InvoiceLineItemID" />
-    </Key>
-    <Property Name="InvoiceLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="InvoiceID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="CostTypeID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="InvoiceLineItemNote" Type="String" MaxLength="8000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="InvoiceLineItems" ToRole="GrantAllocation" />
-    <NavigationProperty Name="Invoice" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID" FromRole="InvoiceLineItems" ToRole="Invoice" />
   </EntityType>
   <EntityType Name="InvoicePaymentRequest">
     <Key>
@@ -5501,18 +5477,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.InvoiceLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" Multiplicity="*" />
@@ -6026,18 +5990,6 @@
       </Principal>
       <Dependent Role="Invoices">
         <PropertyRef Name="ProjectCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InvoiceLineItem_Invoice_InvoiceID">
-    <End Role="Invoice" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.InvoiceLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Invoice">
-        <PropertyRef Name="InvoiceID" />
-      </Principal>
-      <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="InvoiceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
