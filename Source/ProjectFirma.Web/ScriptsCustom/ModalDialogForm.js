@@ -83,11 +83,11 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
 
     var saveButton = jQuery("#" + saveButtonId); 
     saveButton.click(function () {
-        //if (dialogDiv[0] && dialogDiv[0].baseURI.includes('ProjectUpdate')) {// 10/10/2022 AM - Disable save, cancel and exit buttons on modal for slow loading project update workflow to prevent user to submitting a form multiple times. 
-            saveButton.attr("disabled", "disabled");
-            jQuery("#" + cancelButtonID).attr("disabled", "disabled");
-            jQuery("." + "modal-close-button").attr("disabled", "disabled");
-        //}
+
+        saveButton.attr("disabled", "disabled");
+        jQuery("#" + cancelButtonID).attr("disabled", "disabled");
+        jQuery("." + "modal-close-button").attr("disabled", "disabled");
+
         // Manually submit the form
         var form = findBootstrapDialogForm(optionalDialogFormId, dialogDiv);
         // Do not submit if the form
@@ -174,7 +174,7 @@ function wireUpModalDialogForm(dialogDiv, javascriptReadyFunction, optionalDialo
                 {
                     // Reload the dialog to show model errors
                     dialogDiv.find(".modal-body").html(result);
-                    debugger;//ltinfo-modal-dialog-save-button-id
+                    //re-enable save and cancel buttons after failed server side validation
                     var saveButtonId = element.attr("data-save-button-id");
                     var cancelButtonID = element.attr("data-cancel-button-id");
                     dialogDiv.find("#" + saveButtonId).attr("disabled", false);
