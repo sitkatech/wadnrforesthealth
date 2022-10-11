@@ -33,8 +33,7 @@ namespace ProjectFirma.Web.Views.Shared.InvoiceControls
         {
             Invoice = invoice;
             UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
-            //OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
-            //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
+
             ShowDownload = invoice.InvoiceFileResource != null;
         }        
     }
