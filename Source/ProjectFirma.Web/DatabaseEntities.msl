@@ -173,8 +173,8 @@
           <ScalarProperty Name="RegionCity" ColumnName="RegionCity" />
           <ScalarProperty Name="RegionState" ColumnName="RegionState" />
           <ScalarProperty Name="RegionZip" ColumnName="RegionZip" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="RegionPhone" ColumnName="RegionPhone" />
+          <ScalarProperty Name="RegionEmail" ColumnName="RegionEmail" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

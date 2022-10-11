@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public int RegionID { get; set; }
 
         [DisplayName("Mailing Address")]
-        [StringLength(Person.FieldLengths.PersonAddress)]
+        [StringLength(Models.DNRUplandRegion.FieldLengths.RegionAddress)]
         public string Address { get; set; }
 
         [DisplayName("City")]
@@ -54,9 +54,9 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             State = region.RegionState;
             City = region.RegionCity;
             Zip = region.RegionZip;
-            Email = region.Email;
+            Email = region.RegionEmail;
             Address = region.RegionAddress;
-            Phone = region.Phone;
+            Phone = region.RegionPhone;
            
         }
 
@@ -65,9 +65,9 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             region.RegionState = State;
             region.RegionCity = City;
             region.RegionZip = Zip;
-            region.Email = Email;
+            region.RegionEmail = Email;
             region.RegionAddress = Address;
-            region.Phone = Phone;
+            region.RegionPhone = Phone;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

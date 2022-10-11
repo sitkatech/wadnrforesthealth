@@ -70,7 +70,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-12">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
                 <h2>Map</h2>
@@ -84,38 +84,6 @@
                 <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
 
                 <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), but are mapped in a single location. Therefore some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside of the @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel() boundary.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-7">
-        <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-                <h2>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by @FieldDefinition.CostType.GetFieldDefinitionLabel()</h2>
-            </div>
-            <div class="panel-body">
-                @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
-                {
-                    <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
-                        @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
-                    </div>
-
-                }
-                else
-                {
-            <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
-                }
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-                <h2>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</h2>
-            </div>
-            <div class="panel-body">
-                @Html.DhtmlxGrid(ViewDataTyped.BasicProjectInfoGridSpec, ViewDataTyped.BasicProjectInfoGridName, ViewDataTyped.BasicProjectInfoGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
             </div>
         </div>
     </div>
@@ -159,7 +127,7 @@
                         Zip
                     </div>
                     <div class="col-sm-9">
-                        @Html.Raw(ViewDataTyped.DNRUplandRegion.RegionZip)
+                        @ViewDataTyped.DNRUplandRegion.RegionZip
                     </div>
                 </div>
                 <div class="row">
@@ -167,7 +135,7 @@
                         Phone
                     </div>
                     <div class="col-sm-9">
-                        @ViewDataTyped.DNRUplandRegion.Phone
+                        @ViewDataTyped.DNRUplandRegion.RegionPhone
                     </div>
                 </div>
                 <div class="row">
@@ -175,9 +143,41 @@
                         Email
                     </div>
                     <div class="col-sm-9">
-                        @Html.Raw(ViewDataTyped.DNRUplandRegion.Email)
+                        @ViewDataTyped.DNRUplandRegion.RegionEmail
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h2>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by @FieldDefinition.CostType.GetFieldDefinitionLabel()</h2>
+            </div>
+            <div class="panel-body">
+                @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
+                {
+                    <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
+                        @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
+                    </div>
+
+                }
+                else
+                {
+                    <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h2>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</h2>
+            </div>
+            <div class="panel-body">
+                @Html.DhtmlxGrid(ViewDataTyped.BasicProjectInfoGridSpec, ViewDataTyped.BasicProjectInfoGridName, ViewDataTyped.BasicProjectInfoGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
             </div>
         </div>
     </div>

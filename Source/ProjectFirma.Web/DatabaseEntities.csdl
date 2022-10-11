@@ -1575,8 +1575,8 @@
     <Property Name="RegionCity" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="RegionState" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="RegionZip" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-    <Property Name="Phone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="Email" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="RegionPhone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="RegionEmail" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="Agreements" />
     <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="FocusAreas" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="GrantAllocations" />
