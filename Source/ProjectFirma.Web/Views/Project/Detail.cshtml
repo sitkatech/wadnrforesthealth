@@ -99,11 +99,11 @@
     {
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
     }
-     @* TBD: Who can see this button
-    @if (ViewDataTyped.CanDownloadProjectLOAApprovalLetter)
-    {*@
-        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLOAApprovalLetterTemplateUrl()" title="Download LOA Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download LOA Approval Letter</a>
-    @*}*@
+     
+    @if (ViewDataTyped.UserHasProjectAdminPermissions)
+    {
+        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download LOA Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download LOA Approval Letter</a>
+    }
 }
 
 

@@ -264,5 +264,15 @@ namespace ProjectFirma.Web.Controllers
 
             return allActiveProjectsWithIncludes;
         }
+
+
+        [ProjectEditAsAdminFeature]
+        public ActionResult DownloadLandOwnerAssistanceApprovalLetter(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var reportTemplate = ReportTemplate.GetApprovalLetterTemplate();
+            var selectedModelIDs = new List<int> { projectPrimaryKey.EntityObject.PrimaryKey };
+            var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
+            return reportTemplateGenerator.GenerateAndDownload();
+        }
     }
 }

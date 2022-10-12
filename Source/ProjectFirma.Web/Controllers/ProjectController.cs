@@ -373,15 +373,6 @@ namespace ProjectFirma.Web.Controllers
             return project.ProjectStage != ProjectStage.Cancelled;
         }
 
-        public ActionResult DownloadLOAApprovalLetter(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var reportTemplate =
-                HttpRequestStorage.DatabaseEntities.ReportTemplates.FirstOrDefault(x => x.DisplayName == "LOA Approval Letter");
-            var selectedModelIDs = new List<int>{ projectPrimaryKey.EntityObject.PrimaryKey };
-            var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
-            return reportTemplateGenerator.GenerateAndDownload();
-        }
-
         [ProjectsViewFullListFeature]
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
