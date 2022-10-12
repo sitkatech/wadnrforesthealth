@@ -112,6 +112,8 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectUpdateButtonText { get; }
         public bool CanLaunchProjectOrProposalWizard { get; }
         public bool CanViewProjectFactSheet { get; }
+
+        public bool CanDownloadProjectLOAApprovalLetter { get; }
         public string ProjectWizardUrl { get; }
         public bool HasPrograms { get; }
         public bool ExistsInImportBlockList { get; }

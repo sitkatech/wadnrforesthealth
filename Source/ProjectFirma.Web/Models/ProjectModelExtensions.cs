@@ -68,6 +68,12 @@ namespace ProjectFirma.Web.Models
             return FactSheetUrlTemplate.ParameterReplace(project.ProjectID);
         }
 
+        public static readonly UrlTemplate<int> DownloadLOAApprovalLetterTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.DownloadLOAApprovalLetter(UrlTemplate.Parameter1Int)));
+        public static string GetDownloadLOAApprovalLetterTemplateUrl(this Project project)
+        {
+            return DownloadLOAApprovalLetterTemplate.ParameterReplace(project.ProjectID);
+        }
+
         public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.DeleteProject(UrlTemplate.Parameter1Int)));
         public static string GetDeleteUrl(this Project project)
         {

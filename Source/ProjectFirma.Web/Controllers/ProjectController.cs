@@ -54,6 +54,7 @@ using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
 using IndexViewData = ProjectFirma.Web.Views.Project.IndexViewData;
+using ProjectFirma.Web.ReportTemplates;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -370,6 +371,15 @@ namespace ProjectFirma.Web.Controllers
             // Available for everything except cancelled. Inherited from
             // Firma, not sure if this works for us at all.
             return project.ProjectStage != ProjectStage.Cancelled;
+        }
+
+        public ActionResult DownloadLOAApprovalLetter(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var reportTemplate =
+                HttpRequestStorage.DatabaseEntities.ReportTemplates.FirstOrDefault(x => x.DisplayName == "LOA Approval Letter");
+            var selectedModelIDs = new List<int>{ projectPrimaryKey.EntityObject.PrimaryKey };
+            var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
+            return reportTemplateGenerator.GenerateAndDownload();
         }
 
         [ProjectsViewFullListFeature]
