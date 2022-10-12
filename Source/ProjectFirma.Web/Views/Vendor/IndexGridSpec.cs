@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.Vendor
         public IndexGridSpec(Person currentPerson)
         {
             CustomExcelDownloadUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(vc => vc.VendorsExcelDownloadImpl());
-            Add("Vendor ID", a => a.VendorID.ToString(), 100, DhtmlxGridColumnFilterType.Html);
+            Add("Vendor ID", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.VendorID.ToString()), 100, DhtmlxGridColumnFilterType.Html);
             Add("Vendor Type", a => a.VendorType, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Billing Agency", a => a.BillingAgency, 75, DhtmlxGridColumnFilterType.Html);
             Add("Billing Sub Agency", a => a.BillingSubAgency, 75);
