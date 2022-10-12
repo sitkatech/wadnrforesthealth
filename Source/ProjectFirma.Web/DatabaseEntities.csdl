@@ -73,12 +73,13 @@
     <EntitySet Name="InteractionEventProject" EntityType="ProjectFirma.Web.Models.InteractionEventProject" />
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.InteractionEventType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
-    <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.InvoiceLineItem" />
+    <EntitySet Name="InvoicePaymentRequest" EntityType="ProjectFirma.Web.Models.InvoicePaymentRequest" />
     <EntitySet Name="LoaStage" EntityType="ProjectFirma.Web.Models.LoaStage" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
     <EntitySet Name="OrganizationBoundaryStaging" EntityType="ProjectFirma.Web.Models.OrganizationBoundaryStaging" />
+    <EntitySet Name="OrganizationCode" EntityType="ProjectFirma.Web.Models.OrganizationCode" />
     <EntitySet Name="OrganizationType" EntityType="ProjectFirma.Web.Models.OrganizationType" />
     <EntitySet Name="OrganizationTypeRelationshipType" EntityType="ProjectFirma.Web.Models.OrganizationTypeRelationshipType" />
     <EntitySet Name="PclBoundaryLine" EntityType="ProjectFirma.Web.Models.PclBoundaryLine" />
@@ -537,6 +538,10 @@
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantNoteInternals" EntitySet="GrantNoteInternal" />
     </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_Invoice_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
@@ -584,10 +589,6 @@
     <AssociationSet Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
-    </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -745,13 +746,37 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="InteractionEventProjects" EntitySet="InteractionEventProject" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
-      <End Role="PreparedByPerson" EntitySet="Person" />
-      <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
+    <AssociationSet Name="FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID">
+      <End Role="InvoicePaymentRequest" EntitySet="InvoicePaymentRequest" />
+      <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_Invoice_InvoiceID" Association="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID">
-      <End Role="Invoice" EntitySet="Invoice" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
+    <AssociationSet Name="FK_Invoice_OrganizationCode_OrganizationCodeID" Association="ProjectFirma.Web.Models.FK_Invoice_OrganizationCode_OrganizationCodeID">
+      <End Role="OrganizationCode" EntitySet="OrganizationCode" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.FK_Invoice_ProgramIndex_ProgramIndexID">
+      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_Invoice_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
+      <End Role="ApprovedByPerson" EntitySet="Person" />
+      <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" EntitySet="InvoicePaymentRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID">
+      <End Role="PreparedByPerson" EntitySet="Person" />
+      <End Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" EntitySet="InvoicePaymentRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoicePaymentRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="InvoicePaymentRequests" EntitySet="InvoicePaymentRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoicePaymentRequest_Vendor_VendorID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="InvoicePaymentRequests" EntitySet="InvoicePaymentRequest" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1571,6 +1596,12 @@
     <Property Name="DNRUplandRegionAbbrev" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
     <Property Name="DNRUplandRegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="DNRUplandRegionLocation" Type="Geometry" />
+    <Property Name="RegionAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="RegionCity" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="RegionState" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="RegionZip" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="RegionPhone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="RegionEmail" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="Agreements" />
     <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="FocusAreas" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="GrantAllocations" />
@@ -1923,6 +1954,7 @@
     <NavigationProperty Name="GrantModifications" Relationship="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID" FromRole="Grant" ToRole="GrantModifications" />
     <NavigationProperty Name="GrantNotes" Relationship="ProjectFirma.Web.Models.FK_GrantNote_Grant_GrantID" FromRole="Grant" ToRole="GrantNotes" />
     <NavigationProperty Name="GrantNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Grant_GrantID" FromRole="Grant" ToRole="GrantNoteInternals" />
+    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_Grant_GrantID" FromRole="Grant" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -1954,7 +1986,6 @@
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramIndexProjectCodes" />
     <NavigationProperty Name="GrantAllocationProgramManagers" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramManagers" />
-    <NavigationProperty Name="InvoiceLineItems" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="InvoiceLineItems" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditures" />
     <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditureUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequests" />
@@ -2400,34 +2431,50 @@
     </Key>
     <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceIdentifyingName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="RequestorName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceDate" Type="DateTime" Nullable="false" />
-    <Property Name="PurchaseAuthority" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="Boolean" Nullable="false" />
     <Property Name="InvoiceMatchAmountTypeID" Type="Int32" Nullable="false" />
     <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="InvoiceStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceFileResourceID" Type="Int32" />
+    <Property Name="InvoicePaymentRequestID" Type="Int32" Nullable="false" />
+    <Property Name="GrantID" Type="Int32" />
+    <Property Name="ProgramIndexID" Type="Int32" />
+    <Property Name="ProjectCodeID" Type="Int32" />
+    <Property Name="OrganizationCodeID" Type="Int32" />
+    <Property Name="InvoiceNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Fund" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Appn" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="SubObject" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="InvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoicesWhereYouAreTheInvoiceFileResource" ToRole="InvoiceFileResource" />
-    <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
-    <NavigationProperty Name="InvoiceLineItems" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID" FromRole="Invoice" ToRole="InvoiceLineItems" />
+    <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_Invoice_Grant_GrantID" FromRole="Invoices" ToRole="Grant" />
+    <NavigationProperty Name="InvoicePaymentRequest" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID" FromRole="Invoices" ToRole="InvoicePaymentRequest" />
+    <NavigationProperty Name="OrganizationCode" Relationship="ProjectFirma.Web.Models.FK_Invoice_OrganizationCode_OrganizationCodeID" FromRole="Invoices" ToRole="OrganizationCode" />
+    <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_Invoice_ProgramIndex_ProgramIndexID" FromRole="Invoices" ToRole="ProgramIndex" />
+    <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_Invoice_ProjectCode_ProjectCodeID" FromRole="Invoices" ToRole="ProjectCode" />
   </EntityType>
-  <EntityType Name="InvoiceLineItem">
+  <EntityType Name="InvoicePaymentRequest">
     <Key>
-      <PropertyRef Name="InvoiceLineItemID" />
+      <PropertyRef Name="InvoicePaymentRequestID" />
     </Key>
-    <Property Name="InvoiceLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="InvoiceID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="CostTypeID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="InvoiceLineItemNote" Type="String" MaxLength="8000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="InvoiceLineItems" ToRole="GrantAllocation" />
-    <NavigationProperty Name="Invoice" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID" FromRole="InvoiceLineItems" ToRole="Invoice" />
+    <Property Name="InvoicePaymentRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="VendorID" Type="Int32" />
+    <Property Name="PreparedByPersonID" Type="Int32" />
+    <Property Name="PurchaseAuthority" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="Boolean" Nullable="false" />
+    <Property Name="Duns" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="InvoicePaymentRequestDate" Type="DateTime" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ApprovedByPersonID" Type="Int32" />
+    <Property Name="ApprovedDate" Type="DateTime" />
+    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID" FromRole="InvoicePaymentRequest" ToRole="Invoices" />
+    <NavigationProperty Name="ApprovedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" FromRole="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" ToRole="ApprovedByPerson" />
+    <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" FromRole="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Project_ProjectID" FromRole="InvoicePaymentRequests" ToRole="Project" />
+    <NavigationProperty Name="Vendor" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Vendor_VendorID" FromRole="InvoicePaymentRequests" ToRole="Vendor" />
   </EntityType>
   <EntityType Name="LoaStage">
     <Key>
@@ -2514,6 +2561,15 @@
     <Property Name="FeatureClassName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_OrganizationBoundaryStaging_Organization_OrganizationID" FromRole="OrganizationBoundaryStagings" ToRole="Organization" />
+  </EntityType>
+  <EntityType Name="OrganizationCode">
+    <Key>
+      <PropertyRef Name="OrganizationCodeID" />
+    </Key>
+    <Property Name="OrganizationCodeID" Type="Int32" Nullable="false" />
+    <Property Name="OrganizationCodeName" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="OrganizationCodeValue" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_OrganizationCode_OrganizationCodeID" FromRole="OrganizationCode" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="OrganizationType">
     <Key>
@@ -2779,7 +2835,8 @@
     <NavigationProperty Name="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" />
     <NavigationProperty Name="InteractionEventsWhereYouAreTheStaffPerson" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID" FromRole="StaffPerson" ToRole="InteractionEventsWhereYouAreTheStaffPerson" />
     <NavigationProperty Name="InteractionEventContacts" Relationship="ProjectFirma.Web.Models.FK_InteractionEventContact_Person_PersonID" FromRole="Person" ToRole="InteractionEventContacts" />
-    <NavigationProperty Name="InvoicesWhereYouAreThePreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="PreparedByPerson" ToRole="InvoicesWhereYouAreThePreparedByPerson" />
+    <NavigationProperty Name="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" FromRole="ApprovedByPerson" ToRole="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" />
+    <NavigationProperty Name="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" FromRole="PreparedByPerson" ToRole="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" />
     <NavigationProperty Name="Notifications" Relationship="ProjectFirma.Web.Models.FK_Notification_Person_PersonID" FromRole="Person" ToRole="Notifications" />
     <NavigationProperty Name="OrganizationsWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="OrganizationsWhereYouAreThePrimaryContactPerson" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Person_Organization_OrganizationID" FromRole="People" ToRole="Organization" />
@@ -2954,6 +3011,7 @@
     <Property Name="Subprogram" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Subactivity" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="GrantAllocationProgramIndexProjectCodes" />
+    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="ProgramNotificationConfiguration">
     <Key>
@@ -3041,6 +3099,7 @@
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" FromRole="Project" ToRole="GrantAllocationAwardLandownerCostShareLineItems" />
     <NavigationProperty Name="InteractionEventProjects" Relationship="ProjectFirma.Web.Models.FK_InteractionEventProject_Project_ProjectID" FromRole="Project" ToRole="InteractionEventProjects" />
+    <NavigationProperty Name="InvoicePaymentRequests" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Project_ProjectID" FromRole="Project" ToRole="InvoicePaymentRequests" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
     <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
@@ -3094,6 +3153,7 @@
     <Property Name="ProjectStartDate" Type="DateTime" />
     <Property Name="ProjectEndDate" Type="DateTime" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProgramIndexProjectCodes" />
+    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="ProjectCounty">
     <Key>
@@ -4019,6 +4079,7 @@
     <Property Name="VendorStatus" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="TaxpayerIdNumber" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="InvoicePaymentRequests" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Vendor_VendorID" FromRole="Vendor" ToRole="InvoicePaymentRequests" />
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
@@ -5266,6 +5327,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Invoice_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocation_GrantModification_GrantModificationID">
     <End Role="GrantModification" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
@@ -5406,18 +5479,6 @@
         <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="GrantAllocationProgramManagers">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.InvoiceLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="InvoiceLineItems">
         <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
@@ -5890,27 +5951,99 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
-    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
-    <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+  <Association Name="FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID">
+    <End Role="InvoicePaymentRequest" Type="ProjectFirma.Web.Models.InvoicePaymentRequest" Multiplicity="1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoicePaymentRequest">
+        <PropertyRef Name="InvoicePaymentRequestID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="InvoicePaymentRequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_OrganizationCode_OrganizationCodeID">
+    <End Role="OrganizationCode" Type="ProjectFirma.Web.Models.OrganizationCode" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganizationCode">
+        <PropertyRef Name="OrganizationCodeID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="OrganizationCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_ProgramIndex_ProgramIndexID">
+    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.ProgramIndex" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramIndex">
+        <PropertyRef Name="ProgramIndexID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="ProgramIndexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.ProjectCode" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
+    <End Role="ApprovedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" Type="ProjectFirma.Web.Models.InvoicePaymentRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApprovedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson">
+        <PropertyRef Name="ApprovedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID">
+    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.InvoicePaymentRequest" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PreparedByPerson">
         <PropertyRef Name="PersonID" />
       </Principal>
-      <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
+      <Dependent Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson">
         <PropertyRef Name="PreparedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InvoiceLineItem_Invoice_InvoiceID">
-    <End Role="Invoice" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.InvoiceLineItem" Multiplicity="*" />
+  <Association Name="FK_InvoicePaymentRequest_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="InvoicePaymentRequests" Type="ProjectFirma.Web.Models.InvoicePaymentRequest" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Invoice">
-        <PropertyRef Name="InvoiceID" />
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
       </Principal>
-      <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="InvoiceID" />
+      <Dependent Role="InvoicePaymentRequests">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoicePaymentRequest_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Vendor" Multiplicity="0..1" />
+    <End Role="InvoicePaymentRequests" Type="ProjectFirma.Web.Models.InvoicePaymentRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="InvoicePaymentRequests">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

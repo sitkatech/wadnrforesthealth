@@ -13,13 +13,22 @@ namespace ProjectFirma.Web.UnitTestCommon
         {
             public static Invoice Create()
             {
-                var testPerson = TestPerson.Create();
-                var invoice =
-                    new Invoice(TestFramework.MakeTestName("RequestorName", Invoice.FieldLengths.RequestorName),
-                        DateTime.Now, testPerson, InvoiceApprovalStatus.Approved, false, InvoiceMatchAmountType.N_A,
-                        InvoiceStatus.Pending);
+                var testIPR = TestInvoicePaymentRequest.Create();
+                var invoice = new Invoice(DateTime.Now, InvoiceApprovalStatus.Approved, InvoiceMatchAmountType.DNR, InvoiceStatus.Paid, testIPR);
 
                 return invoice;
+            }
+
+        }
+        
+        public class TestInvoicePaymentRequest
+        {
+            public static InvoicePaymentRequest Create()
+            {
+                var project = TestProject.Create();
+                var invoicePaymentRequest = InvoicePaymentRequest.CreateNewBlank(project);
+
+                return invoicePaymentRequest;
             }
 
         }

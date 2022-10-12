@@ -12,8 +12,9 @@ namespace ProjectFirma.Web.Models
         public string InvoiceDateDisplay => InvoiceDate.ToShortDateString();
         public string AuditDescriptionString => InvoiceIdentifyingName;
 
-        public string PurchaseAuthorityDisplay => PurchaseAuthorityIsLandownerCostShareAgreement
-            ? LandOwnerPurchaseAuthority
-            : PurchaseAuthority;
+        //TODO: 10/7/22 TK - probably delete this or move to IPR class
+        //public string PurchaseAuthorityDisplay => PurchaseAuthorityIsLandownerCostShareAgreement
+        //    ? LandOwnerPurchaseAuthority
+        //    : PurchaseAuthority;
     }
 }
