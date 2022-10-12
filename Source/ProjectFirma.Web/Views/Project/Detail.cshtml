@@ -289,6 +289,25 @@
                         }
                     </div>
                 </div>
+                
+                @if (ViewDataTyped.UserHasEditProjectPermissions)
+                {
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            <h3>
+                                Invoices
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            @{
+                                ProjectFundingDetail.RenderPartialView(Html, ViewDataTyped.ProjectFundingDetailViewData);
+                            }
+                        </div>
+                    </div>
+                }
+                
+            
+
 
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">

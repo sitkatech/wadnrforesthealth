@@ -65,14 +65,6 @@ namespace ProjectFirma.Web.Controllers
         //    return new ModalDialogFormJsonResult();
         //}
 
-        [InvoicesViewFullListFeature]
-        public ViewResult Index()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullInvoiceList);
-            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
-            var viewData = new InvoiceIndexViewData(CurrentPerson, firmaPage, invoices.Any(x => x.InvoiceFileResourceID.HasValue));
-            return RazorView<InvoiceIndex, InvoiceIndexViewData>(viewData);
-        }
 
         [HttpGet]
         [InvoiceEditFeature]

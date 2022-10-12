@@ -1339,10 +1339,7 @@
     <Compile Include="Views\Invoice\EditInvoiceViewModel.cs" />
     <Compile Include="Views\Invoice\EditInvoiceViewData.cs" />
     <Compile Include="Views\Invoice\EditInvoice.cs" />
-    <Compile Include="Views\Invoice\InvoiceViewData.cs" />
     <Compile Include="Views\Invoice\InvoiceGridSpec.cs" />
-    <Compile Include="Views\Invoice\InvoiceIndex.cs" />
-    <Compile Include="Views\Invoice\InvoiceIndexViewData.cs" />
     <Compile Include="Views\Job\JobIndexViewData.cs" />
     <Compile Include="Views\Job\JobIndex.cs" />
     <Compile Include="Views\Job\JobIndexGridSpec.cs" />
@@ -2085,7 +2082,6 @@
     <Content Include="Views\GrantAllocation\EditGrantAllocation.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationNote.cshtml" />
     <Content Include="Views\Grant\EditGrantNoteInternal.cshtml" />
-    <Content Include="Views\Invoice\InvoiceIndex.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationNoteInternal.cshtml" />
     <Content Include="Views\Invoice\Detail.cshtml" />
     <Content Include="Views\Invoice\EditInvoice.cshtml" />
