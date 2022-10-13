@@ -38,8 +38,8 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         //public string CurrentProjectStatus { get; set; }
         //public string CurrentProjectStatusColor { get; set; }
         //public string FinalStatusUpdateStatus { get; set; }
-       
-        
+        public List<ReportTemplateInvoicePaymentRequestModel> InvoicePaymentRequests { get; set; }
+
         public ReportTemplateProjectModel(Project project)
         {
             // Private properties
@@ -69,6 +69,9 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             TotalFunding = Project.GetTotalFunding()?.ToStringCurrency();
             ProjectDescription = Project.ProjectDescription;
             ProjectLastUpdated = Project.LastUpdateDate;
+
+            InvoicePaymentRequests = Project.InvoicePaymentRequests
+                .Select(x => new ReportTemplateInvoicePaymentRequestModel(x)).ToList();
 
             //var projectStatus = project.GetCurrentProjectStatus();
             //if (projectStatus != null)
@@ -168,6 +171,11 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         {
             int diff = dt.DayOfWeek - startOfWeek;
             return dt.AddDays(-1 * diff).Date;
+        }
+
+        public List<ReportTemplateInvoicePaymentRequestModel> GetInvoicePaymentRequests()
+        {
+            return InvoicePaymentRequests;
         }
     }
 }
