@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         //public string CurrentProjectStatus { get; set; }
         //public string CurrentProjectStatusColor { get; set; }
         //public string FinalStatusUpdateStatus { get; set; }
-       public List<ReportTemplateInvoicePaymentRequestModel> InvoicePaymentRequests { get; set; }
+        public List<ReportTemplateInvoicePaymentRequestModel> InvoicePaymentRequests { get; set; }
 
         public ReportTemplateProjectModel(Project project)
         {
@@ -171,6 +171,11 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         {
             int diff = dt.DayOfWeek - startOfWeek;
             return dt.AddDays(-1 * diff).Date;
+        }
+
+        public List<ReportTemplateInvoicePaymentRequestModel> GetInvoicePaymentRequests()
+        {
+            return InvoicePaymentRequests;
         }
     }
 }

@@ -47,5 +47,10 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             }
         }
 
+        public List<ReportTemplateInvoiceModel> GetInvoices()
+        {
+            return Invoices;
+        }
+
     }
 }
