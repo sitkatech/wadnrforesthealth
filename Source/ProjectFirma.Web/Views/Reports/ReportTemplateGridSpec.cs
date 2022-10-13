@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Reports
         {
             if (hasManagePermissions)
             {
-                Add(string.Empty, a => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Delete(a)), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, a => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Delete(a)), !a.IsSystemTemplate, true), 30, DhtmlxGridColumnFilterType.None);
                 Add(string.Empty, a => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Edit(a)), "Edit Report Template")), 30, DhtmlxGridColumnFilterType.None);
             }
             Add("Display Name", a => a.DisplayName, 200);

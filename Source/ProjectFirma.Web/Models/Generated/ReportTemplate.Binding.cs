@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ReportTemplate(int reportTemplateID, int fileResourceID, string displayName, string description, int reportTemplateModelTypeID, int reportTemplateModelID) : this()
+        public ReportTemplate(int reportTemplateID, int fileResourceID, string displayName, string description, int reportTemplateModelTypeID, int reportTemplateModelID, bool isSystemTemplate) : this()
         {
             this.ReportTemplateID = reportTemplateID;
             this.FileResourceID = fileResourceID;
@@ -39,12 +39,13 @@ namespace ProjectFirma.Web.Models
             this.Description = description;
             this.ReportTemplateModelTypeID = reportTemplateModelTypeID;
             this.ReportTemplateModelID = reportTemplateModelID;
+            this.IsSystemTemplate = isSystemTemplate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ReportTemplate(int fileResourceID, string displayName, int reportTemplateModelTypeID, int reportTemplateModelID) : this()
+        public ReportTemplate(int fileResourceID, string displayName, int reportTemplateModelTypeID, int reportTemplateModelID, bool isSystemTemplate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ReportTemplateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -53,12 +54,13 @@ namespace ProjectFirma.Web.Models
             this.DisplayName = displayName;
             this.ReportTemplateModelTypeID = reportTemplateModelTypeID;
             this.ReportTemplateModelID = reportTemplateModelID;
+            this.IsSystemTemplate = isSystemTemplate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ReportTemplate(FileResource fileResource, string displayName, ReportTemplateModelType reportTemplateModelType, ReportTemplateModel reportTemplateModel) : this()
+        public ReportTemplate(FileResource fileResource, string displayName, ReportTemplateModelType reportTemplateModelType, ReportTemplateModel reportTemplateModel, bool isSystemTemplate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ReportTemplateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -68,6 +70,7 @@ namespace ProjectFirma.Web.Models
             this.DisplayName = displayName;
             this.ReportTemplateModelTypeID = reportTemplateModelType.ReportTemplateModelTypeID;
             this.ReportTemplateModelID = reportTemplateModel.ReportTemplateModelID;
+            this.IsSystemTemplate = isSystemTemplate;
         }
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ReportTemplate CreateNewBlank(FileResource fileResource, ReportTemplateModelType reportTemplateModelType, ReportTemplateModel reportTemplateModel)
         {
-            return new ReportTemplate(fileResource, default(string), reportTemplateModelType, reportTemplateModel);
+            return new ReportTemplate(fileResource, default(string), reportTemplateModelType, reportTemplateModel, default(bool));
         }
 
         /// <summary>
@@ -127,6 +130,7 @@ namespace ProjectFirma.Web.Models
         public string Description { get; set; }
         public int ReportTemplateModelTypeID { get; set; }
         public int ReportTemplateModelID { get; set; }
+        public bool IsSystemTemplate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ReportTemplateID; } set { ReportTemplateID = value; } }
 

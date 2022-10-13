@@ -3816,6 +3816,7 @@
     <Property Name="Description" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
     <Property Name="ReportTemplateModelTypeID" Type="Int32" Nullable="false" />
     <Property Name="ReportTemplateModelID" Type="Int32" Nullable="false" />
+    <Property Name="IsSystemTemplate" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ReportTemplate_FileResource_FileResourceID" FromRole="ReportTemplates" ToRole="FileResource" />
   </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
