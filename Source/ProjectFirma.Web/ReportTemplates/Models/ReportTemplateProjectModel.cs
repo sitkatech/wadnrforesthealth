@@ -14,6 +14,9 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         private List<ProjectPerson> ProjectPersons { get; set; }
         private List<ProjectOrganization> ProjectOrganizations { get; set; }
         private List<ProjectImage> ProjectImages { get; set; }
+        private List<ProjectRegion> ProjectRegions { get; set; }
+        private List<ProjectCounty> ProjectCounties { get; set; }
+        private List<Treatment> ProjectTreatments { get; set; }
 
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
@@ -29,17 +32,14 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public int NumberOfReportedExpenditures { get; set; }
         public string FundingType { get; set; }
         public string EstimatedTotalCost { get; set; }
-        //public string SecuredFunding { get; set; }
-        //public string TargetedFunding { get; set; }
-        //public string NoFundingSourceIdentified { get; set; }
+
         public string TotalFunding { get; set; }
         public string ProjectDescription { get; set; }
         public DateTime ProjectLastUpdated { get; set; }
-        //public string CurrentProjectStatus { get; set; }
-        //public string CurrentProjectStatusColor { get; set; }
-        //public string FinalStatusUpdateStatus { get; set; }
-       
-        
+
+        public DateTime? ProjectApprovalDate { get; set; }
+        public DateTime? ProjectExpirationDate { get; set; }
+
         public ReportTemplateProjectModel(Project project)
         {
             // Private properties
@@ -47,6 +47,9 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             ProjectPersons = project.ProjectPeople.ToList();
             ProjectOrganizations = project.ProjectOrganizations.ToList();
             ProjectImages = project.ProjectImages.ToList();
+            ProjectRegions = project.ProjectRegions.ToList();
+            ProjectCounties = project.ProjectCounties.ToList();
+            ProjectTreatments = project.Treatments.ToList();
 
             // Public properties
             ProjectID = Project.ProjectID;
@@ -63,26 +66,13 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             NumberOfReportedExpenditures = Project.ProjectGrantAllocationExpenditures.Count();
             FundingType = string.Join(", ", Project.ProjectFundingSources.Select(x => x.FundingSource.FundingSourceDisplayName));
             EstimatedTotalCost = Project.EstimatedTotalCost?.ToStringCurrency();
-            //SecuredFunding = Project.GetSecuredFunding().ToStringCurrency();
-            //TargetedFunding = Project.GetTargetedFunding().ToStringCurrency();
-            //NoFundingSourceIdentified = Project.GetNoFundingSourceIdentifiedAmount()?.ToStringCurrency();
+
             TotalFunding = Project.GetTotalFunding()?.ToStringCurrency();
             ProjectDescription = Project.ProjectDescription;
             ProjectLastUpdated = Project.LastUpdateDate;
 
-            //var projectStatus = project.GetCurrentProjectStatus();
-            //if (projectStatus != null)
-            //{
-            //    CurrentProjectStatusColor = projectStatus.ProjectStatusColor;
-            //    CurrentProjectStatus = projectStatus.ProjectStatusDisplayName;
-            //}
-
-            //var finalProjectStatus = Project.FinalStatusReportStatusDescription;
-            //if (finalProjectStatus != null)
-            //{
-            //    FinalStatusUpdateStatus = finalProjectStatus;
-            //}
-
+            ProjectApprovalDate = Project.ApprovalDate;
+            ProjectExpirationDate = Project.ExpirationDate;
         }
 
         public List<ReportTemplateProjectContactModel> GetProjectContacts()
@@ -131,19 +121,26 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             return ProjectImages.Where(x => x.ProjectImageTiming.ProjectImageTimingName == timingName).Select(x => new ReportTemplateProjectImageModel(x)).ToList();
         }
 
+        public List<ReportTemplateProjectRegionModel> GetProjectRegions()
+        {
+            return ProjectRegions.Select(x => new ReportTemplateProjectRegionModel(x)).ToList();
+        }
+
+        public List<ReportTemplateProjectCountyModel> GetProjectCounties()
+        {
+            return ProjectCounties.Select(x => new ReportTemplateProjectCountyModel(x)).ToList();
+        }
+
+        public List<ReportTemplateProjectTreatmentModel> GetProjectTreatments()
+        {
+            return ProjectTreatments.Select(x => new ReportTemplateProjectTreatmentModel(x)).ToList();
+        }
+
         public ReportTemplateProjectImageModel GetProjectKeyPhoto()
         {
             var projectKeyPhoto = ProjectImages.FirstOrDefault(x => x.IsKeyPhoto == true);
             return projectKeyPhoto != null ? new ReportTemplateProjectImageModel(projectKeyPhoto) : null;
         }
-
-        //public List<ReportTemplateProjectStatusModel> GetAllProjectStatusesFromTheLastWeek()
-        //{
-        //    var lastMonday = GetStartOfWeek(DateTime.Now, DayOfWeek.Monday).AddDays(-7);
-        //    var allProjectStatuses = Project.ProjectProjectStatuses.ToList();
-        //    var filteredProjectStatuses = allProjectStatuses.Where(x => x.ProjectProjectStatusUpdateDate >= lastMonday);
-        //    return filteredProjectStatuses.OrderByDescending(x => x.ProjectProjectStatusUpdateDate).Select(x => new ReportTemplateProjectStatusModel(x)).ToList();
-        //}
 
         public List<ReportTemplateProjectReportedPerformanceMeasureModel> GetProjectReportedPerformanceMeasures()
         {
@@ -169,5 +166,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             int diff = dt.DayOfWeek - startOfWeek;
             return dt.AddDays(-1 * diff).Date;
         }
+
+
     }
 }
