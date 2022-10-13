@@ -100,7 +100,7 @@
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
     }
      
-    @if (ViewDataTyped.UserHasProjectAdminPermissions)
+    @if (ViewDataTyped.UserHasEditProjectPermissions)
     {
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download LOA Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download LOA Approval Letter</a>
     }
