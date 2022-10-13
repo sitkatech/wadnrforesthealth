@@ -3373,6 +3373,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Description" Type="varchar" MaxLength="250" />
     <Property Name="ReportTemplateModelTypeID" Type="int" Nullable="false" />
     <Property Name="ReportTemplateModelID" Type="int" Nullable="false" />
+    <Property Name="IsSystemTemplate" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="SocrataDataMartRawJsonImport">
     <Key>
