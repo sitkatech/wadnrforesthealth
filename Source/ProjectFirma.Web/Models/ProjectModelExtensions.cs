@@ -74,6 +74,12 @@ namespace ProjectFirma.Web.Models
             return DownloadLandOwnerAssistanceApprovalLetter.ParameterReplace(project.ProjectID);
         }
 
+        public static readonly UrlTemplate<int> DownloadInvoicePaymentRequest = new UrlTemplate<int>(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.DownloadInvoicePaymentRequest(UrlTemplate.Parameter1Int)));
+        public static string GetDownloadInvoicePaymentRequestUrl(this Project project)
+        {
+            return DownloadInvoicePaymentRequest.ParameterReplace(project.ProjectID);
+        }
+
         public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.DeleteProject(UrlTemplate.Parameter1Int)));
         public static string GetDeleteUrl(this Project project)
         {

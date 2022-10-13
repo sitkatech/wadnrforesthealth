@@ -274,5 +274,14 @@ namespace ProjectFirma.Web.Controllers
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
             return reportTemplateGenerator.GenerateAndDownload();
         }
+
+        [ProjectEditAsAdminFeature]
+        public ActionResult DownloadInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var reportTemplate = ReportTemplate.GetInvoicePaymentRequestTemplate();
+            var selectedModelIDs = new List<int> { projectPrimaryKey.EntityObject.PrimaryKey };
+            var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
+            return reportTemplateGenerator.GenerateAndDownload();
+        }
     }
 }
