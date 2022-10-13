@@ -54,7 +54,6 @@ using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
 using IndexViewData = ProjectFirma.Web.Views.Project.IndexViewData;
-using ProjectFirma.Web.ReportTemplates;
 
 namespace ProjectFirma.Web.Controllers
 {
