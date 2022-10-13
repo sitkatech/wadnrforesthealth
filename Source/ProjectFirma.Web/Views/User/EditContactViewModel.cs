@@ -12,7 +12,7 @@ using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class SearchContactViewModel : FormViewModel, IValidatableObject, ISearchVendorViewModel
+    public class EditContactViewModel : FormViewModel, IValidatableObject, ISearchVendorViewModel
     {
         /// <summary>
         /// Only here so we have access to it in the Validator function. Not actually being edited. -- SLG
@@ -56,12 +56,12 @@ namespace ProjectFirma.Web.Views.User
         /// <summary>
         /// Needed by ModelBinder
         ///     </summary>
-        public SearchContactViewModel()
+        public EditContactViewModel()
         {
 
         }
 
-        public SearchContactViewModel(Person person)
+        public EditContactViewModel(Person person)
         {
             PersonID = person.PersonID;
             FirstName = person.FirstName;
@@ -98,7 +98,7 @@ namespace ProjectFirma.Web.Views.User
             SetAuthenticatorsForGivenEmailAddress(this, person);
         }
 
-        public static void SetAuthenticatorsForGivenEmailAddress(SearchContactViewModel viewModel, Person personBeingEdited)
+        public static void SetAuthenticatorsForGivenEmailAddress(EditContactViewModel viewModel, Person personBeingEdited)
         {
             if (!string.IsNullOrEmpty(viewModel.Email) && viewModel.Email != personBeingEdited.Email)
             {
@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Views.User
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var editContactViewModel = (SearchContactViewModel)validationContext.ObjectInstance;
+            var editContactViewModel = (EditContactViewModel)validationContext.ObjectInstance;
             var thePersonBeingEdited = HttpRequestStorage.DatabaseEntities.People.SingleOrDefault(p => p.PersonID == editContactViewModel.PersonID);
 
             if (Phone != null)
@@ -125,14 +125,14 @@ namespace ProjectFirma.Web.Views.User
                 if (phoneNumberToTest.Length != 10 || //number of digits in an american phone number
                     !phoneNumberToTest.All(char.IsDigit)) // phone numbers must be digits
                 {
-                    yield return new SitkaValidationResult<SearchContactViewModel, string>("Phone Number was invalid.", m => m.Phone);
+                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number was invalid.", m => m.Phone);
                 }
             }
 
             bool emailProvided = Email != null;
             if (emailProvided && !FirmaHelpers.IsValidEmail(Email))
             {
-                yield return new SitkaValidationResult<SearchContactViewModel, string>("Email Address was invalid.", m => m.Email);
+                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address was invalid.", m => m.Email);
             }
 
             // If Person record is being created, or email is being changed, make sure someone does not already have the given email address
@@ -142,7 +142,7 @@ namespace ProjectFirma.Web.Views.User
             // Create case
             if (emailProvided && personIsBeingCreated && existingUserHasGivenEmailAddressAlready)
             {
-                yield return new SitkaValidationResult<SearchContactViewModel, string>($"Email Address \"{Email}\" already in use.", m => m.Email);
+                yield return new SitkaValidationResult<EditContactViewModel, string>($"Email Address \"{Email}\" already in use.", m => m.Email);
             }
 
             // Edit case
@@ -151,7 +151,7 @@ namespace ProjectFirma.Web.Views.User
                 bool personsEmailIsChanging = thePersonBeingEdited.Email != Email;
                 if (emailProvided && personsEmailIsChanging && existingUserHasGivenEmailAddressAlready)
                 {
-                    yield return new SitkaValidationResult<SearchContactViewModel, string>($"Email Address \"{Email}\" already in use.", m => m.Email);
+                    yield return new SitkaValidationResult<EditContactViewModel, string>($"Email Address \"{Email}\" already in use.", m => m.Email);
                 }
             }
         }

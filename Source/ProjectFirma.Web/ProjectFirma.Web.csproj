@@ -1475,7 +1475,7 @@
     <Compile Include="Views\Shared\ProjectPerson\ProjectPeopleDetailViewData.cs" />
     <Compile Include="Views\User\EditContact.cs" />
     <Compile Include="Views\User\EditContactViewData.cs" />
-    <Compile Include="Views\User\SearchContactViewModel.cs" />
+    <Compile Include="Views\User\EditContactViewModel.cs" />
     <Compile Include="Controllers\ProjectInternalNoteController.cs" />
     <Compile Include="Models\ProjectInternalNote.cs" />
     <Compile Include="Models\ProjectSectionSimple.cs" />

@@ -311,14 +311,14 @@ namespace ProjectFirma.Web.Controllers
         [ContactCreateAndViewFeature]
         public PartialViewResult AddContact()
         {
-            var viewModel = new SearchContactViewModel();
+            var viewModel = new EditContactViewModel();
             return ViewAddContact(viewModel, null);
         }
 
         [HttpPost]
         [ContactCreateAndViewFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult AddContact(SearchContactViewModel viewModel)
+        public ActionResult AddContact(EditContactViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -333,7 +333,7 @@ namespace ProjectFirma.Web.Controllers
             person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
             HttpRequestStorage.DatabaseEntities.People.Add(person);
 
-            SearchContactViewModel.SetAuthenticatorsForGivenEmailAddress(viewModel, person);
+            EditContactViewModel.SetAuthenticatorsForGivenEmailAddress(viewModel, person);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
@@ -342,7 +342,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private PartialViewResult ViewAddContact(SearchContactViewModel viewModel, Person person)
+        private PartialViewResult ViewAddContact(EditContactViewModel viewModel, Person person)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x=>x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
@@ -350,7 +350,7 @@ namespace ProjectFirma.Web.Controllers
             bool fullUpUser = person != null && person.IsFullUser();
 
             var viewData = new EditContactViewData(organizations, fullUpUser);
-            return RazorPartialView<EditContact, EditContactViewData, SearchContactViewModel>(viewData, viewModel);
+            return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
@@ -358,14 +358,14 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
-            var viewModel = new SearchContactViewModel(person);
+            var viewModel = new EditContactViewModel(person);
             return ViewAddContact(viewModel, person);
         }
 
         [HttpPost]
         [UserEditBasicsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, SearchContactViewModel viewModel)
+        public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, EditContactViewModel viewModel)
         {
             var person = personPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
