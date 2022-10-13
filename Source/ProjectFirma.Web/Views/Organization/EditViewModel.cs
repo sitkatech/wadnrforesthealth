@@ -34,7 +34,7 @@ using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.Organization
 {
-    public class SearchViewModel : FormViewModel, IValidatableObject, ISearchVendorViewModel
+    public class EditViewModel : FormViewModel, IValidatableObject, ISearchVendorViewModel
     {
         public const int MaxLogoSizeInBytes = 1024 * 200;
 
@@ -79,11 +79,11 @@ namespace ProjectFirma.Web.Views.Organization
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public SearchViewModel()
+        public EditViewModel()
         {
         }
 
-        public SearchViewModel(Models.Organization organization)
+        public EditViewModel(Models.Organization organization)
         {
             OrganizationID = organization.OrganizationID;
             OrganizationName = organization.OrganizationName;
@@ -121,14 +121,14 @@ namespace ProjectFirma.Web.Views.Organization
             {
                 var originalOrg = HttpRequestStorage.DatabaseEntities.Organizations.Single(x => x.OrganizationID == OrganizationID);
                 var errorMessage = $"Editing is not allowed for organization, {originalOrg.OrganizationName}. If you need more assistance please contact Sitka Technical Support.";
-                yield return new SitkaValidationResult<SearchViewModel, bool>(errorMessage, x => x.IsEditable);
+                yield return new SitkaValidationResult<EditViewModel, bool>(errorMessage, x => x.IsEditable);
             }
 
 
             if (LogoFileResourceData != null && LogoFileResourceData.ContentLength > MaxLogoSizeInBytes)
             {
                 var errorMessage = $"Logo is too large - must be less than {FileUtility.FormatBytes(MaxLogoSizeInBytes)}. Your logo was {FileUtility.FormatBytes(LogoFileResourceData.ContentLength)}.";
-                yield return new SitkaValidationResult<SearchViewModel, HttpPostedFileBase>(errorMessage,
+                yield return new SitkaValidationResult<EditViewModel, HttpPostedFileBase>(errorMessage,
                     x => x.LogoFileResourceData);
             }
 
@@ -137,7 +137,7 @@ namespace ProjectFirma.Web.Views.Organization
             if (existingOrganizationsWithSameName.Any())
             {
                 var errorMessage = $"This {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} name {OrganizationName} is taken already.";
-                yield return new SitkaValidationResult<SearchViewModel, string>(errorMessage,
+                yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
                     x => x.OrganizationName);
             }
             // Get org ShortName and short ShortName
@@ -145,7 +145,7 @@ namespace ProjectFirma.Web.Views.Organization
             if (existingOrganizationsWithSameShortName.Any())
             {
                 var errorMessage = $"This {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} short name {OrganizationShortName} is taken already.";
-                yield return new SitkaValidationResult<SearchViewModel, string>(errorMessage,
+                yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
                     x => x.OrganizationShortName);
             }
         }
