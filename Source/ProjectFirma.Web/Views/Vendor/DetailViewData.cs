@@ -42,6 +42,7 @@ namespace ProjectFirma.Web.Views.Vendor
             : base(currentPerson)
         {
             Vendor = vendorToView;
+            PageTitle = Vendor.VendorName;
         }
     }
 }

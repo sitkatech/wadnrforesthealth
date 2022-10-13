@@ -39,11 +39,9 @@
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <link href="~/Content/bootstrap-tags/bootstrap-tags.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
-    <script src="@Url.Content("~/Content/bootstrap-toc/bootstrap-toc.min.js")" type="text/javascript"></script>
 }
 
 <style type="text/css">
@@ -77,217 +75,177 @@
 
 }
 
-<div data-spy="scroll" data-target="#toc">
-    <div id="contentForTOC" class="container-fluid">
+<div class="row">
+    <div class="col-sm-12 col-md-9 col-lg-10">
+        <h2 class="sectionHeader">@FieldDefinition.Vendor.GetFieldDefinitionLabel() Overview</h2>
         <div class="row">
-            <div data-target="#tableofcontents" id="scrollSpyContent" class="col-lg-2 col-md-3 hidden-sm hidden-xs hidden-print">
-                <div id="tableOfContentsAffixed" class="navpanel panelFirma">
-                    <h4 data-toc-skip style="margin-top: 0">Contents</h4>
-                    <nav id="tableOfContents" class="scrollSpy"></nav>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-9 col-lg-10">
-                <h2 class="sectionHeader">@FieldDefinition.Vendor.GetFieldDefinitionLabel() Overview</h2>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                <h3 class="sectionHeader">
-                                    Basics
-                                </h3>
+            <div class="col-sm-12">
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        <h3 class="sectionHeader">
+                            Basics
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="basicsLayout">
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Vendor Name</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.VendorName</div>
                             </div>
-                            <div class="panel-body">
-                                <div class="basicsLayout">
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">ID</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.VendorID</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Name</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.VendorName</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.StatewideVendorNumber</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Suffix</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.StatewideVendorNumberSuffix</div>
-                                    </div>
-                                    @*<div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">Type</div>
-                                <div class="col-xs-9">@ViewDataTyped.Vendor.VendorType</div>
-                            </div>*@
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Status</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.VendorStatus</div>
-                                    </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.StatewideVendorNumber</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Suffix</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.StatewideVendorNumberSuffix</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Status</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.VendorStatus</div>
+                            </div>
 
-                                    <hr />
+                            <hr />
 
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Billing Agency</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.BillingAgency</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Billing Subagency</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.BillingSubAgency</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Billing Fund</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.BillingFund</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Billing Fund Breakout</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.BillingFundBreakout</div>
-                                    </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Billing Agency</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.BillingAgency</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Billing Subagency</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.BillingSubAgency</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Billing Fund</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.BillingFund</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Billing Fund Breakout</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.BillingFundBreakout</div>
+                            </div>
 
-                                    <hr />
+                            <hr />
 
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Address</div>
-                                        <div class="col-xs-9">
-                                            @ViewDataTyped.Vendor.VendorAddressLine1
-                                            @if (!string.IsNullOrEmpty(@ViewDataTyped.Vendor.VendorAddressLine2))
-                                            {
-                                                <br />@ViewDataTyped.Vendor.VendorAddressLine2
-                                            }
-                                            @if (!string.IsNullOrEmpty(@ViewDataTyped.Vendor.VendorAddressLine3))
-                                            {
-                                                <br />@ViewDataTyped.Vendor.VendorAddressLine3
-                                            }
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">City</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.VendorCity</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">State</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.VendorState</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">ZIP Code</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.VendorZip</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Phone</div>
-                                        <div class="col-xs-9"><a href="tel:@ViewDataTyped.Vendor.VendorPhone">@ViewDataTyped.Vendor.VendorPhone</a></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Email</div>
-                                        <div class="col-xs-9"><a href="mailto:@ViewDataTyped.Vendor.Email">@ViewDataTyped.Vendor.Email</a></div>
-                                    </div>
-
-                                    <hr />
-
-                                    <div class="row">
-                                        <div class="col-xs-3 fieldLabel text-right">Remarks</div>
-                                        <div class="col-xs-9">@ViewDataTyped.Vendor.Remarks</div>
-                                    </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Address</div>
+                                <div class="col-xs-9">
+                                    @ViewDataTyped.Vendor.VendorAddressLine1
+                                    @if (!string.IsNullOrEmpty(@ViewDataTyped.Vendor.VendorAddressLine2))
+                                    {
+                                        <br />@ViewDataTyped.Vendor.VendorAddressLine2
+                                    }
+                                    @if (!string.IsNullOrEmpty(@ViewDataTyped.Vendor.VendorAddressLine3))
+                                    {
+                                        <br />@ViewDataTyped.Vendor.VendorAddressLine3
+                                    }
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">City</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.VendorCity</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">State</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.VendorState</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">ZIP Code</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.VendorZip</div>
+                            </div>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h2 class="sectionHeader">Users</h2>
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                Users
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Phone</div>
+                                <div class="col-xs-9"><a href="tel:@ViewDataTyped.Vendor.VendorPhone">@ViewDataTyped.Vendor.VendorPhone</a></div>
                             </div>
-                            <div class="panel-body">
-                                @if (ViewDataTyped.Vendor.People.Any())
-                                {
-                                    <ul>
-                                        @foreach (var person in ViewDataTyped.Vendor.People.Where(x => x.IsActive).OrderBy(x => x.FullNameLastFirst))
-                                        {
-                                            if (new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, person).HasPermission)
-                                            {
-                                                <li>
-                                                    @person.GetFullNameFirstLastAsUrl()
-                                                </li>
-                                            }
-                                            else
-                                            {
-                                                <li>
-                                                    @person.FullNameFirstLast
-                                                </li>
-                                            }
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <p class="systemText">No Users belong to this @FieldDefinition.Vendor.GetFieldDefinitionLabel().</p>
-                                }
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Email</div>
+                                <div class="col-xs-9"><a href="mailto:@ViewDataTyped.Vendor.Email">@ViewDataTyped.Vendor.Email</a></div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h2 class="sectionHeader">Organizations</h2>
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                Organizations
-                            </div>
-                            <div class="panel-body">
-                                @if (ViewDataTyped.Vendor.Organizations.Any())
-                                {
-                                    <ul>
-                                        @foreach (var organization in ViewDataTyped.Vendor.Organizations.Where(x => x.IsActive).OrderBy(x => x.DisplayName))
-                                        {
-                                            if (new OrganizationViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
-                                            {
-                                                <li>
-                                                    @organization.GetDisplayNameAsUrl()
-                                                </li>
-                                            }
-                                            else
-                                            {
-                                                <li>
-                                                    @organization.DisplayName
-                                                </li>
-                                            }
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <p class="systemText">No Organizations belong to this @FieldDefinition.Vendor.GetFieldDefinitionLabel().</p>
-                                }
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">Remarks</div>
+                                <div class="col-xs-9">@ViewDataTyped.Vendor.Remarks</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="sectionHeader">Users</h2>
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        Users
+                    </div>
+                    <div class="panel-body">
+                        @if (ViewDataTyped.Vendor.People.Any())
+                        {
+                            <ul>
+                                @foreach (var person in ViewDataTyped.Vendor.People.Where(x => x.IsActive).OrderBy(x => x.FullNameLastFirst))
+                                {
+                                    if (new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, person).HasPermission)
+                                    {
+                                        <li>
+                                            @person.GetFullNameFirstLastAsUrl()
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            @person.FullNameFirstLast
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="systemText">No Users belong to this @FieldDefinition.Vendor.GetFieldDefinitionLabel().</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="sectionHeader">Organizations</h2>
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        Organizations
+                    </div>
+                    <div class="panel-body">
+                        @if (ViewDataTyped.Vendor.Organizations.Any())
+                        {
+                            <ul>
+                                @foreach (var organization in ViewDataTyped.Vendor.Organizations.Where(x => x.IsActive).OrderBy(x => x.DisplayName))
+                                {
+                                    if (new OrganizationViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+                                    {
+                                        <li>
+                                            @organization.GetDisplayNameAsUrl()
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            @organization.DisplayName
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="systemText">No Organizations belong to this @FieldDefinition.Vendor.GetFieldDefinitionLabel().</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    jQuery(document)
-        .ready(function () {
-            Toc.init({
-                $nav: jQuery('#tableOfContents'),
-                $scope: jQuery('#contentForTOC')
-            });
-
-            jQuery('body').scrollspy({
-                target: '#tableOfContents'
-            });
-
-            jQuery('#tableOfContentsAffixed')
-                .affix({
-                    offset: {
-                        top: function () { return (this.top = jQuery("#tableOfContentsAffixed").offset().top); },
-                        bottom: function () { return (this.bottom = jQuery('footer').outerHeight(true) + 100); }
-                    }
-                });
-        });
-</script>
