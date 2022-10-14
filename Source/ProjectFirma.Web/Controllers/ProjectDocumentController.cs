@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -38,7 +39,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNew(NewProjectDocumentViewModel viewModel)
         {
-            var viewData = new NewProjectDocumentViewData();
+            var viewData = new NewProjectDocumentViewData(HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes);
             return RazorPartialView<NewProjectDocument, NewProjectDocumentViewData, NewProjectDocumentViewModel>(viewData, viewModel);
         }
 
@@ -71,7 +72,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEdit(EditProjectDocumentsViewModel viewModel)
         {
-            var viewData = new EditProjectDocumentsViewData();
+            var viewData = new EditProjectDocumentsViewData(HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes);
             return RazorPartialView<EditProjectDocuments, EditProjectDocumentsViewData, EditProjectDocumentsViewModel>(viewData, viewModel);
         }
 

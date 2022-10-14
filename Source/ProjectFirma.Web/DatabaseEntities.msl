@@ -1498,6 +1498,17 @@
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ProjectDocumentTypeID" ColumnName="ProjectDocumentTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectDocumentType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectDocumentType">
+        <MappingFragment StoreEntitySet="ProjectDocumentType">
+          <ScalarProperty Name="ProjectDocumentTypeID" ColumnName="ProjectDocumentTypeID" />
+          <ScalarProperty Name="ProjectDocumentTypeName" ColumnName="ProjectDocumentTypeName" />
+          <ScalarProperty Name="ProjectDocumentTypeDescription" ColumnName="ProjectDocumentTypeDescription" />
+          <ScalarProperty Name="ProjectDocumentParentTypeID" ColumnName="ProjectDocumentParentTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

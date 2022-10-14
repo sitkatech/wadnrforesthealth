@@ -1171,7 +1171,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewDocument(NewProjectDocumentViewModel viewModel)
         {
-            var viewData = new NewProjectDocumentViewData();
+            var viewData = new NewProjectDocumentViewData(HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes);
             return RazorPartialView<NewProjectDocument, NewProjectDocumentViewData, NewProjectDocumentViewModel>(viewData, viewModel);
         }
 

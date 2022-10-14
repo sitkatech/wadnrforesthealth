@@ -122,6 +122,7 @@
     <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdateValue" />
     <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeValue" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.ProjectDocument" />
+    <EntitySet Name="ProjectDocumentType" EntityType="ProjectFirma.Web.Models.ProjectDocumentType" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.ProjectDocumentUpdate" />
     <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYear" />
     <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYearUpdate" />
@@ -1253,6 +1254,14 @@
     <AssociationSet Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
       <End Role="ProjectCustomAttributeUpdate" EntitySet="ProjectCustomAttributeUpdate" />
       <End Role="ProjectCustomAttributeUpdateValues" EntitySet="ProjectCustomAttributeUpdateValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID" Association="ProjectFirma.Web.Models.FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID">
+      <End Role="ProjectDocumentType" EntitySet="ProjectDocumentType" />
+      <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectDocumentType_ProjectDocumentType_ProjectDocumentParentTypeID_ProjectDocumentTypeID" Association="ProjectFirma.Web.Models.FK_ProjectDocumentType_ProjectDocumentType_ProjectDocumentParentTypeID_ProjectDocumentTypeID">
+      <End Role="ProjectDocumentParentType" EntitySet="ProjectDocumentType" />
+      <End Role="ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType" EntitySet="ProjectDocumentType" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -3240,8 +3249,22 @@
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
     <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDocumentTypeID" Type="Int32" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="ProjectDocuments" ToRole="FileResource" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID" FromRole="ProjectDocuments" ToRole="Project" />
+    <NavigationProperty Name="ProjectDocumentType" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID" FromRole="ProjectDocuments" ToRole="ProjectDocumentType" />
+  </EntityType>
+  <EntityType Name="ProjectDocumentType">
+    <Key>
+      <PropertyRef Name="ProjectDocumentTypeID" />
+    </Key>
+    <Property Name="ProjectDocumentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectDocumentTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDocumentTypeDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDocumentParentTypeID" Type="Int32" />
+    <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID" FromRole="ProjectDocumentType" ToRole="ProjectDocuments" />
+    <NavigationProperty Name="ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentType_ProjectDocumentType_ProjectDocumentParentTypeID_ProjectDocumentTypeID" FromRole="ProjectDocumentParentType" ToRole="ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType" />
+    <NavigationProperty Name="ProjectDocumentParentType" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentType_ProjectDocumentType_ProjectDocumentParentTypeID_ProjectDocumentTypeID" FromRole="ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType" ToRole="ProjectDocumentParentType" />
   </EntityType>
   <EntityType Name="ProjectDocumentUpdate">
     <Key>
@@ -7473,6 +7496,30 @@
       </Principal>
       <Dependent Role="ProjectCustomAttributeUpdateValues">
         <PropertyRef Name="ProjectCustomAttributeUpdateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID">
+    <End Role="ProjectDocumentType" Type="ProjectFirma.Web.Models.ProjectDocumentType" Multiplicity="0..1" />
+    <End Role="ProjectDocuments" Type="ProjectFirma.Web.Models.ProjectDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDocumentType">
+        <PropertyRef Name="ProjectDocumentTypeID" />
+      </Principal>
+      <Dependent Role="ProjectDocuments">
+        <PropertyRef Name="ProjectDocumentTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectDocumentType_ProjectDocumentType_ProjectDocumentParentTypeID_ProjectDocumentTypeID">
+    <End Role="ProjectDocumentParentType" Type="ProjectFirma.Web.Models.ProjectDocumentType" Multiplicity="0..1" />
+    <End Role="ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType" Type="ProjectFirma.Web.Models.ProjectDocumentType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDocumentParentType">
+        <PropertyRef Name="ProjectDocumentTypeID" />
+      </Principal>
+      <Dependent Role="ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType">
+        <PropertyRef Name="ProjectDocumentParentTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
