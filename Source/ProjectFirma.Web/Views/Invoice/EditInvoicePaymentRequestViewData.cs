@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditInvoiceViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -31,35 +31,34 @@ using MoreLinq;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    public class EditInvoiceViewData : FirmaUserControlViewData
+    public class EditInvoicePaymentRequestViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> InvoiceApprovalStatuses { get; set; }
-        public IEnumerable<SelectListItem> InvoiceStatuses { get; set; }
-        public IEnumerable<SelectListItem> People { get; set; }
-        public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
-        public EditInvoiceType EditInvoiceType { get; set; }
 
-        public EditInvoiceViewData(EditInvoiceType editInvoiceType, IEnumerable<Models.InvoiceApprovalStatus> invoiceApprovalStatuses, IEnumerable<Models.InvoiceStatus> invoiceStatuses, IEnumerable<Models.Person> people)
+        public IEnumerable<SelectListItem> People { get; set; }
+        public IEnumerable<SelectListItem> Vendors { get; set; }
+        public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
+        public EditInvoicePaymentRequestType EditInvoicePaymentRequestType { get; set; }
+
+        public EditInvoicePaymentRequestViewData(EditInvoicePaymentRequestType editInvoicePaymentRequestType, IEnumerable<Models.Vendor> vendors, IEnumerable<Models.Person> people)
         {
-            InvoiceApprovalStatuses = invoiceApprovalStatuses.ToSelectList(x => x.InvoiceApprovalStatusID.ToString(CultureInfo.InvariantCulture), y => y.InvoiceApprovalStatusName);
-            EditInvoiceType = editInvoiceType;
+
+            EditInvoicePaymentRequestType = editInvoicePaymentRequestType;
             var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.Invoice.LandOwnerPurchaseAuthority, Value = true.ToString()};
             var selectListItemOther = new SelectListItem(){Text = "Other (Enter Agreement Number in textbox below)" , Value = false.ToString()};
             var selectListChooseOne = new SelectListItem(){Text = "<Choose one>" , Value = ""};
            
-            if (editInvoiceType == EditInvoiceType.ExistingInvoice)
+            if (EditInvoicePaymentRequestType == EditInvoicePaymentRequestType.ExistingInvoice)
             {
-                InvoiceStatuses = invoiceStatuses.ToSelectList(x => x.InvoiceStatusID.ToString(), y => y.InvoiceStatusDisplayName);
                 PurchaseAuthorityType =
                     new List<SelectListItem> { selectListItemLandOwnerCostShareAgreement, selectListItemOther };
             }
             else
             {
-                InvoiceStatuses = invoiceStatuses.ToSelectListWithEmptyFirstRow(x => x.InvoiceStatusID.ToString(), y => y.InvoiceStatusDisplayName);
                 PurchaseAuthorityType =
                     new List<SelectListItem> { selectListChooseOne, selectListItemLandOwnerCostShareAgreement, selectListItemOther };
             }
-            
+
+            Vendors = vendors.OrderBy(x => x.VendorName).ToSelectListWithEmptyFirstRow(x => x.VendorID.ToString(), y => y.VendorNameAndStatewideVendorNumberWithSuffix);
             People = people.OrderBy(x => x.LastName)
                 .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
         }

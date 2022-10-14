@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditInvoice.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProject.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,45 +18,46 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    public abstract class EditInvoice : TypedWebPartialViewPage<EditInvoiceViewData, EditInvoiceViewModel>
+    public abstract class EditInvoicePaymentRequest : TypedWebPartialViewPage<EditInvoicePaymentRequestViewData, EditInvoicePaymentRequestViewModel>
     {
     }
 
-    public abstract class EditInvoiceType
+    public abstract class EditInvoicePaymentRequestType
     {
         public readonly string IntroductoryText;
 
-        internal EditInvoiceType(string introductoryText)
+        internal EditInvoicePaymentRequestType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditInvoiceTypeNewInvoice NewInvoice = EditInvoiceTypeNewInvoice.Instance;
-        public static readonly EditInvoiceTypeExistingInvoice ExistingInvoice = EditInvoiceTypeExistingInvoice.Instance;
+        public static readonly EditInvoicePaymentRequestTypeNewInvoice NewInvoice = EditInvoicePaymentRequestTypeNewInvoice.Instance;
+        public static readonly EditInvoicePaymentRequestTypeExistingInvoice ExistingInvoice = EditInvoicePaymentRequestTypeExistingInvoice.Instance;
     }
 
-    public class EditInvoiceTypeNewInvoice : EditInvoiceType
+    public class EditInvoicePaymentRequestTypeNewInvoice : EditInvoicePaymentRequestType
     {
-        private EditInvoiceTypeNewInvoice(string introductoryText) : base(introductoryText)
+        private EditInvoicePaymentRequestTypeNewInvoice(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditInvoiceTypeNewInvoice Instance = new EditInvoiceTypeNewInvoice(
+        public static readonly EditInvoicePaymentRequestTypeNewInvoice Instance = new EditInvoicePaymentRequestTypeNewInvoice(
             $"<p>Enter basic information about the {Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditInvoiceTypeExistingInvoice : EditInvoiceType
+    public class EditInvoicePaymentRequestTypeExistingInvoice : EditInvoicePaymentRequestType
     {
-        private EditInvoiceTypeExistingInvoice(string introductoryText) : base(introductoryText)
+        private EditInvoicePaymentRequestTypeExistingInvoice(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditInvoiceTypeExistingInvoice Instance =
-            new EditInvoiceTypeExistingInvoice(
+        public static readonly EditInvoicePaymentRequestTypeExistingInvoice Instance =
+            new EditInvoicePaymentRequestTypeExistingInvoice(
                 $"<p>Update this {Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}'s information.</p>");
     }
 }
