@@ -37,6 +37,14 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [VendorViewFeature]
+        public ViewResult Detail(VendorPrimaryKey vendorPrimaryKey)
+        {
+            var vendor = vendorPrimaryKey.EntityObject;
+            var viewData = new DetailViewData(CurrentPerson, vendor);
+            return RazorView<Detail, DetailViewData>(viewData);
+        }
+
+        [VendorViewFeature]
         public GridJsonNetJObjectResult<Vendor> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);

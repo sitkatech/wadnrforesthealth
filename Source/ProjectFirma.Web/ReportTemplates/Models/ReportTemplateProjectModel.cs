@@ -36,9 +36,10 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string TotalFunding { get; set; }
         public string ProjectDescription { get; set; }
         public DateTime ProjectLastUpdated { get; set; }
-
         public DateTime? ProjectApprovalDate { get; set; }
         public DateTime? ProjectExpirationDate { get; set; }
+
+        public List<ReportTemplateInvoicePaymentRequestModel> InvoicePaymentRequests { get; set; }
 
         public ReportTemplateProjectModel(Project project)
         {
@@ -70,9 +71,11 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             TotalFunding = Project.GetTotalFunding()?.ToStringCurrency();
             ProjectDescription = Project.ProjectDescription;
             ProjectLastUpdated = Project.LastUpdateDate;
-
             ProjectApprovalDate = Project.ApprovalDate;
             ProjectExpirationDate = Project.ExpirationDate;
+
+            InvoicePaymentRequests = Project.InvoicePaymentRequests
+                .Select(x => new ReportTemplateInvoicePaymentRequestModel(x)).ToList();
         }
 
         public List<ReportTemplateProjectContactModel> GetProjectContacts()
@@ -166,7 +169,9 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             int diff = dt.DayOfWeek - startOfWeek;
             return dt.AddDays(-1 * diff).Date;
         }
-
-
+        public List<ReportTemplateInvoicePaymentRequestModel> GetInvoicePaymentRequests()
+        {
+            return InvoicePaymentRequests;
+        }
     }
 }
