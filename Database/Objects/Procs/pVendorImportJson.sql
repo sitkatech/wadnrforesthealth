@@ -51,6 +51,9 @@ from dbo.Organization o
 insert into #VendorFKs
 select distinct p.VendorId from Person p
 
+insert into #VendorFKs
+select distinct ipr.VendorID from InvoicePaymentRequest ipr
+
 -- DELETE (2nd attempt)
 -- Delete Vendors in our table not found in incoming temp table
 delete from dbo.Vendor 
