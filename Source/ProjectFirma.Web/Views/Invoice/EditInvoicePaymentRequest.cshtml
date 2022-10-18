@@ -115,17 +115,16 @@
     jQuery(document)
         .ready(function () {
 
-            //jQuery('.date-picker').datepicker();
 
-            @*var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
+            var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
             var purchaseAuthority = jQuery("#@Html.IdFor(m => m.PurchaseAuthority)");
 
             var isPurchaseAuthorityLandOwner = purchaseAuthorityIsLandownerCostShare.val();
             if (isPurchaseAuthorityLandOwner == 'False') {
-                purchaseAuthoirty.removeAttr('disabled');
+                purchaseAuthority.removeAttr('disabled');
                 jQuery("#purchaseAuthorityTextBoxEntry").show();
             } else {
-                purchaseAuthoirty.attr('disabled', 'disabled');
+                purchaseAuthority.attr('disabled', 'disabled');
                 jQuery("#purchaseAuthorityTextBoxEntry").hide();
                 purchaseAuthority.val('');
             }
@@ -136,11 +135,11 @@
                     purchaseAuthority.removeAttr('disabled');
                     jQuery("#purchaseAuthorityTextBoxEntry").show();
                 } else {
-                    purchaseAuthoirty.attr('disabled', 'disabled');
+                    purchaseAuthority.attr('disabled', 'disabled');
                     jQuery("#purchaseAuthorityTextBoxEntry").hide();
                     purchaseAuthority.val('');
                 }
-            });*@
+            });
 
 
         });
