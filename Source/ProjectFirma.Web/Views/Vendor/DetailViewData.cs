@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="IndexViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DetailViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,25 +19,30 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Linq;
+using System.Web;
+using LtInfo.Common.ModalDialog;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Agreement;
+using ProjectFirma.Web.Views.InteractionEvent;
+using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.User;
 
-namespace ProjectFirma.Web.Views.Invoice
+namespace ProjectFirma.Web.Views.Vendor
 {
-    public class InvoiceIndexViewData : FirmaViewData
+    public class DetailViewData : FirmaViewData
     {
-        public readonly InvoiceGridSpec InvoiceGridSpec;
-        public readonly string InvoiceGridName;
-        public readonly string InvoiceGridDataUrl;
+        public Models.Vendor Vendor { get; }
 
-        public InvoiceIndexViewData(Person currentPerson, Models.FirmaPage firmaPage, bool atLeastOneInvoiceHasAFile) : base(currentPerson, firmaPage)
+        public DetailViewData(Person currentPerson,
+            Models.Vendor vendorToView)
+            : base(currentPerson)
         {
-            PageTitle = $"Full Invoice List";
-
-            InvoiceGridSpec = new InvoiceGridSpec(currentPerson, atLeastOneInvoiceHasAFile);
-            InvoiceGridName = "invoicesGridName";
-            InvoiceGridDataUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData());
+            Vendor = vendorToView;
+            PageTitle = Vendor.VendorName;
         }
     }
 }

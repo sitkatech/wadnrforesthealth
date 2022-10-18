@@ -65,14 +65,6 @@ namespace ProjectFirma.Web.Controllers
         //    return new ModalDialogFormJsonResult();
         //}
 
-        [InvoicesViewFullListFeature]
-        public ViewResult Index()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullInvoiceList);
-            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
-            var viewData = new InvoiceIndexViewData(CurrentPerson, firmaPage, invoices.Any(x => x.InvoiceFileResourceID.HasValue));
-            return RazorView<InvoiceIndex, InvoiceIndexViewData>(viewData);
-        }
 
         [HttpGet]
         [InvoiceEditFeature]
@@ -111,14 +103,7 @@ namespace ProjectFirma.Web.Controllers
         [InvoiceViewFeature]
         public ViewResult InvoiceDetail(InvoicePrimaryKey invoicePrimaryKey)
         {
-            var invoice =
-                HttpRequestStorage.DatabaseEntities.Invoices.SingleOrDefault(i =>
-                    i.InvoiceID == invoicePrimaryKey.PrimaryKeyValue);
-            if (invoice == null)
-            {
-                throw new Exception(
-                    $"Could not find InvoiceID # {invoicePrimaryKey.PrimaryKeyValue}; has it been deleted?");
-            }
+            var invoice = invoicePrimaryKey.EntityObject;
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var invoiceBasicsViewData = new InvoiceBasicsViewData(invoice, false, taxonomyLevel);
@@ -134,6 +119,66 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Invoice>(invoices, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+
+
+
+        [HttpGet]
+        [InvoiceCreateFeature]
+        public PartialViewResult NewInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var viewModel = new EditInvoicePaymentRequestViewModel();
+            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewIpr);
+        }
+
+        [HttpPost]
+        [InvoiceCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey, EditInvoicePaymentRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewIpr);
+            }
+
+            var invoicePaymentRequest = InvoicePaymentRequest.CreateNewBlank(projectPrimaryKey.EntityObject);
+            viewModel.UpdateModel(invoicePaymentRequest, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        [HttpGet]
+        [InvoiceEditFeature]
+        public PartialViewResult EditInvoicePaymentRequest(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)
+        {
+            var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
+            var viewModel = new EditInvoicePaymentRequestViewModel(invoicePaymentRequest);
+            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingIpr);
+        }
+
+        [HttpPost]
+        [InvoiceEditFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInvoicePaymentRequest(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey, EditInvoicePaymentRequestViewModel viewModel)
+        {
+            var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingIpr);
+            }
+
+            viewModel.UpdateModel(invoicePaymentRequest, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult InvoicePaymentRequestViewEdit(EditInvoicePaymentRequestViewModel viewModel, EditInvoicePaymentRequestType editInvoiceType)
+        {
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.Take(50);
+            var people = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople();
+            var viewData = new EditInvoicePaymentRequestViewData(editInvoiceType, vendors, people);
+            return RazorPartialView<EditInvoicePaymentRequest, EditInvoicePaymentRequestViewData, EditInvoicePaymentRequestViewModel>(viewData, viewModel);
+        }
+
 
 
         #region WADNR Grant JSON API

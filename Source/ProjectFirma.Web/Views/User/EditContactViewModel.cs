@@ -12,7 +12,7 @@ using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class EditContactViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
+    public class EditContactViewModel : FormViewModel, IValidatableObject, ISearchVendorViewModel
     {
         /// <summary>
         /// Only here so we have access to it in the Validator function. Not actually being edited. -- SLG

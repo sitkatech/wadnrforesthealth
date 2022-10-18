@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Controllers
         [OrganizationManageFeature]
         public PartialViewResult New()
         {
-            var viewModel = new EditViewModel {IsActive = true, IsEditable = true};
+            var viewModel = new EditViewModel { IsActive = true, IsEditable = true};
             return ViewEdit(viewModel, false, null);
         }
 

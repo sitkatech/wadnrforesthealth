@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantIndex.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="Detail.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,10 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-namespace ProjectFirma.Web.Views.Invoice
+namespace ProjectFirma.Web.Views.Vendor
 {
-    public abstract class InvoiceIndex : LtInfo.Common.Mvc.TypedWebViewPage<InvoiceIndexViewData>
+    public abstract class Detail : LtInfo.Common.Mvc.TypedWebViewPage<DetailViewData>
     {
     }
 }

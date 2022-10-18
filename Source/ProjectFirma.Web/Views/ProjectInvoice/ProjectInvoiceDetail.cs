@@ -1,6 +1,6 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditVendor.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
-Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+<copyright file="ProjectInvoiceDetail.cs" company="Tahoe Regional Planning Agency">
+Copyright (c) Tahoe Regional Planning Agency. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
 
@@ -18,23 +18,17 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
 using System.Web.Mvc;
 using LtInfo.Common.HtmlHelperExtensions;
+using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Vendor
+namespace ProjectFirma.Web.Views.ProjectInvoice
 {
-    public abstract class EditVendor : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditVendorViewData, IEditVendorViewModel>
+    public abstract class ProjectInvoiceDetail : TypedWebPartialViewPage<ProjectInvoiceDetailViewData>
     {
-        public static void RenderPartialView(HtmlHelper html, IEditVendorViewModel viewModel)
+        public static void RenderPartialView(HtmlHelper html, ProjectInvoiceDetailViewData viewData)
         {
-            html.RenderRazorSitkaPartial<EditVendor, EditVendorViewData, IEditVendorViewModel>(new EditVendorViewData(), viewModel);
+            html.RenderRazorSitkaPartial<ProjectInvoiceDetail, ProjectInvoiceDetailViewData>(viewData);
         }
-
-        
     }
-    public class EditVendorViewData
-    {
-    }
-
 }

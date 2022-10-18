@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -62,6 +63,11 @@ namespace ProjectFirma.Web.Models
         public static List<Person> GetActivePeople(this IQueryable<Person> people)
         {
             return people.Where(x => x.IsActive).ToList().OrderBy(ht => ht.FullNameLastFirst).ToList();
+        }
+
+        public static List<Person> GetActiveWadnrPeople(this IQueryable<Person> people)
+        {
+            return people.Where(x => x.IsActive && x.OrganizationID == OrganizationModelExtensions.WadnrID).ToList().OrderBy(ht => ht.FullNameLastFirst).ToList();
         }
 
         public static List<Person> GetPeopleWhoReceiveNotifications(this IQueryable<Person> people)

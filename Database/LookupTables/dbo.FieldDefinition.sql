@@ -333,4 +333,5 @@ VALUES
 (511, N'ReportDescription', N'Report Description', 'Report Description'),
 (512, N'ReportFile', N'Report File', 'Report File'),
 (513, N'ReportModel', N'Report Model', 'Report Model'),
-(514, N'SelectedReportTemplate', N'Selected Report Template', 'Selected Report Template')
+(514, N'SelectedReportTemplate', N'Selected Report Template', 'Selected Report Template'),
+(515, N'InvoicePaymentRequest', N'Invoice Payment Request', 'Invoice Payment Request')
