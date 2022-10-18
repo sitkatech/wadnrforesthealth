@@ -36,28 +36,28 @@ namespace ProjectFirma.Web.Views.Invoice
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditInvoicePaymentRequestTypeNewInvoice NewInvoice = EditInvoicePaymentRequestTypeNewInvoice.Instance;
-        public static readonly EditInvoicePaymentRequestTypeExistingInvoice ExistingInvoice = EditInvoicePaymentRequestTypeExistingInvoice.Instance;
+        public static readonly EditInvoicePaymentRequestTypeNewIpr NewIpr = EditInvoicePaymentRequestTypeNewIpr.Instance;
+        public static readonly EditInvoicePaymentRequestTypeExistingIpr ExistingIpr = EditInvoicePaymentRequestTypeExistingIpr.Instance;
     }
 
-    public class EditInvoicePaymentRequestTypeNewInvoice : EditInvoicePaymentRequestType
+    public class EditInvoicePaymentRequestTypeNewIpr : EditInvoicePaymentRequestType
     {
-        private EditInvoicePaymentRequestTypeNewInvoice(string introductoryText) : base(introductoryText)
+        private EditInvoicePaymentRequestTypeNewIpr(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditInvoicePaymentRequestTypeNewInvoice Instance = new EditInvoicePaymentRequestTypeNewInvoice(
-            $"<p>Enter basic information about the {Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditInvoicePaymentRequestTypeNewIpr Instance = new EditInvoicePaymentRequestTypeNewIpr(
+            $"<p>Enter basic information about the {Models.FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditInvoicePaymentRequestTypeExistingInvoice : EditInvoicePaymentRequestType
+    public class EditInvoicePaymentRequestTypeExistingIpr : EditInvoicePaymentRequestType
     {
-        private EditInvoicePaymentRequestTypeExistingInvoice(string introductoryText) : base(introductoryText)
+        private EditInvoicePaymentRequestTypeExistingIpr(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditInvoicePaymentRequestTypeExistingInvoice Instance =
-            new EditInvoicePaymentRequestTypeExistingInvoice(
-                $"<p>Update this {Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}'s information.</p>");
+        public static readonly EditInvoicePaymentRequestTypeExistingIpr Instance =
+            new EditInvoicePaymentRequestTypeExistingIpr(
+                $"<p>Update this {Models.FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()}'s information.</p>");
     }
 }

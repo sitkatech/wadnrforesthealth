@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Invoice
             var selectListItemOther = new SelectListItem(){Text = "Other (Enter Agreement Number in textbox below)" , Value = false.ToString()};
             var selectListChooseOne = new SelectListItem(){Text = "<Choose one>" , Value = ""};
            
-            if (EditInvoicePaymentRequestType == EditInvoicePaymentRequestType.ExistingInvoice)
+            if (EditInvoicePaymentRequestType == EditInvoicePaymentRequestType.ExistingIpr)
             {
                 PurchaseAuthorityType =
                     new List<SelectListItem> { selectListItemLandOwnerCostShareAgreement, selectListItemOther };

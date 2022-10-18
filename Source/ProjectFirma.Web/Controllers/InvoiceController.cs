@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult NewInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey)
         {
             var viewModel = new EditInvoicePaymentRequestViewModel();
-            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewInvoice);
+            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewIpr);
         }
 
         [HttpPost]
@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewInvoice);
+                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewIpr);
             }
 
             var invoicePaymentRequest = InvoicePaymentRequest.CreateNewBlank(projectPrimaryKey.EntityObject);
@@ -153,7 +153,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
             var viewModel = new EditInvoicePaymentRequestViewModel(invoicePaymentRequest);
-            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingInvoice);
+            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingIpr);
         }
 
         [HttpPost]
@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Controllers
             var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingInvoice);
+                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingIpr);
             }
 
             viewModel.UpdateModel(invoicePaymentRequest, CurrentPerson);
