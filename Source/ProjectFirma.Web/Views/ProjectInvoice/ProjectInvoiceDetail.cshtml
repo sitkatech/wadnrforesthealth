@@ -21,8 +21,15 @@
 @using ProjectFirma.Web.Models
 @using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Views
 @inherits ProjectFirma.Web.Views.ProjectInvoice.ProjectInvoiceDetail
-<div class="table-responsive">
+
+
+<div>
+    <div class="pull-right">
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add Invoice Payment Request", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.AddInvoicePaymentRequestUrl, "Create New Invoice Payment Request", new List<string>{"btn", "btn-firma", "btn-sm"}, ViewDataTyped.CanEditInvoicePaymentRequests)
+    </div>
 
     @if (ViewDataTyped.InvoicePaymentRequests.Any())
     {
@@ -33,6 +40,6 @@
         }
 
     }
-    INVOICE PAYMENT REQUESTS WILL BE OUTPUT HERE
+    
     
 </div>

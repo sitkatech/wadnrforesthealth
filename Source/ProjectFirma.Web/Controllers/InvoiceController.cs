@@ -173,8 +173,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult InvoicePaymentRequestViewEdit(EditInvoicePaymentRequestViewModel viewModel, EditInvoicePaymentRequestType editInvoiceType)
         {
-            var vendors = HttpRequestStorage.DatabaseEntities.Vendors;
-            var people = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.Take(50);
+            var people = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople();
             var viewData = new EditInvoicePaymentRequestViewData(editInvoiceType, vendors, people);
             return RazorPartialView<EditInvoicePaymentRequest, EditInvoicePaymentRequestViewData, EditInvoicePaymentRequestViewModel>(viewData, viewModel);
         }

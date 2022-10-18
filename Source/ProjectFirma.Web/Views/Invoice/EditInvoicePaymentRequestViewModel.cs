@@ -37,13 +37,19 @@ namespace ProjectFirma.Web.Views.Invoice
         public int InvoicePaymentRequestID { get; set; }
         public int ProjectID { get; set;}
 
-
+        [DisplayName("Vendor")]
         public int? VendorID { get; set;}
+        [DisplayName("Prepared By")]
         public int? PreparedByPersonID { get; set;}
+        [DisplayName("Purchase Authority")]
         public string PurchaseAuthority { get; set;}
         public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set;}
+        [DisplayName("DUNS")]
+        [StringLength(InvoicePaymentRequest.FieldLengths.Duns)]
         public string Duns { get; set;}
+        [DisplayName("Date")]
         public DateTime InvoicePaymentRequestDate { get; set;}
+        [DisplayName("Notes")]
         public string Notes { get; set;}
         
 
@@ -52,6 +58,7 @@ namespace ProjectFirma.Web.Views.Invoice
         /// </summary>
         public EditInvoicePaymentRequestViewModel()
         {
+            InvoicePaymentRequestDate = DateTime.Now.Date;
         }
 
         public EditInvoicePaymentRequestViewModel(Models.InvoicePaymentRequest invoicePaymentRequest)
