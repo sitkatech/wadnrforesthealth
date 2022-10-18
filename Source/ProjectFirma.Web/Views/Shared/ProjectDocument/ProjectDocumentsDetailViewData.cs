@@ -32,12 +32,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
             UserHasProjectManagePermissions = UserHasProjectManagePermissions && showNewButton;
         }
 
-        public List<EntityDocument> Documents { get; }
+        public List<ProjectDocumentResource> Documents { get; }
         public string AddDocumentUrl { get; }
         public string ProjectName { get; }
         public bool CanEditDocuments { get; }
 
-        public ProjectDocumentsDetailViewData(List<EntityDocument> documents, string addDocumentUrl, string projectName, bool canEditDocuments)
+        public ProjectDocumentsDetailViewData(List<ProjectDocumentResource> documents, string addDocumentUrl, string projectName, bool canEditDocuments)
         {
             Documents = documents;
             AddDocumentUrl = addDocumentUrl;
@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
             ShowDownload = true;
         }
 
-        public ProjectDocumentsDetailViewData(List<EntityDocument> documents, string addDocumentUrl, string projectName,
+        public ProjectDocumentsDetailViewData(List<ProjectDocumentResource> documents, string addDocumentUrl, string projectName,
             bool canEditDocuments, bool showDownload) : this(documents,addDocumentUrl,projectName,canEditDocuments)
         {
             ShowDownload = showDownload;
