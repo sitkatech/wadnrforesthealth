@@ -31,13 +31,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectDocumentUpdate(int projectDocumentUpdateID, int projectUpdateBatchID, int fileResourceID, string displayName, string description) : this()
+        public ProjectDocumentUpdate(int projectDocumentUpdateID, int projectUpdateBatchID, int fileResourceID, string displayName, string description, int? projectDocumentTypeID) : this()
         {
             this.ProjectDocumentUpdateID = projectDocumentUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.FileResourceID = fileResourceID;
             this.DisplayName = displayName;
             this.Description = description;
+            this.ProjectDocumentTypeID = projectDocumentTypeID;
         }
 
         /// <summary>
@@ -125,11 +126,13 @@ namespace ProjectFirma.Web.Models
         public int FileResourceID { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }
+        public int? ProjectDocumentTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectDocumentUpdateID; } set { ProjectDocumentUpdateID = value; } }
 
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public virtual FileResource FileResource { get; set; }
+        public virtual ProjectDocumentType ProjectDocumentType { get; set; }
 
         public static class FieldLengths
         {

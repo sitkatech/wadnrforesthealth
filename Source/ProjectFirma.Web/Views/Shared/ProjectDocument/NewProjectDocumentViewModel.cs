@@ -29,14 +29,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         // can be the ID of a Project or a ProjectUpdateBatch depending on whether this ViewModel or its child type is invoked.
         public int? ParentID { get; set; }
 
-        public int? ProjectDocumentTypeID => ProjectDocumentTypeSubTypeID ?? ProjectDocumentTypeParentID;
-        
         [Required]
         [DisplayName("Document Type")]
-        public int? ProjectDocumentTypeParentID { get; set;}
-
-        [DisplayName("Other Subtype")]
-        public int? ProjectDocumentTypeSubTypeID { get; set; }
+        public int? ProjectDocumentTypeID { get; set; }
 
         /// <summary>
         /// Needed by ModelBinder

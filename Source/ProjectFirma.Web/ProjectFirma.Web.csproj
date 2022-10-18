@@ -731,6 +731,7 @@
     <Compile Include="Models\County.cs" />
     <Compile Include="Models\ProjectCountyUpdate.cs" />
     <Compile Include="Models\ProjectCounty.cs" />
+    <Compile Include="Models\ProjectDocumentType.cs" />
     <Compile Include="Models\ProjectDocumentResource.cs" />
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\TreatmentCode.cs" />

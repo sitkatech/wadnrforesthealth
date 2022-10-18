@@ -63,20 +63,11 @@
             </div>
             <div class="form-group">
                 <div class="col-xs-12 col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.ProjectDocumentTypeParentID)
+                    @Html.LabelWithSugarFor(m => m.ProjectDocumentTypeID)
                 </div>
                 <div class="col-xs-12 col-sm-9">
-                    @Html.DropDownListFor(m => m.ProjectDocumentTypeParentID, ViewDataTyped.ProjectDocumentTypesList, new { style = "width: 100%;", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ProjectDocumentTypeParentID)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.ProjectDocumentTypeSubTypeID)
-                </div>
-                <div class="col-xs-12 col-sm-9">
-                    @Html.DropDownListFor(m => m.ProjectDocumentTypeSubTypeID, ViewDataTyped.ProjectDocumentTypesOtherList, new { style = "width: 100%;", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ProjectDocumentTypeSubTypeID)
+                    @Html.DropDownListFor(m => m.ProjectDocumentTypeID, ViewDataTyped.ProjectDocumentTypesList, new { style = "width: 100%;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProjectDocumentTypeID)
                 </div>
             </div>
         </div>

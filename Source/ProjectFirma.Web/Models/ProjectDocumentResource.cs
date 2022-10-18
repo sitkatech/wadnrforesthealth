@@ -14,10 +14,10 @@ namespace ProjectFirma.Web.Models
         public string DisplayCssClass { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }
-        public int? ProjectDocumentTypeID { get; set; }
+        public ProjectDocumentType ProjectDocumentType { get; set; }
 
         public ProjectDocumentResource(string deleteUrl, string editUrl, FileResource fileResource, string displayCssClass,
-            string displayName, string description, int? projectDocumentTypeID)
+            string displayName, string description, ProjectDocumentType projectDocumentType)
         {
             DeleteUrl = deleteUrl;
             EditUrl = editUrl;
@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
             DisplayCssClass = displayCssClass;
             DisplayName = displayName;
             Description = description;
-            ProjectDocumentTypeID = projectDocumentTypeID;
+            ProjectDocumentType = projectDocumentType;
         }
 
         public ProjectDocumentResource(ProjectDocument projectDocument)
@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Models
             DisplayCssClass = projectDocument.DisplayCssClass;
             DisplayName = projectDocument.DisplayName;
             Description = projectDocument.Description;
-            ProjectDocumentTypeID = projectDocument.ProjectDocumentTypeID;
+            ProjectDocumentType = projectDocument.ProjectDocumentType;
         }
 
         public ProjectDocumentResource(ProjectDocumentUpdate projectDocumentUpdate)
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Models
             DisplayCssClass = projectDocumentUpdate.DisplayCssClass;
             DisplayName = projectDocumentUpdate.DisplayName;
             Description = projectDocumentUpdate.Description;
-            ProjectDocumentTypeID = null;//projectDocumentUpdate.ProjectDocumentTypeID;
+            ProjectDocumentType = projectDocumentUpdate.ProjectDocumentType;
         }
 
 

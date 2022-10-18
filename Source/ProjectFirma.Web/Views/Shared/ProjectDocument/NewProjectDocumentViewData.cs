@@ -14,12 +14,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         public NewProjectDocumentViewData(IEnumerable<Models.ProjectDocumentType> projectDocumentTypesList)
         {
             ProjectDocumentTypesList =
-                projectDocumentTypesList.Where(x => !x.ProjectDocumentParentTypeID.HasValue)
-                    .ToSelectListWithEmptyFirstRow(x=>x.ProjectDocumentTypeID.ToString(), x => x.ProjectDocumentTypeName);
+                projectDocumentTypesList.ToSelectListWithEmptyFirstRow(x => x.ProjectDocumentTypeID.ToString(),
+                        x => x.ProjectDocumentTypeName);
 
-            ProjectDocumentTypesOtherList = projectDocumentTypesList
-                .Where(x => x.ProjectDocumentParentTypeID == 7)
-                .ToSelectListWithEmptyFirstRow(x=>x.ProjectDocumentParentTypeID.ToString(), x => x.ProjectDocumentTypeName);
         }
     }
 }

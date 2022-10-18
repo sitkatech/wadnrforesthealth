@@ -26,18 +26,17 @@ namespace ProjectFirma.Web.Models
         protected ProjectDocumentType()
         {
             this.ProjectDocuments = new HashSet<ProjectDocument>();
-            this.ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType = new HashSet<ProjectDocumentType>();
+            this.ProjectDocumentUpdates = new HashSet<ProjectDocumentUpdate>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectDocumentType(int projectDocumentTypeID, string projectDocumentTypeName, string projectDocumentTypeDescription, int? projectDocumentParentTypeID) : this()
+        public ProjectDocumentType(int projectDocumentTypeID, string projectDocumentTypeName, string projectDocumentTypeDescription) : this()
         {
             this.ProjectDocumentTypeID = projectDocumentTypeID;
             this.ProjectDocumentTypeName = projectDocumentTypeName;
             this.ProjectDocumentTypeDescription = projectDocumentTypeDescription;
-            this.ProjectDocumentParentTypeID = projectDocumentParentTypeID;
         }
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectDocuments.Any() || ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType.Any();
+            return ProjectDocuments.Any() || ProjectDocumentUpdates.Any();
         }
 
         /// <summary>
@@ -81,9 +80,9 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(ProjectDocument).Name);
             }
 
-            if(ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType.Any())
+            if(ProjectDocumentUpdates.Any())
             {
-                dependentObjects.Add(typeof(ProjectDocumentType).Name);
+                dependentObjects.Add(typeof(ProjectDocumentUpdate).Name);
             }
             return dependentObjects.Distinct().ToList();
         }
@@ -91,7 +90,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectDocumentType).Name, typeof(ProjectDocument).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectDocumentType).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name};
 
 
         /// <summary>
@@ -121,7 +120,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType.ToList())
+            foreach(var x in ProjectDocumentUpdates.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -131,13 +130,11 @@ namespace ProjectFirma.Web.Models
         public int ProjectDocumentTypeID { get; set; }
         public string ProjectDocumentTypeName { get; set; }
         public string ProjectDocumentTypeDescription { get; set; }
-        public int? ProjectDocumentParentTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectDocumentTypeID; } set { ProjectDocumentTypeID = value; } }
 
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
-        public virtual ICollection<ProjectDocumentType> ProjectDocumentTypesWhereYouAreTheProjectDocumentParentType { get; set; }
-        public virtual ProjectDocumentType ProjectDocumentParentType { get; set; }
+        public virtual ICollection<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
 
         public static class FieldLengths
         {
