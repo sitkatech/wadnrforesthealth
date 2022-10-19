@@ -32,13 +32,20 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public int NumberOfReportedExpenditures { get; set; }
         public string FundingType { get; set; }
         public string EstimatedTotalCost { get; set; }
+        public int? PercentageMatch { get; set; }
+        public string PercentageMatchDisplay => PercentageMatch.HasValue ? $"{PercentageMatch.Value}%" : string.Empty;
 
         public string TotalFunding { get; set; }
         public string ProjectDescription { get; set; }
         public DateTime ProjectLastUpdated { get; set; }
-        public DateTime? ProjectApprovalDate { get; set; }
-        public DateTime? ProjectExpirationDate { get; set; }
-
+        public string ProjectLastUpdatedDisplay => ProjectLastUpdated.ToShortDateString();
+        public DateTime? ApprovalDate { get; set; }
+        public string ApprovalDateDisplay => ApprovalDate.HasValue ? ApprovalDate.Value.ToShortDateString() : string.Empty;
+        public DateTime? ExpirationDate { get; set; }
+        public string ExpirationDateDisplay => ExpirationDate.HasValue ? ExpirationDate.Value.ToShortDateString() : string.Empty;
+        public string ProjectRegionsDisplay => String.Join(", ", GetProjectRegions().OrderBy(x => x.DNRUplandRegionName).Select(x => x.DNRUplandRegionName));
+        public string ProjectCountiesDisplay => String.Join(", ", GetProjectCounties().OrderBy(x => x.CountyName).Select(x => x.CountyName));
+        
         public List<ReportTemplateInvoicePaymentRequestModel> InvoicePaymentRequests { get; set; }
 
         public ReportTemplateProjectModel(Project project)
@@ -67,12 +74,13 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             NumberOfReportedExpenditures = Project.ProjectGrantAllocationExpenditures.Count();
             FundingType = string.Join(", ", Project.ProjectFundingSources.Select(x => x.FundingSource.FundingSourceDisplayName));
             EstimatedTotalCost = Project.EstimatedTotalCost?.ToStringCurrency();
+            PercentageMatch = Project.PercentageMatch;
 
             TotalFunding = Project.GetTotalFunding()?.ToStringCurrency();
             ProjectDescription = Project.ProjectDescription;
             ProjectLastUpdated = Project.LastUpdateDate;
-            ProjectApprovalDate = Project.ApprovalDate;
-            ProjectExpirationDate = Project.ExpirationDate;
+            ApprovalDate = Project.ApprovalDate;
+            ExpirationDate = Project.ExpirationDate;
 
             InvoicePaymentRequests = Project.InvoicePaymentRequests
                 .Select(x => new ReportTemplateInvoicePaymentRequestModel(x)).ToList();
@@ -136,7 +144,11 @@ namespace ProjectFirma.Web.ReportTemplates.Models
 
         public List<ReportTemplateProjectTreatmentModel> GetProjectTreatments()
         {
-            return ProjectTreatments.Select(x => new ReportTemplateProjectTreatmentModel(x)).ToList();
+            return ProjectTreatments.Select(x => new ReportTemplateProjectTreatmentModel(x))
+                .OrderBy(x => x.StartDate)
+                .ThenBy(x => x.EndDate)
+                .ThenBy(x => x.TreatmentName)
+                .ToList();
         }
 
         public ReportTemplateProjectImageModel GetProjectKeyPhoto()

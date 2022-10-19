@@ -8,13 +8,15 @@ namespace ProjectFirma.Web.ReportTemplates.Models
 {
     public class ReportTemplateProjectTreatmentModel : ReportTemplateBaseModel
     {
-        public Project Project { get; set; }
-        public Treatment ProjectTreatment { get; set; }
+        private Project Project { get; set; }
+        private Treatment ProjectTreatment { get; set; }
 
-        public string TreatmentCode { get; set; }
-        public string TreatmentType { get; set; }
+        //public string TreatmentCode { get; set; }
+        public string Name { get; set; }
         public DateTime? StartDate { get; set; }
+        public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public DateTime? EndDate { get; set; }
+        public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FootprintAcres { get; set; }
         public string TreatedAcres { get; set; }
         public decimal? CostPerAcre { get; set; }
@@ -45,8 +47,8 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             Project = projectTreatment.Project;
             ProjectTreatment = projectTreatment;
 
-            TreatmentCode = ProjectTreatment.TreatmentCode.TreatmentCodeDisplayName;
-            TreatmentType = ProjectTreatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
+            //TreatmentCode = ProjectTreatment.TreatmentCode.TreatmentCodeDisplayName;
+            Name = ProjectTreatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
             StartDate = ProjectTreatment.TreatmentStartDate;
             EndDate = ProjectTreatment.TreatmentEndDate;
             FootprintAcres = ProjectTreatment.TreatmentFootprintAcres.ToString();

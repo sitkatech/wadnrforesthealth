@@ -8,11 +8,12 @@ namespace ProjectFirma.Web.ReportTemplates.Models
 {
     public class ReportTemplateProjectRegionModel : ReportTemplateBaseModel
     {
-        public Project Project { get; set; }
-        public ProjectRegion ProjectRegion { get; set; }
-        public DNRUplandRegion DNRUplandRegion { get; set; }
+        private Project Project { get; set; }
+        private ProjectRegion ProjectRegion { get; set; }
+        private DNRUplandRegion DNRUplandRegion { get; set; }
 
-        public string DNRUplandRegionName { get; set; }
+        public string Abbreviation { get; set; }
+        public string Name { get; set; }
 
         public ReportTemplateProjectRegionModel(ProjectRegion projectRegion)
         {
@@ -20,7 +21,8 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             ProjectRegion = projectRegion;
             DNRUplandRegion = projectRegion.DNRUplandRegion;
 
-            DNRUplandRegionName = projectRegion.DNRUplandRegion.DisplayName;
+            Abbreviation = projectRegion.DNRUplandRegion.DNRUplandRegionAbbrev;
+            Name = projectRegion.DNRUplandRegion.DisplayName;
         }
     }
 }

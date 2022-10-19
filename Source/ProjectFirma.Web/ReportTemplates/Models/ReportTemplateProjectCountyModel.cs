@@ -8,11 +8,11 @@ namespace ProjectFirma.Web.ReportTemplates.Models
 {
     public class ReportTemplateProjectCountyModel : ReportTemplateBaseModel
     {
-        public Project Project { get; set; }
-        public ProjectCounty ProjectCounty { get; set; }
-        public County County { get; set; }
+        private Project Project { get; set; }
+        private ProjectCounty ProjectCounty { get; set; }
+        private County County { get; set; }
 
-        public string CountyName { get; set; }
+        public string Name { get; set; }
 
         public ReportTemplateProjectCountyModel(ProjectCounty projectCounty)
         {
@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             ProjectCounty = projectCounty;
             County = projectCounty.County;
 
-            CountyName = County.CountyName;
+            Name = County.CountyName;
         }
     }
 }
