@@ -59,7 +59,6 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var ipr = invoicePaymentRequestPrimaryKey.EntityObject;
-            var preparedByPerson = HttpRequestStorage.DatabaseEntities.People.Single(g => g.PersonID == viewModel.PreparedByPersonID);
             var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
             var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
             var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
@@ -97,8 +96,13 @@ namespace ProjectFirma.Web.Controllers
         {
             var invoiceApprovalStatuses = InvoiceApprovalStatus.All;
             var invoiceStatuses = InvoiceStatus.All.OrderBy(x => x.InvoiceStatusID).ToList();
-            var people =  HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
-            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people);
+            var people = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x=>x.GrantNumber);
+            var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices.OrderBy(x=>x.ProgramIndexCode);
+            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes.OrderBy(x=>x.ProjectCodeTitle);
+            var organizationCodes = HttpRequestStorage.DatabaseEntities.OrganizationCodes;
+            
+            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people, grants, programIndices, projectCodes, organizationCodes);
             return RazorPartialView<EditInvoice, EditInvoiceViewData, EditInvoiceViewModel>(viewData, viewModel);
         }
 

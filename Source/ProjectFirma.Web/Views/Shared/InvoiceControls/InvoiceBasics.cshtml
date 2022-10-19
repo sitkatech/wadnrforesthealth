@@ -85,10 +85,10 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.TotalRequestedInvoicePaymentAmount)
+            @Html.LabelWithSugarFor(FieldDefinition.PayAmount)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.Invoice.TotalPaymentAmount.ToStringCurrency()</span>
+            <span>@ViewDataTyped.Invoice.PayAmount.ToStringCurrency()</span>
         </div>
     </div>
     <div class="row">
