@@ -77,12 +77,10 @@
                 @Html.LabelWithSugarFor(m => m.VendorID)
             </div>
             <div class="col-xs-9">
-                <form id="searchForm" role="search" style="display: flex;margin-top: 17px;">
-                    <input id="VendorSearchInputTextboxID" type="text" class="form-control"
-                           name="VendorSearchInputTextboxID" maxlength="200"
-                           placeholder="@FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Number"
-                           style="margin-right: -5px; max-width: 300px; margin-left: auto;" />
-                </form>
+                <input id="VendorSearchInputTextboxID" type="text" class="form-control"
+                       name="VendorSearchInputTextboxID" maxlength="200"
+                       placeholder="@FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Number"
+                       style="margin-right: -5px; max-width: 300px; margin-left: auto;" />
             </div>
         </div>
 
@@ -109,7 +107,6 @@
     </div>
     @Html.HiddenFor(m => m.InvoicePaymentRequestID)
     @Html.HiddenFor(m => m.ProjectID)
-    @*@Html.HiddenFor(m => m.VendorID, new { @id = "VendorID" })*@
     @Html.HiddenFor(x => x.VendorID)
 }
 
@@ -148,12 +145,12 @@
             jQuery("#VendorSearchInputTextboxID")
                 .autocomplete({
                         source: "@Html.Raw(ViewDataTyped.VendorFindUrl)",
-                        minLength: 1,
+                        minLength: 2,
                         position: { my: "right top", at: "right bottom" },
                     select: function (event, ui) {
+
                             //force textbox to display selected value, because angular wont update it until onBlur of input
                             jQuery("#VendorSearchInputTextboxID").val(ui.item.label);
-                            //jQuery("#VendorID").val(ui.item.value);
                             jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.value);
                             event.preventDefault();
 

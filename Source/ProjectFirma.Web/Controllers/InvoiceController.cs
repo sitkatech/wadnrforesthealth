@@ -154,7 +154,7 @@ namespace ProjectFirma.Web.Controllers
         public JsonResult Find(string term)
         {
             var vendorFindResults = GetViewableVendorsFromSearchCriteria(term.Trim());
-            var results = vendorFindResults.Take(VendorsCountLimit).Select(p => new ListItem(p.VendorName.ToEllipsifiedString(100), p.VendorID.ToString(CultureInfo.InvariantCulture))).ToList();
+            var results = vendorFindResults.Take(VendorsCountLimit).Select(p => new ListItem(p.GetVendorNameWithFullStatewideVendorNumber(), p.VendorID.ToString(CultureInfo.InvariantCulture))).ToList();
             if (vendorFindResults.Count > VendorsCountLimit)
             {
                 results.Add(

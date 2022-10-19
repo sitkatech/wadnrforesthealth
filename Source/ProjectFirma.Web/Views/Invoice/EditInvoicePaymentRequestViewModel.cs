@@ -83,8 +83,6 @@ namespace ProjectFirma.Web.Views.Invoice
 
         public void UpdateModel(Models.InvoicePaymentRequest invoicePaymentRequest, Person currentPerson)
         {
-            invoicePaymentRequest.InvoicePaymentRequestID = InvoicePaymentRequestID;
-            invoicePaymentRequest.ProjectID = ProjectID;
             invoicePaymentRequest.VendorID = VendorID;
             invoicePaymentRequest.PreparedByPersonID = PreparedByPersonID;
             invoicePaymentRequest.PurchaseAuthority = PurchaseAuthority;
