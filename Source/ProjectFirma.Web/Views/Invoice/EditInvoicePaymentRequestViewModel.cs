@@ -37,12 +37,17 @@ namespace ProjectFirma.Web.Views.Invoice
         public int InvoicePaymentRequestID { get; set; }
         public int ProjectID { get; set;}
 
-        [DisplayName("Vendor")]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Vendor)]
         public int? VendorID { get; set;}
-        [DisplayName("Prepared By")]
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
+        [Required]
         public int? PreparedByPersonID { get; set;}
-        [DisplayName("Purchase Authority")]
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
         public string PurchaseAuthority { get; set;}
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
+        [Required]
         public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set;}
         [DisplayName("DUNS")]
         [StringLength(InvoicePaymentRequest.FieldLengths.Duns)]
