@@ -49,7 +49,8 @@ namespace ProjectFirma.Web.Views.Invoice
         [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
         [Required]
         public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set;}
-        [DisplayName("DUNS")]
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.DUNS)]
         [StringLength(InvoicePaymentRequest.FieldLengths.Duns)]
         public string Duns { get; set;}
         [DisplayName("Date")]
