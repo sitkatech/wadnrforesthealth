@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public InvoicePaymentRequest(int invoicePaymentRequestID, int projectID, int? vendorID, int? preparedByPersonID, string purchaseAuthority, bool purchaseAuthorityIsLandownerCostShareAgreement, string duns, DateTime invoicePaymentRequestDate, string notes, int? approvedByPersonID, DateTime? approvedDate) : this()
+        public InvoicePaymentRequest(int invoicePaymentRequestID, int projectID, int? vendorID, int? preparedByPersonID, string purchaseAuthority, bool purchaseAuthorityIsLandownerCostShareAgreement, string duns, DateTime invoicePaymentRequestDate, string notes) : this()
         {
             this.InvoicePaymentRequestID = invoicePaymentRequestID;
             this.ProjectID = projectID;
@@ -42,8 +42,6 @@ namespace ProjectFirma.Web.Models
             this.Duns = duns;
             this.InvoicePaymentRequestDate = invoicePaymentRequestDate;
             this.Notes = notes;
-            this.ApprovedByPersonID = approvedByPersonID;
-            this.ApprovedDate = approvedDate;
         }
 
         /// <summary>
@@ -148,15 +146,12 @@ namespace ProjectFirma.Web.Models
         public string Duns { get; set; }
         public DateTime InvoicePaymentRequestDate { get; set; }
         public string Notes { get; set; }
-        public int? ApprovedByPersonID { get; set; }
-        public DateTime? ApprovedDate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return InvoicePaymentRequestID; } set { InvoicePaymentRequestID = value; } }
 
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual Project Project { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual Person ApprovedByPerson { get; set; }
         public virtual Person PreparedByPerson { get; set; }
 
         public static class FieldLengths

@@ -36,18 +36,18 @@ namespace ProjectFirma.Web.Views.Invoice
         public const int InvoiceColumnWidth = 180;
         public static string InvoiceIdHiddenColumnName = "InvoiceIdAsText";
 
-        public InvoiceGridSpec(Models.Person currentPerson, bool invoiceFileExistsOnAtLeastOne)
+        public InvoiceGridSpec(Models.Person currentPerson, bool invoiceFileExistsOnAtLeastOne, InvoicePaymentRequest invoicePaymentRequest)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
 
-            //10/10/22 TK - TODO: allow new invoices, once controller action is updated to provide the IPR ID
+
             var userHasCreatePermissions = new InvoiceCreateFeature().HasPermissionByPerson(currentPerson);
             if (userHasCreatePermissions)
             {
-                //var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.New());
-                //CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Invoice");
+                var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.New(invoicePaymentRequest));
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new {Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}");
             }
 
             if (invoiceFileExistsOnAtLeastOne)
