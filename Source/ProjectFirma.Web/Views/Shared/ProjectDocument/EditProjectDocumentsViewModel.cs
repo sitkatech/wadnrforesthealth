@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         {
             DisplayName = projectDocumentUpdate.DisplayName;
             Description = projectDocumentUpdate.Description;
+            ProjectDocumentTypeID = projectDocumentUpdate.ProjectDocumentTypeID;
         }
 
         public void UpdateModel(Models.ProjectDocument projectDocument)
@@ -58,6 +59,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         {
             projectDocumentUpdate.DisplayName = DisplayName;
             projectDocumentUpdate.Description = Description;
+            projectDocumentUpdate.ProjectDocumentTypeID = ProjectDocumentTypeID;
 
         }
 
