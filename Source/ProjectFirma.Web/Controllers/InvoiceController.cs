@@ -19,18 +19,20 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Invoice;
-using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.InvoiceControls;
+using ProjectFirma.Web.Security.Shared;
+using System.Web.UI.WebControls;
+
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -146,7 +148,28 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [AnonymousUnclassifiedFeature]
+        public JsonResult Find(string term)
+        {
+            var vendorFindResults = GetViewableVendorsFromSearchCriteria(term.Trim());
+            var results = vendorFindResults.Take(VendorsCountLimit).Select(p => new ListItem(p.VendorName.ToEllipsifiedString(100), p.GetDetailUrl())).ToList();
+            if (vendorFindResults.Count > VendorsCountLimit)
+            {
+                results.Add(
+                    new ListItem(
+                        $"<span style='font-weight:bold'>Displaying {VendorsCountLimit} of {vendorFindResults.Count}</span>"));
+            }
+            return Json(results.Select(pfr => new { label = pfr.Text, value = pfr.Value }), JsonRequestBehavior.AllowGet);
+        }
 
+        private List<Vendor> GetViewableVendorsFromSearchCriteria(string searchCriteria)
+        {
+            var vendorsFound = HttpRequestStorage.DatabaseEntities.Vendors.GetVendorFindResultsForVendorNameAndStatewideVendorNumber(searchCriteria).ToList();
+            return vendorsFound;
+        }
+        
+        private const int VendorsCountLimit = 20;
+        
         [HttpGet]
         [InvoiceEditFeature]
         public PartialViewResult EditInvoicePaymentRequest(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)

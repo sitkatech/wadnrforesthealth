@@ -28,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 using MoreLinq;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
@@ -38,6 +39,8 @@ namespace ProjectFirma.Web.Views.Invoice
         public IEnumerable<SelectListItem> Vendors { get; set; }
         public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
         public EditInvoicePaymentRequestType EditInvoicePaymentRequestType { get; set; }
+
+        public string VendorFindUrl { get; }
 
         public EditInvoicePaymentRequestViewData(EditInvoicePaymentRequestType editInvoicePaymentRequestType, IEnumerable<Models.Vendor> vendors, IEnumerable<Models.Person> people)
         {
@@ -57,6 +60,7 @@ namespace ProjectFirma.Web.Views.Invoice
                 PurchaseAuthorityType =
                     new List<SelectListItem> { selectListChooseOne, selectListItemLandOwnerCostShareAgreement, selectListItemOther };
             }
+            VendorFindUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.Find(string.Empty));
 
             Vendors = vendors.OrderBy(x => x.VendorName).ToSelectListWithEmptyFirstRow(x => x.VendorID.ToString(), y => y.VendorNameAndStatewideVendorNumberWithSuffix);
             People = people.OrderBy(x => x.LastName)
