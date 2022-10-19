@@ -43,8 +43,8 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string ApprovalDateDisplay => ApprovalDate.HasValue ? ApprovalDate.Value.ToShortDateString() : string.Empty;
         public DateTime? ExpirationDate { get; set; }
         public string ExpirationDateDisplay => ExpirationDate.HasValue ? ExpirationDate.Value.ToShortDateString() : string.Empty;
-        public string ProjectRegionsDisplay => String.Join(", ", GetProjectRegions().OrderBy(x => x.DNRUplandRegionName).Select(x => x.DNRUplandRegionName));
-        public string ProjectCountiesDisplay => String.Join(", ", GetProjectCounties().OrderBy(x => x.CountyName).Select(x => x.CountyName));
+        public string ProjectRegionsDisplay => String.Join(", ", GetProjectRegions().OrderBy(x => x.Name).Select(x => x.Name));
+        public string ProjectCountiesDisplay => String.Join(", ", GetProjectCounties().OrderBy(x => x.Name).Select(x => x.Name));
         
         public List<ReportTemplateInvoicePaymentRequestModel> InvoicePaymentRequests { get; set; }
 
