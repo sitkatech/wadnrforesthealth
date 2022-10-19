@@ -25,6 +25,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Invoice;
 
 namespace ProjectFirma.Web.Views.ProjectInvoice
 {
@@ -34,6 +35,8 @@ namespace ProjectFirma.Web.Views.ProjectInvoice
         public bool CanEditInvoicePaymentRequests { get; }
         public string AddInvoicePaymentRequestUrl { get; }
 
+        public string InvoiceGridNamePrefix;
+
 
         public ProjectInvoiceDetailViewData(Person currentPerson, Models.Project project) : base(currentPerson)
         {
@@ -41,6 +44,7 @@ namespace ProjectFirma.Web.Views.ProjectInvoice
             AddInvoicePaymentRequestUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.NewInvoicePaymentRequest(project));
             CanEditInvoicePaymentRequests = new InvoiceCreateFeature().HasPermissionByPerson(currentPerson);
 
+            InvoiceGridNamePrefix = "invoiceGridName";
         }
     }
 }
