@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common;
@@ -153,7 +154,7 @@ namespace ProjectFirma.Web.Controllers
         public JsonResult Find(string term)
         {
             var vendorFindResults = GetViewableVendorsFromSearchCriteria(term.Trim());
-            var results = vendorFindResults.Take(VendorsCountLimit).Select(p => new ListItem(p.VendorName.ToEllipsifiedString(100), p.GetDetailUrl())).ToList();
+            var results = vendorFindResults.Take(VendorsCountLimit).Select(p => new ListItem(p.VendorName.ToEllipsifiedString(100), p.VendorID.ToString(CultureInfo.InvariantCulture))).ToList();
             if (vendorFindResults.Count > VendorsCountLimit)
             {
                 results.Add(
@@ -197,9 +198,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult InvoicePaymentRequestViewEdit(EditInvoicePaymentRequestViewModel viewModel, EditInvoicePaymentRequestType editInvoiceType)
         {
-            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.Take(50);
             var people = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople();
-            var viewData = new EditInvoicePaymentRequestViewData(editInvoiceType, vendors, people);
+            var viewData = new EditInvoicePaymentRequestViewData(editInvoiceType, people);
             return RazorPartialView<EditInvoicePaymentRequest, EditInvoicePaymentRequestViewData, EditInvoicePaymentRequestViewModel>(viewData, viewModel);
         }
 

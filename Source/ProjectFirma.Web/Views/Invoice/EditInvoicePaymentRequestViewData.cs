@@ -36,13 +36,12 @@ namespace ProjectFirma.Web.Views.Invoice
     {
 
         public IEnumerable<SelectListItem> People { get; set; }
-        public IEnumerable<SelectListItem> Vendors { get; set; }
         public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
         public EditInvoicePaymentRequestType EditInvoicePaymentRequestType { get; set; }
 
         public string VendorFindUrl { get; }
 
-        public EditInvoicePaymentRequestViewData(EditInvoicePaymentRequestType editInvoicePaymentRequestType, IEnumerable<Models.Vendor> vendors, IEnumerable<Models.Person> people)
+        public EditInvoicePaymentRequestViewData(EditInvoicePaymentRequestType editInvoicePaymentRequestType, IEnumerable<Models.Person> people)
         {
 
             EditInvoicePaymentRequestType = editInvoicePaymentRequestType;
@@ -62,7 +61,6 @@ namespace ProjectFirma.Web.Views.Invoice
             }
             VendorFindUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.Find(string.Empty));
 
-            Vendors = vendors.OrderBy(x => x.VendorName).ToSelectListWithEmptyFirstRow(x => x.VendorID.ToString(), y => y.VendorNameAndStatewideVendorNumberWithSuffix);
             People = people.OrderBy(x => x.LastName)
                 .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
         }
