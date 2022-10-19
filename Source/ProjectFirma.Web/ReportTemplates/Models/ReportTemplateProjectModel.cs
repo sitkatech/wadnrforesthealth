@@ -147,7 +147,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             return ProjectTreatments.Select(x => new ReportTemplateProjectTreatmentModel(x))
                 .OrderBy(x => x.StartDate)
                 .ThenBy(x => x.EndDate)
-                .ThenBy(x => x.TreatmentName)
+                .ThenBy(x => x.Name)
                 .ToList();
         }
 
