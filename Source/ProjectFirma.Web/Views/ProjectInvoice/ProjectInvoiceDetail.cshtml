@@ -37,6 +37,14 @@
         @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add {1}", FirmaDhtmlxGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.AddInvoicePaymentRequestUrl, string.Format("Create New {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
     </div>
 </div>
+@if (ViewDataTyped.CanEditInvoicePaymentRequests)
+{
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
+            <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadInvoicePaymentRequestUrl()" title="Download Invoice Payment Request">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download Invoice Payment Request</a>
+        </div>
+    </div>
+}
 
 @if (ViewDataTyped.InvoicePaymentRequests.Any())
 {
@@ -46,8 +54,7 @@
         <hr />
         <div class="row">
             <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
-                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", FirmaDhtmlxGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
-
+                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", FirmaDhtmlxGridHtmlHelpers.EditIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
             </div>
         </div>
         <div class="row" style="margin-top: 10px;">
