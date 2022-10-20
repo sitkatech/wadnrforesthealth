@@ -149,8 +149,6 @@ namespace ProjectFirma.Web.Views
 
             financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<AgreementController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} List", "Group2"));
 
-            financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InvoiceController>(c => c.Index()), currentPerson,
-                $"Full { Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} List", "Group3"));
 
             MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.Financials).ForEach(x =>
             {

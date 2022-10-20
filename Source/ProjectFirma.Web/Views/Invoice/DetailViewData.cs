@@ -29,18 +29,19 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    public class DetailViewData : InvoiceViewData
+    public class DetailViewData : FirmaViewData
     {
         public InvoiceBasicsViewData InvoiceBasicsViewData { get; set; }
+        public Models.Invoice Invoice { get; set; }
 
 
         public DetailViewData(Person currentPerson, Models.Invoice invoice, InvoiceBasicsViewData invoiceBasicsViewData)
-            : base(currentPerson, invoice)
+            : base(currentPerson)
         {
             PageTitle = invoice.InvoiceIdentifyingName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} Detail";
             InvoiceBasicsViewData = invoiceBasicsViewData;
-
+            Invoice = invoice;
         }
     }
 }

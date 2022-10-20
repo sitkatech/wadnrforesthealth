@@ -47,7 +47,6 @@ namespace ProjectFirma.Web.Models
             this.GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantNoteInternal>();
             this.InteractionEventsWhereYouAreTheStaffPerson = new HashSet<InteractionEvent>();
             this.InteractionEventContacts = new HashSet<InteractionEventContact>();
-            this.InvoicePaymentRequestsWhereYouAreTheApprovedByPerson = new HashSet<InvoicePaymentRequest>();
             this.InvoicePaymentRequestsWhereYouAreThePreparedByPerson = new HashSet<InvoicePaymentRequest>();
             this.Notifications = new HashSet<Notification>();
             this.OrganizationsWhereYouAreThePrimaryContactPerson = new HashSet<Organization>();
@@ -140,7 +139,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementPeople.Any() || AuditLogs.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || ForesterWorkUnits.Any() || GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any() || GrantAllocationsWhereYouAreTheGrantManager.Any() || GrantAllocationAwardPersonnelAndBenefitsLineItems.Any() || GrantAllocationAwardTravelLineItems.Any() || GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicePaymentRequestsWhereYouAreTheApprovedByPerson.Any() || InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonRoles.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProgramsWhereYouAreTheProgramCreatePerson.Any() || ProgramsWhereYouAreTheProgramLastUpdatedByPerson.Any() || ProgramsWhereYouAreTheProgramPrimaryContactPerson.Any() || ProgramNotificationSentsWhereYouAreTheSentToPerson.Any() || ProgramPeople.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TabularDataImportsWhereYouAreTheLastProcessedPerson.Any() || TabularDataImportsWhereYouAreTheUploadPerson.Any();
+            return AgreementPeople.Any() || AuditLogs.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || ForesterWorkUnits.Any() || GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any() || GrantAllocationsWhereYouAreTheGrantManager.Any() || GrantAllocationAwardPersonnelAndBenefitsLineItems.Any() || GrantAllocationAwardTravelLineItems.Any() || GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonRoles.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProgramsWhereYouAreTheProgramCreatePerson.Any() || ProgramsWhereYouAreTheProgramLastUpdatedByPerson.Any() || ProgramsWhereYouAreTheProgramPrimaryContactPerson.Any() || ProgramNotificationSentsWhereYouAreTheSentToPerson.Any() || ProgramPeople.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TabularDataImportsWhereYouAreTheLastProcessedPerson.Any() || TabularDataImportsWhereYouAreTheUploadPerson.Any();
         }
 
         /// <summary>
@@ -258,11 +257,6 @@ namespace ProjectFirma.Web.Models
             if(InteractionEventContacts.Any())
             {
                 dependentObjects.Add(typeof(InteractionEventContact).Name);
-            }
-
-            if(InvoicePaymentRequestsWhereYouAreTheApprovedByPerson.Any())
-            {
-                dependentObjects.Add(typeof(InvoicePaymentRequest).Name);
             }
 
             if(InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any())
@@ -575,11 +569,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in InvoicePaymentRequestsWhereYouAreTheApprovedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in InvoicePaymentRequestsWhereYouAreThePreparedByPerson.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -797,7 +786,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantNoteInternal> GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
         public virtual ICollection<InteractionEvent> InteractionEventsWhereYouAreTheStaffPerson { get; set; }
         public virtual ICollection<InteractionEventContact> InteractionEventContacts { get; set; }
-        public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequestsWhereYouAreTheApprovedByPerson { get; set; }
         public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequestsWhereYouAreThePreparedByPerson { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Organization> OrganizationsWhereYouAreThePrimaryContactPerson { get; set; }

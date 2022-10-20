@@ -762,10 +762,6 @@
       <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
-      <End Role="ApprovedByPerson" EntitySet="Person" />
-      <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" EntitySet="InvoicePaymentRequest" />
-    </AssociationSet>
     <AssociationSet Name="FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
       <End Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" EntitySet="InvoicePaymentRequest" />
@@ -2432,7 +2428,7 @@
     <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceIdentifyingName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceDate" Type="DateTime" Nullable="false" />
-    <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PaymentAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceMatchAmountTypeID" Type="Int32" Nullable="false" />
@@ -2468,10 +2464,7 @@
     <Property Name="Duns" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
     <Property Name="InvoicePaymentRequestDate" Type="DateTime" Nullable="false" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="ApprovedByPersonID" Type="Int32" />
-    <Property Name="ApprovedDate" Type="DateTime" />
     <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID" FromRole="InvoicePaymentRequest" ToRole="Invoices" />
-    <NavigationProperty Name="ApprovedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" FromRole="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" ToRole="ApprovedByPerson" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" FromRole="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Project_ProjectID" FromRole="InvoicePaymentRequests" ToRole="Project" />
     <NavigationProperty Name="Vendor" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Vendor_VendorID" FromRole="InvoicePaymentRequests" ToRole="Vendor" />
@@ -2835,7 +2828,6 @@
     <NavigationProperty Name="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" />
     <NavigationProperty Name="InteractionEventsWhereYouAreTheStaffPerson" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID" FromRole="StaffPerson" ToRole="InteractionEventsWhereYouAreTheStaffPerson" />
     <NavigationProperty Name="InteractionEventContacts" Relationship="ProjectFirma.Web.Models.FK_InteractionEventContact_Person_PersonID" FromRole="Person" ToRole="InteractionEventContacts" />
-    <NavigationProperty Name="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" FromRole="ApprovedByPerson" ToRole="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" />
     <NavigationProperty Name="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" FromRole="PreparedByPerson" ToRole="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" />
     <NavigationProperty Name="Notifications" Relationship="ProjectFirma.Web.Models.FK_Notification_Person_PersonID" FromRole="Person" ToRole="Notifications" />
     <NavigationProperty Name="OrganizationsWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="OrganizationsWhereYouAreThePrimaryContactPerson" />
@@ -5997,18 +5989,6 @@
       </Principal>
       <Dependent Role="Invoices">
         <PropertyRef Name="ProjectCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
-    <End Role="ApprovedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" Type="ProjectFirma.Web.Models.InvoicePaymentRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ApprovedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson">
-        <PropertyRef Name="ApprovedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

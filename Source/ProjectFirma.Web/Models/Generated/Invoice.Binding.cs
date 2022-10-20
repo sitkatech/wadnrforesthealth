@@ -31,12 +31,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, DateTime invoiceDate, decimal? totalPaymentAmount, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID, int invoicePaymentRequestID, int? grantID, int? programIndexID, int? projectCodeID, int? organizationCodeID, string invoiceNumber, string fund, string appn, string subObject) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, DateTime invoiceDate, decimal? paymentAmount, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID, int invoicePaymentRequestID, int? grantID, int? programIndexID, int? projectCodeID, int? organizationCodeID, string invoiceNumber, string fund, string appn, string subObject) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
             this.InvoiceDate = invoiceDate;
-            this.TotalPaymentAmount = totalPaymentAmount;
+            this.PaymentAmount = paymentAmount;
             this.InvoiceApprovalStatusID = invoiceApprovalStatusID;
             this.InvoiceApprovalStatusComment = invoiceApprovalStatusComment;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Models
         public int InvoiceID { get; set; }
         public string InvoiceIdentifyingName { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public decimal? TotalPaymentAmount { get; set; }
+        public decimal? PaymentAmount { get; set; }
         public int InvoiceApprovalStatusID { get; set; }
         public string InvoiceApprovalStatusComment { get; set; }
         public int InvoiceMatchAmountTypeID { get; set; }
