@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Views.Invoice
     public class EditInvoiceViewModel : FormViewModel, IValidatableObject
     {
         public int InvoiceID { get; set; }
+        public int InvoicePaymentRequestID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceIdentifyingName)]
         [Required]
@@ -44,8 +45,8 @@ namespace ProjectFirma.Web.Views.Invoice
         [Required]
         public DateTime? InvoiceDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PayAmount)]
-        public Money? PayAmount { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PaymentAmount)]
+        public Money? PaymentAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
         public int InvoiceApprovalStatusID { get; set; }
@@ -68,7 +69,7 @@ namespace ProjectFirma.Web.Views.Invoice
         //[SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase InvoiceFileResourceData { get; set; }
 
-        public int InvoicePaymentRequestID { get; set; }
+        
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
         public int? GrantID { get; set; }
@@ -80,10 +81,14 @@ namespace ProjectFirma.Web.Views.Invoice
         public int? OrganizationCodeID { get; set; }
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceNumber)]
         public string InvoiceNumber { get; set; }
+
+        [StringLength(Models.Invoice.FieldLengths.Fund)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.Fund)]
         public string Fund { get; set; }
+        [StringLength(Models.Invoice.FieldLengths.Appn)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.Appn)]
         public string Appn { get; set; }
+        [StringLength(Models.Invoice.FieldLengths.SubObject)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.SubObject)]
         public string SubObject { get; set; }
 
@@ -98,7 +103,7 @@ namespace ProjectFirma.Web.Views.Invoice
         {
             InvoiceIdentifyingName = invoice.InvoiceIdentifyingName;
             InvoiceDate = invoice.InvoiceDate;
-            PayAmount = invoice.PayAmount;
+            PaymentAmount = invoice.PaymentAmount;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
             MatchAmount = invoice.MatchAmount;
@@ -118,22 +123,21 @@ namespace ProjectFirma.Web.Views.Invoice
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)
         {
             invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
-            invoice.InvoiceDate = InvoiceDate.Value;
-            invoice.PayAmount = PayAmount;
+            invoice.InvoiceDate = InvoiceDate ?? DateTime.MaxValue;
+            invoice.PaymentAmount = PaymentAmount;
             invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
             invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
             invoice.MatchAmount = MatchAmount;
             invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
 
-            // 10/10/22 TK - TODO: uncomment these to update model, once editors are completed
-            //invoice.InvoiceStatusID = InvoiceStatusID;
-            //invoice.GrantID = GrantID;
-            //invoice.ProgramIndexID = ProgramIndexID;
-            //invoice.ProjectCodeID = ProjectCodeID;
-            //invoice.InvoiceNumber = InvoiceNumber;
-            //invoice.Fund = Fund;
-            //invoice.Appn = Appn;
-            //invoice.SubObject = SubObject;
+            invoice.InvoiceStatusID = InvoiceStatusID;
+            invoice.GrantID = GrantID;
+            invoice.ProgramIndexID = ProgramIndexID;
+            invoice.ProjectCodeID = ProjectCodeID;
+            invoice.InvoiceNumber = InvoiceNumber;
+            invoice.Fund = Fund;
+            invoice.Appn = Appn;
+            invoice.SubObject = SubObject;
 
             if (InvoiceFileResourceData != null)
             {

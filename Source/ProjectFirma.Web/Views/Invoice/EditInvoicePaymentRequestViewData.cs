@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Views.Invoice
         {
 
             EditInvoicePaymentRequestType = editInvoicePaymentRequestType;
-            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.Invoice.LandOwnerPurchaseAuthority, Value = true.ToString()};
+            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.InvoicePaymentRequest.LandOwnerPurchaseAuthority, Value = true.ToString()};
             var selectListItemOther = new SelectListItem(){Text = "Other (Enter Agreement Number in textbox below)" , Value = false.ToString()};
             var selectListChooseOne = new SelectListItem(){Text = "<Choose one>" , Value = ""};
            

@@ -97,9 +97,9 @@ namespace ProjectFirma.Web.Controllers
             var invoiceApprovalStatuses = InvoiceApprovalStatus.All;
             var invoiceStatuses = InvoiceStatus.All.OrderBy(x => x.InvoiceStatusID).ToList();
             var people = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x=>x.GrantNumber);
-            var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices.OrderBy(x=>x.ProgramIndexCode);
-            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes.OrderBy(x=>x.ProjectCodeTitle);
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.GrantNumber);
+            var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices.OrderBy(x => x.ProgramIndexCode);
+            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes.OrderBy(x => x.ProjectCodeName);
             var organizationCodes = HttpRequestStorage.DatabaseEntities.OrganizationCodes;
             
             var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people, grants, programIndices, projectCodes, organizationCodes);

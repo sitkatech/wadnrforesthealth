@@ -2428,7 +2428,7 @@
     <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceIdentifyingName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceDate" Type="DateTime" Nullable="false" />
-    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PaymentAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceMatchAmountTypeID" Type="Int32" Nullable="false" />

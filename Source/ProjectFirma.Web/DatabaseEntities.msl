@@ -884,7 +884,7 @@
           <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
           <ScalarProperty Name="InvoiceIdentifyingName" ColumnName="InvoiceIdentifyingName" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
           <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
           <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
           <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />

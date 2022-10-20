@@ -44,58 +44,59 @@
     foreach (var invoicePaymentRequest in ViewDataTyped.InvoicePaymentRequests.OrderByDescending(x => x.InvoicePaymentRequestDate))
     {
         <hr />
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-4 col-xs-offset-6" style="text-align: right;">
-                    @ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.CanEditInvoicePaymentRequests)
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
+                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", FirmaDhtmlxGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
+
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-xs-5">
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Vendor Name</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.Vendor.VendorName</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Vendor Address</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.Vendor.VendorAddressLine1<br/>@invoicePaymentRequest.Vendor.VendorAddressLine2<br/>@invoicePaymentRequest.Vendor.VendorAddressLine3</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Vendor ID</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.Vendor.StatewideVendorNumberWithSuffix</div>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Purchase Authority</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.PurchaseAuthorityDisplay</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">DUNS</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.Duns</div>
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Prepared By</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.PreparedByPerson.FullNameFirstLast</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Phone</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.PreparedByPerson.Phone</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Date</div>
+                    <div class="col-xs-7">@invoicePaymentRequest.InvoicePaymentRequestDate.ToShortDateString()</div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Vendor Name")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.Vendor.VendorName</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Vendor Address")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.Vendor.VendorAddressLine1<br />@invoicePaymentRequest.Vendor.VendorAddressLine2<br />@invoicePaymentRequest.Vendor.VendorAddressLine3</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Vendor ID")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.Vendor.StatewideVendorNumberWithSuffix</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Purchase Authority")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.PurchaseAuthority</div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("DUNS")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.Duns</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Date")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.InvoicePaymentRequestDate</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Notes")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.Notes</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Prepared By")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.PreparedByPerson.FullNameFirstLast</div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3 fieldLabel">@Html.Label("Phone")</div>
-                    <div class="col-xs-6">@invoicePaymentRequest.PreparedByPerson.Phone</div>
-                </div>
-            </div>
+            <div class="col-xs-2 fieldLabel text-right">Notes</div>
+            <div class="col-xs-10">@invoicePaymentRequest.Notes</div>
         </div>
 
 
-        @Html.DhtmlxGrid(new InvoiceGridSpec(ViewDataTyped.CurrentPerson, invoicePaymentRequest.Invoices.Any(x => x.InvoiceFileResourceID.HasValue), invoicePaymentRequest), ViewDataTyped.InvoiceGridNamePrefix + invoicePaymentRequest.InvoicePaymentRequestID, SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData(invoicePaymentRequest)), string.Empty, DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+        @Html.DhtmlxGrid(new InvoiceGridSpec(ViewDataTyped.CurrentPerson, invoicePaymentRequest.Invoices.Any(x => x.InvoiceFileResourceID.HasValue), invoicePaymentRequest), ViewDataTyped.InvoiceGridNamePrefix + invoicePaymentRequest.InvoicePaymentRequestID, SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData(invoicePaymentRequest)), "height:240px;", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
 
     }
 }

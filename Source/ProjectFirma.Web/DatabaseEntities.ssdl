@@ -2323,7 +2323,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceIdentifyingName" Type="varchar" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
-    <Property Name="PayAmount" Type="money" />
+    <Property Name="PaymentAmount" Type="money" />
     <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
     <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />

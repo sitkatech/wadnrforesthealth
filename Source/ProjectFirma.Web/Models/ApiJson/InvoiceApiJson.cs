@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public string RequestorName { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string PurchaseAuthority { get; set; }
-        public decimal? PayAmount { get; set; }
+        public decimal? PaymentAmount { get; set; }
         public int PreparedByPersonID { get; set; }
         public string PreparedByPersonName { get; set; }
         public int InvoiceApprovalStatusID { get; set; }
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             //RequestorName = invoice.RequestorName;
             InvoiceDate = invoice.InvoiceDate;
             //PurchaseAuthority = invoice.PurchaseAuthority;
-            PayAmount = invoice.PayAmount;
+            PaymentAmount = invoice.PaymentAmount;
             //PreparedByPersonID = invoice.PreparedByPersonID;
             //PreparedByPersonName = invoice.PreparedByPerson.FullNameFirstLastAndOrgShortName;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;

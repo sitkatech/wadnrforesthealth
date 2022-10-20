@@ -138,7 +138,7 @@ VALUES
 (315, N'RequestorName', 'Requestor Name', 'The name of the person/vendor preparing the invoice requesting payment.' ),
 (316, N'InvoiceDate', 'Invoice Date', 'The date the invoice was submitted.'),
 (317, N'PurchaseAuthority', 'Purchase Authority', 'Typically describes an Agreement Number or that the invoice is part of landowner cost-share agreement.'),
-(318, N'PayAmount', 'Pay Amount', 'The total amount of funding requested by a given invoice'),
+(318, N'PaymentAmount', 'Payment Amount', 'The total amount of funding requested by a given invoice'),
 (319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR'),
 (320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.'),
 (321, N'GrantNoteInternal', 'Internal Grant Note', N'<p>Any additional important information about the grant. These notes are only visible to internal users </p>'),

@@ -14,5 +14,5 @@ alter table dbo.InvoicePaymentRequest
 drop column ApprovedByPersonID, ApprovedDate
 
 
-EXEC sp_rename 'dbo.Invoice.TotalPaymentAmount', 'PayAmount', 'COLUMN';
+EXEC sp_rename 'dbo.Invoice.TotalPaymentAmount', 'PaymentAmount', 'COLUMN';
 

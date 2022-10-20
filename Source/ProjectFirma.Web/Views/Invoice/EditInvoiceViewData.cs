@@ -31,20 +31,11 @@ using MoreLinq;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    //public int? GrantID { get; set; }
-    //public int? ProgramIndexID { get; set; }
-    //public int? ProjectCodeID { get; set; }
-    //public int OrganizationCodeID { get; set; }
-    //public string InvoiceNumber { get; set; }
-    //public string Fund { get; set; }
-    //public string Appn { get; set; }
-    //public string SubObject { get; set; }
     public class EditInvoiceViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> InvoiceApprovalStatuses { get; set; }
         public IEnumerable<SelectListItem> InvoiceStatuses { get; set; }
-        public IEnumerable<SelectListItem> People { get; set; }
-        public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
+
         public IEnumerable<SelectListItem> Grants { get; set; }
         public IEnumerable<SelectListItem> ProgramIndices { get; set; }
         public IEnumerable<SelectListItem> ProjectCodes { get; set; }
@@ -57,32 +48,23 @@ namespace ProjectFirma.Web.Views.Invoice
             IEnumerable<Person> people, IEnumerable<Models.Grant> grants, IEnumerable<Models.ProgramIndex> programIndices,
             IEnumerable<Models.ProjectCode> projectCodes, IEnumerable<OrganizationCode> organizationCodes)
         {
-            Grants = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
-            ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => y.ProgramIndexCode);
-            ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeTitle);
-            OrganizationCodes = organizationCodes.ToSelectListWithEmptyFirstRow(x => x.OrganizationCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.OrganizationCodeName} {y.OrganizationCodeValue}");
+            Grants = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => $"{y.GrantNumber} - {y.GrantName}");
+            ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => $"{y.ProgramIndexCode} - {y.ProgramIndexTitle} ({y.Biennium})");
+            ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.ProjectCodeName} - {y.ProjectCodeTitle}");
+            OrganizationCodes = organizationCodes.ToSelectListWithEmptyFirstRow(x => x.OrganizationCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.OrganizationCodeValue} - {y.OrganizationCodeName} ");
 
             InvoiceApprovalStatuses = invoiceApprovalStatuses.ToSelectList(x => x.InvoiceApprovalStatusID.ToString(CultureInfo.InvariantCulture), y => y.InvoiceApprovalStatusName);
             EditInvoiceType = editInvoiceType;
-            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.Invoice.LandOwnerPurchaseAuthority, Value = true.ToString()};
-            var selectListItemOther = new SelectListItem(){Text = "Other (Enter Agreement Number in textbox below)" , Value = false.ToString()};
-            var selectListChooseOne = new SelectListItem(){Text = "<Choose one>" , Value = ""};
-           
+
             if (editInvoiceType == EditInvoiceType.ExistingInvoice)
             {
                 InvoiceStatuses = invoiceStatuses.ToSelectList(x => x.InvoiceStatusID.ToString(), y => y.InvoiceStatusDisplayName);
-                PurchaseAuthorityType =
-                    new List<SelectListItem> { selectListItemLandOwnerCostShareAgreement, selectListItemOther };
             }
             else
             {
                 InvoiceStatuses = invoiceStatuses.ToSelectListWithEmptyFirstRow(x => x.InvoiceStatusID.ToString(), y => y.InvoiceStatusDisplayName);
-                PurchaseAuthorityType =
-                    new List<SelectListItem> { selectListChooseOne, selectListItemLandOwnerCostShareAgreement, selectListItemOther };
             }
-            
-            People = people.OrderBy(x => x.LastName)
-                .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
+;
         }
 
     }
