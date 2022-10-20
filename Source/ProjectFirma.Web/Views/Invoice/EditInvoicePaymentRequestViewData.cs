@@ -28,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 using MoreLinq;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
@@ -35,15 +36,16 @@ namespace ProjectFirma.Web.Views.Invoice
     {
 
         public IEnumerable<SelectListItem> People { get; set; }
-        public IEnumerable<SelectListItem> Vendors { get; set; }
         public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
         public EditInvoicePaymentRequestType EditInvoicePaymentRequestType { get; set; }
 
-        public EditInvoicePaymentRequestViewData(EditInvoicePaymentRequestType editInvoicePaymentRequestType, IEnumerable<Models.Vendor> vendors, IEnumerable<Models.Person> people)
+        public string VendorFindUrl { get; }
+
+        public EditInvoicePaymentRequestViewData(EditInvoicePaymentRequestType editInvoicePaymentRequestType, IEnumerable<Models.Person> people)
         {
 
             EditInvoicePaymentRequestType = editInvoicePaymentRequestType;
-            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.Invoice.LandOwnerPurchaseAuthority, Value = true.ToString()};
+            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.InvoicePaymentRequest.LandOwnerPurchaseAuthority, Value = true.ToString()};
             var selectListItemOther = new SelectListItem(){Text = "Other (Enter Agreement Number in textbox below)" , Value = false.ToString()};
             var selectListChooseOne = new SelectListItem(){Text = "<Choose one>" , Value = ""};
            
@@ -57,8 +59,8 @@ namespace ProjectFirma.Web.Views.Invoice
                 PurchaseAuthorityType =
                     new List<SelectListItem> { selectListChooseOne, selectListItemLandOwnerCostShareAgreement, selectListItemOther };
             }
+            VendorFindUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.Find(string.Empty));
 
-            Vendors = vendors.OrderBy(x => x.VendorName).ToSelectListWithEmptyFirstRow(x => x.VendorID.ToString(), y => y.VendorNameAndStatewideVendorNumberWithSuffix);
             People = people.OrderBy(x => x.LastName)
                 .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
         }

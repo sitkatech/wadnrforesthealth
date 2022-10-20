@@ -37,14 +37,20 @@ namespace ProjectFirma.Web.Views.Invoice
         public int InvoicePaymentRequestID { get; set; }
         public int ProjectID { get; set;}
 
-        [DisplayName("Vendor")]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Vendor)]
         public int? VendorID { get; set;}
-        [DisplayName("Prepared By")]
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
+        [Required]
         public int? PreparedByPersonID { get; set;}
-        [DisplayName("Purchase Authority")]
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
         public string PurchaseAuthority { get; set;}
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
+        [Required]
         public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set;}
-        [DisplayName("DUNS")]
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.DUNS)]
         [StringLength(InvoicePaymentRequest.FieldLengths.Duns)]
         public string Duns { get; set;}
         [DisplayName("Date")]
@@ -77,8 +83,6 @@ namespace ProjectFirma.Web.Views.Invoice
 
         public void UpdateModel(Models.InvoicePaymentRequest invoicePaymentRequest, Person currentPerson)
         {
-            invoicePaymentRequest.InvoicePaymentRequestID = InvoicePaymentRequestID;
-            invoicePaymentRequest.ProjectID = ProjectID;
             invoicePaymentRequest.VendorID = VendorID;
             invoicePaymentRequest.PreparedByPersonID = PreparedByPersonID;
             invoicePaymentRequest.PurchaseAuthority = PurchaseAuthority;

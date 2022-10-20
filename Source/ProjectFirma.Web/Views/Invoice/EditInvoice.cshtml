@@ -42,15 +42,27 @@
             @Html.ValidationMessageFor(m => m.InvoiceIdentifyingName)
         </div>
     </div>
+
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.RequestorName)
+            @Html.LabelWithSugarFor(m => m.GrantID)
         </div>
-        <div class="col-xs-4">
-            @Html.TextBoxFor(m => m.RequestorName, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.RequestorName)
+        <div class="col-xs-9">
+            @Html.SearchableDropDownListFor(m => m.GrantID, ViewDataTyped.Grants, new { style = "width: auto;", @class = "form-control selectpicker" })
+            @Html.ValidationMessageFor(m => m.GrantID)
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceNumber)
+        </div>
+        <div class="col-xs-6">
+            @Html.TextBoxFor(m => m.InvoiceNumber, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceNumber)
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="col-xs-3 control-label">
             @Html.LabelWithSugarFor(m => m.InvoiceDate)
@@ -60,40 +72,62 @@
             @Html.ValidationMessageFor(m => m.InvoiceDate)
         </div>
     </div>
-    <div class="form-group form-group-tight">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)
-        </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement, ViewDataTyped.PurchaseAuthorityType, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)
-        </div>
-    </div>
-    <div class="form-group" id="purchaseAuthorityTextBoxEntry">
-        <div class="col-xs-3 control-label">
 
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.Fund)
         </div>
         <div class="col-xs-6">
-            @Html.TextBoxFor(m => m.PurchaseAuthority, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.PurchaseAuthority)
+            @Html.TextBoxFor(m => m.Fund, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Fund)
         </div>
     </div>
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.InvoiceStatusID)
+            @Html.LabelWithSugarFor(m => m.Appn)
         </div>
-        <div class="col-xs-2">
-            @Html.DropDownListFor(m => m.InvoiceStatusID, ViewDataTyped.InvoiceStatuses, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.InvoiceStatusID)
+        <div class="col-xs-6">
+            @Html.TextBoxFor(m => m.Appn, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Appn)
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.ProgramIndexID)
+        </div>
+        <div class="col-xs-9">
+            @Html.SearchableDropDownListFor(m => m.ProgramIndexID, ViewDataTyped.ProgramIndices, new { style = "width: auto;", @class = "form-control selectpicker" })
+            @Html.ValidationMessageFor(m => m.ProgramIndexID)
         </div>
     </div>
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.InvoiceAmount)
+            @Html.LabelWithSugarFor(m => m.ProjectCodeID)
         </div>
-        <div class="col-xs-2">
-            @Html.EditorFor(m => m.InvoiceAmount, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.InvoiceAmount)
+        <div class="col-xs-9">
+            @Html.SearchableDropDownListFor(m => m.ProjectCodeID, ViewDataTyped.ProjectCodes, new { style = "width: auto;", @class = "form-control selectpicker" })
+            @Html.ValidationMessageFor(m => m.ProjectCodeID)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.SubObject)
+        </div>
+        <div class="col-xs-6">
+            @Html.TextBoxFor(m => m.SubObject, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SubObject)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.OrganizationCodeID)
+        </div>
+        <div class="col-xs-9">
+            @Html.DropDownListFor(m => m.OrganizationCodeID, ViewDataTyped.OrganizationCodes, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.OrganizationCodeID)
         </div>
     </div>
 
@@ -124,14 +158,24 @@
             @Html.ValidationMessageFor(m => m.MatchAmount)
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.PaymentAmount)
+        </div>
+        <div class="col-xs-2">
+            @Html.EditorFor(m => m.PaymentAmount, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PaymentAmount)
+        </div>
+    </div>
+    
 
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.PreparedByPersonID)
+            @Html.LabelWithSugarFor(m => m.InvoiceStatusID)
         </div>
         <div class="col-xs-2">
-            @Html.DropDownListFor(m => m.PreparedByPersonID, ViewDataTyped.People, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.PreparedByPersonID)
+            @Html.DropDownListFor(m => m.InvoiceStatusID, ViewDataTyped.InvoiceStatuses, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceStatusID)
         </div>
     </div>
 
@@ -160,13 +204,14 @@
         <div class="col-sm-8">
             @Html.EditorFor(m => m.InvoiceFileResourceData)
             @*<span class="smallExplanationText">
-                                Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
-                            </span>*@
+                    Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                </span>*@
             @Html.ValidationMessageFor(m => m.InvoiceFileResourceData)
         </div>
     </div>
 </div>
     @Html.HiddenFor(m => m.InvoiceID)
+    @Html.HiddenFor(x => x.InvoicePaymentRequestID)
 }
 
 
@@ -205,32 +250,8 @@
             });
 
             var dollarValueMatchTypeID = '@InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID';
-            var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
-            var purchaseAuthoirty = jQuery("#@Html.IdFor(m => m.PurchaseAuthority)");
 
-            var isPurchaseAuthorityLandOwner = purchaseAuthorityIsLandownerCostShare.val();
-            if (isPurchaseAuthorityLandOwner == 'False') {
-                purchaseAuthoirty.removeAttr('disabled');
-                jQuery("#purchaseAuthorityTextBoxEntry").show();
-            } else {
-                purchaseAuthoirty.attr('disabled', 'disabled');
-                jQuery("#purchaseAuthorityTextBoxEntry").hide();
-                purchaseAuthoirty.val('');
-            }
-
-            purchaseAuthorityIsLandownerCostShare.change(function() {
-                var value = purchaseAuthorityIsLandownerCostShare.val();
-                if (value == 'False') {
-                    purchaseAuthoirty.removeAttr('disabled');
-                    jQuery("#purchaseAuthorityTextBoxEntry").show();
-                } else {
-                    purchaseAuthoirty.attr('disabled', 'disabled');
-                    jQuery("#purchaseAuthorityTextBoxEntry").hide();
-                    purchaseAuthoirty.val('');
-                }
-            });
-
-            var matchAmountType = jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]');
+           var matchAmountType = jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]');
             var checkedMatchAmountType =
                 jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]:checked')[0];
             var matchAmountTypeCheckedValue = null;

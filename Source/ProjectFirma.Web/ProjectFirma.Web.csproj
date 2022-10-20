@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -721,6 +721,7 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.Binding.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
+    <Compile Include="Models\InvoicePaymentRequest.cs" />
     <Compile Include="Models\FirmaPageModelExtensions.cs" />
     <Compile Include="Models\FieldDefinitionModelExtensions.cs" />
     <Compile Include="Controllers\ProjectCountyController.cs" />
@@ -887,11 +888,14 @@
     <Compile Include="ReportTemplates\Models\ReportTemplatePersonModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectBaseViewModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectContactModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectCountyModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectExpectedPerformanceMeasureModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectImageModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectOrganizationModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectRegionModel.cs" />
     <Compile Include="ReportTemplates\Models\ReportTemplateProjectReportedPerformanceMeasureModel.cs" />
+    <Compile Include="ReportTemplates\Models\ReportTemplateProjectTreatmentModel.cs" />
     <Compile Include="ReportTemplates\ProjectFirmaDocxDocument.cs" />
     <Compile Include="ReportTemplates\ReportTemplateGenerator.cs" />
     <Compile Include="ReportTemplates\ReportTemplateTests.cs" />
@@ -4642,7 +4646,6 @@
     <Folder Include="Content\img\MimeTypeIcons\" />
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Help\" />
-    <Folder Include="Views\ProjectGeospatialArea\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
