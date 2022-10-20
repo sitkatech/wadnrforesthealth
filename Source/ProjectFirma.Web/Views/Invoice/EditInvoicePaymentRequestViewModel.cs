@@ -57,6 +57,8 @@ namespace ProjectFirma.Web.Views.Invoice
         public DateTime InvoicePaymentRequestDate { get; set;}
         [DisplayName("Notes")]
         public string Notes { get; set;}
+
+        public string VendorName { get; set; }
         
 
         /// <summary>
@@ -72,6 +74,8 @@ namespace ProjectFirma.Web.Views.Invoice
             InvoicePaymentRequestID = invoicePaymentRequest.InvoicePaymentRequestID;
             ProjectID = invoicePaymentRequest.ProjectID;
             VendorID = invoicePaymentRequest.VendorID;
+            VendorName = invoicePaymentRequest.Vendor.GetVendorNameWithFullStatewideVendorNumber();
+
             PreparedByPersonID = invoicePaymentRequest.PreparedByPersonID;
             PurchaseAuthority = invoicePaymentRequest.PurchaseAuthority;
             PurchaseAuthorityIsLandownerCostShareAgreement = invoicePaymentRequest.PurchaseAuthorityIsLandownerCostShareAgreement;
