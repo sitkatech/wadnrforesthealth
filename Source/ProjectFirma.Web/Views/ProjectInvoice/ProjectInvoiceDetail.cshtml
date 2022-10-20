@@ -34,7 +34,7 @@
 
 <div class="row">
     <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
-        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add {1}", FirmaDhtmlxGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.AddInvoicePaymentRequestUrl, string.Format("Create New {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string>{"btn", "btn-firma", "btn-sm"}, ViewDataTyped.CanEditInvoicePaymentRequests)
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add {1}", FirmaDhtmlxGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.AddInvoicePaymentRequestUrl, string.Format("Create New {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
     </div>
 </div>
 
@@ -43,7 +43,14 @@
 
     foreach (var invoicePaymentRequest in ViewDataTyped.InvoicePaymentRequests.OrderByDescending(x => x.InvoicePaymentRequestDate))
     {
-        <hr/>
+        <hr />
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-6" style="text-align: right;">
+                    @ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.CanEditInvoicePaymentRequests)
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
@@ -90,9 +97,5 @@
 
         @Html.DhtmlxGrid(new InvoiceGridSpec(ViewDataTyped.CurrentPerson, invoicePaymentRequest.Invoices.Any(x => x.InvoiceFileResourceID.HasValue), invoicePaymentRequest), ViewDataTyped.InvoiceGridNamePrefix + invoicePaymentRequest.InvoicePaymentRequestID, SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData(invoicePaymentRequest)), string.Empty, DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
 
-
     }
-
 }
-
-
