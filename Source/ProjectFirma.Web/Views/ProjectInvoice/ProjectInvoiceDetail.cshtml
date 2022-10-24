@@ -61,15 +61,15 @@
             <div class="col-xs-5">
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Vendor Name</div>
-                    <div class="col-xs-7">@invoicePaymentRequest.Vendor.VendorName</div>
+                    <div class="col-xs-7">@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorName : string.Empty)</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Vendor Address</div>
-                    <div class="col-xs-7">@invoicePaymentRequest.Vendor.VendorAddressLine1<br/>@invoicePaymentRequest.Vendor.VendorAddressLine2<br/>@invoicePaymentRequest.Vendor.VendorAddressLine3</div>
+                    <div class="col-xs-7">@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorAddressLine1 : string.Empty)<br />@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorAddressLine2 : string.Empty)<br />@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorAddressLine3 : string.Empty)</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Vendor ID</div>
-                    <div class="col-xs-7">@invoicePaymentRequest.Vendor.StatewideVendorNumberWithSuffix</div>
+                    <div class="col-xs-7">@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.StatewideVendorNumberWithSuffix : string.Empty)</div>
                 </div>
             </div>
             <div class="col-xs-2">
@@ -85,11 +85,11 @@
             <div class="col-xs-5">
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Prepared By</div>
-                    <div class="col-xs-7">@invoicePaymentRequest.PreparedByPerson.FullNameFirstLast</div>
+                    <div class="col-xs-7">@(invoicePaymentRequest.PreparedByPerson != null ? invoicePaymentRequest.PreparedByPerson.FullNameFirstLast : string.Empty)</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Phone</div>
-                    <div class="col-xs-7">@invoicePaymentRequest.PreparedByPerson.Phone</div>
+                    <div class="col-xs-7">@(invoicePaymentRequest.PreparedByPerson != null ? invoicePaymentRequest.PreparedByPerson.Phone : string.Empty)</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Date</div>

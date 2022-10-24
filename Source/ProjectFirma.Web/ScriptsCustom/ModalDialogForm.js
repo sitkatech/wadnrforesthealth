@@ -95,6 +95,9 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
         if (!form.valid())
         {
             //console.log('Form found is not valid');
+            saveButton.attr("disabled", false);
+            jQuery("#" + cancelButtonID).attr("disabled", false);
+            jQuery("." + "modal-close-button").attr("disabled", false);
             return false;
         }
         //console.log('Form appears to be valid, submitting');

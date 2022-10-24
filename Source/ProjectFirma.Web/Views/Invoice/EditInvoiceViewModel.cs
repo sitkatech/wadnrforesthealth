@@ -117,6 +117,7 @@ namespace ProjectFirma.Web.Views.Invoice
             Fund = invoice.Fund;
             Appn = invoice.Appn;
             SubObject = invoice.SubObject;
+            OrganizationCodeID = invoice.OrganizationCodeID;
 
         }
 
@@ -138,6 +139,7 @@ namespace ProjectFirma.Web.Views.Invoice
             invoice.Fund = Fund;
             invoice.Appn = Appn;
             invoice.SubObject = SubObject;
+            invoice.OrganizationCodeID = OrganizationCodeID;
 
             if (InvoiceFileResourceData != null)
             {
