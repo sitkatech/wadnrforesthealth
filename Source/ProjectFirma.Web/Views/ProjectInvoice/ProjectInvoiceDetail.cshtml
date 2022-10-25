@@ -65,7 +65,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Vendor Address</div>
-                    <div class="col-xs-7">@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorAddressLine1 : string.Empty)<br />@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorAddressLine2 : string.Empty)<br />@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.VendorAddressLine3 : string.Empty)</div>
+                    <div class="col-xs-7">@(invoicePaymentRequest.Vendor != null ? invoicePaymentRequest.Vendor.GetFullVendorAddress() : string.Empty) </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Vendor ID</div>
