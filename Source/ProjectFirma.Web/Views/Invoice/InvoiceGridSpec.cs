@@ -28,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using System.Web;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
@@ -53,7 +54,7 @@ namespace ProjectFirma.Web.Views.Invoice
             var userHasEditPermissions = new InvoiceEditFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceNumber}"),
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceIdentifyingName}"),
                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None, true);
             }
 
@@ -62,7 +63,7 @@ namespace ProjectFirma.Web.Views.Invoice
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant?.GetGrantNumberAsUrl(), 180,
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant != null ? x.Grant.GetGrantNumberAsUrl(): new HtmlString(string.Empty), 180,
                 DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.InvoiceNumber.ToGridHeaderString(), x => x.InvoiceNumber, 90, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDate, 90, DhtmlxGridColumnFormatType.Date);
@@ -81,7 +82,7 @@ namespace ProjectFirma.Web.Views.Invoice
             Add(Models.FieldDefinition.InvoiceApprovalStatus.ToGridHeaderString(), x =>
                     x.InvoiceApprovalStatus.InvoiceApprovalStatusName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x =>  x.InvoiceIdentifyingName,
+            Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x => x.InvoiceIdentifyingName,
                 InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.Text);
 
         }
