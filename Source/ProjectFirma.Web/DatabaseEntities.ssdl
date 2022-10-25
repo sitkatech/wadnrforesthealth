@@ -762,10 +762,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
-      <End Role="ApprovedByPerson" EntitySet="Person" />
-      <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" EntitySet="InvoicePaymentRequest" />
-    </AssociationSet>
     <AssociationSet Name="FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InvoicePaymentRequest_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
       <End Role="InvoicePaymentRequestsWhereYouAreThePreparedByPerson" EntitySet="InvoicePaymentRequest" />
@@ -2336,7 +2332,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceIdentifyingName" Type="varchar" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
-    <Property Name="TotalPaymentAmount" Type="money" />
+    <Property Name="PaymentAmount" Type="money" />
     <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
     <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
@@ -2366,8 +2362,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="Duns" Type="varchar" MaxLength="20" />
     <Property Name="InvoicePaymentRequestDate" Type="datetime" Nullable="false" />
     <Property Name="Notes" Type="varchar(max)" />
-    <Property Name="ApprovedByPersonID" Type="int" />
-    <Property Name="ApprovedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="LoaStage">
     <Key>
@@ -5190,18 +5184,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="Invoices">
         <PropertyRef Name="ProjectCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InvoicePaymentRequest_Person_ApprovedByPersonID_PersonID">
-    <End Role="ApprovedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson" Type="ProjectFirma.Web.Models.Store.InvoicePaymentRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ApprovedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="InvoicePaymentRequestsWhereYouAreTheApprovedByPerson">
-        <PropertyRef Name="ApprovedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

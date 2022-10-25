@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[Invoice](
 	[InvoiceID] [int] IDENTITY(1,1) NOT NULL,
 	[InvoiceIdentifyingName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[InvoiceDate] [datetime] NOT NULL,
-	[TotalPaymentAmount] [money] NULL,
+	[PaymentAmount] [money] NULL,
 	[InvoiceApprovalStatusID] [int] NOT NULL,
 	[InvoiceApprovalStatusComment] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[InvoiceMatchAmountTypeID] [int] NOT NULL,

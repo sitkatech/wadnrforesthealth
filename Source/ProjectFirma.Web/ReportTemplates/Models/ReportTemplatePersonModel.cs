@@ -14,6 +14,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Address { get; set; }
 
 
         public ReportTemplatePersonModel(Person person)
@@ -29,6 +30,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 LastName = Person.LastName;
                 Email = Person.Email;
                 Phone = Person.Phone;
+                Address = Person.PersonAddress;
             }
         }
 

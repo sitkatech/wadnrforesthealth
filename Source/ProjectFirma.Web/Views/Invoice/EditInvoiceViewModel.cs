@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditInvoiceViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -35,28 +35,28 @@ namespace ProjectFirma.Web.Views.Invoice
     public class EditInvoiceViewModel : FormViewModel, IValidatableObject
     {
         public int InvoiceID { get; set; }
+        public int InvoicePaymentRequestID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceIdentifyingName)]
         [Required]
         public string InvoiceIdentifyingName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.RequestorName)]
-        [Required]
-        public string RequestorName { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceDate)]
         [Required]
         public DateTime? InvoiceDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
-        public string PurchaseAuthority { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PaymentAmount)]
+        public Money? PaymentAmount { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
+        public int InvoiceApprovalStatusID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalComment)]
+        public string InvoiceApprovalStatusComment { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
         [Required]
-        public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalRequestedInvoicePaymentAmount)]
-        public Money? InvoiceAmount { get; set; }
+        public int InvoiceMatchAmountTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
         public Money? MatchAmount { get; set; }
@@ -65,37 +65,32 @@ namespace ProjectFirma.Web.Views.Invoice
         [Required]
         public int InvoiceStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
-        [Required]
-        public int InvoiceMatchAmountTypeID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
-        public int InvoiceApprovalStatusID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalComment)]
-        public string InvoiceApprovalStatusComment { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
-        [Required]
-        public int PreparedByPersonID { get; set; }
-
-
-        public int InvoicePaymentRequestID { get; set; }
-        
-        public int? GrantID { get; set; }
-        public int? ProgramIndexID { get; set; }
-        public int? ProjectCodeID { get; set; }
-        public string InvoiceNumber { get; set; }
-        public string Fund { get; set; }
-        public string Appn { get; set; }
-        public string SubObject { get; set; }
-        
         [DisplayName("Invoice Voucher Upload")]
         //[SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase InvoiceFileResourceData { get; set; }
 
+        
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
+        public int? GrantID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
+        public int? ProgramIndexID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
+        public int? ProjectCodeID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.OrganizationCode)]
+        public int? OrganizationCodeID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceNumber)]
+        public string InvoiceNumber { get; set; }
 
+        [StringLength(Models.Invoice.FieldLengths.Fund)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Fund)]
+        public string Fund { get; set; }
+        [StringLength(Models.Invoice.FieldLengths.Appn)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Appn)]
+        public string Appn { get; set; }
+        [StringLength(Models.Invoice.FieldLengths.SubObject)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.SubObject)]
+        public string SubObject { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -108,7 +103,7 @@ namespace ProjectFirma.Web.Views.Invoice
         {
             InvoiceIdentifyingName = invoice.InvoiceIdentifyingName;
             InvoiceDate = invoice.InvoiceDate;
-            InvoiceAmount = invoice.TotalPaymentAmount;
+            PaymentAmount = invoice.PaymentAmount;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
             MatchAmount = invoice.MatchAmount;
@@ -122,28 +117,29 @@ namespace ProjectFirma.Web.Views.Invoice
             Fund = invoice.Fund;
             Appn = invoice.Appn;
             SubObject = invoice.SubObject;
+            OrganizationCodeID = invoice.OrganizationCodeID;
 
         }
 
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)
         {
             invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
-            invoice.InvoiceDate = InvoiceDate.Value;
-            invoice.TotalPaymentAmount = InvoiceAmount;
+            invoice.InvoiceDate = InvoiceDate ?? DateTime.MaxValue;
+            invoice.PaymentAmount = PaymentAmount;
             invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
             invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
             invoice.MatchAmount = MatchAmount;
             invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
 
-            // 10/10/22 TK - TODO: uncomment these to update model, once editors are completed
-            //invoice.InvoiceStatusID = InvoiceStatusID;
-            //invoice.GrantID = GrantID;
-            //invoice.ProgramIndexID = ProgramIndexID;
-            //invoice.ProjectCodeID = ProjectCodeID;
-            //invoice.InvoiceNumber = InvoiceNumber;
-            //invoice.Fund = Fund;
-            //invoice.Appn = Appn;
-            //invoice.SubObject = SubObject;
+            invoice.InvoiceStatusID = InvoiceStatusID;
+            invoice.GrantID = GrantID;
+            invoice.ProgramIndexID = ProgramIndexID;
+            invoice.ProjectCodeID = ProjectCodeID;
+            invoice.InvoiceNumber = InvoiceNumber;
+            invoice.Fund = Fund;
+            invoice.Appn = Appn;
+            invoice.SubObject = SubObject;
+            invoice.OrganizationCodeID = OrganizationCodeID;
 
             if (InvoiceFileResourceData != null)
             {
@@ -167,11 +163,6 @@ namespace ProjectFirma.Web.Views.Invoice
                     FirmaValidationMessages.InvoiceNicknameMustBePopulated, m => m.InvoiceIdentifyingName);
             }
 
-            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority))
-            {
-                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
-                    FirmaValidationMessages.PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement, m => m.PurchaseAuthority);
-            }
 
             if (InvoiceMatchAmountTypeID == InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID && !MatchAmount.HasValue)
             {

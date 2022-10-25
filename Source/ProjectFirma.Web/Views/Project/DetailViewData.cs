@@ -30,6 +30,7 @@ using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
+using ProjectFirma.Web.Views.ProjectInvoice;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
@@ -108,6 +109,7 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectStewardCannotEditUrl { get; }
         public string ProjectStewardCannotEditPendingApprovalUrl { get; }
         public ProjectFundingDetailViewData ProjectFundingDetailViewData { get; }
+        public ProjectInvoiceDetailViewData ProjectInvoiceDetailViewData { get; }
 
         public string ProjectUpdateButtonText { get; }
         public bool CanLaunchProjectOrProposalWizard { get; }
@@ -140,6 +142,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
             ProjectLocationSummaryViewData projectLocationSummaryViewData,
             ProjectFundingDetailViewData projectFundingDetailViewData,
+            ProjectInvoiceDetailViewData projectInvoiceDetailViewData,
             PerformanceMeasureExpectedSummaryViewData performanceMeasureExpectedSummaryViewData,
             PerformanceMeasureReportedValuesGroupedViewData performanceMeasureReportedValuesGroupedViewData,
             ProjectExpendituresDetailViewData projectExpendituresDetailViewData,
@@ -331,6 +334,7 @@ namespace ProjectFirma.Web.Views.Project
             PerformanceMeasureReportedValuesGroupedViewData = performanceMeasureReportedValuesGroupedViewData;
             EditPerformanceMeasureActualsUrl = editPerformanceMeasureActualsUrl;
 
+            ProjectInvoiceDetailViewData = projectInvoiceDetailViewData;
             ProjectFundingDetailViewData = projectFundingDetailViewData;
             EditExpectedFundingUrl =
                 SitkaRoute<ProjectGrantAllocationRequestController>.BuildUrlFromExpression(c =>

@@ -884,7 +884,7 @@
           <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
           <ScalarProperty Name="InvoiceIdentifyingName" ColumnName="InvoiceIdentifyingName" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-          <ScalarProperty Name="TotalPaymentAmount" ColumnName="TotalPaymentAmount" />
+          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
           <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
           <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
           <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
@@ -915,8 +915,6 @@
           <ScalarProperty Name="Duns" ColumnName="Duns" />
           <ScalarProperty Name="InvoicePaymentRequestDate" ColumnName="InvoicePaymentRequestDate" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="ApprovedByPersonID" ColumnName="ApprovedByPersonID" />
-          <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

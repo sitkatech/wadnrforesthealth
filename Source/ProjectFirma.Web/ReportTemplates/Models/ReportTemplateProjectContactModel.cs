@@ -12,6 +12,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Address { get; set; }
         public string ContactType { get; set; }
 
         public ReportTemplateProjectContactModel(ProjectPerson projectPerson)
@@ -26,6 +27,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             LastName = ProjectPerson.Person.LastName;
             Email = ProjectPerson.Person.Email;
             Phone = ProjectPerson.Person.Phone;
+            Address = ProjectPerson.Person.PersonAddress;
             ContactType = ProjectPerson.ProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName;
         }
 

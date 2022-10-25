@@ -138,7 +138,7 @@ VALUES
 (315, N'RequestorName', 'Requestor Name', 'The name of the person/vendor preparing the invoice requesting payment.' ),
 (316, N'InvoiceDate', 'Invoice Date', 'The date the invoice was submitted.'),
 (317, N'PurchaseAuthority', 'Purchase Authority', 'Typically describes an Agreement Number or that the invoice is part of landowner cost-share agreement.'),
-(318, N'TotalRequestedInvoicePaymentAmount', 'Total Invoice Amount', 'The total amount of funding requested by a given invoice'),
+(318, N'PaymentAmount', 'Payment Amount', 'The total amount of funding requested by a given invoice'),
 (319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR'),
 (320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.'),
 (321, N'GrantNoteInternal', 'Internal Grant Note', N'<p>Any additional important information about the grant. These notes are only visible to internal users </p>'),
@@ -333,4 +333,11 @@ VALUES
 (511, N'ReportDescription', N'Report Description', 'Report Description'),
 (512, N'ReportFile', N'Report File', 'Report File'),
 (513, N'ReportModel', N'Report Model', 'Report Model'),
-(514, N'SelectedReportTemplate', N'Selected Report Template', 'Selected Report Template')
+(514, N'SelectedReportTemplate', N'Selected Report Template', 'Selected Report Template'),
+(515, N'InvoicePaymentRequest', N'Invoice Payment Request', 'Invoice Payment Request'),
+(516, N'DUNS', N'DUNS', 'DUNS'),
+(517, N'OrganizationCode', N'Organization Code', N'Organization Code used in invoicing'),
+(518, N'InvoiceNumber', N'Invoice Number', N'The number of an invoice'),
+(519, N'Fund', N'Fund', N'The fund of an invoice'),
+(520, N'Appn', N'Appn', N'The Appn of an invoice'),
+(521, N'SubObject', N'SubObject', N'The SubObject of an invoice')

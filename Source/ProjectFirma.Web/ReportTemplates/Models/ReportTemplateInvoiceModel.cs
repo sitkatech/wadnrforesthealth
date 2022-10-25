@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
 
         // Public properties
         public DateTime InvoiceDate { get; set; }
-        public decimal? TotalPaymentAmount { get; set; }
+        public decimal? PaymentAmount { get; set; }
         public decimal? MatchAmount { get; set; }
         public string GrantNumber { get; set; }
         public string ProgramIndexCode { get; set; }
@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             {
                 // Public properties
                 InvoiceDate = invoice.InvoiceDate;
-                TotalPaymentAmount = invoice.TotalPaymentAmount;
+                PaymentAmount = invoice.PaymentAmount;
                 MatchAmount = invoice.MatchAmount;
                 GrantNumber = invoice.Grant?.GrantNumber;
                 ProgramIndexCode = invoice.ProgramIndex?.ProgramIndexCode;
