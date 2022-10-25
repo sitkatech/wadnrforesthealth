@@ -49,5 +49,10 @@ namespace ProjectFirma.Web.Views.ProjectInvoice
             Project = project;
             InvoiceGridNamePrefix = "invoiceGridName";
         }
+
+        public string GetDownloadInvoicePaymentRequestUrl(InvoicePaymentRequest invoicePaymentRequest)
+        {
+            return SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.DownloadInvoicePaymentRequest(this.Project.PrimaryKey, invoicePaymentRequest));
+        }
     }
 }
