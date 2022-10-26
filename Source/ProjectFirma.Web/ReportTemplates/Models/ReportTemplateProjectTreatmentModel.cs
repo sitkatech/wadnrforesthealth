@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         private Project Project { get; set; }
         private Treatment ProjectTreatment { get; set; }
 
-        //public string TreatmentCode { get; set; }
+        public string TreatmentCode { get; set; }
         public string Name { get; set; }
         public DateTime? StartDate { get; set; }
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             Project = projectTreatment.Project;
             ProjectTreatment = projectTreatment;
 
-            //TreatmentCode = ProjectTreatment.TreatmentCode.TreatmentCodeDisplayName;
+            TreatmentCode = ProjectTreatment.TreatmentCode.TreatmentCodeDisplayName;
             Name = ProjectTreatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
             StartDate = ProjectTreatment.TreatmentStartDate;
             EndDate = ProjectTreatment.TreatmentEndDate;
