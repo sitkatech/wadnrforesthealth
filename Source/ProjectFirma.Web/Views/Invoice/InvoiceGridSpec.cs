@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Invoice
             var userHasEditPermissions = new InvoiceEditFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceIdentifyingName}"),
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceNumber}"),
                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None, true);
             }
 

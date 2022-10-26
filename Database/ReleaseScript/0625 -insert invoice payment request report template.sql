@@ -26,3 +26,10 @@ select
 	1 as IsSystemTemplate
  from
 	dbo.FileResource where OriginalBaseFilename = 'Invoice Payment Request'
+
+go 
+
+alter table dbo.Invoice 
+alter column InvoiceNumber varchar(50) not null
+
+

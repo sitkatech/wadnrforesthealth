@@ -34,13 +34,12 @@ namespace ProjectFirma.Web.Views.Invoice
 {
     public class EditInvoiceViewModel : FormViewModel, IValidatableObject
     {
+        [Required]
         public int InvoiceID { get; set; }
-        public int InvoicePaymentRequestID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceIdentifyingName)]
-        [Required]
         public string InvoiceIdentifyingName { get; set; }
-
+        
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceDate)]
         [Required]
         public DateTime? InvoiceDate { get; set; }
@@ -49,6 +48,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public Money? PaymentAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
+        [Required]
         public int InvoiceApprovalStatusID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalComment)]
@@ -69,25 +69,33 @@ namespace ProjectFirma.Web.Views.Invoice
         //[SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase InvoiceFileResourceData { get; set; }
 
-        
+        [Required]
+        public int InvoicePaymentRequestID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
         public int? GrantID { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public int? ProgramIndexID { get; set; }
+        
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
         public int? ProjectCodeID { get; set; }
+        
         [FieldDefinitionDisplay(FieldDefinitionEnum.OrganizationCode)]
         public int? OrganizationCodeID { get; set; }
+        
+        [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceNumber)]
         public string InvoiceNumber { get; set; }
-
+        
         [StringLength(Models.Invoice.FieldLengths.Fund)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.Fund)]
         public string Fund { get; set; }
+        
         [StringLength(Models.Invoice.FieldLengths.Appn)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.Appn)]
         public string Appn { get; set; }
+        
         [StringLength(Models.Invoice.FieldLengths.SubObject)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.SubObject)]
         public string SubObject { get; set; }

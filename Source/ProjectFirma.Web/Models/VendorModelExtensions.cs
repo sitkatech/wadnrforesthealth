@@ -28,9 +28,8 @@ namespace ProjectFirma.Web.Models
         {
             return vendor != null
                 ? String.Join("\r\n", vendor.VendorAddressLine1, vendor.VendorAddressLine2, vendor.VendorAddressLine3,
-                    vendor.VendorCity, vendor.VendorState, vendor.VendorZip)
+                    $"{vendor.VendorCity} {vendor.VendorState} {vendor.VendorZip}")
                 : string.Empty;
-
         }
     }
 }
