@@ -11,7 +11,9 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         // Public properties
         public DateTime InvoiceDate { get; set; }
         public decimal? PaymentAmount { get; set; }
+        public string PaymentAmountDisplay(int decimalPlaces = 2) => PaymentAmount.HasValue ? PaymentAmount.Value.ToString($"C{decimalPlaces}") : string.Empty;
         public decimal? MatchAmount { get; set; }
+        public string MatchAmountDisplay(int decimalPlaces = 2) => MatchAmount.HasValue ? MatchAmount.Value.ToString($"C{decimalPlaces}") : string.Empty;
         public string GrantNumber { get; set; }
         public string ProgramIndexCode { get; set; }
         public string ProjectCodeName { get; set; }
