@@ -50,6 +50,5 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             DiffUrl = diffUrl;
         }
 
-        //public EntityDocumentsViewData EntityDocumentsViewData { get; set; }
     }
 }

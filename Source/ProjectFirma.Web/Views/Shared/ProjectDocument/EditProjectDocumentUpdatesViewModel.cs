@@ -19,6 +19,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
             DocumentID = projectDocumentUpdate.ProjectDocumentUpdateID;
             DisplayName = projectDocumentUpdate.DisplayName;
             Description = projectDocumentUpdate.Description;
+            ProjectDocumentTypeID = projectDocumentUpdate.ProjectDocumentTypeID;
         }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

@@ -65,7 +65,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
                 HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
                 var projectDocument = new ProjectDocumentUpdate(projectUpdateBatch.ProjectID, fileResource.FileResourceID, DisplayNames[key])
                 {
-                    Description = !Descriptions[key].IsNullOrWhiteSpace() ? Descriptions[key] : null
+                    Description = !Descriptions[key].IsNullOrWhiteSpace() ? Descriptions[key] : null,
+                    ProjectDocumentTypeID = ProjectDocumentTypeID
                 };
                 projectUpdateBatch.ProjectDocumentUpdates.Add(projectDocument);
             }
