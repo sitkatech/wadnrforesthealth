@@ -17,9 +17,12 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public DateTime? EndDate { get; set; }
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
-        public string FootprintAcres { get; set; }
-        public string TreatedAcres { get; set; }
+        public decimal FootprintAcres { get; set; }
+        public string FootprintAcresDisplay(int decimalPlaces = 3) => ProjectTreatment.TreatmentFootprintAcres.ToString($"N{decimalPlaces}");
+        public decimal? TreatedAcres { get; set; }
+        public string TreatedAcresDisplay(int decimalPlaces = 3) => ProjectTreatment.TreatmentTreatedAcres.HasValue ? ProjectTreatment.TreatmentTreatedAcres.Value.ToString($"N{decimalPlaces}") : string.Empty;
         public decimal? CostPerAcre { get; set; }
+        public string CostPerAcreDisplay(int decimalPlaces = 2) => CostPerAcre.HasValue ? CostPerAcre.Value.ToString($"C{decimalPlaces}") : string.Empty;
 
         public decimal? TotalCostFootprint
         {
@@ -31,6 +34,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 return null;
             }
         }
+        public string TotalCostFootprintDisplay(int decimalPlaces = 2) => TotalCostFootprint.HasValue ? TotalCostFootprint.Value.ToString($"C{decimalPlaces}") : string.Empty;
 
         public decimal? TotalCostTreated
         {
@@ -41,6 +45,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 return null;
             }
         }
+        public string TotalCostTreatedDisplay(int decimalPlaces = 2) => TotalCostTreated.HasValue ? TotalCostTreated.Value.ToString($"C{decimalPlaces}") : string.Empty;
 
         public ReportTemplateProjectTreatmentModel(Treatment projectTreatment)
         {
@@ -51,8 +56,8 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             Name = ProjectTreatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
             StartDate = ProjectTreatment.TreatmentStartDate;
             EndDate = ProjectTreatment.TreatmentEndDate;
-            FootprintAcres = ProjectTreatment.TreatmentFootprintAcres.ToString();
-            TreatedAcres = ProjectTreatment.TreatmentTreatedAcres.HasValue ? ProjectTreatment.TreatmentTreatedAcres.Value.ToString() : string.Empty;
+            FootprintAcres = ProjectTreatment.TreatmentFootprintAcres;
+            TreatedAcres = ProjectTreatment.TreatmentTreatedAcres;
             CostPerAcre = ProjectTreatment.CostPerAcre;
         }
     }
