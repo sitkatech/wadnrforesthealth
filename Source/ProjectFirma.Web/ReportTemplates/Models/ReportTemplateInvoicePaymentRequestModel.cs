@@ -17,6 +17,39 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string VendorCity { get; set; }
         public string VendorState { get; set; }
         public string VendorZip { get; set; }
+
+        public string VendorCityStateZip
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(VendorCity)
+                    && !string.IsNullOrEmpty(VendorState)
+                    && !string.IsNullOrEmpty(VendorZip))
+                {
+                    return $"{VendorCity}, {VendorState}  {VendorZip}";
+                }
+
+                if (!string.IsNullOrEmpty(VendorCity) && !string.IsNullOrEmpty(VendorState))
+                    return $"{VendorCity}, {VendorState}";
+
+                if (!string.IsNullOrEmpty(VendorCity))
+                    return VendorCity;
+
+                if (!string.IsNullOrEmpty(VendorState))
+                    return VendorState;
+
+                if (!string.IsNullOrEmpty(VendorZip))
+                    return VendorZip;
+
+                return string.Empty;
+            }
+        }
+
+        public string VendorAddressDisplay => $"{(!string.IsNullOrEmpty(VendorAddressLine1) ? VendorAddressLine1 + Environment.NewLine : string.Empty)}" +
+                                              $"{(!string.IsNullOrEmpty(VendorAddressLine2) ? VendorAddressLine2 + Environment.NewLine : string.Empty)}" +
+                                              $"{(!string.IsNullOrEmpty(VendorAddressLine3) ? VendorAddressLine3 + Environment.NewLine : string.Empty)}" +
+                                              $"{VendorCityStateZip}";
+
         public ReportTemplatePersonModel PreparedByPerson { get; set; }
         public string PurchaseAuthority { get; set; }
         public string DUNS { get; set; }
