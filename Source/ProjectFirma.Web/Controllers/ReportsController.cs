@@ -269,10 +269,11 @@ namespace ProjectFirma.Web.Controllers
         [ProjectEditAsAdminFeature]
         public ActionResult DownloadLandOwnerAssistanceApprovalLetter(ProjectPrimaryKey projectPrimaryKey)
         {
+            var project = projectPrimaryKey.EntityObject;
             var reportTemplate = ReportTemplate.GetApprovalLetterTemplate();
-            var selectedModelIDs = new List<int> { projectPrimaryKey.EntityObject.PrimaryKey };
+            var selectedModelIDs = new List<int> { project.PrimaryKey };
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
-            return reportTemplateGenerator.GenerateAndDownload();
+            return reportTemplateGenerator.GenerateAndDownload($"{project.DisplayName} - Financial Assistance Approval Letter");
         }
     }
 }

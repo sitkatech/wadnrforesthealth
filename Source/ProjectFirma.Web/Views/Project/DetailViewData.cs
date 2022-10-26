@@ -121,6 +121,8 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectImportRemoveBlockListUrl { get; }
         public string ProjectListUrl { get; }
         public string BackToProjectsText { get; }
+        public bool IsLoaProgramProject { get; }
+
         public List<string> ProjectAlerts { get; }
         public readonly ProjectOrganizationsDetailViewData ProjectOrganizationsDetailViewData;
         public List<Models.ClassificationSystem> ClassificationSystems { get; }
@@ -396,8 +398,6 @@ namespace ProjectFirma.Web.Views.Project
             TreatmentGroupGridSpec = treatmentGroupGridSpec;
             TreatmentAreaGrid = "treatmentAreaGrid";
             TreatmentAreaGridDataUrl = treatmentAreaGridDataUrl;
-
-
             TreatmentGridSpec = treatmentGridSpec;
             TreatmentGrid = "treatmentGrid";
             TreatmentGridDataUrl = treatmentGridDataUrl;
@@ -408,7 +408,7 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
 
-            
+            IsLoaProgramProject = project.ProjectPrograms.Any(x => x.ProgramID == 3);
         }
     }
 }
