@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Invoice Create()
             {
                 var testIPR = TestInvoicePaymentRequest.Create();
-                var invoice = new Invoice(DateTime.Now, InvoiceApprovalStatus.Approved, InvoiceMatchAmountType.DNR, InvoiceStatus.Paid, testIPR);
+                var invoice = new Invoice(DateTime.Now, InvoiceApprovalStatus.Approved, InvoiceMatchAmountType.DNR, InvoiceStatus.Paid, testIPR, Guid.NewGuid().ToString());
 
                 return invoice;
             }
@@ -34,3 +34,4 @@ namespace ProjectFirma.Web.UnitTestCommon
         }
     }
 }
+
