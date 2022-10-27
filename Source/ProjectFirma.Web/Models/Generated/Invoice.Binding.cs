@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(DateTime invoiceDate, int invoiceApprovalStatusID, int invoiceMatchAmountTypeID, int invoiceStatusID, int invoicePaymentRequestID) : this()
+        public Invoice(DateTime invoiceDate, int invoiceApprovalStatusID, int invoiceMatchAmountTypeID, int invoiceStatusID, int invoicePaymentRequestID, string invoiceNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -67,12 +67,13 @@ namespace ProjectFirma.Web.Models
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
             this.InvoiceStatusID = invoiceStatusID;
             this.InvoicePaymentRequestID = invoicePaymentRequestID;
+            this.InvoiceNumber = invoiceNumber;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Invoice(DateTime invoiceDate, InvoiceApprovalStatus invoiceApprovalStatus, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus, InvoicePaymentRequest invoicePaymentRequest) : this()
+        public Invoice(DateTime invoiceDate, InvoiceApprovalStatus invoiceApprovalStatus, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus, InvoicePaymentRequest invoicePaymentRequest, string invoiceNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -83,6 +84,7 @@ namespace ProjectFirma.Web.Models
             this.InvoicePaymentRequestID = invoicePaymentRequest.InvoicePaymentRequestID;
             this.InvoicePaymentRequest = invoicePaymentRequest;
             invoicePaymentRequest.Invoices.Add(this);
+            this.InvoiceNumber = invoiceNumber;
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Invoice CreateNewBlank(InvoiceApprovalStatus invoiceApprovalStatus, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus, InvoicePaymentRequest invoicePaymentRequest)
         {
-            return new Invoice(default(DateTime), invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus, invoicePaymentRequest);
+            return new Invoice(default(DateTime), invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus, invoicePaymentRequest, default(string));
         }
 
         /// <summary>

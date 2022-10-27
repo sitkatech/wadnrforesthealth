@@ -23,7 +23,12 @@ namespace ProjectFirma.Web.Models
         {
             var approvalLetterTemplate = HttpRequestStorage.DatabaseEntities.ReportTemplates.Single(x => x.IsSystemTemplate && x.DisplayName == "Financial Assistance Approval Letter");
             return approvalLetterTemplate;
+        }
 
+        public static ReportTemplate GetInvoicePaymentRequestTemplate()
+        {
+            var invoicePaymentRequestTemplate = HttpRequestStorage.DatabaseEntities.ReportTemplates.Single(x => x.IsSystemTemplate && x.DisplayName == "Invoice Payment Request");
+            return invoicePaymentRequestTemplate;
         }
     }
 }
