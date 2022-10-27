@@ -121,7 +121,6 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectImportRemoveBlockListUrl { get; }
         public string ProjectListUrl { get; }
         public string BackToProjectsText { get; }
-        public bool IsLoaProgramProject { get; }
 
         public List<string> ProjectAlerts { get; }
         public readonly ProjectOrganizationsDetailViewData ProjectOrganizationsDetailViewData;
@@ -407,8 +406,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
             ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
-
-            IsLoaProgramProject = project.ProjectPrograms.Any(x => x.ProgramID == 3);
         }
     }
 }
