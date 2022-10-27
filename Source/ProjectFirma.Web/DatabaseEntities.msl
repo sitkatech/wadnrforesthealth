@@ -1505,7 +1505,7 @@
         <MappingFragment StoreEntitySet="ProjectDocumentType">
           <ScalarProperty Name="ProjectDocumentTypeID" ColumnName="ProjectDocumentTypeID" />
           <ScalarProperty Name="ProjectDocumentTypeName" ColumnName="ProjectDocumentTypeName" />
-          <ScalarProperty Name="ProjectDocumentTypeDescription" ColumnName="ProjectDocumentTypeDescription" />
+          <ScalarProperty Name="ProjectDocumentTypeDisplayName" ColumnName="ProjectDocumentTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

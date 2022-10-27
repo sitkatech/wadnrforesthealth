@@ -2918,7 +2918,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectDocumentTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectDocumentTypeName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="ProjectDocumentTypeDescription" Type="varchar" MaxLength="200" />
+    <Property Name="ProjectDocumentTypeDisplayName" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="ProjectDocumentUpdate">
     <Key>

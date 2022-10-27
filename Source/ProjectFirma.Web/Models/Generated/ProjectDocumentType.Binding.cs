@@ -32,11 +32,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectDocumentType(int projectDocumentTypeID, string projectDocumentTypeName, string projectDocumentTypeDescription) : this()
+        public ProjectDocumentType(int projectDocumentTypeID, string projectDocumentTypeName, string projectDocumentTypeDisplayName) : this()
         {
             this.ProjectDocumentTypeID = projectDocumentTypeID;
             this.ProjectDocumentTypeName = projectDocumentTypeName;
-            this.ProjectDocumentTypeDescription = projectDocumentTypeDescription;
+            this.ProjectDocumentTypeDisplayName = projectDocumentTypeDisplayName;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectDocumentTypeID { get; set; }
         public string ProjectDocumentTypeName { get; set; }
-        public string ProjectDocumentTypeDescription { get; set; }
+        public string ProjectDocumentTypeDisplayName { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectDocumentTypeID; } set { ProjectDocumentTypeID = value; } }
 
@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int ProjectDocumentTypeName = 100;
-            public const int ProjectDocumentTypeDescription = 200;
+            public const int ProjectDocumentTypeDisplayName = 200;
         }
     }
 }

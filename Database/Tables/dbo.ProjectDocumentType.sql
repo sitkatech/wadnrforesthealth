@@ -5,7 +5,7 @@ GO
 CREATE TABLE [dbo].[ProjectDocumentType](
 	[ProjectDocumentTypeID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectDocumentTypeName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ProjectDocumentTypeDescription] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectDocumentTypeDisplayName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectDocumentType_ProjectDocumentTypeID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectDocumentTypeID] ASC

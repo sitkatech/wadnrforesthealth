@@ -28,8 +28,15 @@ namespace ProjectFirma.Web.Models
     {
         public static string GetDocumentTypeName(this ProjectDocumentResource projectDocumentResource)
         {
-            return HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes.Single(x => x.ProjectDocumentTypeID == projectDocumentResource.ProjectDocumentTypeID).ProjectDocumentTypeName;
-        }
+            if (projectDocumentResource.ProjectDocumentTypeID == null)
+            {
+                return "No Document Type Selected";
+            }
 
+            var docType =  HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes
+                .SingleOrDefault(x => x.ProjectDocumentTypeID == projectDocumentResource.ProjectDocumentTypeID)
+                .ProjectDocumentTypeName;
+            return docType == null ? "No Document Type Selected" : docType;
+        }
     }
 }

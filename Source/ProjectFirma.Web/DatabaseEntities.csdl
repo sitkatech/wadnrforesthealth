@@ -3252,7 +3252,7 @@
     </Key>
     <Property Name="ProjectDocumentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectDocumentTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectDocumentTypeDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectDocumentTypeDisplayName" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID" FromRole="ProjectDocumentType" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID" FromRole="ProjectDocumentType" ToRole="ProjectDocumentUpdates" />
   </EntityType>
