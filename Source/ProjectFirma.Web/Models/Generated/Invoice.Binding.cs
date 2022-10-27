@@ -25,71 +25,74 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Invoice()
         {
-            this.InvoiceLineItems = new HashSet<InvoiceLineItem>();
+
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, decimal? totalPaymentAmount, int preparedByPersonID, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, bool purchaseAuthorityIsLandownerCostShareAgreement, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, DateTime invoiceDate, decimal? paymentAmount, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID, int invoicePaymentRequestID, int? grantID, int? programIndexID, int? projectCodeID, int? organizationCodeID, string invoiceNumber, string fund, string appn, string subObject) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
-            this.RequestorName = requestorName;
             this.InvoiceDate = invoiceDate;
-            this.PurchaseAuthority = purchaseAuthority;
-            this.TotalPaymentAmount = totalPaymentAmount;
-            this.PreparedByPersonID = preparedByPersonID;
+            this.PaymentAmount = paymentAmount;
             this.InvoiceApprovalStatusID = invoiceApprovalStatusID;
             this.InvoiceApprovalStatusComment = invoiceApprovalStatusComment;
-            this.PurchaseAuthorityIsLandownerCostShareAgreement = purchaseAuthorityIsLandownerCostShareAgreement;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
             this.MatchAmount = matchAmount;
             this.InvoiceStatusID = invoiceStatusID;
             this.InvoiceFileResourceID = invoiceFileResourceID;
+            this.InvoicePaymentRequestID = invoicePaymentRequestID;
+            this.GrantID = grantID;
+            this.ProgramIndexID = programIndexID;
+            this.ProjectCodeID = projectCodeID;
+            this.OrganizationCodeID = organizationCodeID;
+            this.InvoiceNumber = invoiceNumber;
+            this.Fund = fund;
+            this.Appn = appn;
+            this.SubObject = subObject;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(string requestorName, DateTime invoiceDate, int preparedByPersonID, int invoiceApprovalStatusID, bool purchaseAuthorityIsLandownerCostShareAgreement, int invoiceMatchAmountTypeID, int invoiceStatusID) : this()
+        public Invoice(DateTime invoiceDate, int invoiceApprovalStatusID, int invoiceMatchAmountTypeID, int invoiceStatusID, int invoicePaymentRequestID, string invoiceNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.RequestorName = requestorName;
             this.InvoiceDate = invoiceDate;
-            this.PreparedByPersonID = preparedByPersonID;
             this.InvoiceApprovalStatusID = invoiceApprovalStatusID;
-            this.PurchaseAuthorityIsLandownerCostShareAgreement = purchaseAuthorityIsLandownerCostShareAgreement;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
             this.InvoiceStatusID = invoiceStatusID;
+            this.InvoicePaymentRequestID = invoicePaymentRequestID;
+            this.InvoiceNumber = invoiceNumber;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Invoice(string requestorName, DateTime invoiceDate, Person preparedByPerson, InvoiceApprovalStatus invoiceApprovalStatus, bool purchaseAuthorityIsLandownerCostShareAgreement, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus) : this()
+        public Invoice(DateTime invoiceDate, InvoiceApprovalStatus invoiceApprovalStatus, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus, InvoicePaymentRequest invoicePaymentRequest, string invoiceNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.RequestorName = requestorName;
             this.InvoiceDate = invoiceDate;
-            this.PreparedByPersonID = preparedByPerson.PersonID;
-            this.PreparedByPerson = preparedByPerson;
-            preparedByPerson.InvoicesWhereYouAreThePreparedByPerson.Add(this);
             this.InvoiceApprovalStatusID = invoiceApprovalStatus.InvoiceApprovalStatusID;
-            this.PurchaseAuthorityIsLandownerCostShareAgreement = purchaseAuthorityIsLandownerCostShareAgreement;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountType.InvoiceMatchAmountTypeID;
             this.InvoiceStatusID = invoiceStatus.InvoiceStatusID;
+            this.InvoicePaymentRequestID = invoicePaymentRequest.InvoicePaymentRequestID;
+            this.InvoicePaymentRequest = invoicePaymentRequest;
+            invoicePaymentRequest.Invoices.Add(this);
+            this.InvoiceNumber = invoiceNumber;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Invoice CreateNewBlank(Person preparedByPerson, InvoiceApprovalStatus invoiceApprovalStatus, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus)
+        public static Invoice CreateNewBlank(InvoiceApprovalStatus invoiceApprovalStatus, InvoiceMatchAmountType invoiceMatchAmountType, InvoiceStatus invoiceStatus, InvoicePaymentRequest invoicePaymentRequest)
         {
-            return new Invoice(default(string), default(DateTime), preparedByPerson, invoiceApprovalStatus, default(bool), invoiceMatchAmountType, invoiceStatus);
+            return new Invoice(default(DateTime), invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus, invoicePaymentRequest, default(string));
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return InvoiceLineItems.Any();
+            return false;
         }
 
         /// <summary>
@@ -108,17 +111,13 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(InvoiceLineItems.Any())
-            {
-                dependentObjects.Add(typeof(InvoiceLineItem).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Invoice).Name, typeof(InvoiceLineItem).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Invoice).Name};
 
 
         /// <summary>
@@ -134,51 +133,50 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(dbContext);
+            
             Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in InvoiceLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
         public int InvoiceID { get; set; }
         public string InvoiceIdentifyingName { get; set; }
-        public string RequestorName { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public string PurchaseAuthority { get; set; }
-        public decimal? TotalPaymentAmount { get; set; }
-        public int PreparedByPersonID { get; set; }
+        public decimal? PaymentAmount { get; set; }
         public int InvoiceApprovalStatusID { get; set; }
         public string InvoiceApprovalStatusComment { get; set; }
-        public bool PurchaseAuthorityIsLandownerCostShareAgreement { get; set; }
         public int InvoiceMatchAmountTypeID { get; set; }
         public decimal? MatchAmount { get; set; }
         public int InvoiceStatusID { get; set; }
         public int? InvoiceFileResourceID { get; set; }
+        public int InvoicePaymentRequestID { get; set; }
+        public int? GrantID { get; set; }
+        public int? ProgramIndexID { get; set; }
+        public int? ProjectCodeID { get; set; }
+        public int? OrganizationCodeID { get; set; }
+        public string InvoiceNumber { get; set; }
+        public string Fund { get; set; }
+        public string Appn { get; set; }
+        public string SubObject { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }
 
-        public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
-        public virtual Person PreparedByPerson { get; set; }
         public InvoiceApprovalStatus InvoiceApprovalStatus { get { return InvoiceApprovalStatus.AllLookupDictionary[InvoiceApprovalStatusID]; } }
         public InvoiceMatchAmountType InvoiceMatchAmountType { get { return InvoiceMatchAmountType.AllLookupDictionary[InvoiceMatchAmountTypeID]; } }
         public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }
         public virtual FileResource InvoiceFileResource { get; set; }
+        public virtual InvoicePaymentRequest InvoicePaymentRequest { get; set; }
+        public virtual Grant Grant { get; set; }
+        public virtual ProgramIndex ProgramIndex { get; set; }
+        public virtual ProjectCode ProjectCode { get; set; }
+        public virtual OrganizationCode OrganizationCode { get; set; }
 
         public static class FieldLengths
         {
             public const int InvoiceIdentifyingName = 255;
-            public const int RequestorName = 255;
-            public const int PurchaseAuthority = 255;
+            public const int InvoiceNumber = 50;
+            public const int Fund = 255;
+            public const int Appn = 255;
+            public const int SubObject = 255;
         }
     }
 }

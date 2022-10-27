@@ -29,27 +29,19 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    public class DetailViewData : InvoiceViewData
+    public class DetailViewData : FirmaViewData
     {
         public InvoiceBasicsViewData InvoiceBasicsViewData { get; set; }
+        public Models.Invoice Invoice { get; set; }
 
-        public string InvoiceLineItemGridDataUrl { get; }
-        public InvoiceLineItemGridSpec InvoiceLineItemGridSpec { get; }
 
         public DetailViewData(Person currentPerson, Models.Invoice invoice, InvoiceBasicsViewData invoiceBasicsViewData)
-            : base(currentPerson, invoice)
+            : base(currentPerson)
         {
             PageTitle = invoice.InvoiceIdentifyingName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} Detail";
             InvoiceBasicsViewData = invoiceBasicsViewData;
-            InvoiceLineItemGridSpec = new InvoiceLineItemGridSpec(currentPerson) { ObjectNameSingular = "Invoice Line Item", ObjectNamePlural = "Invoice Line Items", SaveFiltersInCookie = true };
-            InvoiceLineItemGridDataUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(ac => ac.InvoiceLineItemGridJsonData(invoice.InvoiceID));
-            var userHasEditInvoicePermissions = new InvoiceLineItemEditFeature().HasPermissionByPerson(currentPerson);
-            if (userHasEditInvoicePermissions)
-            {
-                var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.NewInvoiceLineItem(invoice.InvoiceID));
-                InvoiceLineItemGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Invoice Line Item");
-            }
+            Invoice = invoice;
         }
     }
 }

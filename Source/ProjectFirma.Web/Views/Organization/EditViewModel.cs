@@ -34,7 +34,7 @@ using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.Organization
 {
-    public class EditViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
+    public class EditViewModel : FormViewModel, IValidatableObject, ISearchVendorViewModel
     {
         public const int MaxLogoSizeInBytes = 1024 * 200;
 

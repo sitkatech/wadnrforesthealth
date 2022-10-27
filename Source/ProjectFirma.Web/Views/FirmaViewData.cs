@@ -149,8 +149,6 @@ namespace ProjectFirma.Web.Views
 
             financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<AgreementController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} List", "Group2"));
 
-            financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InvoiceController>(c => c.Index()), currentPerson,
-                $"Full { Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} List", "Group3"));
 
             MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.Financials).ForEach(x =>
             {
@@ -184,6 +182,10 @@ namespace ProjectFirma.Web.Views
             }
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", "Group3"));
 
+            if (new VendorViewFeature().HasPermissionByPerson(currentPerson))
+            {
+                programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<VendorController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Vendor.GetFieldDefinitionLabelPluralized()}", "Group3"));
+            }
 
             MultiTenantHelpers.GetCustomPagesByNavigationSection(CustomPageNavigationSectionEnum.ProgramInfo).ForEach(x =>
             {

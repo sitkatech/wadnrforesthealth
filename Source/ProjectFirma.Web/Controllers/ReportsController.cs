@@ -84,6 +84,7 @@ namespace ProjectFirma.Web.Controllers
             var reportTemplateModelType = ReportTemplateModelType.All.FirstOrDefault(x => x.ReportTemplateModelTypeID == viewModel.ReportTemplateModelTypeID);
             var reportTemplateModel = ReportTemplateModel.All.FirstOrDefault(x => x.ReportTemplateModelID == viewModel.ReportTemplateModelID);
             var reportTemplate = ReportTemplate.CreateNewBlank(fileResourceInfo, reportTemplateModelType, reportTemplateModel);
+            reportTemplate.IsSystemTemplate = false;//All report templates generated through the UI are not system templates. System templates are created through the database. 
 
             ReportTemplateGenerator.ValidateReportTemplate(reportTemplate, out var reportIsValid, out var errorMessage, out var sourceCode);
 
@@ -165,11 +166,11 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewDelete(ReportTemplate reportTemplate, ConfirmDialogFormViewModel viewModel)
         {
 
-            var canDelete = new ReportTemplateManageFeature().HasPermissionByPerson(CurrentPerson);
+            var canDelete = new ReportTemplateManageFeature().HasPermissionByPerson(CurrentPerson) && !reportTemplate.IsSystemTemplate;
 
             var confirmMessage = canDelete
                 ? $"Are you sure you want to delete the \"{reportTemplate.DisplayName}\" Report Template?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Report Template");
+                : reportTemplate.IsSystemTemplate ? "You can't delete this Report Template because it is a System Template" : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Report Template");
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
@@ -262,6 +263,25 @@ namespace ProjectFirma.Web.Controllers
                 .Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsVisibleToUser(currentPerson);
 
             return allActiveProjectsWithIncludes;
+        }
+
+
+        [ProjectEditAsAdminFeature]
+        public ActionResult DownloadLandOwnerAssistanceApprovalLetter(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var reportTemplate = ReportTemplate.GetApprovalLetterTemplate();
+            var selectedModelIDs = new List<int> { projectPrimaryKey.EntityObject.PrimaryKey };
+            var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
+            return reportTemplateGenerator.GenerateAndDownload();
+        }
+
+        [ProjectEditAsAdminFeature]
+        public ActionResult DownloadInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey, InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)
+        {
+            var reportTemplate = ReportTemplate.GetInvoicePaymentRequestTemplate();
+            var selectedModelIDs = new List<int> { invoicePaymentRequestPrimaryKey.EntityObject.PrimaryKey };
+            var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
+            return reportTemplateGenerator.GenerateAndDownload();
         }
     }
 }

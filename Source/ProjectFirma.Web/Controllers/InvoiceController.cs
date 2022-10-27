@@ -19,18 +19,21 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Invoice;
-using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.InvoiceControls;
+using ProjectFirma.Web.Security.Shared;
+using System.Web.UI.WebControls;
+
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -38,118 +41,8 @@ namespace ProjectFirma.Web.Controllers
     {
 
         [HttpGet]
-        [InvoiceLineItemDeleteFeature]
-        public PartialViewResult DeleteInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
-        {
-            var viewModel = new ConfirmDialogFormViewModel(invoiceLineItemPrimaryKey.PrimaryKeyValue);
-            return ViewDeleteInvoiceLineItem(invoiceLineItemPrimaryKey.EntityObject, viewModel);
-        }
-
-        private PartialViewResult ViewDeleteInvoiceLineItem(InvoiceLineItem invoiceLineItem, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to remove this {FieldDefinition.Invoice.GetFieldDefinitionLabel()} Line Item from this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [InvoiceLineItemDeleteFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewDeleteInvoiceLineItem(invoiceLineItem, viewModel);
-            }
-
-            var message = $"{FieldDefinition.Invoice.GetFieldDefinitionLabel()} Line Item successfully removed from this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}.";
-
-            invoiceLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
-
-            SetMessageForDisplay(message);
-            return new ModalDialogFormJsonResult();
-        }
-
-        [HttpGet]
-        [InvoiceEditFeature]
-        public PartialViewResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey)
-        {
-            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
-            var viewModel = new EditInvoiceLineItemViewModel(invoiceID);
-            return ViewEditInvoiceLineItem(viewModel);
-        }
-
-        [HttpPost]
-        [InvoiceEditFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceLineItemViewModel viewModel)
-        {
-            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInvoiceLineItem(viewModel);
-            }
-
-            var invoiceLineItem = new InvoiceLineItem(invoiceID, viewModel.GrantAllocationID, viewModel.CostTypeID,
-                viewModel.InvoiceLineItemAmount);
-            viewModel.UpdateModel(invoiceLineItem);
-            HttpRequestStorage.DatabaseEntities.InvoiceLineItems.Add(invoiceLineItem);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Invoice Line Item successfully added to this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}.");
-
-            return new ModalDialogFormJsonResult();
-        }
-
-
-        [HttpGet]
-        [InvoiceLineItemEditFeature]
-        public PartialViewResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
-        {
-            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
-            var viewModel = new EditInvoiceLineItemViewModel(invoiceLineItem);
-            return ViewEditInvoiceLineItem(viewModel);
-        }
-
-        [HttpPost]
-        [InvoiceLineItemEditFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, EditInvoiceLineItemViewModel viewModel)
-        {
-            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInvoiceLineItem(viewModel);
-            }
-            viewModel.UpdateModel(invoiceLineItem);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditInvoiceLineItem(EditInvoiceLineItemViewModel viewModel)
-        {
-            var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).ToList();
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var viewData = new EditInvoiceLineItemViewData(grantAllocations, costTypes);
-            return RazorPartialView<EditInvoiceLineItem, EditInvoiceLineItemViewData, EditInvoiceLineItemViewModel>(viewData, viewModel);
-        }
-
-        [InvoiceViewFeature]
-        public GridJsonNetJObjectResult<InvoiceLineItem> InvoiceLineItemGridJsonData(InvoicePrimaryKey invoicePrimaryKey)
-        {
-            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
-            var gridSpec = new InvoiceLineItemGridSpec(CurrentPerson);
-            var invoice = HttpRequestStorage.DatabaseEntities.Invoices.FirstOrDefault(x => x.InvoiceID == invoiceID);
-            var invoiceLineItems = invoice != null
-                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDisplayName).ToList()
-                : new List<InvoiceLineItem>();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InvoiceLineItem>(invoiceLineItems, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
-
-        [HttpGet]
         [InvoiceCreateFeature]
-        public PartialViewResult New()
+        public PartialViewResult New(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)
         {
             var viewModel = new EditInvoiceViewModel();
             return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
@@ -158,30 +51,22 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [InvoiceCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditInvoiceViewModel viewModel)
+        public ActionResult New(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey, EditInvoiceViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
             }
 
-            var preparedByPerson = HttpRequestStorage.DatabaseEntities.People.Single(g => g.PersonID == viewModel.PreparedByPersonID);
+            var ipr = invoicePaymentRequestPrimaryKey.EntityObject;
             var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
             var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
             var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
-            var invoice = Invoice.CreateNewBlank(preparedByPerson, invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus);
+            var invoice = Invoice.CreateNewBlank(invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus, ipr);
             viewModel.UpdateModel(invoice, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        [InvoicesViewFullListFeature]
-        public ViewResult Index()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullInvoiceList);
-            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
-            var viewData = new InvoiceIndexViewData(CurrentPerson, firmaPage, invoices.Any(x => x.InvoiceFileResourceID.HasValue));
-            return RazorView<InvoiceIndex, InvoiceIndexViewData>(viewData);
-        }
 
         [HttpGet]
         [InvoiceEditFeature]
@@ -211,8 +96,13 @@ namespace ProjectFirma.Web.Controllers
         {
             var invoiceApprovalStatuses = InvoiceApprovalStatus.All;
             var invoiceStatuses = InvoiceStatus.All.OrderBy(x => x.InvoiceStatusID).ToList();
-            var people =  HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
-            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people);
+            var people = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.GrantNumber);
+            var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices.OrderBy(x => x.ProgramIndexCode);
+            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes.OrderBy(x => x.ProjectCodeName);
+            var organizationCodes = HttpRequestStorage.DatabaseEntities.OrganizationCodes;
+            
+            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people, grants, programIndices, projectCodes, organizationCodes);
             return RazorPartialView<EditInvoice, EditInvoiceViewData, EditInvoiceViewModel>(viewData, viewModel);
         }
 
@@ -220,14 +110,7 @@ namespace ProjectFirma.Web.Controllers
         [InvoiceViewFeature]
         public ViewResult InvoiceDetail(InvoicePrimaryKey invoicePrimaryKey)
         {
-            var invoice =
-                HttpRequestStorage.DatabaseEntities.Invoices.SingleOrDefault(i =>
-                    i.InvoiceID == invoicePrimaryKey.PrimaryKeyValue);
-            if (invoice == null)
-            {
-                throw new Exception(
-                    $"Could not find InvoiceID # {invoicePrimaryKey.PrimaryKeyValue}; has it been deleted?");
-            }
+            var invoice = invoicePrimaryKey.EntityObject;
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var invoiceBasicsViewData = new InvoiceBasicsViewData(invoice, false, taxonomyLevel);
@@ -236,13 +119,94 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [InvoicesViewFullListFeature]
-        public GridJsonNetJObjectResult<Invoice> InvoiceGridJsonData()
+        public GridJsonNetJObjectResult<Invoice> InvoiceGridJsonData(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)
         {
-            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
-            var gridSpec = new InvoiceGridSpec(CurrentPerson, invoices.Any(x => x.InvoiceFileResourceID.HasValue));
+            var ipr = invoicePaymentRequestPrimaryKey.EntityObject;
+            var invoices = ipr.Invoices.ToList();
+            var gridSpec = new InvoiceGridSpec(CurrentPerson, invoices.Any(x => x.InvoiceFileResourceID.HasValue), ipr);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Invoice>(invoices, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+
+
+
+        [HttpGet]
+        [InvoiceCreateFeature]
+        public PartialViewResult NewInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var viewModel = new EditInvoicePaymentRequestViewModel();
+            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewIpr);
+        }
+
+        [HttpPost]
+        [InvoiceCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey, EditInvoicePaymentRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.NewIpr);
+            }
+
+            var invoicePaymentRequest = InvoicePaymentRequest.CreateNewBlank(projectPrimaryKey.EntityObject);
+            viewModel.UpdateModel(invoicePaymentRequest, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [AnonymousUnclassifiedFeature]
+        public JsonResult Find(string term)
+        {
+            var vendorFindResults = GetViewableVendorsFromSearchCriteria(term.Trim());
+            var results = vendorFindResults.Take(VendorsCountLimit).Select(p => new ListItem(p.GetVendorNameWithFullStatewideVendorNumber(), p.VendorID.ToString(CultureInfo.InvariantCulture))).ToList();
+            if (vendorFindResults.Count > VendorsCountLimit)
+            {
+                results.Add(
+                    new ListItem(
+                        $"<span style='font-weight:bold'>Displaying {VendorsCountLimit} of {vendorFindResults.Count}</span>"));
+            }
+            return Json(results.Select(pfr => new { label = pfr.Text, value = pfr.Value }), JsonRequestBehavior.AllowGet);
+        }
+
+        private List<Vendor> GetViewableVendorsFromSearchCriteria(string searchCriteria)
+        {
+            var vendorsFound = HttpRequestStorage.DatabaseEntities.Vendors.GetVendorFindResultsForVendorNameAndStatewideVendorNumber(searchCriteria).ToList();
+            return vendorsFound;
+        }
+        
+        private const int VendorsCountLimit = 20;
+        
+        [HttpGet]
+        [InvoiceEditFeature]
+        public PartialViewResult EditInvoicePaymentRequest(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)
+        {
+            var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
+            var viewModel = new EditInvoicePaymentRequestViewModel(invoicePaymentRequest);
+            return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingIpr);
+        }
+
+        [HttpPost]
+        [InvoiceEditFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInvoicePaymentRequest(InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey, EditInvoicePaymentRequestViewModel viewModel)
+        {
+            var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return InvoicePaymentRequestViewEdit(viewModel, EditInvoicePaymentRequestType.ExistingIpr);
+            }
+
+            viewModel.UpdateModel(invoicePaymentRequest, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult InvoicePaymentRequestViewEdit(EditInvoicePaymentRequestViewModel viewModel, EditInvoicePaymentRequestType editInvoiceType)
+        {
+            var people = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople();
+            var viewData = new EditInvoicePaymentRequestViewData(editInvoiceType, people);
+            return RazorPartialView<EditInvoicePaymentRequest, EditInvoicePaymentRequestViewData, EditInvoicePaymentRequestViewModel>(viewData, viewModel);
+        }
+
 
 
         #region WADNR Grant JSON API
@@ -253,14 +217,6 @@ namespace ProjectFirma.Web.Controllers
             var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
             var jsonApiInvoices = InvoiceApiJson.MakeInvoiceApiJsonsFromAgreements(invoices, false);
             return new JsonNetJArrayResult(jsonApiInvoices);
-        }
-
-        [InvoicesViewJsonApiFeature]
-        public JsonNetJArrayResult InvoiceLineItemJsonApi()
-        {
-            var invoiceLineItems = HttpRequestStorage.DatabaseEntities.InvoiceLineItems.ToList();
-            var jsonApiInvoiceLineItems = InvoiceLineItemApiJson.MakeInvoiceLineItemApiJsonsFromAgreements(invoiceLineItems);
-            return new JsonNetJArrayResult(jsonApiInvoiceLineItems);
         }
 
         #endregion

@@ -46,6 +46,7 @@ using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
+using ProjectFirma.Web.Views.ProjectInvoice;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectImportBlockList;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
@@ -198,6 +199,7 @@ namespace ProjectFirma.Web.Controllers
             var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
+            var projectInvoiceDetailViewData = new ProjectInvoiceDetailViewData(CurrentPerson, project);
             var imageGalleryViewData = BuildImageGalleryViewData(project, CurrentPerson);
             var projectNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(project.ProjectNotes)),
@@ -245,6 +247,7 @@ namespace ProjectFirma.Web.Controllers
                 projectAttributesViewData,
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
+                projectInvoiceDetailViewData,
                 performanceMeasureExpectedsSummaryViewData,
                 performanceMeasureReportedValuesGroupedViewData,
                 projectExpendituresSummaryViewData,

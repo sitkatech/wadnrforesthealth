@@ -36,6 +36,7 @@ using DetailViewData = ProjectFirma.Web.Views.DNRUplandRegion.DetailViewData;
 using Index = ProjectFirma.Web.Views.DNRUplandRegion.Index;
 using IndexGridSpec = ProjectFirma.Web.Views.DNRUplandRegion.IndexGridSpec;
 using IndexViewData = ProjectFirma.Web.Views.DNRUplandRegion.IndexViewData;
+using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -146,6 +147,39 @@ namespace ProjectFirma.Web.Controllers
         {
             var viewData = new MapTooltipViewData(CurrentPerson, dnrUplandRegionPrimaryKey.EntityObject);
             return RazorPartialView<MapTooltip, MapTooltipViewData>(viewData);
+        }
+
+        [HttpGet]
+        [DNRUplandRegionManageFeature]
+        public ActionResult EditContact(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
+        {
+            var region = dnrUplandRegionPrimaryKey.EntityObject;
+            var viewModel = new EditContactViewModel(region);
+            return ViewAddContact(viewModel, region);
+        }
+
+        [HttpPost]
+        [DNRUplandRegionManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditContact(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey, EditContactViewModel viewModel)
+        {
+            var region = dnrUplandRegionPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewAddContact(viewModel, region);
+            }
+
+            viewModel.UpdateModel(region);
+
+            SetMessageForDisplay($"Successfully updated {region.GetDisplayNameAsUrl()}");
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewAddContact(EditContactViewModel viewModel, DNRUplandRegion region)
+        {
+            var viewData = new EditContactViewData(region);
+            return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
     }
 }

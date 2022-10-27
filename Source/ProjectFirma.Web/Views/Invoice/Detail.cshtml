@@ -59,9 +59,7 @@
     }
 </style>
 
-<div>
-    <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.InvoicesListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToInvoicesText</a>
-</div>
+
 
 
 <div class="col-sm-12 col-md-9 col-lg-10">
@@ -71,7 +69,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditInvoiceUrl, string.Format("Edit Invoice - {0}", ViewDataTyped.Invoice.InvoiceIdentifyingName), 950, ViewDataTyped.UserHasEditInvoicePermissions)
+                       
                         Basics
                     </h3>
                 </div>
@@ -82,19 +80,6 @@
         </div>
     </div>
     
-    <div class="row">
-        <div class="col-sm-12" style="padding: 0px;">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.Invoice.GetFieldDefinitionLabel() Line Items
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.InvoiceLineItemGridSpec, InvoiceLineItemGridName, ViewDataTyped.InvoiceLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </div>

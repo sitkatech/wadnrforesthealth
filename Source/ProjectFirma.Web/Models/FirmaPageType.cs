@@ -209,10 +209,7 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
     }
 
-    public partial class FirmaPageTypeFullInvoiceList
-    {
-        public override string GetViewUrl() => SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.Index());
-    }
+
 
     public partial class FirmaPageTypeInteractionEventList
     {
@@ -259,5 +256,10 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeCounty
     {
         public override string GetViewUrl() => SitkaRoute<CountyController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeVendor
+    {
+        public override string GetViewUrl() => SitkaRoute<VendorController>.BuildUrlFromExpression(c => c.Index());
     }
 }

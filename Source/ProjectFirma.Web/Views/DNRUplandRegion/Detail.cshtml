@@ -23,6 +23,8 @@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.ModalDialog
 @using MoreLinq
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
@@ -68,7 +70,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-12">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
                 <h2>Map</h2>
@@ -77,7 +79,7 @@
                 <p>
                     This map displays the location of any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() associated with this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()
                 </p>
-                <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 320px; margin: 5px 0 5px 0">
+                <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 450px; margin: 5px 0 5px 0">
                 </div>
                 <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
 
@@ -85,7 +87,69 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-7">
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h2>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, "Edit Contact", ViewDataTyped.UserHasRegionManagePermissions)
+                    @FieldDefinition.Contact.GetFieldDefinitionLabel()
+                </h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-3 fieldLabel text-right">
+                        Address
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionAddress
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 fieldLabel text-right">
+                        City
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionCity
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 fieldLabel text-right">
+                        State
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionState
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 fieldLabel text-right">
+                        Zip
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionZip
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel text-right">
+                        Phone
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionPhone
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 fieldLabel text-right">
+                        Email
+                    </div>
+                    <div class="col-sm-9">
+                        @ViewDataTyped.DNRUplandRegion.RegionEmail
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
                 <h2>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by @FieldDefinition.CostType.GetFieldDefinitionLabel()</h2>
@@ -100,7 +164,7 @@
                 }
                 else
                 {
-            <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
+                    <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
                 }
             </div>
         </div>

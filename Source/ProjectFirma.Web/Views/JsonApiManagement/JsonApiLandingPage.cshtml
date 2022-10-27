@@ -87,11 +87,7 @@
         return linkHtml;
     }
 
-    private string InvoiceLineItemJsonApiLink()
-    {
-        string linkHtml = SitkaRoute<InvoiceController>.BuildLinkFromExpression(c => c.InvoiceLineItemJsonApi(), "Invoice Line Item JSON");
-        return linkHtml;
-    }
+
 
 }
 
@@ -112,7 +108,7 @@
 <h3>@Html.Raw(GrantStatusJsonApiLink())</h3>
 <h3>@Html.Raw(InteractionEventJsonApiLink())</h3>
 <h3>@Html.Raw(InvoiceJsonApiLink())</h3>
-<h3>@Html.Raw(InvoiceLineItemJsonApiLink())</h3>
+
 
 <div>
 Some of these result sets may be empty until populated in the system

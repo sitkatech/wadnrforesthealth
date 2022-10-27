@@ -169,6 +169,12 @@
           <ScalarProperty Name="DNRUplandRegionAbbrev" ColumnName="DNRUplandRegionAbbrev" />
           <ScalarProperty Name="DNRUplandRegionName" ColumnName="DNRUplandRegionName" />
           <ScalarProperty Name="DNRUplandRegionLocation" ColumnName="DNRUplandRegionLocation" />
+          <ScalarProperty Name="RegionAddress" ColumnName="RegionAddress" />
+          <ScalarProperty Name="RegionCity" ColumnName="RegionCity" />
+          <ScalarProperty Name="RegionState" ColumnName="RegionState" />
+          <ScalarProperty Name="RegionZip" ColumnName="RegionZip" />
+          <ScalarProperty Name="RegionPhone" ColumnName="RegionPhone" />
+          <ScalarProperty Name="RegionEmail" ColumnName="RegionEmail" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -877,30 +883,38 @@
         <MappingFragment StoreEntitySet="Invoice">
           <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
           <ScalarProperty Name="InvoiceIdentifyingName" ColumnName="InvoiceIdentifyingName" />
-          <ScalarProperty Name="RequestorName" ColumnName="RequestorName" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-          <ScalarProperty Name="PurchaseAuthority" ColumnName="PurchaseAuthority" />
-          <ScalarProperty Name="TotalPaymentAmount" ColumnName="TotalPaymentAmount" />
-          <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
+          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
           <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
           <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
-          <ScalarProperty Name="PurchaseAuthorityIsLandownerCostShareAgreement" ColumnName="PurchaseAuthorityIsLandownerCostShareAgreement" />
           <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
           <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
           <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
           <ScalarProperty Name="InvoiceFileResourceID" ColumnName="InvoiceFileResourceID" />
+          <ScalarProperty Name="InvoicePaymentRequestID" ColumnName="InvoicePaymentRequestID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+          <ScalarProperty Name="OrganizationCodeID" ColumnName="OrganizationCodeID" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="Fund" ColumnName="Fund" />
+          <ScalarProperty Name="Appn" ColumnName="Appn" />
+          <ScalarProperty Name="SubObject" ColumnName="SubObject" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceLineItem">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceLineItem">
-        <MappingFragment StoreEntitySet="InvoiceLineItem">
-          <ScalarProperty Name="InvoiceLineItemID" ColumnName="InvoiceLineItemID" />
-          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="InvoiceLineItemAmount" ColumnName="InvoiceLineItemAmount" />
-          <ScalarProperty Name="InvoiceLineItemNote" ColumnName="InvoiceLineItemNote" />
+    <EntitySetMapping Name="InvoicePaymentRequest">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoicePaymentRequest">
+        <MappingFragment StoreEntitySet="InvoicePaymentRequest">
+          <ScalarProperty Name="InvoicePaymentRequestID" ColumnName="InvoicePaymentRequestID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
+          <ScalarProperty Name="PurchaseAuthority" ColumnName="PurchaseAuthority" />
+          <ScalarProperty Name="PurchaseAuthorityIsLandownerCostShareAgreement" ColumnName="PurchaseAuthorityIsLandownerCostShareAgreement" />
+          <ScalarProperty Name="Duns" ColumnName="Duns" />
+          <ScalarProperty Name="InvoicePaymentRequestDate" ColumnName="InvoicePaymentRequestDate" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -973,6 +987,15 @@
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="FeatureClassName" ColumnName="FeatureClassName" />
           <ScalarProperty Name="GeoJson" ColumnName="GeoJson" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrganizationCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.OrganizationCode">
+        <MappingFragment StoreEntitySet="OrganizationCode">
+          <ScalarProperty Name="OrganizationCodeID" ColumnName="OrganizationCodeID" />
+          <ScalarProperty Name="OrganizationCodeName" ColumnName="OrganizationCodeName" />
+          <ScalarProperty Name="OrganizationCodeValue" ColumnName="OrganizationCodeValue" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1980,6 +2003,7 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="ReportTemplateModelTypeID" ColumnName="ReportTemplateModelTypeID" />
           <ScalarProperty Name="ReportTemplateModelID" ColumnName="ReportTemplateModelID" />
+          <ScalarProperty Name="IsSystemTemplate" ColumnName="IsSystemTemplate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public string RequestorName { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string PurchaseAuthority { get; set; }
-        public decimal? TotalPaymentAmount { get; set; }
+        public decimal? PaymentAmount { get; set; }
         public int PreparedByPersonID { get; set; }
         public string PreparedByPersonName { get; set; }
         public int InvoiceApprovalStatusID { get; set; }
@@ -38,16 +38,16 @@ namespace ProjectFirma.Web.Models.ApiJson
         {
             InvoiceID = invoice.InvoiceID;
             InvoiceIdentifyingName = invoice.InvoiceIdentifyingName;
-            RequestorName = invoice.RequestorName;
+            //RequestorName = invoice.RequestorName;
             InvoiceDate = invoice.InvoiceDate;
-            PurchaseAuthority = invoice.PurchaseAuthority;
-            TotalPaymentAmount = invoice.TotalPaymentAmount;
-            PreparedByPersonID = invoice.PreparedByPersonID;
-            PreparedByPersonName = invoice.PreparedByPerson.FullNameFirstLastAndOrgShortName;
+            //PurchaseAuthority = invoice.PurchaseAuthority;
+            PaymentAmount = invoice.PaymentAmount;
+            //PreparedByPersonID = invoice.PreparedByPersonID;
+            //PreparedByPersonName = invoice.PreparedByPerson.FullNameFirstLastAndOrgShortName;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusName = invoice.InvoiceApprovalStatus.InvoiceApprovalStatusName;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
-            PurchaseAuthorityIsLandownerCostShareAgreement = invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
+            //PurchaseAuthorityIsLandownerCostShareAgreement = invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
             MatchAmount = invoice.MatchAmount;
             InvoiceStatusID = invoice.InvoiceStatusID;

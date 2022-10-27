@@ -1,4 +1,8 @@
-﻿namespace ProjectFirma.Web.Models
+﻿using System.Data.Entity.Core;
+using System.Linq;
+using ProjectFirma.Web.Common;
+
+namespace ProjectFirma.Web.Models
 {
     public partial class ReportTemplate : IAuditableEntity
     {
@@ -13,6 +17,18 @@
         {
             // Looks kind of weird but it will cascade delete the ReportTemplate
             FileResource.DeleteFull(dbContext);
+        }
+
+        public static ReportTemplate GetApprovalLetterTemplate()
+        {
+            var approvalLetterTemplate = HttpRequestStorage.DatabaseEntities.ReportTemplates.Single(x => x.IsSystemTemplate && x.DisplayName == "LOA Approval Letter");
+            return approvalLetterTemplate;
+        }
+
+        public static ReportTemplate GetInvoicePaymentRequestTemplate()
+        {
+            var invoicePaymentRequestTemplate = HttpRequestStorage.DatabaseEntities.ReportTemplates.Single(x => x.IsSystemTemplate && x.DisplayName == "Invoice Payment Request");
+            return invoicePaymentRequestTemplate;
         }
     }
 }

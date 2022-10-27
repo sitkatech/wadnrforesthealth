@@ -35,6 +35,7 @@
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views.ProjectFunding
+@using ProjectFirma.Web.Views.ProjectInvoice
 @using ProjectFirma.Web.Views.Shared.ProjectCostShare
 @using ProjectFirma.Web.Views.Shared.ProjectDocument
 @using ProjectFirma.Web.Views.Shared.ProjectOrganization
@@ -98,6 +99,11 @@
     @if (ViewDataTyped.CanViewProjectFactSheet)
     {
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
+    }
+     
+    @if (ViewDataTyped.UserHasEditProjectPermissions)
+    {
+        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download LOA Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download LOA Approval Letter</a>
     }
 }
 
@@ -289,6 +295,25 @@
                         }
                     </div>
                 </div>
+                
+                @if (ViewDataTyped.UserHasEditProjectPermissions)
+                {
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            <h3>
+                                Invoices
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            @{
+                                ProjectInvoiceDetail.RenderPartialView(Html, ViewDataTyped.ProjectInvoiceDetailViewData);
+                            }
+                        </div>
+                    </div>
+                }
+                
+            
+
 
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">

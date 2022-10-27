@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditInvoiceViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -34,29 +34,29 @@ namespace ProjectFirma.Web.Views.Invoice
 {
     public class EditInvoiceViewModel : FormViewModel, IValidatableObject
     {
+        [Required]
         public int InvoiceID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceIdentifyingName)]
-        [Required]
         public string InvoiceIdentifyingName { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.RequestorName)]
-        [Required]
-        public string RequestorName { get; set; }
-
+        
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceDate)]
         [Required]
         public DateTime? InvoiceDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
-        public string PurchaseAuthority { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PaymentAmount)]
+        public Money? PaymentAmount { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
         [Required]
-        public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set; }
+        public int InvoiceApprovalStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalRequestedInvoicePaymentAmount)]
-        public Money? InvoiceAmount { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalComment)]
+        public string InvoiceApprovalStatusComment { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
+        [Required]
+        public int InvoiceMatchAmountTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
         public Money? MatchAmount { get; set; }
@@ -65,26 +65,40 @@ namespace ProjectFirma.Web.Views.Invoice
         [Required]
         public int InvoiceStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
-        [Required]
-        public int InvoiceMatchAmountTypeID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
-        public int InvoiceApprovalStatusID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalComment)]
-        public string InvoiceApprovalStatusComment { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
-        [Required]
-        public int PreparedByPersonID { get; set; }
-        
         [DisplayName("Invoice Voucher Upload")]
         //[SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase InvoiceFileResourceData { get; set; }
 
+        [Required]
+        public int InvoicePaymentRequestID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
+        public int? GrantID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
+        public int? ProgramIndexID { get; set; }
+        
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
+        public int? ProjectCodeID { get; set; }
+        
+        [FieldDefinitionDisplay(FieldDefinitionEnum.OrganizationCode)]
+        public int? OrganizationCodeID { get; set; }
+        
+        [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceNumber)]
+        public string InvoiceNumber { get; set; }
+        
+        [StringLength(Models.Invoice.FieldLengths.Fund)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Fund)]
+        public string Fund { get; set; }
+        
+        [StringLength(Models.Invoice.FieldLengths.Appn)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Appn)]
+        public string Appn { get; set; }
+        
+        [StringLength(Models.Invoice.FieldLengths.SubObject)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.SubObject)]
+        public string SubObject { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -96,32 +110,45 @@ namespace ProjectFirma.Web.Views.Invoice
         public EditInvoiceViewModel(Models.Invoice invoice)
         {
             InvoiceIdentifyingName = invoice.InvoiceIdentifyingName;
-            RequestorName = invoice.RequestorName;
             InvoiceDate = invoice.InvoiceDate;
-            PurchaseAuthority = invoice.PurchaseAuthority;
-            InvoiceAmount = invoice.TotalPaymentAmount;
+            PaymentAmount = invoice.PaymentAmount;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
-            PurchaseAuthorityIsLandownerCostShareAgreement =
-                invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
             MatchAmount = invoice.MatchAmount;
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
-            PreparedByPersonID = invoice.PreparedByPersonID;
+            InvoiceStatusID = invoice.InvoiceStatusID;
+            InvoicePaymentRequestID = invoice.InvoicePaymentRequestID;
+            GrantID = invoice.GrantID;
+            ProgramIndexID = invoice.ProgramIndexID;
+            ProjectCodeID = invoice.ProjectCodeID;
+            InvoiceNumber = invoice.InvoiceNumber;
+            Fund = invoice.Fund;
+            Appn = invoice.Appn;
+            SubObject = invoice.SubObject;
+            OrganizationCodeID = invoice.OrganizationCodeID;
+
         }
 
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)
         {
             invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
-            invoice.RequestorName = RequestorName;
-            invoice.InvoiceDate = InvoiceDate.Value;
-            invoice.PurchaseAuthority = PurchaseAuthority;
-            invoice.TotalPaymentAmount = InvoiceAmount;
+            invoice.InvoiceDate = InvoiceDate ?? DateTime.MaxValue;
+            invoice.PaymentAmount = PaymentAmount;
             invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
             invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
-            invoice.PurchaseAuthorityIsLandownerCostShareAgreement = PurchaseAuthorityIsLandownerCostShareAgreement.Value;
             invoice.MatchAmount = MatchAmount;
             invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
-            invoice.PreparedByPersonID = PreparedByPersonID;
+
+            invoice.InvoiceStatusID = InvoiceStatusID;
+            invoice.GrantID = GrantID;
+            invoice.ProgramIndexID = ProgramIndexID;
+            invoice.ProjectCodeID = ProjectCodeID;
+            invoice.InvoiceNumber = InvoiceNumber;
+            invoice.Fund = Fund;
+            invoice.Appn = Appn;
+            invoice.SubObject = SubObject;
+            invoice.OrganizationCodeID = OrganizationCodeID;
+
             if (InvoiceFileResourceData != null)
             {
                 var currentInvoiceFileResource = invoice.InvoiceFileResource;
@@ -144,11 +171,6 @@ namespace ProjectFirma.Web.Views.Invoice
                     FirmaValidationMessages.InvoiceNicknameMustBePopulated, m => m.InvoiceIdentifyingName);
             }
 
-            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority))
-            {
-                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
-                    FirmaValidationMessages.PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement, m => m.PurchaseAuthority);
-            }
 
             if (InvoiceMatchAmountTypeID == InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID && !MatchAmount.HasValue)
             {

@@ -79,6 +79,14 @@ namespace ProjectFirma.Web.ReportTemplates
                     };
                     document = DocumentFactory.Create<ProjectFirmaDocxDocument>(templatePath, baseViewModel);
                     break;
+                case ReportTemplateModelEnum.InvoicePaymentRequest:
+                    var iprBaseViewModel = new ReportTemplateInvoicePaymentRequestBaseViewModel()
+                    {
+                        ReportTitle = ReportTemplate.DisplayName,
+                        ReportModel = GetListOfInvoicePaymentRequestModels()
+                    };
+                    document = DocumentFactory.Create<ProjectFirmaDocxDocument>(templatePath, iprBaseViewModel);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -144,6 +152,9 @@ namespace ProjectFirma.Web.ReportTemplates
                         var imagePath = $"{FullTemplateTempImageDirectory}\\{projectImage.FileResource.FullGuidBasedFilename}";
                         CorrectImageProblemsAndSaveToDisk(projectImage, imagePath);
                     }
+                    break;
+                case ReportTemplateModelEnum.InvoicePaymentRequest:
+                    //IPR does not have images
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -253,6 +264,14 @@ namespace ProjectFirma.Web.ReportTemplates
             orderedProjectList.ForEach(x => listOfModels.Add(new ReportTemplateProjectModel(x)));
             return listOfModels;
         }
+        private List<ReportTemplateInvoicePaymentRequestModel> GetListOfInvoicePaymentRequestModels()
+        {
+            var listOfModels = new List<ReportTemplateInvoicePaymentRequestModel>();
+            var iprModels = HttpRequestStorage.DatabaseEntities.InvoicePaymentRequests.Where(x => SelectedModelIDs.Contains(x.InvoicePaymentRequestID)).ToList();
+            var orderedIprList = iprModels.OrderBy(p => SelectedModelIDs.IndexOf(p.InvoicePaymentRequestID)).ToList();
+            orderedIprList.ForEach(x => listOfModels.Add(new ReportTemplateInvoicePaymentRequestModel(x)));
+            return listOfModels;
+        }
 
         public static void ValidateReportTemplate(ReportTemplate reportTemplate, out bool reportIsValid, out string errorMessage, out string sourceCode)
         {
@@ -268,6 +287,11 @@ namespace ProjectFirma.Web.ReportTemplates
                     // SMG 2/17/2020 this can cause problems with templates failing only some of the time, but it feels costly to validate against every single model in the system
                     selectedModelIDs = HttpRequestStorage.DatabaseEntities.Projects
                         .Select(x => x.ProjectID).Take(10).ToList();
+                    break;
+                case ReportTemplateModelEnum.InvoicePaymentRequest:
+                    // select 10 random models to test the report with
+                    selectedModelIDs = HttpRequestStorage.DatabaseEntities.InvoicePaymentRequests
+                        .Select(x => x.InvoicePaymentRequestID).Take(10).ToList();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

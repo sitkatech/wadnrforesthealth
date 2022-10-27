@@ -100,12 +100,13 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual DbSet<InteractionEvent> InteractionEvents { get; set; }
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
-        public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; set; }
+        public virtual DbSet<InvoicePaymentRequest> InvoicePaymentRequests { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<LoaStage> LoaStages { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
+        public virtual DbSet<OrganizationCode> OrganizationCodes { get; set; }
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<OrganizationTypeRelationshipType> OrganizationTypeRelationshipTypes { get; set; }
         public virtual DbSet<OrganizationType> OrganizationTypes { get; set; }
@@ -626,13 +627,13 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(invoiceApprovalStatus, "InvoiceApprovalStatus", primaryKey);
                     return invoiceApprovalStatus;
 
-                case "InvoiceLineItem":
-                    return InvoiceLineItems.GetInvoiceLineItem(primaryKey);
-
                 case "InvoiceMatchAmountType":
                     var invoiceMatchAmountType = InvoiceMatchAmountType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(invoiceMatchAmountType, "InvoiceMatchAmountType", primaryKey);
                     return invoiceMatchAmountType;
+
+                case "InvoicePaymentRequest":
+                    return InvoicePaymentRequests.GetInvoicePaymentRequest(primaryKey);
 
                 case "Invoice":
                     return Invoices.GetInvoice(primaryKey);
@@ -673,6 +674,9 @@ namespace ProjectFirma.Web.Models
 
                 case "OrganizationBoundaryStaging":
                     return OrganizationBoundaryStagings.GetOrganizationBoundaryStaging(primaryKey);
+
+                case "OrganizationCode":
+                    return OrganizationCodes.GetOrganizationCode(primaryKey);
 
                 case "Organization":
                     return Organizations.GetOrganization(primaryKey);

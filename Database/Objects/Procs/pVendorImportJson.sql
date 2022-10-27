@@ -40,20 +40,30 @@ begin
         last_process_date DateTime
     )
     AS vendorTemp
+	where vendorTemp.vendor_status = 'A'
 
-    --select * from #vendorSocrataTemp
+	--select * from #vendorSocrataTemp
+
+--create temp table to track which vendor records have a fk from another table
+select distinct o.VendorID into #VendorFKs
+from dbo.Organization o
+
+insert into #VendorFKs
+select distinct p.VendorId from Person p
+
+insert into #VendorFKs
+select distinct ipr.VendorID from InvoicePaymentRequest ipr
 
 -- DELETE (2nd attempt)
 -- Delete Vendors in our table not found in incoming temp table
 delete from dbo.Vendor 
 where VendorID in 
 (
-select dbv.VendorID
-from dbo.Vendor as dbv
-full outer join #vendorSocrataTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
-where --(dbv.StatewideVendorNumber is null or dbv.StatewideVendorNumberSuffix is null)
-       -- or
-       (tv.vendor_num is null or tv.vendor_num_suffix is null)
+	select dbv.VendorID 
+	from dbo.Vendor as dbv
+	full outer join #vendorSocrataTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
+	where (tv.vendor_num is null or tv.vendor_num_suffix is null) 
+	and not exists (select 1 from #VendorFKs where dbv.VendorID = #VendorFKs.VendorID)
 )
 
 -- UPDATE (2nd attempt)
@@ -149,7 +159,7 @@ full outer join #vendorSocrataTemp as tv on tv.vendor_num = dbv.StatewideVendorN
 where  (dbv.StatewideVendorNumber is null and dbv.StatewideVendorNumberSuffix is null)
        and
        (tv.vendor_num is not null and tv.vendor_num_suffix is not null)
-
+	   
 
 
 end
@@ -158,12 +168,12 @@ go
 
 
 /*
-select * from  dbo.SocrataDataMartRawJsonImport
+select * from  dbo.SocrataDataMartRawJsonImport where SocrataDataMartRawJsonImportTableTypeID = 1
 
 delete from dbo.Vendor
 
 set statistics time on
-exec pVendorImportJson @SocrataDataMartRawJsonImportID = 2
+exec pVendorImportJson @SocrataDataMartRawJsonImportID = 16414
 set statistics time off
 
 

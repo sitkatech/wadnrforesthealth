@@ -37,7 +37,8 @@ values
 (58, 'RegionsList', 'Regions List', 1),
 (59, 'PriorityLandscapesList', 'Priority Landscapes List', 1),
 (60, 'FullAgreementList', 'Full Agreement List', 1),
-(61, 'FullInvoiceList', 'Full Invoice List', 1),
+--10/11/22 TK - No longer have a page with a grid of all invoices.
+--(61, 'FullInvoiceList', 'Full Invoice List', 1),
 (62, 'InteractionEventList', 'Interaction/Event List', 1),
 (63, 'GisUploadAttemptInstructions', 'GIS Upload Attempt Instructions', 1),
 (64, 'DNRCostShareTreatments', 'DNR Cost Share Treatments', 1),
@@ -49,4 +50,5 @@ values
 (70, 'County', 'Counties', 1),
 (71, 'Reports', 'Reports', 1),
 (72, 'ReportProjects', 'Report Projects', 1),
-(73, 'ReportAddReport', 'Add a Report', 2)
+(73, 'ReportAddReport', 'Add a Report', 2),
+(74, 'Vendor', 'Vendors', 1)
