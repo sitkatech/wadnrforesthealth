@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Views
         public static readonly HtmlString CheckIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ok gi-1x blue");
         public static readonly HtmlString BanIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-ban-circle gi-1x red");
         public static readonly HtmlString EnvelopeIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-envelope gi-1x blue");
+        public static readonly HtmlString EditIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit gi-1x blue");
         public static readonly UrlTemplate<string> ExcelDownloadWithFooterUrl =
             new UrlTemplate<string>(SitkaRoute<HomeController>.BuildUrlFromExpression(x => x.ExportGridToExcel(UrlTemplate.Parameter1String)));
         public static readonly UrlTemplate<string> ExcelDownloadWithoutFooterUrl =

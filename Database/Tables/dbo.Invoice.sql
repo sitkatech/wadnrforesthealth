@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[Invoice](
 	[ProgramIndexID] [int] NULL,
 	[ProjectCodeID] [int] NULL,
 	[OrganizationCodeID] [int] NULL,
-	[InvoiceNumber] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[InvoiceNumber] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Fund] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Appn] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[SubObject] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,

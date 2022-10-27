@@ -20,6 +20,7 @@ namespace ProjectFirma.Web.Models
     public abstract partial class ReportTemplateModel : IHavePrimaryKey
     {
         public static readonly ReportTemplateModelProject Project = ReportTemplateModelProject.Instance;
+        public static readonly ReportTemplateModelInvoicePaymentRequest InvoicePaymentRequest = ReportTemplateModelInvoicePaymentRequest.Instance;
 
         public static readonly List<ReportTemplateModel> All;
         public static readonly ReadOnlyDictionary<int, ReportTemplateModel> AllLookupDictionary;
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ReportTemplateModel()
         {
-            All = new List<ReportTemplateModel> { Project };
+            All = new List<ReportTemplateModel> { Project, InvoicePaymentRequest };
             AllLookupDictionary = new ReadOnlyDictionary<int, ReportTemplateModel>(All.ToDictionary(x => x.ReportTemplateModelID));
         }
 
@@ -101,6 +102,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
+                case ReportTemplateModelEnum.InvoicePaymentRequest:
+                    return InvoicePaymentRequest;
                 case ReportTemplateModelEnum.Project:
                     return Project;
                 default:
@@ -111,12 +114,19 @@ namespace ProjectFirma.Web.Models
 
     public enum ReportTemplateModelEnum
     {
-        Project = 1
+        Project = 1,
+        InvoicePaymentRequest = 2
     }
 
     public partial class ReportTemplateModelProject : ReportTemplateModel
     {
         private ReportTemplateModelProject(int reportTemplateModelID, string reportTemplateModelName, string reportTemplateModelDisplayName, string reportTemplateModelDescription) : base(reportTemplateModelID, reportTemplateModelName, reportTemplateModelDisplayName, reportTemplateModelDescription) {}
         public static readonly ReportTemplateModelProject Instance = new ReportTemplateModelProject(1, @"Project", @"Project", @"Templates will be with the ""Project"" model.");
+    }
+
+    public partial class ReportTemplateModelInvoicePaymentRequest : ReportTemplateModel
+    {
+        private ReportTemplateModelInvoicePaymentRequest(int reportTemplateModelID, string reportTemplateModelName, string reportTemplateModelDisplayName, string reportTemplateModelDescription) : base(reportTemplateModelID, reportTemplateModelName, reportTemplateModelDisplayName, reportTemplateModelDescription) {}
+        public static readonly ReportTemplateModelInvoicePaymentRequest Instance = new ReportTemplateModelInvoicePaymentRequest(2, @"InvoicePaymentRequest", @"Invoice Payment Request", @"Templates will be with the ""Invoice Payment Request"" model.");
     }
 }

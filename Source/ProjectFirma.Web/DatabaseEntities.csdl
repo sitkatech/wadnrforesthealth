@@ -2449,7 +2449,7 @@
     <Property Name="ProgramIndexID" Type="Int32" />
     <Property Name="ProjectCodeID" Type="Int32" />
     <Property Name="OrganizationCodeID" Type="Int32" />
-    <Property Name="InvoiceNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="InvoiceNumber" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="Fund" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="Appn" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="SubObject" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />

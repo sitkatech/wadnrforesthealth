@@ -24,7 +24,7 @@ using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View Vendor Grid")]
+    [SecurityFeatureDescription("View Vendor")]
     public class VendorViewFeature : FirmaFeature
     {
         public VendorViewFeature()

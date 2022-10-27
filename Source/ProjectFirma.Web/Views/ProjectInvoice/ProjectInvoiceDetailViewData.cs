@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Linq;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -35,6 +36,8 @@ namespace ProjectFirma.Web.Views.ProjectInvoice
         public bool CanEditInvoicePaymentRequests { get; }
         public string AddInvoicePaymentRequestUrl { get; }
 
+        public Models.Project Project { get; }
+
         public string InvoiceGridNamePrefix;
 
 
@@ -43,8 +46,13 @@ namespace ProjectFirma.Web.Views.ProjectInvoice
             InvoicePaymentRequests = project.InvoicePaymentRequests.ToList();
             AddInvoicePaymentRequestUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.NewInvoicePaymentRequest(project));
             CanEditInvoicePaymentRequests = new InvoiceCreateFeature().HasPermissionByPerson(currentPerson);
-
+            Project = project;
             InvoiceGridNamePrefix = "invoiceGridName";
+        }
+
+        public string GetDownloadInvoicePaymentRequestUrl(InvoicePaymentRequest invoicePaymentRequest)
+        {
+            return SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.DownloadInvoicePaymentRequest(this.Project.PrimaryKey, invoicePaymentRequest));
         }
     }
 }

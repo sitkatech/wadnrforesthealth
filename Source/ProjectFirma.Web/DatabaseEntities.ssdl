@@ -2344,7 +2344,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="ProjectCodeID" Type="int" />
     <Property Name="OrganizationCodeID" Type="int" />
-    <Property Name="InvoiceNumber" Type="varchar" MaxLength="50" />
+    <Property Name="InvoiceNumber" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="Fund" Type="varchar" MaxLength="255" />
     <Property Name="Appn" Type="varchar" MaxLength="255" />
     <Property Name="SubObject" Type="varchar" MaxLength="255" />
