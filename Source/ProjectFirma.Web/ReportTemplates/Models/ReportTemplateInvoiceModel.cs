@@ -14,7 +14,8 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public decimal? PaymentAmount { get; set; }
         public string PaymentAmountDisplay(int decimalPlaces = 2) => PaymentAmount.HasValue ? PaymentAmount.Value.ToString($"C{decimalPlaces}") : string.Empty;
         public decimal? MatchAmount { get; set; }
-        public string MatchAmountDisplay(int decimalPlaces = 2) => MatchAmount.HasValue ? MatchAmount.Value.ToString($"C{decimalPlaces}") : string.Empty;
+        private string MatchAmountDisplayFromModel { get; set; }
+        public string MatchAmountDisplay(int decimalPlaces = 2) => MatchAmount.HasValue ? MatchAmount.Value.ToString($"C{decimalPlaces}") : MatchAmountDisplayFromModel;
         public string GrantNumber { get; set; }
         public string ProgramIndexCode { get; set; }
         public string ProjectCodeName { get; set; }
@@ -33,6 +34,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 InvoiceDate = invoice.InvoiceDate;
                 PaymentAmount = invoice.PaymentAmount;
                 MatchAmount = invoice.MatchAmount;
+                MatchAmountDisplayFromModel = invoice.MatchAmountForDisplay;
                 GrantNumber = invoice.Grant?.GrantNumber;
                 ProgramIndexCode = invoice.ProgramIndex?.ProgramIndexCode;
                 ProjectCodeName = invoice.ProjectCode?.ProjectCodeName;
@@ -41,6 +43,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 Fund = invoice.Fund;
                 Appn = invoice.Appn;
                 SubObject = invoice.SubObject;
+
             }
         }
 

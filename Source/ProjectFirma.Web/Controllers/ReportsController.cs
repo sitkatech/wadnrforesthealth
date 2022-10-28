@@ -284,7 +284,7 @@ namespace ProjectFirma.Web.Controllers
             var reportTemplate = ReportTemplate.GetInvoicePaymentRequestTemplate();
             var selectedModelIDs = new List<int> { invoicePaymentRequest.PrimaryKey };
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
-            return reportTemplateGenerator.GenerateAndDownload($"{project.DisplayName} - Invoice Payment Request {invoicePaymentRequest.InvoicePaymentRequestDate:MM-DD-YYYY}");
+            return reportTemplateGenerator.GenerateAndDownload($"{project.DisplayName} - Invoice Payment Request {invoicePaymentRequest.InvoicePaymentRequestDate:MM-dd-yyyy}");
         }
     }
 }

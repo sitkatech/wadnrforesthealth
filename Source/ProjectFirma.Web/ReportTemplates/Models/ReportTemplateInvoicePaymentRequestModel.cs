@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 VendorState = invoicePaymentRequest.Vendor?.VendorState;
                 VendorZip = invoicePaymentRequest.Vendor?.VendorZip;
                 PreparedByPerson = invoicePaymentRequest.PreparedByPersonID.HasValue ? new ReportTemplatePersonModel(invoicePaymentRequest.PreparedByPerson) : null; 
-                PurchaseAuthority = invoicePaymentRequest.PurchaseAuthority;
+                PurchaseAuthority = invoicePaymentRequest.PurchaseAuthorityDisplay;
                 DUNS = invoicePaymentRequest.Duns;
                 InvoicePaymentRequestDate = invoicePaymentRequest.InvoicePaymentRequestDate;
                 Notes = invoicePaymentRequest.Notes;
