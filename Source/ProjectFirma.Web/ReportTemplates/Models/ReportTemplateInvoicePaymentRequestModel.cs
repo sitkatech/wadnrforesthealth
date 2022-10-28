@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string PurchaseAuthority { get; set; }
         public string DUNS { get; set; }
         public DateTime InvoicePaymentRequestDate { get; set; }
+        public string InvoicePaymentRequestDateDisplay => InvoicePaymentRequestDate.ToShortDateString();
         public string Notes { get; set; }
         public List<ReportTemplateInvoiceModel> Invoices { get; set; }
 
