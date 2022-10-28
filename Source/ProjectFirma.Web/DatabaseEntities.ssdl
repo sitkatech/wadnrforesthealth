@@ -122,6 +122,7 @@
     <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdateValue" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeValue" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.Store.ProjectDocument" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectDocumentType" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.Store.ProjectExemptReportingYear" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExemptReportingYearUpdate" store:Type="Tables" Schema="dbo" />
@@ -1113,8 +1114,16 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID">
+      <End Role="ProjectDocumentType" EntitySet="ProjectDocumentType" />
+      <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectDocumentUpdate_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectDocumentUpdate_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="ProjectDocumentUpdates" EntitySet="ProjectDocumentUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID">
+      <End Role="ProjectDocumentType" EntitySet="ProjectDocumentType" />
       <End Role="ProjectDocumentUpdates" EntitySet="ProjectDocumentUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
@@ -2901,6 +2910,15 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
+    <Property Name="ProjectDocumentTypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="ProjectDocumentType">
+    <Key>
+      <PropertyRef Name="ProjectDocumentTypeID" />
+    </Key>
+    <Property Name="ProjectDocumentTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectDocumentTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectDocumentTypeDisplayName" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="ProjectDocumentUpdate">
     <Key>
@@ -2911,6 +2929,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
+    <Property Name="ProjectDocumentTypeID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectExemptReportingYear">
     <Key>
@@ -6226,6 +6245,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID">
+    <End Role="ProjectDocumentType" Type="ProjectFirma.Web.Models.Store.ProjectDocumentType" Multiplicity="0..1" />
+    <End Role="ProjectDocuments" Type="ProjectFirma.Web.Models.Store.ProjectDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDocumentType">
+        <PropertyRef Name="ProjectDocumentTypeID" />
+      </Principal>
+      <Dependent Role="ProjectDocuments">
+        <PropertyRef Name="ProjectDocumentTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectDocumentUpdate_FileResource_FileResourceID">
     <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
     <End Role="ProjectDocumentUpdates" Type="ProjectFirma.Web.Models.Store.ProjectDocumentUpdate" Multiplicity="*" />
@@ -6235,6 +6266,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="ProjectDocumentUpdates">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID">
+    <End Role="ProjectDocumentType" Type="ProjectFirma.Web.Models.Store.ProjectDocumentType" Multiplicity="0..1" />
+    <End Role="ProjectDocumentUpdates" Type="ProjectFirma.Web.Models.Store.ProjectDocumentUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDocumentType">
+        <PropertyRef Name="ProjectDocumentTypeID" />
+      </Principal>
+      <Dependent Role="ProjectDocumentUpdates">
+        <PropertyRef Name="ProjectDocumentTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

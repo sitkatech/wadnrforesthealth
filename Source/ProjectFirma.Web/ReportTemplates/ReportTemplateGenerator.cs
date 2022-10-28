@@ -196,13 +196,23 @@ namespace ProjectFirma.Web.ReportTemplates
                 }
             }
         }
+
+        /// <summary>Create the report from the template to download, using the template's OriginalCompleteFileName.</summary>
+        public ActionResult GenerateAndDownload() => GenerateAndDownload(ReportTemplate.FileResource.OriginalCompleteFileName);
         
-        public ActionResult GenerateAndDownload()
+        /// <summary>Create the report from the template to download.</summary>
+        public ActionResult GenerateAndDownload(string fileName)
         {
             Generate();
             var fileData = File.ReadAllBytes(GetCompilePath());
             var stream = new MemoryStream(fileData);
-            return new FileResourceResult(ReportTemplate.FileResource.OriginalCompleteFileName, stream, FileResourceMimeType.WordDOCX);
+
+            //Add the extension if needed.
+            var downloadFileName = fileName.EndsWith(ReportTemplate.FileResource.OriginalFileExtension)
+                ? fileName
+                : $"{fileName}{ReportTemplate.FileResource.OriginalFileExtension}";
+
+            return new FileResourceResult(downloadFileName, stream, FileResourceMimeType.WordDOCX);
         }
 
         private void CleanTempDirectoryOfOldFiles(string targetDirectory)

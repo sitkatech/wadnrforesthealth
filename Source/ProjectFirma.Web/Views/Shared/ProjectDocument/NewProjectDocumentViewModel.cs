@@ -29,6 +29,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         // can be the ID of a Project or a ProjectUpdateBatch depending on whether this ViewModel or its child type is invoked.
         public int? ParentID { get; set; }
 
+        [Required]
+        [DisplayName("Document Type")]
+        public int? ProjectDocumentTypeID { get; set; }
+
         /// <summary>
         /// Needed by ModelBinder
         /// </summary>
@@ -46,7 +50,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
                 HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
                 var projectDocument = new Models.ProjectDocument(project.ProjectID, fileResource.FileResourceID, DisplayNames[key])
                 {
-                    Description = !Descriptions[key].IsNullOrWhiteSpace() ? Descriptions[key] : null
+                    Description = !Descriptions[key].IsNullOrWhiteSpace() ? Descriptions[key] : null,
+                    ProjectDocumentTypeID = ProjectDocumentTypeID
                 };
                 project.ProjectDocuments.Add(projectDocument);
             }
@@ -60,7 +65,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
                 HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
                 var projectDocument = new ProjectDocumentUpdate(projectUpdateBatch.ProjectID, fileResource.FileResourceID, DisplayNames[key])
                 {
-                    Description = !Descriptions[key].IsNullOrWhiteSpace() ? Descriptions[key] : null
+                    Description = !Descriptions[key].IsNullOrWhiteSpace() ? Descriptions[key] : null,
+                    ProjectDocumentTypeID = ProjectDocumentTypeID
                 };
                 projectUpdateBatch.ProjectDocumentUpdates.Add(projectDocument);
             }

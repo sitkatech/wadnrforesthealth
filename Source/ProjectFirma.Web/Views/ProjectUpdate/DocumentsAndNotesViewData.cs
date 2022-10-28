@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Shared.TextControls;
@@ -40,7 +41,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 SitkaRoute<ProjectNoteUpdateController>.BuildUrlFromExpression(x => x.New(projectUpdateBatch)),
                 projectUpdateBatch.Project.DisplayName,
                 IsEditable);
-            ProjectDocumentsViewData = new ProjectDocumentsDetailViewData(EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(projectUpdateBatch.ProjectDocumentUpdates)),
+            ProjectDocumentsViewData = new ProjectDocumentsDetailViewData(
+                ProjectDocumentResource.CreateFromProjectDocuments(projectUpdateBatch.ProjectDocumentUpdates),
                 SitkaRoute<ProjectDocumentUpdateController>.BuildUrlFromExpression(x => x.New(projectUpdateBatch)),
                 projectUpdateBatch.Project.DisplayName,
                 IsEditable);
@@ -48,6 +50,5 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             DiffUrl = diffUrl;
         }
 
-        //public EntityDocumentsViewData EntityDocumentsViewData { get; set; }
     }
 }

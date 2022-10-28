@@ -121,6 +121,7 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectImportRemoveBlockListUrl { get; }
         public string ProjectListUrl { get; }
         public string BackToProjectsText { get; }
+
         public List<string> ProjectAlerts { get; }
         public readonly ProjectOrganizationsDetailViewData ProjectOrganizationsDetailViewData;
         public List<Models.ClassificationSystem> ClassificationSystems { get; }
@@ -385,10 +386,11 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectCostShareViewData = new ProjectCostShareViewData(project, currentPerson);
 
+            var projectDocumentResources = ProjectDocumentResource.CreateFromProjectDocuments(project.ProjectDocuments);
             ProjectDocumentsDetailViewData = new ProjectDocumentsDetailViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
+                projectDocumentResources,
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
-                new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
+                userHasEditProjectPermissions);
 
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
@@ -396,8 +398,6 @@ namespace ProjectFirma.Web.Views.Project
             TreatmentGroupGridSpec = treatmentGroupGridSpec;
             TreatmentAreaGrid = "treatmentAreaGrid";
             TreatmentAreaGridDataUrl = treatmentAreaGridDataUrl;
-
-
             TreatmentGridSpec = treatmentGridSpec;
             TreatmentGrid = "treatmentGrid";
             TreatmentGridDataUrl = treatmentGridDataUrl;
@@ -407,8 +407,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
             ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
-
-            
         }
     }
 }

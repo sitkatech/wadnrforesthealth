@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[ProjectDocument](
 	[FileResourceID] [int] NOT NULL,
 	[DisplayName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Description] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectDocumentTypeID] [int] NULL,
  CONSTRAINT [PK_ProjectDocument_ProjectDocumentID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectDocumentID] ASC
@@ -34,3 +35,8 @@ ALTER TABLE [dbo].[ProjectDocument]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocum
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectDocument] CHECK CONSTRAINT [FK_ProjectDocument_Project_ProjectID]
+GO
+ALTER TABLE [dbo].[ProjectDocument]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID] FOREIGN KEY([ProjectDocumentTypeID])
+REFERENCES [dbo].[ProjectDocumentType] ([ProjectDocumentTypeID])
+GO
+ALTER TABLE [dbo].[ProjectDocument] CHECK CONSTRAINT [FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID]

@@ -149,6 +149,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectCustomAttributeUpdateValue> ProjectCustomAttributeUpdateValues { get; set; }
         public virtual DbSet<ProjectCustomAttributeValue> ProjectCustomAttributeValues { get; set; }
         public virtual DbSet<ProjectDocument> ProjectDocuments { get; set; }
+        public virtual DbSet<ProjectDocumentType> ProjectDocumentTypes { get; set; }
         public virtual DbSet<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
         public virtual DbSet<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
@@ -853,6 +854,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectDocument":
                     return ProjectDocuments.GetProjectDocument(primaryKey);
+
+                case "ProjectDocumentType":
+                    return ProjectDocumentTypes.GetProjectDocumentType(primaryKey);
 
                 case "ProjectDocumentUpdate":
                     return ProjectDocumentUpdates.GetProjectDocumentUpdate(primaryKey);
