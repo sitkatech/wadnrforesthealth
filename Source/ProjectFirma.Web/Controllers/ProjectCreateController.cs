@@ -1098,7 +1098,7 @@ namespace ProjectFirma.Web.Controllers
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             var projectDocumentsDetailViewData = new ProjectDocumentsDetailViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
+                ProjectDocumentResource.CreateFromProjectDocuments(project.ProjectDocuments),
                 SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.NewDocument(project)), project.ProjectName,
                 canEditNotesAndDocuments);
             var viewData = new DocumentsAndNotesViewData(CurrentPerson, project, proposalSectionsStatus, entityNotesViewData, projectDocumentsDetailViewData);
@@ -1171,7 +1171,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewDocument(NewProjectDocumentViewModel viewModel)
         {
-            var viewData = new NewProjectDocumentViewData();
+            var viewData = new NewProjectDocumentViewData(HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes);
             return RazorPartialView<NewProjectDocument, NewProjectDocumentViewData, NewProjectDocumentViewModel>(viewData, viewModel);
         }
 

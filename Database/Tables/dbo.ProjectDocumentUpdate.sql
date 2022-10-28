@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[ProjectDocumentUpdate](
 	[FileResourceID] [int] NOT NULL,
 	[DisplayName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Description] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectDocumentTypeID] [int] NULL,
  CONSTRAINT [PK_ProjectDocumentUpdate_ProjectDocumentUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectDocumentUpdateID] ASC
@@ -29,6 +30,11 @@ ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_Projec
 REFERENCES [dbo].[FileResource] ([FileResourceID])
 GO
 ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_FileResource_FileResourceID]
+GO
+ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID] FOREIGN KEY([ProjectDocumentTypeID])
+REFERENCES [dbo].[ProjectDocumentType] ([ProjectDocumentTypeID])
+GO
+ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID]
 GO
 ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID] FOREIGN KEY([ProjectUpdateBatchID])
 REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID])

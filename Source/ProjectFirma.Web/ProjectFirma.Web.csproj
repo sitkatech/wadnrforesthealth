@@ -490,6 +490,9 @@
     <Compile Include="Models\Generated\ProjectDocument.Binding.cs" />
     <Compile Include="Models\Generated\ProjectDocument.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectDocumentPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectDocumentType.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectDocumentType.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectDocumentTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectDocumentUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectDocumentUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectDocumentUpdatePrimaryKey.Binding.cs" />
@@ -730,6 +733,9 @@
     <Compile Include="Models\OrganizationCode.cs" />
     <Compile Include="Models\ProjectCountyUpdate.cs" />
     <Compile Include="Models\ProjectCounty.cs" />
+    <Compile Include="Models\ProjectDocumentType.cs" />
+    <Compile Include="Models\ProjectDocumentResource.cs" />
+    <Compile Include="Models\ProjectDocumentResourceModelExtensions.cs" />
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\TreatmentCode.cs" />
     <Compile Include="Controllers\TreatmentUpdateController.cs" />

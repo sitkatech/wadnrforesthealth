@@ -24,6 +24,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         // can be the ID of a ProjectDocument or a ProjectDocumentUpdate depending on whether this ViewModel or its child type is invoked.
         public int? DocumentID { get; set; }
 
+        [Required]
+        [DisplayName("Document Type")]
+        public int? ProjectDocumentTypeID { get; set; }
+
         public EditProjectDocumentsViewModel()
         {
         }
@@ -34,24 +38,29 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
             DocumentID = projectDocument.ProjectDocumentID;
             DisplayName = projectDocument.DisplayName;
             Description = projectDocument.Description;
+            ProjectDocumentTypeID = projectDocument.ProjectDocumentTypeID;
         }
 
         public EditProjectDocumentsViewModel(Models.ProjectDocumentUpdate projectDocumentUpdate)
         {
             DisplayName = projectDocumentUpdate.DisplayName;
             Description = projectDocumentUpdate.Description;
+            ProjectDocumentTypeID = projectDocumentUpdate.ProjectDocumentTypeID;
         }
 
         public void UpdateModel(Models.ProjectDocument projectDocument)
         {
             projectDocument.DisplayName = DisplayName;
             projectDocument.Description = Description;
+            projectDocument.ProjectDocumentTypeID = ProjectDocumentTypeID;
         }
 
         public void UpdateModel(Models.ProjectDocumentUpdate projectDocumentUpdate)
         {
             projectDocumentUpdate.DisplayName = DisplayName;
             projectDocumentUpdate.Description = Description;
+            projectDocumentUpdate.ProjectDocumentTypeID = ProjectDocumentTypeID;
+
         }
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

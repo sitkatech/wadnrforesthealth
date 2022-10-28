@@ -386,10 +386,11 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectCostShareViewData = new ProjectCostShareViewData(project, currentPerson);
 
+            var projectDocumentResources = ProjectDocumentResource.CreateFromProjectDocuments(project.ProjectDocuments);
             ProjectDocumentsDetailViewData = new ProjectDocumentsDetailViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
+                projectDocumentResources,
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
-                new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
+                userHasEditProjectPermissions);
 
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
