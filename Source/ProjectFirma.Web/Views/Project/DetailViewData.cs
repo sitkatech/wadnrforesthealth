@@ -121,6 +121,7 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectImportRemoveBlockListUrl { get; }
         public string ProjectListUrl { get; }
         public string BackToProjectsText { get; }
+
         public List<string> ProjectAlerts { get; }
         public readonly ProjectOrganizationsDetailViewData ProjectOrganizationsDetailViewData;
         public List<Models.ClassificationSystem> ClassificationSystems { get; }
@@ -396,8 +397,6 @@ namespace ProjectFirma.Web.Views.Project
             TreatmentGroupGridSpec = treatmentGroupGridSpec;
             TreatmentAreaGrid = "treatmentAreaGrid";
             TreatmentAreaGridDataUrl = treatmentAreaGridDataUrl;
-
-
             TreatmentGridSpec = treatmentGridSpec;
             TreatmentGrid = "treatmentGrid";
             TreatmentGridDataUrl = treatmentGridDataUrl;
@@ -407,8 +406,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
             ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
-
-            
         }
     }
 }

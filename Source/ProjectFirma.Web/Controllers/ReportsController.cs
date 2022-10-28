@@ -269,19 +269,22 @@ namespace ProjectFirma.Web.Controllers
         [ProjectEditAsAdminFeature]
         public ActionResult DownloadLandOwnerAssistanceApprovalLetter(ProjectPrimaryKey projectPrimaryKey)
         {
+            var project = projectPrimaryKey.EntityObject;
             var reportTemplate = ReportTemplate.GetApprovalLetterTemplate();
-            var selectedModelIDs = new List<int> { projectPrimaryKey.EntityObject.PrimaryKey };
+            var selectedModelIDs = new List<int> { project.PrimaryKey };
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
-            return reportTemplateGenerator.GenerateAndDownload();
+            return reportTemplateGenerator.GenerateAndDownload($"{project.DisplayName} - Financial Assistance Approval Letter");
         }
 
         [ProjectEditAsAdminFeature]
         public ActionResult DownloadInvoicePaymentRequest(ProjectPrimaryKey projectPrimaryKey, InvoicePaymentRequestPrimaryKey invoicePaymentRequestPrimaryKey)
         {
+            var project = projectPrimaryKey.EntityObject;
+            var invoicePaymentRequest = invoicePaymentRequestPrimaryKey.EntityObject;
             var reportTemplate = ReportTemplate.GetInvoicePaymentRequestTemplate();
-            var selectedModelIDs = new List<int> { invoicePaymentRequestPrimaryKey.EntityObject.PrimaryKey };
+            var selectedModelIDs = new List<int> { invoicePaymentRequest.PrimaryKey };
             var reportTemplateGenerator = new ReportTemplateGenerator(reportTemplate, selectedModelIDs);
-            return reportTemplateGenerator.GenerateAndDownload();
+            return reportTemplateGenerator.GenerateAndDownload($"{project.DisplayName} - Invoice Payment Request {invoicePaymentRequest.InvoicePaymentRequestDate:MM-DD-YYYY}");
         }
     }
 }

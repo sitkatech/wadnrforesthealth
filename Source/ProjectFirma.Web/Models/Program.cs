@@ -11,6 +11,8 @@ namespace ProjectFirma.Web.Models
 {
     public partial class Program : IAuditableEntity
     {
+        public const int LandownerAssistanceProgramID = 3;
+
         public string AuditDescriptionString => ProgramName;
 
         public string InternalDisplayName =>  $"{ProgramName}{(!String.IsNullOrWhiteSpace(ProgramShortName) ? $" ({ProgramShortName})" : String.Empty)}{(!ProgramIsActive ? " (Inactive)" : String.Empty)}";

@@ -21,7 +21,7 @@ namespace ProjectFirma.Web.Models
 
         public static ReportTemplate GetApprovalLetterTemplate()
         {
-            var approvalLetterTemplate = HttpRequestStorage.DatabaseEntities.ReportTemplates.Single(x => x.IsSystemTemplate && x.DisplayName == "LOA Approval Letter");
+            var approvalLetterTemplate = HttpRequestStorage.DatabaseEntities.ReportTemplates.Single(x => x.IsSystemTemplate && x.DisplayName == "Financial Assistance Approval Letter");
             return approvalLetterTemplate;
         }
 
