@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             Project = projectTreatment.Project;
             ProjectTreatment = projectTreatment;
 
-            TreatmentCode = ProjectTreatment.TreatmentCode.TreatmentCodeDisplayName;
+            TreatmentCode = ProjectTreatment.TreatmentCode?.TreatmentCodeDisplayName;
             Name = ProjectTreatment.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName;
             StartDate = ProjectTreatment.TreatmentStartDate;
             EndDate = ProjectTreatment.TreatmentEndDate;

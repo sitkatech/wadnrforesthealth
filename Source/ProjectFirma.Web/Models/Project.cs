@@ -927,6 +927,8 @@ namespace ProjectFirma.Web.Models
             return ProjectStage != ProjectStage.Proposed;
         }
 
+        public bool IsInLandownerAssistanceProgram => ProjectPrograms.Any(x => x.ProgramID == Program.LandownerAssistanceProgramID);
+
         public static List<ProjectSectionSimple> GetApplicableProposalWizardSections(Project project, bool ignoreStatus)
         {
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus))

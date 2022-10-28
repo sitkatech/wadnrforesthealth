@@ -101,9 +101,9 @@
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
     }
      
-    @if (ViewDataTyped.UserHasEditProjectPermissions)
+    @if (ViewDataTyped.UserHasEditProjectPermissions && ViewDataTyped.Project.IsInLandownerAssistanceProgram)
     {
-        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download LOA Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download LOA Approval Letter</a>
+        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download Financial Assistance Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download Financial Assistance Approval Letter</a>
     }
 }
 

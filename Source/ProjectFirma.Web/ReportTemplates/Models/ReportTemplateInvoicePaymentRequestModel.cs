@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string PurchaseAuthority { get; set; }
         public string DUNS { get; set; }
         public DateTime InvoicePaymentRequestDate { get; set; }
+        public string InvoicePaymentRequestDateDisplay => InvoicePaymentRequestDate.ToShortDateString();
         public string Notes { get; set; }
         public List<ReportTemplateInvoiceModel> Invoices { get; set; }
 
@@ -72,7 +73,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 VendorState = invoicePaymentRequest.Vendor?.VendorState;
                 VendorZip = invoicePaymentRequest.Vendor?.VendorZip;
                 PreparedByPerson = invoicePaymentRequest.PreparedByPersonID.HasValue ? new ReportTemplatePersonModel(invoicePaymentRequest.PreparedByPerson) : null; 
-                PurchaseAuthority = invoicePaymentRequest.PurchaseAuthority;
+                PurchaseAuthority = invoicePaymentRequest.PurchaseAuthorityDisplay;
                 DUNS = invoicePaymentRequest.Duns;
                 InvoicePaymentRequestDate = invoicePaymentRequest.InvoicePaymentRequestDate;
                 Notes = invoicePaymentRequest.Notes;
