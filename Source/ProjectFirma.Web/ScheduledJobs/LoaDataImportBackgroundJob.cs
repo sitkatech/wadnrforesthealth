@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ApprovalUtilities.Reflection;
+using GeoJSON.Net.Feature;
+using GeoJSON.Net.Geometry;
 using Hangfire;
 using Newtonsoft.Json;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.GisProjectBulkUpdate;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
     public class LoaDataImportBackgroundJob : ScheduledBackgroundJobBase
     {
         public static LoaDataImportBackgroundJob Instance;
+
+        public static int LoaGisUploadSourceOrganizationID = 3;
 
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
@@ -45,16 +54,60 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             var result = new LoaProjectGeometriesDto();
 
-            var url = FirmaWebConfiguration.ArcGisLoaDataEasternUrl; //_configuration["ARCGIS_METRO_SITE_URL"];
-            url += "?f=json&where=Approval_ID is not null&outSr=4326";
-            url += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
+            var queryString = "?f=json&where=Approval_ID is not null&outSr=4326";
+            queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
+            var easternUrl = FirmaWebConfiguration.ArcGisLoaDataEasternUrl; //_configuration["ARCGIS_METRO_SITE_URL"];
+            easternUrl += queryString;
             HttpResponseMessage response;
             LoaProjectGeometriesDto processedResponse;
             try
             {
-                response = httpClient.GetAsync(url).Result;
+                response = httpClient.GetAsync(easternUrl).Result;
                 response.EnsureSuccessStatusCode();
                 processedResponse = arcUtility.ProcessRepsonse<LoaProjectGeometriesDto>(response);
+
+                var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
+                var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
+                var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
+
+                HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+                
+                
+                //Feature = new Feature(new Polygon(siteFeature.geometry.rings), siteFeature.attributes)
+                
+                var featureList = new List<Feature>();
+                foreach (var record in processedResponse.features)
+                {
+                    if (record.geometry != null && record.geometry.rings != null)
+                    {
+                        var approvalAttribute = record.attributes.Approval_ID;
+                        if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
+                        {
+                            var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
+                            featureList.Add(feature);
+                        }
+                    }
+                }
+                var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
+
+                GisProjectBulkUpdateController.SaveGisUploadToNormalizedFieldsUsingGeoJson(gisAttempt, featureCollection);
+
+
+
+                var gisMetadataAttributeIDs = gisAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
+                var metadataAttributes =
+                    HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
+                        gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
+
+
+                var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
+
+                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var projectListCount, out var skippedProjectCount, out var existingProjectCount);
+
+               var message = $"Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
+
+               Logger.Info(message);
 
             }
             catch (Exception)
