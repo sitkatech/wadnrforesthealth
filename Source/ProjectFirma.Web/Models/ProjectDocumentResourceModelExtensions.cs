@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
 
             var docType =  HttpRequestStorage.DatabaseEntities.ProjectDocumentTypes
                 .SingleOrDefault(x => x.ProjectDocumentTypeID == projectDocumentResource.ProjectDocumentTypeID)
-                .ProjectDocumentTypeName;
+                .ProjectDocumentTypeDisplayName;
             return docType == null ? "No Document Type Selected" : docType;
         }
     }

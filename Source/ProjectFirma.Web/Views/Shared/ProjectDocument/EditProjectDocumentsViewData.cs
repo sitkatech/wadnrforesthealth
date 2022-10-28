@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         public EditProjectDocumentsViewData(IEnumerable<Models.ProjectDocumentType> projectDocumentTypesList)
         {
             ProjectDocumentTypesList =
-                projectDocumentTypesList.ToSelectListWithEmptyFirstRow( x=>x.ProjectDocumentTypeID.ToString(),  x=> x.ProjectDocumentTypeName);
+                projectDocumentTypesList.ToSelectListWithEmptyFirstRow( x=>x.ProjectDocumentTypeID.ToString(),  x=> x.ProjectDocumentTypeDisplayName);
         }
     }
 }
