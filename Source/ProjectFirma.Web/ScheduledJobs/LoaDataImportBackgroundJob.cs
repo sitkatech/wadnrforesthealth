@@ -21,6 +21,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public static LoaDataImportBackgroundJob Instance;
 
         public static int LoaGisUploadSourceOrganizationID = 3;
+        public static int MaxRecordCount = 5000;
 
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
@@ -40,10 +41,11 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadLoaEasternData();
+            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataEasternUrl);
+            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataWesternUrl);
         }
 
-        private void DownloadLoaEasternData()
+        private void DownloadArcOnlineDataAndImportProjects(string arcOnlineUrl)
         {
             var arcUtility = new ArcGisOnlineUtility();
             HttpClient httpClient = new HttpClient();
@@ -52,19 +54,32 @@ namespace ProjectFirma.Web.ScheduledJobs
                 return;
             }
 
-            var result = new LoaProjectGeometriesDto();
-
-            var queryString = "?f=json&where=Approval_ID is not null&outSr=4326";
+            var queryString = $"?f=json&outSr=4326&where=Approval_ID is not null&resultRecordCount={MaxRecordCount}";
             queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
-            var easternUrl = FirmaWebConfiguration.ArcGisLoaDataEasternUrl; //_configuration["ARCGIS_METRO_SITE_URL"];
-            easternUrl += queryString;
+            arcOnlineUrl += queryString;
             HttpResponseMessage response;
             LoaProjectGeometriesDto processedResponse;
             try
             {
-                response = httpClient.GetAsync(easternUrl).Result;
+                //get the total records available
+                response = httpClient.GetAsync(arcOnlineUrl + "&returnCountOnly=true").Result;
                 response.EnsureSuccessStatusCode();
-                processedResponse = arcUtility.ProcessRepsonse<LoaProjectGeometriesDto>(response);
+                var countResponse = arcUtility.ProcessRepsonse<LoaProjectApiCountResponse>(response);
+                var totalRecordCount = countResponse.count;
+
+                //loop until we get all the records, the max returned is 5000
+                var featuresFromApi = new List<LoaProjectFeatureDto>();
+                var resultOffset = 0;
+                do
+                {
+                    response = httpClient.GetAsync(arcOnlineUrl + $"&resultOffset={resultOffset}").Result;
+                    response.EnsureSuccessStatusCode();
+                    processedResponse = arcUtility.ProcessRepsonse<LoaProjectGeometriesDto>(response);
+                    featuresFromApi.AddRange(processedResponse.features);
+
+                    resultOffset += MaxRecordCount;
+                } while (resultOffset <= totalRecordCount);
+
 
                 var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
                 var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
@@ -73,11 +88,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
                 HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
                 
-                
-                //Feature = new Feature(new Polygon(siteFeature.geometry.rings), siteFeature.attributes)
-                
                 var featureList = new List<Feature>();
-                foreach (var record in processedResponse.features)
+                foreach (var record in featuresFromApi)
                 {
                     if (record.geometry != null && record.geometry.rings != null)
                     {
@@ -93,8 +105,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 GisProjectBulkUpdateController.SaveGisUploadToNormalizedFieldsUsingGeoJson(gisAttempt, featureCollection);
 
-
-
                 var gisMetadataAttributeIDs = gisAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
                 var metadataAttributes =
                     HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
@@ -105,7 +115,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var projectListCount, out var skippedProjectCount, out var existingProjectCount);
 
-               var message = $"Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
+               var message = $"LOA Data Import Job Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
 
                Logger.Info(message);
 
@@ -115,22 +125,15 @@ namespace ProjectFirma.Web.ScheduledJobs
                 return;  // the calling code will set back a 400
             }
 
-            if (processedResponse != null)
-            {
-                result = processedResponse;
-            }
-
-
-
-
-            
-            return;
-
 
 
         }
 
+        private class LoaProjectApiCountResponse
+        {
+            public int count { get; set; }
 
+        }
 
         private class LoaProjectGeometriesDto
         {
