@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         {
             ProjectDocumentTypesList =
                 projectDocumentTypesList.ToSelectListWithEmptyFirstRow(x => x.ProjectDocumentTypeID.ToString(),
-                        x => x.ProjectDocumentTypeName);
+                        x => x.ProjectDocumentTypeDisplayName);
 
         }
     }

@@ -5,6 +5,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectDocumentType : IAuditableEntity
     {
-        public string AuditDescriptionString => ProjectDocumentTypeName;
+        public string AuditDescriptionString => ProjectDocumentTypeDisplayName;
     }
 }
