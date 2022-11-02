@@ -7,6 +7,11 @@ namespace ProjectFirma.Web.ScheduledJobs
     /// </summary>
     public static class ScheduledBackgroundJobLaunchHelper
     {
+        public static void RunLoaDataImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        {
+            LoaDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
+        }
+
         public static void RunProgramNotificationScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
             ProgramNotificationScheduledBackgroundJob.Instance.RunJob(jobCancellationToken);

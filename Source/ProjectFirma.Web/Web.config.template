@@ -46,6 +46,11 @@
     <add key="GrantExpendituresTempBaseUrl" value="${grant-expenditures-temp-base-url}" />
     <add key="LastLoadDateUrl" value="${last-load-date-url}" />
     <add key="ShapeFileRootDirectory" value="C:\Sitka\WADNRForestHealth\ShapeFiles" />
+    <add key="ArcGisAuthUrl" value="${arcgis-auth-url}" />
+    <add key="ArcGisLoaDataEasternUrl" value="${arcgis-loa-data-eastern-url}" />
+    <add key="ArcGisLoaDataWesternUrl" value="${arcgis-loa-data-western-url}" />
+    <add key="ArcGisClientId" value="${arcgis-client-id}" />
+    <add key="ArcGisClientSecret" value="${arcgis-client-secret}" />
   </appSettings>
   <system.net>
     <mailSettings>

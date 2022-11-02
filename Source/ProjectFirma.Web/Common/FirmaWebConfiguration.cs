@@ -58,6 +58,11 @@ namespace ProjectFirma.Web.Common
         public static readonly string ShapeFileRootDirectory = SitkaConfiguration.GetRequiredAppSetting("ShapeFileRootDirectory");
 
         public static readonly string LastLoadDateUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("LastLoadDateUrl");
+        public static readonly string ArcGisAuthUrl = SitkaConfiguration.GetRequiredAppSetting("ArcGisAuthUrl");
+        public static readonly string ArcGisLoaDataEasternUrl = SitkaConfiguration.GetRequiredAppSetting("ArcGisLoaDataEasternUrl");
+        public static readonly string ArcGisLoaDataWesternUrl = SitkaConfiguration.GetRequiredAppSetting("ArcGisLoaDataWesternUrl");
+        public static readonly string ArcGisClientId = SitkaConfiguration.GetRequiredAppSetting("ArcGisClientId");
+        public static readonly string ArcGisClientSecret = SitkaConfiguration.GetRequiredAppSetting("ArcGisClientSecret");
 
         public static readonly int GeoSpatialReferenceID = 4326;
 

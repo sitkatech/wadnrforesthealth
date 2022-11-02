@@ -140,12 +140,10 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [HttpPost]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
+
+        public static void ImportProjects(GisUploadAttempt gisUploadAttempt,GisMetadataViewModel viewModel, out int projectListCount, out int skippedProjectCount, out int existingProjectCount)
         {
-            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
+            
             var projectIdentifierMetadataAttribute = GenerateSingleMetadataAttribute(gisUploadAttempt, viewModel.ProjectIdentifierMetadataAttributeID);
             var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID).ToList();
 
@@ -154,7 +152,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 gisFeatureIDs = FilterListBasedOnIncludeExcludeCriteria(gisExcludeIncludeList, gisFeatureIDs);
             }
-            
+
 
             var completionDateDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.CompletionDateMetadataAttributeID);
             var projectNameDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectNameMetadataAttributeID);
@@ -164,12 +162,12 @@ namespace ProjectFirma.Web.Controllers
 
             var distinctProjectIdentifiers = GetDistinctProjectIdentifiers(projectIdentifierMetadataAttribute, gisFeatureIDs);
             var projectImportBlockList = HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Where(x => x.ProgramID == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
-          
+
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x => string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
-            var existingProjectCount = 0;
-            var skippedProjectCount = 0;
+            existingProjectCount = 0;
+            skippedProjectCount = 0;
             var projectList = new List<Project>();
             var newPersonList = new List<Person>();
             var newProjectPersonList = new List<ProjectPerson>();
@@ -202,7 +200,7 @@ namespace ProjectFirma.Web.Controllers
                         skippedProjectCount++;
             }
 
-            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program,currentCounter, ref existingProjectCount, ref skippedProjectCount);
+            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program, currentCounter, ref existingProjectCount, ref skippedProjectCount);
 
             MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID);
 
@@ -244,7 +242,18 @@ namespace ProjectFirma.Web.Controllers
 
             ExecPClearGisImportTables();
 
-            SetMessageForDisplay($"Successfully imported {projectList.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+            projectListCount = projectList.Count;
+        }
+
+        [HttpPost]
+        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
+        {
+            var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
+            ImportProjects(gisUploadAttempt, viewModel, out var projectListCount, out var skippedProjectCount, out var existingProjectCount);
+
+            SetMessageForDisplay($"Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -320,7 +329,7 @@ namespace ProjectFirma.Web.Controllers
                 var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier
                     .Where(x => privateLandOwnerDictionary.ContainsKey(x))
                     .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
-                var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
+                var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
                 GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
             }
 
@@ -1071,7 +1080,7 @@ namespace ProjectFirma.Web.Controllers
             return context;
         }
 
-        private void SaveGisUploadToNormalizedFieldsUsingGeoJson(GisUploadAttempt gisUploadAttempt, FeatureCollection featureCollection)
+        public static void SaveGisUploadToNormalizedFieldsUsingGeoJson(GisUploadAttempt gisUploadAttempt, FeatureCollection featureCollection)
         {
             ExecPClearGisImportTables();
             var gisMetdataAttributes = HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.ToList();
@@ -1321,7 +1330,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private void ExecPClearGisImportTables()
+        private static void ExecPClearGisImportTables()
         {
             var sqlDatabaseConnectionString = FirmaWebConfiguration.DatabaseConnectionString;
             var sqlQueryOne = $"dbo.pClearGisImportTables";
@@ -1338,7 +1347,7 @@ namespace ProjectFirma.Web.Controllers
 
         }
 
-        private void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID
+        private static void ExecProcImportTreatmentsFromGisUploadAttempt(int gisUploadAttemptID
                                                                 , int projectIdentifierMetadataAttributeID
                                                                 , int? footprintAcresMetadataAttributeID
                                                                 , int? treatedAcresMetadataAttributeID
