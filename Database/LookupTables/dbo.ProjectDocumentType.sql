@@ -1,17 +1,21 @@
 delete from dbo.ProjectDocumentType
 
-insert dbo.ProjectDocumentType (ProjectDocumentTypeName, ProjectDocumentTypeDisplayName)
+SET IDENTITY_INSERT dbo.ProjectDocumentType ON
+
+insert dbo.ProjectDocumentType (ProjectDocumentTypeID, ProjectDocumentTypeName, ProjectDocumentTypeDisplayName)
 values
-	('CostShareApplication', 'Cost Share Application'),
-	('CostShareSheet', 'Cost Share Sheet'),
-	('TreatmentSpecs', 'Treatment Specs'),
-	('Map', 'Map'),
-	('ApprovalLetter', 'Approval Letter'),
-	('ClaimForm', 'Claim Form'),
-	('Other', 'Other'),
-	('ManagementPlan', 'Management Plan'),
-	('MonitoringReport', 'Monitoring Report'),
-	('ProjectScoringMatrix', 'Project Scoring Matrix'),
-	('SiteVisitNotes', 'Site Visit Notes'),
-	('ApprovalChecklist', 'Approval Checklist'),
-	('Self-CostStatement', 'Self-Cost Statement')
+	(14, 'CostShareApplication', 'Cost Share Application'),
+	(15, 'CostShareSheet', 'Cost Share Sheet'),
+	(16, 'TreatmentSpecs', 'Treatment Specs'),
+	(17, 'Map', 'Map'),
+	(18, 'ApprovalLetter', 'Approval Letter'),
+	(19, 'ClaimForm', 'Claim Form'),
+	(20, 'Other', 'Other'),
+	(21, 'ManagementPlan', 'Management Plan'),
+	(22, 'MonitoringReport', 'Monitoring Report'),
+	(23, 'ProjectScoringMatrix', 'Project Scoring Matrix'),
+	(24, 'SiteVisitNotes', 'Site Visit Notes'),
+	(25, 'ApprovalChecklist', 'Approval Checklist'),
+	(26, 'Self-CostStatement', 'Self-Cost Statement')
+
+SET IDENTITY_INSERT dbo.ProjectDocumentType Off
