@@ -827,15 +827,34 @@ namespace ProjectFirma.Web.Controllers
                         string.Equals(x.FirstName, firstName, StringComparison.InvariantCultureIgnoreCase) &&
                         (string.Equals(x.LastName, lastName, StringComparison.InvariantCultureIgnoreCase) ||
                          (string.IsNullOrEmpty(x.LastName) && string.IsNullOrEmpty(lastName)))).ToList();
-                    if (existingPersons.Count() == 1)
+                    if (existingPersons.Any())
                     {
-                        var projectPerson = new ProjectPerson(project, existingPersons.Single(),
+                        Person existingPerson;
+                        if (existingPersons.Count() == 1)
+                        {
+                            existingPerson = existingPersons.Single();
+                        }
+                        else
+                        {
+                            existingPerson = existingPersons.OrderBy(x => x.CreateDate).First();
+                        }
+
+                        var projectPerson = new ProjectPerson(project, existingPerson,
                             ProjectPersonRelationshipType.PrivateLandowner);
                         newProjectPersonList.Add(projectPerson);
                     }
-                    else if (existingNewPersons.Count() == 1)
+                    else if (existingNewPersons.Any())
                     {
-                        var projectPerson = new ProjectPerson(project, existingNewPersons.Single(),
+                        Person existingNewPerson;
+                        if (existingNewPersons.Count() == 1)
+                        {
+                            existingNewPerson = existingNewPersons.Single();
+                        }
+                        else
+                        {
+                            existingNewPerson = existingNewPersons.OrderBy(x => x.CreateDate).First();
+                        }
+                        var projectPerson = new ProjectPerson(project, existingNewPerson,
                             ProjectPersonRelationshipType.PrivateLandowner);
                         newProjectPersonList.Add(projectPerson);
                     }
