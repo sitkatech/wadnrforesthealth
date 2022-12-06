@@ -1217,11 +1217,12 @@ namespace ProjectFirma.Web.Controllers
             var sqlQuery = $"select * from dbo.GisFeature where GisUploadAttemptID = {gisUploadAttempt.GisUploadAttemptID}";
 
             var reprojectedFeatureCollection = ImportSqlToGeoJson(sqlQuery, 2927, sqlDatabaseConnectionString);
-            var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
-                .Where(x => x.GisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).ToList();
             var dictionaryReprojectedFeatures =
                 reprojectedFeatureCollection.Features.ToDictionary(x =>
                     int.Parse(x.Properties["GisImportFeatureKey"].ToString()));
+
+            var gisFeatureList = HttpRequestStorage.DatabaseEntities.GisFeatures
+                .Where(x => x.GisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID).ToList();
 
             for (var gisFeatureIndex = 0; gisFeatureIndex < gisFeatureList.Count; gisFeatureIndex++)
             {
@@ -1239,7 +1240,7 @@ namespace ProjectFirma.Web.Controllers
                 }
                 else
                 {
-                    SitkaLogger.Instance.LogDetailedErrorMessage($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}");
+                    SitkaLogger.Instance.LogDetailedErrorMessage($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}.");
                 }
                 
             }
