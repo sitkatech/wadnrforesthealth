@@ -20,6 +20,8 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using ApprovalUtilities.SimpleLogger;
+using log4net;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -1224,14 +1226,22 @@ namespace ProjectFirma.Web.Controllers
             for (var gisFeatureIndex = 0; gisFeatureIndex < gisFeatureList.Count; gisFeatureIndex++)
             {
                 var gisFeature = gisFeatureList[gisFeatureIndex];
-                var geojsonFeature = dictionaryReprojectedFeatures[gisFeature.GisImportFeatureKey];
-                var reprojectedGeom = geojsonFeature.ToSqlGeometry();
-                if (reprojectedGeom.STIsValid())
+                if (dictionaryReprojectedFeatures.ContainsKey(gisFeature.GisImportFeatureKey))
                 {
-                    var area = reprojectedGeom.STArea().Value;
-                    var areaInAcres = area * 2.29568e-5;
-                    gisFeature.CalculatedArea = (decimal)areaInAcres;
+                    var geojsonFeature = dictionaryReprojectedFeatures[gisFeature.GisImportFeatureKey];
+                    var reprojectedGeom = geojsonFeature.ToSqlGeometry();
+                    if (reprojectedGeom.STIsValid())
+                    {
+                        var area = reprojectedGeom.STArea().Value;
+                        var areaInAcres = area * 2.29568e-5;
+                        gisFeature.CalculatedArea = (decimal)areaInAcres;
+                    }
                 }
+                else
+                {
+                    SitkaLogger.Instance.LogDetailedErrorMessage($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}");
+                }
+                
             }
 
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
