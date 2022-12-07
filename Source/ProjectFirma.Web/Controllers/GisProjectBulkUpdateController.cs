@@ -1240,7 +1240,8 @@ namespace ProjectFirma.Web.Controllers
                 }
                 else
                 {
-                    SitkaLogger.Instance.LogDetailedErrorMessage($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}.");
+                    var logger = LogManager.GetLogger(typeof(GisProjectBulkUpdateController));
+                    logger.Error($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}.");
                 }
                 
             }
