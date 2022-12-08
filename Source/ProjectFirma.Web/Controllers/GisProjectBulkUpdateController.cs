@@ -797,6 +797,12 @@ namespace ProjectFirma.Web.Controllers
                 {
                     projectNames = projectNames.Take(1).ToList();
                 }
+                else
+                {
+                    var logger = LogManager.GetLogger(typeof(GisProjectBulkUpdateController));
+                    logger.Warn($"Multiple Project Names found while trying to CalculateProjectName(). They are:{string.Join(", ", projectNames)}. Taking the first one for this project.");
+                    projectNames = projectNames.Take(1).ToList();
+                }
             }
 
             //GUT SHOT from USFS Silvitculture is bad SMILEY WOOD I also bad
@@ -1241,7 +1247,7 @@ namespace ProjectFirma.Web.Controllers
                 else
                 {
                     var logger = LogManager.GetLogger(typeof(GisProjectBulkUpdateController));
-                    logger.Error($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}.");
+                    logger.Warn($"Cannot find key gisFeature.GisImportFeatureKey:\"{gisFeature.GisImportFeatureKey}\" in dictionaryReprojectedFeatures. Related to GisUploadAttemptID:{gisUploadAttempt.GisUploadAttemptID}.");
                 }
                 
             }
