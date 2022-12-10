@@ -69,7 +69,7 @@
   -->
   <system.web>
     <!-- this next line seems to be needed since moving to ASP.Net 4.0 - otherwise validation errors occur even despite the presence of ValidateInput(false) attribute on the controller action and the ValidatePageRequest=false in the page directive -->
-    <httpRuntime requestValidationMode="2.0" maxRequestLength="${max-request-length}" maxUrlLength="${max-request-url-length}" maxQueryStringLength="${max-request-querystring-length}" ${httpruntime-executiontimeout-optional}/>
+    <httpRuntime requestValidationMode="2.0" maxRequestLength="${max-request-length}" maxUrlLength="${max-request-url-length}" maxQueryStringLength="${max-request-querystring-length}" ${httpruntime-executiontimeout-optional} />
     <compilation debug="true" targetFramework="4.8">
       <assemblies>
         <add assembly="System.Runtime, Version=4.1.2.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
@@ -89,7 +89,12 @@
     <trace enabled="${template-trace-enabled}" pageOutput="false" mostRecent="true" requestLimit="100" localOnly="true" />
   </system.web>
   <system.webServer>
-    <validation validateIntegratedModeConfiguration="true" />
+	  <security>
+		  <requestFiltering removeServerHeader="true">
+			  <requestLimits maxAllowedContentLength="${long::parse(max-request-length) * 1024}"  />
+		  </requestFiltering>
+	  </security>
+	  <validation validateIntegratedModeConfiguration="true" />
     <!-- runAllManagedModulesForAllRequests forces all requests, even static content handlers to go through ASP.NET MVC which allows us to set caching headers and handle 404 errors -->
     <modules runAllManagedModulesForAllRequests="true">
         <remove name="FormsAuthentication" />
