@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectIdentifier)]
         [StringLength(Models.Project.FieldLengths.ProjectGisIdentifier)]
-        public string ProgramIdentifier { get; set; }
+        public string ProjectGisIdentifier { get; set; }
 
         
 
@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             HasExistingProjectUpdate = hasExistingProjectUpdate;
             FocusAreaID = project.FocusAreaID;
             ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
-            ProgramIdentifier = project.ProjectGisIdentifier;
+            ProjectGisIdentifier = project.ProjectGisIdentifier;
             PercentageMatch = project.PercentageMatch;
         }
 
@@ -125,7 +125,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.FocusAreaID = FocusAreaID;
             project.PercentageMatch = PercentageMatch;
             // 2022-7-18 TK&RO - adding this trim to prevent GIS Identifiers with leading or trailing spaces as this caused comparison issues in the bulk import
-            project.ProjectGisIdentifier = string.IsNullOrEmpty(ProgramIdentifier) ? string.Empty : ProgramIdentifier.Trim();
+            project.ProjectGisIdentifier = string.IsNullOrEmpty(ProjectGisIdentifier) ? null : ProjectGisIdentifier.Trim();
             var projectType =
                 HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
                     x.ProjectTypeID == project.ProjectTypeID);
