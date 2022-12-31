@@ -113,7 +113,7 @@
         </div>
         <div class="form-group form-group-condensed">
             <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(FieldDefinition.ProjectInitiationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Start/Approval Date</strong>
+                @Html.LabelWithSugarFor(m => m.PlannedDate)
             </div>
             <div class="col-sm-8">
                 @if (ViewDataTyped.IsEditable)
