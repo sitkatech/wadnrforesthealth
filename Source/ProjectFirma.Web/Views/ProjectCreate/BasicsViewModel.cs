@@ -77,6 +77,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         /// </summary>
         public BasicsViewModel()
         {
+            ProjectProgramSimples = new List<ProjectProgramSimple>();
         }
 
         public BasicsViewModel(Models.Project project)
