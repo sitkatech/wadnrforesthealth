@@ -70,6 +70,11 @@ namespace ProjectFirma.Web.Models
             return people.Where(x => x.IsActive && x.OrganizationID == OrganizationModelExtensions.WadnrID).ToList().OrderBy(ht => ht.FullNameLastFirst).ToList();
         }
 
+        public static List<Person> GetAllWadnrPeople(this IQueryable<Person> people)
+        {
+            return people.Where(x => x.OrganizationID == OrganizationModelExtensions.WadnrID).ToList().OrderBy(ht => ht.FullNameLastFirst).ToList();
+        }
+
         public static List<Person> GetPeopleWhoReceiveNotifications(this IQueryable<Person> people)
         {
             return people.ToList().Where(x => x.ShouldReceiveNotifications()).OrderBy(ht => ht.FullNameLastFirst).ToList();

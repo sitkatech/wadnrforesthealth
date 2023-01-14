@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Controllers
         {
             
 
-            var people = HttpRequestStorage.DatabaseEntities.People.Where(x => x.OrganizationID == OrganizationModelExtensions.WadnrID).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
+            var people = HttpRequestStorage.DatabaseEntities.People.GetAllWadnrPeople().OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
 
             var selectedForesterWorkUnits = new List<ForesterWorkUnit>();
 

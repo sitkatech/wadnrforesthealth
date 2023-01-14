@@ -226,7 +226,7 @@ namespace ProjectFirma.Web.Controllers
                 .OrderBy(x => x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.OrganizationName);
-            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser()).ToList();
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople().Where(x => x.IsFullUser()).ToList();
             if (currentPrimaryContactPerson != null && !activePeople.Contains(currentPrimaryContactPerson))
             {
                 activePeople.Add(currentPrimaryContactPerson);
@@ -334,7 +334,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel)
         {
-            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
 
             var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
 
