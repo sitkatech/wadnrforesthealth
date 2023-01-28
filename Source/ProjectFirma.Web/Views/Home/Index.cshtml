@@ -143,8 +143,8 @@
             @if (ViewDataTyped.DisplayActionButtons)
             {            
                 @ProjectCreateHelper.AddProjectButton()
-                @GisProjectBulkUpdateHelper.GisProjectBulkUploadButton()
-            <a class="btn btn-firma" href="@ViewDataTyped.ProjectUpdatesUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() requiring an update">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit") Update @FieldDefinition.Project.GetFieldDefinitionLabel()</a>
+                @GisProjectBulkUpdateHelper.GisProjectBulkUploadButton(ViewDataTyped.CurrentPerson)
+                <a class="btn btn-firma" href="@ViewDataTyped.ProjectUpdatesUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() requiring an update">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit") Update @FieldDefinition.Project.GetFieldDefinitionLabel()</a>
             }
             <h4 style="margin-bottom: 5px; margin-top: 10px;">@FieldDefinition.Project.GetFieldDefinitionLabel() Map</h4>
             <div>

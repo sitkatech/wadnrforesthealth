@@ -38,7 +38,7 @@
     {
         @ProjectCreateHelper.AddProjectButton()
 
-         @GisProjectBulkUpdateHelper.GisProjectBulkUploadButton()
+         @GisProjectBulkUpdateHelper.GisProjectBulkUploadButton(ViewDataTyped.CurrentPerson)
         <a class="btn btn-firma" href="@ViewDataTyped.ProjectUpdatesUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() requiring an update">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit") Update @FieldDefinition.Project.GetFieldDefinitionLabel()</a>
     }
 }

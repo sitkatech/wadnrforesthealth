@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Controllers
     public class GisProjectBulkUpdateController : FirmaBaseController
     {
         [HttpGet]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         public PartialViewResult SourceOrganizationSelection()
         {
             var gisSourceOrganizations = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.ToList();
@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpPost]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult SourceOrganizationSelection(SourceOrganizationTypeSelectionViewModel viewModel)
         {
@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         public ActionResult InstructionsGisImport(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.GisUploadAttemptInstructions);
@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         public ActionResult UploadGisFile(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var uploadGisFileViewModel = new UploadGisFileViewModel();
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        [ProjectsViewFullListFeature]
+        [GisAttemptUploadViewFeature]
         public GridJsonNetJObjectResult<GisFeature> GisRecordGridJsonData(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
@@ -248,7 +248,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
         {
@@ -1029,7 +1029,7 @@ namespace ProjectFirma.Web.Controllers
         /// Dummy get signature so that it can find the post action
         /// </summary>
         [HttpGet]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         public ActionResult CheckStatusOfGisUploadAttempt(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
@@ -1037,7 +1037,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [GisAttemptUploadViewFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult UploadGisFile(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, UploadGisFileViewModel viewModel)
         {

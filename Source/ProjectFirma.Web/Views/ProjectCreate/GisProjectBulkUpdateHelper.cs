@@ -4,6 +4,8 @@ using LtInfo.Common.BootstrapWrappers;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
@@ -19,11 +21,17 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         private static readonly string GisProjectBulkUploadContinueButtonText =
             $"Continue {BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-right")}";
 
-        public static HtmlString GisProjectBulkUploadButton()
+        public static HtmlString GisProjectBulkUploadButton(Person currentPerson)
         {
-            return ModalDialogFormHelper.ModalDialogFormLink(GetGisBulkUploadButtonText, GisProjectBulkUploadUrl,
-                GetGisBulkUploadButtonText, 700, GisProjectBulkUploadContinueButtonText, "Cancel",
-                new List<string> { "btn", "btn-firma", "addSomePadding" }, null, null);
+            if (new GisUploadAttemptCreateFeature().HasPermissionByPerson(currentPerson))
+            {
+                return ModalDialogFormHelper.ModalDialogFormLink(GetGisBulkUploadButtonText, GisProjectBulkUploadUrl,
+                    GetGisBulkUploadButtonText, 700, GisProjectBulkUploadContinueButtonText, "Cancel",
+                    new List<string> { "btn", "btn-firma", "addSomePadding" }, null, null);
+            }
+
+            return new HtmlString(string.Empty);
+
         }
 
     }
