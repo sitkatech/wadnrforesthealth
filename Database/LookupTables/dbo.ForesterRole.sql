@@ -16,7 +16,8 @@ values
 (10, 'Rivers and Habitat Open Space Program Manager', 'RiversAndHabitatOpenSpaceProgramManager', 60),
 (11, 'Service Forestry Program Manager', 'ServiceForestryProgramManager', 100),
 (12, 'UCF Statewide Specialist', 'UcfStatewideSpecialist', 120),
-(13, 'Small Forest Landowner Office Program Manager', 'SmallForestLandownerOfficeProgramManager', 110)
+(13, 'Small Forest Landowner Office Program Manager', 'SmallForestLandownerOfficeProgramManager', 110),
+(14, 'Forest Regulation Fish & Wildlife Biologist', 'ForestRegulationFishAndWildlifeBiologist', 140)
 
 
 SET IDENTITY_INSERT dbo.ForesterRole OFF;

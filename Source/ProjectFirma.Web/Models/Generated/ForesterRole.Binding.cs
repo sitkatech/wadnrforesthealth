@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ForesterRoleServiceForestryProgramManager ServiceForestryProgramManager = ForesterRoleServiceForestryProgramManager.Instance;
         public static readonly ForesterRoleUcfStatewideSpecialist UcfStatewideSpecialist = ForesterRoleUcfStatewideSpecialist.Instance;
         public static readonly ForesterRoleSmallForestLandownerOfficeProgramManager SmallForestLandownerOfficeProgramManager = ForesterRoleSmallForestLandownerOfficeProgramManager.Instance;
+        public static readonly ForesterRoleForestRegulationFishAndWildlifeBiologist ForestRegulationFishAndWildlifeBiologist = ForesterRoleForestRegulationFishAndWildlifeBiologist.Instance;
 
         public static readonly List<ForesterRole> All;
         public static readonly ReadOnlyDictionary<int, ForesterRole> AllLookupDictionary;
@@ -41,7 +42,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ForesterRole()
         {
-            All = new List<ForesterRole> { ServiceForester, ServiceForestrySpecialist, ForestPracticesForester, StewardshipFishAndWildlifeBiologist, UrbanForestryTechnician, CommunityResilienceCoordinator, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, ServiceForestryProgramManager, UcfStatewideSpecialist, SmallForestLandownerOfficeProgramManager };
+            All = new List<ForesterRole> { ServiceForester, ServiceForestrySpecialist, ForestPracticesForester, StewardshipFishAndWildlifeBiologist, UrbanForestryTechnician, CommunityResilienceCoordinator, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, ServiceForestryProgramManager, UcfStatewideSpecialist, SmallForestLandownerOfficeProgramManager, ForestRegulationFishAndWildlifeBiologist };
             AllLookupDictionary = new ReadOnlyDictionary<int, ForesterRole>(All.ToDictionary(x => x.ForesterRoleID));
         }
 
@@ -119,6 +120,8 @@ namespace ProjectFirma.Web.Models
                     return FamilyForestFishPassageProgram;
                 case ForesterRoleEnum.ForestPracticesForester:
                     return ForestPracticesForester;
+                case ForesterRoleEnum.ForestRegulationFishAndWildlifeBiologist:
+                    return ForestRegulationFishAndWildlifeBiologist;
                 case ForesterRoleEnum.ForestryRiparianEasementProgram:
                     return ForestryRiparianEasementProgram;
                 case ForesterRoleEnum.RegulationAssistanceForester:
@@ -159,7 +162,8 @@ namespace ProjectFirma.Web.Models
         RiversAndHabitatOpenSpaceProgramManager = 10,
         ServiceForestryProgramManager = 11,
         UcfStatewideSpecialist = 12,
-        SmallForestLandownerOfficeProgramManager = 13
+        SmallForestLandownerOfficeProgramManager = 13,
+        ForestRegulationFishAndWildlifeBiologist = 14
     }
 
     public partial class ForesterRoleServiceForester : ForesterRole
@@ -238,5 +242,11 @@ namespace ProjectFirma.Web.Models
     {
         private ForesterRoleSmallForestLandownerOfficeProgramManager(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
         public static readonly ForesterRoleSmallForestLandownerOfficeProgramManager Instance = new ForesterRoleSmallForestLandownerOfficeProgramManager(13, @"Small Forest Landowner Office Program Manager", @"SmallForestLandownerOfficeProgramManager", 110);
+    }
+
+    public partial class ForesterRoleForestRegulationFishAndWildlifeBiologist : ForesterRole
+    {
+        private ForesterRoleForestRegulationFishAndWildlifeBiologist(int foresterRoleID, string foresterRoleDisplayName, string foresterRoleName, int sortOrder) : base(foresterRoleID, foresterRoleDisplayName, foresterRoleName, sortOrder) {}
+        public static readonly ForesterRoleForestRegulationFishAndWildlifeBiologist Instance = new ForesterRoleForestRegulationFishAndWildlifeBiologist(14, @"Forest Regulation Fish & Wildlife Biologist", @"ForestRegulationFishAndWildlifeBiologist", 140);
     }
 }
