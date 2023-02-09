@@ -314,25 +314,29 @@ namespace ProjectFirma.Web.Controllers
         {
             var projectProgramList = HttpRequestStorage.DatabaseEntities.ProjectPrograms
                 .Where(x => x.ProgramID == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).Select(x => x.ProjectID).ToList();
-            var existingProjectsAfterSaveWithProjectPeople = HttpRequestStorage.DatabaseEntities.Projects
+            var projectsInProjectProgramList = HttpRequestStorage.DatabaseEntities.Projects
                 .Include(x => x.ProjectPeople)
                 .Where(x => projectProgramList.Contains(x.ProjectID))
-                .ToList()
+                .ToList();
+            var existingProjectsAfterSaveWithProjectPeople = projectsInProjectProgramList
                 .Where(x => distinctProjectIdentifiers.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
-                var project = existingProjectsAfterSaveWithProjectPeople.Single(x => string.Equals(x.ProjectGisIdentifier,
+                var project = existingProjectsAfterSaveWithProjectPeople.SingleOrDefault(x => string.Equals(x.ProjectGisIdentifier,
                     distinctProjectIdentifier, StringComparison.InvariantCultureIgnoreCase));
-                var gisFeaturesIdListWithProjectIdentifier =
-                    projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
-                        string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
-                            StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
-                var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier
-                    .Where(x => privateLandOwnerDictionary.ContainsKey(x))
-                    .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
-                var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
-                GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
+                if (project != null)
+                {
+                    var gisFeaturesIdListWithProjectIdentifier =
+                        projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
+                            string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
+                                StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                    var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier
+                        .Where(x => privateLandOwnerDictionary.ContainsKey(x))
+                        .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
+                    var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+                    GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
+                }
             }
 
             HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
