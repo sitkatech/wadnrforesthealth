@@ -16,7 +16,7 @@ select
 	p.LastName,
 	p.Email,
 	p.Phone,
-	fdd.FieldDefinitionDataValue as ForesterRoleDefinition
+	COALESCE(fdd.FieldDefinitionDataValue, fd.DefaultDefinition) as ForesterRoleDefinition
 from
 	dbo.ForesterWorkUnit as fwu
 	join dbo.ForesterRole as fr on fwu.ForesterRoleID = fr.ForesterRoleID

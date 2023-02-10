@@ -300,12 +300,12 @@ VALUES
 (478, N'ProjectApplicationDate', N'Project Application Date', N'<p>The date on which the application for the project was submitted.'),
 (479, N'ProjectDecisionDate', N'Project Decision Date', N'<p>The date on which the project was decided/approved.'),
 (480, N'ServiceForester', 'Service Forester', N'Placeholder definition for forester role, Service Forester'),
-(481, N'StewardshipBiologist', 'Stewardship Biologist', N'Placeholder definition for forester role, Stewardship Biologist'),
+(481, N'StewardshipFishAndWildlifeBiologist', 'Stewardship Fish & Wildlife Biologist', N'Placeholder definition for forester role, Stewardship Fish & Wildlife Biologist'),
 (482, N'RegulationAssistanceForester', 'Regulation Assistance Forester', N'Placeholder definition for forester role, Regulation Assistance Forester'),
 (483, N'FamilyForestFishPassageProgram', 'Family Forest Fish Passage Program', N'Placeholder definition for forester role, Family Forest Fish Passage Program'),
 (484, N'ForestryRiparianEasementProgram', 'Forestry Riparian Easement Program', N'Placeholder definition for forester role, Forestry Riparian Easement Program'),
 (485, N'RiversAndHabitatOpenSpaceProgramManager', 'Rivers and Habitat Open Space Program Manager', N'Placeholder definition for forester role, Rivers and Habitat Open Space Program Manager'),
-(486, N'CommunityWildfirePreparednessSpecialist', 'Community Wildfire Preparedness Specialist', N'Placeholder definition for forester role, Community Wildfire Preparedness Specialist'),
+(486, N'CommunityResilienceCoordinator', 'Community Resilience Coordinator', N'Placeholder definition for forester role, Community Resilience Coordinator'),
 (487, N'UrbanForestryTechnician', 'Urban Forestry Technician', N'Placeholder definition for forester role, Urban Forestry Technician'),
 (488, N'ForestPracticesForester', 'Forest Practices Forester', N'Placeholder definition for forester role, Forest Practices Forester'),
 (489, N'SmallForestLandownerOfficeProgramManager', 'Small Forest Landowner Office Program Manager', N'Placeholder definition for forester role, Small Forest Landowner Office Program Manager'),
@@ -340,4 +340,6 @@ VALUES
 (518, N'InvoiceNumber', N'Invoice Number', N'The number of an invoice'),
 (519, N'Fund', N'Fund', N'The fund of an invoice'),
 (520, N'Appn', N'Appn', N'The Appn of an invoice'),
-(521, N'SubObject', N'SubObject', N'The SubObject of an invoice')
+(521, N'SubObject', N'SubObject', N'The SubObject of an invoice'),
+(522, N'ServiceForestryProgramManager', N'Service Forestry Program Manager', N'Placeholder definition for forester role, Service Forestry Program Manager'),
+(523, N'ForestRegulationFishAndWildlifeBiologist', N'Forest Regulation Fish & Wildlife Biologist', N'Placeholder definition for forester role, Forest Regulation Fish & Wildlife Biologist')
