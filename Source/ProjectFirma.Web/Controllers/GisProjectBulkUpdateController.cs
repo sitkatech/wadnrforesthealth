@@ -239,6 +239,8 @@ namespace ProjectFirma.Web.Controllers
 
             UpdateProjectRegions(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
 
+            UpdateProjectCounties(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
+
             UpdateProjectTypesIfNeeded(gisUploadAttempt);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
@@ -497,6 +499,46 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapesToAdd);
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+        }
+
+        private static void UpdateProjectCounties(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
+        {
+            HttpRequestStorage.DatabaseEntities.GetObjectContext().CommandTimeout = 500;
+            var projectCountiesCalculated = HttpRequestStorage.DatabaseEntities
+                .GetfGetUploadProgramCountys(gisUploadAttempt.GisUploadAttemptID, gisMetadataAttributeIdentier, gisUploadAttempt.GisUploadSourceOrganization.ProgramID).ToList();
+            var projectCounties = projectCountiesCalculated
+                .Select(x => new ProjectCounty(x.ProjectID, x.CountyID)).ToList();
+            var projectProgramList = HttpRequestStorage.DatabaseEntities.ProjectPrograms
+                .Where(x => x.ProgramID == gisUploadAttempt.GisUploadSourceOrganization.ProgramID).Select(x => x.ProjectID).ToList();
+            var projectsWithCounties = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectCounties)
+                .Where(x => projectProgramList.Contains(x.ProjectID))
+                .ToList()
+                .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
+                .ToList();
+
+            var projectsWithCountiesToDelete = projectsWithCounties
+                .SelectMany(x => x.ProjectCounties)
+                .ToList();
+
+            var projectsWithCountiesToDeleteAkList = projectsWithCountiesToDelete
+                .Select(x => $"{x.ProjectID}, {x.CountyID}").ToList();
+
+            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.ToList().Select(x => $"{x.ProjectID}, {x.CountyID}").ToList();
+            var allProjectCountiesExceptDeletes = allProjectCounties.Where(x =>
+                !projectsWithCountiesToDeleteAkList.Contains(x));
+
+            projectsWithCountiesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+
+
+            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            var projectCountiesToAdd = projectCounties.Where(x =>
+                    !allProjectCountiesExceptDeletes.Contains($"{x.ProjectID}, {x.CountyID}"))
+                .ToList();
+
+            HttpRequestStorage.DatabaseEntities.ProjectCounties.AddRange(projectCountiesToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 

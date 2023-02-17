@@ -1396,6 +1396,11 @@
       <Parameter Name="piGisMetadataAttributeID" Type="Int32" />
       <Parameter Name="programID" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="fGetUploadProgramCounty" ReturnType="Collection(ProjectFirma.Web.Models.fGetUploadProgramCounty_Result)" IsComposable="true">
+      <Parameter Name="piGisUploadAttemptID" Type="Int32" />
+      <Parameter Name="piGisMetadataAttributeID" Type="Int32" />
+      <Parameter Name="programID" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
       <Parameter Name="stringToSplit" Type="String" />
       <Parameter Name="delimiter" Type="String" />
@@ -1414,6 +1419,11 @@
     <Property Name="number" Type="Int64" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="fGetUploadProgramCounty_Result">
+    <Property Name="number" Type="Int64" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="CountyID" Type="Int32" Nullable="false" />
   </ComplexType>
   <ComplexType Name="fnSplitString_Result">
     <Property Name="splitdata" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />

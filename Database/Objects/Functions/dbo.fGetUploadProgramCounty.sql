@@ -27,8 +27,9 @@ as return(
         , p.ProjectGisIdentifier
         , pp.ProgramID
         from dbo.ProjectLocation pl
-        join dbo.Project p on pl.ProjectID = p.ProjectID
-        join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
+            join dbo.Project p on pl.ProjectID = p.ProjectID
+            join dbo.ProjectProgram pp on pp.ProjectID = p.ProjectID
+        where pp.ProgramID = @programID
         ) x on x.ProjectLocationID = pl.ProjectLocationID
         join dbo.County county on county.CountyFeature.STIntersects(pl.ProjectLocationGeometry) = 1
          where  x.ProjectGisIdentifier in (select distinct gfma.GisFeatureMetadataAttributeValue from dbo.GisFeature gf 
@@ -38,10 +39,10 @@ as return(
 
 
 
-        ) x
+        ) x 
 
 )
 go
 
---
+--select * from dbo.fGetUploadProgramCounty(169, 263, 3)
 
