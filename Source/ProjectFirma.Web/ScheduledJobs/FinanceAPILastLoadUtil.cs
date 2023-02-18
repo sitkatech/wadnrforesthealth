@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using log4net;
 using LtInfo.Common;
+using Newtonsoft.Json;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.ScheduledJobs
@@ -22,25 +25,73 @@ namespace ProjectFirma.Web.ScheduledJobs
         public static DateTime GetLastLoadDate()
         {
             DateTime lastLoadDate;
+            var logger = LogManager.GetLogger(typeof(FinanceApiLastLoadUtil));
+            
 
-            Uri lastLoadDateUrl = new Uri(FirmaWebConfiguration.LastLoadDateUrl);
+            var arcUtility = new ArcGisOnlineUtility();
+            var token = arcUtility.GetDataImportAuthTokenFromUser();
 
-            try
+
+            using (var hc = new HttpClient())
             {
-                using (var webClient = new WebClient())
+                var queryUrl =
+                    $"{FirmaWebConfiguration.LastLoadDateUrl}?token={token}" +
+                    $"&f=json" +
+                    $"&where=1=1" +
+                    $"&outFields=LOAD_FREQUENCY,FINANCIAL_LOAD_HISTORY_ID,LOAD_COMPLETE_DATE" +
+                    $"&orderByFields=LOAD_COMPLETE_DATE DESC" +
+                    $"&resultRecordCount=1";// +
+                    //$"&resultOffset={offset}" +
+
+                    // the followings are optional.
+                    //$"&datumTransformation=" +
+                    //$"&featureEncoding=esriDefault" +
+                    //$"&gdbVersion=" +
+                    //$"&geometry=" +
+                    //$"&geometryPrecision=" +
+                    //$"&geometryType=esriGeometryEnvelope" +
+                    //$"&groupByFieldsForStatistics=" +
+                    //$"&having=" +
+                    //$"&historicMoment=" +
+                    //$"&inSR=" +
+                    //$"&maxAllowableOffset=" +
+                    //$"&objectIds=" +
+                    //$"&outSR=" +
+                    //$"&outStatistics=" +
+                    //$"&parameterValues=" +
+                    //$"&queryByDistance=" +
+                    //$"&quantizationParameters=" +
+                    //$"&rangeValues=" +
+                    //$"&relationParam=" +
+                    //$"&returnCountOnly=false" +
+                    //$"&returnDistinctValues=true" +
+                    //$"&returnExtentOnly=false" +
+                    //$"&returnGeometry=false" +
+                    //$"&returnIdsOnly=false" +
+                    //$"&returnM=false" +
+                    //$"&returnTrueCurves=false" +
+                    //$"&returnZ=false" +
+                    //$"&spatialRel=esriSpatialRelIntersects" +
+                    //$"&text=" +
+                    //$"&time=" +
+                    
+
+                
+
+                var respTxt = hc.GetStringAsync(queryUrl).Result;
+                dynamic respObj = JsonConvert.DeserializeObject(respTxt);
+                var feature = respObj?.features[0];
+
+                if (feature != null)
                 {
-                    string response = webClient.DownloadString(lastLoadDateUrl);
-                    var lastLoadDateJson = JsonTools.DeserializeObject<LastLoadDateJsonResponse>(response);
-                    lastLoadDate = lastLoadDateJson.LoadCompleteDt;
+                    var lastLoadDateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(feature.LOAD_COMPLETE_DATE);
+                    lastLoadDate = lastLoadDateTimeOffset.DateTime;
                 }
-            }
-            catch (Exception exception)
-            {
-                var logger = LogManager.GetLogger(typeof(FinanceApiLastLoadUtil));
+                else
+                {
+                    throw new Exception("Could not get the LastLoadDate of the finance API");
+                }
 
-                string errorMessage = $"Error retrieving URL {lastLoadDateUrl}: {exception.Message}";
-                logger.Error(errorMessage);
-                throw;
             }
 
             return lastLoadDate;

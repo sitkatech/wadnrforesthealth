@@ -45,6 +45,9 @@
     <add key="VendorJsonSocrataBaseUrl" value="${vendor-json-socrata-base-url}" />
     <add key="GrantExpendituresTempBaseUrl" value="${grant-expenditures-temp-base-url}" />
     <add key="LastLoadDateUrl" value="${last-load-date-url}" />
+    <add key="DataImportAuthUrl" value="${data-import-auth-url}" />
+    <add key="DataImportAuthUsername" value="${data-import-auth-username}" />
+    <add key="DataImportAuthPassword" value="${data-import-auth-password}" />
     <add key="ShapeFileRootDirectory" value="C:\Sitka\WADNRForestHealth\ShapeFiles" />
     <add key="ArcGisAuthUrl" value="${arcgis-auth-url}" />
     <add key="ArcGisLoaDataEasternUrl" value="${arcgis-loa-data-eastern-url}" />

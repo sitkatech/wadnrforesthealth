@@ -55,6 +55,10 @@ namespace ProjectFirma.Web.Common
         public static readonly string ProgramIndexJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProgramIndexJsonSocrataBaseUrl");
         public static readonly string VendorJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("VendorJsonSocrataBaseUrl");
         public static readonly string GrantExpendituresTempBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("GrantExpendituresTempBaseUrl");
+        public static readonly string DataImportAuthUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthUrl");
+        public static readonly string DataImportAuthUsername = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthUsername");
+        public static readonly string DataImportAuthPassword = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthPassword");
+
         public static readonly string ShapeFileRootDirectory = SitkaConfiguration.GetRequiredAppSetting("ShapeFileRootDirectory");
 
         public static readonly string LastLoadDateUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("LastLoadDateUrl");
