@@ -2480,6 +2480,15 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetUploadProgramCounty" FunctionImportName="fGetUploadProgramCounty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetUploadProgramCounty_Result">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fnSplitString" FunctionImportName="fnSplitString">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fnSplitString_Result">
