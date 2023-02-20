@@ -98,6 +98,17 @@
                 </h2>
             </div>
             <div class="panel-body">
+                @if (ViewDataTyped.UserHasRegionManagePermissions)
+                {
+                    <div class="row">
+                        <div class="col-sm-3 fieldLabel text-right">
+                            Coordinator
+                        </div>
+                        <div class="col-sm-9">
+                            @ViewDataTyped.Coordinator
+                        </div>
+                    </div>
+                }
                 <div class="row">
                     <div class="col-sm-3 fieldLabel text-right">
                         Address

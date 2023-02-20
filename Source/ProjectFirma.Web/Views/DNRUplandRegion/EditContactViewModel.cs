@@ -15,6 +15,10 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
     public class EditContactViewModel : FormViewModel, IValidatableObject
     {
+
+        [DisplayName("Coordinator")]
+        public int ? CoordinatorID { get; set; }
+
         /// <summary>
         /// Only here so we have access to it in the Validator function. Not actually being edited. -- SLG
         /// </summary>
@@ -50,6 +54,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
         public EditContactViewModel(Models.DNRUplandRegion region)
         {
+            CoordinatorID = region.DNRUplandRegionCoordinator;
             RegionID = region.DNRUplandRegionID;
             State = region.RegionState;
             City = region.RegionCity;
@@ -62,6 +67,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
         public void UpdateModel(Models.DNRUplandRegion region)
         {
+            region.DNRUplandRegionCoordinator = CoordinatorID;
             region.RegionState = State;
             region.RegionCity = City;
             region.RegionZip = Zip;

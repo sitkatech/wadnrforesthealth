@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -43,9 +44,10 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public readonly MapInitJson MapInitJson;
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
         public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
+        public readonly string Coordinator;
         public string EditContactUrl { get; }
 
-        public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
+        public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures, string coordinator) : base(currentPerson)
         {
             DNRUplandRegion = dnrUplandRegion;
             MapInitJson = mapInitJson;
@@ -67,6 +69,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>dnrUplandRegion.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
             EditContactUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditContact(dnrUplandRegion));
+            Coordinator = coordinator;
 
         }
 
