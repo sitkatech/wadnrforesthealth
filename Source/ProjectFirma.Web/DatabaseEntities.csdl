@@ -279,9 +279,9 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="CustomPageImages" EntitySet="CustomPageImage" />
     </AssociationSet>
-    <AssociationSet Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinator_PersonID" Association="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinator_PersonID">
-      <End Role="Person" EntitySet="Person" />
-      <End Role="DNRUplandRegionsWhereYouAreThePerson" EntitySet="DNRUplandRegion" />
+    <AssociationSet Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID" Association="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID">
+      <End Role="DNRUplandRegionCoordinator" EntitySet="Person" />
+      <End Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" EntitySet="DNRUplandRegion" />
     </AssociationSet>
     <AssociationSet Name="FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID">
       <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
@@ -1611,9 +1611,9 @@
     <Property Name="RegionZip" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="RegionPhone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="RegionEmail" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="DNRUplandRegionCoordinator" Type="Int32" />
+    <Property Name="DNRUplandRegionCoordinatorID" Type="Int32" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="Agreements" />
-    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinator_PersonID" FromRole="DNRUplandRegionsWhereYouAreThePerson" ToRole="Person" />
+    <NavigationProperty Name="DNRUplandRegionCoordinator" Relationship="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID" FromRole="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" ToRole="DNRUplandRegionCoordinator" />
     <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="FocusAreas" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="GrantAllocations" />
     <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="PersonStewardRegions" />
@@ -2822,7 +2822,7 @@
     <Property Name="CreateGisUploadAttemptID" Type="Int32" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
-    <NavigationProperty Name="DNRUplandRegionsWhereYouAreThePerson" Relationship="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinator_PersonID" FromRole="Person" ToRole="DNRUplandRegionsWhereYouAreThePerson" />
+    <NavigationProperty Name="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" Relationship="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID" FromRole="DNRUplandRegionCoordinator" ToRole="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="ForesterWorkUnits" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="Person" ToRole="ForesterWorkUnits" />
     <NavigationProperty Name="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptCreatePerson" ToRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" />
@@ -4564,15 +4564,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinator_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="DNRUplandRegionsWhereYouAreThePerson" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="*" />
+  <Association Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID">
+    <End Role="DNRUplandRegionCoordinator" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Person">
+      <Principal Role="DNRUplandRegionCoordinator">
         <PropertyRef Name="PersonID" />
       </Principal>
-      <Dependent Role="DNRUplandRegionsWhereYouAreThePerson">
-        <PropertyRef Name="DNRUplandRegionCoordinator" />
+      <Dependent Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator">
+        <PropertyRef Name="DNRUplandRegionCoordinatorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

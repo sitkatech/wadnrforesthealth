@@ -1,4 +1,4 @@
 alter table dbo.DNRUplandRegion
-add DNRUplandRegionCoordinator int null constraint FK_DNRUplandRegion_Person_DNRUplandRegionCoordinator_PersonID foreign key (DNRUplandRegionCoordinator) 
-references Person(PersonID)
+add DNRUplandRegionCoordinatorID int null constraint FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID foreign key (DNRUplandRegionCoordinatorID) 
+references dbo.Person(PersonID)
 

@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Models
         {
             this.AgreementPeople = new HashSet<AgreementPerson>();
             this.AuditLogs = new HashSet<AuditLog>();
-            this.DNRUplandRegionsWhereYouAreThePerson = new HashSet<DNRUplandRegion>();
+            this.DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator = new HashSet<DNRUplandRegion>();
             this.FileResourcesWhereYouAreTheCreatePerson = new HashSet<FileResource>();
             this.ForesterWorkUnits = new HashSet<ForesterWorkUnit>();
             this.GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson = new HashSet<GisUploadAttempt>();
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementPeople.Any() || AuditLogs.Any() || DNRUplandRegionsWhereYouAreThePerson.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || ForesterWorkUnits.Any() || GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any() || GrantAllocationsWhereYouAreTheGrantManager.Any() || GrantAllocationAwardPersonnelAndBenefitsLineItems.Any() || GrantAllocationAwardTravelLineItems.Any() || GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonRoles.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProgramsWhereYouAreTheProgramCreatePerson.Any() || ProgramsWhereYouAreTheProgramLastUpdatedByPerson.Any() || ProgramsWhereYouAreTheProgramPrimaryContactPerson.Any() || ProgramNotificationSentsWhereYouAreTheSentToPerson.Any() || ProgramPeople.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TabularDataImportsWhereYouAreTheLastProcessedPerson.Any() || TabularDataImportsWhereYouAreTheUploadPerson.Any();
+            return AgreementPeople.Any() || AuditLogs.Any() || DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || ForesterWorkUnits.Any() || GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any() || GrantAllocationsWhereYouAreTheGrantManager.Any() || GrantAllocationAwardPersonnelAndBenefitsLineItems.Any() || GrantAllocationAwardTravelLineItems.Any() || GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonRoles.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProgramsWhereYouAreTheProgramCreatePerson.Any() || ProgramsWhereYouAreTheProgramLastUpdatedByPerson.Any() || ProgramsWhereYouAreTheProgramPrimaryContactPerson.Any() || ProgramNotificationSentsWhereYouAreTheSentToPerson.Any() || ProgramPeople.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TabularDataImportsWhereYouAreTheLastProcessedPerson.Any() || TabularDataImportsWhereYouAreTheUploadPerson.Any();
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(AuditLog).Name);
             }
 
-            if(DNRUplandRegionsWhereYouAreThePerson.Any())
+            if(DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator.Any())
             {
                 dependentObjects.Add(typeof(DNRUplandRegion).Name);
             }
@@ -475,7 +475,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in DNRUplandRegionsWhereYouAreThePerson.ToList())
+            foreach(var x in DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -777,7 +777,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual ICollection<AuditLog> AuditLogs { get; set; }
-        public virtual ICollection<DNRUplandRegion> DNRUplandRegionsWhereYouAreThePerson { get; set; }
+        public virtual ICollection<DNRUplandRegion> DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator { get; set; }
         public virtual ICollection<FileResource> FileResourcesWhereYouAreTheCreatePerson { get; set; }
         public virtual ICollection<ForesterWorkUnit> ForesterWorkUnits { get; set; }
         public virtual ICollection<GisUploadAttempt> GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson { get; set; }

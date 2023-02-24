@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
         public EditContactViewModel(Models.DNRUplandRegion region)
         {
-            CoordinatorID = region.DNRUplandRegionCoordinator;
+            CoordinatorID = region.DNRUplandRegionCoordinatorID;
             RegionID = region.DNRUplandRegionID;
             State = region.RegionState;
             City = region.RegionCity;
@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
         public void UpdateModel(Models.DNRUplandRegion region)
         {
-            region.DNRUplandRegionCoordinator = CoordinatorID;
+            region.DNRUplandRegionCoordinatorID = CoordinatorID;
             region.RegionState = State;
             region.RegionCity = City;
             region.RegionZip = Zip;

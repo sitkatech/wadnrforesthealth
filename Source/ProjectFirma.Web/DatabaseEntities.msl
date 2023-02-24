@@ -175,7 +175,7 @@
           <ScalarProperty Name="RegionZip" ColumnName="RegionZip" />
           <ScalarProperty Name="RegionPhone" ColumnName="RegionPhone" />
           <ScalarProperty Name="RegionEmail" ColumnName="RegionEmail" />
-          <ScalarProperty Name="DNRUplandRegionCoordinator" ColumnName="DNRUplandRegionCoordinator" />
+          <ScalarProperty Name="DNRUplandRegionCoordinatorID" ColumnName="DNRUplandRegionCoordinatorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

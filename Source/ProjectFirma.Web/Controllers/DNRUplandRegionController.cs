@@ -93,8 +93,7 @@ namespace ProjectFirma.Web.Controllers
                 .OrderBy(x => x.PerformanceMeasureDisplayName)
             .ToList();
 
-            var coordinator = HttpRequestStorage.DatabaseEntities.People.SingleOrDefault(x=>x.PersonID == region.DNRUplandRegionCoordinator)?.FullNameFirstLastAndOrgShortName;
-            var viewData = new DetailViewData(CurrentPerson, region, mapInitJson, viewGoogleChartViewData, performanceMeasures, coordinator);
+            var viewData = new DetailViewData(CurrentPerson, region, mapInitJson, viewGoogleChartViewData, performanceMeasures);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
