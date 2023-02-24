@@ -226,6 +226,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
         public virtual DbSet<fGetProjectDnrUploadRegion_Result> fGetProjectDnrUploadRegionResults { get; set; }
         public virtual DbSet<fGetProjectPriorityLandscape_Result> fGetProjectPriorityLandscapeResults { get; set; }
+        public virtual DbSet<fGetUploadProgramCounty_Result> fGetUploadProgramCountyResults { get; set; }
         public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }
 
         [DbFunction("DatabaseEntities", "fGetColumnNamesForTable")]
@@ -282,6 +283,28 @@ namespace ProjectFirma.Web.Models
             };
             return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
                   .CreateQuery<fGetProjectPriorityLandscape_Result>("DatabaseEntities.fGetProjectPriorityLandscape(@piGisUploadAttemptID, @piGisMetadataAttributeID, @programID)",piGisUploadAttemptID, piGisMetadataAttributeID, programID);
+        }
+
+        [DbFunction("DatabaseEntities", "fGetUploadProgramCounty")]
+        public virtual IQueryable<fGetUploadProgramCounty_Result> GetfGetUploadProgramCountys(int? piGisUploadAttemptIDParameter, int? piGisMetadataAttributeIDParameter, int? programIDParameter)
+        {
+            
+            var piGisUploadAttemptID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisUploadAttemptID", typeof(int?))
+            {
+                Value = piGisUploadAttemptIDParameter
+            };
+
+            var piGisMetadataAttributeID = new System.Data.Entity.Core.Objects.ObjectParameter("piGisMetadataAttributeID", typeof(int?))
+            {
+                Value = piGisMetadataAttributeIDParameter
+            };
+
+            var programID = new System.Data.Entity.Core.Objects.ObjectParameter("programID", typeof(int?))
+            {
+                Value = programIDParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetUploadProgramCounty_Result>("DatabaseEntities.fGetUploadProgramCounty(@piGisUploadAttemptID, @piGisMetadataAttributeID, @programID)",piGisUploadAttemptID, piGisMetadataAttributeID, programID);
         }
 
         [DbFunction("DatabaseEntities", "fnSplitString")]

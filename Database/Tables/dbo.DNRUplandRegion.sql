@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[DNRUplandRegion](
 	[RegionZip] [varchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[RegionPhone] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[RegionEmail] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[DNRUplandRegionCoordinatorID] [int] NULL,
  CONSTRAINT [PK_DNRUplandRegion_DNRUplandRegionID] PRIMARY KEY CLUSTERED 
 (
 	[DNRUplandRegionID] ASC
@@ -23,6 +24,11 @@ CREATE TABLE [dbo].[DNRUplandRegion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[DNRUplandRegion]  WITH CHECK ADD  CONSTRAINT [FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID] FOREIGN KEY([DNRUplandRegionCoordinatorID])
+REFERENCES [dbo].[Person] ([PersonID])
+GO
+ALTER TABLE [dbo].[DNRUplandRegion] CHECK CONSTRAINT [FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID]
 GO
 SET ARITHABORT ON
 SET CONCAT_NULL_YIELDS_NULL ON

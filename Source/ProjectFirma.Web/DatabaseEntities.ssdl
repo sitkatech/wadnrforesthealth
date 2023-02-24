@@ -398,6 +398,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="CustomPageImages" EntitySet="CustomPageImage" />
     </AssociationSet>
+    <AssociationSet Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID">
+      <End Role="DNRUplandRegionCoordinator" EntitySet="Person" />
+      <End Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" EntitySet="DNRUplandRegion" />
+    </AssociationSet>
     <AssociationSet Name="FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID" Association="ProjectFirma.Web.Models.Store.FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID">
       <End Role="FieldDefinitionData" EntitySet="FieldDefinitionData" />
       <End Role="FieldDefinitionDataImages" EntitySet="FieldDefinitionDataImage" />
@@ -1680,6 +1684,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="RegionZip" Type="varchar" MaxLength="10" />
     <Property Name="RegionPhone" Type="varchar" MaxLength="30" />
     <Property Name="RegionEmail" Type="varchar" MaxLength="255" />
+    <Property Name="DNRUplandRegionCoordinatorID" Type="int" />
   </EntityType>
   <EntityType Name="ExternalMapLayer">
     <Key>
@@ -4088,6 +4093,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="CustomPageImages">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID">
+    <End Role="DNRUplandRegionCoordinator" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegionCoordinator">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator">
+        <PropertyRef Name="DNRUplandRegionCoordinatorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -7499,6 +7516,20 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
           <Property Name="number" Type="bigint" />
           <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fGetUploadProgramCounty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="piGisUploadAttemptID" Type="int" Mode="In" />
+    <Parameter Name="piGisMetadataAttributeID" Type="int" Mode="In" />
+    <Parameter Name="programID" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="number" Type="bigint" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="CountyID" Type="int" Nullable="false" />
         </RowType>
       </CollectionType>
     </ReturnType>

@@ -18,25 +18,23 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using ProjectFirma.Web.Views.Project;
+using LtInfo.Common.MvcResults;
+using MoreLinq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
-using ProjectFirma.Web.Views.Shared;
-using LtInfo.Common.MvcResults;
-using MoreLinq;
-using NUnit.Framework;
 using ProjectFirma.Web.Views.DNRUplandRegion;
+using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.Shared;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Detail = ProjectFirma.Web.Views.DNRUplandRegion.Detail;
 using DetailViewData = ProjectFirma.Web.Views.DNRUplandRegion.DetailViewData;
 using Index = ProjectFirma.Web.Views.DNRUplandRegion.Index;
 using IndexGridSpec = ProjectFirma.Web.Views.DNRUplandRegion.IndexGridSpec;
 using IndexViewData = ProjectFirma.Web.Views.DNRUplandRegion.IndexViewData;
-using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -93,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
                 .SelectMany(x => x.PerformanceMeasureActuals)
                 .Select(x => x.PerformanceMeasure).Distinct()
                 .OrderBy(x => x.PerformanceMeasureDisplayName)
-                .ToList();
+            .ToList();
 
             var viewData = new DetailViewData(CurrentPerson, region, mapInitJson, viewGoogleChartViewData, performanceMeasures);
             return RazorView<Detail, DetailViewData>(viewData);
