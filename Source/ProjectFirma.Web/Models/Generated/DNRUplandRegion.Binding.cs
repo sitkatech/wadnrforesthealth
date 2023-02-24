@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation, string regionAddress, string regionCity, string regionState, string regionZip, string regionPhone, string regionEmail) : this()
+        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation, string regionAddress, string regionCity, string regionState, string regionZip, string regionPhone, string regionEmail, int? dNRUplandRegionCoordinatorID) : this()
         {
             this.DNRUplandRegionID = dNRUplandRegionID;
             this.DNRUplandRegionAbbrev = dNRUplandRegionAbbrev;
@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Models
             this.RegionZip = regionZip;
             this.RegionPhone = regionPhone;
             this.RegionEmail = regionEmail;
+            this.DNRUplandRegionCoordinatorID = dNRUplandRegionCoordinatorID;
         }
 
         /// <summary>
@@ -188,6 +189,7 @@ namespace ProjectFirma.Web.Models
         public string RegionZip { get; set; }
         public string RegionPhone { get; set; }
         public string RegionEmail { get; set; }
+        public int? DNRUplandRegionCoordinatorID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return DNRUplandRegionID; } set { DNRUplandRegionID = value; } }
 
@@ -197,6 +199,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
+        public virtual Person DNRUplandRegionCoordinator { get; set; }
 
         public static class FieldLengths
         {
