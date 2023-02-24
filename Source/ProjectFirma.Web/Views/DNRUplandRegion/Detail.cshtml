@@ -105,7 +105,7 @@
                             Coordinator
                         </div>
                         <div class="col-sm-9">
-                            @ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator.FullNameFirstLastAndOrgShortName
+                            @(ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator != null ? ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator.FullNameFirstLastAndOrgShortName : String.Empty)
                         </div>
                     </div>
                 }
