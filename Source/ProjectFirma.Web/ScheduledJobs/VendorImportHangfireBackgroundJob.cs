@@ -63,8 +63,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddSocrataMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
-            var vendorJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.Vendor);
+            //var fullUrl = AddSocrataMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
+            var vendorJson = DownloadSocrataUrlToString(VendorJsonSocrataBaseUrl, SocrataDataMartRawJsonImportTableType.Vendor);
             Logger.Info($"Vendor JSON length: {vendorJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, lastFinanceApiLoadDate, null, vendorJson);

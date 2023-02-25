@@ -59,6 +59,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ArcOnlineFinanceApiRawJsonImport">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ArcOnlineFinanceApiRawJsonImport">
+        <MappingFragment StoreEntitySet="ArcOnlineFinanceApiRawJsonImport">
+          <ScalarProperty Name="ArcOnlineFinanceApiRawJsonImportID" ColumnName="ArcOnlineFinanceApiRawJsonImportID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" ColumnName="ArcOnlineFinanceApiRawJsonImportTableTypeID" />
+          <ScalarProperty Name="BienniumFiscalYear" ColumnName="BienniumFiscalYear" />
+          <ScalarProperty Name="FinanceApiLastLoadDate" ColumnName="FinanceApiLastLoadDate" />
+          <ScalarProperty Name="RawJsonString" ColumnName="RawJsonString" />
+          <ScalarProperty Name="JsonImportDate" ColumnName="JsonImportDate" />
+          <ScalarProperty Name="JsonImportStatusTypeID" ColumnName="JsonImportStatusTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="AuditLog">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AuditLog">
         <MappingFragment StoreEntitySet="AuditLog">

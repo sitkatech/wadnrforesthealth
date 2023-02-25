@@ -34,6 +34,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
+        public virtual DbSet<ArcOnlineFinanceApiRawJsonImport> ArcOnlineFinanceApiRawJsonImports { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
@@ -352,6 +353,14 @@ namespace ProjectFirma.Web.Models
 
                 case "AgreementType":
                     return AgreementTypes.GetAgreementType(primaryKey);
+
+                case "ArcOnlineFinanceApiRawJsonImport":
+                    return ArcOnlineFinanceApiRawJsonImports.GetArcOnlineFinanceApiRawJsonImport(primaryKey);
+
+                case "ArcOnlineFinanceApiRawJsonImportTableType":
+                    var arcOnlineFinanceApiRawJsonImportTableType = ArcOnlineFinanceApiRawJsonImportTableType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(arcOnlineFinanceApiRawJsonImportTableType, "ArcOnlineFinanceApiRawJsonImportTableType", primaryKey);
+                    return arcOnlineFinanceApiRawJsonImportTableType;
 
                 case "AuditLogEventType":
                     var auditLogEventType = AuditLogEventType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
