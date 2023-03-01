@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Net.Http;
 using Hangfire;
 using log4net;
+using Newtonsoft.Json;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -39,43 +41,115 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// Download the contents of the given URL to a temp file
         /// </summary>
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
-        public string DownloadArcOnlineUrlToString(Uri urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
+        public List<string> DownloadArcOnlineUrlToString(Uri urlToDownload, string token, string whereClause, string outFields, string orderByFields, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
         {
             Logger.Info($"Starting '{JobName}' DownloadArcOnlineUrlToString");
-            try
-            {
-                using (var webClient = new WebClient())
-                {
-                    // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
-                    // See: http://xxxxx
-                    webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
-                    string socrataJsonData = webClient.DownloadString(urlToDownload);
+            //try
+            //{
+            //    using (var webClient = new WebClient())
+            //    {
+            //        // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
+            //        // See: http://xxxxx
+            //        webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
+            //        string socrataJsonData = webClient.DownloadString(urlToDownload);
 
-                    Logger.Info($"Ending '{JobName}' DownloadArcOnlineUrlToString");
-                    return socrataJsonData;
+            //        Logger.Info($"Ending '{JobName}' DownloadArcOnlineUrlToString");
+            //        return socrataJsonData;
+            //    }
+            //}
+            //catch (Exception exception)
+            //{
+            //    string errorMessage = $"Error downloading ArcOnline type {socrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeName}, URL {urlToDownload}: {exception.Message}";
+            //    Logger.Error(errorMessage);
+            //    throw;
+            //}
+
+            var ret = new List<string>();
+            var PAGE_SIZE = 250;
+            var offset = 0;
+            var hasDataToQuery = true;
+
+            while (hasDataToQuery)
+            {
+                using (var hc = new HttpClient())
+                {
+                    var where = $"{whereClause}";
+                    var queryUrl =
+                        $"{urlToDownload}?token={token}" +
+                        $"&f=json" +
+                        $"&where={where}" +
+                        $"&outFields={outFields}" +
+                        $"&orderByFields={orderByFields}" +
+                        $"&resultRecordCount={PAGE_SIZE}" +
+                        $"&resultOffset={offset}" +
+
+                        // the followings are optional.
+                        //$"&datumTransformation=" +
+                        //$"&featureEncoding=esriDefault" +
+                        //$"&gdbVersion=" +
+                        //$"&geometry=" +
+                        //$"&geometryPrecision=" +
+                        //$"&geometryType=esriGeometryEnvelope" +
+                        //$"&groupByFieldsForStatistics=" +
+                        //$"&having=" +
+                        //$"&historicMoment=" +
+                        //$"&inSR=" +
+                        //$"&maxAllowableOffset=" +
+                        //$"&objectIds=" +
+                        //$"&outSR=" +
+                        //$"&outStatistics=" +
+                        //$"&parameterValues=" +
+                        //$"&queryByDistance=" +
+                        //$"&quantizationParameters=" +
+                        //$"&rangeValues=" +
+                        //$"&relationParam=" +
+                        //$"&returnCountOnly=false" +
+                        //$"&returnDistinctValues=true" +
+                        //$"&returnExtentOnly=false" +
+                        //$"&returnGeometry=false" +
+                        //$"&returnIdsOnly=false" +
+                        //$"&returnM=false" +
+                        //$"&returnTrueCurves=false" +
+                        //$"&returnZ=false" +
+                        //$"&spatialRel=esriSpatialRelIntersects" +
+                        //$"&text=" +
+                        //$"&time=" +
+                        string.Empty;
+
+                    //Console.WriteLine($"\r\n-==Query String==-\r\n{queryUrl}");
+
+                    var respTxt = hc.GetStringAsync(queryUrl).Result;
+                    dynamic respObj = JsonConvert.DeserializeObject(respTxt);
+                    hasDataToQuery = Convert.ToBoolean(respObj.exceededTransferLimit);
+                    foreach (var item in respObj.features)
+                    {
+                        ret.Add(JsonConvert.SerializeObject(item));
+                        offset += 1;
+                    }
+                    //Console.WriteLine($"Queried {ret.Count} so far..");
                 }
             }
-            catch (Exception exception)
-            {
-                string errorMessage = $"Error downloading ArcOnline type {socrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeName}, URL {urlToDownload}: {exception.Message}";
-                Logger.Error(errorMessage);
-                throw;
-            }
+
+            return ret;
+        
+
         }
 
 
 
-        public int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType,
+        public int ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType arcOnlineFinanceApiRawJsonImportTableType,
                                                DateTime lastFinanceApiLoadDate,
                                                int? optionalBienniumFiscalYear,
                                                string rawJsonString)
         {
-            Logger.Info($"Starting '{JobName}' ShoveRawJsonStringIntoTable");
-            SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString, JsonImportStatusType.NotYetProcessed);
+            Logger.Info($"Starting '{JobName}' ArcOnline ShoveRawJsonStringIntoTable");
+            //SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, arcOnlineFinanceApiRawJsonImportTableType, rawJsonString, JsonImportStatusType.NotYetProcessed);
+            var newRawJsonImport = new ArcOnlineFinanceApiRawJsonImport(DateTime.Now,
+                arcOnlineFinanceApiRawJsonImportTableType, rawJsonString, JsonImportStatusType.NotYetProcessed);
             newRawJsonImport.FinanceApiLastLoadDate = lastFinanceApiLoadDate;
             newRawJsonImport.BienniumFiscalYear = optionalBienniumFiscalYear;
 
-            HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Add(newRawJsonImport);
+            HttpRequestStorage.DatabaseEntities.ArcOnlineFinanceApiRawJsonImports.Add(newRawJsonImport);
 
             // We use the System Person if none is available, because that indicates we are running from an automated context (Hangfire)
             if (HttpRequestStorage.PersonIsSet())
@@ -89,8 +163,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // Normally we might return the object here, but this thing is potentially so huge we want to dump it just as soon as we no longer need it.
-            Logger.Info($"Ending '{JobName}' ShoveRawJsonStringIntoTable");
-            return newRawJsonImport.SocrataDataMartRawJsonImportID;
+            Logger.Info($"Ending '{JobName}' ArcOnline ShoveRawJsonStringIntoTable");
+            return newRawJsonImport.ArcOnlineFinanceApiRawJsonImportID;
         }
 
         public void MarkJsonImportStatus(int socrataDataMartRawJsonImportID, JsonImportStatusType jsonImportStatusType)

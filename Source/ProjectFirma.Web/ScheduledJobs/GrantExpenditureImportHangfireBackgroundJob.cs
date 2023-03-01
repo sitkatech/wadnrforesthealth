@@ -51,8 +51,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
             ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
 
+            var arcUtility = new ArcGisOnlineUtility();
+            var token = arcUtility.GetDataImportAuthTokenFromUser();
             // See how current the data is
-            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate(token);
 
             // 2001 is the first biennium for which API returned data. This is WAY farther back than needed, but
             // harmless to overreach, since we only use data for which we have matching PI/PC.

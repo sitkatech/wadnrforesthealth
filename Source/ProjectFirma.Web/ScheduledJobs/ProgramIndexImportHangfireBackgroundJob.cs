@@ -50,8 +50,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
             ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
 
+            var arcUtility = new ArcGisOnlineUtility();
+            var token = arcUtility.GetDataImportAuthTokenFromUser();
             // See how current the data is
-            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate(token);
 
             var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.ProgramIndex.SocrataDataMartRawJsonImportTableTypeID, null);
 

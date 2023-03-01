@@ -22,14 +22,10 @@ namespace ProjectFirma.Web.ScheduledJobs
         }
 
 
-        public static DateTime GetLastLoadDate()
+        public static DateTime GetLastLoadDate(string token)
         {
             DateTime lastLoadDate;
             var logger = LogManager.GetLogger(typeof(FinanceApiLastLoadUtil));
-            
-
-            var arcUtility = new ArcGisOnlineUtility();
-            var token = arcUtility.GetDataImportAuthTokenFromUser();
 
 
             using (var hc = new HttpClient())
@@ -81,10 +77,11 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var respTxt = hc.GetStringAsync(queryUrl).Result;
                 dynamic respObj = JsonConvert.DeserializeObject(respTxt);
                 var feature = respObj?.features[0];
+                //long loadCompleteDate = 0;
 
-                if (feature != null)
+                if (feature != null)// && long.TryParse(feature.attributes.LOAD_COMPLETE_DATE.Value, out loadCompleteDate))
                 {
-                    var lastLoadDateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(feature.LOAD_COMPLETE_DATE);
+                    var lastLoadDateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(feature.attributes.LOAD_COMPLETE_DATE.Value);
                     lastLoadDate = lastLoadDateTimeOffset.DateTime;
                 }
                 else

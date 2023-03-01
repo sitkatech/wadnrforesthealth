@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Hangfire;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
-    public class VendorImportHangfireBackgroundJob : SocrataDataMartUpdateBackgroundJob
+    public class VendorImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
         private static readonly Uri VendorJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.VendorJsonSocrataBaseUrl);
 
@@ -50,10 +51,13 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
             ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
 
-            // See how current the data is
-            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+            var arcUtility = new ArcGisOnlineUtility();
+            var token = arcUtility.GetDataImportAuthTokenFromUser();
 
-            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.Vendor.SocrataDataMartRawJsonImportTableTypeID, null);
+            // See how current the data is
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate(token);
+
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(ArcOnlineFinanceApiRawJsonImportTableType.Vendor.ArcOnlineFinanceApiRawJsonImportTableTypeID, null);
 
             // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
             if (importInfo != null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
@@ -64,10 +68,13 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // Pull JSON off the page into a (possibly huge) string
             //var fullUrl = AddSocrataMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
-            var vendorJson = DownloadSocrataUrlToString(VendorJsonSocrataBaseUrl, SocrataDataMartRawJsonImportTableType.Vendor);
-            Logger.Info($"Vendor JSON length: {vendorJson.Length}");
+            var outFields = "REMARKS,LAST_PROCESS_DATE,VENDOR_NUMBER,VENDOR_NUMBER_SUFFIX,VENDOR_NAME,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3,CITY,STATE,ZIP_CODE,ZIP_PLUS_4,PHONE_NUMBER,VENDOR_STATUS,VENDOR_TYPE,BILLING_AGENCY,BILLING_SUBAGENCY,BILLING_FUND,BILLING_FUND_BREAKOUT,CCD_CTX_FLAG,EMAIL";
+            var orderByFields = "";
+            var whereClause = "1=1";
+            var vendorJson = DownloadArcOnlineUrlToString(VendorJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, SocrataDataMartRawJsonImportTableType.Vendor);
+            Logger.Info($"Vendor JSON length: {vendorJson.Count}");
             // Push that string into a raw JSON string in the raw staging table
-            var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, lastFinanceApiLoadDate, null, vendorJson);
+            var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.Vendor, lastFinanceApiLoadDate, null, vendorJson.FirstOrDefault());
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
             
             try
