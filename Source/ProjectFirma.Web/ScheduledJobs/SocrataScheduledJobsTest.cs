@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadVendorTableData()
         {
             var vendorJob = new VendorImportHangfireBackgroundJob();
-            vendorJob.DownloadSocrataVendorTable();
+            vendorJob.DownloadArcOnlineVendorTable();
         }
 
         [Test]

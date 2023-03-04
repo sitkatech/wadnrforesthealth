@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// Download the contents of the given URL to a temp file
         /// </summary>
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
-        public List<string> DownloadArcOnlineUrlToString(Uri urlToDownload, string token, string whereClause, string outFields, string orderByFields, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
+        public string DownloadArcOnlineUrlToString(Uri urlToDownload, string token, string whereClause, string outFields, string orderByFields, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
         {
             Logger.Info($"Starting '{JobName}' DownloadArcOnlineUrlToString");
             //try
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             //}
 
             var ret = new List<string>();
-            var PAGE_SIZE = 250;
+            var PAGE_SIZE = 2000;
             var offset = 0;
             var hasDataToQuery = true;
 
@@ -123,14 +123,14 @@ namespace ProjectFirma.Web.ScheduledJobs
                     hasDataToQuery = Convert.ToBoolean(respObj.exceededTransferLimit);
                     foreach (var item in respObj.features)
                     {
-                        ret.Add(JsonConvert.SerializeObject(item));
+                        ret.Add(JsonConvert.SerializeObject(item.attributes));
                         offset += 1;
                     }
                     //Console.WriteLine($"Queried {ret.Count} so far..");
                 }
             }
 
-            return ret;
+            return string.Join(",", ret);
         
 
         }

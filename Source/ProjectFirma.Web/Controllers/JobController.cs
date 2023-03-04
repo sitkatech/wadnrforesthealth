@@ -75,7 +75,7 @@ namespace ProjectFirma.Web.Controllers
             lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
             {
                 var vendorImportJob = new VendorImportHangfireBackgroundJob();
-                vendorImportJob.DownloadSocrataVendorTable();
+                vendorImportJob.DownloadArcOnlineVendorTable();
             }
 
             var message = $"Socrata Vendors Imported";
