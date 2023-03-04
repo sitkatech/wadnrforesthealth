@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using Hangfire;
 using log4net;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -65,7 +66,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             //}
 
             var ret = new List<string>();
-            var PAGE_SIZE = 2000;
+            var PAGE_SIZE = 1000;
             var offset = 0;
             var hasDataToQuery = true;
 
@@ -130,8 +131,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 }
             }
 
-            return string.Join(",", ret);
-        
+            return $"[{string.Join(",", ret)}]";
+
 
         }
 
@@ -167,24 +168,24 @@ namespace ProjectFirma.Web.ScheduledJobs
             return newRawJsonImport.ArcOnlineFinanceApiRawJsonImportID;
         }
 
-        public void MarkJsonImportStatus(int socrataDataMartRawJsonImportID, JsonImportStatusType jsonImportStatusType)
+        public void MarkJsonImportStatus(int arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType jsonImportStatusType)
         {
             // Because these objects are so huge, we try to avoid bringing them into memory directly, hence 
             // the proc to keep it at arm's length.
-            Logger.Info($"Starting '{JobName}' MarkJsonImportStatus");
-            string markJsonImportStatus = "dbo.pMarkJsonImportStatus";
+            Logger.Info($"Starting '{JobName}' ArcOnline MarkJsonImportStatus");
+            string markJsonImportStatus = "dbo.pArcOnlineMarkJsonImportStatus";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
-                Logger.Info($"'{JobName}' MarkJsonImportStatus - Marking socrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID} as JsonImportStatusType {jsonImportStatusType.JsonImportStatusTypeName}");
+                Logger.Info($"'{JobName}' ArcOnline MarkJsonImportStatus - Marking arcOnlineFinanceApiRawJsonImportID {arcOnlineFinanceApiRawJsonImportID} as JsonImportStatusType {jsonImportStatusType.JsonImportStatusTypeName}");
                 using (SqlCommand cmd = new SqlCommand(markJsonImportStatus, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportID", arcOnlineFinanceApiRawJsonImportID);
                     cmd.Parameters.AddWithValue("@JsonImportStatusTypeID", jsonImportStatusType.JsonImportStatusTypeID);
                     cmd.ExecuteNonQuery();
                 }
             }
-            Logger.Info($"Ending '{JobName}' MarkJsonImportStatus");
+            Logger.Info($"Ending '{JobName}' ArcOnline MarkJsonImportStatus");
         }
 
         /// <summary>

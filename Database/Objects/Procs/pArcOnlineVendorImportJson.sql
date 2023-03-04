@@ -16,33 +16,56 @@ begin
     CROSS APPLY OPENJSON(RawJsonString)
     WITH
     (
-        vendor_num nvarchar(256),
-        vendor_num_suffix nvarchar(256),
-        vendor_name nvarchar(256),
-        addr1 nvarchar(256),
-        addr2 nvarchar(256),
-        addr3 nvarchar(256),
-        city nvarchar(256),
-        state nvarchar(256),
-        zip_code nvarchar(256),
-        zip_plus_4 nvarchar(256),
-        phone varchar(200),
-        vendor_status nvarchar(256),
-        vendor_type nvarchar(256),
-        billing_agency nvarchar(256),
-        billing_subagency nvarchar(256),
-        billing_fund nvarchar(256),
-        billing_fund_breakout nvarchar(256),
-        ccd_ctx_flag nvarchar(256),
-        taxpayer_id_num varchar(200),
-        email nvarchar(256),
-        remarks nvarchar(256),
-        last_process_date DateTime
+	/*
+	REMARKS: null
+LAST_PROCESS_DATE: null
+VENDOR_NUMBER:
+VENDOR_NUMBER_SUFFIX:
+VENDOR_NAME: null
+ADDRESS_LINE1: null
+ADDRESS_LINE2: null
+ADDRESS_LINE3: null
+CITY: null
+STATE: null
+ZIP_CODE: null
+ZIP_PLUS_4: null
+PHONE_NUMBER: null
+VENDOR_STATUS: null
+VENDOR_TYPE: null
+BILLING_AGENCY: null
+BILLING_SUBAGENCY: null
+BILLING_FUND: null
+BILLING_FUND_BREAKOUT: null
+CCD_CTX_FLAG: null
+EMAIL: null
+	*/
+
+        VENDOR_NUMBER nvarchar(256),
+        VENDOR_NUMBER_SUFFIX nvarchar(256),
+        VENDOR_NAME nvarchar(256),
+        ADDRESS_LINE1 nvarchar(256),
+        ADDRESS_LINE2 nvarchar(256),
+        ADDRESS_LINE3 nvarchar(256),
+        CITY nvarchar(256),
+        STATE nvarchar(256),
+        ZIP_CODE nvarchar(256),
+        ZIP_PLUS_4 nvarchar(256),
+        PHONE_NUMBER varchar(200),
+        VENDOR_STATUS nvarchar(256),
+        VENDOR_TYPE nvarchar(256),
+        BILLING_AGENCY nvarchar(256),
+        BILLING_SUBAGENCY nvarchar(256),
+        BILLING_FUND nvarchar(256),
+        BILLING_FUND_BREAKOUT nvarchar(256),
+        CCD_CTX_FLAG nvarchar(256),
+        --taxpayer_id_num varchar(200),
+        EMAIL nvarchar(256),
+        REMARKS nvarchar(256),
+        LAST_PROCESS_DATE DateTime
     )
     AS vendorTemp
-	where vendorTemp.vendor_status = 'A'
 
-	--select * from #vendorArcOnlineTemp
+	select * from #vendorArcOnlineTemp
 
 --create temp table to track which vendor records have a fk from another table
 select distinct o.VendorID into #VendorFKs
@@ -61,8 +84,8 @@ where VendorID in
 (
 	select dbv.VendorID 
 	from dbo.Vendor as dbv
-	full outer join #vendorArcOnlineTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
-	where (tv.vendor_num is null or tv.vendor_num_suffix is null) 
+	full outer join #vendorArcOnlineTemp as tv on tv.VENDOR_NUMBER = dbv.StatewideVendorNumber and tv.VENDOR_NUMBER_SUFFIX = dbv.StatewideVendorNumberSuffix
+	where (tv.VENDOR_NUMBER is null or tv.VENDOR_NUMBER_SUFFIX is null) 
 	and not exists (select 1 from #VendorFKs where dbv.VendorID = #VendorFKs.VendorID)
 )
 
@@ -70,47 +93,47 @@ where VendorID in
 -- Update values for keys found in both sides
 update dbv
 set 
-    VendorName = tv.vendor_name,
-    VendorType = tv.vendor_type,
-    BillingAgency = tv.billing_agency,
-    BillingSubAgency = tv.billing_subagency,
-    BillingFund = tv.billing_fund,
-    VendorAddressLine1 = tv.addr1,
-    VendorAddressLine2 = tv.addr2,
-    VendorAddressLine3 = tv.addr3,
-    VendorCity = tv.city,
-    VendorState = tv.[state],
-    VendorZip = tv.zip_code,
-    Remarks = tv.remarks,
-    VendorPhone = tv.phone,
-    VendorStatus = tv.vendor_status,
-    TaxpayerIdNumber = tv.taxpayer_id_num,
-    Email = tv.email
+    VendorName = tv.VENDOR_NAME,
+    VendorType = tv.VENDOR_TYPE,
+    BillingAgency = tv.BILLING_AGENCY,
+    BillingSubAgency = tv.BILLING_SUBAGENCY,
+    BillingFund = tv.BILLING_FUND,
+    VendorAddressLine1 = tv.ADDRESS_LINE1,
+    VendorAddressLine2 = tv.ADDRESS_LINE2,
+    VendorAddressLine3 = tv.ADDRESS_LINE3,
+    VendorCity = tv.CITY,
+    VendorState = tv.[STATE],
+    VendorZip = tv.ZIP_CODE,
+    Remarks = tv.REMARKS,
+    VendorPhone = tv.PHONE_NUMBER,
+    VendorStatus = tv.VENDOR_STATUS,
+    --TaxpayerIdNumber = tv.taxpayer_id_num,
+    Email = tv.EMAIL
 from 
     dbo.Vendor as dbv
-    join #vendorArcOnlineTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
---    full outer join #vendorArcOnlineTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
+    join #vendorArcOnlineTemp as tv on tv.VENDOR_NUMBER = dbv.StatewideVendorNumber and tv.VENDOR_NUMBER_SUFFIX = dbv.StatewideVendorNumberSuffix
+--    full outer join #vendorArcOnlineTemp as tv on tv.VENDOR_NUMBER = dbv.StatewideVendorNumber and tv.VENDOR_NUMBER_SUFFIX = dbv.StatewideVendorNumberSuffix
 --where  dbv.StatewideVendorNumber is not null and dbv.StatewideVendorNumberSuffix is not null
 --       and
---       tv.vendor_num is not null and tv.vendor_num_suffix is not null
+--       tv.VENDOR_NUMBER is not null and tv.VENDOR_NUMBER_SUFFIX is not null
     where 
     (
-        isnull(dbv.VendorName, '') != isnull(tv.vendor_name, '') or
-        isnull(dbv.VendorType, '') != isnull(tv.vendor_type, '') or
-        isnull(dbv.BillingAgency, '') != isnull(tv.billing_agency, '') or
-        isnull(dbv.BillingSubAgency, '') != isnull(tv.billing_subagency, '') or
-        isnull(dbv.BillingFund, '') != isnull(tv.billing_fund, '') or
-        isnull(dbv.VendorAddressLine1, '') != isnull(tv.addr1, '') or
-        isnull(dbv.VendorAddressLine2, '') != isnull(tv.addr2, '') or
-        isnull(dbv.VendorAddressLine3, '') != isnull(tv.addr3, '') or
-        isnull(dbv.VendorCity, '') != isnull(tv.city, '') or
-        isnull(dbv.VendorState, '') != isnull(tv.[state], '') or
-        isnull(dbv.VendorZip, '') != isnull(tv.zip_code, '') or
-        isnull(dbv.Remarks, '') != isnull(tv.remarks, '') or
-        isnull(dbv.VendorPhone, '') != isnull(tv.phone, '') or
-        isnull(dbv.VendorStatus, '') != isnull(tv.vendor_status, '') or
-        isnull(dbv.TaxpayerIdNumber, '') != isnull(tv.taxpayer_id_num, '') or
-        isnull(dbv.Email, '') != isnull(tv.email, '')
+        isnull(dbv.VendorName, '') != isnull(tv.VENDOR_NAME, '') or
+        isnull(dbv.VendorType, '') != isnull(tv.VENDOR_TYPE, '') or
+        isnull(dbv.BillingAgency, '') != isnull(tv.BILLING_AGENCY, '') or
+        isnull(dbv.BillingSubAgency, '') != isnull(tv.BILLING_SUBAGENCY, '') or
+        isnull(dbv.BillingFund, '') != isnull(tv.BILLING_FUND, '') or
+        isnull(dbv.VendorAddressLine1, '') != isnull(tv.ADDRESS_LINE1, '') or
+        isnull(dbv.VendorAddressLine2, '') != isnull(tv.ADDRESS_LINE2, '') or
+        isnull(dbv.VendorAddressLine3, '') != isnull(tv.ADDRESS_LINE3, '') or
+        isnull(dbv.VendorCity, '') != isnull(tv.CITY, '') or
+        isnull(dbv.VendorState, '') != isnull(tv.[STATE], '') or
+        isnull(dbv.VendorZip, '') != isnull(tv.ZIP_CODE, '') or
+        isnull(dbv.Remarks, '') != isnull(tv.REMARKS, '') or
+        isnull(dbv.VendorPhone, '') != isnull(tv.PHONE_NUMBER, '') or
+        isnull(dbv.VendorStatus, '') != isnull(tv.VENDOR_STATUS, '') or
+        --isnull(dbv.TaxpayerIdNumber, '') != isnull(tv.taxpayer_id_num, '') or
+        isnull(dbv.Email, '') != isnull(tv.EMAIL, '')
     )
 
 
@@ -133,32 +156,32 @@ insert into dbo.Vendor (VendorName,
                         Remarks,
                         VendorPhone,
                         VendorStatus,
-                        TaxpayerIdNumber,
+                        --TaxpayerIdNumber,
                         Email)
-select tv.vendor_name,
-       tv.vendor_num,
-       tv.vendor_num_suffix,
-       tv.vendor_type,
-       tv.billing_agency,
-       tv.billing_subagency,
-       tv.billing_fund,
-       tv.billing_fund_breakout,
-       tv.addr1,
-       tv.addr2,
-       tv.addr3,
-       tv.city,
-       tv.[state],
-       tv.zip_code,
-       tv.remarks,
-       tv.phone,
-       tv.vendor_status,
-       tv.taxpayer_id_num,
-       tv.email
+select tv.VENDOR_NAME,
+       tv.VENDOR_NUMBER,
+       tv.VENDOR_NUMBER_SUFFIX,
+       tv.VENDOR_TYPE,
+       tv.BILLING_AGENCY,
+       tv.BILLING_SUBAGENCY,
+       tv.BILLING_FUND,
+       tv.BILLING_FUND_BREAKOUT,
+       tv.ADDRESS_LINE1,
+       tv.ADDRESS_LINE2,
+       tv.ADDRESS_LINE3,
+       tv.CITY,
+       tv.[STATE],
+       tv.ZIP_CODE,
+       tv.REMARKS,
+       tv.PHONE_NUMBER,
+       tv.VENDOR_STATUS,
+       --tv.taxpayer_id_num,
+       tv.EMAIL
 from dbo.Vendor as dbv
-full outer join #vendorArcOnlineTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
+full outer join #vendorArcOnlineTemp as tv on tv.VENDOR_NUMBER = dbv.StatewideVendorNumber and tv.VENDOR_NUMBER_SUFFIX = dbv.StatewideVendorNumberSuffix
 where  (dbv.StatewideVendorNumber is null and dbv.StatewideVendorNumberSuffix is null)
        and
-       (tv.vendor_num is not null and tv.vendor_num_suffix is not null)
+       (tv.VENDOR_NUMBER is not null and tv.VENDOR_NUMBER_SUFFIX is not null)
 	   
 
 
@@ -168,13 +191,20 @@ go
 
 
 /*
-select * from  dbo.SocrataDataMartRawJsonImport where SocrataDataMartRawJsonImportTableTypeID = 1
+
+
+select * from  dbo.ArcOnlineFinanceApiRawJsonImportTableType where ArcOnlineFinanceApiRawJsonImportTableTypeID = 1
 
 delete from dbo.Vendor
 
 set statistics time on
-exec pVendorImportJson @SocrataDataMartRawJsonImportID = 16414
+exec pArcOnlineVendorImportJson @ArcOnlineFinanceApiRawJsonImportID = 1
 set statistics time off
+
+
+select * from dbo.ArcOnlineFinanceApiRawJsonImport
+
+@ArcOnlineFinanceApiRawJsonImportID
 
 
 */
