@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadArcOnlineVendorTable()
         {
             Logger.Info($"Starting '{JobName}' DownloadArcOnlineVendorTable");
-            ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
+            ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries();
 
             var arcUtility = new ArcGisOnlineUtility();
             var token = arcUtility.GetDataImportAuthTokenFromUser();
