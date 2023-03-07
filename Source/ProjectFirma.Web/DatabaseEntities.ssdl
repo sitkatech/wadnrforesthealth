@@ -7573,10 +7573,14 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   <Function Name="pArcOnlineVendorImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
   </Function>
+  <Function Name="pClearArcOnlineFinanceApiRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearAuditLogTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearGisImportTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearGrantAllocationExpenditureTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="bienniumFiscalYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pClearOutdatedArcOnlineFinanceApiRawJsonImports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
   <Function Name="pClearOutdatedSocrataDataMartRawJsonImports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />

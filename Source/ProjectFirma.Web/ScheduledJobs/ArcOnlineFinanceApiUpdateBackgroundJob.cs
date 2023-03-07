@@ -191,12 +191,12 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// <summary>
         /// Clears *ALL* entries in the table.
         /// </summary>
-        public static void ClearSocrataDataMartRawJsonImportsTable()
+        public static void ClearArcOnlineFinanceApiRawJsonImportsTable()
         {
             ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
 
-            logger.Info($"Starting  pClearSocrataDataMartRawJsonImportsTable");
-            string vendorImportProc = "pClearSocrataDataMartRawJsonImportsTable";
+            logger.Info($"Starting  pClearArcOnlineFinanceApiRawJsonImportsTable");
+            string vendorImportProc = "pClearArcOnlineFinanceApiRawJsonImportsTable";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -205,7 +205,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     cmd.ExecuteNonQuery();
                 }
             }
-            logger.Info($"Ending pClearSocrataDataMartRawJsonImportsTable");
+            logger.Info($"Ending pClearArcOnlineFinanceApiRawJsonImportsTable");
         }
 
 
@@ -216,14 +216,14 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         // 
         /// <summary>
-        /// Clears only *OLD* entries in the Socrata imports table
+        /// Clears only *OLD* entries in the ArcOnline imports table
         /// </summary>
-        public static void ClearOutdatedSocrataDataMartRawJsonImportsTableEntries()
+        public static void ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries()
         {
             ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
 
-            logger.Info($"Starting pClearOutdatedSocrataDataMartRawJsonImports({StaleEntriesDayCutoff} days)");
-            string vendorImportProc = "pClearOutdatedSocrataDataMartRawJsonImports";
+            logger.Info($"Starting pClearOutdatedArcOnlineFinanceApiRawJsonImports({StaleEntriesDayCutoff} days)");
+            string vendorImportProc = "pClearOutdatedArcOnlineFinanceApiRawJsonImports";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -233,12 +233,12 @@ namespace ProjectFirma.Web.ScheduledJobs
                     cmd.ExecuteNonQuery();
                 }
             }
-            logger.Info($"Ending pClearOutdatedSocrataDataMartRawJsonImports({StaleEntriesDayCutoff} days)");
+            logger.Info($"Ending pClearOutdatedArcOnlineFinanceApiRawJsonImports({StaleEntriesDayCutoff} days)");
         }
 
         public class SuccessfulJsonImportInfo
         {
-            public int SocrataDataMartRawJsonImportTableTypeID;
+            public int ArcOnlineFinanceApiRawJsonImportTableTypeID;
             public int? BienniumFiscalYear;
             public DateTime JsonImportDate;
             public DateTime FinanceApiLastLoadDate;
@@ -253,9 +253,9 @@ namespace ProjectFirma.Web.ScheduledJobs
             /// <summary>
             /// Complete Constructor
             /// </summary>
-            public SuccessfulJsonImportInfo(int socrataDataMartRawJsonImportTableTypeID, int bienniumFiscalYear, DateTime jsonImportDate, DateTime financeApiLastLoadDate)
+            public SuccessfulJsonImportInfo(int arcOnlineFinanceApiRawJsonImportTableTypeID, int bienniumFiscalYear, DateTime jsonImportDate, DateTime financeApiLastLoadDate)
             {
-                SocrataDataMartRawJsonImportTableTypeID = socrataDataMartRawJsonImportTableTypeID;
+                ArcOnlineFinanceApiRawJsonImportTableTypeID = arcOnlineFinanceApiRawJsonImportTableTypeID;
                 BienniumFiscalYear = bienniumFiscalYear;
                 JsonImportDate = jsonImportDate;
                 FinanceApiLastLoadDate = financeApiLastLoadDate;
@@ -286,7 +286,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                             return null;
                         }
 
-                        importInfo.SocrataDataMartRawJsonImportTableTypeID = (int)dataReader["ArcOnlineFinanceApiRawJsonImportTableTypeID"];
+                        importInfo.ArcOnlineFinanceApiRawJsonImportTableTypeID = (int)dataReader["ArcOnlineFinanceApiRawJsonImportTableTypeID"];
                         if (dataReader["BienniumFiscalYear"] != System.DBNull.Value)
                         {
                             importInfo.BienniumFiscalYear = (int?)dataReader["BienniumFiscalYear"];
