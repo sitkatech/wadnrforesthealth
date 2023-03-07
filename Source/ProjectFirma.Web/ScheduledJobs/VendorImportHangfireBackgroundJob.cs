@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             // See how current the data is
             DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate(token);
 
-            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(ArcOnlineFinanceApiRawJsonImportTableType.Vendor.ArcOnlineFinanceApiRawJsonImportTableTypeID, null);
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(ArcOnlineFinanceApiRawJsonImportTableType.Vendor.ArcOnlineFinanceApiRawJsonImportTableTypeID, null);
 
             // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
             if (importInfo != null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)

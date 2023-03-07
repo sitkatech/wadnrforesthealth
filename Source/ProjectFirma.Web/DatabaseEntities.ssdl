@@ -7597,6 +7597,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Mode="In" />
     <Parameter Name="OptionalBienniumFiscalYear" Type="int" Mode="In" />
   </Function>
+  <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" Type="int" Mode="In" />
+    <Parameter Name="OptionalBienniumFiscalYear" Type="int" Mode="In" />
+  </Function>
   <Function Name="pMarkJsonImportStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="JsonImportStatusTypeID" Type="int" Mode="In" />

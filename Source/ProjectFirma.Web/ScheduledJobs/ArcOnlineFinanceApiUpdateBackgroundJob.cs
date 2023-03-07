@@ -263,18 +263,18 @@ namespace ProjectFirma.Web.ScheduledJobs
         }
 
 
-        public SuccessfulJsonImportInfo LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(int socrataDataMartRawJsonImportTableTypeID, int? optionalBienniumFiscalYear)
+        public SuccessfulJsonImportInfo LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(int arcOnlineFinanceApiRawJsonImportTableTypeID, int? optionalBienniumFiscalYear)
         {
             // Because these objects are so huge, we try to avoid bringing them into memory directly, hence 
             // the proc to keep it at arm's length.
-            Logger.Info($"Starting '{JobName}' LatestSuccessfulJsonImportInfoForBienniumAndImportTableType");
-            string vendorImportProc = "dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType";
+            Logger.Info($"Starting '{JobName}' LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi");
+            string vendorImportProc = "dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportTableTypeID", socrataDataMartRawJsonImportTableTypeID);
+                    cmd.CommandType = CommandType.StoredProcedure;//ArcOnlineFinanceApiRawJsonImportTableType
+                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportTableTypeID", arcOnlineFinanceApiRawJsonImportTableTypeID);
                     cmd.Parameters.AddWithValue("@OptionalBienniumFiscalYear", optionalBienniumFiscalYear);
                     using (SqlDataReader dataReader = cmd.ExecuteReader())
                     {
@@ -286,7 +286,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                             return null;
                         }
 
-                        importInfo.SocrataDataMartRawJsonImportTableTypeID = (int)dataReader["SocrataDataMartRawJsonImportTableTypeID"];
+                        importInfo.SocrataDataMartRawJsonImportTableTypeID = (int)dataReader["ArcOnlineFinanceApiRawJsonImportTableTypeID"];
                         if (dataReader["BienniumFiscalYear"] != System.DBNull.Value)
                         {
                             importInfo.BienniumFiscalYear = (int?)dataReader["BienniumFiscalYear"];
@@ -294,7 +294,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                         importInfo.JsonImportDate = (DateTime)dataReader["JsonImportDate"];
                         importInfo.FinanceApiLastLoadDate = (DateTime)dataReader["FinanceApiLastLoadDate"];
 
-                        Logger.Info($"Ending '{JobName}' pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType");
+                        Logger.Info($"Ending '{JobName}' pLatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi");
 
                         return importInfo;
                     }
