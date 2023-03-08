@@ -460,6 +460,45 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectUplandRegionsToAdd);
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+
+            AddProjectCoordinators(gisUploadAttempt, projectsWithUplandDnrRegions);
+        }
+
+        /// <summary>For any new LOA projects that have an associated DNR Upland Region, add the associated DNR Service Forestry Regional Coordinator to the project with the Coordinator role.</summary>
+        private static void AddProjectCoordinators(GisUploadAttempt gisUploadAttempt, List<Project> projectsWithDnrUplandRegions)
+        {
+            List<ProjectPerson> coordinatorsToAdd = new List<ProjectPerson>();
+
+            var newLoaProjects = projectsWithDnrUplandRegions
+                .Where(x => x.IsInLandownerAssistanceProgram
+                            && x.CreateGisUploadAttemptID != null
+                            && x.CreateGisUploadAttemptID == gisUploadAttempt.GisUploadAttemptID);
+
+            var dnrUplandRegions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions;
+
+            foreach (var project in newLoaProjects)
+            {
+                var coordinators = project.ProjectRegions
+                    .Join(dnrUplandRegions,
+                        pr => pr.DNRUplandRegionID,
+                        dur => dur.DNRUplandRegionID,
+                        (pr, dur) => dur)
+                    .Select(x => x.DNRUplandRegionCoordinator)
+                    .Distinct();
+
+                foreach (var coordinator in coordinators)
+                {
+                    if (coordinator != null)
+                        coordinatorsToAdd.Add(new ProjectPerson(project, coordinator,
+                            ProjectPersonRelationshipType.Coordinator));
+                }
+            }
+
+            if (coordinatorsToAdd.Count > 0)
+            {
+                HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(coordinatorsToAdd);
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            }
         }
 
         private static void UpdateProjectPriorityLandscapes(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
