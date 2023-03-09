@@ -107,10 +107,10 @@ namespace ProjectFirma.Web.Controllers
             lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
             {
                 var projectCodeJob = new ProjectCodeImportHangfireBackgroundJob();
-                projectCodeJob.DownloadSocrataProjectCodeTable();
+                projectCodeJob.DownloadArcOnlineFinanceApiProjectCodeTable();
             }
 
-            var message = $"Socrata Project Codes Imported";
+            var message = $"ArcOnline Finance API Project Codes Imported";
             SetMessageForDisplay(message);
 
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));

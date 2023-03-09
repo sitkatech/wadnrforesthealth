@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadSocrataProjectCodeTable()
      {
             var projectCodeImportJob = new ProjectCodeImportHangfireBackgroundJob();
-            projectCodeImportJob.DownloadSocrataProjectCodeTable();
+            projectCodeImportJob.DownloadArcOnlineFinanceApiProjectCodeTable();
         }
 
     }

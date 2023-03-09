@@ -7570,6 +7570,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="JsonImportStatusTypeID" Type="int" Mode="In" />
   </Function>
+  <Function Name="pArcOnlineProjectCodeImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
+  </Function>
   <Function Name="pArcOnlineVendorImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
   </Function>
