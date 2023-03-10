@@ -27,18 +27,18 @@ JSON format:
     CROSS APPLY OPENJSON(RawJsonString)
     WITH
     (
-        create_date datetime,
-        project_code varchar(200),
-        project_start_date datetime,
-        project_end_date datetime,
-        title nvarchar(256)
+        CREATE_DATE datetime,
+        PROJECT_CODE varchar(200),
+        PROJECT_START_DATE datetime,
+        PROJECT_END_DATE datetime,
+        TITLE nvarchar(256)
     )
     AS ProjectCodeTemp
 
 
 -- Remove leading zeros from incoming ProjectCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
 update #ProjectCodeArcOnlineTemp
-set project_code = dbo.fRemoveLeadingZeroes(project_code)
+set PROJECT_CODE = dbo.fRemoveLeadingZeroes(PROJECT_CODE)
 
 -- DELETE
 -- Delete ProjectCodes in our table not found in incoming temp table
@@ -47,8 +47,8 @@ where ProjectCodeID in
 (
     select dbpc.ProjectCodeID
     from dbo.ProjectCode as dbpc
-    full outer join #ProjectCodeArcOnlineTemp as tpc on tpc.project_code = dbpc.ProjectCodeName
-    where (tpc.project_code is null)
+    full outer join #ProjectCodeArcOnlineTemp as tpc on tpc.PROJECT_CODE = dbpc.ProjectCodeName
+    where (tpc.PROJECT_CODE is null)
 )
 
 
@@ -57,19 +57,19 @@ where ProjectCodeID in
 -- Update values for keys found in both sides
 update dbpc
 set 
-    ProjectCodeTitle = tpc.title,
-    CreateDate = tpc.create_date,
-    ProjectStartDate = tpc.project_start_date,
-    ProjectEndDate = tpc.project_end_date
+    ProjectCodeTitle = tpc.TITLE,
+    CreateDate = tpc.CREATE_DATE,
+    ProjectStartDate = tpc.PROJECT_START_DATE,
+    ProjectEndDate = tpc.PROJECT_END_DATE
 from 
     dbo.ProjectCode as dbpc
-    join #ProjectCodeArcOnlineTemp as tpc on tpc.project_code = dbpc.ProjectCodeName
+    join #ProjectCodeArcOnlineTemp as tpc on tpc.PROJECT_CODE = dbpc.ProjectCodeName
     where 
     (
-        isnull(dbpc.ProjectCodeTitle, '') != isnull(tpc.title, '') or
-        isnull(dbpc.CreateDate, '') != isnull(tpc.create_date, '') or
-        isnull(dbpc.ProjectStartDate, '') != isnull(tpc.project_start_date, '') or
-        isnull(dbpc.ProjectEndDate, '') != isnull(tpc.project_end_date, '')
+        isnull(dbpc.ProjectCodeTitle, '') != isnull(tpc.TITLE, '') or
+        isnull(dbpc.CreateDate, '') != isnull(tpc.CREATE_DATE, '') or
+        isnull(dbpc.ProjectStartDate, '') != isnull(tpc.PROJECT_START_DATE, '') or
+        isnull(dbpc.ProjectEndDate, '') != isnull(tpc.PROJECT_END_DATE, '')
     )
 
 
@@ -80,13 +80,13 @@ insert into dbo.ProjectCode (ProjectCodeName,
                              CreateDate,
                              ProjectStartDate,
                              ProjectEndDate)
-select tpc.project_code,
-       tpc.title,
-       tpc.create_date,
-       tpc.project_start_date,
-       tpc.project_end_date
+select tpc.PROJECT_CODE,
+       tpc.TITLE,
+       tpc.CREATE_DATE,
+       tpc.PROJECT_START_DATE,
+       tpc.PROJECT_END_DATE
 from dbo.ProjectCode as dbpc
-full outer join #ProjectCodeArcOnlineTemp as tpc on tpc.project_code = dbpc.ProjectCodeName
+full outer join #ProjectCodeArcOnlineTemp as tpc on tpc.PROJECT_CODE = dbpc.ProjectCodeName
 where  (dbpc.ProjectCodeName is null)
 
 
