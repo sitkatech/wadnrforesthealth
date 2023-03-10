@@ -71,7 +71,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             var outFields = "REMARKS,LAST_PROCESS_DATE,VENDOR_NUMBER,VENDOR_NUMBER_SUFFIX,VENDOR_NAME,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3,CITY,STATE,ZIP_CODE,ZIP_PLUS_4,PHONE_NUMBER,VENDOR_STATUS,VENDOR_TYPE,BILLING_AGENCY,BILLING_SUBAGENCY,BILLING_FUND,BILLING_FUND_BREAKOUT,CCD_CTX_FLAG,EMAIL";
             var orderByFields = "";
             var whereClause = "VENDOR_STATUS='A'";
-            var vendorJson = DownloadArcOnlineUrlToString(VendorJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, SocrataDataMartRawJsonImportTableType.Vendor);
+            var vendorJson = DownloadArcOnlineUrlToString(VendorJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.Vendor);
             Logger.Info($"Vendor JSON length: {vendorJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.Vendor, lastFinanceApiLoadDate, null, vendorJson);

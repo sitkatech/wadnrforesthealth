@@ -42,28 +42,9 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// Download the contents of the given URL to a temp file
         /// </summary>
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
-        public string DownloadArcOnlineUrlToString(Uri urlToDownload, string token, string whereClause, string outFields, string orderByFields, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
+        public string DownloadArcOnlineUrlToString(Uri urlToDownload, string token, string whereClause, string outFields, string orderByFields, ArcOnlineFinanceApiRawJsonImportTableType arcOnlineFinanceApiRawJsonImportTableType)
         {
             Logger.Info($"Starting '{JobName}' DownloadArcOnlineUrlToString");
-            //try
-            //{
-            //    using (var webClient = new WebClient())
-            //    {
-            //        // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
-            //        // See: http://xxxxx
-            //        webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
-            //        string socrataJsonData = webClient.DownloadString(urlToDownload);
-
-            //        Logger.Info($"Ending '{JobName}' DownloadArcOnlineUrlToString");
-            //        return socrataJsonData;
-            //    }
-            //}
-            //catch (Exception exception)
-            //{
-            //    string errorMessage = $"Error downloading ArcOnline type {socrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeName}, URL {urlToDownload}: {exception.Message}";
-            //    Logger.Error(errorMessage);
-            //    throw;
-            //}
 
             var ret = new List<string>();
             var PAGE_SIZE = 1000;
@@ -144,7 +125,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                                                string rawJsonString)
         {
             Logger.Info($"Starting '{JobName}' ArcOnline ShoveRawJsonStringIntoTable");
-            //SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, arcOnlineFinanceApiRawJsonImportTableType, rawJsonString, JsonImportStatusType.NotYetProcessed);
+
             var newRawJsonImport = new ArcOnlineFinanceApiRawJsonImport(DateTime.Now,
                 arcOnlineFinanceApiRawJsonImportTableType, rawJsonString, JsonImportStatusType.NotYetProcessed);
             newRawJsonImport.FinanceApiLastLoadDate = lastFinanceApiLoadDate;

@@ -98,6 +98,8 @@ go
 /*
 select * from dbo.ArcOnlineFinanceApiRawJsonImport
 
+select * from dbo.JsonImportStatusType
+
 set statistics time on
 
 exec pProjectCodeImportJson @ArcOnlineFinanceApiRawJsonImportID = 1

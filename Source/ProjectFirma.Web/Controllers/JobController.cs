@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
             lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
             {
                 var programIndexJob = new ProgramIndexImportHangfireBackgroundJob();
-                programIndexJob.DownloadSocrataProgramIndexTable();
+                programIndexJob.DownloadArcOnlineProgramIndexTable();
             }
 
             var message = $"Socrata Program Indices Imported";

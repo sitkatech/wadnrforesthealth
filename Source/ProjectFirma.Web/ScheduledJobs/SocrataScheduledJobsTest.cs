@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadProgramIndexData()
         {
             var programIndexJob = new ProgramIndexImportHangfireBackgroundJob();
-            programIndexJob.DownloadSocrataProgramIndexTable();
+            programIndexJob.DownloadArcOnlineProgramIndexTable();
         }
 
         [Test]

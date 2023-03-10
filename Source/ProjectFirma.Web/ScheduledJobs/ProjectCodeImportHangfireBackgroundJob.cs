@@ -70,7 +70,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             var outFields = "PROJECT_END_DATE,CREATE_DATE,PROJECT_CODE,TITLE,PROJECT_START_DATE";
             var orderByFields = "";
             var whereClause = "1=1";
-            var projectCodeJson = DownloadArcOnlineUrlToString(ProjectCodeJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, SocrataDataMartRawJsonImportTableType.ProjectCode);
+            var projectCodeJson = DownloadArcOnlineUrlToString(ProjectCodeJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProjectCode);
             Logger.Info($"ProjectCode JSON length: {projectCodeJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.ProjectCode, lastFinanceApiLoadDate, null, projectCodeJson);

@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             var dateTimeToRestartProgramIndex = new DateTime(yearToRestartProgramIndex, monthToRestartProgramIndex, dayToRestartProgramIndex, hourToRestartProgramIndex, 0, 0);
             if (DateTime.Now >= dateTimeToRestartProgramIndex)
             {
-                //AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+                AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
             }
 
             // 1:30 AM  pacific tasks is 8:36am utc
