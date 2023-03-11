@@ -51,10 +51,10 @@ namespace ProjectFirma.Web.Common
 
         public static readonly string WebMapServiceUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("WebMapServiceUrl");
 
-        public static readonly string ProjectCodeJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProjectCodeJsonSocrataBaseUrl");
-        public static readonly string ProgramIndexJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProgramIndexJsonSocrataBaseUrl");
-        public static readonly string VendorJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("VendorJsonSocrataBaseUrl");
-        public static readonly string GrantExpendituresTempBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("GrantExpendituresTempBaseUrl");
+        public static readonly string ProjectCodeJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProjectCodeJsonApiBaseUrl");
+        public static readonly string ProgramIndexJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProgramIndexJsonApiBaseUrl");
+        public static readonly string VendorJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("VendorJsonApiBaseUrl");
+        public static readonly string GrantExpendituresJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("GrantExpendituresJsonApiBaseUrl");
         public static readonly string DataImportAuthUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthUrl");
         public static readonly string DataImportAuthUsername = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthUsername");
         public static readonly string DataImportAuthPassword = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthPassword");
