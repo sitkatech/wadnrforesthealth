@@ -8,7 +8,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
-    public class GrantExpenditureImportHangfireBackgroundJob : SocrataDataMartUpdateBackgroundJob
+    public class GrantExpenditureImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
         private static readonly Uri GrantExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.GrantExpendituresTempBaseUrl);
 
@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadGrantExpendituresTableForAllFiscalYears()
         {
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
-            ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
+            ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries();
 
             var arcUtility = new ArcGisOnlineUtility();
             var token = arcUtility.GetDataImportAuthTokenFromUser();
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 // -- SLG 6/27/2019 -- https://projects.sitkatech.com/projects/wa_dnr_forest_health_tracker/cards/1635
                 try
                 {
-                    ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear, lastFinanceApiLoadDate);
+                    ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear, lastFinanceApiLoadDate, token);
                 }
                 catch (Exception e)
                 {
@@ -85,28 +85,29 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
         }
 
-        private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, int bienniumToImport)
+        private void GrantExpenditureImportJson(int arcOnlineFinanceApiRawJsonImportID, int bienniumToImport)
         {
-            Logger.Info($"Starting '{JobName}' GrantExpenditureImportJson");
-            string vendorImportProc = "dbo.pGrantExpenditureImportJson";
+            Logger.Info($"Starting '{JobName}' ArcOnlineGrantExpenditureImportJson");
+            string vendorImportProc = "dbo.pArcOnlineGrantExpenditureImportJson";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportID", arcOnlineFinanceApiRawJsonImportID);
                     cmd.Parameters.AddWithValue("@BienniumToImport", bienniumToImport);
                     cmd.ExecuteNonQuery();
                 }
             }
-            Logger.Info($"Ending '{JobName}' GrantExpenditureImportJson");
+            Logger.Info($"Ending '{JobName}' ArcOnlineGrantExpenditureImportJson");
         }
 
-        private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear, DateTime lastFinanceApiLoadDate)
+        private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear,
+            DateTime lastFinanceApiLoadDate, string token)
         {
             Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium Fiscal Year {bienniumFiscalYear}");
 
-            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.GrantExpenditure.SocrataDataMartRawJsonImportTableTypeID, bienniumFiscalYear);
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(ArcOnlineFinanceApiRawJsonImportTableType.GrantExpenditure.ArcOnlineFinanceApiRawJsonImportTableTypeID, bienniumFiscalYear);
 
             // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
             if (importInfo!= null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
@@ -118,32 +119,44 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Clear the expenditure data for the given Biennium before doing the import
             ClearGrantAllocationExpenditureTables(bienniumFiscalYear);
 
-            var fullUrl = GetGrantExpendituresJsonApiUrlWithAllParameters(bienniumFiscalYear);
-            // Pull JSON off the page into a (possibly huge) string
-            Logger.Info($"Attempting to retrieve Expenditures for Biennium Fiscal Year {bienniumFiscalYear} from URL {fullUrl}...");
-            string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
+            //var fullUrl = GetGrantExpendituresJsonApiUrlWithAllParameters(bienniumFiscalYear);
+            //// Pull JSON off the page into a (possibly huge) string
+            //Logger.Info($"Attempting to retrieve Expenditures for Biennium Fiscal Year {bienniumFiscalYear} from URL {fullUrl}...");
+            //string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
 
+            //Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
+            //// Push that string into a raw JSON string in the raw staging table
+            //int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, grantExpenditureJson);
+            //Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+
+
+            var outFields = "FTE_AMOUNT,TAR_HR_AMOUNT,BIENNIUM,FISCAL_MONTH,FISCAL_ADJUSTMENT_MONTH,CALENDAR_YEAR,MONTH_NAME,SOURCE_SYSTEM,DOCUMENT_NUMBER,DOCUMENT_SUFFIX,DOCUMENT_DATE,DOCUMENT_INVOICE_NUMBER,INVOICE_DESCRIPTION,INVOICE_DATE,INVOICE_NUMBER,GL_ACCOUNT_NUMBER,OBJECT_CODE,OBJECT_NAME,SUB_OBJECT_CODE,SUB_OBJECT_NAME,SUB_SUB_OBJECT_CODE,SUB_SUB_OBJECT_NAME,APPROPRIATION_CODE,APPROPRIATION_NAME,FUND_CODE,FUND_NAME,ORG_CODE,ORG_NAME,PROGRAM_INDEX_CODE,PROGRAM_INDEX_NAME,PROGRAM_CODE,PROGRAM_NAME,SUB_PROGRAM_CODE,SUB_PROGRAM_NAME,ACTIVITY_CODE,ACTIVITY_NAME,SUB_ACTIVITY_CODE,SUB_ACTIVITY_NAME,PROJECT_CODE,PROJECT_NAME,VENDOR_NUMBER,VENDOR_NAME,EXPENDITURE_ACCURED,ENCUMBRANCE";
+            var orderByFields = "";
+            var whereClause = $"BIENNIUM={bienniumFiscalYear}";
+            var grantExpenditureJson = DownloadArcOnlineUrlToString(GrantExpendituresJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex);
             Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, grantExpenditureJson);
-            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+            var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, null, grantExpenditureJson);
+            Logger.Info($"New ArcOnlineFinanceApiRawJsonImportID: {arcOnlineFinanceApiRawJsonImportID}");
+
+
 
             try
             {
                 // Import the given Biennium
-                GrantExpenditureImportJson(socrataDataMartRawJsonImportID, bienniumFiscalYear);
+                GrantExpenditureImportJson(arcOnlineFinanceApiRawJsonImportID, bienniumFiscalYear);
             }
             catch (Exception e)
             {
                 // Mark as failed in table
-                MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingFailed);
+                MarkJsonImportStatus(arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType.ProcessingFailed);
 
                 // add more debugging information to the exception and re-throw
-                var exceptionWithMoreInfo = new ApplicationException($"ImportExpendituresForGivenBienniumFiscalYear failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}", e);
+                var exceptionWithMoreInfo = new ApplicationException($"ImportExpendituresForGivenBienniumFiscalYear failed for ArcOnlineFinanceApiRawJsonImportID {arcOnlineFinanceApiRawJsonImportID}", e);
                 throw exceptionWithMoreInfo;
             }
             // If we get this far, it's successfully imported, and we can mark it as such
-            MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
+            MarkJsonImportStatus(arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
         }
 
         /// <summary>
