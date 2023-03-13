@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     public class VendorImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
-        private static readonly Uri VendorJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.VendorJsonApiBaseUrl);
+        private static readonly Uri VendorJsonApiBaseUrl = new Uri(FirmaWebConfiguration.VendorJsonApiBaseUrl);
 
         public static VendorImportHangfireBackgroundJob Instance;
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
         }
 
-        private void VendorImportJson(int socrataDataMartRawJsonImportID)
+        private void VendorImportJson(int arcOnlineFinanceApiRawJsonImportID)
         {
             Logger.Info($"Starting '{JobName}' ArcOnlineVendorImportJson");
             string vendorImportProc = "dbo.pArcOnlineVendorImportJson";
@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportID", arcOnlineFinanceApiRawJsonImportID);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -67,11 +67,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // Pull JSON off the page into a (possibly huge) string
-            //var fullUrl = AddSocrataMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
             var outFields = "REMARKS,LAST_PROCESS_DATE,VENDOR_NUMBER,VENDOR_NUMBER_SUFFIX,VENDOR_NAME,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3,CITY,STATE,ZIP_CODE,ZIP_PLUS_4,PHONE_NUMBER,VENDOR_STATUS,VENDOR_TYPE,BILLING_AGENCY,BILLING_SUBAGENCY,BILLING_FUND,BILLING_FUND_BREAKOUT,CCD_CTX_FLAG,EMAIL";
             var orderByFields = "";
             var whereClause = "VENDOR_STATUS='A'";
-            var vendorJson = DownloadArcOnlineUrlToString(VendorJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.Vendor);
+            var vendorJson = DownloadArcOnlineUrlToString(VendorJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.Vendor);
             Logger.Info($"Vendor JSON length: {vendorJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.Vendor, lastFinanceApiLoadDate, null, vendorJson);

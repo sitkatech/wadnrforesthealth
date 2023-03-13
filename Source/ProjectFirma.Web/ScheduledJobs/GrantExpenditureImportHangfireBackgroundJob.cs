@@ -119,17 +119,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Clear the expenditure data for the given Biennium before doing the import
             ClearGrantAllocationExpenditureTables(bienniumFiscalYear);
 
-            //var fullUrl = GetGrantExpendituresJsonApiUrlWithAllParameters(bienniumFiscalYear);
-            //// Pull JSON off the page into a (possibly huge) string
-            //Logger.Info($"Attempting to retrieve Expenditures for Biennium Fiscal Year {bienniumFiscalYear} from URL {fullUrl}...");
-            //string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
-
-            //Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
-            //// Push that string into a raw JSON string in the raw staging table
-            //int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, grantExpenditureJson);
-            //Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
-
-
             var outFields = "FTE_AMOUNT,TAR_HR_AMOUNT,BIENNIUM,FISCAL_MONTH,FISCAL_ADJUSTMENT_MONTH,CALENDAR_YEAR,MONTH_NAME,SOURCE_SYSTEM,DOCUMENT_NUMBER,DOCUMENT_SUFFIX,DOCUMENT_DATE,DOCUMENT_INVOICE_NUMBER,INVOICE_DESCRIPTION,INVOICE_DATE,INVOICE_NUMBER,GL_ACCOUNT_NUMBER,OBJECT_CODE,OBJECT_NAME,SUB_OBJECT_CODE,SUB_OBJECT_NAME,SUB_SUB_OBJECT_CODE,SUB_SUB_OBJECT_NAME,APPROPRIATION_CODE,APPROPRIATION_NAME,FUND_CODE,FUND_NAME,ORG_CODE,ORG_NAME,PROGRAM_INDEX_CODE,PROGRAM_INDEX_NAME,PROGRAM_CODE,PROGRAM_NAME,SUB_PROGRAM_CODE,SUB_PROGRAM_NAME,ACTIVITY_CODE,ACTIVITY_NAME,SUB_ACTIVITY_CODE,SUB_ACTIVITY_NAME,PROJECT_CODE,PROJECT_NAME,VENDOR_NUMBER,VENDOR_NAME,EXPENDITURE_ACCURED,ENCUMBRANCE";
             var orderByFields = "";
             var whereClause = $"BIENNIUM={bienniumFiscalYear}";

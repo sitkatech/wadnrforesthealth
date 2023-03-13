@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -1055,7 +1055,7 @@
     <Compile Include="Models\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\VendorModelExtensions.cs" />
     <Compile Include="ScheduledJobs\SocrataDataMartUpdateBackgroundJob.cs" />
-    <Compile Include="ScheduledJobs\SocrataScheduledJobsTest.cs" />
+    <Compile Include="ScheduledJobs\FinanceApiScheduledJobsTest.cs" />
     <Compile Include="Security\AgreementCreateFeature.cs" />
     <Compile Include="Security\AgreementDeleteFeature.cs" />
     <Compile Include="Security\AgreementsViewFeature.cs" />

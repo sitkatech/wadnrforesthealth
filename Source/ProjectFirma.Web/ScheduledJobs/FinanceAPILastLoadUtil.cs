@@ -12,7 +12,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     /// <summary>
     /// This is a utility class for dealing with load dates for the so-called Finance API from Tammy.
-    /// This is distinct from the Socrata APIs.
     /// 
     /// </summary>
     public class FinanceApiLastLoadUtil

@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     public class ProgramIndexImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
-        private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonApiBaseUrl);
+        private static readonly Uri ProgramIndexJsonApiBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonApiBaseUrl);
 
         public static ProgramIndexImportHangfireBackgroundJob Instance;
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             var outFields = "ACTIVITY_CODE,SUB_ACTIVITY_CODE,BIENNIUM,PROGRAM_INDEX_CODE,TITLE,PROGRAM_CODE,SUB_PROGRAM_CODE";
             var orderByFields = "";
             var whereClause = "1=1";
-            var programIndexJson = DownloadArcOnlineUrlToString(ProgramIndexJsonSocrataBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex);
+            var programIndexJson = DownloadArcOnlineUrlToString(ProgramIndexJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex);
             Logger.Info($"ProgramIndex JSON length: {programIndexJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex, lastFinanceApiLoadDate, null, programIndexJson);

@@ -31,12 +31,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             throw new NotImplementedException("You probably want to run derived versions of this class, not this class itself.");
         }
 
-        //public Uri AddSocrataMaxLimitTagToUrl(Uri baseSocrataJsonApiUrl)
-        //{
-        //    var uriBuilder = new UriBuilder(baseSocrataJsonApiUrl);
-        //    uriBuilder.Query += "$limit=9999999";
-        //    return uriBuilder.Uri;
-        //}
 
         /// <summary>
         /// Download the contents of the given URL to a temp file
@@ -174,7 +168,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         public static void ClearArcOnlineFinanceApiRawJsonImportsTable()
         {
-            ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
+            ILog logger = LogManager.GetLogger(typeof(ArcOnlineFinanceApiUpdateBackgroundJob));
 
             logger.Info($"Starting  pClearArcOnlineFinanceApiRawJsonImportsTable");
             string vendorImportProc = "pClearArcOnlineFinanceApiRawJsonImportsTable";
@@ -201,7 +195,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         public static void ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries()
         {
-            ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
+            ILog logger = LogManager.GetLogger(typeof(ArcOnlineFinanceApiUpdateBackgroundJob));
 
             logger.Info($"Starting pClearOutdatedArcOnlineFinanceApiRawJsonImports({StaleEntriesDayCutoff} days)");
             string vendorImportProc = "pClearOutdatedArcOnlineFinanceApiRawJsonImports";

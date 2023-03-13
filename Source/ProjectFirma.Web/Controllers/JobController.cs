@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Controllers
                 vendorImportJob.DownloadArcOnlineVendorTable();
             }
 
-            var message = $"Socrata Vendors Imported";
+            var message = $"Vendors Imported";
             SetMessageForDisplay(message);
 
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Controllers
                 programIndexJob.DownloadArcOnlineProgramIndexTable();
             }
 
-            var message = $"Socrata Program Indices Imported";
+            var message = $"Program Indices Imported";
             SetMessageForDisplay(message);
 
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Controllers
                 grantExpenditureJob.DownloadGrantExpendituresTableForAllFiscalYears();
             }
 
-            var message = $"Socrata Grant Expenditures Imported";
+            var message = $"Grant Expenditures Imported";
             SetMessageForDisplay(message);
 
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
