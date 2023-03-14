@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Common.Logging;
 using Newtonsoft.Json;
@@ -101,6 +102,49 @@ namespace ProjectFirma.Web.ScheduledJobs
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Esri-Authorization", $"Bearer {arcGISAuthorization.access_token}");
             return true;
         }
+
+
+        public string GetDataImportAuthTokenFromUser()
+        {
+            using (var hc = new HttpClient())
+            {
+                var requestBody = new[] {
+                    new KeyValuePair<string, string>("username", FirmaWebConfiguration.DataImportAuthUsername),
+                    new KeyValuePair<string, string>("password", FirmaWebConfiguration.DataImportAuthPassword),
+                    new KeyValuePair<string, string>("referer", "localhost"),
+                    new KeyValuePair<string, string>("f", "json"),
+                };
+                var requestMsg = new HttpRequestMessage()
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri(FirmaWebConfiguration.DataImportAuthUrl),
+                    Content = new FormUrlEncodedContent(requestBody)
+                };
+
+                requestMsg.Headers.Accept.Clear();
+                requestMsg.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/atom"));
+
+                var authResp = hc.SendAsync(requestMsg);
+                var respRaw = authResp.Result.Content.ReadAsStringAsync().Result;
+
+                /* response example.
+                    {
+                        "token":    "PBUEmJESrS9s6d8zSAc-6fXbV2eLRaSPyAYF843vTK6jyaWCRg9S6z5gwbSSzBCzE2l6JUJ1qJMoAH5YhYTH_fBMcDbYK-J8T-Pr_2h_r9El3C5E7yAa21VRiKZmzNJK",
+                        "expires":  1668317334177,
+                        "ssl":      true
+                    }
+                 */
+
+                //Console.WriteLine($"\r\n-==Authentication Result==-\r\n{respRaw}");
+
+                dynamic tmp = JsonConvert.DeserializeObject(respRaw);
+                return Convert.ToString(tmp.token);
+            }
+        }
+
+
+
+
 
 
         public class ArcGISApplicationAuthorizationDto

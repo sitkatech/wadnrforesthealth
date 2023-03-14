@@ -8,9 +8,9 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
-    public class ProgramIndexImportHangfireBackgroundJob : SocrataDataMartUpdateBackgroundJob
+    public class ProgramIndexImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
-        private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonSocrataBaseUrl);
+        private static readonly Uri ProgramIndexJsonApiBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonApiBaseUrl);
 
         public static ProgramIndexImportHangfireBackgroundJob Instance;
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
@@ -29,70 +29,76 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
         }
 
-        private void ProgramIndexImportJson(int socrataDataMartRawJsonImportID)
+        private void ProgramIndexImportJson(int arcOnlineFinanceApiRawJsonImportID)
         {
-            Logger.Info($"Starting '{JobName}' ProgramIndexImportJson");
-            string vendorImportProc = "dbo.pProgramIndexImportJson";
+            Logger.Info($"Starting '{JobName}' ArcOnlineProgramIndexImportJson");
+            string vendorImportProc = "dbo.pArcOnlineProgramIndexImportJson";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportID", arcOnlineFinanceApiRawJsonImportID);
                     cmd.ExecuteNonQuery();
                 }
             }
-            Logger.Info($"Ending '{JobName}' ProgramIndexImportJson");
+            Logger.Info($"Ending '{JobName}' ArcOnlineProgramIndexImportJson");
         }
 
-        public void DownloadSocrataProgramIndexTable()
+        public void DownloadArcOnlineProgramIndexTable()
         {
-            Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
-            ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
+            Logger.Info($"Starting '{JobName}' DownloadArcOnlineProgramIndexTable");
+            ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries();
 
+            var arcUtility = new ArcGisOnlineUtility();
+            var token = arcUtility.GetDataImportAuthTokenFromUser();
             // See how current the data is
-            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate(token);
 
-            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.ProgramIndex.SocrataDataMartRawJsonImportTableTypeID, null);
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex.ArcOnlineFinanceApiRawJsonImportTableTypeID, null);
 
             // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
             if (importInfo != null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
             {
-                Logger.Info($"DownloadSocrataProgramIndexTable - ProgramIndex table already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
+                Logger.Info($"DownloadArcOnlineProgramIndexTable - ProgramIndex table already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
                 return;
             }
 
+
             // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddSocrataMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);
-            string programIndexJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProgramIndex);
-            Logger.Info($"Program Index JSON length: {programIndexJson.Length}");
+            var outFields = "ACTIVITY_CODE,SUB_ACTIVITY_CODE,BIENNIUM,PROGRAM_INDEX_CODE,TITLE,PROGRAM_CODE,SUB_PROGRAM_CODE";
+            var orderByFields = "";
+            var whereClause = "1=1";
+            var programIndexJson = DownloadArcOnlineUrlToString(ProgramIndexJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex);
+            Logger.Info($"ProgramIndex JSON length: {programIndexJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProgramIndex, lastFinanceApiLoadDate, null, programIndexJson);
-            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+            var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex, lastFinanceApiLoadDate, null, programIndexJson);
+            Logger.Info($"New ArcOnlineFinanceApiRawJsonImportID: {arcOnlineFinanceApiRawJsonImportID}");
+
 
             try
             {
                 // Use the JSON to refresh the Vendor table
-                ProgramIndexImportJson(socrataDataMartRawJsonImportID);
+                ProgramIndexImportJson(arcOnlineFinanceApiRawJsonImportID);
             }
             catch (Exception e)
             {
                 // Mark as failed in table
-                MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingFailed);
+                MarkJsonImportStatus(arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType.ProcessingFailed);
 
                 // add more debugging information to the exception and re-throw
-                var exceptionWithMoreInfo = new ApplicationException($"ProgramIndexImportJson failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}", e);
+                var exceptionWithMoreInfo = new ApplicationException($"ProgramIndexImportJson failed for ArcOnlineFinanceApiRawJsonImportID {arcOnlineFinanceApiRawJsonImportID}", e);
                 throw exceptionWithMoreInfo;
             }
             // If we get this far, it's successfully imported, and we can mark it as such
-            MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
+            MarkJsonImportStatus(arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
 
-            Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
+            Logger.Info($"Ending '{JobName}' DownloadArcOnlineProgramIndexTable");
         }
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadSocrataProgramIndexTable();
+            DownloadArcOnlineProgramIndexTable();
         }
     }
 }

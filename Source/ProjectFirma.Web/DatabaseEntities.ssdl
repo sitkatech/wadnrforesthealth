@@ -6,6 +6,7 @@
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArcOnlineFinanceApiRawJsonImport" EntityType="ProjectFirma.Web.Models.Store.ArcOnlineFinanceApiRawJsonImport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Store.Classification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ClassificationPerformanceMeasure" store:Type="Tables" Schema="dbo" />
@@ -1575,6 +1576,19 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="AgreementTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementTypeAbbrev" Type="varchar" MaxLength="100" />
     <Property Name="AgreementTypeName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ArcOnlineFinanceApiRawJsonImport">
+    <Key>
+      <PropertyRef Name="ArcOnlineFinanceApiRawJsonImportID" />
+    </Key>
+    <Property Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" Type="int" Nullable="false" />
+    <Property Name="BienniumFiscalYear" Type="int" />
+    <Property Name="FinanceApiLastLoadDate" Type="datetime" />
+    <Property Name="RawJsonString" Type="varchar(max)" Nullable="false" />
+    <Property Name="JsonImportDate" Type="datetime" />
+    <Property Name="JsonImportStatusTypeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AuditLog">
     <Key>
@@ -7552,10 +7566,31 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <Function Name="pArcOnlineGrantExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
+    <Parameter Name="BienniumToImport" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pArcOnlineMarkJsonImportStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
+    <Parameter Name="JsonImportStatusTypeID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pArcOnlineProgramIndexImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pArcOnlineProjectCodeImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pArcOnlineVendorImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pClearArcOnlineFinanceApiRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearAuditLogTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearGisImportTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearGrantAllocationExpenditureTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="bienniumFiscalYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pClearOutdatedArcOnlineFinanceApiRawJsonImports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
   <Function Name="pClearOutdatedSocrataDataMartRawJsonImports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
@@ -7574,6 +7609,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   <Function Name="pImportLoaTabularData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Mode="In" />
+    <Parameter Name="OptionalBienniumFiscalYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" Type="int" Mode="In" />
     <Parameter Name="OptionalBienniumFiscalYear" Type="int" Mode="In" />
   </Function>
   <Function Name="pMarkJsonImportStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

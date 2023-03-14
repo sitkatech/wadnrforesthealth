@@ -8,9 +8,9 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
-    public class ProjectCodeImportHangfireBackgroundJob : SocrataDataMartUpdateBackgroundJob
+    public class ProjectCodeImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
-        private static readonly Uri ProjectCodeJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProjectCodeJsonSocrataBaseUrl);
+        private static readonly Uri ProjectCodeJsonApiBaseUrl = new Uri(FirmaWebConfiguration.ProjectCodeJsonApiBaseUrl);
 
         public static ProjectCodeImportHangfireBackgroundJob Instance;
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
@@ -29,71 +29,76 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
         }
 
-        private void ProjectCodeImportJson(int socrataDataMartRawJsonImportID)
+        private void ProjectCodeImportJson(int arcOnlineFinanceApiRawJsonImportID)
         {
             Logger.Info($"Starting '{JobName}' ProjectCodeImportJson");
-            string vendorImportProc = "dbo.pProjectCodeImportJson";
+            string vendorImportProc = "dbo.pArcOnlineProjectCodeImportJson";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@ArcOnlineFinanceApiRawJsonImportID", arcOnlineFinanceApiRawJsonImportID);
                     cmd.ExecuteNonQuery();
                 }
             }
             Logger.Info($"Ending '{JobName}' ProjectCodeImportJson");
         }
 
-        public void DownloadSocrataProjectCodeTable()
+        
+        public void DownloadArcOnlineFinanceApiProjectCodeTable()
         {
-            Logger.Info($"Starting '{JobName}' DownloadSocrataProjectCodeTable");
-            ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
+            Logger.Info($"Starting '{JobName}' DownloadArcOnlineFinanceApiProjectCodeTable");
+            ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries();
 
+            var arcUtility = new ArcGisOnlineUtility();
+            var token = arcUtility.GetDataImportAuthTokenFromUser();
             // See how current the data is
-            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate(token);
 
-            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.ProjectCode.SocrataDataMartRawJsonImportTableTypeID, null);
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(ArcOnlineFinanceApiRawJsonImportTableType.ProjectCode.ArcOnlineFinanceApiRawJsonImportTableTypeID, null);
 
             // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
             if (importInfo != null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
             {
-                Logger.Info($"DownloadSocrataProjectCodeTable - ProjectCode table already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
+                Logger.Info($"DownloadArcOnlineFinanceApiProjectCodeTable - ProjectCode table already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
                 return;
             }
 
+
             // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddSocrataMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
-            Logger.Info($"Retrieving ProjectCode JSON from URL: {fullUrl}");
-            var projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);
+            var outFields = "PROJECT_END_DATE,CREATE_DATE,PROJECT_CODE,TITLE,PROJECT_START_DATE";
+            var orderByFields = "";
+            var whereClause = "1=1";
+            var projectCodeJson = DownloadArcOnlineUrlToString(ProjectCodeJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProjectCode);
             Logger.Info($"ProjectCode JSON length: {projectCodeJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProjectCode, lastFinanceApiLoadDate, null, projectCodeJson);
-            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+            var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.ProjectCode, lastFinanceApiLoadDate, null, projectCodeJson);
+            Logger.Info($"New ArcOnlineFinanceApiRawJsonImportID: {arcOnlineFinanceApiRawJsonImportID}");
 
             try
             {
                 // Use the JSON to refresh the Project Code table
-                ProjectCodeImportJson(socrataDataMartRawJsonImportID);
+                ProjectCodeImportJson(arcOnlineFinanceApiRawJsonImportID);
             }
             catch (Exception e)
             {
                 // Mark as failed in table
-                MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingFailed);
+                MarkJsonImportStatus(arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType.ProcessingFailed);
 
                 // add more debugging information to the exception and re-throw
-                var exceptionWithMoreInfo = new ApplicationException($"ProjectCodeImportJson failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}", e);
+                var exceptionWithMoreInfo = new ApplicationException($"ProjectCodeImportJson failed for ArcOnlineFinanceApiRawJsonImportID {arcOnlineFinanceApiRawJsonImportID}", e);
                 throw exceptionWithMoreInfo;
             }
             // If we get this far, it's successfully imported, and we can mark it as such
-            MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
+            MarkJsonImportStatus(arcOnlineFinanceApiRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
 
-            Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
+            Logger.Info($"Ending '{JobName}' DownloadArcOnlineFinanceApiProjectCodeTable");
         }
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadSocrataProjectCodeTable();
+            DownloadArcOnlineFinanceApiProjectCodeTable();
         }
     }
 }

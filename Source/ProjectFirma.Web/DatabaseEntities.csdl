@@ -6,6 +6,7 @@
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.AgreementPerson" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.AgreementStatus" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.AgreementType" />
+    <EntitySet Name="ArcOnlineFinanceApiRawJsonImport" EntityType="ProjectFirma.Web.Models.ArcOnlineFinanceApiRawJsonImport" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.AuditLog" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
@@ -1497,6 +1498,19 @@
     <Property Name="AgreementTypeAbbrev" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="AgreementTypeName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID" FromRole="AgreementType" ToRole="Agreements" />
+  </EntityType>
+  <EntityType Name="ArcOnlineFinanceApiRawJsonImport">
+    <Key>
+      <PropertyRef Name="ArcOnlineFinanceApiRawJsonImportID" />
+    </Key>
+    <Property Name="ArcOnlineFinanceApiRawJsonImportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+    <Property Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" Type="Int32" Nullable="false" />
+    <Property Name="BienniumFiscalYear" Type="Int32" />
+    <Property Name="FinanceApiLastLoadDate" Type="DateTime" />
+    <Property Name="RawJsonString" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="JsonImportDate" Type="DateTime" />
+    <Property Name="JsonImportStatusTypeID" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="AuditLog">
     <Key>

@@ -40,11 +40,14 @@
     <add key="DefaultModalDialogButtonCssClasses" value="btn-firma,btn-xs" />
     <add key="WkhtmltopdfExecutable" value="${wkhtmltopdf-executable}" />
     <add key="WebMapServiceUrl" value="${web-map-service-url}" />
-    <add key="ProjectCodeJsonSocrataBaseUrl" value="${project-code-json-socrata-base-url}" />
-    <add key="ProgramIndexJsonSocrataBaseUrl" value="${program-index-json-socrata-base-url}" />
-    <add key="VendorJsonSocrataBaseUrl" value="${vendor-json-socrata-base-url}" />
-    <add key="GrantExpendituresTempBaseUrl" value="${grant-expenditures-temp-base-url}" />
+    <add key="ProjectCodeJsonApiBaseUrl" value="${project-code-json-api-base-url}" />
+    <add key="ProgramIndexJsonApiBaseUrl" value="${program-index-json-api-base-url}" />
+    <add key="VendorJsonApiBaseUrl" value="${vendor-json-api-base-url}" />
+    <add key="GrantExpendituresJsonApiBaseUrl" value="${grant-expenditures-json-api-base-url}" />
     <add key="LastLoadDateUrl" value="${last-load-date-url}" />
+    <add key="DataImportAuthUrl" value="${data-import-auth-url}" />
+    <add key="DataImportAuthUsername" value="${data-import-auth-username}" />
+    <add key="DataImportAuthPassword" value="${data-import-auth-password}" />
     <add key="ShapeFileRootDirectory" value="C:\Sitka\WADNRForestHealth\ShapeFiles" />
     <add key="ArcGisAuthUrl" value="${arcgis-auth-url}" />
     <add key="ArcGisLoaDataEasternUrl" value="${arcgis-loa-data-eastern-url}" />
