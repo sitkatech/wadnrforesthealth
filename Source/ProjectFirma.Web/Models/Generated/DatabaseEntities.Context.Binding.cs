@@ -210,6 +210,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TreatmentUpdate> TreatmentUpdates { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<WashingtonLegislativeDistrict> WashingtonLegislativeDistricts { get; set; }
+        public virtual DbSet<vArcOnlineRawJsonImportIndex> vArcOnlineRawJsonImportIndices { get; set; }
         public virtual DbSet<vGeoServerCounty> vGeoServerCounties { get; set; }
         public virtual DbSet<vGeoServerPclBoundaryLine> vGeoServerPclBoundaryLines { get; set; }
         public virtual DbSet<vGeoServerPclLandscapeTreatmentPriority> vGeoServerPclLandscapeTreatmentPriorities { get; set; }

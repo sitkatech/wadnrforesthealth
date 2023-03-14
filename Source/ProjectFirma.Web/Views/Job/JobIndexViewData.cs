@@ -33,12 +33,12 @@ namespace ProjectFirma.Web.Views.Job
 
         public JobIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = "Socrata Import Jobs";
+            PageTitle = "Finance API Import Jobs";
 
-            var hasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
-            GridSpec = new JobIndexGridSpec(hasTagManagePermissions);
+            var hasFirmaAdminPermission = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
+            GridSpec = new JobIndexGridSpec(hasFirmaAdminPermission);
 
-            if (hasTagManagePermissions)
+            if (hasFirmaAdminPermission)
             {
                 // Job execution is done with buttons, and, eventually, should be done via Hangfire.
 
@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.Job
                 //GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Tag");
             }
 
-            GridName = "SocrataJobsGrid";
+            GridName = "importJobsGrid";
             GridDataUrl = SitkaRoute<JobController>.BuildUrlFromExpression(tc => tc.JobIndexGridJsonData());
         }
     }

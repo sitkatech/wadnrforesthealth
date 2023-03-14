@@ -44,12 +44,12 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [JobManageFeature]
-        public GridJsonNetJObjectResult<vSocrataDataMartRawJsonImportIndex> JobIndexGridJsonData()
+        public GridJsonNetJObjectResult<vArcOnlineRawJsonImportIndex> JobIndexGridJsonData()
         {
             var hasJobDeletePermissions = new FirmaAdminFeature().HasPermissionByPerson(CurrentPerson);
             var gridSpec = new JobIndexGridSpec(hasJobDeletePermissions);
-            var priorJobs = HttpRequestStorage.DatabaseEntities.vSocrataDataMartRawJsonImportIndices.OrderBy(x => x.CreateDate).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<vSocrataDataMartRawJsonImportIndex>(priorJobs, gridSpec);
+            var priorJobs = HttpRequestStorage.DatabaseEntities.vArcOnlineRawJsonImportIndices.OrderBy(x => x.CreateDate).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<vArcOnlineRawJsonImportIndex>(priorJobs, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
@@ -57,11 +57,10 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult ClearPriorDataMartRawJsonImports()
         {
-            int priorJobCount = HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Count();
+            int priorJobCount = HttpRequestStorage.DatabaseEntities.ArcOnlineFinanceApiRawJsonImports.Count();
 
-            SocrataDataMartUpdateBackgroundJob.ClearSocrataDataMartRawJsonImportsTable();
-
-            var message = $"{priorJobCount} Prior Socrata DataMart Json Imports cleared";
+            ArcOnlineFinanceApiUpdateBackgroundJob.ClearArcOnlineFinanceApiRawJsonImportsTable();
+            var message = $"{priorJobCount} Prior ArcOnline Json Imports cleared";
             SetMessageForDisplay(message);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();

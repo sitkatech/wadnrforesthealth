@@ -2292,6 +2292,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vArcOnlineRawJsonImportIndex">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vArcOnlineRawJsonImportIndex">
+        <MappingFragment StoreEntitySet="vArcOnlineRawJsonImportIndex">
+          <ScalarProperty Name="ArcOnlineFinanceApiRawJsonImportID" ColumnName="ArcOnlineFinanceApiRawJsonImportID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" ColumnName="ArcOnlineFinanceApiRawJsonImportTableTypeID" />
+          <ScalarProperty Name="ArcOnlineFinanceApiRawJsonImportTableTypeName" ColumnName="ArcOnlineFinanceApiRawJsonImportTableTypeName" />
+          <ScalarProperty Name="BienniumFiscalYear" ColumnName="BienniumFiscalYear" />
+          <ScalarProperty Name="FinanceApiLastLoadDate" ColumnName="FinanceApiLastLoadDate" />
+          <ScalarProperty Name="JsonImportStatusTypeID" ColumnName="JsonImportStatusTypeID" />
+          <ScalarProperty Name="JsonImportStatusTypeName" ColumnName="JsonImportStatusTypeName" />
+          <ScalarProperty Name="JsonImportDate" ColumnName="JsonImportDate" />
+          <ScalarProperty Name="RawJsonStringLength" ColumnName="RawJsonStringLength" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vGeoServerCounty">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerCounty">
         <MappingFragment StoreEntitySet="vGeoServerCounty">

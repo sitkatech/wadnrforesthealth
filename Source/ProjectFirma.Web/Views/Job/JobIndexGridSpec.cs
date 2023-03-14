@@ -25,7 +25,7 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.Job
 {
-    public class JobIndexGridSpec : GridSpec<Models.vSocrataDataMartRawJsonImportIndex>
+    public class JobIndexGridSpec : GridSpec<Models.vArcOnlineRawJsonImportIndex>
     {
         public JobIndexGridSpec()
         {
@@ -33,8 +33,8 @@ namespace ProjectFirma.Web.Views.Job
 
         public JobIndexGridSpec(bool hasManageTagPermissions)
         {
-            ObjectNameSingular = "Socrata Import Job";
-            ObjectNamePlural = "Socrata Import Jobs";
+            ObjectNameSingular = "Import Job";
+            ObjectNamePlural = "Import Jobs";
             SaveFiltersInCookie = true;
 
             if (hasManageTagPermissions)
@@ -44,8 +44,8 @@ namespace ProjectFirma.Web.Views.Job
 
             const int dateWidth = 125;
 
-            Add("RawJSONImportID", a => a.SocrataDataMartRawJsonImportID.ToString(), 50, DhtmlxGridColumnFilterType.Numeric);
-            Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.SocrataDataMartRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("RawJSONImportID", a => a.ArcOnlineFinanceApiRawJsonImportID.ToString(), 50, DhtmlxGridColumnFilterType.Numeric);
+            Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.ArcOnlineFinanceApiRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Create Date", a => a.CreateDate, dateWidth, DhtmlxGridColumnFormatType.Date);
             Add("Biennium Fiscal Year", a => a.BienniumFiscalYear.ToString(), 100, DhtmlxGridColumnFilterType.Numeric);
             Add("Json Import Status Type Name", a => a.JsonImportStatusTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);

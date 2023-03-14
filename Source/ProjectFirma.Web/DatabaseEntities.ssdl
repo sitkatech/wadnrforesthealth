@@ -182,6 +182,20 @@
     <EntitySet Name="TreatmentUpdate" EntityType="ProjectFirma.Web.Models.Store.TreatmentUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.Store.WashingtonLegislativeDistrict" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vArcOnlineRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vArcOnlineRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vArcOnlineRawJsonImportIndex">
+      <DefiningQuery>SELECT 
+[vArcOnlineRawJsonImportIndex].[ArcOnlineFinanceApiRawJsonImportID] AS [ArcOnlineFinanceApiRawJsonImportID], 
+[vArcOnlineRawJsonImportIndex].[CreateDate] AS [CreateDate], 
+[vArcOnlineRawJsonImportIndex].[ArcOnlineFinanceApiRawJsonImportTableTypeID] AS [ArcOnlineFinanceApiRawJsonImportTableTypeID], 
+[vArcOnlineRawJsonImportIndex].[ArcOnlineFinanceApiRawJsonImportTableTypeName] AS [ArcOnlineFinanceApiRawJsonImportTableTypeName], 
+[vArcOnlineRawJsonImportIndex].[BienniumFiscalYear] AS [BienniumFiscalYear], 
+[vArcOnlineRawJsonImportIndex].[FinanceApiLastLoadDate] AS [FinanceApiLastLoadDate], 
+[vArcOnlineRawJsonImportIndex].[JsonImportStatusTypeID] AS [JsonImportStatusTypeID], 
+[vArcOnlineRawJsonImportIndex].[JsonImportStatusTypeName] AS [JsonImportStatusTypeName], 
+[vArcOnlineRawJsonImportIndex].[JsonImportDate] AS [JsonImportDate], 
+[vArcOnlineRawJsonImportIndex].[RawJsonStringLength] AS [RawJsonStringLength]
+FROM [dbo].[vArcOnlineRawJsonImportIndex] AS [vArcOnlineRawJsonImportIndex]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.Store.vGeoServerCounty" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerCounty">
       <DefiningQuery>SELECT 
 [vGeoServerCounty].[CountyID] AS [CountyID], 
@@ -3648,6 +3662,29 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="WashingtonLegislativeDistrictLocation" Type="geometry" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictNumber" Type="int" Nullable="false" />
     <Property Name="WashingtonLegislativeDistrictName" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vArcOnlineRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vArcOnlineRawJsonImportIndex">
+    <Key>
+      <PropertyRef Name="ArcOnlineFinanceApiRawJsonImportID" />
+      <PropertyRef Name="CreateDate" />
+      <PropertyRef Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" />
+      <PropertyRef Name="ArcOnlineFinanceApiRawJsonImportTableTypeName" />
+      <PropertyRef Name="JsonImportStatusTypeID" />
+      <PropertyRef Name="JsonImportStatusTypeName" />
+    </Key>
+    <Property Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ArcOnlineFinanceApiRawJsonImportTableTypeID" Type="int" Nullable="false" />
+    <Property Name="ArcOnlineFinanceApiRawJsonImportTableTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="BienniumFiscalYear" Type="int" />
+    <Property Name="FinanceApiLastLoadDate" Type="datetime" />
+    <Property Name="JsonImportStatusTypeID" Type="int" Nullable="false" />
+    <Property Name="JsonImportStatusTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="JsonImportDate" Type="datetime" />
+    <Property Name="RawJsonStringLength" Type="bigint" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerCounty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
