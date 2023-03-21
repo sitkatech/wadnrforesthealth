@@ -326,7 +326,7 @@ VALUES
 (504, N'TreatmentCode', 'Treatment Code', N'<p>The code for the treatment, e.g., BR-1: Brush Control.</p>'),
 (505, N'TreatmentCostPerAcre', 'Treatment Cost Per Acre', N'<p>The cost of the treatment on a per acre basis.</p>'),
 (506, N'TreatmentTotalCost', 'Treatment Total Cost', N'<p>The treatment acres multiplied by the cost per acre.</p>'),
-(507, N'Coordinator', 'Coordinator', 'Placeholder definition for Coordinator.'),
+(507, N'ServiceForestryRegionalCoordinator', 'Service Forestry Regional Coordinator', 'Placeholder definition for Service Forestry Regional Coordinator.'),
 (508, N'County', N'County', N'<p>A political and administrative division of a state, providing certain local governmental services.</p>'),
 (509, N'PercentageMatch', N'Percentage Match', N'<p>The percentage matched by WADNR for Service Forestry specific projects.</p>'),
 (510, N'ReportTitle', N'Report Title', 'Report Title'),

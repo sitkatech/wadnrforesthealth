@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectPersonRelationshipTypePrimaryContact PrimaryContact = ProjectPersonRelationshipTypePrimaryContact.Instance;
         public static readonly ProjectPersonRelationshipTypePrivateLandowner PrivateLandowner = ProjectPersonRelationshipTypePrivateLandowner.Instance;
         public static readonly ProjectPersonRelationshipTypeContractor Contractor = ProjectPersonRelationshipTypeContractor.Instance;
-        public static readonly ProjectPersonRelationshipTypeCoordinator Coordinator = ProjectPersonRelationshipTypeCoordinator.Instance;
+        public static readonly ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator ServiceForestryRegionalCoordinator = ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator.Instance;
 
         public static readonly List<ProjectPersonRelationshipType> All;
         public static readonly ReadOnlyDictionary<int, ProjectPersonRelationshipType> AllLookupDictionary;
@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectPersonRelationshipType()
         {
-            All = new List<ProjectPersonRelationshipType> { PrimaryContact, PrivateLandowner, Contractor, Coordinator };
+            All = new List<ProjectPersonRelationshipType> { PrimaryContact, PrivateLandowner, Contractor, ServiceForestryRegionalCoordinator };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectPersonRelationshipType>(All.ToDictionary(x => x.ProjectPersonRelationshipTypeID));
         }
 
@@ -112,12 +112,12 @@ namespace ProjectFirma.Web.Models
             {
                 case ProjectPersonRelationshipTypeEnum.Contractor:
                     return Contractor;
-                case ProjectPersonRelationshipTypeEnum.Coordinator:
-                    return Coordinator;
                 case ProjectPersonRelationshipTypeEnum.PrimaryContact:
                     return PrimaryContact;
                 case ProjectPersonRelationshipTypeEnum.PrivateLandowner:
                     return PrivateLandowner;
+                case ProjectPersonRelationshipTypeEnum.ServiceForestryRegionalCoordinator:
+                    return ServiceForestryRegionalCoordinator;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -129,7 +129,7 @@ namespace ProjectFirma.Web.Models
         PrimaryContact = 1,
         PrivateLandowner = 2,
         Contractor = 3,
-        Coordinator = 4
+        ServiceForestryRegionalCoordinator = 4
     }
 
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
@@ -150,9 +150,9 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false, false, 20);
     }
 
-    public partial class ProjectPersonRelationshipTypeCoordinator : ProjectPersonRelationshipType
+    public partial class ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeCoordinator(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
-        public static readonly ProjectPersonRelationshipTypeCoordinator Instance = new ProjectPersonRelationshipTypeCoordinator(4, @"Coordinator", @"Coordinator", 507, false, false, 40);
+        private ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        public static readonly ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator Instance = new ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator(4, @"ServiceForestryRegionalCoordinator", @"Service Forestry Regional Coordinator", 507, false, false, 40);
     }
 }

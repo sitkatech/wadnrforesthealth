@@ -490,7 +490,7 @@ namespace ProjectFirma.Web.Controllers
                 {
                     if (coordinator != null)
                         coordinatorsToAdd.Add(new ProjectPerson(project, coordinator,
-                            ProjectPersonRelationshipType.Coordinator));
+                            ProjectPersonRelationshipType.ServiceForestryRegionalCoordinator));
                 }
             }
 

@@ -4,8 +4,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectPersonRelationshipType](
 	[ProjectPersonRelationshipTypeID] [int] NOT NULL,
-	[ProjectPersonRelationshipTypeName] [varchar](25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ProjectPersonRelationshipTypeDisplayName] [varchar](25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProjectPersonRelationshipTypeName] [varchar](150) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProjectPersonRelationshipTypeDisplayName] [varchar](150) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FieldDefinitionID] [int] NOT NULL,
 	[IsRequired] [bit] NOT NULL,
 	[IsRestrictedToAdminAndProjectSteward] [bit] NOT NULL,
