@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using System.Activities.Expressions
 @using LtInfo.Common
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
@@ -98,17 +99,6 @@
                 </h2>
             </div>
             <div class="panel-body">
-                @if (ViewDataTyped.UserHasRegionManagePermissions)
-                {
-                    <div class="row">
-                        <div class="col-sm-3 fieldLabel text-right">
-                            Coordinator
-                        </div>
-                        <div class="col-sm-9">
-                            @(ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator != null ? ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator.FullNameFirstLastAndOrgShortName : String.Empty)
-                        </div>
-                    </div>
-                }
                 <div class="row">
                     <div class="col-sm-3 fieldLabel text-right">
                         Address
@@ -157,6 +147,27 @@
                         @ViewDataTyped.DNRUplandRegion.RegionEmail
                     </div>
                 </div>
+
+                @if (ViewDataTyped.UserHasRegionManagePermissions)
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12 fieldLabel">
+                            Service Forestry Regional Coordinator
+                        </div>
+                        <div class="col-sm-12">
+                            @if (ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator != null)
+                            {
+                                @ViewDataTyped.DNRUplandRegion.DNRUplandRegionCoordinator.GetFullNameFirstLastAndOrgShortNameAsUrl();
+                            }
+                            else
+                            {
+                                @Html.Raw("Not Assigned");
+                            }
+                        </div>
+                    </div>
+                }
+
             </div>
         </div>
     </div>

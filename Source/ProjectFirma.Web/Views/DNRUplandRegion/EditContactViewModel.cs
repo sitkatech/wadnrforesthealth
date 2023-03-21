@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
     public class EditContactViewModel : FormViewModel, IValidatableObject
     {
 
-        [DisplayName("Coordinator")]
+        [DisplayName("Service Forestry Regional Coordinator")]
         public int ? CoordinatorID { get; set; }
 
         /// <summary>
