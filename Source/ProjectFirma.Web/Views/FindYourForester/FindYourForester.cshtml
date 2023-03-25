@@ -60,17 +60,17 @@
         <div id="outOfStateAddressError" class="col-md-12 alert alert-danger" style="display: none;">There was a problem finding your address. Either the request failed or you selected a location outside the State of Washington. Try hitting Find Your Forester again or update your selection to be inside the State of Washington</div>
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
 
-            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 600px; margin: 5px 0 5px 0">
+            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 400px; margin: 5px 0 5px 0">
             </div>
             <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
 
         </div>
-        <div class="col-md-3" style="padding-left: 0; padding-right: 0;">
-            <div class="panel panel-default" style="height: 600px; margin: 5px 0 5px 0">
+        <div class="col-md-5" style="padding-left: 0; padding-right: 0;">
+            <div class="panel panel-default" style="height: 400px; margin: 5px 0 5px 0">
                 <div class="panel-heading"><strong>Forester Contact Information:</strong></div>
-                <div id="findYourForesterContainer" class="panel-body" style="max-height: 559px; overflow-y: scroll; ">
+                <div id="findYourForesterContainer" class="panel-body" style="max-height: 359px; overflow-y: scroll; ">
 
                 </div>
             </div>
@@ -184,6 +184,15 @@
                         allForesterDefinitionLists.find('[data-forester-no-data]').show();
                         allForesterDefinitionLists.find('[data-forester-initial]').hide();
                     }
+                }
+
+                if (jQuery('#findYourForesterContainer div').children('span').length > 6) {
+                    console.log("THERE ARE MORE THAN 6 SPANS!");
+                    jQuery('#findYourForesterContainer div').children('br').eq(6).after('<button id="showHideFindYourForesterContent">see more</button><div id="hiddenFindYourForesterContent">');
+                    jQuery('#findYourForesterContainer div').append('</div>');
+
+                    jQuery('#hiddenFindYourForesterContent').hide();
+
                 }
                    
             });
