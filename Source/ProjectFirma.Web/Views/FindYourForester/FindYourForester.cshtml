@@ -60,17 +60,17 @@
         <div id="outOfStateAddressError" class="col-md-12 alert alert-danger" style="display: none;">There was a problem finding your address. Either the request failed or you selected a location outside the State of Washington. Try hitting Find Your Forester again or update your selection to be inside the State of Washington</div>
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
 
-            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 600px; margin: 5px 0 5px 0">
+            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 400px; margin: 5px 0 5px 0">
             </div>
             <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
 
         </div>
-        <div class="col-md-3" style="padding-left: 0; padding-right: 0;">
-            <div class="panel panel-default" style="height: 600px; margin: 5px 0 5px 0">
+        <div class="col-md-5" style="padding-left: 0; padding-right: 0;">
+            <div class="panel panel-default" style="height: 400px; margin: 5px 0 5px 0">
                 <div class="panel-heading"><strong>Forester Contact Information:</strong></div>
-                <div id="findYourForesterContainer" class="panel-body" style="max-height: 559px; overflow-y: scroll; ">
+                <div id="findYourForesterContainer" class="panel-body" style="max-height: 359px; overflow-y: scroll; ">
 
                 </div>
             </div>
@@ -105,6 +105,18 @@
 </div>
 
 <script type="text/javascript">
+
+    function showHideFyfSidebarContent() {
+        if (jQuery('#findYourForesterContainer div').children(':hidden').length) {
+            jQuery('#findYourForesterContainer div').children().slice(13).show();
+            jQuery('#showHideFindYourForesterContent').html("see less");
+        } else {
+            jQuery('#findYourForesterContainer div').children().slice(13).hide();
+            jQuery('#showHideFindYourForesterContent').html("see more");
+        }
+    }
+
+
     jQuery(document).ready(function () {
 
         
@@ -185,12 +197,18 @@
                         allForesterDefinitionLists.find('[data-forester-initial]').hide();
                     }
                 }
+
+                if (jQuery('#findYourForesterContainer div').children('span').length > 6) {
+                    jQuery('#findYourForesterContainer div').children().eq(11).after('<button id="showHideFindYourForesterContent" onclick="showHideFyfSidebarContent();">see more</button><br/>');
+                    jQuery('#findYourForesterContainer div').children().slice(13).hide();
+
+                }
                    
             });
 
         }
 
-        
+
         //zoom to address
         jQuery('#btnZoomToAddress').click(function() {
 
