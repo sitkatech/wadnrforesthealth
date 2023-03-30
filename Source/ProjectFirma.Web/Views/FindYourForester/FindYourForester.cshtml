@@ -107,11 +107,12 @@
 <script type="text/javascript">
 
     function showHideFyfSidebarContent() {
-        if (jQuery('#findYourForesterContainer div').children(':hidden').length) {
-            jQuery('#findYourForesterContainer div').children().slice(13).show();
+        var hiddenChildren = jQuery('#findYourForesterContainer > div > span').filter(':hidden');
+        if (hiddenChildren.length) {
+            jQuery('#findYourForesterContainer > div > span').slice(6).show();
             jQuery('#showHideFindYourForesterContent').html("see less");
         } else {
-            jQuery('#findYourForesterContainer div').children().slice(13).hide();
+            jQuery('#findYourForesterContainer > div > span').slice(6).hide();
             jQuery('#showHideFindYourForesterContent').html("see more");
         }
     }
@@ -198,9 +199,9 @@
                     }
                 }
 
-                if (jQuery('#findYourForesterContainer div').children('span').length > 6) {
-                    jQuery('#findYourForesterContainer div').children().eq(11).after('<button id="showHideFindYourForesterContent" onclick="showHideFyfSidebarContent();">see more</button><br/>');
-                    jQuery('#findYourForesterContainer div').children().slice(13).hide();
+                if (jQuery('#findYourForesterContainer > div > span').length > 6) {
+                    jQuery('#findYourForesterContainer > div > span').eq(5).after('<br/><button id="showHideFindYourForesterContent" onclick="showHideFyfSidebarContent();">see more</button>');
+                    jQuery('#findYourForesterContainer > div > span').slice(6).hide();
 
                 }
                    
