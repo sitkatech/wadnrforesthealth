@@ -47,7 +47,7 @@
     <add key="LastLoadDateUrl" value="${last-load-date-url}" />
     <add key="DataImportAuthUrl" value="${data-import-auth-url}" />
     <add key="DataImportAuthUsername" value="${data-import-auth-username}" />
-    <add key="DataImportAuthPassword" value="${data-import-auth-password}" />
+    <add key="DataImportAuthPassword" value="${string::replace(data-import-auth-password, '&', '&amp;')}" />
     <add key="ShapeFileRootDirectory" value="C:\Sitka\WADNRForestHealth\ShapeFiles" />
     <add key="ArcGisAuthUrl" value="${arcgis-auth-url}" />
     <add key="ArcGisLoaDataEasternUrl" value="${arcgis-loa-data-eastern-url}" />
