@@ -97,9 +97,9 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // Every 15 minutes jobs
             var cronValueFor15Minutes = CronValueOrNeverIfJobsDisabled($"*/{runJobEveryFifteenMinutes} * * * *");
-            //AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
-            //AddRecurringJob(GrantExpenditureImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunGrantExpenditureImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
-           // AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            AddRecurringJob(GrantExpenditureImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunGrantExpenditureImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
 
             // We only add this job if we are beyond this date, so that can get to phase 2 without this job screaming at us.
             // This job (and likely others) needs a proper merge function, but we have no budget for this currently. -- SLG 7/9/2019
@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             var dateTimeToRestartProgramIndex = new DateTime(yearToRestartProgramIndex, monthToRestartProgramIndex, dayToRestartProgramIndex, hourToRestartProgramIndex, 0, 0);
             if (DateTime.Now >= dateTimeToRestartProgramIndex)
             {
-               // AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+                AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
             }
 
             // 1:30 AM  pacific tasks is 8:36am utc
