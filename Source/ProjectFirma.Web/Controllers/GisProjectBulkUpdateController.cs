@@ -147,7 +147,7 @@ namespace ProjectFirma.Web.Controllers
         {
 
             var projectIdentifierMetadataAttribute = GenerateSingleMetadataAttribute(gisUploadAttempt, viewModel.ProjectIdentifierMetadataAttributeID);
-            var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID).ToList();
+            var gisFeatureIDs = gisUploadAttempt.GisFeatures.Select(x => x.GisFeatureID).ToHashSet();
 
             var gisExcludeIncludeList = gisUploadAttempt.GisUploadSourceOrganization.GisExcludeIncludeColumns.ToList();
             if (gisExcludeIncludeList.Any())
@@ -262,7 +262,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private static List<int> FilterListBasedOnIncludeExcludeCriteria(List<GisExcludeIncludeColumn> gisExcludeIncludeList, List<int> gisFeatureIDs)
+        private static HashSet<int> FilterListBasedOnIncludeExcludeCriteria(List<GisExcludeIncludeColumn> gisExcludeIncludeList, HashSet<int> gisFeatureIDs)
         {
             foreach (var gisExcludeIncludeColumn in gisExcludeIncludeList)
             {
@@ -287,15 +287,15 @@ namespace ProjectFirma.Web.Controllers
                     if (gisExcludeIncludeColumn.IsWhitelist)
                     {
                         var listOfGisFeaturesToKeep = filteredIncludeExcludeList.Select(x => x.GisFeatureID).ToList();
-                        var distinctListOfFeaturesToKeep = listOfGisFeaturesToKeep.Distinct().ToList();
+                        var distinctListOfFeaturesToKeep = listOfGisFeaturesToKeep.Distinct().ToHashSet();
                         gisFeatureIDs = distinctListOfFeaturesToKeep;
                     }
 
                     if (!gisExcludeIncludeColumn.IsWhitelist)
                     {
                         var listOfGisFeaturesToNix = filteredIncludeExcludeList.Select(x => x.GisFeatureID).ToList();
-                        var distinctListOfFeaturesToNix = listOfGisFeaturesToNix.Distinct().ToList();
-                        gisFeatureIDs = gisFeatureIDs.Where(x => !distinctListOfFeaturesToNix.Contains(x)).ToList();
+                        var distinctListOfFeaturesToNix = listOfGisFeaturesToNix.Distinct().ToHashSet();
+                        gisFeatureIDs = gisFeatureIDs.Where(x => !distinctListOfFeaturesToNix.Contains(x)).ToHashSet();
                     }
                 }
             }
@@ -562,11 +562,11 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             var projectsWithCountiesToDeleteAkList = projectsWithCountiesToDelete
-                .Select(x => $"{x.ProjectID}, {x.CountyID}").ToList();
+                .Select(x => $"{x.ProjectID}, {x.CountyID}").ToHashSet();
 
-            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.ToList().Select(x => $"{x.ProjectID}, {x.CountyID}").ToList();
+            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.ToList().Select(x => $"{x.ProjectID}, {x.CountyID}").ToHashSet();
             var allProjectCountiesExceptDeletes = allProjectCounties.Where(x =>
-                !projectsWithCountiesToDeleteAkList.Contains(x));
+                !projectsWithCountiesToDeleteAkList.Contains(x)).ToHashSet();
 
             projectsWithCountiesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
@@ -619,7 +619,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         private static List<string> GetDistinctProjectIdentifiers(GisMetadataAttribute projectIdentifierMetadataAttribute,
-            List<int> gisFeatureIDs)
+            HashSet<int> gisFeatureIDs)
         {
             var projectIdentifierValues =
                 projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
