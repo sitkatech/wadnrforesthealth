@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void WholeJobShouldRunWithoutErrors()
         {
             var jobCancellationToken = new JobCancellationToken(false);
-            LoaDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
+            Assert.DoesNotThrow(() => LoaDataImportBackgroundJob.Instance.RunJob(jobCancellationToken), $"Job {nameof(LoaDataImportBackgroundJob)} should complete without exceptions");
         }
     }
 }
