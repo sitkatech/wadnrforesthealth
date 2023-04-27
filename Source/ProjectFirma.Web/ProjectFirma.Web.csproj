@@ -918,6 +918,7 @@
     <Compile Include="ScheduledJobs\LoaDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
+    <Compile Include="ScheduledJobs\LoaDataImportBackgroundJobTest.cs" />
     <Compile Include="ScheduledJobs\ProgramIndexImportHangfireBackgroundJob.cs" />
     <Compile Include="Common\SQLHelpers.cs" />
     <Compile Include="ScheduledJobs\ProgramNotificationHelper.cs" />
