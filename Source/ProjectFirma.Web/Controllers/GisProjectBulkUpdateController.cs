@@ -1,5 +1,4 @@
-﻿using ApprovalUtilities.Utilities;
-using GeoJSON.Net;
+﻿using GeoJSON.Net;
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
@@ -20,7 +19,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using ApprovalUtilities.SimpleLogger;
 using log4net;
 
 namespace ProjectFirma.Web.Controllers
@@ -37,7 +35,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<SourceOrganizationTypeSelection, SourceOrganizationTypeSelectionViewData, SourceOrganizationTypeSelectionViewModel>(viewData, viewModel);
         }
 
-
         [HttpPost]
         [GisAttemptUploadViewFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
@@ -51,6 +48,7 @@ namespace ProjectFirma.Web.Controllers
                 return RazorPartialView<SourceOrganizationTypeSelection, SourceOrganizationTypeSelectionViewData, SourceOrganizationTypeSelectionViewModel>(viewData, viewModel);
             }
 
+            // ReSharper disable once PossibleInvalidOperationException
             var gisAttempt = new GisUploadAttempt(viewModel.SourceOrganizationID.Value, CurrentPerson.PersonID, DateTime.Now);
 
             HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
@@ -79,8 +77,6 @@ namespace ProjectFirma.Web.Controllers
 
         }
 
-
-
         [HttpGet]
         [GisAttemptUploadViewFeature]
         public ActionResult UploadGisFile(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey)
@@ -90,7 +86,6 @@ namespace ProjectFirma.Web.Controllers
 
             return ViewUploadGisFile(uploadGisFileViewModel, gisUploadAttempt);
         }
-
 
         [HttpGet]
         [GisAttemptUploadViewFeature]
@@ -436,9 +431,9 @@ namespace ProjectFirma.Web.Controllers
 
             var projectsWithUplandRegionsToDeleteAkList = projectsWithUplandDnrRegions
                 .SelectMany(p => p.ProjectRegions
-                .Select(pr => $"{pr.ProjectID}, {pr.DNRUplandRegionID}")).ToHashSet();
+                    .Select(pr => new { pr.ProjectID, pr.DNRUplandRegionID })).ToHashSet();
 
-            var allProjectUplandRegionsAkList = HttpRequestStorage.DatabaseEntities.ProjectRegions.Select(x => $"{x.ProjectID}, {x.DNRUplandRegionID}").ToHashSet();
+            var allProjectUplandRegionsAkList = HttpRequestStorage.DatabaseEntities.ProjectRegions.Select(x => new {x.ProjectID, x.DNRUplandRegionID}).ToHashSet();
             var allProjectUplandRegionsAkListExceptDeletes = allProjectUplandRegionsAkList.Except(projectsWithUplandRegionsToDeleteAkList).ToHashSet();
 
             projectsWithUplandDnrRegions.SelectMany(x => x.ProjectRegions)
@@ -448,7 +443,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var projectUplandRegionsToAdd = projectRegions.Where(x =>
-                    !allProjectUplandRegionsAkListExceptDeletes.Contains($"{x.ProjectID}, {x.DNRUplandRegionID}"))
+                    !allProjectUplandRegionsAkListExceptDeletes.Contains(new {x.ProjectID, x.DNRUplandRegionID}))
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectUplandRegionsToAdd);
@@ -515,9 +510,10 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             var projectsWithPriorityLandscapesToDeleteAkList = projectsWithPriorityLandscapesToDelete
-                .Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToHashSet();
+                .Select(x => new {x.ProjectID, x.PriorityLandscapeID}).ToHashSet();
 
-            var allProjectPriorityLandscapesAkList = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.ToList().Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToHashSet();
+            var allProjectPriorityLandscapesAkList = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes
+                .Select(x => new { x.ProjectID, x.PriorityLandscapeID }).ToHashSet();
             var allProjectPriorityLandscapesExceptDeletes = allProjectPriorityLandscapesAkList.Where(x =>
                 !projectsWithPriorityLandscapesToDeleteAkList.Contains(x));
 
@@ -525,7 +521,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var projectPriorityLandscapesToAdd = projectPriorityLandscapes.Where(x =>
-                    !allProjectPriorityLandscapesExceptDeletes.Contains($"{x.ProjectID}, {x.PriorityLandscapeID}"))
+                    !allProjectPriorityLandscapesExceptDeletes.Contains(new { x.ProjectID, x.PriorityLandscapeID }))
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapesToAdd);
@@ -553,19 +549,17 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             var projectsWithCountiesToDeleteAkList = projectsWithCountiesToDelete
-                .Select(x => $"{x.ProjectID}, {x.CountyID}").ToHashSet();
+                .Select(x => new {x.ProjectID, x.CountyID}).ToHashSet();
 
-            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.ToList().Select(x => $"{x.ProjectID}, {x.CountyID}").ToHashSet();
+            var allProjectCounties = HttpRequestStorage.DatabaseEntities.ProjectCounties.ToList().Select(x => new {x.ProjectID, x.CountyID}).ToHashSet();
             var allProjectCountiesExceptDeletes = allProjectCounties.Where(x =>
                 !projectsWithCountiesToDeleteAkList.Contains(x)).ToHashSet();
 
             projectsWithCountiesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
-
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
-
             var projectCountiesToAdd = projectCounties.Where(x =>
-                    !allProjectCountiesExceptDeletes.Contains($"{x.ProjectID}, {x.CountyID}"))
+                    !allProjectCountiesExceptDeletes.Contains(new {x.ProjectID, x.CountyID}))
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectCounties.AddRange(projectCountiesToAdd);
@@ -989,7 +983,7 @@ namespace ProjectFirma.Web.Controllers
             var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(startDateDictionary.ContainsKey)
                 .SelectMany(x => startDateDictionary[x]).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
-                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+                .Where(x => DateTime.TryParse(x, out _)).Select(DateTime.Parse).ToList();
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?)null;
 
             if (existingProject != null)
@@ -1005,10 +999,7 @@ namespace ProjectFirma.Web.Controllers
                         startDate = otherTreatmentStartDates;
                     }
                 }
-
-
             }
-
             return startDate;
         }
 
@@ -1020,7 +1011,7 @@ namespace ProjectFirma.Web.Controllers
                 .SelectMany(x => completionDateDictionary[x]).ToList();
 
             var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
-                .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
+                .Where(x => DateTime.TryParse(x, out _)).Select(DateTime.Parse).ToList();
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?)null;
 
@@ -1069,7 +1060,7 @@ namespace ProjectFirma.Web.Controllers
                 {
                     var projectStageMappedString = projectStageCrossWalks.Single(x =>
                             x.GisCrossWalkSourceValue.Equals(projectStageString, StringComparison.InvariantCultureIgnoreCase))
-                        ?.GisCrossWalkMappedValue;
+                        .GisCrossWalkMappedValue;
 
                     if (!string.IsNullOrEmpty(projectStageMappedString))
                     {
@@ -1136,7 +1127,7 @@ namespace ProjectFirma.Web.Controllers
             var httpPostedFileBase = viewModel.FileResourceData;
             var shapeFileSuccessfullyExtractedToDisk = false;
             var shapeFilePath = GisUploadAttemptStaging.UnzipAndSaveFileToDiskIfShapefile(httpPostedFileBase, gisUploadAttempt, ref shapeFileSuccessfullyExtractedToDisk);
-            FeatureCollection featureCollection = null;
+            FeatureCollection featureCollection;
 
             if (shapeFileSuccessfullyExtractedToDisk)
             {
@@ -1162,13 +1153,11 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-
         private DatabaseEntities AddToContext(DatabaseEntities context,
             GisFeatureMetadataAttribute entity, int count, int commitCount, bool recreateContext)
         {
             context.Set<GisFeatureMetadataAttribute>().Add(entity);
             var connectionString = context.Database.Connection.ConnectionString;
-
             if (count % commitCount == 0)
             {
                 context.SaveChangesWithNoAuditing();
@@ -1179,7 +1168,6 @@ namespace ProjectFirma.Web.Controllers
                     context.Configuration.AutoDetectChangesEnabled = false;
                 }
             }
-
             return context;
         }
 
