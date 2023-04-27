@@ -19,7 +19,13 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string GrantNumber { get; set; }
         public string ProgramIndexCode { get; set; }
         public string ProjectCodeName { get; set; }
+        public string OrganizationCodeValue { get; set; }
         public string OrganizationCodeName { get; set; }
+        public string OrganizationCodeDisplay =>
+            !string.IsNullOrEmpty(OrganizationCodeValue) && !string.IsNullOrEmpty(OrganizationCodeName)
+                ? $"{OrganizationCodeValue} - {OrganizationCodeName}"
+                : string.Empty;
+
         public string InvoiceNumber { get; set; }
         public string Fund { get; set; }
         public string Appn { get; set; }
@@ -38,6 +44,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 GrantNumber = invoice.Grant?.GrantNumber;
                 ProgramIndexCode = invoice.ProgramIndex?.ProgramIndexCode;
                 ProjectCodeName = invoice.ProjectCode?.ProjectCodeName;
+                OrganizationCodeValue = invoice.OrganizationCode?.OrganizationCodeValue;
                 OrganizationCodeName = invoice.OrganizationCode?.OrganizationCodeName;
                 InvoiceNumber = invoice.InvoiceNumber;
                 Fund = invoice.Fund;
