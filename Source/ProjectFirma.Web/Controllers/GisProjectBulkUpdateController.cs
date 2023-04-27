@@ -295,7 +295,7 @@ namespace ProjectFirma.Web.Controllers
                     {
                         var listOfGisFeaturesToNix = filteredIncludeExcludeList.Select(x => x.GisFeatureID).ToList();
                         var distinctListOfFeaturesToNix = listOfGisFeaturesToNix.Distinct().ToHashSet();
-                        gisFeatureIDs = gisFeatureIDs.Where(x => !distinctListOfFeaturesToNix.Contains(x)).ToHashSet();
+                        gisFeatureIDs = gisFeatureIDs.Except(distinctListOfFeaturesToNix).ToHashSet();
                     }
                 }
             }
@@ -334,7 +334,7 @@ namespace ProjectFirma.Web.Controllers
                             string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
                                 StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
                     var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier
-                        .Where(x => privateLandOwnerDictionary.ContainsKey(x))
+                        .Where(privateLandOwnerDictionary.ContainsKey)
                         .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
                     var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
                     GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
@@ -372,7 +372,7 @@ namespace ProjectFirma.Web.Controllers
                     var gisFeaturesIdListWithProjectIdentifier =
                         projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                             string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
-                                StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+                                StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToHashSet();
                     var gisFeatures = gisUploadAttempt.GisFeatures
                         .Where(x => gisFeaturesIdListWithProjectIdentifier.Contains(x.GisFeatureID)).ToList();
                     var importedProjectAreaIndex = 1;
@@ -434,19 +434,12 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => distinctIdentifiersFromGisUploadAttempt.Contains(x.ProjectGisIdentifier, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
 
+            var projectsWithUplandRegionsToDeleteAkList = projectsWithUplandDnrRegions
+                .SelectMany(p => p.ProjectRegions
+                .Select(pr => $"{pr.ProjectID}, {pr.DNRUplandRegionID}")).ToHashSet();
 
-            var projectsWithUplandRegionsToDelete = projectsWithUplandDnrRegions
-                .SelectMany(x => x.ProjectRegions)
-                .ToList();
-
-            var projectsWithUplandRegionsToDeleteAkList = projectsWithUplandRegionsToDelete
-                .Select(x => $"{x.ProjectID}, {x.DNRUplandRegionID}").ToList();
-
-            var allProjectUplandRegionsAkList = HttpRequestStorage.DatabaseEntities.ProjectRegions.ToList().Select(x => $"{x.ProjectID}, {x.DNRUplandRegionID}").ToList();
-
-            var allProjectUplandRegionsAkListExceptDeletes = allProjectUplandRegionsAkList.Where(x =>
-                !projectsWithUplandRegionsToDeleteAkList.Contains(x));
-
+            var allProjectUplandRegionsAkList = HttpRequestStorage.DatabaseEntities.ProjectRegions.Select(x => $"{x.ProjectID}, {x.DNRUplandRegionID}").ToHashSet();
+            var allProjectUplandRegionsAkListExceptDeletes = allProjectUplandRegionsAkList.Except(projectsWithUplandRegionsToDeleteAkList).ToHashSet();
 
             projectsWithUplandDnrRegions.SelectMany(x => x.ProjectRegions)
                 .ToList()
@@ -522,15 +515,13 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             var projectsWithPriorityLandscapesToDeleteAkList = projectsWithPriorityLandscapesToDelete
-                .Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToList();
+                .Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToHashSet();
 
-            var allProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.ToList().Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToList();
-            var allProjectPriorityLandscapesExceptDeletes = allProjectPriorityLandscapes.Where(x =>
+            var allProjectPriorityLandscapesAkList = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.ToList().Select(x => $"{x.ProjectID}, {x.PriorityLandscapeID}").ToHashSet();
+            var allProjectPriorityLandscapesExceptDeletes = allProjectPriorityLandscapesAkList.Where(x =>
                 !projectsWithPriorityLandscapesToDeleteAkList.Contains(x));
 
             projectsWithPriorityLandscapesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
-
-
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
             var projectPriorityLandscapesToAdd = projectPriorityLandscapes.Where(x =>
@@ -637,7 +628,7 @@ namespace ProjectFirma.Web.Controllers
             return projectIdentifierMetadataAttribute;
         }
 
-        private static Dictionary<int, List<GisFeatureMetadataAttribute>> GenerateMetadataValueDictionary(IEnumerable<int> gisFeatureIDs,
+        private static Dictionary<int, List<GisFeatureMetadataAttribute>> GenerateMetadataValueDictionary(HashSet<int> gisFeatureIDs,
             int? completionDateMetadataAttributeID)
         {
             var completionDateDictionary = HttpRequestStorage.DatabaseEntities.GisFeatureMetadataAttributes.Where(x =>
@@ -860,7 +851,7 @@ namespace ProjectFirma.Web.Controllers
             GisUploadAttempt gisUploadAttempt, List<int> gisFeaturesIdListWithProjectIdentifier, DateTime? completionDate)
         {
             var projectStageAttributes = gisFeaturesIdListWithProjectIdentifier
-                .Where(x => projectStageDictionary.ContainsKey(x))
+                .Where(projectStageDictionary.ContainsKey)
                 .SelectMany(x => projectStageDictionary[x]).ToList();
             ProjectStage projectStage = gisUploadAttempt.GisUploadSourceOrganization.ProjectStageDefault;
             projectStage = CalculateProjectStageIfNeeded(gisCrossWalkDefaultList, gisUploadAttempt, projectStageAttributes,
@@ -871,7 +862,7 @@ namespace ProjectFirma.Web.Controllers
         private static string CalculateProjectName(Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary,
             List<int> gisFeaturesIdListWithProjectIdentifier)
         {
-            var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => projectNameDictionary.ContainsKey(x))
+            var projectNameAttributes = gisFeaturesIdListWithProjectIdentifier.Where(projectNameDictionary.ContainsKey)
                 .SelectMany(x => projectNameDictionary[x]).ToList();
             var projectNames = projectNameAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
 
@@ -995,7 +986,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static DateTime? CalculateStartDate(Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, List<int> gisFeaturesIdListWithProjectIdentifier, Project existingProject, int programID)
         {
-            var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(x => startDateDictionary.ContainsKey(x))
+            var startDateAttributes = gisFeaturesIdListWithProjectIdentifier.Where(startDateDictionary.ContainsKey)
                 .SelectMany(x => startDateDictionary[x]).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out var date)).Select(x => DateTime.Parse(x)).ToList();
@@ -1025,7 +1016,7 @@ namespace ProjectFirma.Web.Controllers
             List<int> gisFeaturesIdListWithProjectIdentifier, Project existingProject, int programID)
         {
             var completionDateAttributes = gisFeaturesIdListWithProjectIdentifier
-                .Where(x => completionDateDictionary.ContainsKey(x))
+                .Where(completionDateDictionary.ContainsKey)
                 .SelectMany(x => completionDateDictionary[x]).ToList();
 
             var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
@@ -1200,7 +1191,7 @@ namespace ProjectFirma.Web.Controllers
                 ? featureCollection.Features.First().Properties.Select(x => x.Key).ToList()
                 : new List<string>();
             var distinctListOfFields = featureCollection.Features.SelectMany(x => x.Properties.Select(y => y.Key)).OrderBy(x => x).Distinct().ToList();
-            distinctListOfFields.Where(x => !listOfPropertiesFromFirstFeature.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ForEach(x => listOfPropertiesFromFirstFeature.Add(x));
+            listOfPropertiesFromFirstFeature.AddRange(distinctListOfFields.Except(listOfPropertiesFromFirstFeature, StringComparer.InvariantCultureIgnoreCase));
             for (int i = 0; i < listOfPropertiesFromFirstFeature.Count(); i++)
             {
                 var columnName = listOfPropertiesFromFirstFeature[i];
