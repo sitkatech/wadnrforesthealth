@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using ApprovalUtilities.Reflection;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
 using Hangfire;
-using Newtonsoft.Json;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -120,19 +116,22 @@ namespace ProjectFirma.Web.ScheduledJobs
                Logger.Info(message);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return;  // the calling code will set back a 400
+                // the calling code will set back a 400
+                Logger.Error($"Exception occurred in {nameof(DownloadArcOnlineDataAndImportProjects)} while processing with Arc URL {arcOnlineUrl}", ex);
             }
-
-
-
         }
 
+        // ReSharper disable InconsistentNaming
+        // ReSharper disable UnusedAutoPropertyAccessor.Local
+        // ReSharper disable ClassNeverInstantiated.Local
+        // ReSharper disable CollectionNeverUpdated.Local
+        // ReSharper disable UnusedMember.Local
+#pragma warning disable IDE1006 // Naming Styles
         private class LoaProjectApiCountResponse
         {
             public int count { get; set; }
-
         }
 
         private class LoaProjectGeometriesDto
@@ -201,9 +200,11 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             public List<List<List<double>>> rings { get; set; }
         }
-
+        // ReSharper restore UnusedAutoPropertyAccessor.Local
+        // ReSharper restore InconsistentNaming
+        // ReSharper restore ClassNeverInstantiated.Local
+        // ReSharper restore CollectionNeverUpdated.Local
+        // ReSharper restore UnusedMember.Local
+#pragma warning restore IDE1006 // Naming Styles
     }
-
-
-
 }
