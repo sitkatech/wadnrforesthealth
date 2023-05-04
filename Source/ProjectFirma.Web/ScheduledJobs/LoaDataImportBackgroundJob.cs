@@ -5,6 +5,7 @@ using System.Net.Http;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
 using Hangfire;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -17,6 +18,13 @@ namespace ProjectFirma.Web.ScheduledJobs
         public static LoaDataImportBackgroundJob Instance;
 
         public static int LoaGisUploadSourceOrganizationID = 3;
+
+        /// <summary>
+        /// The property maxRecordCount is used if the resultType value is none. This can be the default server assigned (1000, 2000) or a value that is overwritten by the service owner or admin.
+        /// Note:
+        ///  For ArcGIS Online hosted services, maxRecordCount has an upper limit of 32000 for points, and an upper limit of 4000 for lines and polygons.
+        /// https://developers.arcgis.com/rest/services-reference/online/feature-layer.htm
+        /// </summary>
         public static int MaxRecordCount = 5000;
 
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
@@ -50,15 +58,13 @@ namespace ProjectFirma.Web.ScheduledJobs
                 return;
             }
 
-            var queryString = $"?f=json&outSr=4326&where=Approval_ID is not null&resultRecordCount={MaxRecordCount}";
+            var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null&resultRecordCount={MaxRecordCount}";
             queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
-            arcOnlineUrl += queryString;
-            HttpResponseMessage response;
-            LoaProjectGeometriesDto processedResponse;
+            var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
             try
             {
                 //get the total records available
-                response = httpClient.GetAsync(arcOnlineUrl + "&returnCountOnly=true").Result;
+                var response = httpClient.GetAsync(arcOnlineUrlWithQueryString + "&returnCountOnly=true").Result;
                 response.EnsureSuccessStatusCode();
                 var countResponse = arcUtility.ProcessRepsonse<LoaProjectApiCountResponse>(response);
                 var totalRecordCount = countResponse.count;
@@ -66,16 +72,20 @@ namespace ProjectFirma.Web.ScheduledJobs
                 //loop until we get all the records, the max returned is 5000
                 var featuresFromApi = new List<LoaProjectFeatureDto>();
                 var resultOffset = 0;
+                LoaProjectGeometriesDto processedResponse;
                 do
                 {
-                    response = httpClient.GetAsync(arcOnlineUrl + $"&resultOffset={resultOffset}").Result;
+                    var requestUri = arcOnlineUrlWithQueryString + $"&resultOffset={resultOffset}";
+
+                    response = httpClient.GetAsync(requestUri).Result;
                     response.EnsureSuccessStatusCode();
                     processedResponse = arcUtility.ProcessRepsonse<LoaProjectGeometriesDto>(response);
                     featuresFromApi.AddRange(processedResponse.features);
 
-                    resultOffset += MaxRecordCount;
-                } while (resultOffset <= totalRecordCount);
+                    resultOffset += processedResponse.features.Count;
+                } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
 
+                Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for code error, is {nameof(MaxRecordCount)} set correctly?");
 
                 var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
                 var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
@@ -106,20 +116,20 @@ namespace ProjectFirma.Web.ScheduledJobs
                     HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
                         gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
 
-
                 var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
 
                 GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var projectListCount, out var skippedProjectCount, out var existingProjectCount);
 
-               var message = $"LOA Data Import Job Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
-
+               var message = $"LOA Data Import Job Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. TotalRecordCount: {totalRecordCount}; FeaturesFromApiCount: {featuresFromApi.Count}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. From Arc URL: {arcOnlineUrl}";
                Logger.Info(message);
 
             }
             catch (Exception ex)
             {
                 // the calling code will set back a 400
-                Logger.Error($"Exception occurred in {nameof(DownloadArcOnlineDataAndImportProjects)} while processing with Arc URL {arcOnlineUrl}", ex);
+                throw new ApplicationException(
+                    $"Exception: {ex.GetType()}; Message: {ex.Message}; Occurred in {nameof(DownloadArcOnlineDataAndImportProjects)} while processing with Arc URL {arcOnlineUrl}",
+                    ex);
             }
         }
 
