@@ -19,14 +19,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         public static int LoaGisUploadSourceOrganizationID = 3;
 
-        /// <summary>
-        /// The property maxRecordCount is used if the resultType value is none. This can be the default server assigned (1000, 2000) or a value that is overwritten by the service owner or admin.
-        /// Note:
-        ///  For ArcGIS Online hosted services, maxRecordCount has an upper limit of 32000 for points, and an upper limit of 4000 for lines and polygons.
-        /// https://developers.arcgis.com/rest/services-reference/online/feature-layer.htm
-        /// </summary>
-        public static int MaxRecordCount = 5000;
-
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
             FirmaEnvironmentType.Local,
@@ -58,7 +50,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 return;
             }
 
-            var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null&resultRecordCount={MaxRecordCount}";
+            var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null";
             queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
             var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
             try
@@ -69,7 +61,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var countResponse = arcUtility.ProcessRepsonse<LoaProjectApiCountResponse>(response);
                 var totalRecordCount = countResponse.count;
 
-                //loop until we get all the records, the max returned is 5000
+                // loop until we get all the records, the max returned is 5000
                 var featuresFromApi = new List<LoaProjectFeatureDto>();
                 var resultOffset = 0;
                 LoaProjectGeometriesDto processedResponse;
@@ -85,7 +77,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     resultOffset += processedResponse.features.Count;
                 } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
 
-                Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for code error, is {nameof(MaxRecordCount)} set correctly?");
+                Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
 
                 var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
                 var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
