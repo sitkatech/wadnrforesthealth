@@ -171,6 +171,7 @@ namespace ProjectFirma.Web.Controllers
             bool userHasProjectUpdatePermissions = new ProjectUpdateCreateEditSubmitFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userCanEditProposal = new ProjectCreateFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userHasPerformanceMeasureActualManagePermissions = new PerformanceMeasureActualFromProjectManageFeature().HasPermission(CurrentPerson, project).HasPermission;
+            bool userCanViewProjectDocuments = (!CurrentPerson.IsAnonymousOrUnassigned);
 
             var editSimpleProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project));
             var editDetailedProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationDetailed(project));
@@ -285,7 +286,7 @@ namespace ProjectFirma.Web.Controllers
                 , editProjectRegionUrl
                 , editProjectCountyUrl
                 ,editProjectPriorityLandscapeUrl,
-                projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
+                projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl, userCanViewProjectDocuments);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

@@ -50,6 +50,7 @@ namespace ProjectFirma.Web.Views.Project
         public bool UserHasProjectAdminPermissions { get; }
         public bool UserHasEditProjectPermissions { get; }
         public bool UserHasPerformanceMeasureActualManagePermissions { get; }
+        public bool UserCanViewProjectDocuments { get; }
 
         public string EditProjectUrl { get; }
         public string EditProjectAttributesUrl { get; }
@@ -138,6 +139,7 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectInteractionEventsGridDataUrl { get;}
 
         public List<ProjectAgreementByGrantAllocation> ProjectAgreementByGrantAllocations { get; }
+        
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
@@ -169,7 +171,7 @@ namespace ProjectFirma.Web.Views.Project
             , string editProjectRegionUrl
             , string editProjectCountyUrl
             , string editProjectPriorityLandscapeUrl,
-            InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl)
+            InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl, bool userCanViewProjectDocuments)
             : base(currentPerson, project)
         {
             PageTitle = project.DisplayName.ToEllipsifiedStringClean(110);
@@ -195,6 +197,7 @@ namespace ProjectFirma.Web.Views.Project
             UserHasProjectAdminPermissions = userHasProjectAdminPermissions;
             UserHasEditProjectPermissions = userHasEditProjectPermissions;
             UserHasPerformanceMeasureActualManagePermissions = userHasPerformanceMeasureActualManagePermissions;
+            UserCanViewProjectDocuments = userCanViewProjectDocuments;
 
             var projectAlerts = new List<string>();
             var proposedProjectListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Proposed());
