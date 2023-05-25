@@ -1287,6 +1287,7 @@
           <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
           <ScalarProperty Name="PriorityLandscapeAboveMapText" ColumnName="PriorityLandscapeAboveMapText" />
           <ScalarProperty Name="PriorityLandscapeCategoryID" ColumnName="PriorityLandscapeCategoryID" />
+          <ScalarProperty Name="PriorityLandscapeExternalResources" ColumnName="PriorityLandscapeExternalResources" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

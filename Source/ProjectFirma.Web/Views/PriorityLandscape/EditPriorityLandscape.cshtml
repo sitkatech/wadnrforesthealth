@@ -52,6 +52,16 @@
                 @Html.ValidationMessageFor(m => m.PriorityLandscapeDescription)
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-xs-2 control-label">
+                @Html.LabelWithSugarFor(m => m.PriorityLandscapeExternalResources)
+            </div>
+            <div class="col-xs-10">
+                @Html.CkEditorFor(x => x.PriorityLandscapeExternalResources, CkEditorExtension.CkEditorToolbar.Minimal, true, false, 200)
+                @Html.ValidationMessageFor(m => m.PriorityLandscapeExternalResources)
+            </div>
+        </div>
     </div>
 
     @Html.HiddenFor(m => m.PriorityLandscapeID)

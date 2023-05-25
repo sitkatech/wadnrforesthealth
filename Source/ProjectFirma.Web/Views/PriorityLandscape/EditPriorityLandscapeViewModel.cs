@@ -43,6 +43,9 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         [DisplayName("Description")]
         public HtmlString PriorityLandscapeDescription { get; set; }
 
+        [DisplayName("External Resources")]
+        public HtmlString PriorityLandscapeExternalResources { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -55,13 +58,14 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
         {
             PriorityLandscapeName = priorityLandscape.PriorityLandscapeName;
             PriorityLandscapeDescription = priorityLandscape.PriorityLandscapeDescriptionHtmlString;
+            PriorityLandscapeExternalResources = priorityLandscape.PriorityLandscapeExternalResourcesHtmlString;
             PriorityLandscapeID = priorityLandscape.PriorityLandscapeID;
         }
 
         public void UpdateModel(Models.PriorityLandscape priorityLandscape)
         {
             priorityLandscape.PriorityLandscapeDescriptionHtmlString = PriorityLandscapeDescription;
-
+            priorityLandscape.PriorityLandscapeExternalResourcesHtmlString = PriorityLandscapeExternalResources;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
