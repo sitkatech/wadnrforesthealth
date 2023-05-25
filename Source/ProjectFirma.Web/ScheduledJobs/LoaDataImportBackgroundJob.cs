@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null";
-            queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner";
+            queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner,email";
             var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
             try
             {
@@ -196,6 +196,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             public string GlobalID { get; set; }
             public string Shape__Area { get; set; }
             public string Shape__Length { get; set; }
+            public string email { get; set; }
         }
 
         private class GeometryDto
