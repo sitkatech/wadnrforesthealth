@@ -468,14 +468,14 @@ namespace ProjectFirma.Web.Controllers
 
         public List<Project> GetListOfActiveProjectsVisibleToUser(Person currentPerson)
         {
-            var viewProjectFeature = new ProjectViewFeature();
             var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
                 .Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests)
                 .Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages)
+                .Include(x => x.ProjectCounties)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
-                .Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsVisibleToUser(currentPerson);
-           
-            //var allProjectsVisibleToUser = allActiveProjectsWithIncludes.Where(p => viewProjectFeature.HasPermission(currentPerson, p).HasPermission).ToList();
+                .Include(x => x.ProjectOrganizations).ToList()
+                .GetActiveProjectsVisibleToUser(currentPerson);
+            
             return allActiveProjectsWithIncludes;
         }
 
