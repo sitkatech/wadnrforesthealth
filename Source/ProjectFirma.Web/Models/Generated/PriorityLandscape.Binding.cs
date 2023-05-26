@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation, string priorityLandscapeDescription, int? planYear, string priorityLandscapeAboveMapText, int? priorityLandscapeCategoryID) : this()
+        public PriorityLandscape(int priorityLandscapeID, string priorityLandscapeName, DbGeometry priorityLandscapeLocation, string priorityLandscapeDescription, int? planYear, string priorityLandscapeAboveMapText, int? priorityLandscapeCategoryID, string priorityLandscapeExternalResources) : this()
         {
             this.PriorityLandscapeID = priorityLandscapeID;
             this.PriorityLandscapeName = priorityLandscapeName;
@@ -47,6 +47,7 @@ namespace ProjectFirma.Web.Models
             this.PlanYear = planYear;
             this.PriorityLandscapeAboveMapText = priorityLandscapeAboveMapText;
             this.PriorityLandscapeCategoryID = priorityLandscapeCategoryID;
+            this.PriorityLandscapeExternalResources = priorityLandscapeExternalResources;
         }
 
         /// <summary>
@@ -210,6 +211,13 @@ namespace ProjectFirma.Web.Models
         public int? PlanYear { get; set; }
         public string PriorityLandscapeAboveMapText { get; set; }
         public int? PriorityLandscapeCategoryID { get; set; }
+        public string PriorityLandscapeExternalResources { get; set; }
+        [NotMapped]
+        public HtmlString PriorityLandscapeExternalResourcesHtmlString
+        { 
+            get { return PriorityLandscapeExternalResources == null ? null : new HtmlString(PriorityLandscapeExternalResources); }
+            set { PriorityLandscapeExternalResources = value?.ToString(); }
+        }
         [NotMapped]
         public int PrimaryKey { get { return PriorityLandscapeID; } set { PriorityLandscapeID = value; } }
 
