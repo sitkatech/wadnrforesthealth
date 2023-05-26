@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.PriorityLandscape
             IndexUrl = SitkaRoute<PriorityLandscapeController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "priorityLandscapeProjectListGrid";
-            BasicProjectInfoGridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false, new Dictionary<int, vTotalTreatedAcresByProject>(), new Dictionary<int, List<Models.Program>>())
+            BasicProjectInfoGridSpec = new ProjectIndexGridSpec(CurrentPerson, false, false, new Dictionary<int, vTotalTreatedAcresByProject>())
             {
                 ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()}",
                 ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()}",
