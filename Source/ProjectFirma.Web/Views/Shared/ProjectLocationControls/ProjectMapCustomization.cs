@@ -111,8 +111,19 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public static List<Models.Project> ProjectsForMap(Person currentPerson)
         {
-            return new List<Models.Project>(HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson)).Where(x => x.ProjectStage.ShouldShowOnMap())
-                .OrderBy(x => x.ProjectStage.ProjectStageID).ToList();
+            var projects = HttpRequestStorage.DatabaseEntities.Projects
+                .Include(x => x.ProjectOrganizations)
+                .Include(x => x.ProjectPrograms )
+                .Include(x => x.ProjectClassifications)
+                .Include(x => x.ProjectType)
+                .Include(x => x.ProjectGrantAllocationRequests)
+                //.Include(x => x.ProjectStage)
+                .ToList();
+
+
+            var projectsVisibleToUser = projects.GetActiveProjectsAndProposalsVisibleToUser(currentPerson).ToList();
+
+            return projectsVisibleToUser.Where(x => x.ProjectStage.ShouldShowOnMap()).OrderBy(x => x.ProjectStage.ProjectStageID).ToList();
         }
     }
 }
