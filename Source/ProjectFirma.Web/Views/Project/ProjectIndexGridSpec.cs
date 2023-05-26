@@ -40,8 +40,7 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectIndexGridSpec(Person currentPerson
             , bool allowTaggingFunctionality
             , bool allowDeleteFunctionality
-            , Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary
-            , Dictionary<int, List<Models.Program>> programsByProject)
+            , Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
@@ -68,7 +67,7 @@ namespace ProjectFirma.Web.Views.Project
 
             Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, DhtmlxGridColumnFormatType.Decimal );
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => x.ProjectPrograms.ToProgramListDisplay(false), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add($"Associated {Models.FieldDefinition.County.ToGridHeaderString()}", x => x.ProjectCounties.FirstOrDefault()?.County?.CountyName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
@@ -83,12 +82,7 @@ namespace ProjectFirma.Web.Views.Project
 
             return new HtmlString(string.Empty);
         }
-
-        private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
-        {
-            return project.ProjectPrograms.ToProgramListDisplay(false);
-        }
-
+        
 
         private decimal TotalTreatedAcres(Models.Project project,
             Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)

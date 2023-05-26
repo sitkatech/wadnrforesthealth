@@ -460,9 +460,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var treatmentTotals = HttpRequestStorage.DatabaseEntities.vTotalTreatedAcresByProjects.ToList();
             var treatmentDictionary = treatmentTotals.ToDictionary(x => x.ProjectID, y => y);
-            var programProjectDictionary = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Include(x => x.Program).ToList()
-                .GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, x => x.ToList().Select(y => y.Program).ToList());
-            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true, treatmentDictionary, programProjectDictionary);
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson, true, true, treatmentDictionary);
             var allProjectsVisibleToUser = GetListOfActiveProjectsVisibleToUser(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(allProjectsVisibleToUser, gridSpec);
             return gridJsonNetJObjectResult;
@@ -470,14 +468,14 @@ namespace ProjectFirma.Web.Controllers
 
         public List<Project> GetListOfActiveProjectsVisibleToUser(Person currentPerson)
         {
-            var viewProjectFeature = new ProjectViewFeature();
             var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
                 .Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests)
                 .Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages)
+                .Include(x => x.ProjectCounties)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
-                .Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsVisibleToUser(currentPerson);
-           
-            //var allProjectsVisibleToUser = allActiveProjectsWithIncludes.Where(p => viewProjectFeature.HasPermission(currentPerson, p).HasPermission).ToList();
+                .Include(x => x.ProjectOrganizations).ToList()
+                .GetActiveProjectsVisibleToUser(currentPerson);
+            
             return allActiveProjectsWithIncludes;
         }
 

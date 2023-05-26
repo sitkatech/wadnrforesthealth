@@ -60,6 +60,9 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Private Landowner Column")]
         public int? PrivateLandownerMetadataAttributeID { get; set; }
 
+        [DisplayName("Primary Contact Column")]
+        public int? PrimaryContactMetadataAttributeID { get; set; }
+
         [DisplayName("Treatment Detailed Activity Type Column")]
         public int? TreatmentDetailedActivityTypeMetadataAttributeID { get; set; }
 
@@ -121,6 +124,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             ProjectStageMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectStage);
             FootprintAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.FootprintAcres);
             PrivateLandownerMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.Landowner);
+            PrimaryContactMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectPrimaryContact);
             TreatedAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatedAcres);
             TreatmentDetailedActivityTypeMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.TreatmentDetailedActivityType);
             PruningAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres);

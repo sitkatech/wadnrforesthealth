@@ -154,6 +154,7 @@ namespace ProjectFirma.Web.Controllers
             var completionDateDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.CompletionDateMetadataAttributeID);
             var projectNameDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectNameMetadataAttributeID);
             var privateLandOwnerDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.PrivateLandownerMetadataAttributeID);
+            var primaryContactDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.PrimaryContactMetadataAttributeID);
             var startDateDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.StartDateMetadataAttributeID);
             var projectStageDictionary = GenerateMetadataValueDictionary(gisFeatureIDs, viewModel.ProjectStageMetadataAttributeID);
 
@@ -201,7 +202,7 @@ namespace ProjectFirma.Web.Controllers
 
             MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID);
 
-            MakeProjectPeopleAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, privateLandOwnerDictionary, existingPersons, newPersonList, newProjectPersonList);
+            MakeProjectPeopleAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, privateLandOwnerDictionary, primaryContactDictionary, existingPersons, newPersonList, newProjectPersonList);
 
             MakeProjectOrganizationsAndSave(gisUploadAttempt, distinctProjectIdentifiers);
 
@@ -305,8 +306,11 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
         }
 
-        private static void MakeProjectPeopleAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers,
-            GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandOwnerDictionary,
+        private static void MakeProjectPeopleAndSave(GisUploadAttempt gisUploadAttempt,
+            List<string> distinctProjectIdentifiers,
+            GisMetadataAttribute projectIdentifierMetadataAttribute,
+            Dictionary<int, List<GisFeatureMetadataAttribute>> privateLandOwnerDictionary,
+            Dictionary<int, List<GisFeatureMetadataAttribute>> primaryContactDictionary,
             List<Person> existingPersons, List<Person> newPersonList, List<ProjectPerson> newProjectPersonList)
         {
             var projectProgramList = HttpRequestStorage.DatabaseEntities.ProjectPrograms
@@ -328,11 +332,18 @@ namespace ProjectFirma.Web.Controllers
                         projectIdentifierMetadataAttribute.GisFeatureMetadataAttributes.Where(x =>
                             string.Equals(x.GisFeatureMetadataAttributeValue, distinctProjectIdentifier,
                                 StringComparison.InvariantCultureIgnoreCase)).Select(x => x.GisFeatureID).ToList();
+
                     var privateLandownerAttributes = gisFeaturesIdListWithProjectIdentifier
                         .Where(privateLandOwnerDictionary.ContainsKey)
                         .SelectMany(x => privateLandOwnerDictionary[x]).ToList();
                     var landOwners = privateLandownerAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
-                    GenerateProjectPersonList(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
+                    GenerateProjectPersonListForPrivateLandowners(existingPersons, newPersonList, newProjectPersonList, landOwners, project);
+
+                    var primaryContactAttributes = gisFeaturesIdListWithProjectIdentifier
+                        .Where(primaryContactDictionary.ContainsKey)
+                        .SelectMany(x => primaryContactDictionary[x]).ToList();
+                    var primaryContactEmails = primaryContactAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+                    GenerateProjectPersonListForPrimaryContact(existingPersons, newProjectPersonList, primaryContactEmails, project);
                 }
             }
 
@@ -885,7 +896,7 @@ namespace ProjectFirma.Web.Controllers
             return projectName;
         }
 
-        private static void GenerateProjectPersonList(List<Person> existingPersonList, List<Person> newPersonList, List<ProjectPerson> newProjectPersonList,
+        private static void GenerateProjectPersonListForPrivateLandowners(List<Person> existingPersonList, List<Person> newPersonList, List<ProjectPerson> newProjectPersonList,
             List<string> landOwners, Project project)
         {
             if (landOwners.Any())
@@ -945,6 +956,39 @@ namespace ProjectFirma.Web.Controllers
                             ProjectPersonRelationshipType.PrivateLandowner);
                         newProjectPersonList.Add(projectPerson);
                     }
+                }
+            }
+        }
+
+        private static void GenerateProjectPersonListForPrimaryContact(List<Person> existingPersonList, List<ProjectPerson> newProjectPersonList,
+            List<string> primaryContactEmails, Project project)
+        {
+            if (!primaryContactEmails.Any())
+            {
+                return;
+            }
+            
+            project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType == ProjectPersonRelationshipType.PrimaryContact).ToList().ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            foreach (var contactEmail in primaryContactEmails)
+            {
+                var email = contactEmail.Trim();
+
+                var existingPersons = existingPersonList.Where(x => string.Equals(x.Email, email, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+                if (existingPersons.Any())
+                {
+                    Person existingPerson;
+                    if (existingPersons.Count() == 1)
+                    {
+                        existingPerson = existingPersons.Single();
+                    }
+                    else
+                    {
+                        existingPerson = existingPersons.OrderBy(x => x.CreateDate).First();
+                    }
+
+                    var projectPerson = new ProjectPerson(project, existingPerson, ProjectPersonRelationshipType.PrimaryContact);
+                    newProjectPersonList.Add(projectPerson);
                 }
             }
         }
