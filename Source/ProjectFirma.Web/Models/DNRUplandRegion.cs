@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.GeoJson;
@@ -37,7 +38,15 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectRegions.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            var projects = HttpRequestStorage.DatabaseEntities.Projects
+                .Where(x => x.ProjectRegions.Any(y => y.DNRUplandRegionID == this.DNRUplandRegionID))
+                .Include(x => x.ProjectOrganizations)
+                .Include(x => x.ProjectTags)
+                .Include(x => x.ProjectGrantAllocationRequests)
+                .Include(x => x.ProjectType)
+                .ToList();
+
+            return projects.GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
         public string AuditDescriptionString => DNRUplandRegionName;
