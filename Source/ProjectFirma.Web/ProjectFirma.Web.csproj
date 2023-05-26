@@ -1312,6 +1312,7 @@
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
     <Compile Include="Views\ProjectInvoice\ProjectInvoiceDetail.cs" />
     <Compile Include="Views\ProjectInvoice\ProjectInvoiceDetailViewData.cs" />
+    <Compile Include="Views\Project\ProjectThemeProjectListGridSpec.cs" />
     <Compile Include="Views\Reports\Edit.cs" />
     <Compile Include="Views\Reports\EditViewData.cs" />
     <Compile Include="Views\Reports\EditViewModel.cs" />
