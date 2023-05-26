@@ -469,8 +469,7 @@ namespace ProjectFirma.Web.Controllers
         public List<Project> GetListOfActiveProjectsVisibleToUser(Person currentPerson)
         {
             var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
-                .Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests)
-                .Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages)
+                .Include(x => x.PerformanceMeasureActuals)
                 .Include(x => x.ProjectPrograms)
                 .Include(x => x.ProjectCounties)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
