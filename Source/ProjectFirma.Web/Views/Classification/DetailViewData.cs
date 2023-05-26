@@ -34,9 +34,9 @@ namespace ProjectFirma.Web.Views.Classification
         public readonly string IndexUrl;
         public readonly bool UserHasClassificationManagePermissions;
 
-        public readonly BasicProjectInfoGridSpec BasicProjectInfoGridSpec;
-        public readonly string BasicProjectInfoGridName;
-        public readonly string BasicProjectInfoGridDataUrl;
+        public readonly ProjectThemeProjectListGridSpec ProjectThemeProjectListGridSpec;
+        public readonly string ProjectThemeProjectListGridName;
+        public readonly string ProjectThemeProjectListGridDataUrl;
 
         public readonly string ClassificationDisplayName;
         public readonly string ClassificationDisplayNamePluralized;
@@ -53,15 +53,15 @@ namespace ProjectFirma.Web.Views.Classification
             ClassificationDisplayNamePluralized = classification.ClassificationSystem.ClassificationSystemNamePluralized;
             ClassificationDisplayName = classification.ClassificationSystem.ClassificationSystemName;
 
-            BasicProjectInfoGridName = "geospatialAreaProjectListGrid";
-            BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false)
+            ProjectThemeProjectListGridName = "geospatialAreaProjectListGrid";
+            ProjectThemeProjectListGridSpec = new ProjectThemeProjectListGridSpec(Classification)
             {
                 ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} associated with the {ClassificationDisplayName} {classification.DisplayName}",
                 ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with the {ClassificationDisplayName} {classification.DisplayName}",
                 SaveFiltersInCookie = true
             };
 
-            BasicProjectInfoGridDataUrl = SitkaRoute<ClassificationController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(classification));
+            ProjectThemeProjectListGridDataUrl = SitkaRoute<ClassificationController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(classification));
         }
     }
 }
