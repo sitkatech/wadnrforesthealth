@@ -311,36 +311,32 @@
                         </div>
                     </div>
                 }
-                
-            
-
 
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.Project.GetFieldDefinitionLabel()
                     </div>
                     <div class="panel-body">
-                        <p>
-                            @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Project.GetFieldDefinitionLabel() by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
-                        </p>
-                        <table class="table">
-                            <tr>
-                                <th>@FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()</th>
-                                <th>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</th>
-                            </tr>
-                            @foreach (var currentProjectAgreement in ViewDataTyped.ProjectAgreementByGrantAllocations)
-                            {
+                        @if (ViewDataTyped.ProjectAgreements.Any())
+                        {
+                            <table class="table">
                                 <tr>
-                                    <td>
-                                        @currentProjectAgreement.Agreement.GetAgreementTitleAsUrl()
-                                    </td>
-                                    <td>
-                                        @currentProjectAgreement.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl
-                                    </td>
+                                    <th>@FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()</th>
                                 </tr>
-                            }
-                        </table>
-
+                                @foreach (var currentProjectAgreement in ViewDataTyped.ProjectAgreements)
+                                {
+                                    <tr>
+                                        <td>
+                                            @currentProjectAgreement.Agreement.GetAgreementTitleAsUrl()
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <p class="systemText">No @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated with this project.</p>
+                        }
                     </div>
                 </div>
 

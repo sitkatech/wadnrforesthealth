@@ -4,6 +4,7 @@
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Agreement" />
     <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.AgreementGrantAllocation" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.AgreementPerson" />
+    <EntitySet Name="AgreementProject" EntityType="ProjectFirma.Web.Models.AgreementProject" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.AgreementStatus" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.AgreementType" />
     <EntitySet Name="ArcOnlineFinanceApiRawJsonImport" EntityType="ProjectFirma.Web.Models.ArcOnlineFinanceApiRawJsonImport" />
@@ -225,6 +226,10 @@
       <End Role="Agreement" EntitySet="Agreement" />
       <End Role="AgreementPeople" EntitySet="AgreementPerson" />
     </AssociationSet>
+    <AssociationSet Name="FK_AgreementProject_Agreement_AgreementID" Association="ProjectFirma.Web.Models.FK_AgreementProject_Agreement_AgreementID">
+      <End Role="Agreement" EntitySet="Agreement" />
+      <End Role="AgreementProjects" EntitySet="AgreementProject" />
+    </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
@@ -232,6 +237,10 @@
     <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AgreementPeople" EntitySet="AgreementPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementProject_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_AgreementProject_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="AgreementProjects" EntitySet="AgreementProject" />
     </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1461,6 +1470,7 @@
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Agreements" ToRole="Organization" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementPeople" />
+    <NavigationProperty Name="AgreementProjects" Relationship="ProjectFirma.Web.Models.FK_AgreementProject_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementProjects" />
   </EntityType>
   <EntityType Name="AgreementGrantAllocation">
     <Key>
@@ -1482,6 +1492,16 @@
     <Property Name="AgreementPersonRoleID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Agreement" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID" FromRole="AgreementPeople" ToRole="Agreement" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="AgreementPeople" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="AgreementProject">
+    <Key>
+      <PropertyRef Name="AgreementProjectID" />
+    </Key>
+    <Property Name="AgreementProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Agreement" Relationship="ProjectFirma.Web.Models.FK_AgreementProject_Agreement_AgreementID" FromRole="AgreementProjects" ToRole="Agreement" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_AgreementProject_Project_ProjectID" FromRole="AgreementProjects" ToRole="Project" />
   </EntityType>
   <EntityType Name="AgreementStatus">
     <Key>
@@ -3128,6 +3148,7 @@
     <Property Name="ProjectFundingSourceNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PercentageMatch" Type="Int32" />
+    <NavigationProperty Name="AgreementProjects" Relationship="ProjectFirma.Web.Models.FK_AgreementProject_Project_ProjectID" FromRole="Project" ToRole="AgreementProjects" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
@@ -4442,6 +4463,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_AgreementProject_Agreement_AgreementID">
+    <End Role="Agreement" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="1" />
+    <End Role="AgreementProjects" Type="ProjectFirma.Web.Models.AgreementProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agreement">
+        <PropertyRef Name="AgreementID" />
+      </Principal>
+      <Dependent Role="AgreementProjects">
+        <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
     <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.AgreementGrantAllocation" Multiplicity="*" />
@@ -4463,6 +4496,18 @@
       </Principal>
       <Dependent Role="AgreementPeople">
         <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementProject_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="AgreementProjects" Type="ProjectFirma.Web.Models.AgreementProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="AgreementProjects">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

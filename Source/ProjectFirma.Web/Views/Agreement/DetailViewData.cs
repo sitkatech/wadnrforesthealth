@@ -47,6 +47,8 @@ namespace ProjectFirma.Web.Views.Agreement
         public string AgreementsListUrl { get; set; }
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
         public List<ProjectAgreementByGrantAllocation> AgreementProjectsByGrantAllocations { get; }
+        public List<AgreementProject> AgreementProjects { get; }
+        public string EditAgreementProjectsUrl { get; }
 
 
 
@@ -84,6 +86,9 @@ namespace ProjectFirma.Web.Views.Agreement
             List<AgreementGrantAllocation> agreementGrantAllocationsList = agreement.AgreementGrantAllocations.ToList();
             CurrentAgreementGrantAllocationsInSortedOrder = AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocationsList);
             AgreementProjectsByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(agreementGrantAllocationsList);
+
+            AgreementProjects = agreement.AgreementProjects.ToList();
+            EditAgreementProjectsUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.EditAgreementProjects(agreement.AgreementID));
         }
     }
 }

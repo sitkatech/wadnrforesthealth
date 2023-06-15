@@ -4,6 +4,7 @@
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementProject" EntityType="ProjectFirma.Web.Models.Store.AgreementProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ArcOnlineFinanceApiRawJsonImport" EntityType="ProjectFirma.Web.Models.Store.ArcOnlineFinanceApiRawJsonImport" store:Type="Tables" Schema="dbo" />
@@ -380,6 +381,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AgreementPeople" EntitySet="AgreementPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementProject_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProject_Agreement_AgreementID">
+      <End Role="Agreement" EntitySet="Agreement" />
+      <End Role="AgreementProjects" EntitySet="AgreementProject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementProject_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProject_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="AgreementProjects" EntitySet="AgreementProject" />
     </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1575,6 +1584,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="AgreementPersonRoleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AgreementProject">
+    <Key>
+      <PropertyRef Name="AgreementProjectID" />
+    </Key>
+    <Property Name="AgreementProjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementID" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementStatus">
     <Key>
@@ -4049,6 +4066,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="AgreementPeople">
         <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementProject_Agreement_AgreementID">
+    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
+    <End Role="AgreementProjects" Type="ProjectFirma.Web.Models.Store.AgreementProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agreement">
+        <PropertyRef Name="AgreementID" />
+      </Principal>
+      <Dependent Role="AgreementProjects">
+        <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementProject_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="AgreementProjects" Type="ProjectFirma.Web.Models.Store.AgreementProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="AgreementProjects">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -42,6 +42,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AgreementProject">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementProject">
+        <MappingFragment StoreEntitySet="AgreementProject">
+          <ScalarProperty Name="AgreementProjectID" ColumnName="AgreementProjectID" />
+          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="AgreementStatus">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementStatus">
         <MappingFragment StoreEntitySet="AgreementStatus">

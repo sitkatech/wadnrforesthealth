@@ -139,7 +139,8 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectInteractionEventsGridDataUrl { get;}
 
         public List<ProjectAgreementByGrantAllocation> ProjectAgreementByGrantAllocations { get; }
-        
+        public List<AgreementProject> ProjectAgreements { get; }
+
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
@@ -410,6 +411,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
             ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
+            ProjectAgreements = project.AgreementProjects.ToList();
         }
     }
 }
