@@ -298,25 +298,21 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(agreement);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            var finalMessage = MakeGrantAllocationSuccessMessage(countAdded, countDeleted, agreement);
+            var finalMessage = MakeAddDeleteSuccessMessage(countAdded, countDeleted, agreement, FieldDefinition.GrantAllocation.FieldDefinitionDisplayName, FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized());
             SetMessageForDisplay(finalMessage);
             return new ModalDialogFormJsonResult();
         }
 
-        private static string MakeGrantAllocationSuccessMessage(int countAdded, int countDeleted, Agreement agreement)
+        private static string MakeAddDeleteSuccessMessage(int countAdded, int countDeleted, Agreement agreement, string singularTypeName, string pluralTypeName)
         {
-            var addedGrantAllocationString = countAdded == 1
-                ? FieldDefinition.GrantAllocation.FieldDefinitionDisplayName
-                : FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized();
-            var deletedGrantAllocationString = countDeleted == 1
-                ? FieldDefinition.GrantAllocation.FieldDefinitionDisplayName
-                : FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized();
+            var addedTypeString = countAdded == 1 ? singularTypeName : pluralTypeName;
+            var deletedTypeString = countDeleted == 1 ? singularTypeName : pluralTypeName;
             var addedMessage = countAdded == 0
                 ? string.Empty
-                : $"{countAdded} {addedGrantAllocationString} successfully added to Agreement \"{agreement.AgreementTitle}\".";
+                : $"{countAdded} {addedTypeString} successfully added to Agreement \"{agreement.AgreementTitle}\".";
             var deletedMessage = countDeleted == 0
                 ? string.Empty
-                : $"{countDeleted} {deletedGrantAllocationString} successfully removed from Agreement \"{agreement.AgreementTitle}\".";
+                : $"{countDeleted} {deletedTypeString} successfully removed from Agreement \"{agreement.AgreementTitle}\".";
 
             var finalMessage = $"{addedMessage} {System.Environment.NewLine} {deletedMessage}";
             return finalMessage;
@@ -370,5 +366,46 @@ namespace ProjectFirma.Web.Controllers
 
         #endregion
 
+        [HttpGet]
+        [AgreementEditAsAdminFeature]
+        public PartialViewResult EditAgreementProjects(AgreementPrimaryKey agreementPrimaryKey)
+        {
+            var agreement = agreementPrimaryKey.EntityObject;
+            Check.EnsureNotNull(agreement);
+
+            var viewModel = new EditAgreementProjectsViewModel(agreement);
+            return ViewEditAgreementProjects(viewModel);
+        }
+
+        [HttpPost]
+        [AgreementEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditAgreementProjects(AgreementPrimaryKey agreementPrimaryKey, EditAgreementProjectsViewModel viewModel)
+        {
+            var agreement = agreementPrimaryKey.EntityObject;
+            Check.EnsureNotNull(agreement);
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEditAgreementProjects(viewModel);
+            }
+            var projectsCurrentlyOnAgreement = agreement.AgreementProjects.Select(x => x.ProjectID).ToList();
+            var projectsFromPost = viewModel.ProjectJsons.Select(x => x.ProjectID).ToList();
+            var countAdded = projectsFromPost.Except(projectsCurrentlyOnAgreement).Count();
+            var countDeleted = projectsCurrentlyOnAgreement.Except(projectsFromPost).Count();
+
+            viewModel.UpdateModel(agreement);
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            var finalMessage = MakeAddDeleteSuccessMessage(countAdded, countDeleted, agreement, FieldDefinition.Project.GetFieldDefinitionLabel(), FieldDefinition.Project.GetFieldDefinitionLabelPluralized());
+            SetMessageForDisplay(finalMessage);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditAgreementProjects(EditAgreementProjectsViewModel viewModel)
+        {
+            var viewData = new EditAgreementProjectsViewData();
+            return RazorPartialView<EditAgreementProjects, EditAgreementProjectsViewData, EditAgreementProjectsViewModel>(viewData, viewModel);
+        }
     }
 }

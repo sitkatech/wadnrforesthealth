@@ -224,11 +224,21 @@
                 </div>
                 <div class="panel-body">
                     @*Display grant allocations in descending order according to grant number year*@
-                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
-                    {
-                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</a>
-                        <br />
-                    }
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()
+                            </th>
+                        </tr>
+                        @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</a>
+                                </td>
+                            </tr>
+                        }
+                    </table>
                 </div>
             </div>
         </div>
@@ -238,30 +248,25 @@
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementProjectsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.Project.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
                     @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    <p>
-                        @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Agreement.GetFieldDefinitionLabel() by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
-                    </p>
                     <table class="table">
                         <tr>
-                            <th>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</th>
-                            <th>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</th>
+                            <th>
+                                @FieldDefinition.Project.GetFieldDefinitionLabelPluralized()
+                            </th>
                         </tr>
-                        @foreach (var currentAgreementGrantAllocation in ViewDataTyped.AgreementProjectsByGrantAllocations)
+                        @foreach (var projectAgreement in ViewDataTyped.AgreementProjects)
                         {
                             <tr>
                                 <td>
-                                    @currentAgreementGrantAllocation.Project.DisplayNameAsUrl
-                                </td>
-                                <td>
-                                    @currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl
+                                    @projectAgreement.Project.DisplayNameAsUrl
                                 </td>
                             </tr>
                         }
                     </table>
-                    
                 </div>
             </div>
         </div>

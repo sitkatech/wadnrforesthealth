@@ -31,6 +31,7 @@ namespace ProjectFirma.Web.Models
         }
         public virtual DbSet<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual DbSet<AgreementPerson> AgreementPeople { get; set; }
+        public virtual DbSet<AgreementProject> AgreementProjects { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
@@ -345,6 +346,9 @@ namespace ProjectFirma.Web.Models
                     var agreementPersonRole = AgreementPersonRole.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(agreementPersonRole, "AgreementPersonRole", primaryKey);
                     return agreementPersonRole;
+
+                case "AgreementProject":
+                    return AgreementProjects.GetAgreementProject(primaryKey);
 
                 case "Agreement":
                     return Agreements.GetAgreement(primaryKey);

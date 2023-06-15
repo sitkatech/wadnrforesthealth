@@ -27,6 +27,7 @@ namespace ProjectFirma.Web.Models
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.AgreementPeople = new HashSet<AgreementPerson>();
+            this.AgreementProjects = new HashSet<AgreementProject>();
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || AgreementPeople.Any();
+            return AgreementGrantAllocations.Any() || AgreementPeople.Any() || AgreementProjects.Any();
         }
 
         /// <summary>
@@ -114,13 +115,18 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(AgreementPerson).Name);
             }
+
+            if(AgreementProjects.Any())
+            {
+                dependentObjects.Add(typeof(AgreementProject).Name);
+            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name, typeof(AgreementProject).Name};
 
 
         /// <summary>
@@ -154,6 +160,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in AgreementProjects.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -178,6 +189,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
+        public virtual ICollection<AgreementProject> AgreementProjects { get; set; }
         public virtual AgreementType AgreementType { get; set; }
         public virtual DNRUplandRegion DNRUplandRegion { get; set; }
         public virtual Organization Organization { get; set; }
