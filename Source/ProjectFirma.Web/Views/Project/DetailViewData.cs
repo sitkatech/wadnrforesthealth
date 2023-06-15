@@ -138,7 +138,6 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectInteractionEventsGridName { get;  }
         public string ProjectInteractionEventsGridDataUrl { get;}
 
-        public List<ProjectAgreementByGrantAllocation> ProjectAgreementByGrantAllocations { get; }
         public List<AgreementProject> ProjectAgreements { get; }
 
 
@@ -410,7 +409,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridName = "projectInteractionEventsGrid";
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
-            ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
             ProjectAgreements = project.AgreementProjects.ToList();
         }
     }

@@ -1147,7 +1147,6 @@
     <Compile Include="Views\Agreement\EditAgreementViewModel.cs" />
     <Compile Include="Views\Agreement\EditAgreement.cs" />
     <Compile Include="Views\Agreement\EditAgreementViewData.cs" />
-    <Compile Include="Models\ProjectAgreementByGrantAllocation.cs" />
     <Compile Include="Views\Agreement\EditAgreementProjectsViewModel.cs" />
     <Compile Include="Views\County\Detail.cs" />
     <Compile Include="Views\County\DetailViewData.cs" />

@@ -6,6 +6,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class AgreementProject : IAuditableEntity
     {
-        public string AuditDescriptionString => this.Project != null ? this.Project.ProjectName : "NullProject";
+        public string AuditDescriptionString => $"AgreementProjectID:{AgreementProjectID} AgreementID:{AgreementID} ProjectID:{ProjectID}";
     }
 }
