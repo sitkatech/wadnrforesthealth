@@ -1028,6 +1028,14 @@ namespace ProjectFirma.Web.Controllers
                 .SelectMany(x => startDateDictionary[x]).ToList();
             var startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out _)).Select(DateTime.Parse).ToList();
+
+            // 6/20/23 TK - we need this extra check for the two paths for importing projects. The GDB upload gives us a dateTime, but the ArcOnline endpoints provide an epoch date. So if the initial dateTime parsing fails we will attempt the epoch method here.
+            if (!startAttributes.Any())
+            {
+                startAttributes = startDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
+                    .Where(x => long.TryParse(x, out _)).Select(y => DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(y)).DateTime).ToList();
+            }
+
             var startDate = startAttributes.Any() ? startAttributes.Min() : (DateTime?)null;
 
             if (existingProject != null)
@@ -1056,6 +1064,13 @@ namespace ProjectFirma.Web.Controllers
 
             var completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
                 .Where(x => DateTime.TryParse(x, out _)).Select(DateTime.Parse).ToList();
+
+            // 6/20/23 TK - we need this extra check for the two paths for importing projects. The GDB upload gives us a dateTime, but the ArcOnline endpoints provide an epoch date. So if the initial dateTime parsing fails we will attempt the epoch method here.
+            if (!completionAttributes.Any())
+            {
+                completionAttributes = completionDateAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct()
+                    .Where(x => long.TryParse(x, out _)).Select(y => DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(y)).DateTime).ToList();
+            }
 
             var completionDate = completionAttributes.Any() ? completionAttributes.Max() : (DateTime?)null;
 
