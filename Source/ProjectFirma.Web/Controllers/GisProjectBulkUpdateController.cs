@@ -787,15 +787,25 @@ namespace ProjectFirma.Web.Controllers
                 project.ProjectStageID = projectStage.ProjectStageID;
                 project.ProjectName = projectName;
                 project.LastUpdateGisUploadAttemptID = gisUploadAttemptID;
+                if (projectStage == ProjectStage.Proposed)
+                {
+                    project.ProjectApprovalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
+                }
             }
             else
             {
+                var approvalStatusID = ProjectApprovalStatus.Approved.ProjectApprovalStatusID;
+                if (projectStage == ProjectStage.Proposed)
+                {
+                    approvalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
+                }
+
                 project = new Project(otherProjectType.ProjectTypeID,
                     projectStage.ProjectStageID,
                     projectName,
                     false,
                     ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
-                    ProjectApprovalStatus.Approved.ProjectApprovalStatusID,
+                    approvalStatusID,
                     projectNumber
                 );
                 project.CreateGisUploadAttemptID = gisUploadAttemptID;
@@ -1099,11 +1109,7 @@ namespace ProjectFirma.Web.Controllers
             if (gisUploadAttempt.GisUploadSourceOrganization.DataDeriveProjectStage)
             {
                 var projectStages = projectStageAttributes.Select(x => x.GisFeatureMetadataAttributeValue).Distinct().ToList();
-                var projectStageString =
-                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.HasValue &&
-                    gisUploadAttempt.GisUploadSourceOrganization.ImportIsFlattened.Value
-                        ? string.Empty
-                        : projectStages.SingleOrDefault();
+                var projectStageString = projectStages.FirstOrDefault();
 
 
                 var projectStageCrossWalks = gisCrossWalkDefaultList.Where(x =>
