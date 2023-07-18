@@ -979,28 +979,27 @@ namespace ProjectFirma.Web.Controllers
             }
             
             project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType == ProjectPersonRelationshipType.PrimaryContact).ToList().ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
-            foreach (var contactEmail in primaryContactEmails)
+            var contactEmail = primaryContactEmails.First();// 7/17/23 TK - There should only be one Primary Contact on a project.
+            
+            var email = contactEmail.Trim();
+
+            var existingPersons = existingPersonList.Where(x => string.Equals(x.Email, email, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (existingPersons.Any())
             {
-                var email = contactEmail.Trim();
-
-                var existingPersons = existingPersonList.Where(x => string.Equals(x.Email, email, StringComparison.InvariantCultureIgnoreCase)).ToList();
-
-                if (existingPersons.Any())
+                Person existingPerson;
+                if (existingPersons.Count() == 1)
                 {
-                    Person existingPerson;
-                    if (existingPersons.Count() == 1)
-                    {
-                        existingPerson = existingPersons.Single();
-                    }
-                    else
-                    {
-                        existingPerson = existingPersons.OrderBy(x => x.CreateDate).First();
-                    }
-
-                    var projectPerson = new ProjectPerson(project, existingPerson, ProjectPersonRelationshipType.PrimaryContact);
-                    newProjectPersonList.Add(projectPerson);
+                    existingPerson = existingPersons.Single();
                 }
+                else
+                {
+                    existingPerson = existingPersons.OrderBy(x => x.CreateDate).First();
+                }
+
+                var projectPerson = new ProjectPerson(project, existingPerson, ProjectPersonRelationshipType.PrimaryContact);
+                newProjectPersonList.Add(projectPerson);
             }
+            
         }
 
         private static string ExtractLastName(string landOwner)
