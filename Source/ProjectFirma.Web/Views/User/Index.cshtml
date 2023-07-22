@@ -24,6 +24,8 @@ Source code is available upon request via <support@sitkatech.com>.
 @using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
 @inherits ProjectFirma.Web.Views.User.Index
+
+
 @section JavascriptAndStylesContent
 {
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
@@ -35,7 +37,20 @@ Source code is available upon request via <support@sitkatech.com>.
     @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add Contact", BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus")), ViewDataTyped.AddContactUrl, "Add Contact", new List<string>{"btn", "btn-firma", "btn-sm"}, ViewDataTyped.UserCanAddContact)
 }
 
+
+<div>
+    Show :
+    @Html.DropDownList("ShowOnlyActiveOrBothActiveAndInactive", ViewDataTyped.ActiveOnlyOrAllUsersSelectListItems, new { id = @ViewDataTyped.UserGridDropdownFilterId, onchange = "changeGridUrl()", })
+</div>
+
 <div style="margin-top: 10px">
     @*User and Contacts grid*@
     @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
 </div>
+
+<script>
+    var changeGridUrl = function () {
+        
+        Sitka.@(ViewDataTyped.GridName).load(jQuery("#@ViewDataTyped.UserGridDropdownFilterId").val());
+    }
+</script>

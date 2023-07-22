@@ -45,16 +45,64 @@ namespace ProjectFirma.Web.Controllers
         [ContactCreateAndViewFeature]
         public ViewResult Index()
         {
-            var viewData = new IndexViewData(CurrentPerson);
+
+            List<SelectListItem> activeOnlyOrAllUserSelectListItems = new List<SelectListItem>()
+            {
+                new SelectListItem()
+                {
+                    Text = "All Active Users and Contacts",
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
+                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts))
+                },
+                new SelectListItem()
+                {
+                    Text = "All Active Users",
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
+                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers))
+                },
+                new SelectListItem()
+                {
+                    Text = "All Contacts",
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
+                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllContacts))
+                },
+                new SelectListItem()
+                {
+                    Text = "All Users and Contacts",
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
+                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllUsersAndContacts))
+                }
+            };
+
+            var viewData = new IndexViewData(CurrentPerson, activeOnlyOrAllUserSelectListItems);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
         [ContactCreateAndViewFeature]
-        public GridJsonNetJObjectResult<Person> IndexGridJsonData()
+        public GridJsonNetJObjectResult<Person> IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum usersStatusFilterType)
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var persons = HttpRequestStorage.DatabaseEntities.People.ToList().Where(x => new UserViewFeature().HasPermission(CurrentPerson, x).HasPermission).OrderBy(x => x.FullNameLastFirst).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Person>(persons, gridSpec);
+            var persons = HttpRequestStorage.DatabaseEntities.People.ToList().Where(x => new UserViewFeature().HasPermission(CurrentPerson, x).HasPermission);
+
+            switch (usersStatusFilterType)
+            {
+                case IndexGridSpec.UsersStatusFilterTypeEnum.AllContacts:
+                    persons = persons.Where(x => !x.IsFullUser());
+                    break;
+                case IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers:
+                    persons = persons.Where(x => x.IsFullUser() && x.IsActive);
+                    break;
+                case IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts:
+                    persons = persons.Where(x => x.IsActive);
+                    break;
+                case IndexGridSpec.UsersStatusFilterTypeEnum.AllUsersAndContacts:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("usersStatusFilterType", usersStatusFilterType,
+                        null);
+            }
+
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Person>(persons.OrderBy(x => x.FullNameLastFirst).ToList(), gridSpec);
             return gridJsonNetJObjectResult;
         }
 

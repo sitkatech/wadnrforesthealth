@@ -18,6 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -32,20 +35,28 @@ namespace ProjectFirma.Web.Views.User
         public string GridDataUrl { get; }
 
         public bool UserIsSitkaAdmin { get; }
+        public string AddContactUrl { get; set; }
+        public bool UserCanAddContact { get; set; }
 
-        public IndexViewData(Person currentPerson) : base(currentPerson)
+
+        public List<SelectListItem> ActiveOnlyOrAllUsersSelectListItems { get; }
+        public string UserGridDropdownFilterId { get; }
+
+        public IndexViewData(Person currentPerson, List<SelectListItem> activeOnlyOrAllUsersSelectListItems) : base(currentPerson)
         {
             PageTitle = "Users and Contacts";
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true};
+            GridSpec = new IndexGridSpec(currentPerson)
+                { ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true };
             GridName = "UserGrid";
-            GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
+            GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers));
 
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());
             UserCanAddContact = new ContactCreateAndViewFeature().HasPermissionByPerson(currentPerson);
+
+            ActiveOnlyOrAllUsersSelectListItems = activeOnlyOrAllUsersSelectListItems;
+            UserGridDropdownFilterId = "userGridDropdownFilterId";
         }
 
-        public string AddContactUrl { get; set; }
-        public bool UserCanAddContact { get; set; }
     }
 }
