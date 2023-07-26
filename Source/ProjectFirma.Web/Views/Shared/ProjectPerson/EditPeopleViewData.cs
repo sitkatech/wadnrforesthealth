@@ -25,6 +25,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.User;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectPerson
 {
@@ -44,7 +45,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
             }).Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();
             PrimaryContactProjectPersonRelationshipType = new ProjectPersonRelationshipTypeSimple(ProjectPersonRelationshipType.PrimaryContact);
             UserCanManageContacts = new ContactManageFeature().HasPermission(currentPerson);
-            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
         }
     }
 }

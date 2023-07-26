@@ -42,39 +42,46 @@ namespace ProjectFirma.Web.Controllers
 {
     public class UserController : FirmaBaseController
     {
+        // 7/25/23 TK - originally tried to pass the enum as a variable but that complained because the enum cannot be null and a plain /User/Index URL would throw an error. doing it this way allows the plain /User/Index URL to work
+        [HttpGet]
         [ContactCreateAndViewFeature]
-        public ViewResult Index()
+        public ViewResult Index(int? selectedUsersStatusFilterTypeEnum = (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts)
         {
 
+            return ViewIndex(selectedUsersStatusFilterTypeEnum ?? (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts);
+        }
+
+        private ViewResult ViewIndex(int selectedUsersStatusFilterTypeEnum)
+        {
             List<SelectListItem> activeOnlyOrAllUserSelectListItems = new List<SelectListItem>()
             {
                 new SelectListItem()
                 {
                     Text = "All Active Users and Contacts",
-                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
-                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts))
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts)),
+                    Selected = selectedUsersStatusFilterTypeEnum == (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts
                 },
                 new SelectListItem()
                 {
                     Text = "All Active Users",
-                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
-                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers))
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers)),
+                    Selected = selectedUsersStatusFilterTypeEnum == (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers
                 },
                 new SelectListItem()
                 {
                     Text = "All Contacts",
-                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
-                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllContacts))
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllContacts)),
+                    Selected = selectedUsersStatusFilterTypeEnum == (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllContacts
                 },
                 new SelectListItem()
                 {
                     Text = "All Users and Contacts",
-                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x =>
-                        x.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllUsersAndContacts))
+                    Value = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllUsersAndContacts)),
+                    Selected = selectedUsersStatusFilterTypeEnum == (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllUsersAndContacts
                 }
             };
 
-            var viewData = new IndexViewData(CurrentPerson, activeOnlyOrAllUserSelectListItems);
+            var viewData = new IndexViewData(CurrentPerson, activeOnlyOrAllUserSelectListItems, (IndexGridSpec.UsersStatusFilterTypeEnum)selectedUsersStatusFilterTypeEnum);
             return RazorView<Index, IndexViewData>(viewData);
         }
 

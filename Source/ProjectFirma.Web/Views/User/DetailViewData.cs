@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Views.User
             EntityName = "User";
             //TODO: This gets pulled up to root
             EditPersonOrganizationPrimaryContactUrl = SitkaRoute<PersonOrganizationController>.BuildUrlFromExpression(c => c.EditPersonOrganizationPrimaryContacts(personToView));
-            Index = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            Index = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
 
             UserHasPersonViewPermissions = new UserViewFeature().HasPermission(currentPerson, personToView).HasPermission;
             UserHasEditBasicsPermission = new UserEditBasicsFeature().HasPermission(currentPerson,personToView).HasPermission;

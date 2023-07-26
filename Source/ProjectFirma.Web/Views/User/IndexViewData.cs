@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Web.Mvc;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -38,17 +39,16 @@ namespace ProjectFirma.Web.Views.User
         public string AddContactUrl { get; set; }
         public bool UserCanAddContact { get; set; }
 
-
         public List<SelectListItem> ActiveOnlyOrAllUsersSelectListItems { get; }
         public string UserGridDropdownFilterId { get; }
 
-        public IndexViewData(Person currentPerson, List<SelectListItem> activeOnlyOrAllUsersSelectListItems) : base(currentPerson)
+        public IndexViewData(Person currentPerson, List<SelectListItem> activeOnlyOrAllUsersSelectListItems, IndexGridSpec.UsersStatusFilterTypeEnum selectedEnum) : base(currentPerson)
         {
             PageTitle = "Users and Contacts";
             GridSpec = new IndexGridSpec(currentPerson)
                 { ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true };
             GridName = "UserGrid";
-            GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsers));
+            GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData(selectedEnum));
 
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());
@@ -56,6 +56,7 @@ namespace ProjectFirma.Web.Views.User
 
             ActiveOnlyOrAllUsersSelectListItems = activeOnlyOrAllUsersSelectListItems;
             UserGridDropdownFilterId = "userGridDropdownFilterId";
+
         }
 
     }

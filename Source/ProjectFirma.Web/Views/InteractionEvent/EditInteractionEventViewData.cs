@@ -29,6 +29,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.User;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
@@ -75,7 +76,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();      
 
             UserCanManageContacts = new ContactManageFeature().HasPermission(currentPerson);
-            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
             var allContactSimples = allPeople.Select(x => new PersonSimple(x)).ToList();
 
             AngularViewData = new EditInteractionEventAngularViewData(interactionEventID, allContactSimples, allProjectSimples);

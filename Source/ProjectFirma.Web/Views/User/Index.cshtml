@@ -40,7 +40,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <div>
     Show :
-    @Html.DropDownList("ShowOnlyActiveOrBothActiveAndInactive", ViewDataTyped.ActiveOnlyOrAllUsersSelectListItems, new { id = @ViewDataTyped.UserGridDropdownFilterId, onchange = "changeGridUrl()", })
+    @Html.DropDownList("ShowOnlyActiveOrBothActiveAndInactive", ViewDataTyped.ActiveOnlyOrAllUsersSelectListItems, new { id = @ViewDataTyped.UserGridDropdownFilterId, onchange = "redirectToFilteredUrl()", })
 </div>
 
 <div style="margin-top: 10px">
@@ -49,8 +49,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </div>
 
 <script>
-    var changeGridUrl = function () {
-        
-        Sitka.@(ViewDataTyped.GridName).load(jQuery("#@ViewDataTyped.UserGridDropdownFilterId").val());
-    }
+    var redirectToFilteredUrl = function() {
+
+        window.location.href = jQuery("#@ViewDataTyped.UserGridDropdownFilterId").val();
+    };
 </script>

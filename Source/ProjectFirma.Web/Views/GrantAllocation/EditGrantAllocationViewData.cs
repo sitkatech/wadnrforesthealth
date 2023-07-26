@@ -27,6 +27,7 @@ using ProjectFirma.Web.Common;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.User;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
@@ -88,7 +89,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     y => y.FullNameFirstLastAndOrgShortName);
 
             EditGrantAllocationType = editGrantAllocationType;
-            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
         }
 
     }
