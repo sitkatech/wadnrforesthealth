@@ -43,6 +43,10 @@ delete from dbo.ProjectPerson
 where ProjectPersonRelationshipTypeID = 1
 and ProjectID = 19531 and PersonID != 6081
 
+delete from dbo.ProjectPerson
+where ProjectPersonRelationshipTypeID = 1
+and ProjectID = 22323 and PersonID != 6907
+
 
 
 CREATE UNIQUE INDEX [UNQ_ProjectPerson_ProjectPersonRelationshipTypeID]
