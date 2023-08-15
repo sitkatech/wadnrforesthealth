@@ -69,13 +69,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<int> GetRequiredBaseRoleIDs()
         {
-            var roleIDs = new List<int>()
-            {
-                Role.Normal.RoleID,
-                Role.ProjectSteward.RoleID,
-                Role.Admin.RoleID,
-                Role.SitkaAdmin.RoleID
-            };
+            var roleIDs = Role.All.Where(x => x.IsBaseRole).Select(x => x.RoleID).ToList();
             return roleIDs;
         }
     }
