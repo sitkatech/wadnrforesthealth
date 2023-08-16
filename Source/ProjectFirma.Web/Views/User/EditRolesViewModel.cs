@@ -36,8 +36,12 @@ namespace ProjectFirma.Web.Views.User
         public int PersonID { get; set; }
 
         [Required]
-        [DisplayName("Role")]
+        [DisplayName("Supplemental Roles")]
         public List<RoleSimple> RoleSimples { get; set; }
+
+        [Required]
+        [DisplayName("Base Role")]
+        public int BaseRoleID { get; set; }
 
         [Required]
         [DisplayName("Should Receive Support Emails?")]
@@ -54,7 +58,6 @@ namespace ProjectFirma.Web.Views.User
         {
             PersonID = person.PersonID;
             RoleSimples = person.PersonRoles.Select(x => new RoleSimple(x.Role)).ToList();
-
             ShouldReceiveSupportEmails = person.ReceiveSupportEmails;
         }
 
@@ -120,7 +123,7 @@ namespace ProjectFirma.Web.Views.User
                 yield break;
             }
 
-            var baseRoleIDs = Models.Role.GetRequiredBaseRoleIDs();
+            var baseRoleIDs = Models.Role.GetBaseRoleIDs();
             //They must have at least one of the base roles if not unassigned.
             if (!roleIDs.Intersect(baseRoleIDs).Any())
             {
