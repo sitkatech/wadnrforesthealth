@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.User
         [Required]
         public int PersonID { get; set; }
 
-        [Required]
+
         [DisplayName("Supplemental Roles")]
         public List<RoleSimple> RoleSimples { get; set; }
 
@@ -57,22 +57,20 @@ namespace ProjectFirma.Web.Views.User
         public EditRolesViewModel(Person person)
         {
             PersonID = person.PersonID;
-            RoleSimples = person.PersonRoles.Select(x => new RoleSimple(x.Role)).ToList();
+            RoleSimples = person.PersonRoles.Where(x => !x.Role.IsBaseRole).Select(x => new RoleSimple(x.Role)).ToList();
+            BaseRoleID = person.GetUsersBaseRole().RoleID;
             ShouldReceiveSupportEmails = person.ReceiveSupportEmails;
         }
 
         public void UpdateModel(Person person, Person currentPerson)
         {
-            var roleSimpleIDs = RoleSimples.Select(x => x.RoleID).ToList();
-            var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) &&
-                                         !roleSimpleIDs.Contains(Models.Role.ProjectSteward.RoleID) &&
-                                         !roleSimpleIDs.Contains(Models.Role.Admin.RoleID) && !roleSimpleIDs.Contains(Models.Role.SitkaAdmin.RoleID);
 
-            var downgradingFromProgramEditor = person.HasRole(Models.Role.ProgramEditor) && !roleSimpleIDs.Contains(Models.Role.ProgramEditor.RoleID);
+            var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) && BaseRoleID != Models.Role.ProjectSteward.RoleID;
+            var downgradingFromProgramEditor = person.HasRole(Models.Role.ProgramEditor) && BaseRoleID != Models.Role.ProgramEditor.RoleID;
 
 
             var newPersonRoles = new List<PersonRole>();
-            if (RoleSimples.Any())
+            if (RoleSimples != null && RoleSimples.Any())
             {
                 foreach (var roleSimple in RoleSimples)
                 {
@@ -80,11 +78,9 @@ namespace ProjectFirma.Web.Views.User
                     newPersonRoles.Add(newPersonRole);
                 }
             }
-            else
-            {
-                // RoleID is required so this should not really happen, but map to unassigned as a safety
-                newPersonRoles.Add(new PersonRole(person, Models.Role.Unassigned));
-            }
+            
+            newPersonRoles.Add(new PersonRole(person.PersonID, BaseRoleID));
+            
 
             person.PersonRoles.Merge(newPersonRoles, HttpRequestStorage.DatabaseEntities.PersonRoles.Local, (o1, o2) => o1.PersonID == o2.PersonID && o1.RoleID == o2.RoleID);
 
@@ -115,23 +111,7 @@ namespace ProjectFirma.Web.Views.User
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var roleIDs = this.RoleSimples.Select(x => x.RoleID).ToList();
-
-            //if a user only has unassigned that is okay.
-            if (roleIDs.Count == 1 && roleIDs.Contains(Models.Role.Unassigned.RoleID))
-            {
-                yield break;
-            }
-
-            var baseRoleIDs = Models.Role.GetBaseRoleIDs();
-            //They must have at least one of the base roles if not unassigned.
-            if (!roleIDs.Intersect(baseRoleIDs).Any())
-            {
-                yield return new SitkaValidationResult<EditRolesViewModel, List<RoleSimple>>(
-                    $"This user needs to have one of the following base roles:  {Models.Role.Normal.RoleDisplayName}, {Models.Role.ProjectSteward.RoleDisplayName}, or {Models.Role.Admin.RoleDisplayName}",
-                    m => m.RoleSimples);
-            }
-
+            return new List<ValidationResult>();
         }
     }
 }

@@ -139,9 +139,11 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEdit(EditRolesViewModel viewModel)
         {
-            var roles = CurrentPerson.IsSitkaAdministrator() ? Role.All : Role.All.Except(new[] {Role.SitkaAdmin});
-            var rolesAsSimples = roles.Select(x => new RoleSimple(x)).ToList();
-            var viewData = new EditRolesViewData(rolesAsSimples);
+            var baseRoles = CurrentPerson.IsSitkaAdministrator() ? Role.AllBaseRoles() : Role.AllBaseRoles().Except(new[] { Role.SitkaAdmin });
+            var baseRolesAsSimples = baseRoles.Select(x => new RoleSimple(x)).ToList();
+            var supplementalRoles = Role.AllSupplementalRoles();
+            var supplementalRolesAsSimples = supplementalRoles.Select(x => new RoleSimple(x)).ToList();
+            var viewData = new EditRolesViewData(supplementalRolesAsSimples, baseRolesAsSimples);
             return RazorPartialView<EditRoles, EditRolesViewData, EditRolesViewModel>(viewData, viewModel);
         }
 

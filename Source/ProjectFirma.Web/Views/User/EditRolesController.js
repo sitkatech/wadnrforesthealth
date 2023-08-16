@@ -30,7 +30,7 @@ angular.module("ProjectFirmaApp").controller("EditRolesController", function($sc
     });
 
     $scope.getAvailableRolesForPerson = function() {
-        var allRoles = $scope.AngularViewData.AllRoles;
+        var allRoles = $scope.AngularViewData.AllSupplementalRoles;
         var usedRoles = $scope.AngularModel.RoleSimples;
         var usedRoleIds = _.map(usedRoles,
             function(f) {
@@ -46,7 +46,7 @@ angular.module("ProjectFirmaApp").controller("EditRolesController", function($sc
     };
 
     $scope.addRole = function (roleID) {
-        var allRoles = _.filter($scope.AngularViewData.AllRoles,
+        var allRoles = _.filter($scope.AngularViewData.AllSupplementalRoles,
             function(f) {
                 return f.RoleID === Number(roleID);
             });

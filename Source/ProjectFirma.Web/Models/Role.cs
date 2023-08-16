@@ -72,5 +72,16 @@ namespace ProjectFirma.Web.Models
             var roleIDs = Role.All.Where(x => x.IsBaseRole).Select(x => x.RoleID).ToList();
             return roleIDs;
         }
+
+        public static List<Role> AllSupplementalRoles()
+        {
+            return Role.All.Where(x => !x.IsBaseRole).ToList();
+        }
+
+        public static List<Role> AllBaseRoles()
+        {
+            return Role.All.Where(x => x.IsBaseRole).ToList();
+        }
+
     }
 }
