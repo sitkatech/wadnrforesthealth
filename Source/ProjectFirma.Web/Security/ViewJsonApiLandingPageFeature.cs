@@ -7,7 +7,7 @@ namespace ProjectFirma.Web.Security
     public class ViewJsonApiLandingPageFeature : FirmaFeature
     {
         public ViewJsonApiLandingPageFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward, Role.Normal })
+            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward, Role.Normal })
         {
         }
     }

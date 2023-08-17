@@ -30,6 +30,6 @@ namespace ProjectFirma.Web.Security
     //public class GrantsViewFullListFeature : FirmaAdminFeature
     public class InvoicesViewFullListFeature : FirmaFeature
     {
-        public InvoicesViewFullListFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward }) { }
+        public InvoicesViewFullListFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward }) { }
     }
 }

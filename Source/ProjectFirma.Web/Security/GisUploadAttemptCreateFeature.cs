@@ -8,7 +8,7 @@ namespace ProjectFirma.Web.Security
     public class GisUploadAttemptCreateFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GisUploadAttempt>
     {
         public GisUploadAttemptCreateFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward })
         {
             
         }

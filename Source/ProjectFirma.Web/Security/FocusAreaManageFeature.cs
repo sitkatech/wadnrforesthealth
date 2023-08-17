@@ -27,6 +27,6 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Manage DNR LOA Focus Area")]
     public class FocusAreaManageFeature : FirmaFeature
     {
-        public FocusAreaManageFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward }) { }
+        public FocusAreaManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward }) { }
     }
 }

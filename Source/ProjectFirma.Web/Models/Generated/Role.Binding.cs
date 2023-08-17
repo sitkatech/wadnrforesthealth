@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleAdmin Admin = RoleAdmin.Instance;
         public static readonly RoleNormal Normal = RoleNormal.Instance;
         public static readonly RoleUnassigned Unassigned = RoleUnassigned.Instance;
-        public static readonly RoleSitkaAdmin SitkaAdmin = RoleSitkaAdmin.Instance;
+        public static readonly RoleEsaAdmin EsaAdmin = RoleEsaAdmin.Instance;
         public static readonly RoleProjectSteward ProjectSteward = RoleProjectSteward.Instance;
         public static readonly RoleProgramEditor ProgramEditor = RoleProgramEditor.Instance;
 
@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, SitkaAdmin, ProjectSteward, ProgramEditor };
+            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, ProgramEditor };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
@@ -110,14 +110,14 @@ namespace ProjectFirma.Web.Models
             {
                 case RoleEnum.Admin:
                     return Admin;
+                case RoleEnum.EsaAdmin:
+                    return EsaAdmin;
                 case RoleEnum.Normal:
                     return Normal;
                 case RoleEnum.ProgramEditor:
                     return ProgramEditor;
                 case RoleEnum.ProjectSteward:
                     return ProjectSteward;
-                case RoleEnum.SitkaAdmin:
-                    return SitkaAdmin;
                 case RoleEnum.Unassigned:
                     return Unassigned;
                 default:
@@ -131,7 +131,7 @@ namespace ProjectFirma.Web.Models
         Admin = 1,
         Normal = 2,
         Unassigned = 7,
-        SitkaAdmin = 8,
+        EsaAdmin = 8,
         ProjectSteward = 9,
         ProgramEditor = 10
     }
@@ -154,10 +154,10 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleUnassigned Instance = new RoleUnassigned(7, @"Unassigned", @"Unassigned", @"", true);
     }
 
-    public partial class RoleSitkaAdmin : Role
+    public partial class RoleEsaAdmin : Role
     {
-        private RoleSitkaAdmin(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
-        public static readonly RoleSitkaAdmin Instance = new RoleSitkaAdmin(8, @"SitkaAdmin", @"Sitka Administrator", @"", true);
+        private RoleEsaAdmin(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleEsaAdmin Instance = new RoleEsaAdmin(8, @"EsaAdmin", @"ESA Administrator", @"", true);
     }
 
     public partial class RoleProjectSteward : Role

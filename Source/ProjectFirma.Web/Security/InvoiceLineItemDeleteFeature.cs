@@ -6,6 +6,6 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Delete Invoice Line Item")]
     public class InvoiceLineItemDeleteFeature : FirmaFeature
     {
-        public InvoiceLineItemDeleteFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin }) { }
+        public InvoiceLineItemDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin }) { }
     }
 }

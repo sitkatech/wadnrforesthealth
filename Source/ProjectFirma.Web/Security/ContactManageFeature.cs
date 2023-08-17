@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Manage Contact")]
     public class ContactManageFeature : FirmaBaseFeature
     {
-        public ContactManageFeature() : base(new List<IRole>{Role.Normal, Role.Admin, Role.ProjectSteward, Role.SitkaAdmin})
+        public ContactManageFeature() : base(new List<IRole>{Role.Normal, Role.Admin, Role.ProjectSteward, Role.EsaAdmin})
         {
         }
         

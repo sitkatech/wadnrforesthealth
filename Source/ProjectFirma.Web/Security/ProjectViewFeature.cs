@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Security
 
             // "should only be visible and accessible to the following roles: Project Steward, Program Editor, Admin, Sitka Admin."
             bool projectCanOnlyBeSeenByAdmins = contextModelObject.ProjectType.LimitVisibilityToAdmin;
-            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.SitkaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.ProgramEditor);
+            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.ProgramEditor);
             if (projectCanOnlyBeSeenByAdmins)
             {
                 if (!personHasLimitedVisibilityRole)

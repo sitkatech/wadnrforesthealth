@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<PerformanceMeasure> _firmaFeatureWithContextImpl;
 
         public TaxonomyTierPerformanceMeasureManageFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
+            : base(new List<Role> { Role.EsaAdmin, Role.Admin })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<PerformanceMeasure>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
