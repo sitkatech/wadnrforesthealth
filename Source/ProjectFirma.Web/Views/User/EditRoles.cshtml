@@ -74,7 +74,7 @@
                 @Html.LabelFor(m => m.BaseRoleID)
             </div>
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.BaseRoleID, ViewDataTyped.AllBaseRoles)
+                @Html.DropDownListFor(m => m.BaseRoleID, ViewDataTyped.AllBaseRoles, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.BaseRoleID)
             </div>
         </div>
