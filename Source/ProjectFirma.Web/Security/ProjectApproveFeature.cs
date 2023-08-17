@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Project> _firmaFeatureWithContextImpl;
 
         public ProjectApproveFeature()
-            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward, Role.ProgramEditor })
+            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward, Role.CanEditProgram })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Project>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel} based on your relationship to the {projectLabel}'s {organizationLabel}.");
             }
 
-            if (person.HasRole(Role.ProgramEditor) && !person.CanProgramEditorManageProject(contextModelObject))
+            if (person.HasRole(Role.CanEditProgram) && !person.CanProgramEditorManageProject(contextModelObject))
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel} based on your relationship to the {projectLabel}'s Program.");
             }

@@ -7,7 +7,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("View Program")]
     public class ProgramViewFeature : FirmaFeature
     {
-        public ProgramViewFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward, Role.ProgramEditor })
+        public ProgramViewFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward, Role.CanEditProgram })
         {
         }
     }

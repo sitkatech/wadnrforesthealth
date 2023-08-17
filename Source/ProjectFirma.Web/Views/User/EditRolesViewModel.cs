@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Views.User
         {
 
             var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) && BaseRoleID != Models.Role.ProjectSteward.RoleID;
-            var downgradingFromProgramEditor = person.HasRole(Models.Role.ProgramEditor) && BaseRoleID != Models.Role.ProgramEditor.RoleID;
+            var downgradingFromProgramEditor = person.HasRole(Models.Role.CanEditProgram) && BaseRoleID != Models.Role.CanEditProgram.RoleID;
 
 
             var newPersonRoles = new List<PersonRole>();

@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Views.Program
                 var peopleEditors = HttpRequestStorage.DatabaseEntities.People
                     .Where(x => PersonIDList.Contains(x.PersonID)).ToList();
                 var peopleWithoutProgramEditorRole = peopleEditors
-                    .Where(x => x.PersonRoles.All(pr => pr.RoleID != Models.Role.ProgramEditor.RoleID)).ToList();
+                    .Where(x => x.PersonRoles.All(pr => pr.RoleID != Models.Role.CanEditProgram.RoleID)).ToList();
                 if (peopleWithoutProgramEditorRole.Any())
                 {
                     var listOfNames = new List<string>();

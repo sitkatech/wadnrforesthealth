@@ -210,7 +210,7 @@ namespace ProjectFirma.Web.Models
 
         public bool CanProgramEditorManageProject(Project project)
         {
-            if (!this.HasRole(Role.ProgramEditor))
+            if (!this.HasRole(Role.CanEditProgram))
             {
                 return false;
             }

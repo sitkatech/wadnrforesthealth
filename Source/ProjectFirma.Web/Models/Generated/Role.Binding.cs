@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleUnassigned Unassigned = RoleUnassigned.Instance;
         public static readonly RoleEsaAdmin EsaAdmin = RoleEsaAdmin.Instance;
         public static readonly RoleProjectSteward ProjectSteward = RoleProjectSteward.Instance;
-        public static readonly RoleProgramEditor ProgramEditor = RoleProgramEditor.Instance;
+        public static readonly RoleCanEditProgram CanEditProgram = RoleCanEditProgram.Instance;
 
         public static readonly List<Role> All;
         public static readonly ReadOnlyDictionary<int, Role> AllLookupDictionary;
@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, ProgramEditor };
+            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
@@ -110,12 +110,12 @@ namespace ProjectFirma.Web.Models
             {
                 case RoleEnum.Admin:
                     return Admin;
+                case RoleEnum.CanEditProgram:
+                    return CanEditProgram;
                 case RoleEnum.EsaAdmin:
                     return EsaAdmin;
                 case RoleEnum.Normal:
                     return Normal;
-                case RoleEnum.ProgramEditor:
-                    return ProgramEditor;
                 case RoleEnum.ProjectSteward:
                     return ProjectSteward;
                 case RoleEnum.Unassigned:
@@ -133,7 +133,7 @@ namespace ProjectFirma.Web.Models
         Unassigned = 7,
         EsaAdmin = 8,
         ProjectSteward = 9,
-        ProgramEditor = 10
+        CanEditProgram = 10
     }
 
     public partial class RoleAdmin : Role
@@ -166,9 +166,9 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleProjectSteward Instance = new RoleProjectSteward(9, @"ProjectSteward", @"Project Steward", @"Users with this role can approve Project Proposals, create new Projects, and approve Project Updates.", true);
     }
 
-    public partial class RoleProgramEditor : Role
+    public partial class RoleCanEditProgram : Role
     {
-        private RoleProgramEditor(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
-        public static readonly RoleProgramEditor Instance = new RoleProgramEditor(10, @"ProgramEditor", @"Program Editor", @"Users with this role can edit Projects that are from their Program", false);
+        private RoleCanEditProgram(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleCanEditProgram Instance = new RoleCanEditProgram(10, @"CanEditProgram", @"Can Edit Program", @"Users with this role can edit Projects that are from their Program", false);
     }
 }

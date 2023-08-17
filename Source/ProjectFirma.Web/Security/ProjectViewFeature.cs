@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Security
 
             // "should only be visible and accessible to the following roles: Project Steward, Program Editor, Admin, Sitka Admin."
             bool projectCanOnlyBeSeenByAdmins = contextModelObject.ProjectType.LimitVisibilityToAdmin;
-            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.ProgramEditor);
+            bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.CanEditProgram);
             if (projectCanOnlyBeSeenByAdmins)
             {
                 if (!personHasLimitedVisibilityRole)
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Security
                     return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
                 }
 
-                if (person.HasRole(Role.ProgramEditor) && !person.CanProgramEditorManageProject(contextModelObject))
+                if (person.HasRole(Role.CanEditProgram) && !person.CanProgramEditorManageProject(contextModelObject))
                 {
                     return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
                 }
