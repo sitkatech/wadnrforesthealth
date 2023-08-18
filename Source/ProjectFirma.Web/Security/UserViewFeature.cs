@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Security
             }
 
             //Only SitkaAdmin users should be able to see other SitkaAdmin users
-            if (!person.HasRole(Role.SitkaAdmin) && contextModelObject.HasRole(Role.SitkaAdmin))
+            if (!person.HasRole(Role.EsaAdmin) && contextModelObject.HasRole(Role.EsaAdmin))
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult("You don\'t have permission to view this user.");
             }

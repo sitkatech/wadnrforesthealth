@@ -7,7 +7,7 @@ namespace ProjectFirma.Web.Security
     public class GrantCreateFeature : FirmaFeature
     {
         public GrantCreateFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward })
         {
         }
     }

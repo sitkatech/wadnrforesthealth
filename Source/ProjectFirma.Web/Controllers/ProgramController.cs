@@ -334,7 +334,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditProgramPeople(EditProgramPeopleViewModel viewModel)
         {
-            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.ProgramEditor.RoleID)).ToList();
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActiveWadnrPeople().Where(x => x.IsFullUser() && x.PersonRoles.Any(pr => pr.RoleID == Role.CanEditProgram.RoleID)).ToList();
 
             var people = activePeople.OrderBy(x => x.FullNameLastFirst).Select(x => new PersonSimple(x)).ToList();
 

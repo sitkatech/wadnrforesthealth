@@ -68,9 +68,20 @@
 {
     @Html.ValidationSummary()
     <div class="form-horizontal" id="EditRolesAngularApp" ng-controller="EditRolesController">
-
-        <div class="row">
+        
+        <div class="form-group">
             <div class="col-md-10">
+                @Html.LabelFor(m => m.BaseRoleID)
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.BaseRoleID, ViewDataTyped.AllBaseRoles, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.BaseRoleID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">@Html.LabelFor(m => m.RoleSimples)</div>
+            <div class="col-md-12">
                 <div class="input-group" style="width: 100%;">
                     <select class="selectpicker" id="todo{{AngularViewData.RoleId}}"
                             ng-model="selectedRoleID"
@@ -86,17 +97,17 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <br />
-        <span>Currently Selected Roles:</span>
-        <div class="row" ng-repeat="currentRole in AngularModel.RoleSimples" style="margin-top: 5px;">
-            <div class="col-md-12">
-                <span>
-                    <a href="#" ng-click="removeSelectedRole(currentRole.RoleID); $event.preventDefault();">
-                        <i class="glyphicon glyphicon-trash" title="Remove Role" alt="Remove Role"></i>
-                    </a>
-                </span>
-                <span ng-bind="(currentRole.RoleDisplayName)"></span>
+            
+            <div class="col-md-12">Currently Selected Supplemental Roles:</div>
+            <div class="col-md-12" ng-repeat="currentRole in AngularModel.RoleSimples" style="margin-top: 5px;">
+
+                    <span>
+                        <a href="#" ng-click="removeSelectedRole(currentRole.RoleID); $event.preventDefault();">
+                            <i class="glyphicon glyphicon-trash" title="Remove Role" alt="Remove Role"></i>
+                        </a>
+                    </span>
+                    <span ng-bind="(currentRole.RoleDisplayName)"></span>
+
             </div>
         </div>
 

@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Manage Find Your Forester")]
     public class FindYourForesterManageFeature : FirmaBaseFeature
     {
-        public FindYourForesterManageFeature() : base(new List<IRole>{ Role.ProjectSteward, Role.Admin, Role.SitkaAdmin })
+        public FindYourForesterManageFeature() : base(new List<IRole>{ Role.ProjectSteward, Role.Admin, Role.EsaAdmin })
         {
         }
         

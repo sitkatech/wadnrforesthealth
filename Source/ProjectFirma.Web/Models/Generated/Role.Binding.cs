@@ -22,9 +22,9 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleAdmin Admin = RoleAdmin.Instance;
         public static readonly RoleNormal Normal = RoleNormal.Instance;
         public static readonly RoleUnassigned Unassigned = RoleUnassigned.Instance;
-        public static readonly RoleSitkaAdmin SitkaAdmin = RoleSitkaAdmin.Instance;
+        public static readonly RoleEsaAdmin EsaAdmin = RoleEsaAdmin.Instance;
         public static readonly RoleProjectSteward ProjectSteward = RoleProjectSteward.Instance;
-        public static readonly RoleProgramEditor ProgramEditor = RoleProgramEditor.Instance;
+        public static readonly RoleCanEditProgram CanEditProgram = RoleCanEditProgram.Instance;
 
         public static readonly List<Role> All;
         public static readonly ReadOnlyDictionary<int, Role> AllLookupDictionary;
@@ -34,19 +34,20 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, SitkaAdmin, ProjectSteward, ProgramEditor };
+            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected Role(int roleID, string roleName, string roleDisplayName, string roleDescription)
+        protected Role(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole)
         {
             RoleID = roleID;
             RoleName = roleName;
             RoleDisplayName = roleDisplayName;
             RoleDescription = roleDescription;
+            IsBaseRole = isBaseRole;
         }
 
         [Key]
@@ -54,6 +55,7 @@ namespace ProjectFirma.Web.Models
         public string RoleName { get; private set; }
         public string RoleDisplayName { get; private set; }
         public string RoleDescription { get; private set; }
+        public bool IsBaseRole { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return RoleID; } }
 
@@ -108,14 +110,14 @@ namespace ProjectFirma.Web.Models
             {
                 case RoleEnum.Admin:
                     return Admin;
+                case RoleEnum.CanEditProgram:
+                    return CanEditProgram;
+                case RoleEnum.EsaAdmin:
+                    return EsaAdmin;
                 case RoleEnum.Normal:
                     return Normal;
-                case RoleEnum.ProgramEditor:
-                    return ProgramEditor;
                 case RoleEnum.ProjectSteward:
                     return ProjectSteward;
-                case RoleEnum.SitkaAdmin:
-                    return SitkaAdmin;
                 case RoleEnum.Unassigned:
                     return Unassigned;
                 default:
@@ -129,44 +131,44 @@ namespace ProjectFirma.Web.Models
         Admin = 1,
         Normal = 2,
         Unassigned = 7,
-        SitkaAdmin = 8,
+        EsaAdmin = 8,
         ProjectSteward = 9,
-        ProgramEditor = 10
+        CanEditProgram = 10
     }
 
     public partial class RoleAdmin : Role
     {
-        private RoleAdmin(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleAdmin Instance = new RoleAdmin(1, @"Admin", @"Administrator", @"");
+        private RoleAdmin(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleAdmin Instance = new RoleAdmin(1, @"Admin", @"Administrator", @"", true);
     }
 
     public partial class RoleNormal : Role
     {
-        private RoleNormal(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleNormal Instance = new RoleNormal(2, @"Normal", @"Normal User", @"Users with this role can propose new EIP projects, update existing EIP projects where their organization is the Lead Implementer, and view almost every page within the EIP Tracker.");
+        private RoleNormal(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleNormal Instance = new RoleNormal(2, @"Normal", @"Normal User", @"Users with this role can propose new EIP projects, update existing EIP projects where their organization is the Lead Implementer, and view almost every page within the EIP Tracker.", true);
     }
 
     public partial class RoleUnassigned : Role
     {
-        private RoleUnassigned(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleUnassigned Instance = new RoleUnassigned(7, @"Unassigned", @"Unassigned", @"");
+        private RoleUnassigned(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleUnassigned Instance = new RoleUnassigned(7, @"Unassigned", @"Unassigned", @"", true);
     }
 
-    public partial class RoleSitkaAdmin : Role
+    public partial class RoleEsaAdmin : Role
     {
-        private RoleSitkaAdmin(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleSitkaAdmin Instance = new RoleSitkaAdmin(8, @"SitkaAdmin", @"Sitka Administrator", @"");
+        private RoleEsaAdmin(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleEsaAdmin Instance = new RoleEsaAdmin(8, @"EsaAdmin", @"ESA Administrator", @"", true);
     }
 
     public partial class RoleProjectSteward : Role
     {
-        private RoleProjectSteward(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleProjectSteward Instance = new RoleProjectSteward(9, @"ProjectSteward", @"Project Steward", @"Users with this role can approve Project Proposals, create new Projects, approve Project Updates, and create Grant Allocations for their Organization.");
+        private RoleProjectSteward(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleProjectSteward Instance = new RoleProjectSteward(9, @"ProjectSteward", @"Project Steward", @"Users with this role can approve Project Proposals, create new Projects, and approve Project Updates.", true);
     }
 
-    public partial class RoleProgramEditor : Role
+    public partial class RoleCanEditProgram : Role
     {
-        private RoleProgramEditor(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleProgramEditor Instance = new RoleProgramEditor(10, @"ProgramEditor", @"Program Editor", @"Users with this role can edit Projects that are from their Program");
+        private RoleCanEditProgram(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleCanEditProgram Instance = new RoleCanEditProgram(10, @"CanEditProgram", @"Can Edit Program", @"Users with this role can edit Projects that are from their Program", false);
     }
 }

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Person> _firmaFeatureWithContextImpl;
 
         public UserEditBasicsFeature()
-            : base(new List<Role> {Role.SitkaAdmin, Role.Admin, Role.Normal, Role.ProjectSteward})
+            : base(new List<Role> {Role.EsaAdmin, Role.Admin, Role.Normal, Role.ProjectSteward})
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Person>(this);
             ActionFilter = _firmaFeatureWithContextImpl;

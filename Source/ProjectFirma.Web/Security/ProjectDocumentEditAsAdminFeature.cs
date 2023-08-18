@@ -9,7 +9,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<ProjectDocument> _firmaFeatureWithContextImpl;
 
         public ProjectDocumentEditAsAdminFeature()
-            : base(new List<Role> {Role.Normal, Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> {Role.Normal, Role.EsaAdmin, Role.Admin, Role.ProjectSteward })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<ProjectDocument>(this);
             ActionFilter = _firmaFeatureWithContextImpl;

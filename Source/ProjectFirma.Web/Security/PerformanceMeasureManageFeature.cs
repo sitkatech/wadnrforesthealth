@@ -26,6 +26,6 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Manage PerformanceMeasure")]
     public class PerformanceMeasureManageFeature : FirmaFeature
     {
-        public PerformanceMeasureManageFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin }) { }
+        public PerformanceMeasureManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin }) { }
     }
 }

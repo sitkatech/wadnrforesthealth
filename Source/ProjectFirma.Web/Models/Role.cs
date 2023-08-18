@@ -67,16 +67,21 @@ namespace ProjectFirma.Web.Models
             return SitkaRoute<RoleController>.BuildUrlFromExpression(t => t.Anonymous());
         }
 
-        public static List<int> GetRequiredBaseRoleIDs()
+        public static List<int> GetBaseRoleIDs()
         {
-            var roleIDs = new List<int>()
-            {
-                Role.Normal.RoleID,
-                Role.ProjectSteward.RoleID,
-                Role.Admin.RoleID,
-                Role.SitkaAdmin.RoleID
-            };
+            var roleIDs = Role.All.Where(x => x.IsBaseRole).Select(x => x.RoleID).ToList();
             return roleIDs;
         }
+
+        public static List<Role> AllSupplementalRoles()
+        {
+            return Role.All.Where(x => !x.IsBaseRole).ToList();
+        }
+
+        public static List<Role> AllBaseRoles()
+        {
+            return Role.All.Where(x => x.IsBaseRole).ToList();
+        }
+
     }
 }

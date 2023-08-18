@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
         string RoleName { get; }
         string RoleDisplayName { get; }
         string RoleDescription { get; }
+        bool IsBaseRole { get; }
         List<FeaturePermission> GetFeaturePermissions();
         List<Person> GetPeopleWithRole();
         HtmlString GetDisplayNameAsUrl();

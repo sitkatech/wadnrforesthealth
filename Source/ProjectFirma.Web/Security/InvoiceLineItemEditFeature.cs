@@ -6,6 +6,6 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Edit Invoice Line Item")]
     public class InvoiceLineItemEditFeature : FirmaFeature
     {
-        public InvoiceLineItemEditFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward }) { }
+        public InvoiceLineItemEditFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward }) { }
     }
 }

@@ -19,18 +19,22 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.User
 {
     public class EditRolesViewData : FirmaUserControlViewData
     {
-        public List<RoleSimple> AllRoles { get; }
+        public List<RoleSimple> AllSupplementalRoles { get; }
+        public List<SelectListItem> AllBaseRoles { get; }
 
-        public EditRolesViewData(List<RoleSimple> roles)
+        public EditRolesViewData(List<RoleSimple> supplementalRoles, List<RoleSimple> baseRoles)
         {
-            AllRoles = roles;
+            AllSupplementalRoles = supplementalRoles;
+            AllBaseRoles = baseRoles.ToSelectList(x => x.RoleID.ToString(), y => y.RoleDisplayName).ToList();
         }
     }
 }

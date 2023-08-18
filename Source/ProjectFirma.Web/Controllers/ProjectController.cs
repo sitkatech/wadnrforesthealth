@@ -519,7 +519,7 @@ namespace ProjectFirma.Web.Controllers
             var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
 
-            var elevatedRoles = new List<IRole> {Role.Admin, Role.SitkaAdmin, Role.ProjectSteward};
+            var elevatedRoles = new List<IRole> {Role.Admin, Role.EsaAdmin, Role.ProjectSteward};
             if (CurrentPerson.HasAnyOfTheseRoles(elevatedRoles))
             {
                 filteredProposals = pendingProjects;

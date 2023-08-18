@@ -237,7 +237,7 @@
                     Assigned @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
                 </div>
                 <div class="panel-body">
-                    @if (ViewDataTyped.Person.HasRole(Role.ProgramEditor))
+                    @if (ViewDataTyped.Person.HasRole(Role.CanEditProgram))
                     {
                         if (ViewDataTyped.Person.ProgramPeople.Any())
                         {

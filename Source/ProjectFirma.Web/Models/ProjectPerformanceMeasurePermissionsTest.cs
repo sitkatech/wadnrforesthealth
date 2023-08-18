@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Models
             userAdmin.PersonRoles.Add(new PersonRole(userAdmin, Role.Admin));
 
             var userSitkaAdmin = TestFramework.TestPerson.Create();
-            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.SitkaAdmin));
+            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.EsaAdmin));
 
             // Deferred Project
             // ----------------
@@ -252,7 +252,7 @@ namespace ProjectFirma.Web.Models
             userAdmin.PersonRoles.Add(new PersonRole(userAdmin, Role.Admin));
 
             var userSitkaAdmin = TestFramework.TestPerson.Create();
-            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.SitkaAdmin));
+            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.EsaAdmin));
 
             // Planning/Design Project
             // ----------------
@@ -294,7 +294,7 @@ namespace ProjectFirma.Web.Models
             userAdmin.PersonRoles.Add(new PersonRole(userAdmin, Role.Admin));
 
             var userSitkaAdmin = TestFramework.TestPerson.Create();
-            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.SitkaAdmin));
+            userSitkaAdmin.PersonRoles.Add(new PersonRole(userSitkaAdmin, Role.EsaAdmin));
 
             // Planning/Design Project
             // ----------------

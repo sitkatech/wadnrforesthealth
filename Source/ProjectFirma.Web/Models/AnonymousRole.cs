@@ -34,6 +34,10 @@ namespace ProjectFirma.Web.Models
         public string RoleName { get { return "Anonymous"; } }
         public string RoleDisplayName { get { return "Anonymous (no login required)"; } }
         public string RoleDescription { get { return "This is the default security level for users who do not have a login. Any logged in user can also access all of these features."; } }
+        public bool IsBaseRole
+        {
+            get { return true; }
+        }
         public List<FeaturePermission> GetFeaturePermissions()
         {
             var featurePermissions = IRoleExtensions.GetFeaturePermissions(null, typeof(AnonymousUnclassifiedFeature));

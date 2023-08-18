@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -105,7 +106,7 @@ namespace ProjectFirma.Web.Models
 
         public static bool IsSitkaAdministrator(this Person person)
         {
-            return person != null && person.HasRole(Role.SitkaAdmin);
+            return person != null && person.HasRole(Role.EsaAdmin);
 
         }
 
@@ -138,6 +139,34 @@ namespace ProjectFirma.Web.Models
         {
             var roleIDs = iroles.Select(x => x.RoleID);
             return person.PersonRoles.Select(x => x.Role.RoleID).Intersect(roleIDs).Any();
+        }
+
+        /// <summary>
+        /// Should only be used for full users
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static Role GetUsersBaseRole(this Person person)
+        {
+            if (!person.IsFullUser())
+            {
+                throw new Exception("Person is not a Full User and should not have a base role");
+            }
+            return person.PersonRoles.Where(x => x.Role.IsBaseRole).Select(x => x.Role).Single();
+        }
+
+        /// <summary>
+        /// Should only be used for full users
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static List<Role> GetUsersSupplementalRoles(this Person person)
+        {
+            if (!person.IsFullUser())
+            {
+                throw new Exception("Person is not a Full User and should not have a base role");
+            }
+            return person.PersonRoles.Where(x => !x.Role.IsBaseRole).Select(x => x.Role).ToList();
         }
     }
 }

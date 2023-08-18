@@ -8,7 +8,7 @@
             {
                 return true;
             }
-            else if (person.HasRole(Role.Admin) || person.HasRole(Role.SitkaAdmin) || person.HasRole(Role.ProjectSteward))
+            else if (person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward))
             {
                 return true;
             }
