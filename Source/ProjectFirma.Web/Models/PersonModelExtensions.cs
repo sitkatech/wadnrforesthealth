@@ -154,5 +154,19 @@ namespace ProjectFirma.Web.Models
             }
             return person.PersonRoles.Where(x => x.Role.IsBaseRole).Select(x => x.Role).Single();
         }
+
+        /// <summary>
+        /// Should only be used for full users
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static List<Role> GetUsersSupplementalRoles(this Person person)
+        {
+            if (!person.IsFullUser())
+            {
+                throw new Exception("Person is not a Full User and should not have a base role");
+            }
+            return person.PersonRoles.Where(x => !x.Role.IsBaseRole).Select(x => x.Role).ToList();
+        }
     }
 }

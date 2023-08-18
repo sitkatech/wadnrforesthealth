@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Views.Role
         public List<Person> PeopleWithRole;
         public readonly string RoleName;
         public readonly string RoleDescription;
+        public readonly string RoleType;
 
         public DetailViewData(Person currentPerson, IRole role)
             : base(currentPerson)
@@ -50,6 +51,7 @@ namespace ProjectFirma.Web.Views.Role
             RoleName = role.GetRoleDisplayName();
 
             RoleDescription = role.RoleDescription;
+            RoleType = role.IsBaseRole ? "Base" : "Supplemental";
 
             GridSpec = new PersonWithRoleGridSpec() {ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true};
             GridName = "PersonWithRoleGrid";
