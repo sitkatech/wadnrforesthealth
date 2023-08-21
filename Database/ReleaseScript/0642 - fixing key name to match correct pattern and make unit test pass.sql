@@ -1,0 +1,1 @@
+exec sp_rename 'PK_AgreementProject_ProjectID_AgreementID', 'AK_AgreementProject_AgreementID_ProjectID', 'OBJECT'
