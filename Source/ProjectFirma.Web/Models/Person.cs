@@ -203,6 +203,37 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public string BaseRoleNameForDisplay
+        {
+            get
+            {
+                if (IsAnonymousUser)
+                {
+                    // the presence of roles switches you from being IsAuthenticated or not
+                    return string.Empty;
+                }
+
+                var roleName = this.GetUsersBaseRole().RoleDisplayName;
+                return roleName;
+            }
+        }
+
+        public IEnumerable<string> SupplementalRoleNamesForDisplay
+        {
+            get
+            {
+                if (IsAnonymousUser)
+                {
+                    // the presence of roles switches you from being IsAuthenticated or not
+                    return new List<string>();
+                }
+
+                var roleNames = this.GetUsersSupplementalRoles().Select(x => x.RoleDisplayName);
+                return roleNames;
+            }
+        }
+
+
         public bool CanStewardProject(Project project)
         {
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.CanStewardProject(this, project) ?? true;

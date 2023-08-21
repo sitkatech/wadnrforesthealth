@@ -33,13 +33,16 @@ where PersonID = 6910 and RoleID = 2
 delete from dbo.PersonRole
 where PersonID = 10482 and RoleID = 7
 
+delete from dbo.PersonRole
+where PersonID = 10535 and RoleID = 7
+
 /*
 
 select * 
 from 
 dbo.PersonRole as pr
 join dbo.Person as p on pr.PersonID = p.PersonID
-where pr.PersonID in (5411, 6440, 6446, 6910, 10482)
+where pr.PersonID in (10535)
 
 
 select * from dbo.[Role]

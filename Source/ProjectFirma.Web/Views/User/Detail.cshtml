@@ -151,15 +151,28 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Role</div>
+                        <div class="col-xs-4 fieldLabel text-right">Base Role</div>
                         <div class="col-xs-8">
                             @if (ViewDataTyped.UserHasViewEverythingPermissions)
                             {
-                                @Html.Raw(string.Join(", ", ViewDataTyped.Person.PersonRoles.Select(x => x.Role.GetDisplayNameAsUrl())))
+                                @ViewDataTyped.Person.GetUsersBaseRole().GetDisplayNameAsUrl()
                             }
                             else
                             {
-                                @(string.Join(", ", ViewDataTyped.Person.RoleNamesForDisplay))
+                                @(ViewDataTyped.Person.BaseRoleNameForDisplay)
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">Supplemental Role(s)</div>
+                        <div class="col-xs-8">
+                            @if (ViewDataTyped.UserHasViewEverythingPermissions)
+                            {
+                                @Html.Raw(string.Join(", ", ViewDataTyped.Person.GetUsersSupplementalRoles().Select(x => x.GetDisplayNameAsUrl())))
+                            }
+                            else
+                            {
+                                @(string.Join(", ", ViewDataTyped.Person.SupplementalRoleNamesForDisplay))
                             }
                         </div>
                     </div>
