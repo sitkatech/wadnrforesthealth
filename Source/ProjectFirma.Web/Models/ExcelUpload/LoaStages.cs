@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
 {
     public class LoaStageImports : List<LoaStageImport>
     {
-        public const string FbmsUnexpendedPayrecV3SheetName = "Analysis 1 - PayRec v3 BW_SS...";
+        public const string FbmsUnexpendedPayrecV3SheetName = "Master Data";
         /// <summary>
         /// If there is only a single worksheet in a file, try to use it, no matter what it is named
         /// </summary>
