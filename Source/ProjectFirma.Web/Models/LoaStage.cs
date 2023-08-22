@@ -1,4 +1,5 @@
-﻿using ProjectFirma.Web.Models.ExcelUpload;
+﻿using System;
+using ProjectFirma.Web.Models.ExcelUpload;
 
 namespace ProjectFirma.Web.Models
 {
@@ -28,7 +29,7 @@ namespace ProjectFirma.Web.Models
             this.ApplicationDate = loaStageImport.ApplicationDate;
             this.DecisionDate = loaStageImport.DecisionDate;
 
-            var foresterSplit = loaStageImport.Forester.Split(' ');
+            var foresterSplit = string.IsNullOrEmpty(loaStageImport.Forester) ? Array.Empty<string>() : loaStageImport.Forester.Split(' ');
             if (foresterSplit.Length > 1)
             {
                 this.ForesterFirstName = foresterSplit[0];
