@@ -126,8 +126,8 @@ begin
               where x.PersonID is not null and x.ProjectPersonID is null
 
 
-              insert into dbo.Person (FirstName, LastName, Phone, Email, CreatedAsPartOfBulkImport, RoleID, CreateDate, IsActive, ReceiveSupportEmails)
-              select distinct x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, 1, 7, GETDATE(), 1, 0
+              insert into dbo.Person (FirstName, LastName, Phone, Email, CreatedAsPartOfBulkImport, CreateDate, IsActive, ReceiveSupportEmails)
+              select distinct x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, 1, GETDATE(), 1, 0
               from #projectForesterInfo x
               where x.ForesterFirstName is not null and x.ForesterLastName is not null and x.PersonID is null
 
