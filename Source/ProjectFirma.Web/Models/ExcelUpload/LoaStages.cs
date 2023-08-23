@@ -115,12 +115,12 @@ Renamed: "Vendor Name" => "Name"
         public const string GrantNumberKey = "Grant #";
         public const string GrantKey = "Grant";
         public const string CodeKey = "Code";
-        public const string IndexKey = " Index";
+        public const string IndexKey = "Index";
         public const string MatchKey = "Match";
         public const string PayKey = "Pay";
         public const string ForesterKey = "Forester";
         public const string ForesterPhoneKey = "Forester Phone";
-        public const string ForesterEmailKey = "Forester Email";
+        public const string ForesterEmailKey = "Forester email";
         public const string StatusKey = "Status";
        
 
@@ -135,7 +135,7 @@ Renamed: "Vendor Name" => "Name"
                 {"AZ", GrantNumberKey},
                 {"BE", GrantKey},
                 {"BF", CodeKey},
-                {"BL", IndexKey},
+                {"BG", IndexKey},
                 {"BJ", MatchKey},
                 {"BK", PayKey},
                 {"G", ForesterKey},
