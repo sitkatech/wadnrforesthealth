@@ -108,7 +108,7 @@ begin
               into #projectForesterInfo
               from dbo.LoaStage x
               join dbo.Project p on p.ProjectGisIdentifier = x.ProjectIdentifier
-              left join dbo.Person person on person.FirstName = x.ForesterFirstName and person.LastName = x.ForesterLastName
+              left join dbo.Person person on person.Email = x.ForesterEmail
               left join dbo.ProjectPerson pp on pp.PersonID = person.PersonID and pp.ProjectID = p.ProjectID and pp.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
               left join dbo.ProjectPerson ppOld on ppOld.ProjectID = p.ProjectID and ppOld.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
 
@@ -129,7 +129,7 @@ begin
               insert into dbo.Person (FirstName, LastName, Phone, Email, CreatedAsPartOfBulkImport, CreateDate, IsActive, ReceiveSupportEmails)
               select distinct x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, 1, GETDATE(), 1, 0
               from #projectForesterInfo x
-              where x.ForesterFirstName is not null and x.ForesterLastName is not null and x.PersonID is null
+              where x.ForesterFirstName is not null and x.ForesterLastName is not null and x.ForesterEmail is not null and x.PersonID is null
 
 
               if object_id('tempdb.dbo.#projectForesterInfoRoundTwo') is not null drop table #projectForesterInfoRoundTwo
@@ -137,7 +137,7 @@ begin
               into #projectForesterInfoRoundTwo
               from dbo.LoaStage x
               join dbo.Project p on p.ProjectGisIdentifier = x.ProjectIdentifier
-              left join dbo.Person person on person.FirstName = x.ForesterFirstName and person.LastName = x.ForesterLastName
+              left join dbo.Person person on person.Email = x.ForesterEmail
               left join dbo.ProjectPerson pp on pp.PersonID = person.PersonID and pp.ProjectID = p.ProjectID and pp.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
               left join dbo.ProjectPerson ppOld on ppOld.ProjectID = p.ProjectID and ppOld.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
 
