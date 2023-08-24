@@ -129,7 +129,7 @@ begin
               insert into dbo.Person (FirstName, LastName, Phone, Email, CreatedAsPartOfBulkImport, CreateDate, IsActive, ReceiveSupportEmails)
               select distinct x.ForesterFirstName, x.ForesterLastName, x.ForesterPhone, x.ForesterEmail, 1, GETDATE(), 1, 0
               from #projectForesterInfo x
-              where x.ForesterFirstName is not null and x.ForesterLastName is not null and x.ForesterEmail is not null and x.PersonID is null
+              where x.ForesterFirstName is not null and x.ForesterLastName is not null and x.ForesterEmail is not null and x.ForesterEmail != '#N/A' and x.PersonID is null
 
 
               if object_id('tempdb.dbo.#projectForesterInfoRoundTwo') is not null drop table #projectForesterInfoRoundTwo
