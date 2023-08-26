@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.Models
             this.AgreementsWhereYouAreTheAgreementFileResource = new HashSet<Agreement>();
             this.ClassificationsWhereYouAreTheKeyImageFileResource = new HashSet<Classification>();
             this.CustomPageImages = new HashSet<CustomPageImage>();
+            this.DNRUplandRegionContentImages = new HashSet<DNRUplandRegionContentImage>();
             this.FieldDefinitionDataImages = new HashSet<FieldDefinitionDataImage>();
             this.FirmaHomePageImages = new HashSet<FirmaHomePageImage>();
             this.FirmaPageImages = new HashSet<FirmaPageImage>();
@@ -114,7 +115,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (GrantModificationFileResource != null) || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.Any() || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || ReportTemplates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
+            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || DNRUplandRegionContentImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (GrantModificationFileResource != null) || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.Any() || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || ReportTemplates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
@@ -137,6 +138,11 @@ namespace ProjectFirma.Web.Models
             if(CustomPageImages.Any())
             {
                 dependentObjects.Add(typeof(CustomPageImage).Name);
+            }
+
+            if(DNRUplandRegionContentImages.Any())
+            {
+                dependentObjects.Add(typeof(DNRUplandRegionContentImage).Name);
             }
 
             if(FieldDefinitionDataImages.Any())
@@ -244,7 +250,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantFileResource).Name, typeof(GrantModificationFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantFileResource).Name, typeof(GrantModificationFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -280,6 +286,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in CustomPageImages.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in DNRUplandRegionContentImages.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -400,6 +411,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<Agreement> AgreementsWhereYouAreTheAgreementFileResource { get; set; }
         public virtual ICollection<Classification> ClassificationsWhereYouAreTheKeyImageFileResource { get; set; }
         public virtual ICollection<CustomPageImage> CustomPageImages { get; set; }
+        public virtual ICollection<DNRUplandRegionContentImage> DNRUplandRegionContentImages { get; set; }
         public virtual ICollection<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual ICollection<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual ICollection<FirmaPageImage> FirmaPageImages { get; set; }

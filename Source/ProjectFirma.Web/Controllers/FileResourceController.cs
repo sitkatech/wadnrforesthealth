@@ -269,5 +269,31 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.CustomPageImages.Add(ppImage);
             return Content(viewModel.GetCkEditorJavascriptContentToReturn(fileResource));
         }
+
+
+        /// <summary>
+        /// Dummy fake HTTP "GET" for <see cref="CkEditorUploadFileResourceForDnrUplandRegionPage(DNRUplandRegionPrimaryKey, CkEditorImageUploadViewModel)"/>
+        /// </summary>
+        /// <returns></returns>
+        [CrossAreaRoute]
+        [HttpGet]
+        [CustomPageManageFeature]
+        public ContentResult CkEditorUploadFileResourceForDnrUplandRegionPage(DNRUplandRegionPrimaryKey regionPrimaryKey)
+        {
+            return Content(String.Empty);
+        }
+
+        [CrossAreaRoute]
+        [HttpPost]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        [CustomPageManageFeature]
+        public ContentResult CkEditorUploadFileResourceForDnrUplandRegionPage(DNRUplandRegionPrimaryKey regionPrimaryKey, CkEditorImageUploadViewModel viewModel)
+        {
+            var fileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.upload, CurrentPerson);
+            var region = regionPrimaryKey.EntityObject;
+            var regionContentImage = new DNRUplandRegionContentImage(region, fileResource);
+            HttpRequestStorage.DatabaseEntities.DNRUplandRegionContentImages.Add(regionContentImage);
+            return Content(viewModel.GetCkEditorJavascriptContentToReturn(fileResource));
+        }
     }
 }

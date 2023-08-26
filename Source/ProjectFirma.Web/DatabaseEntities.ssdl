@@ -18,6 +18,7 @@
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DNRUplandRegion" EntityType="ProjectFirma.Web.Models.Store.DNRUplandRegion" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DNRUplandRegionContentImage" EntityType="ProjectFirma.Web.Models.Store.DNRUplandRegionContentImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ExternalMapLayer" EntityType="ProjectFirma.Web.Models.Store.ExternalMapLayer" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.Store.FederalFundCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionData" store:Type="Tables" Schema="dbo" />
@@ -425,6 +426,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID">
       <End Role="DNRUplandRegionCoordinator" EntitySet="Person" />
       <End Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" EntitySet="DNRUplandRegion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DNRUplandRegionContentImage_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_DNRUplandRegionContentImage_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="DNRUplandRegionContentImages" EntitySet="DNRUplandRegionContentImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DNRUplandRegionContentImage_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_DNRUplandRegionContentImage_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="DNRUplandRegionContentImages" EntitySet="DNRUplandRegionContentImage" />
     </AssociationSet>
     <AssociationSet Name="FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID" Association="ProjectFirma.Web.Models.Store.FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID">
       <End Role="FieldDefinitionData" EntitySet="FieldDefinitionData" />
@@ -1730,6 +1739,15 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="RegionPhone" Type="varchar" MaxLength="30" />
     <Property Name="RegionEmail" Type="varchar" MaxLength="255" />
     <Property Name="DNRUplandRegionCoordinatorID" Type="int" />
+    <Property Name="RegionContent" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="DNRUplandRegionContentImage">
+    <Key>
+      <PropertyRef Name="DNRUplandRegionContentImageID" />
+    </Key>
+    <Property Name="DNRUplandRegionContentImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ExternalMapLayer">
     <Key>
@@ -4198,6 +4216,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator">
         <PropertyRef Name="DNRUplandRegionCoordinatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DNRUplandRegionContentImage_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="1" />
+    <End Role="DNRUplandRegionContentImages" Type="ProjectFirma.Web.Models.Store.DNRUplandRegionContentImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="DNRUplandRegionContentImages">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DNRUplandRegionContentImage_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
+    <End Role="DNRUplandRegionContentImages" Type="ProjectFirma.Web.Models.Store.DNRUplandRegionContentImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="DNRUplandRegionContentImages">
+        <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

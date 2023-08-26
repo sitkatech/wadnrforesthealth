@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class County : IAuditableEntity
     {
-        public string DisplayName => "Counties";
+        public string DisplayName => CountyName;
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
@@ -49,10 +49,6 @@ namespace ProjectFirma.Web.Models
             return feature;
         }
 
-        public HtmlString GetDisplayNameAsUrl()
-        {
-            return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
-        }
 
         public string GetDetailUrl()
         {
@@ -87,10 +83,6 @@ namespace ProjectFirma.Web.Models
             return layerGeoJsons;
         }
 
-        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
-        {
-            var projects = GetAssociatedProjects(currentPerson);
-            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
-        }
+
     }
 }

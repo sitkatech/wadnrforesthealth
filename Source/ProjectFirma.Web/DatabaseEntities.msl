@@ -199,6 +199,16 @@
           <ScalarProperty Name="RegionPhone" ColumnName="RegionPhone" />
           <ScalarProperty Name="RegionEmail" ColumnName="RegionEmail" />
           <ScalarProperty Name="DNRUplandRegionCoordinatorID" ColumnName="DNRUplandRegionCoordinatorID" />
+          <ScalarProperty Name="RegionContent" ColumnName="RegionContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DNRUplandRegionContentImage">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.DNRUplandRegionContentImage">
+        <MappingFragment StoreEntitySet="DNRUplandRegionContentImage">
+          <ScalarProperty Name="DNRUplandRegionContentImageID" ColumnName="DNRUplandRegionContentImageID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

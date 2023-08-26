@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
+        public virtual DbSet<DNRUplandRegionContentImage> DNRUplandRegionContentImages { get; set; }
         public virtual DbSet<DNRUplandRegion> DNRUplandRegions { get; set; }
         public virtual DbSet<ExternalMapLayer> ExternalMapLayers { get; set; }
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
@@ -423,6 +424,9 @@ namespace ProjectFirma.Web.Models
                     var division = Division.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(division, "Division", primaryKey);
                     return division;
+
+                case "DNRUplandRegionContentImage":
+                    return DNRUplandRegionContentImages.GetDNRUplandRegionContentImage(primaryKey);
 
                 case "DNRUplandRegion":
                     return DNRUplandRegions.GetDNRUplandRegion(primaryKey);
