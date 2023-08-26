@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[DNRUplandRegion](
 	[RegionPhone] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[RegionEmail] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[DNRUplandRegionCoordinatorID] [int] NULL,
+	[RegionContent] [dbo].[html] NULL,
  CONSTRAINT [PK_DNRUplandRegion_DNRUplandRegionID] PRIMARY KEY CLUSTERED 
 (
 	[DNRUplandRegionID] ASC

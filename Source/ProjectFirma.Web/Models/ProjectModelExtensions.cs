@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
@@ -203,6 +204,17 @@ namespace ProjectFirma.Web.Models
             }
 
             return $"No {FieldDefinition.FundingSource.FieldDefinitionDisplayName} selected.";
+        }
+
+        public static Organization GetLeadImplementer(this Project project)
+        {
+            return project.ProjectOrganizations.Where(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID).Select(x => x.Organization).SingleOrDefault();
+        }
+
+        public static HtmlString GetExpectedFundingGrantAllocationsAsCommaDelimitedList(this Project project)
+        {
+            var grantAllocations = project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation);
+            return new HtmlString(string.Join(", ", grantAllocations.Select(x => x.DisplayNameAsUrl)));
         }
     }
 }

@@ -95,6 +95,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public decimal TotalFootprintAcres
+        {
+            get
+            {
+                return Math.Round(Treatments.Select(x => x.TreatmentFootprintAcres).Sum(), 2);
+            }
+        }
+
         public Organization GetPrimaryContactOrganization()
         {
             return ProjectOrganizations.SingleOrDefault(x => x.RelationshipType.IsPrimaryContact)?.Organization;
@@ -165,6 +173,18 @@ namespace ProjectFirma.Web.Models
             return ProjectGrantAllocationRequests.Any()
                 ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
                 : null;
+        }
+
+        public decimal GetTotalPaymentAmount()
+        {
+            var invoices = this.InvoicePaymentRequests.SelectMany(x => x.Invoices);
+            return invoices.Sum(x => x.PaymentAmount ?? 0);
+        }
+
+        public decimal GetTotalMatchAmount()
+        {
+            var invoices = this.InvoicePaymentRequests.SelectMany(x => x.Invoices);
+            return invoices.Sum(x => x.MatchAmount ?? 0);
         }
 
         //public decimal? GetUnsecuredFunding()

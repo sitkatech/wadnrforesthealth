@@ -134,7 +134,7 @@ namespace ProjectFirma.Web.Controllers
         [DNRUplandRegionViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
-            var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);
+            var gridSpec = new ProjectInfoGridSpecForRegionDetail(CurrentPerson, false);
             var projectRegions = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectRegions, gridSpec);
             return gridJsonNetJObjectResult;
@@ -179,5 +179,39 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditContactViewData(region);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
+
+
+
+        [HttpGet]
+        [DNRUplandRegionManageFeature]
+        public PartialViewResult EditPageContent(DNRUplandRegionPrimaryKey regionPrimaryKey)
+        {
+            var region = regionPrimaryKey.EntityObject;
+            var viewModel = new EditPageContentViewModel(region);
+            return ViewEditPageContent(viewModel, region);
+        }
+
+        [HttpPost]
+        [DNRUplandRegionManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditPageContent(DNRUplandRegionPrimaryKey regionPrimaryKey, EditPageContentViewModel viewModel)
+        {
+            var region = regionPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditPageContent(viewModel, region);
+            }
+            viewModel.UpdateModel(region);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditPageContent(EditPageContentViewModel viewModel, DNRUplandRegion region)
+        {
+            var ckEditorToolbar = CkEditorExtension.CkEditorToolbar.AllOnOneRowNoMaximize;
+            var viewData = new EditPageContentViewData(ckEditorToolbar, SitkaRoute<FileResourceController>.BuildUrlFromExpression(x => x.CkEditorUploadFileResourceForDnrUplandRegionPage(region)));
+            return RazorPartialView<EditPageContent, EditPageContentViewData, EditPageContentViewModel>(viewData, viewModel);
+        }
+
+
     }
 }

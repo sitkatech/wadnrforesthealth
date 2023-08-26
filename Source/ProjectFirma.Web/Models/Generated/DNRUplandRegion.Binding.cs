@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         protected DNRUplandRegion()
         {
             this.Agreements = new HashSet<Agreement>();
+            this.DNRUplandRegionContentImages = new HashSet<DNRUplandRegionContentImage>();
             this.FocusAreas = new HashSet<FocusArea>();
             this.GrantAllocations = new HashSet<GrantAllocation>();
             this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
@@ -36,7 +37,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation, string regionAddress, string regionCity, string regionState, string regionZip, string regionPhone, string regionEmail, int? dNRUplandRegionCoordinatorID) : this()
+        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation, string regionAddress, string regionCity, string regionState, string regionZip, string regionPhone, string regionEmail, int? dNRUplandRegionCoordinatorID, string regionContent) : this()
         {
             this.DNRUplandRegionID = dNRUplandRegionID;
             this.DNRUplandRegionAbbrev = dNRUplandRegionAbbrev;
@@ -49,6 +50,7 @@ namespace ProjectFirma.Web.Models
             this.RegionPhone = regionPhone;
             this.RegionEmail = regionEmail;
             this.DNRUplandRegionCoordinatorID = dNRUplandRegionCoordinatorID;
+            this.RegionContent = regionContent;
         }
 
         /// <summary>
@@ -77,7 +79,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Agreements.Any() || FocusAreas.Any() || GrantAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
+            return Agreements.Any() || DNRUplandRegionContentImages.Any() || FocusAreas.Any() || GrantAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
         }
 
         /// <summary>
@@ -90,6 +92,11 @@ namespace ProjectFirma.Web.Models
             if(Agreements.Any())
             {
                 dependentObjects.Add(typeof(Agreement).Name);
+            }
+
+            if(DNRUplandRegionContentImages.Any())
+            {
+                dependentObjects.Add(typeof(DNRUplandRegionContentImage).Name);
             }
 
             if(FocusAreas.Any())
@@ -122,7 +129,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(DNRUplandRegion).Name, typeof(Agreement).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(DNRUplandRegion).Name, typeof(Agreement).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -148,6 +155,11 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in Agreements.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in DNRUplandRegionContentImages.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -190,10 +202,18 @@ namespace ProjectFirma.Web.Models
         public string RegionPhone { get; set; }
         public string RegionEmail { get; set; }
         public int? DNRUplandRegionCoordinatorID { get; set; }
+        public string RegionContent { get; set; }
+        [NotMapped]
+        public HtmlString RegionContentHtmlString
+        { 
+            get { return RegionContent == null ? null : new HtmlString(RegionContent); }
+            set { RegionContent = value?.ToString(); }
+        }
         [NotMapped]
         public int PrimaryKey { get { return DNRUplandRegionID; } set { DNRUplandRegionID = value; } }
 
         public virtual ICollection<Agreement> Agreements { get; set; }
+        public virtual ICollection<DNRUplandRegionContentImage> DNRUplandRegionContentImages { get; set; }
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }

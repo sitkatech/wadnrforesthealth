@@ -38,13 +38,14 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public readonly Models.DNRUplandRegion DNRUplandRegion;
         public readonly bool UserHasRegionManagePermissions;
         public readonly string IndexUrl;
-        public readonly BasicProjectInfoGridSpec BasicProjectInfoGridSpec;
+        public readonly ProjectInfoGridSpecForRegionDetail BasicProjectInfoGridSpec;
         public readonly string BasicProjectInfoGridName;
         public readonly string BasicProjectInfoGridDataUrl;
         public readonly MapInitJson MapInitJson;
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
         public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
         public string EditContactUrl { get; }
+        public string EditPageContentUrl { get; }
 
         public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
         {
@@ -57,7 +58,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             IndexUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "regionProjectListGrid";
-            BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false)
+            BasicProjectInfoGridSpec = new ProjectInfoGridSpecForRegionDetail(CurrentPerson, false)
             {
                 ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
                 ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
@@ -68,6 +69,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>dnrUplandRegion.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
             EditContactUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditContact(dnrUplandRegion));
+            EditPageContentUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditPageContent(dnrUplandRegion));
 
         }
 
