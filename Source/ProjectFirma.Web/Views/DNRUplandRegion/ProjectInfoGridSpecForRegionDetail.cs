@@ -34,9 +34,9 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 Add(Models.FieldDefinition.Landowner.ToGridHeaderString(), x => string.Join(", ", x.GetPrivateLandowners().Select(y => y.FullNameFirstLast)), 150, DhtmlxGridColumnFilterType.Text);
             }
 
-            Add(Models.FieldDefinition.County.ToGridHeaderString(), x => new HtmlString(string.Join(", ", x.GetProjectCounties().Select(y => y.GetCountyDisplayNameAsUrl()))), 150, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.County.ToGridHeaderString(), x => new HtmlString(string.Join(", ", x.GetProjectCounties().Select(y => y.GetCountyDisplayNameAsUrl()))), 150, DhtmlxGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => x.GetPrimaryContact().GetFullNameFirstLastAsUrl(), 150, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => x.GetPrimaryContact().GetFullNameFirstLastAsUrl(), 150, DhtmlxGridColumnFilterType.Text);
 
 
             Add($"Total {Models.FieldDefinition.TreatedAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalTreatedAcres, 90, DhtmlxGridColumnFormatType.Decimal);
