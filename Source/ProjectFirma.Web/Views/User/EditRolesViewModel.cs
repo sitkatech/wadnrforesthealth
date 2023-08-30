@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Views.User
         {
 
             var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) && BaseRoleID != Models.Role.ProjectSteward.RoleID;
-            var downgradingFromProgramEditor = person.HasRole(Models.Role.CanEditProgram) && BaseRoleID != Models.Role.CanEditProgram.RoleID;
+            var removingCanEditProgramRole = person.HasRole(Models.Role.CanEditProgram) && RoleSimples == null || (RoleSimples != null && RoleSimples.All(x => x.RoleID != Models.Role.CanEditProgram.RoleID));
 
 
             var newPersonRoles = new List<PersonRole>();
@@ -103,7 +103,7 @@ namespace ProjectFirma.Web.Views.User
                 HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.DeletePersonStewardOrganization(person.PersonStewardOrganizations);
             }
 
-            if (downgradingFromProgramEditor)
+            if (removingCanEditProgramRole)
             {
                 HttpRequestStorage.DatabaseEntities.ProgramPeople.DeleteProgramPerson(person.ProgramPeople);
             }

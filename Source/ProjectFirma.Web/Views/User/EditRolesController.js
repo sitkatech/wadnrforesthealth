@@ -39,7 +39,7 @@ angular.module("ProjectFirmaApp").controller("EditRolesController", function($sc
 
         var filteredRoleSelectList = _.filter(allRoles,
             function(f) {
-                return !_.includes(usedRoleIds, f.RoleID)
+                return !_.includes(usedRoleIds, f.RoleID);
             });
 
         return filteredRoleSelectList;

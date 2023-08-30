@@ -69,15 +69,13 @@ Source code is available upon request via <support@sitkatech.com>.
                         data-container="body"
                         title="Select a @FieldDefinition.ProjectStewardshipArea.GetFieldDefinitionLabelPluralized() to Add"
                         data-width="100%">
-                    <option value="null" disabled selected></option>
                     <option ng-repeat="stewardshipArea in filteredStewardshipAreas()"
-                            value="{{stewardshipArea.StewardshipAreaID}}"
+                            ng-value="stewardshipArea.StewardshipAreaID"
                             ng-selected="StewardshipAreaIDToAdd == stewardshipArea.StewardshipAreaID"
-                            ng-bind="stewardshipArea.StewardshipAreaName"
-                            data-tokens="{{stewardshipArea.StewardshipAreaName}}"></option>
+                            ng-bind="stewardshipArea.StewardshipAreaName"></option>
                 </select>
                 <span class="input-group-btn">
-                    <button class="btn btn-firma" type="button" ng-click="addRow()">
+                    <button class="btn btn-firma" type="button" ng-click="addRow(StewardshipAreaIDToAdd)">
                         <span class="glyphicon glyphicon-plus"></span> Add
                     </button>
                 </span>

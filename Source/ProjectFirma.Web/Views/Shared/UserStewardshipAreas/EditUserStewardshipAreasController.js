@@ -30,20 +30,34 @@ angular.module("ProjectFirmaApp").controller("EditUserStewardshipAreasController
 
     $scope.filteredStewardshipAreas = function ()
     {
-        var usedStewardshipAreaIDs = ($scope.AngularModel.PersonStewardshipAreaSimples).map(function (s) { return s.StewardshipAreaID });
-        var filter = _($scope.AngularViewData.AllStewardshipAreas).filter(function (f) { return !_.includes(usedStewardshipAreaIDs, f.StewardshipAreaID); });
-        var orgsFilteredAndSorted = filter.sortBy(["StewardshipAreaName"]).value();
-        return orgsFilteredAndSorted;
+
+        var allAreas = $scope.AngularViewData.AllStewardshipAreas;
+        var usedAreas = $scope.AngularModel.PersonStewardshipAreaSimples;
+        var usedStewardshipAreaIDs = _.map(usedAreas, function (s) { return s.StewardshipAreaID });
+        console.log("used area IDs:" + usedStewardshipAreaIDs);
+
+        var filteredAreas = _.filter(allAreas, function (f) { return !_.includes(usedStewardshipAreaIDs, f.StewardshipAreaID); });
+        return filteredAreas;
     };
 
-    $scope.addRow = function() {
-        if ($scope.StewardshipAreaIDToAdd == null) {
-            return;
+    $scope.addRow = function (areaID) {
+
+        var areas = _.filter($scope.AngularViewData.AllStewardshipAreas,
+            function(f) {
+                return f.StewardshipAreaID === Number(areaID);
+            });
+
+        var selectedArea = areas[0];
+
+        if (selectedArea !== undefined) {
+            var newStewardshipAreaPersonSimple = {
+                StewardshipAreaID: Number(selectedArea.StewardshipAreaID),
+                StewardshipAreaName: selectedArea.StewardshipAreaName
+            }
+            $scope.AngularModel.PersonStewardshipAreaSimples.push(newStewardshipAreaPersonSimple);
         }
-        var newStewardshipAreaPersonSimple = {
-            StewardshipAreaID: $scope.StewardshipAreaIDToAdd,
-        }
-        $scope.AngularModel.PersonStewardshipAreaSimples.push(newStewardshipAreaPersonSimple);
+
+        
         $scope.StewardshipAreaIDToAdd = null;
     };
 
