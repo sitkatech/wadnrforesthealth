@@ -98,10 +98,11 @@ namespace ProjectFirma.Web.Controllers
 
             projectLocationsMapInitJson.Layers.AddRange(HttpRequestStorage.DatabaseEntities.Organizations.GetBoundaryLayerGeoJson());
 
+            projectLocationsMapInitJson.Layers.Add(MapInitJson.GetWashingtonLegislativeDistrictLayer());
             var interactionEventLayer = HttpRequestStorage.DatabaseEntities.InteractionEvents.GetInteractionEventsLayerGeoJson();
             projectLocationsMapInitJson.Layers.Add(interactionEventLayer);
-            projectLocationsMapInitJson.Layers.Add(MapInitJson.GetWashingtonCountyLayer());
-            projectLocationsMapInitJson.Layers.Add(MapInitJson.GetWashingtonLegislativeDistrictLayer());
+            //projectLocationsMapInitJson.Layers.Add(MapInitJson.GetWashingtonCountyLayer());
+            
             
 
             var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID, 

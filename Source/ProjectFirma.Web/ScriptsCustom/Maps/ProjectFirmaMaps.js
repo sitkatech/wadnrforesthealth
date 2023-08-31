@@ -514,7 +514,7 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
 
     ProjectFirmaMaps.Map.prototype.popupForWMSAndVectorLayers = function(wmsLayers, vecLayers, latlng) {
         var self = this;
-
+        
         var point = this.map.latLngToContainerPoint(latlng, this.map.getZoom()),
             size = this.map.getSize(),
 
@@ -582,7 +582,7 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 });
 
                 self.map.setView(latlng);
-                if (jQuery('#findYourForesterContainer')) {
+                if (jQuery('#findYourForesterContainer').length > 0) {
                     jQuery('#findYourForesterContainer').html(self.htmlPopupContents(allLayers));
                 } else {
                     self.map.openPopup(L.popup({ maxWidth: 200, maxHeight: 250 }).setLatLng(latlng).setContent(self.htmlPopupContents(allLayers)).openOn(self.map));
@@ -636,9 +636,9 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
         var labelText = "";
         var linkHtml = "";
         switch (firstFeature.geometry_name) {
-        case "RegionLocation":
-            url = "/DNRUplandRegion/Detail/" + firstFeature.properties.RegionID;
-            linkText = firstFeature.properties.RegionName;
+        case "DNRUplandRegionLocation":
+            url = "/DNRUplandRegion/Detail/" + firstFeature.properties.DNRUplandRegionID;
+            linkText = firstFeature.properties.DNRUplandRegionName;
             linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
             labelText = "DNR Upland Region";
             deferred.resolve({
