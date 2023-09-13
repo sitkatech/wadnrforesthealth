@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
 
             Add($"Total {Models.FieldDefinition.TreatedAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalTreatedAcres, 90, DhtmlxGridColumnFormatType.Decimal);
-            Add($"Total {Models.FieldDefinition.FootprintAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalFootprintAcres, 90, DhtmlxGridColumnFormatType.Decimal);
+            //Add($"Total {Models.FieldDefinition.FootprintAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalFootprintAcres, 90, DhtmlxGridColumnFormatType.Decimal);
 
 
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
