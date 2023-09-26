@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -750,6 +750,7 @@
     <Compile Include="Models\ProjectDocumentType.cs" />
     <Compile Include="Models\ProjectDocumentResource.cs" />
     <Compile Include="Models\ProjectDocumentResourceModelExtensions.cs" />
+    <Compile Include="Models\ProjectLocationTest.cs" />
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\RoleTest.cs" />
     <Compile Include="Models\TreatmentCode.cs" />
