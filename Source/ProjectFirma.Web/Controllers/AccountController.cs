@@ -200,6 +200,7 @@ namespace ProjectFirma.Web.Controllers
                     var roleFromClaims = MapRoleFromClaims(roleGroups);
                     if (!person.PersonRoles.Select(x => x.RoleID).Contains(roleFromClaims.RoleID))
                     {
+                        person.PersonRoles.Where(x => x.Role.IsBaseRole).ToList().ForEach(x => HttpRequestStorage.DatabaseEntities.PersonRoles.Remove(x));
                         person.PersonRoles.Add(new PersonRole(person, roleFromClaims));
                     }
                 }
