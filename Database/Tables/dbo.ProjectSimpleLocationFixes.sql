@@ -12,13 +12,9 @@ CREATE TABLE [dbo].[ProjectSimpleLocationFixes](
 	[ProjectID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
 
+GO
 ALTER TABLE [dbo].[ProjectSimpleLocationFixes]  WITH CHECK ADD  CONSTRAINT [FK_ProjectSimpleLocationFixes_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
-
 ALTER TABLE [dbo].[ProjectSimpleLocationFixes] CHECK CONSTRAINT [FK_ProjectSimpleLocationFixes_Project_ProjectID]
-GO
-
-
