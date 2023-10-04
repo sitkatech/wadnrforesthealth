@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Views.ExcelUpload
         public string GetLastLoaSoutheastUploadedDateAndPersonString()
         {
             var lastLoaSoutheastUploadDate = LatestTabularDataImportForLoaSoutheast?.UploadDate;
-            return lastLoaSoutheastUploadDate != null ? $"{lastLoaSoutheastUploadDate} - {LatestTabularDataImportForLoaNortheast.UploadPerson.FullNameFirstLast}" : "Unknown";
+            return lastLoaSoutheastUploadDate != null ? $"{lastLoaSoutheastUploadDate} - {LatestTabularDataImportForLoaSoutheast.UploadPerson.FullNameFirstLast}" : "Unknown";
         }
 
 
