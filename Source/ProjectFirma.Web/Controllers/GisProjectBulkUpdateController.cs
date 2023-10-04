@@ -391,7 +391,13 @@ namespace ProjectFirma.Web.Controllers
                         importedProjectAreaIndex++;
                     }
 
-                    var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
+                    var combinedGeometry = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault();
+                    if (combinedGeometry != null)
+                    {
+                        gisFeatures.Skip(1).ToList().ForEach(x => combinedGeometry.Union(x.GisFeatureGeometry));
+                    }
+
+                    var centroid = combinedGeometry?.Centroid;
                     if (centroid != null)
                     {
                         project.ProjectLocationPoint = centroid;
