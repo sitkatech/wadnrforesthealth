@@ -391,10 +391,14 @@ namespace ProjectFirma.Web.Controllers
                         importedProjectAreaIndex++;
                     }
 
-                    var combinedGeometry = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault();
+                    var features = gisFeatures.Select(x => x.GisFeatureGeometry).Where(x => x != null).ToList();
+                    features.AddRange(project.ProjectLocations.Where(x => x.ProjectLocationType.ProjectLocationTypeID == ProjectLocationType.ProjectArea.ProjectLocationTypeID && x.ProgramID != programID).Select(x => x.ProjectLocationGeometry));
+                        
+                    var combinedGeometry = features.FirstOrDefault();
+
                     if (combinedGeometry != null)
                     {
-                        gisFeatures.Skip(1).ToList().ForEach(x => combinedGeometry.Union(x.GisFeatureGeometry));
+                        features.ToList().ForEach(x => combinedGeometry.Union(x));
                     }
 
                     var centroid = combinedGeometry?.Centroid;
