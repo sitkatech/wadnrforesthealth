@@ -1,19 +1,3 @@
-create table ProjectSimpleLocationFixes
-(
-    ProjectID int not null,
-    OldProjectLocationPoint geometry null,
-    NewProjectLocationPoint geometry not null,
-    UpdatedDate datetime not null, 
-    CONSTRAINT [PK_ProjectSimpleLocationFixes_ProjectID] PRIMARY KEY CLUSTERED 
-    (
-	    ProjectID ASC
-    )
-)
-
-ALTER TABLE dbo.ProjectSimpleLocationFixes  WITH CHECK ADD  CONSTRAINT [FK_ProjectSimpleLocationFixes_Project_ProjectID] FOREIGN KEY([ProjectID])
-REFERENCES dbo.Project (ProjectID)
-GO
-
 drop table if exists #tmpA
 select  p.ProjectID,
     p.ProjectName, 
