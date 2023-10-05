@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectSimpleLocationFixes](
-    [ProjectSimpleLocationFixesID] [int] NOT NULL,
+	[ProjectSimpleLocationFixesID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[OldProjectLocationPoint] [geometry] NULL,
 	[NewProjectLocationPoint] [geometry] NOT NULL,
@@ -19,4 +19,3 @@ ALTER TABLE [dbo].[ProjectSimpleLocationFixes]  WITH CHECK ADD  CONSTRAINT [FK_P
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectSimpleLocationFixes] CHECK CONSTRAINT [FK_ProjectSimpleLocationFixes_Project_ProjectID]
-GO
