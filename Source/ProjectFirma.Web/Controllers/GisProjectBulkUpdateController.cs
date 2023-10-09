@@ -801,7 +801,10 @@ namespace ProjectFirma.Web.Controllers
                 {
                     project.ProjectApprovalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
                 }
-                if (projectStage == ProjectStage.Implementation && project.ProjectApprovalStatusID == ProjectApprovalStatus.PendingApproval.ProjectApprovalStatusID)
+                if (projectStage == ProjectStage.Implementation  
+                    && (project.ProjectApprovalStatusID == ProjectApprovalStatus.Draft.ProjectApprovalStatusID
+                        || 
+                        project.ProjectApprovalStatusID == ProjectApprovalStatus.PendingApproval.ProjectApprovalStatusID))
                 {
                     project.ProjectApprovalStatusID = ProjectApprovalStatus.Approved.ProjectApprovalStatusID;
                 }
