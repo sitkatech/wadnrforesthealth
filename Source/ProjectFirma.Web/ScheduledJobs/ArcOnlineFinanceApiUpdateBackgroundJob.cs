@@ -123,7 +123,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             catch (Exception e)
             {
-                Logger.Error($"Error getting Arc Online Response. Trying 1 more time: {e}");
+                Logger.Warn($"Error getting Arc Online Response. Trying 1 more time: {e}");
             }
 
             return hc.GetStringAsync(queryUrl).Result;
