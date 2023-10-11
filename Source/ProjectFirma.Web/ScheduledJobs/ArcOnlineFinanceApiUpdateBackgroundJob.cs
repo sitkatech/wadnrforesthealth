@@ -94,7 +94,9 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                     //Console.WriteLine($"\r\n-==Query String==-\r\n{queryUrl}");
 
-                    var respTxt = hc.GetStringAsync(queryUrl).Result;
+                    var respTxt = GetResponseTextWithOneRetry(hc, queryUrl);
+
+
                     dynamic respObj = JsonConvert.DeserializeObject(respTxt);
                     hasDataToQuery = Convert.ToBoolean(respObj.exceededTransferLimit);
                     foreach (var item in respObj.features)
@@ -111,6 +113,21 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         }
 
+        private string GetResponseTextWithOneRetry(HttpClient hc, string queryUrl)
+        {
+
+            try
+            {
+                var respTxt = hc.GetStringAsync(queryUrl).Result;
+                return respTxt;
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Error getting Arc Online Response. Trying 1 more time: {e}");
+            }
+
+            return hc.GetStringAsync(queryUrl).Result;
+        }
 
 
         public int ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType arcOnlineFinanceApiRawJsonImportTableType,
