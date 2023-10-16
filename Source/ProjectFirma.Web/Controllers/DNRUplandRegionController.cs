@@ -139,7 +139,17 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectRegions, gridSpec);
             return gridJsonNetJObjectResult;
         }
-        
+
+
+        [DNRUplandRegionViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
+        {
+            var gridSpec = new AssociatedGrantAllocationsGridSpec(CurrentPerson, false);
+            var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
         [AnonymousUnclassifiedFeature]
         public PartialViewResult MapTooltip(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {

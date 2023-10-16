@@ -39,8 +39,11 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public readonly bool UserHasRegionManagePermissions;
         public readonly string IndexUrl;
         public readonly ProjectInfoGridSpecForRegionDetail BasicProjectInfoGridSpec;
+        public readonly AssociatedGrantAllocationsGridSpec AssociatedGrantAllocationsGridSpec;
         public readonly string BasicProjectInfoGridName;
+        public readonly string AssociatedGrantAllocationsGridName;
         public readonly string BasicProjectInfoGridDataUrl;
+        public readonly string AssociatedGrantAllocationsGridDataUrl;
         public readonly MapInitJson MapInitJson;
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
         public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
@@ -64,8 +67,16 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
                 SaveFiltersInCookie = true
             };
-          
             BasicProjectInfoGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(dnrUplandRegion));
+
+            AssociatedGrantAllocationsGridName = "regionGrantAllocationsListGrid";
+            AssociatedGrantAllocationsGridSpec = new AssociatedGrantAllocationsGridSpec(CurrentPerson, false)
+            {
+                ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
+                ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
+                SaveFiltersInCookie = true
+            };
+            AssociatedGrantAllocationsGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.GrantAllocationsGridJsonData(dnrUplandRegion));
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>dnrUplandRegion.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
             EditContactUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditContact(dnrUplandRegion));

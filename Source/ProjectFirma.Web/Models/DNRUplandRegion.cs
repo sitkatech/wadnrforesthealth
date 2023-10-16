@@ -49,6 +49,16 @@ namespace ProjectFirma.Web.Models
             return projects.GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
 
+        public List<GrantAllocation> GetAssociatedGrantAllocations(Person currentPerson)
+        {
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations
+                .Where(x => x.DNRUplandRegionID == this.DNRUplandRegionID)
+                //.Include(x => x.GrantAllocationLikelyPeople)
+                .ToList();
+
+            return grantAllocations;
+        }
+
         public string AuditDescriptionString => DNRUplandRegionName;
 
         public Feature MakeFeatureWithRelevantProperties()

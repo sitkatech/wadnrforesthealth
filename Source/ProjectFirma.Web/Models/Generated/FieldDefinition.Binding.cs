@@ -359,6 +359,16 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionSubObject SubObject = FieldDefinitionSubObject.Instance;
         public static readonly FieldDefinitionServiceForestryProgramManager ServiceForestryProgramManager = FieldDefinitionServiceForestryProgramManager.Instance;
         public static readonly FieldDefinitionForestRegulationFishAndWildlifeBiologist ForestRegulationFishAndWildlifeBiologist = FieldDefinitionForestRegulationFishAndWildlifeBiologist.Instance;
+        public static readonly FieldDefinitionFundFSPs FundFSPs = FieldDefinitionFundFSPs.Instance;
+        public static readonly FieldDefinitionSource Source = FieldDefinitionSource.Instance;
+        public static readonly FieldDefinitionAllocation Allocation = FieldDefinitionAllocation.Instance;
+        public static readonly FieldDefinitionTotalGrantFunds TotalGrantFunds = FieldDefinitionTotalGrantFunds.Instance;
+        public static readonly FieldDefinitionOverallBalance OverallBalance = FieldDefinitionOverallBalance.Instance;
+        public static readonly FieldDefinitionContractualBalance ContractualBalance = FieldDefinitionContractualBalance.Instance;
+        public static readonly FieldDefinitionTravelBalance TravelBalance = FieldDefinitionTravelBalance.Instance;
+        public static readonly FieldDefinitionStaffBalance StaffBalance = FieldDefinitionStaffBalance.Instance;
+        public static readonly FieldDefinitionLikelyToUse LikelyToUse = FieldDefinitionLikelyToUse.Instance;
+        public static readonly FieldDefinitionCompleted Completed = FieldDefinitionCompleted.Instance;
 
         public static readonly List<FieldDefinition> All;
         public static readonly ReadOnlyDictionary<int, FieldDefinition> AllLookupDictionary;
@@ -368,7 +378,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, DNRUplandRegion, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, PaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectBalance, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationBalance, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsName, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationBalance, GrantAllocationAwardTravelName, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationBalance, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundBalance, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationBalance, GrantAllocationAwardContractorInvoiceLandownerCostShareBalance, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationBalance, GrantAllocationAwardLandownerCostShareStatus, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, GrantAllocationAwardLandownerCostShareNotes, GrantAllocationAwardLandownerCostShareAllocatedAmount, GrantAllocationAwardLandownerCostShareTotalCost, GrantAllocationAwardLandownerCostShareGrantCost, GrantAllocationAwardContractorInvoiceDescription, GrantAllocationAwardContractorInvoiceNumber, GrantAllocationAwardContractorInvoiceDate, GrantAllocationAwardContractorInvoiceType, GrantAllocationAwardContractorInvoiceForemanHours, GrantAllocationAwardContractorInvoiceForemanRate, GrantAllocationAwardContractorInvoiceLaborHours, GrantAllocationAwardContractorInvoiceLaborRate, GrantAllocationAwardContractorInvoiceGrappleHours, GrantAllocationAwardContractorInvoiceGrappleRate, GrantAllocationAwardContractorInvoiceMasticationHours, GrantAllocationAwardContractorInvoiceMasticationRate, GrantAllocationAwardContractorInvoiceTotal, GrantAllocationAwardContractorInvoiceTaxRate, GrantAllocationAwardContractorInvoiceAcresReported, GrantAllocationAwardContractorInvoiceDocumentUpload, GrantAllocationAwardContractorInvoiceNotes, GrantAllocationAwardContractual, GrantAllocationAwardContractualAllocationTotal, GrantAllocationAwardContractualAllocationBalance, GrantAllocationAwardSuppliesLineItem, GrantAllocationAwardPersonnelAndBenefitsLineItem, GrantAllocationAwardTravelLineItem, GrantAllocationAwardLandownerCostShareLineItem, GrantAllocationAwardContractorInvoiceLineItem, GrantAllocationAwardSpentAmount, GrantAllocationAwardBalance, GrantAllocationAwardLandownerCostShareActualMatch, GrantAllocationAwardCalendarStartYear, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipFishAndWildlifeBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityResilienceCoordinator, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist, ExternalMapLayer, ExternalMapLayerDisplayName, ExternalMapLayerUrl, ExternalMapLayerDescription, ExternalMapLayerFeatureNameField, ExternalMapLayerDisplayOnPriorityLandscape, ExternalMapLayerDisplayOnProjectMap, ExternalMapLayerDisplayOnAllOthers, ExternalMapLayerIsATiledMapService, ExternalMapLayerIsActive, UpdatesFromImport, TreatmentCode, TreatmentCostPerAcre, TreatmentTotalCost, ServiceForestryRegionalCoordinator, County, PercentageMatch, ReportTitle, ReportDescription, ReportFile, ReportModel, SelectedReportTemplate, InvoicePaymentRequest, DUNS, OrganizationCode, InvoiceNumber, Fund, Appn, SubObject, ServiceForestryProgramManager, ForestRegulationFishAndWildlifeBiologist };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, DNRUplandRegion, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, PaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectBalance, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationBalance, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsName, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationBalance, GrantAllocationAwardTravelName, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationBalance, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundBalance, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationBalance, GrantAllocationAwardContractorInvoiceLandownerCostShareBalance, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationBalance, GrantAllocationAwardLandownerCostShareStatus, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, GrantAllocationAwardLandownerCostShareNotes, GrantAllocationAwardLandownerCostShareAllocatedAmount, GrantAllocationAwardLandownerCostShareTotalCost, GrantAllocationAwardLandownerCostShareGrantCost, GrantAllocationAwardContractorInvoiceDescription, GrantAllocationAwardContractorInvoiceNumber, GrantAllocationAwardContractorInvoiceDate, GrantAllocationAwardContractorInvoiceType, GrantAllocationAwardContractorInvoiceForemanHours, GrantAllocationAwardContractorInvoiceForemanRate, GrantAllocationAwardContractorInvoiceLaborHours, GrantAllocationAwardContractorInvoiceLaborRate, GrantAllocationAwardContractorInvoiceGrappleHours, GrantAllocationAwardContractorInvoiceGrappleRate, GrantAllocationAwardContractorInvoiceMasticationHours, GrantAllocationAwardContractorInvoiceMasticationRate, GrantAllocationAwardContractorInvoiceTotal, GrantAllocationAwardContractorInvoiceTaxRate, GrantAllocationAwardContractorInvoiceAcresReported, GrantAllocationAwardContractorInvoiceDocumentUpload, GrantAllocationAwardContractorInvoiceNotes, GrantAllocationAwardContractual, GrantAllocationAwardContractualAllocationTotal, GrantAllocationAwardContractualAllocationBalance, GrantAllocationAwardSuppliesLineItem, GrantAllocationAwardPersonnelAndBenefitsLineItem, GrantAllocationAwardTravelLineItem, GrantAllocationAwardLandownerCostShareLineItem, GrantAllocationAwardContractorInvoiceLineItem, GrantAllocationAwardSpentAmount, GrantAllocationAwardBalance, GrantAllocationAwardLandownerCostShareActualMatch, GrantAllocationAwardCalendarStartYear, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipFishAndWildlifeBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityResilienceCoordinator, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist, ExternalMapLayer, ExternalMapLayerDisplayName, ExternalMapLayerUrl, ExternalMapLayerDescription, ExternalMapLayerFeatureNameField, ExternalMapLayerDisplayOnPriorityLandscape, ExternalMapLayerDisplayOnProjectMap, ExternalMapLayerDisplayOnAllOthers, ExternalMapLayerIsATiledMapService, ExternalMapLayerIsActive, UpdatesFromImport, TreatmentCode, TreatmentCostPerAcre, TreatmentTotalCost, ServiceForestryRegionalCoordinator, County, PercentageMatch, ReportTitle, ReportDescription, ReportFile, ReportModel, SelectedReportTemplate, InvoicePaymentRequest, DUNS, OrganizationCode, InvoiceNumber, Fund, Appn, SubObject, ServiceForestryProgramManager, ForestRegulationFishAndWildlifeBiologist, FundFSPs, Source, Allocation, TotalGrantFunds, OverallBalance, ContractualBalance, TravelBalance, StaffBalance, LikelyToUse, Completed };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -464,6 +474,8 @@ namespace ProjectFirma.Web.Models
                     return AgreementTitle;
                 case FieldDefinitionEnum.AgreementType:
                     return AgreementType;
+                case FieldDefinitionEnum.Allocation:
+                    return Allocation;
                 case FieldDefinitionEnum.AllocationAmount:
                     return AllocationAmount;
                 case FieldDefinitionEnum.Application:
@@ -492,6 +504,8 @@ namespace ProjectFirma.Web.Models
                     return ClassificationSystemName;
                 case FieldDefinitionEnum.CommunityResilienceCoordinator:
                     return CommunityResilienceCoordinator;
+                case FieldDefinitionEnum.Completed:
+                    return Completed;
                 case FieldDefinitionEnum.CompletionDate:
                     return CompletionDate;
                 case FieldDefinitionEnum.Contact:
@@ -500,6 +514,8 @@ namespace ProjectFirma.Web.Models
                     return ContactRelationshipType;
                 case FieldDefinitionEnum.Contractor:
                     return Contractor;
+                case FieldDefinitionEnum.ContractualBalance:
+                    return ContractualBalance;
                 case FieldDefinitionEnum.CostType:
                     return CostType;
                 case FieldDefinitionEnum.County:
@@ -586,6 +602,8 @@ namespace ProjectFirma.Web.Models
                     return Fund;
                 case FieldDefinitionEnum.FundedAmount:
                     return FundedAmount;
+                case FieldDefinitionEnum.FundFSPs:
+                    return FundFSPs;
                 case FieldDefinitionEnum.FundingSource:
                     return FundingSource;
                 case FieldDefinitionEnum.FundingSourceNote:
@@ -900,6 +918,8 @@ namespace ProjectFirma.Web.Models
                     return Landowner;
                 case FieldDefinitionEnum.LifecycleOperatingCost:
                     return LifecycleOperatingCost;
+                case FieldDefinitionEnum.LikelyToUse:
+                    return LikelyToUse;
                 case FieldDefinitionEnum.LimitVisibilityToAdmin:
                     return LimitVisibilityToAdmin;
                 case FieldDefinitionEnum.MatchAmount:
@@ -924,6 +944,8 @@ namespace ProjectFirma.Web.Models
                     return OrganizationPrimaryContact;
                 case FieldDefinitionEnum.OrganizationType:
                     return OrganizationType;
+                case FieldDefinitionEnum.OverallBalance:
+                    return OverallBalance;
                 case FieldDefinitionEnum.Partner:
                     return Partner;
                 case FieldDefinitionEnum.Password:
@@ -1076,8 +1098,12 @@ namespace ProjectFirma.Web.Models
                     return SmallForestLandownerOfficeProgramManager;
                 case FieldDefinitionEnum.SmallForestLandownerProgramManager:
                     return SmallForestLandownerProgramManager;
+                case FieldDefinitionEnum.Source:
+                    return Source;
                 case FieldDefinitionEnum.SpendingAssociatedWithPM:
                     return SpendingAssociatedWithPM;
+                case FieldDefinitionEnum.StaffBalance:
+                    return StaffBalance;
                 case FieldDefinitionEnum.StatewideVendorNumber:
                     return StatewideVendorNumber;
                 case FieldDefinitionEnum.StewardshipFishAndWildlifeBiologist:
@@ -1100,6 +1126,10 @@ namespace ProjectFirma.Web.Models
                     return TaxonomyTrunkDescription;
                 case FieldDefinitionEnum.TotalAwardAmount:
                     return TotalAwardAmount;
+                case FieldDefinitionEnum.TotalGrantFunds:
+                    return TotalGrantFunds;
+                case FieldDefinitionEnum.TravelBalance:
+                    return TravelBalance;
                 case FieldDefinitionEnum.TreatedAcres:
                     return TreatedAcres;
                 case FieldDefinitionEnum.TreatmentCode:
@@ -1473,7 +1503,17 @@ namespace ProjectFirma.Web.Models
         Appn = 520,
         SubObject = 521,
         ServiceForestryProgramManager = 522,
-        ForestRegulationFishAndWildlifeBiologist = 523
+        ForestRegulationFishAndWildlifeBiologist = 523,
+        FundFSPs = 524,
+        Source = 525,
+        Allocation = 526,
+        TotalGrantFunds = 527,
+        OverallBalance = 528,
+        ContractualBalance = 529,
+        TravelBalance = 530,
+        StaffBalance = 531,
+        LikelyToUse = 532,
+        Completed = 533
     }
 
     public partial class FieldDefinitionProjectType : FieldDefinition
@@ -3514,5 +3554,65 @@ namespace ProjectFirma.Web.Models
     {
         private FieldDefinitionForestRegulationFishAndWildlifeBiologist(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
         public static readonly FieldDefinitionForestRegulationFishAndWildlifeBiologist Instance = new FieldDefinitionForestRegulationFishAndWildlifeBiologist(523, @"ForestRegulationFishAndWildlifeBiologist", @"Forest Regulation Fish & Wildlife Biologist", @"Placeholder definition for forester role, Forest Regulation Fish & Wildlife Biologist");
+    }
+
+    public partial class FieldDefinitionFundFSPs : FieldDefinition
+    {
+        private FieldDefinitionFundFSPs(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundFSPs Instance = new FieldDefinitionFundFSPs(524, @"FundFSPs", @"Fund FSP's?", @"Placeholder definition for Grant Allocation Fund FSP's");
+    }
+
+    public partial class FieldDefinitionSource : FieldDefinition
+    {
+        private FieldDefinitionSource(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionSource Instance = new FieldDefinitionSource(525, @"Source", @"Source", @"Placeholder definition for Grant Allocation Source");
+    }
+
+    public partial class FieldDefinitionAllocation : FieldDefinition
+    {
+        private FieldDefinitionAllocation(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionAllocation Instance = new FieldDefinitionAllocation(526, @"Allocation", @"Allocation", @"Placeholder definition for Grant Allocation Allocation");
+    }
+
+    public partial class FieldDefinitionTotalGrantFunds : FieldDefinition
+    {
+        private FieldDefinitionTotalGrantFunds(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionTotalGrantFunds Instance = new FieldDefinitionTotalGrantFunds(527, @"TotalGrantFunds", @"Total Grant Funds", @"Placeholder definition for Grant Allocation Total Grant Funds");
+    }
+
+    public partial class FieldDefinitionOverallBalance : FieldDefinition
+    {
+        private FieldDefinitionOverallBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionOverallBalance Instance = new FieldDefinitionOverallBalance(528, @"OverallBalance", @"Overall Balance", @"Placeholder definition for Grant Allocation Overall Balance");
+    }
+
+    public partial class FieldDefinitionContractualBalance : FieldDefinition
+    {
+        private FieldDefinitionContractualBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionContractualBalance Instance = new FieldDefinitionContractualBalance(529, @"ContractualBalance", @"Contractual Balance", @"Placeholder definition for Grant Allocation Contractual Balance");
+    }
+
+    public partial class FieldDefinitionTravelBalance : FieldDefinition
+    {
+        private FieldDefinitionTravelBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionTravelBalance Instance = new FieldDefinitionTravelBalance(530, @"Travel Balance", @"Travel Balance", @"Placeholder definition for Grant Allocation Travel Balance");
+    }
+
+    public partial class FieldDefinitionStaffBalance : FieldDefinition
+    {
+        private FieldDefinitionStaffBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionStaffBalance Instance = new FieldDefinitionStaffBalance(531, @"StaffBalance", @"Staff Balance", @"Placeholder definition for Grant Allocation Staff Balance");
+    }
+
+    public partial class FieldDefinitionLikelyToUse : FieldDefinition
+    {
+        private FieldDefinitionLikelyToUse(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionLikelyToUse Instance = new FieldDefinitionLikelyToUse(532, @"LikelyToUse", @"Likely To Use", @"Placeholder definition for Grant Allocation Likely To Use");
+    }
+
+    public partial class FieldDefinitionCompleted : FieldDefinition
+    {
+        private FieldDefinitionCompleted(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionCompleted Instance = new FieldDefinitionCompleted(533, @"Completed", @"Completed", @"Placeholder definition for Grant Allocation Completed");
     }
 }
