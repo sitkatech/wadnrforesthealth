@@ -44,7 +44,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
         public IEnumerable<SelectListItem> ProgramManagersSelectList { get; }
         public IEnumerable<SelectListItem> GrantManagers { get; }
+        public IEnumerable<SelectListItem> Sources { get; }
         public string AddContactUrl { get; }
+        public bool? HasFundFsps { get; }
+        public IEnumerable<SelectListItem> LikelyPeopleSelectList { get; }
 
         public EditGrantAllocationAngularViewData AngularViewData { get; }
 
@@ -59,6 +62,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                                         IEnumerable<Division> divisions,
                                         IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
+                                        IEnumerable<GrantAllocationSource> sources,
                                         List<Person> allPeople)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
@@ -90,6 +94,14 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             EditGrantAllocationType = editGrantAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
+            HasFundFsps = grantAllocationBeingEdited?.HasFundFSPs;
+            Sources = sources.ToSelectListWithEmptyFirstRow(
+                x => x.GrantAllocationSourceID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationSourceDisplayName);
+
+            LikelyPeopleSelectList = allPeople.OrderBy(x => x.FullNameLastFirst)
+                .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FullNameFirstLastAndOrgShortName);
+
         }
 
     }

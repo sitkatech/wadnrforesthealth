@@ -744,6 +744,8 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrict.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
     <Compile Include="Models\AgreementProject.cs" />
+    <Compile Include="Models\GrantAllocationSource.cs" />
+    <Compile Include="Models\GrantAllocationLikelyPerson.cs" />
     <Compile Include="Models\InvoicePaymentRequest.cs" />
     <Compile Include="Models\FirmaPageModelExtensions.cs" />
     <Compile Include="Models\FieldDefinitionModelExtensions.cs" />
