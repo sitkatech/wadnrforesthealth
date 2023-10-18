@@ -77,6 +77,24 @@ namespace ProjectFirma.Web.Models
             return new HtmlString(programManagerUrlsStringBuilder.ToString());
         }
 
+        public HtmlString GetAllLikelyToUsePersonNamesAsUrls()
+        {
+            var likelyToUseUrlsList = this.GrantAllocationLikelyPeople.Select(ltup => ltup.Person.GetFullNameFirstLastAsUrl()).ToList();
+            var likelyToUseUrlsStringBuilder = new StringBuilder();
+            foreach (var likelyToUseUrl in likelyToUseUrlsList)
+            {
+                if (likelyToUseUrlsStringBuilder.Length < 1)
+                {
+                    likelyToUseUrlsStringBuilder.Append(likelyToUseUrl);
+                }
+                else
+                {
+                    likelyToUseUrlsStringBuilder.Append(", " + likelyToUseUrl);
+                }
+            }
+            return new HtmlString(likelyToUseUrlsStringBuilder.ToString());
+        }
+
         /// <summary>
         /// Allocation is the percentage based on pay amount total from "expected funding by project" section from the grant allocation detail page divided by the contractual amount from the "grant allocation budget line items" section on the grant allocation detail page
         /// </summary>
@@ -99,6 +117,21 @@ namespace ProjectFirma.Web.Models
             return allocationCurrentBalance - indirect;
         }
 
+
+        public HtmlString ToLikelyToUsePeopleListDisplay()
+        {
+
+            var likelyToUse = GrantAllocationLikelyPeople.Select(x=>x.Person.GetFullNameFirstLastAsUrl()).ToList();
+            
+            var returnList = string.Join(", ", likelyToUse);
+            if (likelyToUse.Any())
+            {
+                return new HtmlString(returnList);
+            }
+
+            return new HtmlString(string.Empty);
+
+        }
         private Dictionary<int, string> AllocationColor = new Dictionary<int, string>()
         {
             {0,  "#00B050"},

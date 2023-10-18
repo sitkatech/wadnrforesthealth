@@ -515,7 +515,7 @@
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
           <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
-          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="GrantAllocationPriorityID" ColumnName="GrantAllocationPriorityID" />
           <ScalarProperty Name="HasFundFSPs" ColumnName="HasFundFSPs" />
           <ScalarProperty Name="GrantAllocationSourceID" ColumnName="GrantAllocationSourceID" />
         </MappingFragment>
@@ -743,6 +743,15 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationPriority">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationPriority">
+        <MappingFragment StoreEntitySet="GrantAllocationPriority">
+          <ScalarProperty Name="GrantAllocationPriorityID" ColumnName="GrantAllocationPriorityID" />
+          <ScalarProperty Name="GrantAllocationPriorityNumber" ColumnName="GrantAllocationPriorityNumber" />
+          <ScalarProperty Name="GrantAllocationPriorityColor" ColumnName="GrantAllocationPriorityColor" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

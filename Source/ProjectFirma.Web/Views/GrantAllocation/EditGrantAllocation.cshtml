@@ -75,19 +75,15 @@
                 //console.log("dnrUplandRegionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
-        debugger;
         jQuery(":radio[class='likely-to-use']").on("change", function () {
-            debugger;
             if (jQuery(this).val() == "False") {
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", true);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", true);
                 jQuery(".likely-to-use-div").css("display", "none");
-                //console.log("dnrUplandRegionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", false);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", false);
                 jQuery(".likely-to-use-div").css("display", "block");
-                //console.log("dnrUplandRegionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
@@ -248,8 +244,19 @@
                 @Html.ValidationMessageFor(m => m.EndDate)
             </div>
         </div>
+    
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.PriorityID)
+        </div>
+        <div class="col-xs-6">
+            @Html.SearchableDropDownListFor(m => m.PriorityID, ViewDataTyped.Priorities, new { style = "width: auto;", @class = "form-control selectpicker" })
+            @Html.ValidationMessageFor(m => m.PriorityID)
+        </div>
+    </div>
+    
 
-        <div class="form-group">
+    <div class="form-group">
             <div class="col-xs-3 control-label">
                 @Html.LabelWithSugarFor(m => m.FundFSPsBool)
             </div>
@@ -266,7 +273,7 @@
                 </div>
                 <div class="radio-inline">
                     <label>
-                        @Html.RadioButtonFor(m => m.FundFSPsBool, string.Empty, null) N/A
+                        @Html.RadioButtonFor(m => m.FundFSPsBool, string.Empty, new {@class = "fund-fsps-na"}) N/A
                     </label>
                 </div>
                 @Html.ValidationMessageFor(m => m.FundFSPsBool)
@@ -299,7 +306,6 @@
                         <label>
                             @Html.RadioButtonFor(m => m.LikelyToUsePeopleBool, true, new { @class = "likely-to-use" }) List of Users
                         </label>
-
                     </div>
                     <div class="likely-to-use-div">
                         @Html.SearchableMultiSelectDropDownListFor(m => m.LikelyToUsePeopleIds, ViewDataTyped.LikelyPeopleSelectList, new { style = "width: auto;", @class = "form-control selectpicker likely-to-use-people-dropdown"})
@@ -388,13 +394,16 @@
                 },
                 html: true
             });
+        if(@(String.IsNullOrEmpty(Model.FundFSPsBool.ToString()) ? "true" : "false") == true) {
+            jQuery(":radio[class='fund-fsps-na']").prop("checked", true)
 
+        }
 
-         if("@(Model.LikelyToUsePeopleBool.ToString())" == "False"){
+        if("@(Model.LikelyToUsePeopleBool.ToString())" == "False"){
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", true);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", true);
                 jQuery(".likely-to-use-div").css("display", "none");
-            } else {
+        } else {
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", false);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", false);
                 jQuery(".likely-to-use-div").css("display", "block");

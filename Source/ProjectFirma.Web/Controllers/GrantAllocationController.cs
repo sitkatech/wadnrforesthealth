@@ -120,6 +120,7 @@ namespace ProjectFirma.Web.Controllers
             var regions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
             var sources = HttpRequestStorage.DatabaseEntities.GrantAllocationSources;
+            var priorities = HttpRequestStorage.DatabaseEntities.GrantAllocationPriorities;
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
             List<GrantModification> grantModifications;
             if (optionalRelevantGrant == null)
@@ -141,6 +142,7 @@ namespace ProjectFirma.Web.Controllers
                                                             regions,
                                                             federalFundCodes,
                                                             sources,
+                                                            priorities,
                                                             people
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);

@@ -11,9 +11,24 @@ create table dbo.GrantAllocationSource (
 )
 go
 
-alter table dbo.GrantAllocation
-add Priority int null
+create table dbo.GrantAllocationPriority(
+	GrantAllocationPriorityID int not null, 
+	GrantAllocationPriorityNumber int not null,
+	GrantAllocationPriorityColor varchar(8) not null,
+	constraint [PK_GrantAllocationSource_GrantAllocationPriorityID] PRIMARY KEY CLUSTERED 
+	(
+		GrantAllocationPriorityID ASC
+	)
+)
 go
+
+alter table dbo.GrantAllocation
+add GrantAllocationPriorityID int null
+go
+
+ALTER TABLE [dbo].GrantAllocation WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID] FOREIGN KEY(GrantAllocationPriorityID)
+REFERENCES [dbo].GrantAllocationPriority (GrantAllocationPriorityID)
+GO
 
 alter table dbo.GrantAllocation
 add HasFundFSPs bit null

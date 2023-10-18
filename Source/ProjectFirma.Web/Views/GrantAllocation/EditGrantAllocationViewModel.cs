@@ -82,6 +82,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantManager)]
         public int? GrantManagerID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationPriority)]
+        public int? PriorityID { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationFundFSPs)]
         public bool? FundFSPsBool { get; set; }
 
@@ -126,6 +129,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EndDate = grantAllocation.EndDate;
             ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
             GrantManagerID = grantAllocation.GrantManagerID;
+            PriorityID = grantAllocation.GrantAllocationPriorityID;
             FundFSPsBool = grantAllocation.HasFundFSPs;
             SourceID = grantAllocation.GrantAllocationSource?.GrantAllocationSourceID;
             LikelyToUsePeopleBool = grantAllocation.GrantAllocationLikelyPeople.Any();
@@ -205,6 +209,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
+            grantAllocation.GrantAllocationPriorityID = PriorityID;
             grantAllocation.DNRUplandRegionID = DNRUplandRegionID;
             if (grantAllocation.AllocationAmount != AllocationAmount)
             {
@@ -297,6 +302,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 EndDate = EndDate,
                 ProgramManagerPersonIDs = ProgramManagerPersonIDs,
                 GrantManagerID = GrantManagerID,
+                PriorityID = PriorityID,
                 FundFSPsBool = FundFSPsBool,
                 SourceID = SourceID,
                 LikelyToUsePeopleIds = LikelyToUsePeopleIds,

@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID, int? priority, bool? hasFundFSPs, int? grantAllocationSourceID) : this()
+        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantAllocationName = grantAllocationName;
@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Models
             this.DivisionID = divisionID;
             this.GrantManagerID = grantManagerID;
             this.GrantModificationID = grantModificationID;
-            this.Priority = priority;
+            this.GrantAllocationPriorityID = grantAllocationPriorityID;
             this.HasFundFSPs = hasFundFSPs;
             this.GrantAllocationSourceID = grantAllocationSourceID;
         }
@@ -303,7 +303,7 @@ namespace ProjectFirma.Web.Models
         public int? DivisionID { get; set; }
         public int? GrantManagerID { get; set; }
         public int GrantModificationID { get; set; }
-        public int? Priority { get; set; }
+        public int? GrantAllocationPriorityID { get; set; }
         public bool? HasFundFSPs { get; set; }
         public int? GrantAllocationSourceID { get; set; }
         [NotMapped]
@@ -330,6 +330,7 @@ namespace ProjectFirma.Web.Models
         public Division Division { get { return DivisionID.HasValue ? Division.AllLookupDictionary[DivisionID.Value] : null; } }
         public virtual Person GrantManager { get; set; }
         public virtual GrantModification GrantModification { get; set; }
+        public virtual GrantAllocationPriority GrantAllocationPriority { get; set; }
         public virtual GrantAllocationSource GrantAllocationSource { get; set; }
 
         public static class FieldLengths

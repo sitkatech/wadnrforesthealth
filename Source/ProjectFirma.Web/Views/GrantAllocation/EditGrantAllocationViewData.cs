@@ -44,6 +44,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
         public IEnumerable<SelectListItem> ProgramManagersSelectList { get; }
         public IEnumerable<SelectListItem> GrantManagers { get; }
+        public IEnumerable<SelectListItem> Priorities { get; }
+
         public IEnumerable<SelectListItem> Sources { get; }
         public string AddContactUrl { get; }
         public bool? HasFundFsps { get; }
@@ -63,6 +65,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                                         IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
                                         IEnumerable<GrantAllocationSource> sources,
+                                        IEnumerable<GrantAllocationPriority> priorities,
                                         List<Person> allPeople)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
@@ -78,6 +81,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantManagers = allPeople.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
+
+            Priorities = priorities.OrderBy(x => x.GrantAllocationPriorityNumber)
+                .ToSelectListWithEmptyFirstRow(x => x.GrantAllocationPriorityID.ToString(CultureInfo.InvariantCulture),
+                    y => y.GrantAllocationPriorityNumber.ToString());
 
             // Include Persons who currently have the right a Program Manager
             List<Person> peopleWhoAreProgramManagers = allPeople.Where(x => x.IsProgramManager == true).ToList();

@@ -352,5 +352,6 @@ VALUES
 (530, N'GrantAllocationTravel Balance', N'Travel Balance', N'Placeholder definition for Grant Allocation Travel Balance'),
 (531, N'GrantAllocationStaffBalance', N'Staff Balance', N'Placeholder definition for Grant Allocation Staff Balance'),
 (532, N'GrantAllocationLikelyToUse', N'Likely To Use', N'Placeholder definition for Grant Allocation Likely To Use'),
-(533, N'GrantAllocationCompleted', N'Completed', N'Placeholder definition for Grant Allocation Completed')
+(533, N'GrantAllocationCompleted', N'Completed', N'Placeholder definition for Grant Allocation Completed'),
+(534, N'GrantAllocationPriority', N'Priority', N'Placeholder definition for Grant Allocation Priority')
 

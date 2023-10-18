@@ -70,7 +70,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             BasicProjectInfoGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(dnrUplandRegion));
 
             AssociatedGrantAllocationsGridName = "regionGrantAllocationsListGrid";
-            AssociatedGrantAllocationsGridSpec = new AssociatedGrantAllocationsGridSpec(CurrentPerson, false)
+            AssociatedGrantAllocationsGridSpec = new AssociatedGrantAllocationsGridSpec()
             {
                 ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
                 ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",

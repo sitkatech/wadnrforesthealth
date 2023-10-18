@@ -59,6 +59,7 @@
     <EntitySet Name="GrantAllocationLikelyPerson" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationLikelyPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationPriority" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationPriority" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationSource" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationSource" store:Type="Tables" Schema="dbo" />
@@ -555,6 +556,10 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
+      <End Role="GrantAllocationPriority" EntitySet="GrantAllocationPriority" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID">
@@ -2042,7 +2047,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
     <Property Name="GrantModificationID" Type="int" Nullable="false" />
-    <Property Name="Priority" Type="int" />
+    <Property Name="GrantAllocationPriorityID" Type="int" />
     <Property Name="HasFundFSPs" Type="bit" />
     <Property Name="GrantAllocationSourceID" Type="int" />
   </EntityType>
@@ -2256,6 +2261,14 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="LastUpdatedByPersonID" Type="int" />
     <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="GrantAllocationPriority">
+    <Key>
+      <PropertyRef Name="GrantAllocationPriorityID" />
+    </Key>
+    <Property Name="GrantAllocationPriorityID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationPriorityNumber" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationPriorityColor" Type="varchar" Nullable="false" MaxLength="8" />
   </EntityType>
   <EntityType Name="GrantAllocationProgramIndexProjectCode">
     <Key>
@@ -4634,6 +4647,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="FederalFundCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
+    <End Role="GrantAllocationPriority" Type="ProjectFirma.Web.Models.Store.GrantAllocationPriority" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationPriority">
+        <PropertyRef Name="GrantAllocationPriorityID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantAllocationPriorityID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

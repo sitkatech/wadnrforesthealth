@@ -144,7 +144,7 @@ namespace ProjectFirma.Web.Controllers
         [DNRUplandRegionViewFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
-            var gridSpec = new AssociatedGrantAllocationsGridSpec(CurrentPerson, false);
+            var gridSpec = new AssociatedGrantAllocationsGridSpec();
             var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
