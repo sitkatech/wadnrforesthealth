@@ -86,18 +86,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 .ToSelectListWithEmptyFirstRow(x => x.GrantAllocationPriorityID.ToString(CultureInfo.InvariantCulture),
                     y => y.GrantAllocationPriorityNumber.ToString());
 
-            // Include Persons who currently have the right a Program Manager
-            List<Person> peopleWhoAreProgramManagers = allPeople.Where(x => x.IsProgramManager == true).ToList();
-            // Include anyone who was set to be a Program Manager for this GrantAllocation in the past, but who may no longer have the right on their Person record.
-            if (grantAllocationBeingEdited != null)
-            {
-                peopleWhoAreProgramManagers.AddRange(grantAllocationBeingEdited.GrantAllocationProgramManagers.Select(pm => pm.Person));
-            }
-            peopleWhoAreProgramManagers = peopleWhoAreProgramManagers.Distinct().ToList();
+            ProgramManagersSelectList = allPeople.OrderBy(x => x.FullNameLastFirst)
 
-            ProgramManagersSelectList = peopleWhoAreProgramManagers.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
-                    y => y.FullNameFirstLastAndOrgShortName);
+            y => y.FullNameFirstLastAndOrgShortName);
 
             EditGrantAllocationType = editGrantAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
