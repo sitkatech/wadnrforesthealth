@@ -16,7 +16,13 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
     {
         public AssociatedGrantAllocationsGridSpec()
         {
-            Add(Models.FieldDefinition.GrantAllocationPriority.ToGridHeaderString(), x => x.GrantAllocationPriority?.GrantAllocationPriorityNumber.ToString(), 50, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationPriority.ToGridHeaderString(), x =>
+            {
+                var priorityColor = x.GrantAllocationPriority?.GrantAllocationPriorityColor ?? "default";
+                
+                return new HtmlString(
+                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{priorityColor}\">{x.GrantAllocationPriority?.GrantAllocationPriorityNumber.ToString()}</div>");
+            }, 50, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
 
             Add("Program Index",
                 x => string.Join(",",
@@ -43,7 +49,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             {
                 var allocation = x.GetAllocation();
                 return new HtmlString(
-                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(allocation)}\">{allocation.ToStringPercent().HtmlEncode()}</div>");
+                    $"{x.GetSortOrderSpan(allocation)}<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(allocation)}\">{allocation.ToStringPercent().HtmlEncode()}</div>");
             }, 50, DhtmlxGridColumnFormatType.None, DhtmlxGridColumnFilterType.Html);
 
             Add(Models.FieldDefinition.GrantAllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
@@ -75,8 +81,8 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 var completed = (decimal)(x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart /
                                           (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance()));
                 return new HtmlString(
-                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(completed)}\">{completed.ToStringPercent().HtmlEncode()}</div>");
-            }, 100, DhtmlxGridColumnFormatType.None, DhtmlxGridColumnFilterType.Html);
+                    $"{x.GetSortOrderSpan(completed)}<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(completed)}\">{completed.ToStringPercent().HtmlEncode()}</div>");
+            }, 100, DhtmlxGridColumnFormatType.Percent, DhtmlxGridColumnFilterType.Html);
         
 
 
