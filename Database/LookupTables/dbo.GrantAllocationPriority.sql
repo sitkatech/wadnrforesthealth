@@ -1,4 +1,3 @@
-SET IDENTITY_INSERT dbo.ForesterRole ON;
 
 delete from dbo.GrantAllocationPriority
 
