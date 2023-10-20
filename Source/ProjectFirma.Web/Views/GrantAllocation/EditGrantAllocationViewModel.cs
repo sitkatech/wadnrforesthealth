@@ -29,6 +29,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using DocumentFormat.OpenXml.Office2013.Word;
+using Person = ProjectFirma.Web.Models.Person;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
@@ -80,6 +82,20 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantManager)]
         public int? GrantManagerID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationPriority)]
+        public int? PriorityID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationFundFSPs)]
+        public bool? FundFSPsBool { get; set; }
+
+        public bool LikelyToUsePeopleBool { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationLikelyToUse)]
+        public List<int> LikelyToUsePeopleIds { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationSource)]
+        public int? SourceID { get; set; }
+
         [DisplayName("Grant Allocation File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public List<HttpPostedFileBase> GrantAllocationFileResourceDatas { get; set; }
@@ -113,6 +129,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EndDate = grantAllocation.EndDate;
             ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
             GrantManagerID = grantAllocation.GrantManagerID;
+            PriorityID = grantAllocation.GrantAllocationPriorityID;
+            FundFSPsBool = grantAllocation.HasFundFSPs;
+            SourceID = grantAllocation.GrantAllocationSource?.GrantAllocationSourceID;
+            LikelyToUsePeopleBool = grantAllocation.GrantAllocationLikelyPeople.Any();
+            LikelyToUsePeopleIds = grantAllocation.GrantAllocationLikelyPeople.Select(x=>x.PersonID).ToList();
+
             //GrantAllocationFileResourceDatas = grantAllocation.GrantAllocationFileResources
         }
 
@@ -187,6 +209,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
+            grantAllocation.GrantAllocationPriorityID = PriorityID;
             grantAllocation.DNRUplandRegionID = DNRUplandRegionID;
             if (grantAllocation.AllocationAmount != AllocationAmount)
             {
@@ -203,6 +226,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.StartDate = StartDate;
             grantAllocation.EndDate = EndDate;
             grantAllocation.GrantManagerID = GrantManagerID;
+            grantAllocation.HasFundFSPs = FundFSPsBool;
+            grantAllocation.GrantAllocationSourceID = SourceID;
 
             // Deleting existing records
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
@@ -227,6 +252,18 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationProgramIndexProjectCodes =
                 ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null).Select(gapipc =>
                     new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
+
+            // Deleting existing records
+            grantAllocation.GrantAllocationLikelyPeople.ToList().ForEach(galp => galp.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            if (LikelyToUsePeopleBool == true)
+            {
+                grantAllocation.GrantAllocationLikelyPeople = this.LikelyToUsePeopleIds != null
+                    ? this.LikelyToUsePeopleIds
+                        .Select(p => new GrantAllocationLikelyPerson(grantAllocation.GrantAllocationID, p)).ToList()
+                    : new List<GrantAllocationLikelyPerson>();
+            }
+
+
         }
 
         // Some fields can't be serialized to JSON which is needed for the Angular controller,
@@ -249,6 +286,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 EndDate = EndDate,
                 ProgramManagerPersonIDs = ProgramManagerPersonIDs,
                 GrantManagerID = GrantManagerID,
+                PriorityID = PriorityID,
+                FundFSPsBool = FundFSPsBool,
+                SourceID = SourceID,
+                LikelyToUsePeopleIds = LikelyToUsePeopleIds,
                 GrantAllocationFileResourceDatas = new List<HttpPostedFileBase>()
             };
 

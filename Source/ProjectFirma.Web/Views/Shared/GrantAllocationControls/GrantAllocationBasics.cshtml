@@ -181,4 +181,39 @@ Source code is available upon request via <support@sitkatech.com>.
             <span>@ViewDataTyped.GrantAllocation.FederalFundCodeDisplay</span>
         </div>
     </div>
+    
+    
+    
+    <div class="row">
+        <div class="col-sm-5 text-right">
+            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationPriority)
+        </div>
+        <div class="col-sm-7">
+            <span>@(ViewDataTyped.GrantAllocation.GrantAllocationPriority != null ? ViewDataTyped.GrantAllocation.GrantAllocationPriority.GrantAllocationPriorityNumber : (int?)null)</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 text-right">
+            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationFundFSPs)
+        </div>
+        <div class="col-sm-7">
+            <span>@ViewDataTyped.GrantAllocation.HasFundFSPs.ToYesNo("N/A")</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 text-right">
+            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationSource)
+        </div>
+        <div class="col-sm-7">
+            <span>@(ViewDataTyped.GrantAllocation.GrantAllocationSource != null ? ViewDataTyped.GrantAllocation.GrantAllocationSource.GrantAllocationSourceDisplayName : null)</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 text-right">
+            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationLikelyToUse)
+        </div>
+        <div class="col-sm-7">
+            <span>@ViewDataTyped.GrantAllocation.GetAllLikelyToUsePersonNamesAsUrls()</span>
+        </div>
+    </div>
 </div>

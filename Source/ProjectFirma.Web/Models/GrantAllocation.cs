@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -74,6 +76,89 @@ namespace ProjectFirma.Web.Models
                 }
             }
             return new HtmlString(programManagerUrlsStringBuilder.ToString());
+        }
+
+        public HtmlString GetAllLikelyToUsePersonNamesAsUrls()
+        {
+            var likelyToUseUrlsList = this.GrantAllocationLikelyPeople.Select(ltup => ltup.Person.GetFullNameFirstLastAsUrl()).ToList();
+            var likelyToUseUrlsStringBuilder = new StringBuilder();
+            foreach (var likelyToUseUrl in likelyToUseUrlsList)
+            {
+                if (likelyToUseUrlsStringBuilder.Length < 1)
+                {
+                    likelyToUseUrlsStringBuilder.Append(likelyToUseUrl);
+                }
+                else
+                {
+                    likelyToUseUrlsStringBuilder.Append(", " + likelyToUseUrl);
+                }
+            }
+            return new HtmlString(likelyToUseUrlsStringBuilder.ToString());
+        }
+
+        /// <summary>
+        /// Allocation is the percentage based on pay amount total from "expected funding by project" section from the grant allocation detail page divided by the contractual amount from the "grant allocation budget line items" section on the grant allocation detail page
+        /// </summary>
+        /// <returns></returns>
+        public decimal? GetAllocation()
+        {
+            var expectedFundingByProject = ProjectGrantAllocationRequests.Sum(y => y.PayAmount);
+            var contractualAmount = GrantAllocationBudgetLineItems.Where(z => z.CostType == CostType.Contractual)
+                .Sum(z => z.GrantAllocationBudgetLineItemAmount);
+            if (contractualAmount == 0) return expectedFundingByProject;
+            return expectedFundingByProject / contractualAmount;
+        }
+
+        public decimal GetOverallBalance()
+        {
+            var allocationCurrentBalance =
+                this.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart;
+            var indirect = GrantAllocationBudgetLineItems.Where(z => z.CostType == CostType.IndirectCosts)
+                .Sum(z => z.GrantAllocationBudgetLineItemAmount);
+            return allocationCurrentBalance - indirect;
+        }
+
+
+        public HtmlString ToLikelyToUsePeopleListDisplay()
+        {
+
+            var likelyToUse = GrantAllocationLikelyPeople.Select(x=>x.Person.GetFullNameFirstLastAsUrl()).ToList();
+            
+            var returnList = string.Join(", ", likelyToUse);
+            if (likelyToUse.Any())
+            {
+                return new HtmlString(returnList);
+            }
+
+            return new HtmlString(string.Empty);
+
+        }
+        private Dictionary<int, string> AllocationColor = new Dictionary<int, string>()
+        {
+            {0,  "#00B050"},
+            {10, "#22B756"},
+            {20, "#44BF5D"},
+            {30, "#66C764"},
+            {40, "#88CF6B"},
+            {50, "#AAD772"},
+            {60, "#CCDF79"},
+            {70, "#EEE780"},
+            {80, "#FFDC7C"},
+            {90, "#FFBD6A"},
+            {100, "#FF9D59"},
+            {110, "#FF7E47"},
+            {120, "#FF5E35"},
+            {130, "#FF3F24"},
+            {140, "#FF2012"},
+            {150, "#FF0000"}
+        };
+        public string GetAllocationCssClass(decimal? percentage)
+        {
+            
+            var integerLookup = Math.Floor((percentage ?? 0) * 10)*10;
+            integerLookup = Math.Min(integerLookup, 150);
+            integerLookup = Math.Max(integerLookup, 0);
+            return AllocationColor[(int)integerLookup];
         }
 
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
@@ -190,6 +275,17 @@ namespace ProjectFirma.Web.Models
 
             DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+
+        public string GetSortOrderSpan(decimal? something)
+        {
+            if (something == null) return String.Empty;
+            if (something.Value < 0)
+            {
+                return $"<span style=\"display: none;\">-{(1000000000000000 + (something.Value * 100)).ToString("F2", CultureInfo.InvariantCulture).PadLeft(15, '0')}</span>";
+
+            }
+            return $"<span style=\"display: none;\">{(something.Value * 100).ToString("F2", CultureInfo.InvariantCulture).PadLeft(16, '0')}</span>";
         }
     }
 }
