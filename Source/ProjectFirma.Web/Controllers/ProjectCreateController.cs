@@ -241,7 +241,7 @@ namespace ProjectFirma.Web.Controllers
             }
             viewModel.UpdateModel(project, CurrentPerson);
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabelPluralized()} successfully saved.");
-            return GoToNextSection(viewModel, project, ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName);
+            return GoToNextSection(viewModel, project, "ProjectAttributes");// 10/20/2023 AM & TK : previous code called this, removed from lookup to skip section temporarily ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName
         }
 
         [HttpGet]
