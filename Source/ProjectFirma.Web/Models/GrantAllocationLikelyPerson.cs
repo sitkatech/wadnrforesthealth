@@ -2,7 +2,7 @@
 {
     public partial class GrantAllocationLikelyPerson : IAuditableEntity
     {
-        public string AuditDescriptionString => $"Grant Allocation Likely Person: {GrantAllocation?.GrantAllocationID} - {Person?.PersonID}";
+        public string AuditDescriptionString => $"Grant Allocation Likely Person: GrantAllocationID:{GrantAllocationID} - PersonID:{PersonID}";
 
     }
 }
