@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
-            : base(currentPerson, project, ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName, proposalSectionsStatus)
+            : base(currentPerson, project, "ProjectAttributes", proposalSectionsStatus)// 10/20/2023 AM & TK : previous code called this, removed from lookup to skip section temporarily ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName
         {
             ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Proposed;
             ProjectDisplayName = project.DisplayName;

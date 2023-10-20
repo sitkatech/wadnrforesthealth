@@ -36,24 +36,24 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectUpdateSectionProjectAttributes
-    {
-        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
-        {
-            return projectUpdateBatch.AreProjectAttributesValid;
-        }
+    //public partial class ProjectUpdateSectionProjectAttributes
+    //{
+    //    public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+    //    {
+    //        return projectUpdateBatch.AreProjectAttributesValid;
+    //    }
 
-        public override string GetSectionUrl(Project project)
-        {
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.ProjectAttributes(project)) : null;
-        }
+    //    public override string GetSectionUrl(Project project)
+    //    {
+    //        var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+    //        return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.ProjectAttributes(project)) : null;
+    //    }
 
-        public override bool SectionIsUpdated(UpdateStatus updateStatus)
-        {
-            return updateStatus.IsProjectAttributesUpdated;
-        }
-    }
+    //    public override bool SectionIsUpdated(UpdateStatus updateStatus)
+    //    {
+    //        return updateStatus.IsProjectAttributesUpdated;
+    //    }
+    //}
 
     public partial class ProjectUpdateSectionLocationSimple
     {

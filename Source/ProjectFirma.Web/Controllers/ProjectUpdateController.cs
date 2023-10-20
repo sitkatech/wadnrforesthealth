@@ -363,7 +363,7 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(projectUpdate, CurrentPerson);
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
-                ProjectUpdateSection.ProjectAttributes.ProjectUpdateSectionDisplayName);
+                "ProjectAttributes");// 10/20/2023 AM & TK : previous code called this, removed from lookup to skip section temporarily ProjectUpdateSection.ProjectAttributes.ProjectUpdateSectionDisplayName
 
         }
 

@@ -31,7 +31,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionContacts Contacts = ProjectUpdateSectionContacts.Instance;
         public static readonly ProjectUpdateSectionDNRUplandRegions DNRUplandRegions = ProjectUpdateSectionDNRUplandRegions.Instance;
         public static readonly ProjectUpdateSectionPriorityLandscapes PriorityLandscapes = ProjectUpdateSectionPriorityLandscapes.Instance;
-        public static readonly ProjectUpdateSectionProjectAttributes ProjectAttributes = ProjectUpdateSectionProjectAttributes.Instance;
         public static readonly ProjectUpdateSectionTreatments Treatments = ProjectUpdateSectionTreatments.Instance;
         public static readonly ProjectUpdateSectionCounties Counties = ProjectUpdateSectionCounties.Instance;
 
@@ -43,7 +42,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes, Treatments, Counties };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -145,8 +144,6 @@ namespace ProjectFirma.Web.Models
                     return Photos;
                 case ProjectUpdateSectionEnum.PriorityLandscapes:
                     return PriorityLandscapes;
-                case ProjectUpdateSectionEnum.ProjectAttributes:
-                    return ProjectAttributes;
                 case ProjectUpdateSectionEnum.Treatments:
                     return Treatments;
                 default:
@@ -169,7 +166,6 @@ namespace ProjectFirma.Web.Models
         Contacts = 13,
         DNRUplandRegions = 14,
         PriorityLandscapes = 15,
-        ProjectAttributes = 16,
         Treatments = 17,
         Counties = 18
     }
@@ -244,12 +240,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectUpdateSectionPriorityLandscapes(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectUpdateSectionPriorityLandscapes Instance = new ProjectUpdateSectionPriorityLandscapes(15, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2);
-    }
-
-    public partial class ProjectUpdateSectionProjectAttributes : ProjectUpdateSection
-    {
-        private ProjectUpdateSectionProjectAttributes(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionProjectAttributes Instance = new ProjectUpdateSectionProjectAttributes(16, @"ProjectAttributes", @"Project Attributes", 22, true, 1);
     }
 
     public partial class ProjectUpdateSectionTreatments : ProjectUpdateSection
