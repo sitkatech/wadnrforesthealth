@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             UpdateStatus updateStatus,
             ProjectAttributeValidationResult projectAttributeValidationResult,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
-            : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, projectAttributeValidationResult.GetWarningMessages(), ProjectUpdateSection.ProjectAttributes.ProjectUpdateSectionDisplayName)
+            : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, projectAttributeValidationResult.GetWarningMessages(), "ProjectAttributes")// 10/20/2023 AM & TK : previous code called this, removed from lookup to skip section temporarily ProjectUpdateSection.ProjectAttributes.ProjectUpdateSectionDisplayName
         {
             ProjectUpdate = projectUpdate;
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffProjectAttributes(Project));
