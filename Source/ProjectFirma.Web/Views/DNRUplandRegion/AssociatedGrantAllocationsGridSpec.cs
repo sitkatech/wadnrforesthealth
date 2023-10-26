@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
     public class AssociatedGrantAllocationsGridSpec : GridSpec<Models.GrantAllocation>
     {
         public AssociatedGrantAllocationsGridSpec()
-        {
+            { 
             Add(Models.FieldDefinition.GrantAllocationPriority.ToGridHeaderString(), x =>
             {
                 var priorityColor = x.GrantAllocationPriority?.GrantAllocationPriorityColor ?? "default";
@@ -29,9 +29,9 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                     x.GrantAllocationProgramIndexProjectCodes?.Select(y => y.ProgramIndex?.ProgramIndexTitle) ??
                     Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
 
-            Add("Program Code",
+            Add("Project Code",
                 x => string.Join(",",
-                    x.GrantAllocationProgramIndexProjectCodes?.Select(y => y.ProjectCode?.ProjectCodeTitle) ??
+                    x.GrantAllocationProgramIndexProjectCodes?.Select(y => y.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited()) ??
                     Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification?.Grant.GrantNumber, 200, DhtmlxGridColumnFilterType.Text);
@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                     $"{x.GetSortOrderSpan(allocation)}<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(allocation)}\">{allocation.ToStringPercent().HtmlEncode()}</div>");
             }, 50, DhtmlxGridColumnFormatType.None, DhtmlxGridColumnFilterType.Html);
 
-            Add(Models.FieldDefinition.GrantAllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
+            Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationOverallBalance.ToGridHeaderString(), x => x.GetOverallBalance(), 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
@@ -88,6 +88,6 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
 
 
-    }
+        }
     }
 }
