@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             {
                 var allocation = x.GetAllocation();
                 return new HtmlString(
-                    $"{x.GetSortOrderSpan(allocation)}<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(allocation)}\">{allocation.ToStringPercent().HtmlEncode()}</div>");
+                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(allocation)}\">{allocation.ToStringPercent().HtmlEncode()}</div>");
             }, 50, DhtmlxGridColumnFormatType.None, DhtmlxGridColumnFilterType.Html);
 
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 var completed = (decimal)(x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart /
                                           (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance()));
                 return new HtmlString(
-                    $"{x.GetSortOrderSpan(completed)}<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(completed)}\">{completed.ToStringPercent().HtmlEncode()}</div>");
+                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(completed)}\">{completed.ToStringPercent().HtmlEncode()}</div>");
             }, 100, DhtmlxGridColumnFormatType.Percent, DhtmlxGridColumnFilterType.Html);
         
 

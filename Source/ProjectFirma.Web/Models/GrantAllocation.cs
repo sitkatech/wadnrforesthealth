@@ -277,15 +277,5 @@ namespace ProjectFirma.Web.Models
             Delete(dbContext);
         }
 
-        public string GetSortOrderSpan(decimal? something)
-        {
-            if (something == null) return String.Empty;
-            if (something.Value < 0)
-            {
-                return $"<span style=\"display: none;\">-{(1000000000000000 + (something.Value * 100)).ToString("F2", CultureInfo.InvariantCulture).PadLeft(15, '0')}</span>";
-
-            }
-            return $"<span style=\"display: none;\">{(something.Value * 100).ToString("F2", CultureInfo.InvariantCulture).PadLeft(16, '0')}</span>";
-        }
     }
 }
