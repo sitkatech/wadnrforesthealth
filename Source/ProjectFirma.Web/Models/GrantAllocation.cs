@@ -133,34 +133,6 @@ namespace ProjectFirma.Web.Models
             return new HtmlString(string.Empty);
 
         }
-        private Dictionary<int, string> AllocationColor = new Dictionary<int, string>()
-        {
-            {0,  "#00B050"},
-            {10, "#22B756"},
-            {20, "#44BF5D"},
-            {30, "#66C764"},
-            {40, "#88CF6B"},
-            {50, "#AAD772"},
-            {60, "#CCDF79"},
-            {70, "#EEE780"},
-            {80, "#FFDC7C"},
-            {90, "#FFBD6A"},
-            {100, "#FF9D59"},
-            {110, "#FF7E47"},
-            {120, "#FF5E35"},
-            {130, "#FF3F24"},
-            {140, "#FF2012"},
-            {150, "#FF0000"}
-        };
-        public string GetAllocationCssClass(decimal? percentage)
-        {
-            
-            var integerLookup = Math.Floor((percentage ?? 0) * 10)*10;
-            integerLookup = Math.Min(integerLookup, 150);
-            integerLookup = Math.Max(integerLookup, 0);
-            return AllocationColor[(int)integerLookup];
-        }
-
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
         {
             var convertedProjectCodes = new List<ProjectCode>();
@@ -277,15 +249,5 @@ namespace ProjectFirma.Web.Models
             Delete(dbContext);
         }
 
-        public string GetSortOrderSpan(decimal? something)
-        {
-            if (something == null) return String.Empty;
-            if (something.Value < 0)
-            {
-                return $"<span style=\"display: none;\">-{(1000000000000000 + (something.Value * 100)).ToString("F2", CultureInfo.InvariantCulture).PadLeft(15, '0')}</span>";
-
-            }
-            return $"<span style=\"display: none;\">{(something.Value * 100).ToString("F2", CultureInfo.InvariantCulture).PadLeft(16, '0')}</span>";
-        }
     }
 }
