@@ -16,7 +16,13 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
     {
         public AssociatedGrantAllocationsGridSpec()
             { 
-                Add(Models.FieldDefinition.GrantAllocationPriority.ToGridHeaderString(), x => x.GrantAllocationPriority?.GrantAllocationPriorityNumber.ToString(), 50, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.GrantAllocationPriority.ToGridHeaderString(), x =>
+            {
+                var priorityColor = x.GrantAllocationPriority?.GrantAllocationPriorityColor ?? "default";
+                
+                return new HtmlString(
+                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{priorityColor}\">{x.GrantAllocationPriority?.GrantAllocationPriorityNumber.ToString()}</div>");
+            }, 50, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
 
             Add("Program Index",
                 x => string.Join(",",
@@ -39,7 +45,12 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             Add(Models.FieldDefinition.GrantAllocationSource.ToGridHeaderString(), x => x.GrantAllocationSource?.GrantAllocationSourceDisplayName, 200,
                 DhtmlxGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.GrantAllocationAllocation.ToGridHeaderString(), x => x.GetAllocation().ToStringPercent(), 50, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAllocation.ToGridHeaderString(), x =>
+            {
+                var allocation = x.GetAllocation();
+                return new HtmlString(
+                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(allocation)}\">{allocation.ToStringPercent().HtmlEncode()}</div>");
+            }, 50, DhtmlxGridColumnFormatType.None, DhtmlxGridColumnFilterType.Html);
 
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
@@ -65,7 +76,17 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 x => x.ToLikelyToUsePeopleListDisplay(),
                 100, DhtmlxGridColumnFilterType.Html);
 
-            Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x => ((decimal)x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart / (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance())).ToStringPercent(), 100, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x =>
+            {
+                var completed = (decimal)(x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart /
+                                          (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance()));
+                return new HtmlString(
+                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(completed)}\">{completed.ToStringPercent().HtmlEncode()}</div>");
+            }, 100, DhtmlxGridColumnFormatType.Percent, DhtmlxGridColumnFilterType.Html);
+        
+
+
+
 
         }
     }
