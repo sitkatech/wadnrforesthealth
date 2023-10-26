@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 x => x.ToLikelyToUsePeopleListDisplay(),
                 100, DhtmlxGridColumnFilterType.Html);
 
-            Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x => ((decimal)x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart / (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance())).ToStringPercent(), 100, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x => ((decimal)x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart / (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance())).ToStringPercent(), 100, DhtmlxGridColumnFilterType.Text);
 
         }
     }
