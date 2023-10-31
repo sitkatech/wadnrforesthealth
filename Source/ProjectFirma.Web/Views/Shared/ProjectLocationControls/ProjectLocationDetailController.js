@@ -149,7 +149,7 @@ angular.module("ProjectFirmaApp")
         {
             var leafletID = layer._leaflet_id;
             layer.on('click', function (f) {
-                if (layer.editing.enabled()) {
+                if (layer.editing && layer.editing.enabled()) {
                     return;
                 }
 
