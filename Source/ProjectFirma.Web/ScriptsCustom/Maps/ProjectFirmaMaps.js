@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 var ProjectFirmaMaps = {};
+var highlightOverlay;
 
 /* ====== Main Map ====== */
 ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLayersAsBaseLayers)
@@ -414,6 +415,9 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
 
         var vecLayers = this.getVectorLayers(true);
 
+        if (highlightOverlay)
+            highlightOverlay.remove(); //For any click, remove the existing highlight
+
         if (wmsLayers.length > 0) {
             this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng);
         } else {
@@ -623,10 +627,8 @@ ProjectFirmaMaps.Map.prototype.removeDuplicatesFromArray = function (originalArr
     return newArray;
 }
 
-
-
 ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
-        var deferred = new jQuery.Deferred();
+    var deferred = new jQuery.Deferred();
     if (typeof json.features !== "undefined" && json.features.length > 0) {
 
         var firstFeature = json.features[0];
@@ -656,7 +658,20 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 link: linkHtml
             });
             break;
-        case "ProjectLocationGeometry":
+            case "ProjectLocationGeometry":
+                //Highlight feature
+                var highlightStyle = {
+                    "color": "#ff00ff",
+                    "weight": 5,
+                    "opacity": 0.5
+                };
+
+                highlightOverlay = L.geoJSON(firstFeature, { style: highlightStyle });
+                highlightOverlay.addTo(this.map);
+
+                console.log(firstFeature.properties.ProjectID);
+
+                //break; //This is intentionally commented-out to fall through to ProjectLocationPoint for the same popup
         case "ProjectLocationPoint":
             queryUrl = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
             labelText = "Project";
