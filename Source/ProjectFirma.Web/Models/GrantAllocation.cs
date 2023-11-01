@@ -100,13 +100,22 @@ namespace ProjectFirma.Web.Models
         /// Allocation is the percentage based on pay amount total from "expected funding by project" section from the grant allocation detail page divided by the contractual amount from the "grant allocation budget line items" section on the grant allocation detail page
         /// </summary>
         /// <returns></returns>
-        public decimal? GetAllocation()
+        public HtmlString GetAllocationStringForDnrUplandRegionGrid()
         {
             var expectedFundingByProject = ProjectGrantAllocationRequests.Sum(y => y.PayAmount);
-            var contractualAmount = GrantAllocationBudgetLineItems.Where(z => z.CostType == CostType.Contractual)
-                .Sum(z => z.GrantAllocationBudgetLineItemAmount);
-            if (contractualAmount == 0) return expectedFundingByProject;
-            return expectedFundingByProject / contractualAmount;
+            var budgetLineItem = GrantAllocationBudgetLineItems.Single(z => z.CostType == CostType.Contractual);
+
+            var contractualAmount = budgetLineItem.GrantAllocationBudgetLineItemAmount;
+            if (contractualAmount == 0)
+            {
+                return new HtmlString($"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{AllocationColor[150]}\">N/A - Cannot divide by 0</div>");
+            }
+
+            var allocationAmount = expectedFundingByProject / contractualAmount;
+
+            return new HtmlString($"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{GetAllocationCssClass(allocationAmount)}\">{allocationAmount.ToStringPercent()}</div>");
+
+
         }
 
         public decimal GetOverallBalance()
