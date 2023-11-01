@@ -415,7 +415,7 @@
         //debugger;
         var projectLocationsMapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectLocationsMapInitJson).ToString(Formatting.None));
         if (!projectFirmaMap) {
-            projectFirmaMap = new ProjectFirmaMaps.Map(projectLocationsMapInitJson);
+            projectFirmaMap = new ProjectFirmaMaps.Map(projectLocationsMapInitJson, null, null, "@FirmaWebConfiguration.WebMapServiceUrl");
         }
         projectFirmaMap.initializeProjectLocations(projectLocationsMapInitJson);
 
