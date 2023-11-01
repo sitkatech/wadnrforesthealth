@@ -71,7 +71,6 @@
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.GrantModificationStatus" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.GrantNote" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.GrantNoteInternal" />
-    <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.InteractionEvent" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.InteractionEventContact" />
@@ -537,10 +536,6 @@
     <AssociationSet Name="FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID" Association="ProjectFirma.Web.Models.FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID">
       <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
       <End Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" EntitySet="GisUploadSourceOrganization" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
-      <End Role="GrantStatus" EntitySet="GrantStatus" />
-      <End Role="Grants" EntitySet="Grant" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantType_GrantTypeID" Association="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID">
       <End Role="GrantType" EntitySet="GrantType" />
@@ -2044,7 +2039,6 @@
     <Property Name="ShortName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
     <Property Name="GrantStatusID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="GrantStatus" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID" FromRole="Grants" ToRole="GrantStatus" />
     <NavigationProperty Name="GrantType" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="Grants" ToRole="GrantType" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Grants" ToRole="Organization" />
     <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="Grant" ToRole="GrantFileResources" />
@@ -2482,14 +2476,6 @@
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Grant_GrantID" FromRole="GrantNoteInternals" ToRole="Grant" />
     <NavigationProperty Name="CreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="GrantNoteInternalsWhereYouAreTheCreatedByPerson" ToRole="CreatedByPerson" />
     <NavigationProperty Name="LastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" ToRole="LastUpdatedByPerson" />
-  </EntityType>
-  <EntityType Name="GrantStatus">
-    <Key>
-      <PropertyRef Name="GrantStatusID" />
-    </Key>
-    <Property Name="GrantStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantStatusName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID" FromRole="GrantStatus" ToRole="Grants" />
   </EntityType>
   <EntityType Name="GrantType">
     <Key>
@@ -5467,18 +5453,6 @@
       </Principal>
       <Dependent Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization">
         <PropertyRef Name="RelationshipTypeForDefaultOrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Grant_GrantStatus_GrantStatusID">
-    <End Role="GrantStatus" Type="ProjectFirma.Web.Models.GrantStatus" Multiplicity="1" />
-    <End Role="Grants" Type="ProjectFirma.Web.Models.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantStatus">
-        <PropertyRef Name="GrantStatusID" />
-      </Principal>
-      <Dependent Role="Grants">
-        <PropertyRef Name="GrantStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

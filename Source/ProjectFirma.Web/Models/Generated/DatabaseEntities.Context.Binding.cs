@@ -99,7 +99,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual DbSet<GrantNote> GrantNotes { get; set; }
         public virtual DbSet<Grant> Grants { get; set; }
-        public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
         public virtual DbSet<InteractionEventContact> InteractionEventContacts { get; set; }
         public virtual DbSet<InteractionEventFileResource> InteractionEventFileResources { get; set; }
@@ -656,7 +655,9 @@ namespace ProjectFirma.Web.Models
                     return Grants.GetGrant(primaryKey);
 
                 case "GrantStatus":
-                    return GrantStatuses.GetGrantStatus(primaryKey);
+                    var grantStatus = GrantStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(grantStatus, "GrantStatus", primaryKey);
+                    return grantStatus;
 
                 case "GrantType":
                     return GrantTypes.GetGrantType(primaryKey);

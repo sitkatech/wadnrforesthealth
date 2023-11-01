@@ -71,7 +71,6 @@
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.Store.GrantModificationStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.Store.InteractionEvent" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.Store.InteractionEventContact" store:Type="Tables" Schema="dbo" />
@@ -537,10 +536,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadSourceOrganization_RelationshipType_RelationshipTypeForDefaultOrganizationID_RelationshipTypeID">
       <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
       <End Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" EntitySet="GisUploadSourceOrganization" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
-      <End Role="GrantStatus" EntitySet="GrantStatus" />
-      <End Role="Grants" EntitySet="Grant" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantType_GrantTypeID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantType_GrantTypeID">
       <End Role="GrantType" EntitySet="GrantType" />
@@ -2379,13 +2374,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="LastUpdatedByPersonID" Type="int" />
     <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantStatus">
-    <Key>
-      <PropertyRef Name="GrantStatusID" />
-    </Key>
-    <Property Name="GrantStatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantStatusName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="GrantType">
     <Key>
@@ -4587,18 +4575,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization">
         <PropertyRef Name="RelationshipTypeForDefaultOrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Grant_GrantStatus_GrantStatusID">
-    <End Role="GrantStatus" Type="ProjectFirma.Web.Models.Store.GrantStatus" Multiplicity="1" />
-    <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantStatus">
-        <PropertyRef Name="GrantStatusID" />
-      </Principal>
-      <Dependent Role="Grants">
-        <PropertyRef Name="GrantStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

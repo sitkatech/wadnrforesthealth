@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.UnitTestCommon
 
             private static GrantStatus GetDefaultGrantStatus()
             {
-                return HttpRequestStorage.DatabaseEntities.GrantStatuses.First();
+                return GrantStatus.All.First();
             }
 
             public static Grant Create(Organization organization)
