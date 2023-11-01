@@ -1,7 +1,7 @@
 
 delete from dbo.GrantStatus
 
-
+SET IDENTITY_INSERT dbo.GrantStatus ON
 Insert into dbo.GrantStatus (GrantStatusID, GrantStatusName)
 values
 
@@ -11,5 +11,5 @@ values
 (3, 'Planned'),
 (4, 'Closeout')
 
-
+SET IDENTITY_INSERT dbo.GrantStatus OFF
 
