@@ -25,13 +25,13 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             }, 50, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
 
             Add("Program Index",
-                x => string.Join(",",
-                    x.GrantAllocationProgramIndexProjectCodes?.Select(y => y.ProgramIndex?.ProgramIndexTitle) ??
+                x => string.Join(", ",
+                    x.GrantAllocationProgramIndexProjectCodes?.Where(y=>y.ProgramIndex != null).Select(y => y.ProgramIndex?.ProgramIndexTitle) ??
                     Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
 
             Add("Project Code",
-                x => string.Join(",",
-                    x.GrantAllocationProgramIndexProjectCodes?.Select(y => y.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited()) ??
+                x => string.Join(", ",
+                    x.GrantAllocationProgramIndexProjectCodes?.Where(y=> y.ProjectCode != null).Select(y =>  y.ProjectCode?.ProjectCodeName).Distinct() ??
                     Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification?.Grant.GrantNumber, 200, DhtmlxGridColumnFilterType.Text);

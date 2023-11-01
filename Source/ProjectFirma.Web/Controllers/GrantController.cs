@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEdit(EditGrantViewModel viewModel, EditGrantType editGrantType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantStatuses = GrantStatus.All;
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
             
             var viewData = new EditGrantViewData(editGrantType,
@@ -129,7 +129,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewNew(viewModel, EditGrantType.NewGrant);
             }
-            var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(g => g.GrantStatusID == viewModel.GrantStatusID);
+            var grantStatus = GrantStatus.All.Single(g => g.GrantStatusID == viewModel.GrantStatusID);
             var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
             var grant = Grant.CreateNewBlank(grantStatus, grantOrganization);
             viewModel.UpdateModel(grant, CurrentPerson);
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewNew(NewGrantViewModel viewModel, EditGrantType editGrantType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantStatuses = GrantStatus.All;
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
 
             var viewData = new NewGrantViewData(editGrantType,
@@ -188,7 +188,7 @@ namespace ProjectFirma.Web.Controllers
                 return DuplicateGrantViewEdit(viewModel, originalGrant, initialAwardGrantModificationForCopy.GrantAllocations.ToList());
             }
 
-            var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(gs => gs.GrantStatusID == viewModel.GrantStatusID);
+            var grantStatus = GrantStatus.All.Single(gs => gs.GrantStatusID == viewModel.GrantStatusID);
             var organization = originalGrant.Organization;
             var newGrant = Grant.CreateNewBlank(grantStatus, organization);
             viewModel.UpdateModel(newGrant);
@@ -235,7 +235,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult DuplicateGrantViewEdit(DuplicateGrantViewModel viewModel, Grant grantToDuplicate, List<GrantAllocation> grantAllocations)
         {
-            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantStatuses = GrantStatus.All;
             
             var viewData = new DuplicateGrantViewData(grantStatuses, grantToDuplicate, grantAllocations);
             return RazorPartialView<DuplicateGrant, DuplicateGrantViewData, DuplicateGrantViewModel>(viewData, viewModel);
@@ -489,7 +489,7 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewJsonApiFeature]
         public JsonNetJArrayResult GrantStatusJsonApi()
         {
-            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses.ToList();
+            var grantStatuses = GrantStatus.All.ToList();
             var jsonApiGrantStatuses = GrantStatusApiJson.MakeGrantStatusApiJsonsFromGrantStatuses(grantStatuses);
             return new JsonNetJArrayResult(jsonApiGrantStatuses);
         }
