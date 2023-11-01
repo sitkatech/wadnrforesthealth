@@ -687,7 +687,7 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                     if (data.features.length > 0) {
                         //Highlight feature(s) with new layer
                         var highlightStyle = {
-                            "color": "#2dc3a1",
+                            "color": "#00FFFF",
                             "weight": 2,
                             "opacity": 0.5
                         };
