@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add("Program Index",
                 x => string.Join(", ",
-                    x.GrantAllocationProgramIndexProjectCodes?.Where(y=>y.ProgramIndex != null).Select(y => y.ProgramIndex?.ProgramIndexTitle) ??
+                    x.GrantAllocationProgramIndexProjectCodes?.Where(y=>y.ProgramIndex != null).Select(y => y.ProgramIndex?.AuditDescriptionString) ??
                     Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
 
             Add("Project Code",
