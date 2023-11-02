@@ -84,7 +84,7 @@ angular.module("ProjectFirmaApp")
             });
 
             layer.on('click', function (f) {
-                if (layer.editing.enabled()) {
+                if (layer.editing && layer.editing.enabled()) {
                     return;
                 }
 
