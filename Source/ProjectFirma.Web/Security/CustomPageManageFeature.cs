@@ -24,8 +24,10 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Manage Custom Page Content")]
-    public class CustomPageManageFeature : FirmaAdminFeature
+    public class CustomPageManageFeature : FirmaFeature
     {
-       
+        public CustomPageManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManagePageContent })
+        {
+        }
     }
 }

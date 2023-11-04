@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Security
     public class LoggedInAndNotUnassignedRoleUnclassifiedFeature : FirmaFeature
     {
         public LoggedInAndNotUnassignedRoleUnclassifiedFeature()
-            : base(FirmaBaseFeatureHelpers.AllRolesExceptUnassigned)
+            : base(FirmaBaseFeatureHelpers.AllBaseRolesExceptUnassigned)
         {
         }
     }
