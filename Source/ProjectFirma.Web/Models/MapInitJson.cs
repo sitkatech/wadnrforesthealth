@@ -67,7 +67,6 @@ namespace ProjectFirma.Web.Models
             {
                 GetAllSimpleProjectLocations(),
                 GetAllDetailedProjectLocations(),
-                GetAllProjectTreatments(),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.East),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, layerInitialVisibility, PriorityLandscapeCategory.West),
                 DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
@@ -130,13 +129,6 @@ namespace ProjectFirma.Web.Models
             return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Detail", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "orange", .2m,
                 LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_location_detailed.png");
-        }
-
-        public static LayerGeoJson GetAllProjectTreatments()
-        {
-            return new LayerGeoJson($"All Project Treatment Areas", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetAllProjectTreatmentAreasWmsLayerName(), "orange", .2m,
-                LayerInitialVisibility.Hide, "/Content/leaflet/images/washington_project_treatment.png");
         }
 
         public static LayerGeoJson GetWashingtonCountyLayer()
