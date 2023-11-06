@@ -3563,7 +3563,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionGrantAllocationFundFSPs : FieldDefinition
     {
         private FieldDefinitionGrantAllocationFundFSPs(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationFundFSPs Instance = new FieldDefinitionGrantAllocationFundFSPs(524, @"GrantAllocationFundFSPs", @"Fund FSP's?", @"Placeholder definition for Grant Allocation Fund FSP's");
+        public static readonly FieldDefinitionGrantAllocationFundFSPs Instance = new FieldDefinitionGrantAllocationFundFSPs(524, @"GrantAllocationFundFSPs", @"Fund FSPs?", @"Placeholder definition for Grant Allocation Fund FSPs");
     }
 
     public partial class FieldDefinitionGrantAllocationSource : FieldDefinition
