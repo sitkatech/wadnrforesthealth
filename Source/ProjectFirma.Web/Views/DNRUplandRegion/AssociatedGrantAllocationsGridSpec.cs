@@ -27,29 +27,29 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             Add("Program Index",
                 x => string.Join(", ",
                     x.GrantAllocationProgramIndexProjectCodes?.Where(y=>y.ProgramIndex != null).Select(y => y.ProgramIndex?.AuditDescriptionString) ??
-                    Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
+                    Array.Empty<string>()), 60, DhtmlxGridColumnFilterType.Text);
 
             Add("Project Code",
                 x => string.Join(", ",
                     x.GrantAllocationProgramIndexProjectCodes?.Where(y=> y.ProjectCode != null).Select(y =>  y.ProjectCode?.ProjectCodeName).Distinct() ??
-                    Array.Empty<string>()), 200, DhtmlxGridColumnFilterType.Text);
+                    Array.Empty<string>()), 50, DhtmlxGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification?.Grant.GrantNumber, 200, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification?.Grant.GetGrantNumberAsUrl(), 150, DhtmlxGridColumnFilterType.Text);
 
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 75, DhtmlxGridColumnFormatType.Date);
 
             Add(Models.FieldDefinition.GrantAllocationFundFSPs.ToGridHeaderString(), x => x.HasFundFSPs.ToYesNo("N/A"), 50, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => x.DisplayNameAsUrl, 200, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => x.DisplayNameAsUrl, 175, DhtmlxGridColumnFilterType.Html);
 
-            Add(Models.FieldDefinition.GrantAllocationSource.ToGridHeaderString(), x => x.GrantAllocationSource?.GrantAllocationSourceDisplayName, 200,
+            Add(Models.FieldDefinition.GrantAllocationSource.ToGridHeaderString(), x => x.GrantAllocationSource?.GrantAllocationSourceDisplayName, 175,
                 DhtmlxGridColumnFilterType.SelectFilterStrict);
 
             Add(Models.FieldDefinition.GrantAllocationAllocation.ToGridHeaderString(), x => x.GetAllocationStringForDnrUplandRegionGrid(), 50, DhtmlxGridColumnFormatType.None, DhtmlxGridColumnFilterType.Html);
 
-            Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
+            Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 100, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationOverallBalance.ToGridHeaderString(), x => x.GetOverallBalance(), 50, DhtmlxGridColumnFormatType.CurrencyWithCents,
+            Add(Models.FieldDefinition.GrantAllocationOverallBalance.ToGridHeaderString(), x => x.GetOverallBalance(), 75, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
 
             Add(Models.FieldDefinition.GrantAllocationContractualBalance.ToGridHeaderString(),
@@ -59,17 +59,17 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.GrantAllocationTravelBalance.ToGridHeaderString(),
                 x => x.GetAllBudgetVsActualLineItemsByCostType().FirstOrDefault(y => y.CostType == CostType.Travel)
-                    ?.BudgetMinusExpendituresFromDatamart, 100, DhtmlxGridColumnFormatType.CurrencyWithCents,
+                    ?.BudgetMinusExpendituresFromDatamart, 75, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
 
             Add(Models.FieldDefinition.GrantAllocationStaffBalance.ToGridHeaderString(),
                 x => x.GetAllBudgetVsActualLineItemsByCostType().FirstOrDefault(y => y.CostType == CostType.Personnel)
-                    ?.BudgetMinusExpendituresFromDatamart, 100, DhtmlxGridColumnFormatType.CurrencyWithCents,
+                    ?.BudgetMinusExpendituresFromDatamart, 75, DhtmlxGridColumnFormatType.CurrencyWithCents,
                 DhtmlxGridColumnAggregationType.Total);
 
             Add(Models.FieldDefinition.GrantAllocationLikelyToUse.ToGridHeaderString(),
                 x => x.ToLikelyToUsePeopleListDisplay(),
-                100, DhtmlxGridColumnFilterType.Html);
+                175, DhtmlxGridColumnFilterType.Html);
 
             Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x =>
             {
