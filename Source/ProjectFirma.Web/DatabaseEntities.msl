@@ -714,7 +714,7 @@
     <EntitySetMapping Name="GrantAllocationLikelyPerson">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationLikelyPerson">
         <MappingFragment StoreEntitySet="GrantAllocationLikelyPerson">
-          <ScalarProperty Name="GrantAllocationLikelyUserID" ColumnName="GrantAllocationLikelyUserID" />
+          <ScalarProperty Name="GrantAllocationLikelyPersonID" ColumnName="GrantAllocationLikelyPersonID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>

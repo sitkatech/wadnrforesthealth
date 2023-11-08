@@ -2293,9 +2293,9 @@
   </EntityType>
   <EntityType Name="GrantAllocationLikelyPerson">
     <Key>
-      <PropertyRef Name="GrantAllocationLikelyUserID" />
+      <PropertyRef Name="GrantAllocationLikelyPersonID" />
     </Key>
-    <Property Name="GrantAllocationLikelyUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationLikelyPersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="PersonID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationLikelyPeople" ToRole="GrantAllocation" />

@@ -31,9 +31,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationLikelyPerson(int grantAllocationLikelyUserID, int grantAllocationID, int personID) : this()
+        public GrantAllocationLikelyPerson(int grantAllocationLikelyPersonID, int grantAllocationID, int personID) : this()
         {
-            this.GrantAllocationLikelyUserID = grantAllocationLikelyUserID;
+            this.GrantAllocationLikelyPersonID = grantAllocationLikelyPersonID;
             this.GrantAllocationID = grantAllocationID;
             this.PersonID = personID;
         }
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
         public GrantAllocationLikelyPerson(int grantAllocationID, int personID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.GrantAllocationLikelyUserID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.GrantAllocationLikelyPersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantAllocationID = grantAllocationID;
             this.PersonID = personID;
@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Models
         public GrantAllocationLikelyPerson(GrantAllocation grantAllocation, Person person) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.GrantAllocationLikelyUserID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.GrantAllocationLikelyPersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.GrantAllocationLikelyPeople.Add(this);
@@ -116,11 +116,11 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int GrantAllocationLikelyUserID { get; set; }
+        public int GrantAllocationLikelyPersonID { get; set; }
         public int GrantAllocationID { get; set; }
         public int PersonID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantAllocationLikelyUserID; } set { GrantAllocationLikelyUserID = value; } }
+        public int PrimaryKey { get { return GrantAllocationLikelyPersonID; } set { GrantAllocationLikelyPersonID = value; } }
 
         public virtual GrantAllocation GrantAllocation { get; set; }
         public virtual Person Person { get; set; }

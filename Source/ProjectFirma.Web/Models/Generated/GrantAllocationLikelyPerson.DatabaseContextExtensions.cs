@@ -14,19 +14,19 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static GrantAllocationLikelyPerson GetGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, int grantAllocationLikelyUserID)
+        public static GrantAllocationLikelyPerson GetGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, int grantAllocationLikelyPersonID)
         {
-            var grantAllocationLikelyPerson = grantAllocationLikelyPeople.SingleOrDefault(x => x.GrantAllocationLikelyUserID == grantAllocationLikelyUserID);
-            Check.RequireNotNullThrowNotFound(grantAllocationLikelyPerson, "GrantAllocationLikelyPerson", grantAllocationLikelyUserID);
+            var grantAllocationLikelyPerson = grantAllocationLikelyPeople.SingleOrDefault(x => x.GrantAllocationLikelyPersonID == grantAllocationLikelyPersonID);
+            Check.RequireNotNullThrowNotFound(grantAllocationLikelyPerson, "GrantAllocationLikelyPerson", grantAllocationLikelyPersonID);
             return grantAllocationLikelyPerson;
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, List<int> grantAllocationLikelyUserIDList)
+        public static void DeleteGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, List<int> grantAllocationLikelyPersonIDList)
         {
-            if(grantAllocationLikelyUserIDList.Any())
+            if(grantAllocationLikelyPersonIDList.Any())
             {
-                var grantAllocationLikelyPeopleInSourceCollectionToDelete = grantAllocationLikelyPeople.Where(x => grantAllocationLikelyUserIDList.Contains(x.GrantAllocationLikelyUserID));
+                var grantAllocationLikelyPeopleInSourceCollectionToDelete = grantAllocationLikelyPeople.Where(x => grantAllocationLikelyPersonIDList.Contains(x.GrantAllocationLikelyPersonID));
                 foreach (var grantAllocationLikelyPersonToDelete in grantAllocationLikelyPeopleInSourceCollectionToDelete.ToList())
                 {
                     grantAllocationLikelyPersonToDelete.Delete(HttpRequestStorage.DatabaseEntities);
@@ -39,8 +39,8 @@ namespace ProjectFirma.Web.Models
         {
             if(grantAllocationLikelyPeopleToDelete.Any())
             {
-                var grantAllocationLikelyUserIDList = grantAllocationLikelyPeopleToDelete.Select(x => x.GrantAllocationLikelyUserID).ToList();
-                var grantAllocationLikelyPeopleToDeleteFromSourceList = grantAllocationLikelyPeople.Where(x => grantAllocationLikelyUserIDList.Contains(x.GrantAllocationLikelyUserID)).ToList();
+                var grantAllocationLikelyPersonIDList = grantAllocationLikelyPeopleToDelete.Select(x => x.GrantAllocationLikelyPersonID).ToList();
+                var grantAllocationLikelyPeopleToDeleteFromSourceList = grantAllocationLikelyPeople.Where(x => grantAllocationLikelyPersonIDList.Contains(x.GrantAllocationLikelyPersonID)).ToList();
 
                 foreach (var grantAllocationLikelyPersonToDelete in grantAllocationLikelyPeopleToDeleteFromSourceList)
                 {
@@ -49,9 +49,9 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, int grantAllocationLikelyUserID)
+        public static void DeleteGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, int grantAllocationLikelyPersonID)
         {
-            DeleteGrantAllocationLikelyPerson(grantAllocationLikelyPeople, new List<int> { grantAllocationLikelyUserID });
+            DeleteGrantAllocationLikelyPerson(grantAllocationLikelyPeople, new List<int> { grantAllocationLikelyPersonID });
         }
 
         public static void DeleteGrantAllocationLikelyPerson(this IQueryable<GrantAllocationLikelyPerson> grantAllocationLikelyPeople, GrantAllocationLikelyPerson grantAllocationLikelyPersonToDelete)

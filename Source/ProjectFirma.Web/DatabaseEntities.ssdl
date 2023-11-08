@@ -2227,9 +2227,9 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
   </EntityType>
   <EntityType Name="GrantAllocationLikelyPerson">
     <Key>
-      <PropertyRef Name="GrantAllocationLikelyUserID" />
+      <PropertyRef Name="GrantAllocationLikelyPersonID" />
     </Key>
-    <Property Name="GrantAllocationLikelyUserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationLikelyPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
   </EntityType>
