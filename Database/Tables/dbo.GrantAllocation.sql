@@ -17,6 +17,7 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[GrantAllocationPriorityID] [int] NULL,
 	[HasFundFSPs] [bit] NULL,
 	[GrantAllocationSourceID] [int] NULL,
+	[LikelyToUse] [bit] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC

@@ -2065,6 +2065,7 @@
     <Property Name="GrantAllocationPriorityID" Type="Int32" />
     <Property Name="HasFundFSPs" Type="Boolean" />
     <Property Name="GrantAllocationSourceID" Type="Int32" />
+    <Property Name="LikelyToUse" Type="Boolean" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="GrantAllocations" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />

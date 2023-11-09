@@ -2045,6 +2045,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="GrantAllocationPriorityID" Type="int" />
     <Property Name="HasFundFSPs" Type="bit" />
     <Property Name="GrantAllocationSourceID" Type="int" />
+    <Property Name="LikelyToUse" Type="bit" />
   </EntityType>
   <EntityType Name="GrantAllocationAward">
     <Key>
