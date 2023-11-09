@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationFundFSPs)]
         public bool? FundFSPsBool { get; set; }
 
-        public bool LikelyToUsePeopleBool { get; set; }
+        public bool? LikelyToUsePeopleBool { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationLikelyToUse)]
         public List<int> LikelyToUsePeopleIds { get; set; }
@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             PriorityID = grantAllocation.GrantAllocationPriorityID;
             FundFSPsBool = grantAllocation.HasFundFSPs;
             SourceID = grantAllocation.GrantAllocationSource?.GrantAllocationSourceID;
-            LikelyToUsePeopleBool = grantAllocation.GrantAllocationLikelyPeople.Any();
+            LikelyToUsePeopleBool = grantAllocation.LikelyToUse;
             LikelyToUsePeopleIds = grantAllocation.GrantAllocationLikelyPeople.Select(x=>x.PersonID).ToList();
 
             //GrantAllocationFileResourceDatas = grantAllocation.GrantAllocationFileResources
@@ -228,6 +228,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantManagerID = GrantManagerID;
             grantAllocation.HasFundFSPs = FundFSPsBool;
             grantAllocation.GrantAllocationSourceID = SourceID;
+            grantAllocation.LikelyToUse = LikelyToUsePeopleBool;
 
             // Deleting existing records
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));

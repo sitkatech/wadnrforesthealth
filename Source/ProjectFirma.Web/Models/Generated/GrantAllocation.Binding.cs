@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID) : this()
+        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID, bool? likelyToUse) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantAllocationName = grantAllocationName;
@@ -61,6 +61,7 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationPriorityID = grantAllocationPriorityID;
             this.HasFundFSPs = hasFundFSPs;
             this.GrantAllocationSourceID = grantAllocationSourceID;
+            this.LikelyToUse = likelyToUse;
         }
 
         /// <summary>
@@ -306,6 +307,7 @@ namespace ProjectFirma.Web.Models
         public int? GrantAllocationPriorityID { get; set; }
         public bool? HasFundFSPs { get; set; }
         public int? GrantAllocationSourceID { get; set; }
+        public bool? LikelyToUse { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 

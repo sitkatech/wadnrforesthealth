@@ -75,15 +75,19 @@
                 //console.log("dnrUplandRegionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
-        jQuery(":radio[class='likely-to-use']").on("change", function () {
+        jQuery(":radio.likely-to-use").on("change", function () {
             if (jQuery(this).val() == "False") {
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", true);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", true);
                 jQuery(".likely-to-use-div").css("display", "none");
-            } else {
+            } else if (jQuery(this).val() == "True") {
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", false);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", false);
                 jQuery(".likely-to-use-div").css("display", "block");
+            } else {
+                jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", true);
+                jQuery(".likely-to-use-people-dropdown").prop("disabled", true);
+                jQuery(".likely-to-use-div").css("display", "none");
             }
         });
 
@@ -299,7 +303,7 @@
                     @*class="col-sm-9"*@
                     <div class="radio-inline">
                         <label>
-                            @Html.RadioButtonFor(m => m.LikelyToUsePeopleBool, false, new {@class="likely-to-use"}) Contractual Only
+                            @Html.RadioButtonFor(m => m.LikelyToUsePeopleBool, false, new { @class = "likely-to-use" }) Contractual Only
                         </label>
                     </div>
                     <div class="radio-inline">
@@ -307,8 +311,13 @@
                             @Html.RadioButtonFor(m => m.LikelyToUsePeopleBool, true, new { @class = "likely-to-use" }) List of Users
                         </label>
                     </div>
+                    <div class="radio-inline">
+                        <label>
+                            @Html.RadioButtonFor(m => m.LikelyToUsePeopleBool, string.Empty, new { @class = "likely-to-use likely-to-use-na" }) N/A
+                        </label>
+                    </div>
                     <div class="likely-to-use-div">
-                        @Html.SearchableMultiSelectDropDownListFor(m => m.LikelyToUsePeopleIds, ViewDataTyped.LikelyPeopleSelectList, new { style = "width: auto;", @class = "form-control selectpicker likely-to-use-people-dropdown"})
+                        @Html.SearchableMultiSelectDropDownListFor(m => m.LikelyToUsePeopleIds, ViewDataTyped.LikelyPeopleSelectList, new { style = "width: auto;", @class = "form-control selectpicker likely-to-use-people-dropdown" })
                         @Html.ValidationMessageFor(m => m.LikelyToUsePeopleIds)
                     </div>
                     @Html.ValidationMessageFor(m => m.LikelyToUsePeopleBool)
@@ -399,16 +408,20 @@
 
         }
 
-        if("@(Model.LikelyToUsePeopleBool.ToString())" == "False"){
-                jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", true);
-                jQuery(".likely-to-use-people-dropdown").prop("disabled", true);
-                jQuery(".likely-to-use-div").css("display", "none");
-        } else {
+        if((@(String.IsNullOrEmpty(Model.LikelyToUsePeopleBool.ToString()) ? "true" : "false") == false) && ("@(Model.LikelyToUsePeopleBool.ToString())" == "True")) {
                 jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", false);
                 jQuery(".likely-to-use-people-dropdown").prop("disabled", false);
                 jQuery(".likely-to-use-div").css("display", "block");
-        };
-        
+        } else{
+                jQuery("#@Html.IdFor(m => m.LikelyToUsePeopleIds)").prop("disabled", true);
+                jQuery(".likely-to-use-people-dropdown").prop("disabled", true);
+                jQuery(".likely-to-use-div").css("display", "none");
+        }
+        if(@(String.IsNullOrEmpty(Model.LikelyToUsePeopleBool.ToString()) ? "true" : "false") == true) {
+            jQuery(":radio.likely-to-use-na").prop("checked", true)
+
+        }
+
     });
     // ]]>
 </script>

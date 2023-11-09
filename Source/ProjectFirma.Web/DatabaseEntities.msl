@@ -518,6 +518,7 @@
           <ScalarProperty Name="GrantAllocationPriorityID" ColumnName="GrantAllocationPriorityID" />
           <ScalarProperty Name="HasFundFSPs" ColumnName="HasFundFSPs" />
           <ScalarProperty Name="GrantAllocationSourceID" ColumnName="GrantAllocationSourceID" />
+          <ScalarProperty Name="LikelyToUse" ColumnName="LikelyToUse" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

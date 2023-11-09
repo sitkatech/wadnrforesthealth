@@ -80,6 +80,14 @@ namespace ProjectFirma.Web.Models
 
         public HtmlString GetAllLikelyToUsePersonNamesAsUrls()
         {
+            if (LikelyToUse == null)
+            {
+                return new HtmlString("N/A");
+            }
+            else if (LikelyToUse == false)
+            {
+                return new HtmlString("Contractual Only");
+            }
             var likelyToUseUrlsList = this.GrantAllocationLikelyPeople.Select(ltup => ltup.Person.GetFullNameFirstLastAsUrl()).ToList();
             var likelyToUseUrlsStringBuilder = new StringBuilder();
             foreach (var likelyToUseUrl in likelyToUseUrlsList)
@@ -134,12 +142,17 @@ namespace ProjectFirma.Web.Models
             var likelyToUse = GrantAllocationLikelyPeople.Select(x=>x.Person.GetFullNameFirstLastAsUrl()).ToList();
             
             var returnList = string.Join(", ", likelyToUse);
-            if (likelyToUse.Any())
+            if (LikelyToUse == true)
             {
-                return new HtmlString(returnList);
+                if(likelyToUse.Any()) return new HtmlString(returnList);
+                return new HtmlString(string.Empty);
+            }
+            else if (LikelyToUse == null)
+            {
+                return new HtmlString("N/A");
             }
 
-            return new HtmlString(string.Empty);
+            return new HtmlString("Contractual Only");
 
         }
         private Dictionary<int, string> AllocationColor = new Dictionary<int, string>()
