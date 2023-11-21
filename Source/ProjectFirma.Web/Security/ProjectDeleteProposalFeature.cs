@@ -7,7 +7,7 @@ namespace ProjectFirma.Web.Security
     {
         private readonly FirmaFeatureWithContextImpl<Project> _lakeTahoeInfoFeatureWithContextImpl;
 
-        public ProjectDeleteProposalFeature() : base(Role.AllBaseRolesExceptUnassigned)
+        public ProjectDeleteProposalFeature() : base(Role.AllBaseRolesExceptUnassigned())
         {
             _lakeTahoeInfoFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Project>(this);
             ActionFilter = _lakeTahoeInfoFeatureWithContextImpl;

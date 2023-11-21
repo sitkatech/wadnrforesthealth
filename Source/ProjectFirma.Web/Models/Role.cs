@@ -83,7 +83,10 @@ namespace ProjectFirma.Web.Models
             return Role.All.Where(x => x.IsBaseRole).ToList();
         }
 
-        public static readonly List<Role> AllBaseRolesExceptUnassigned = Role.AllBaseRoles().Except(new List<Role> { Role.Unassigned }).ToList();
+        public static List<Role> AllBaseRolesExceptUnassigned()
+        {
+            return Role.AllBaseRoles().Except(new List<Role> { Role.Unassigned }).ToList();
+        }
 
     }
 }

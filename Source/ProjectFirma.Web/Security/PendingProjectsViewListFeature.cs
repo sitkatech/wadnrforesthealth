@@ -8,7 +8,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("View Pending {0} List", FieldDefinitionEnum.Project)]
     public class PendingProjectsViewListFeature : FirmaFeature
     {
-        public PendingProjectsViewListFeature() : base(Role.AllBaseRolesExceptUnassigned)
+        public PendingProjectsViewListFeature() : base(Role.AllBaseRolesExceptUnassigned())
         {
         }
     }
