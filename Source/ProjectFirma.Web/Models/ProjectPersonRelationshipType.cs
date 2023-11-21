@@ -4,11 +4,11 @@
     {
         public bool IsViewableByUser(Person person)
         {
-            if (!IsRestrictedToAdminAndProjectSteward)
+            if (!IsRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo)
             {
                 return true;
             }
-            else if (person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward))
+            else if (person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.CanViewLandownerInfo))
             {
                 return true;
             }

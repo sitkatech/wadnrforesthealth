@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[ProjectPersonRelationshipType](
 	[ProjectPersonRelationshipTypeDisplayName] [varchar](150) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FieldDefinitionID] [int] NOT NULL,
 	[IsRequired] [bit] NOT NULL,
-	[IsRestrictedToAdminAndProjectSteward] [bit] NOT NULL,
+	[IsRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo] [bit] NOT NULL,
 	[SortOrder] [int] NOT NULL,
  CONSTRAINT [PK_ProjectPersonRelationshipType_ProjectPersonRelationshipTypeID] PRIMARY KEY CLUSTERED 
 (
