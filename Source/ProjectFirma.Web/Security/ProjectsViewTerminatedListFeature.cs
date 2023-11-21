@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Security
     public class ProjectsViewTerminatedListFeature : FirmaFeature
     {
         public ProjectsViewTerminatedListFeature()
-            : base(FirmaBaseFeatureHelpers.AllBaseRolesExceptUnassigned)
+            : base(Role.AllBaseRolesExceptUnassigned)
         {
         }
     }

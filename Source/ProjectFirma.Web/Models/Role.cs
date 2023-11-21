@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<int> GetBaseRoleIDs()
         {
-            var roleIDs = Role.All.Where(x => x.IsBaseRole).Select(x => x.RoleID).ToList();
+            var roleIDs = AllBaseRoles().Select(x => x.RoleID).ToList();
             return roleIDs;
         }
 
@@ -82,6 +82,8 @@ namespace ProjectFirma.Web.Models
         {
             return Role.All.Where(x => x.IsBaseRole).ToList();
         }
+
+        public static readonly List<Role> AllBaseRolesExceptUnassigned = Role.AllBaseRoles().Except(new List<Role> { Role.Unassigned }).ToList();
 
     }
 }
