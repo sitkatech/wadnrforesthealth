@@ -7,7 +7,7 @@ namespace ProjectFirma.Web.Security
     public class GrantAllocationAwardContractorInvoiceItemEditAsAdminFeature : FirmaFeature
     {
         public GrantAllocationAwardContractorInvoiceItemEditAsAdminFeature()
-            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
         {
 
         }

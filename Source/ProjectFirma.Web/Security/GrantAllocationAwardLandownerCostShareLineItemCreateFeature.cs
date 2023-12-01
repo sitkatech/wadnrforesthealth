@@ -6,8 +6,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Create a Grant Allocation Award Landowner Cost Share Line Item", FieldDefinitionEnum.GrantAllocationAwardLandownerCostShare)]
     public class GrantAllocationAwardLandownerCostShareLineItemCreateFeature : FirmaFeature
     {
-        public GrantAllocationAwardLandownerCostShareLineItemCreateFeature()
-            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward })
+        public GrantAllocationAwardLandownerCostShareLineItemCreateFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
         {
         }
     }
