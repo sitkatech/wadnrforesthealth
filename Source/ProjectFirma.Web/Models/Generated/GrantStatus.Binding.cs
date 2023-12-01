@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[GrantStatus]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using CodeFirstStoreFunctions;
@@ -16,115 +17,132 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GrantStatus] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[GrantStatus]")]
-    public partial class GrantStatus : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class GrantStatus : IHavePrimaryKey
     {
+        public static readonly GrantStatusActive Active = GrantStatusActive.Instance;
+        public static readonly GrantStatusPending Pending = GrantStatusPending.Instance;
+        public static readonly GrantStatusPlanned Planned = GrantStatusPlanned.Instance;
+        public static readonly GrantStatusCloseout Closeout = GrantStatusCloseout.Instance;
+
+        public static readonly List<GrantStatus> All;
+        public static readonly ReadOnlyDictionary<int, GrantStatus> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected GrantStatus()
+        static GrantStatus()
         {
-            this.Grants = new HashSet<Grant>();
+            All = new List<GrantStatus> { Active, Pending, Planned, Closeout };
+            AllLookupDictionary = new ReadOnlyDictionary<int, GrantStatus>(All.ToDictionary(x => x.GrantStatusID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public GrantStatus(int grantStatusID, string grantStatusName) : this()
+        protected GrantStatus(int grantStatusID, string grantStatusName)
         {
-            this.GrantStatusID = grantStatusID;
-            this.GrantStatusName = grantStatusName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public GrantStatus(string grantStatusName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.GrantStatusID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.GrantStatusName = grantStatusName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static GrantStatus CreateNewBlank()
-        {
-            return new GrantStatus(default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return Grants.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(Grants.Any())
-            {
-                dependentObjects.Add(typeof(Grant).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantStatus).Name, typeof(Grant).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.GrantStatuses.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Grants.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            GrantStatusID = grantStatusID;
+            GrantStatusName = grantStatusName;
         }
 
         [Key]
-        public int GrantStatusID { get; set; }
-        public string GrantStatusName { get; set; }
+        public int GrantStatusID { get; private set; }
+        public string GrantStatusName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantStatusID; } set { GrantStatusID = value; } }
+        public int PrimaryKey { get { return GrantStatusID; } }
 
-        public virtual ICollection<Grant> Grants { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(GrantStatus other)
         {
-            public const int GrantStatusName = 100;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.GrantStatusID == GrantStatusID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as GrantStatus);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return GrantStatusID;
+        }
+
+        public static bool operator ==(GrantStatus left, GrantStatus right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(GrantStatus left, GrantStatus right)
+        {
+            return !Equals(left, right);
+        }
+
+        public GrantStatusEnum ToEnum { get { return (GrantStatusEnum)GetHashCode(); } }
+
+        public static GrantStatus ToType(int enumValue)
+        {
+            return ToType((GrantStatusEnum)enumValue);
+        }
+
+        public static GrantStatus ToType(GrantStatusEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case GrantStatusEnum.Active:
+                    return Active;
+                case GrantStatusEnum.Closeout:
+                    return Closeout;
+                case GrantStatusEnum.Pending:
+                    return Pending;
+                case GrantStatusEnum.Planned:
+                    return Planned;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum GrantStatusEnum
+    {
+        Active = 1,
+        Pending = 2,
+        Planned = 3,
+        Closeout = 4
+    }
+
+    public partial class GrantStatusActive : GrantStatus
+    {
+        private GrantStatusActive(int grantStatusID, string grantStatusName) : base(grantStatusID, grantStatusName) {}
+        public static readonly GrantStatusActive Instance = new GrantStatusActive(1, @"Active");
+    }
+
+    public partial class GrantStatusPending : GrantStatus
+    {
+        private GrantStatusPending(int grantStatusID, string grantStatusName) : base(grantStatusID, grantStatusName) {}
+        public static readonly GrantStatusPending Instance = new GrantStatusPending(2, @"Pending");
+    }
+
+    public partial class GrantStatusPlanned : GrantStatus
+    {
+        private GrantStatusPlanned(int grantStatusID, string grantStatusName) : base(grantStatusID, grantStatusName) {}
+        public static readonly GrantStatusPlanned Instance = new GrantStatusPlanned(3, @"Planned");
+    }
+
+    public partial class GrantStatusCloseout : GrantStatus
+    {
+        private GrantStatusCloseout(int grantStatusID, string grantStatusName) : base(grantStatusID, grantStatusName) {}
+        public static readonly GrantStatusCloseout Instance = new GrantStatusCloseout(4, @"Closeout");
     }
 }

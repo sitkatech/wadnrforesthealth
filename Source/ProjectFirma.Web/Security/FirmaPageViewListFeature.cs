@@ -18,10 +18,17 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+using ProjectFirma.Web.Models;
+
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View List of All Page Contents")]
-    public class FirmaPageViewListFeature : FirmaAdminFeature
+    public class FirmaPageViewListFeature : FirmaFeature
     {
+        public FirmaPageViewListFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManagePageContent })
+        {
+        }
     }
 }

@@ -39,14 +39,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder)
+        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, int sortOrder)
         {
             ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
             ProjectPersonRelationshipTypeName = projectPersonRelationshipTypeName;
             ProjectPersonRelationshipTypeDisplayName = projectPersonRelationshipTypeDisplayName;
             FieldDefinitionID = fieldDefinitionID;
             IsRequired = isRequired;
-            IsRestrictedToAdminAndProjectSteward = isRestrictedToAdminAndProjectSteward;
+            IsRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo = isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo;
             SortOrder = sortOrder;
         }
         public FieldDefinition FieldDefinition { get { return FieldDefinition.AllLookupDictionary[FieldDefinitionID]; } }
@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Models
         public string ProjectPersonRelationshipTypeDisplayName { get; private set; }
         public int FieldDefinitionID { get; private set; }
         public bool IsRequired { get; private set; }
-        public bool IsRestrictedToAdminAndProjectSteward { get; private set; }
+        public bool IsRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo { get; private set; }
         public int SortOrder { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectPersonRelationshipTypeID; } }
@@ -134,25 +134,25 @@ namespace ProjectFirma.Web.Models
 
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, sortOrder) {}
         public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", 275, false, false, 10);
     }
 
     public partial class ProjectPersonRelationshipTypePrivateLandowner : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePrivateLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        private ProjectPersonRelationshipTypePrivateLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, sortOrder) {}
         public static readonly ProjectPersonRelationshipTypePrivateLandowner Instance = new ProjectPersonRelationshipTypePrivateLandowner(2, @"PrivateLandowner", @"Private Landowner", 273, false, true, 30);
     }
 
     public partial class ProjectPersonRelationshipTypeContractor : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, sortOrder) {}
         public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", 272, false, false, 20);
     }
 
     public partial class ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectSteward, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectSteward, sortOrder) {}
+        private ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, int fieldDefinitionID, bool isRequired, bool isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, int sortOrder) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, fieldDefinitionID, isRequired, isRestrictedToAdminAndProjectStewardAndCanViewLandownerInfo, sortOrder) {}
         public static readonly ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator Instance = new ProjectPersonRelationshipTypeServiceForestryRegionalCoordinator(4, @"ServiceForestryRegionalCoordinator", @"Service Forestry Regional Coordinator", 507, false, false, 40);
     }
 }

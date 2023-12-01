@@ -28,8 +28,7 @@ namespace ProjectFirma.Web.Security
     {
         private readonly FirmaFeatureWithContextImpl<Person> _firmaFeatureWithContextImpl;
 
-        public UserViewFeature()
-            : base(Role.All)
+        public UserViewFeature() : base(Role.AllBaseRoles())
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Person>(this);
             ActionFilter = _firmaFeatureWithContextImpl;

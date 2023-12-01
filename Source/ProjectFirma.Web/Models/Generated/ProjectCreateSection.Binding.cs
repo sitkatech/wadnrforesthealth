@@ -32,7 +32,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionContacts Contacts = ProjectCreateSectionContacts.Instance;
         public static readonly ProjectCreateSectionDNRUplandRegions DNRUplandRegions = ProjectCreateSectionDNRUplandRegions.Instance;
         public static readonly ProjectCreateSectionPriorityLandscapes PriorityLandscapes = ProjectCreateSectionPriorityLandscapes.Instance;
-        public static readonly ProjectCreateSectionProjectAttributes ProjectAttributes = ProjectCreateSectionProjectAttributes.Instance;
         public static readonly ProjectCreateSectionTreatments Treatments = ProjectCreateSectionTreatments.Instance;
         public static readonly ProjectCreateSectionCounties Counties = ProjectCreateSectionCounties.Instance;
 
@@ -44,7 +43,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes, Treatments, Counties };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -146,8 +145,6 @@ namespace ProjectFirma.Web.Models
                     return Photos;
                 case ProjectCreateSectionEnum.PriorityLandscapes:
                     return PriorityLandscapes;
-                case ProjectCreateSectionEnum.ProjectAttributes:
-                    return ProjectAttributes;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
                     return ReportedPerformanceMeasures;
                 case ProjectCreateSectionEnum.Treatments:
@@ -173,7 +170,6 @@ namespace ProjectFirma.Web.Models
         Contacts = 16,
         DNRUplandRegions = 17,
         PriorityLandscapes = 18,
-        ProjectAttributes = 19,
         Treatments = 20,
         Counties = 21
     }
@@ -254,12 +250,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionPriorityLandscapes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionPriorityLandscapes Instance = new ProjectCreateSectionPriorityLandscapes(18, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2);
-    }
-
-    public partial class ProjectCreateSectionProjectAttributes : ProjectCreateSection
-    {
-        private ProjectCreateSectionProjectAttributes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionProjectAttributes Instance = new ProjectCreateSectionProjectAttributes(19, @"ProjectAttributes", @"Project Attributes", 22, true, 1);
     }
 
     public partial class ProjectCreateSectionTreatments : ProjectCreateSection

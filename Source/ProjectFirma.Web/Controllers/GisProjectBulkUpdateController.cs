@@ -391,7 +391,17 @@ namespace ProjectFirma.Web.Controllers
                         importedProjectAreaIndex++;
                     }
 
-                    var centroid = gisFeatures.Select(x => x.GisFeatureGeometry).FirstOrDefault()?.Centroid;
+                    var features = gisFeatures.Select(x => x.GisFeatureGeometry).Where(x => x != null).ToList();
+                    features.AddRange(project.ProjectLocations.Where(x => x.ProjectLocationType.ProjectLocationTypeID == ProjectLocationType.ProjectArea.ProjectLocationTypeID && x.ProgramID != programID).Select(x => x.ProjectLocationGeometry));
+                        
+                    var combinedGeometry = features.FirstOrDefault();
+
+                    if (combinedGeometry != null)
+                    {
+                        features.ToList().ForEach(x => combinedGeometry.Union(x));
+                    }
+
+                    var centroid = combinedGeometry?.Centroid;
                     if (centroid != null)
                     {
                         project.ProjectLocationPoint = centroid;
@@ -790,6 +800,13 @@ namespace ProjectFirma.Web.Controllers
                 if (projectStage == ProjectStage.Proposed)
                 {
                     project.ProjectApprovalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
+                }
+                if (projectStage == ProjectStage.Implementation  
+                    && (project.ProjectApprovalStatusID == ProjectApprovalStatus.Draft.ProjectApprovalStatusID
+                        || 
+                        project.ProjectApprovalStatusID == ProjectApprovalStatus.PendingApproval.ProjectApprovalStatusID))
+                {
+                    project.ProjectApprovalStatusID = ProjectApprovalStatus.Approved.ProjectApprovalStatusID;
                 }
             }
             else

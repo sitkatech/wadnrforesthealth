@@ -83,16 +83,17 @@ angular.module("ProjectFirmaApp")
                 //console.log("item(" + projectID +")" + JSON.stringify(item));
             });
 
-            layer.on('click', function (f) {
-                if (layer.editing.enabled()) {
-                    return;
-                }
+            //2023-11-06 RMO: Removing this behavior for WADNR
+            //layer.on('click', function (f) {
+            //    if (layer.editing.enabled()) {
+            //        return;
+            //    }
 
-                $scope.$apply(function () {
-                    $scope.selectedLocationProjectID = projectID;
-                });
-                setLayerIconColors();
-            });
+            //    $scope.$apply(function () {
+            //        $scope.selectedLocationProjectID = projectID;
+            //    });
+            //    setLayerIconColors();
+            //});
             
         };
 

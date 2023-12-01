@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Models
         {
             if (person == null)
             {
-                return new HtmlString(null);
+                return new HtmlString(string.Empty);
             }
             var userUrl = person.GetFullNameFirstLastAsUrl();
             var orgUrl = person.Organization?.GetDisplayNameAsUrl();
@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Models
         {
             if (person == null)
             {
-                return new HtmlString(null);
+                return new HtmlString(string.Empty);
             }
             var userUrl = person.GetFullNameFirstLastAsUrl();
             var orgUrl = person.Organization?.GetShortNameAsUrl();
@@ -70,7 +70,7 @@ namespace ProjectFirma.Web.Models
         {
             if (person == null)
             {
-                return new HtmlString(null);
+                return new HtmlString(string.Empty);
             }
             var userString = person.FullNameFirstLast;
             var orgUrl = person.Organization?.GetShortNameAsUrl();

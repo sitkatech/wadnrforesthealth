@@ -342,4 +342,16 @@ VALUES
 (520, N'Appn', N'Appn', N'The Appn of an invoice'),
 (521, N'SubObject', N'SubObject', N'The SubObject of an invoice'),
 (522, N'ServiceForestryProgramManager', N'Service Forestry Program Manager', N'Placeholder definition for forester role, Service Forestry Program Manager'),
-(523, N'ForestRegulationFishAndWildlifeBiologist', N'Forest Regulation Fish & Wildlife Biologist', N'Placeholder definition for forester role, Forest Regulation Fish & Wildlife Biologist')
+(523, N'ForestRegulationFishAndWildlifeBiologist', N'Forest Regulation Fish & Wildlife Biologist', N'Placeholder definition for forester role, Forest Regulation Fish & Wildlife Biologist'),
+(524, N'GrantAllocationFundFSPs', N'Fund FSPs?', N'Placeholder definition for Grant Allocation Fund FSPs'),
+(525, N'GrantAllocationSource', N'Source', N'Placeholder definition for Grant Allocation Source'),
+(526, N'GrantAllocationAllocation', N'Allocation', N'Placeholder definition for Grant Allocation Allocation'),
+(527, N'GrantAllocationTotalGrantFunds', N'Total Grant Funds', N'Placeholder definition for Grant Allocation Total Grant Funds'),
+(528, N'GrantAllocationOverallBalance', N'Overall Balance', N'Placeholder definition for Grant Allocation Overall Balance'),
+(529, N'GrantAllocationContractualBalance', N'Contractual Balance', N'Placeholder definition for Grant Allocation Contractual Balance'),
+(530, N'GrantAllocationTravel Balance', N'Travel Balance', N'Placeholder definition for Grant Allocation Travel Balance'),
+(531, N'GrantAllocationStaffBalance', N'Staff Balance', N'Placeholder definition for Grant Allocation Staff Balance'),
+(532, N'GrantAllocationLikelyToUse', N'Likely To Use', N'Placeholder definition for Grant Allocation Likely To Use'),
+(533, N'GrantAllocationCompleted', N'Completed', N'Placeholder definition for Grant Allocation Completed'),
+(534, N'GrantAllocationPriority', N'Priority', N'Placeholder definition for Grant Allocation Priority')
+

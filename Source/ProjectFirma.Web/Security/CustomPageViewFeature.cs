@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<CustomPage> _firmaFeatureWithContextImpl;
 
         public CustomPageViewFeature()
-            : base(Role.All)
+            : base(Role.AllBaseRoles())
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<CustomPage>(this);
             ActionFilter = _firmaFeatureWithContextImpl;

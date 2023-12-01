@@ -8,4 +8,6 @@ values
 (7, 'Unassigned', 'Unassigned', '',1),
 (8, 'EsaAdmin', 'ESA Administrator', '',1),
 (9, 'ProjectSteward', 'Project Steward', 'Users with this role can approve Project Proposals, create new Projects, and approve Project Updates.',1),
-(10, 'CanEditProgram', 'Can Edit Program', 'Users with this role can edit Projects that are from their Program',0)
+(10, 'CanEditProgram', 'Can Edit Program', 'Users with this role can edit Projects that are from their Program',0),
+(11, 'CanManagePageContent', 'Can Manage Page Content', 'Users with this role can edit content on custom pages',0),
+(12, 'CanViewLandownerInfo', 'Can View Landowner Info', 'Users with this role can view landowner information',0)

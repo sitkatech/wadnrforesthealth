@@ -32,8 +32,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, LayerInitialVisibility.Show, PriorityLandscapeCategory.East),
                 PriorityLandscape.GetPriorityLandscapeWmsLayerGeoJson(0.2m, LayerInitialVisibility.Show, PriorityLandscapeCategory.West),
-                MapInitJson.GetAllDetailedProjectLocations(),
-                MapInitJson.GetAllProjectTreatments()
+                MapInitJson.GetAllDetailedProjectLocations()
             };
 
             var mapInitJson = new MapInitJson("priorityLandscapeIndex", 10, layerGeoJsons, MapInitJson.GetExternalMapLayersForPriorityLandscape(), BoundingBox.MakeNewDefaultBoundingBox());

@@ -19,12 +19,15 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 var ProjectFirmaMaps = {};
+var highlightOverlay; //Used when highlighting all a Project's Detailed Locations; see formatGeospatialAreaResponse
+var mapOutsideScope; //Used when highlighting all a Project's Detailed Locations; see formatGeospatialAreaResponse
 
 /* ====== Main Map ====== */
-ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLayersAsBaseLayers)
+ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLayersAsBaseLayers, projectDetailedLocationSelectedLayerUrl)
 {
     var self = this;
     this.MapDivId = mapInitJson.MapDivID;
+    this.ProjectDetailedLocationSelectedLayerUrl = projectDetailedLocationSelectedLayerUrl;
 
     var esriAerialUrl = 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     var esriAerial = new L.TileLayer(esriAerialUrl, {});
@@ -63,6 +66,12 @@ ProjectFirmaMaps.Map = function (mapInitJson, initialBaseLayerShown, treatAllLay
         fullscreenControl: mapInitJson.AllowFullScreen ? { pseudoFullscreen: true } : false
     };
     this.map = L.map(this.MapDivId, options);
+
+    mapOutsideScope = this.map;
+    this.map.on("overlayremove", function(e) {
+        if (highlightOverlay && e.name.includes("All Project Locations - Detail"))
+            highlightOverlay.remove(); //If Detailed Locations is toggled off, also remove the highlight
+    });
 
     // Initialize the map
     if (streetLayerGroup != null)
@@ -414,6 +423,9 @@ ProjectFirmaMaps.Map.prototype.removeClickEventHandler = function() {
 
         var vecLayers = this.getVectorLayers(true);
 
+        if (highlightOverlay)
+            highlightOverlay.remove(); //For any click, remove the existing highlight
+
         if (wmsLayers.length > 0) {
             this.popupForWMSAndVectorLayers(wmsLayers, vecLayers, latlng);
         } else {
@@ -623,10 +635,8 @@ ProjectFirmaMaps.Map.prototype.removeDuplicatesFromArray = function (originalArr
     return newArray;
 }
 
-
-
 ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
-        var deferred = new jQuery.Deferred();
+    var deferred = new jQuery.Deferred();
     if (typeof json.features !== "undefined" && json.features.length > 0) {
 
         var firstFeature = json.features[0];
@@ -656,7 +666,39 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 link: linkHtml
             });
             break;
-        case "ProjectLocationGeometry":
+            case "ProjectLocationGeometry":
+            if (this.ProjectDetailedLocationSelectedLayerUrl) {
+                var projectLocationDetailedWfsParams = {
+                    service: "WFS",
+                    version: "2.0",
+                    request: "GetFeature",
+                    outputFormat: "application/json",
+                    SrsName: "EPSG:4326",
+                    maxFeatures: 10000,
+                    typeNames: 'WADNRForestHealth:ProjectLocationDetailed',
+                    cql_filter: 'ProjectID=' + firstFeature.properties.ProjectID
+                };
+
+                jQuery.ajax({
+                    url: this.ProjectDetailedLocationSelectedLayerUrl +
+                        L.Util.getParamString(projectLocationDetailedWfsParams),
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (data.features.length > 0) {
+                        //Highlight feature(s) with new layer
+                        var highlightStyle = {
+                            "color": "#00FFFF",
+                            "weight": 2,
+                            "opacity": 0.5
+                        };
+                        highlightOverlay = L.geoJSON(data, { style: highlightStyle });
+                        highlightOverlay.addTo(mapOutsideScope);
+                    }
+                }).fail(function(data) {
+                    console.log(data);
+                });
+            }
+            //break; //This is intentionally commented-out to fall through to ProjectLocationPoint to get the same popup
         case "ProjectLocationPoint":
             queryUrl = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
             labelText = "Project";

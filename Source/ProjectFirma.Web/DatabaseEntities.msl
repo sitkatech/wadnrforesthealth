@@ -515,6 +515,10 @@
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
           <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="GrantAllocationPriorityID" ColumnName="GrantAllocationPriorityID" />
+          <ScalarProperty Name="HasFundFSPs" ColumnName="HasFundFSPs" />
+          <ScalarProperty Name="GrantAllocationSourceID" ColumnName="GrantAllocationSourceID" />
+          <ScalarProperty Name="LikelyToUse" ColumnName="LikelyToUse" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -708,6 +712,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationLikelyPerson">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationLikelyPerson">
+        <MappingFragment StoreEntitySet="GrantAllocationLikelyPerson">
+          <ScalarProperty Name="GrantAllocationLikelyPersonID" ColumnName="GrantAllocationLikelyPersonID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNote">
         <MappingFragment StoreEntitySet="GrantAllocationNote">
@@ -734,6 +747,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationPriority">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationPriority">
+        <MappingFragment StoreEntitySet="GrantAllocationPriority">
+          <ScalarProperty Name="GrantAllocationPriorityID" ColumnName="GrantAllocationPriorityID" />
+          <ScalarProperty Name="GrantAllocationPriorityNumber" ColumnName="GrantAllocationPriorityNumber" />
+          <ScalarProperty Name="GrantAllocationPriorityColor" ColumnName="GrantAllocationPriorityColor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationProgramIndexProjectCode">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode">
         <MappingFragment StoreEntitySet="GrantAllocationProgramIndexProjectCode">
@@ -750,6 +772,16 @@
           <ScalarProperty Name="GrantAllocationProgramManagerID" ColumnName="GrantAllocationProgramManagerID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationSource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationSource">
+        <MappingFragment StoreEntitySet="GrantAllocationSource">
+          <ScalarProperty Name="GrantAllocationSourceID" ColumnName="GrantAllocationSourceID" />
+          <ScalarProperty Name="GrantAllocationSourceName" ColumnName="GrantAllocationSourceName" />
+          <ScalarProperty Name="GrantAllocationSourceDisplayName" ColumnName="GrantAllocationSourceDisplayName" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -842,14 +874,6 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantStatus">
-        <MappingFragment StoreEntitySet="GrantStatus">
-          <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
-          <ScalarProperty Name="GrantStatusName" ColumnName="GrantStatusName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

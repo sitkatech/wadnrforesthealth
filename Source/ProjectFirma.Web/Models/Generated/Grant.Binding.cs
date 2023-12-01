@@ -73,8 +73,6 @@ namespace ProjectFirma.Web.Models
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GrantName = grantName;
             this.GrantStatusID = grantStatus.GrantStatusID;
-            this.GrantStatus = grantStatus;
-            grantStatus.Grants.Add(this);
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
             organization.Grants.Add(this);
@@ -207,7 +205,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual GrantType GrantType { get; set; }
-        public virtual GrantStatus GrantStatus { get; set; }
+        public GrantStatus GrantStatus { get { return GrantStatus.AllLookupDictionary[GrantStatusID]; } }
         public virtual Organization Organization { get; set; }
 
         public static class FieldLengths

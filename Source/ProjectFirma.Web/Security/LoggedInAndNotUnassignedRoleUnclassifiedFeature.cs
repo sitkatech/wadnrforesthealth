@@ -18,6 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using ProjectFirma.Web.Models;
+
 namespace ProjectFirma.Web.Security
 {
     /// <summary>
@@ -26,8 +29,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Has a ProjectFirma role")]
     public class LoggedInAndNotUnassignedRoleUnclassifiedFeature : FirmaFeature
     {
-        public LoggedInAndNotUnassignedRoleUnclassifiedFeature()
-            : base(FirmaBaseFeatureHelpers.AllRolesExceptUnassigned)
+        public LoggedInAndNotUnassignedRoleUnclassifiedFeature() : base(Role.AllBaseRolesExceptUnassigned())
         {
         }
     }

@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
     public class LoggedInUnclassifiedFeature : FirmaFeature
     {
         public LoggedInUnclassifiedFeature()
-            : base(Role.All)
+            : base(Role.AllBaseRoles())
         {
         }
     }

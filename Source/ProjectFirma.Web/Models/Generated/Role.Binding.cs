@@ -25,6 +25,8 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleEsaAdmin EsaAdmin = RoleEsaAdmin.Instance;
         public static readonly RoleProjectSteward ProjectSteward = RoleProjectSteward.Instance;
         public static readonly RoleCanEditProgram CanEditProgram = RoleCanEditProgram.Instance;
+        public static readonly RoleCanManagePageContent CanManagePageContent = RoleCanManagePageContent.Instance;
+        public static readonly RoleCanViewLandownerInfo CanViewLandownerInfo = RoleCanViewLandownerInfo.Instance;
 
         public static readonly List<Role> All;
         public static readonly ReadOnlyDictionary<int, Role> AllLookupDictionary;
@@ -34,7 +36,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram };
+            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram, CanManagePageContent, CanViewLandownerInfo };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
@@ -112,6 +114,10 @@ namespace ProjectFirma.Web.Models
                     return Admin;
                 case RoleEnum.CanEditProgram:
                     return CanEditProgram;
+                case RoleEnum.CanManagePageContent:
+                    return CanManagePageContent;
+                case RoleEnum.CanViewLandownerInfo:
+                    return CanViewLandownerInfo;
                 case RoleEnum.EsaAdmin:
                     return EsaAdmin;
                 case RoleEnum.Normal:
@@ -133,7 +139,9 @@ namespace ProjectFirma.Web.Models
         Unassigned = 7,
         EsaAdmin = 8,
         ProjectSteward = 9,
-        CanEditProgram = 10
+        CanEditProgram = 10,
+        CanManagePageContent = 11,
+        CanViewLandownerInfo = 12
     }
 
     public partial class RoleAdmin : Role
@@ -170,5 +178,17 @@ namespace ProjectFirma.Web.Models
     {
         private RoleCanEditProgram(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
         public static readonly RoleCanEditProgram Instance = new RoleCanEditProgram(10, @"CanEditProgram", @"Can Edit Program", @"Users with this role can edit Projects that are from their Program", false);
+    }
+
+    public partial class RoleCanManagePageContent : Role
+    {
+        private RoleCanManagePageContent(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleCanManagePageContent Instance = new RoleCanManagePageContent(11, @"CanManagePageContent", @"Can Manage Page Content", @"Users with this role can edit content on custom pages", false);
+    }
+
+    public partial class RoleCanViewLandownerInfo : Role
+    {
+        private RoleCanViewLandownerInfo(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleCanViewLandownerInfo Instance = new RoleCanViewLandownerInfo(12, @"CanViewLandownerInfo", @"Can View Landowner Info", @"Users with this role can view landowner information", false);
     }
 }

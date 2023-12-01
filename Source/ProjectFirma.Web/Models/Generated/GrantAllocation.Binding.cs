@@ -31,6 +31,7 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationChangeLogs = new HashSet<GrantAllocationChangeLog>();
             this.GrantAllocationExpenditures = new HashSet<GrantAllocationExpenditure>();
             this.GrantAllocationFileResources = new HashSet<GrantAllocationFileResource>();
+            this.GrantAllocationLikelyPeople = new HashSet<GrantAllocationLikelyPerson>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
@@ -44,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID) : this()
+        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID, bool? likelyToUse) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantAllocationName = grantAllocationName;
@@ -57,6 +58,10 @@ namespace ProjectFirma.Web.Models
             this.DivisionID = divisionID;
             this.GrantManagerID = grantManagerID;
             this.GrantModificationID = grantModificationID;
+            this.GrantAllocationPriorityID = grantAllocationPriorityID;
+            this.HasFundFSPs = hasFundFSPs;
+            this.GrantAllocationSourceID = grantAllocationSourceID;
+            this.LikelyToUse = likelyToUse;
         }
 
         /// <summary>
@@ -96,7 +101,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationAwards.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationChangeLogs.Any() || GrantAllocationExpenditures.Any() || GrantAllocationFileResources.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationAwards.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationChangeLogs.Any() || GrantAllocationExpenditures.Any() || GrantAllocationFileResources.Any() || GrantAllocationLikelyPeople.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
         }
 
         /// <summary>
@@ -134,6 +139,11 @@ namespace ProjectFirma.Web.Models
             if(GrantAllocationFileResources.Any())
             {
                 dependentObjects.Add(typeof(GrantAllocationFileResource).Name);
+            }
+
+            if(GrantAllocationLikelyPeople.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationLikelyPerson).Name);
             }
 
             if(GrantAllocationNotes.Any())
@@ -181,7 +191,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationAward).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationAward).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -232,6 +242,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in GrantAllocationFileResources.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationLikelyPeople.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -289,6 +304,10 @@ namespace ProjectFirma.Web.Models
         public int? DivisionID { get; set; }
         public int? GrantManagerID { get; set; }
         public int GrantModificationID { get; set; }
+        public int? GrantAllocationPriorityID { get; set; }
+        public bool? HasFundFSPs { get; set; }
+        public int? GrantAllocationSourceID { get; set; }
+        public bool? LikelyToUse { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
@@ -298,6 +317,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual ICollection<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
         public virtual ICollection<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
+        public virtual ICollection<GrantAllocationLikelyPerson> GrantAllocationLikelyPeople { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
@@ -312,6 +332,8 @@ namespace ProjectFirma.Web.Models
         public Division Division { get { return DivisionID.HasValue ? Division.AllLookupDictionary[DivisionID.Value] : null; } }
         public virtual Person GrantManager { get; set; }
         public virtual GrantModification GrantModification { get; set; }
+        public virtual GrantAllocationPriority GrantAllocationPriority { get; set; }
+        public virtual GrantAllocationSource GrantAllocationSource { get; set; }
 
         public static class FieldLengths
         {

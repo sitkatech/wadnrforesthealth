@@ -44,7 +44,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
         public IEnumerable<SelectListItem> ProgramManagersSelectList { get; }
         public IEnumerable<SelectListItem> GrantManagers { get; }
+        public IEnumerable<SelectListItem> Priorities { get; }
+
+        public IEnumerable<SelectListItem> Sources { get; }
         public string AddContactUrl { get; }
+        public bool? HasFundFsps { get; }
+        public IEnumerable<SelectListItem> LikelyPeopleSelectList { get; }
 
         public EditGrantAllocationAngularViewData AngularViewData { get; }
 
@@ -59,6 +64,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                                         IEnumerable<Division> divisions,
                                         IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
+                                        IEnumerable<GrantAllocationSource> sources,
+                                        IEnumerable<GrantAllocationPriority> priorities,
                                         List<Person> allPeople)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
@@ -75,21 +82,25 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
 
-            // Include Persons who currently have the right a Program Manager
-            List<Person> peopleWhoAreProgramManagers = allPeople.Where(x => x.IsProgramManager == true).ToList();
-            // Include anyone who was set to be a Program Manager for this GrantAllocation in the past, but who may no longer have the right on their Person record.
-            if (grantAllocationBeingEdited != null)
-            {
-                peopleWhoAreProgramManagers.AddRange(grantAllocationBeingEdited.GrantAllocationProgramManagers.Select(pm => pm.Person));
-            }
-            peopleWhoAreProgramManagers = peopleWhoAreProgramManagers.Distinct().ToList();
+            Priorities = priorities.OrderBy(x => x.GrantAllocationPriorityNumber)
+                .ToSelectListWithEmptyFirstRow(x => x.GrantAllocationPriorityID.ToString(CultureInfo.InvariantCulture),
+                    y => y.GrantAllocationPriorityNumber.ToString());
 
-            ProgramManagersSelectList = peopleWhoAreProgramManagers.OrderBy(x => x.FullNameLastFirst)
+            ProgramManagersSelectList = allPeople.OrderBy(x => x.FullNameLastFirst)
+
                 .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
-                    y => y.FullNameFirstLastAndOrgShortName);
+            y => y.FullNameFirstLastAndOrgShortName);
 
             EditGrantAllocationType = editGrantAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
+            HasFundFsps = grantAllocationBeingEdited?.HasFundFSPs;
+            Sources = sources.ToSelectListWithEmptyFirstRow(
+                x => x.GrantAllocationSourceID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationSourceDisplayName);
+
+            LikelyPeopleSelectList = allPeople.OrderBy(x => x.FullNameLastFirst)
+                .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FullNameFirstLastAndOrgShortName);
+
         }
 
     }

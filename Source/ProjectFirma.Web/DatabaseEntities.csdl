@@ -56,10 +56,13 @@
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditure" />
     <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditureJsonStage" />
     <EntitySet Name="GrantAllocationFileResource" EntityType="ProjectFirma.Web.Models.GrantAllocationFileResource" />
+    <EntitySet Name="GrantAllocationLikelyPerson" EntityType="ProjectFirma.Web.Models.GrantAllocationLikelyPerson" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantAllocationNoteInternal" />
+    <EntitySet Name="GrantAllocationPriority" EntityType="ProjectFirma.Web.Models.GrantAllocationPriority" />
     <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramManager" />
+    <EntitySet Name="GrantAllocationSource" EntityType="ProjectFirma.Web.Models.GrantAllocationSource" />
     <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.GrantFileResource" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.GrantModification" />
     <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.GrantModificationFileResource" />
@@ -68,7 +71,6 @@
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.GrantModificationStatus" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.GrantNote" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.GrantNoteInternal" />
-    <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.InteractionEvent" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.InteractionEventContact" />
@@ -535,10 +537,6 @@
       <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
       <End Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" EntitySet="GisUploadSourceOrganization" />
     </AssociationSet>
-    <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
-      <End Role="GrantStatus" EntitySet="GrantStatus" />
-      <End Role="Grants" EntitySet="Grant" />
-    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantType_GrantTypeID" Association="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID">
       <End Role="GrantType" EntitySet="GrantType" />
       <End Role="Grants" EntitySet="Grant" />
@@ -566,6 +564,14 @@
     <AssociationSet Name="FK_Invoice_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_Invoice_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
+      <End Role="GrantAllocationPriority" EntitySet="GrantAllocationPriority" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID">
+      <End Role="GrantAllocationSource" EntitySet="GrantAllocationSource" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_GrantModification_GrantModificationID">
       <End Role="GrantModification" EntitySet="GrantModification" />
@@ -598,6 +604,10 @@
     <AssociationSet Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationLikelyPeople" EntitySet="GrantAllocationLikelyPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -674,6 +684,10 @@
     <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
       <End Role="ChangePerson" EntitySet="Person" />
       <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" EntitySet="GrantAllocationChangeLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationLikelyPerson_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="GrantAllocationLikelyPeople" EntitySet="GrantAllocationLikelyPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
       <End Role="CreatedByPerson" EntitySet="Person" />
@@ -2025,7 +2039,6 @@
     <Property Name="ShortName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
     <Property Name="GrantStatusID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="GrantStatus" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID" FromRole="Grants" ToRole="GrantStatus" />
     <NavigationProperty Name="GrantType" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="Grants" ToRole="GrantType" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Grants" ToRole="Organization" />
     <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="Grant" ToRole="GrantFileResources" />
@@ -2049,9 +2062,15 @@
     <Property Name="DivisionID" Type="Int32" />
     <Property Name="GrantManagerID" Type="Int32" />
     <Property Name="GrantModificationID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationPriorityID" Type="Int32" />
+    <Property Name="HasFundFSPs" Type="Boolean" />
+    <Property Name="GrantAllocationSourceID" Type="Int32" />
+    <Property Name="LikelyToUse" Type="Boolean" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="GrantAllocations" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
+    <NavigationProperty Name="GrantAllocationPriority" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID" FromRole="GrantAllocations" ToRole="GrantAllocationPriority" />
+    <NavigationProperty Name="GrantAllocationSource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID" FromRole="GrantAllocations" ToRole="GrantAllocationSource" />
     <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantModification_GrantModificationID" FromRole="GrantAllocations" ToRole="GrantModification" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
@@ -2060,6 +2079,7 @@
     <NavigationProperty Name="GrantAllocationChangeLogs" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationChangeLogs" />
     <NavigationProperty Name="GrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationExpenditures" />
     <NavigationProperty Name="GrantAllocationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationFileResources" />
+    <NavigationProperty Name="GrantAllocationLikelyPeople" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationLikelyPeople" />
     <NavigationProperty Name="GrantAllocationNotes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNotes" />
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramIndexProjectCodes" />
@@ -2272,6 +2292,16 @@
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="GrantAllocationFileResources" ToRole="FileResource" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationFileResources" ToRole="GrantAllocation" />
   </EntityType>
+  <EntityType Name="GrantAllocationLikelyPerson">
+    <Key>
+      <PropertyRef Name="GrantAllocationLikelyPersonID" />
+    </Key>
+    <Property Name="GrantAllocationLikelyPersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="PersonID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationLikelyPeople" ToRole="GrantAllocation" />
+    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_Person_PersonID" FromRole="GrantAllocationLikelyPeople" ToRole="Person" />
+  </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
       <PropertyRef Name="GrantAllocationNoteID" />
@@ -2302,6 +2332,15 @@
     <NavigationProperty Name="CreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" ToRole="CreatedByPerson" />
     <NavigationProperty Name="LastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" ToRole="LastUpdatedByPerson" />
   </EntityType>
+  <EntityType Name="GrantAllocationPriority">
+    <Key>
+      <PropertyRef Name="GrantAllocationPriorityID" />
+    </Key>
+    <Property Name="GrantAllocationPriorityID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationPriorityNumber" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationPriorityColor" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID" FromRole="GrantAllocationPriority" ToRole="GrantAllocations" />
+  </EntityType>
   <EntityType Name="GrantAllocationProgramIndexProjectCode">
     <Key>
       <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
@@ -2323,6 +2362,16 @@
     <Property Name="PersonID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProgramManagers" ToRole="GrantAllocation" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_Person_PersonID" FromRole="GrantAllocationProgramManagers" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="GrantAllocationSource">
+    <Key>
+      <PropertyRef Name="GrantAllocationSourceID" />
+    </Key>
+    <Property Name="GrantAllocationSourceID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationSourceName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="GrantAllocationSourceDisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID" FromRole="GrantAllocationSource" ToRole="GrantAllocations" />
   </EntityType>
   <EntityType Name="GrantFileResource">
     <Key>
@@ -2428,14 +2477,6 @@
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Grant_GrantID" FromRole="GrantNoteInternals" ToRole="Grant" />
     <NavigationProperty Name="CreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="GrantNoteInternalsWhereYouAreTheCreatedByPerson" ToRole="CreatedByPerson" />
     <NavigationProperty Name="LastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" ToRole="LastUpdatedByPerson" />
-  </EntityType>
-  <EntityType Name="GrantStatus">
-    <Key>
-      <PropertyRef Name="GrantStatusID" />
-    </Key>
-    <Property Name="GrantStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantStatusName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID" FromRole="GrantStatus" ToRole="Grants" />
   </EntityType>
   <EntityType Name="GrantType">
     <Key>
@@ -2898,6 +2939,7 @@
     <NavigationProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" />
     <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardTravelLineItems" />
     <NavigationProperty Name="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" FromRole="ChangePerson" ToRole="GrantAllocationChangeLogsWhereYouAreTheChangePerson" />
+    <NavigationProperty Name="GrantAllocationLikelyPeople" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_Person_PersonID" FromRole="Person" ToRole="GrantAllocationLikelyPeople" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheCreatedByPerson" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" />
     <NavigationProperty Name="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" />
@@ -5415,18 +5457,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Grant_GrantStatus_GrantStatusID">
-    <End Role="GrantStatus" Type="ProjectFirma.Web.Models.GrantStatus" Multiplicity="1" />
-    <End Role="Grants" Type="ProjectFirma.Web.Models.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantStatus">
-        <PropertyRef Name="GrantStatusID" />
-      </Principal>
-      <Dependent Role="Grants">
-        <PropertyRef Name="GrantStatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Grant_GrantType_GrantTypeID">
     <End Role="GrantType" Type="ProjectFirma.Web.Models.GrantType" Multiplicity="0..1" />
     <End Role="Grants" Type="ProjectFirma.Web.Models.Grant" Multiplicity="*" />
@@ -5508,6 +5538,30 @@
       </Principal>
       <Dependent Role="Invoices">
         <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
+    <End Role="GrantAllocationPriority" Type="ProjectFirma.Web.Models.GrantAllocationPriority" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationPriority">
+        <PropertyRef Name="GrantAllocationPriorityID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantAllocationPriorityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID">
+    <End Role="GrantAllocationSource" Type="ProjectFirma.Web.Models.GrantAllocationSource" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationSource">
+        <PropertyRef Name="GrantAllocationSourceID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantAllocationSourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5603,6 +5657,18 @@
         <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="GrantAllocationFileResources">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationLikelyPeople" Type="ProjectFirma.Web.Models.GrantAllocationLikelyPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationLikelyPeople">
         <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
@@ -5832,6 +5898,18 @@
       </Principal>
       <Dependent Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson">
         <PropertyRef Name="ChangePersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationLikelyPerson_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="GrantAllocationLikelyPeople" Type="ProjectFirma.Web.Models.GrantAllocationLikelyPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationLikelyPeople">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -26,8 +26,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("View Terminated {0} List", FieldDefinitionEnum.Project)]
     public class ProjectsViewTerminatedListFeature : FirmaFeature
     {
-        public ProjectsViewTerminatedListFeature()
-            : base(FirmaBaseFeatureHelpers.AllRolesExceptUnassigned)
+        public ProjectsViewTerminatedListFeature() : base(Role.AllBaseRolesExceptUnassigned())
         {
         }
     }
