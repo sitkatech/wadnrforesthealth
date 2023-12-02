@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("View Grant Note Internal")]
     public class GrantNoteInternalViewFeature : FirmaFeature
     {
-        public GrantNoteInternalViewFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin })
+        public GrantNoteInternalViewFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
         {
         }
     }

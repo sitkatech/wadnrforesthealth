@@ -25,8 +25,10 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Edit or Delete Grant Modification File")]
-    public class GrantModificationManageFileResourceAsAdminFeature : FirmaAdminFeature
+    public class GrantModificationManageFileResourceAsAdminFeature : FirmaFeature
     {
-        
+        public GrantModificationManageFileResourceAsAdminFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
+        {
+        }
     }
 }
