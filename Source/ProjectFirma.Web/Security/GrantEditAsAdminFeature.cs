@@ -4,8 +4,10 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Edit Grant")]
-    public class GrantEditAsAdminFeature : FirmaAdminFeature
+    public class GrantEditAsAdminFeature : FirmaFeature
     {
-       
+        public GrantEditAsAdminFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
+        {
+        }
     }
 }

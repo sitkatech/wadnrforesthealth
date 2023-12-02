@@ -6,8 +6,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Create a Grant Modification", FieldDefinitionEnum.Application)]
     public class GrantModificationCreateFeature : FirmaFeature
     {
-        public GrantModificationCreateFeature()
-            : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward })
+        public GrantModificationCreateFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
         {
         }
     }
