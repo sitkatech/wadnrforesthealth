@@ -32,44 +32,52 @@
 {
 
     @Html.HiddenFor(m => m.GrantAllocationAwardID)
-    @Html.HiddenFor(m => m.FocusAreaID)
 
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantAllocationAwardName)
-            </div>
-            <div class="col-sm-9">
-                @Html.TextBoxFor(m => m.GrantAllocationAwardName, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.GrantAllocationAwardName)
-            </div>
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantAllocationAwardName)
         </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantAllocationID)
-            </div>
-            <div class="col-sm-9">
-                @Html.SearchableDropDownListFor(m => m.GrantAllocationID, ViewDataTyped.AvailableGrantAllocations, new { @class = "form-control selectpicker", style = "width:auto", onchange = "return getGrantAllocationEndDate(this)" })
-                @Html.ValidationMessageFor(m => m.GrantAllocationID)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantAllocationAwardExpirationDate)
-            </div>
-            <div class="col-sm-9">
-                @Html.EditorFor(m => m.GrantAllocationAwardExpirationDate, new { @class = "form-control", style = "width:auto" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantAllocationAwardCalendarStartYear)
-            </div>
-            <div class="col-sm-9">
-                @Html.EditorFor(m => m.GrantAllocationAwardCalendarStartYear, new { @class = "form-control", style = "width:auto" })
-            </div>
+        <div class="col-sm-9">
+            @Html.TextBoxFor(m => m.GrantAllocationAwardName, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.GrantAllocationAwardName)
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantAllocationID)
+        </div>
+        <div class="col-sm-9">
+            @Html.SearchableDropDownListFor(m => m.GrantAllocationID, ViewDataTyped.AvailableGrantAllocations, new { @class = "form-control selectpicker", style = "width:auto", onchange = "return getGrantAllocationEndDate(this)" })
+            @Html.ValidationMessageFor(m => m.GrantAllocationID)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantAllocationAwardExpirationDate)
+        </div>
+        <div class="col-sm-9">
+            @Html.EditorFor(m => m.GrantAllocationAwardExpirationDate, new { @class = "form-control", style = "width:auto" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantAllocationAwardCalendarStartYear)
+        </div>
+        <div class="col-sm-9">
+            @Html.EditorFor(m => m.GrantAllocationAwardCalendarStartYear, new { @class = "form-control", style = "width:auto" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3 control-label">
+            @Html.LabelWithSugarFor(m => m.FocusAreaID)
+        </div>
+        <div class="col-sm-9">
+            @Html.SearchableDropDownListFor(m => m.FocusAreaID, ViewDataTyped.AvailableFocusAreas, new { @class = "form-control selectpicker", style = "width:auto" })
+            @Html.ValidationMessageFor(m => m.FocusAreaID)
+        </div>
+    </div>
+</div>
 
 }
 

@@ -153,8 +153,9 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult GrantAllocationAwardViewEdit(EditGrantAllocationAwardViewModel viewModel)
         {
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations;
+            var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas;
 
-            var viewData = new EditGrantAllocationAwardViewData(grantAllocations);
+            var viewData = new EditGrantAllocationAwardViewData(grantAllocations, focusAreas);
             return RazorPartialView<EditGrantAllocationAward, EditGrantAllocationAwardViewData, EditGrantAllocationAwardViewModel>(viewData, viewModel);
         }
 

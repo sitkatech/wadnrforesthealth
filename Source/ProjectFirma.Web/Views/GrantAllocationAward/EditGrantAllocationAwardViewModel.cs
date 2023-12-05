@@ -31,6 +31,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     {
         public int GrantAllocationAwardID { get; set; }
 
+        [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
         public int FocusAreaID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocation)]
