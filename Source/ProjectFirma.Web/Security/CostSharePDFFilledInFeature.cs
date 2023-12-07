@@ -27,6 +27,6 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Cost Share PDF Filled-in")]
     public class CostSharePDFFilledInFeature : FirmaFeature
     {
-        public CostSharePDFFilledInFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward }) { }
+        public CostSharePDFFilledInFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanViewLandownerInfo }) { }
     }
 }
