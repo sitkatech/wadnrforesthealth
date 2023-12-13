@@ -68,6 +68,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string ArcGisClientId = SitkaConfiguration.GetRequiredAppSetting("ArcGisClientId");
         public static readonly string ArcGisClientSecret = SitkaConfiguration.GetRequiredAppSetting("ArcGisClientSecret");
 
+        public static readonly string MapBoxApiKey = SitkaConfiguration.GetRequiredAppSetting("MapBoxApiKey");
+
         public static readonly int GeoSpatialReferenceID = 4326;
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
