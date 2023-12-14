@@ -54,6 +54,7 @@
     <add key="ArcGisLoaDataWesternUrl" value="${arcgis-loa-data-western-url}" />
     <add key="ArcGisClientId" value="${arcgis-client-id}" />
     <add key="ArcGisClientSecret" value="${arcgis-client-secret}" />
+    <add key="MapBoxApiKey" value="${mapbox-api-key}" />
   </appSettings>
   <system.net>
     <mailSettings>

@@ -29,11 +29,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     public class EditGrantAllocationAwardViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> AvailableGrantAllocations { get; set; }
+        public IEnumerable<SelectListItem> AvailableFocusAreas { get; set; }
 
-        public EditGrantAllocationAwardViewData(IEnumerable<Models.GrantAllocation> grantAllocations)
+        public EditGrantAllocationAwardViewData(IEnumerable<Models.GrantAllocation> grantAllocations, IEnumerable<Models.FocusArea> availableFocusAreas)
         {
             AvailableGrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(v => v.GrantAllocationID.ToString(CultureInfo.InvariantCulture), k => k.GrantNumberAndGrantAllocationDisplayName);
-
+            AvailableFocusAreas = availableFocusAreas.ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);
         }
 
     }

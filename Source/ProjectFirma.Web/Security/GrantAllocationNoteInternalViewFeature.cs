@@ -4,10 +4,8 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View Grant Allocation Note Internal")]
-    public class GrantAllocationNoteInternalViewFeature : FirmaFeature
+    public class GrantAllocationNoteInternalViewFeature : GrantAllocationEditAsAdminFeature
     {
-        public GrantAllocationNoteInternalViewFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin })
-        {
-        }
+
     }
 }

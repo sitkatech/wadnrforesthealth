@@ -40,5 +40,11 @@
     "inputFiles": [
       "Content/css/style-WashingtonDepartmentOfNaturalResources.css"
     ]
+  },
+  {
+    "outputFileName": "Content/leaflet/leaflet.MakiMarkers/Leaflet.MakiMarkers.min.js",
+    "inputFiles": [
+      "Content/leaflet/leaflet.MakiMarkers/Leaflet.MakiMarkers.js"
+    ]
   }
 ]

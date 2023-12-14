@@ -27,6 +27,7 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleCanEditProgram CanEditProgram = RoleCanEditProgram.Instance;
         public static readonly RoleCanManagePageContent CanManagePageContent = RoleCanManagePageContent.Instance;
         public static readonly RoleCanViewLandownerInfo CanViewLandownerInfo = RoleCanViewLandownerInfo.Instance;
+        public static readonly RoleCanManageGrantsAndAgreements CanManageGrantsAndAgreements = RoleCanManageGrantsAndAgreements.Instance;
 
         public static readonly List<Role> All;
         public static readonly ReadOnlyDictionary<int, Role> AllLookupDictionary;
@@ -36,7 +37,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram, CanManagePageContent, CanViewLandownerInfo };
+            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram, CanManagePageContent, CanViewLandownerInfo, CanManageGrantsAndAgreements };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
@@ -114,6 +115,8 @@ namespace ProjectFirma.Web.Models
                     return Admin;
                 case RoleEnum.CanEditProgram:
                     return CanEditProgram;
+                case RoleEnum.CanManageGrantsAndAgreements:
+                    return CanManageGrantsAndAgreements;
                 case RoleEnum.CanManagePageContent:
                     return CanManagePageContent;
                 case RoleEnum.CanViewLandownerInfo:
@@ -141,7 +144,8 @@ namespace ProjectFirma.Web.Models
         ProjectSteward = 9,
         CanEditProgram = 10,
         CanManagePageContent = 11,
-        CanViewLandownerInfo = 12
+        CanViewLandownerInfo = 12,
+        CanManageGrantsAndAgreements = 13
     }
 
     public partial class RoleAdmin : Role
@@ -190,5 +194,11 @@ namespace ProjectFirma.Web.Models
     {
         private RoleCanViewLandownerInfo(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
         public static readonly RoleCanViewLandownerInfo Instance = new RoleCanViewLandownerInfo(12, @"CanViewLandownerInfo", @"Can View Landowner Info", @"Users with this role can view landowner information", false);
+    }
+
+    public partial class RoleCanManageGrantsAndAgreements : Role
+    {
+        private RoleCanManageGrantsAndAgreements(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleCanManageGrantsAndAgreements Instance = new RoleCanManageGrantsAndAgreements(13, @"CanManageGrantsAndAgreements", @"Can Manage Grants and Agreements", @"Users with this role can manage Grants and Agreements", false);
     }
 }

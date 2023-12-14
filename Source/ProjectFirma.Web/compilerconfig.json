@@ -20,12 +20,12 @@
     "inputFile": "Content/Bootstrap/firma/clackamas.less"
   },
   {
-    "outputFile": "Content/qtip/jquery.qtip.validation.es5.js",
-    "inputFile": "Content/qtip/jquery.qtip.validation.js"
+    "outputFile": "Content/qtip/jquery.qtip.validation.js",
+    "inputFile": "Content/qtip/jquery.qtip.validation-min.js"
   },
   {
-    "outputFile": "Content/qtip/jquery.qtip.es5.js",
-    "inputFile": "Content/qtip/jquery.qtip.js"
+    "outputFile": "Content/qtip/jquery.qtip.js",
+    "inputFile": "Content/qtip/jquery.qtip-min.js"
   },
   {
     "outputFile": "Content/Bootstrap/bootstrap-3.3.7/less/print.css",

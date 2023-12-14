@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.Grant
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new GrantAllocationDeleteFeature().HasPermissionByPerson(currentPerson);
-            var userHasCreatePermissions = new GrantCreateFeature().HasPermissionByPerson(currentPerson);
+            var userHasCreatePermissions = new GrantAllocationCreateFeature().HasPermissionByPerson(currentPerson);
             if (userHasCreatePermissions && createButtonType == GrantAllocationGridCreateButtonType.Shown)
             {
                 var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New(optionalRelevantGrant));
