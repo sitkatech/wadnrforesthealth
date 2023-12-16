@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.User
             if (hasDeletePermission)
             {
                 Add(string.Empty,
-                    x => x.IsFullUser() ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), hasDeletePermission, !x.HasDependentObjects(), true) : new HtmlString(""),
+                    x => !x.IsFullUser() ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), hasDeletePermission, !x.HasDependentObjects(), true) : new HtmlString(""),
                     30, DhtmlxGridColumnFilterType.None);
             }
             Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, DhtmlxGridColumnFilterType.Html);

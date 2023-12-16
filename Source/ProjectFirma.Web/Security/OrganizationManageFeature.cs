@@ -18,10 +18,18 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using ProjectFirma.Web.Models;
+using System.Collections.Generic;
+using System.Web.Mvc;
+
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Manage Organization")]
-    public class OrganizationManageFeature : FirmaAdminFeature
+    public class OrganizationManageFeature : FirmaFeature
     {
+
+        public OrganizationManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanAddEditUsersContactsOrganizations })
+        {
+        }
     }
 }

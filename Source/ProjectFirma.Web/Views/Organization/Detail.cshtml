@@ -106,82 +106,84 @@
     <div class="panel-body">
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="organizationOverview">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditOrganizationUrl, string.Format("Edit {0} - {1}", FieldDefinition.Organization.GetFieldDefinitionLabel(), ViewDataTyped.Organization.DisplayName), ViewDataTyped.UserHasOrganizationManagePermissions) Basics
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    @if (ViewDataTyped.Organization.LogoFileResource != null)
-                                    {
-                                        <div class="col-xs-1">
-                                            <div style="text-align: center;">
-                                                <img src="@ViewDataTyped.Organization.LogoFileResource.FileResourceUrl" style="max-width: 100px; max-height: 200px; margin-left: auto; margin-right: auto;" />
-                                            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditOrganizationUrl, string.Format("Edit {0} - {1}", FieldDefinition.Organization.GetFieldDefinitionLabel(), ViewDataTyped.Organization.DisplayName), ViewDataTyped.UserHasOrganizationManagePermissions) Basics
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                @if (ViewDataTyped.Organization.LogoFileResource != null)
+                                {
+                                    <div class="col-xs-1">
+                                        <div style="text-align: center;">
+                                            <img src="@ViewDataTyped.Organization.LogoFileResource.FileResourceUrl" style="max-width: 100px; max-height: 200px; margin-left: auto; margin-right: auto;" />
                                         </div>
-                                    }
+                                    </div>
+                                }
 
-                                    <div class="@ViewDataTyped.Organization.LogoFileResource != null ? col-xs-11 : col-xs-12">
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
-                                            <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationName</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Short Name")</div>
-                                            <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationShortName</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationType)</div>
-                                            <div class="col-xs-6">@(ViewDataTyped.Organization.OrganizationType != null ? ViewDataTyped.Organization.OrganizationType.OrganizationTypeName : string.Empty)</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationPrimaryContact)</div>
-                                            <div class="col-xs-6">@(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, ViewDataTyped.Organization.PrimaryContactPerson).HasPermission ? ViewDataTyped.Organization.PrimaryContactPersonWithOrgAsUrl : ViewDataTyped.Organization.PrimaryContactPersonAsStringAndOrgAsUrl)</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Vendor")</div>
-                                            <div class="col-xs-6">@ViewDataTyped.Organization.Vendor.GetVendorNameWithFullStatewideVendorNumberAsUrl()</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Home Page")</div>
-                                            <div class="col-xs-6">
-                                                <a class="wrapLongString" href="@ViewDataTyped.Organization.OrganizationUrl">@ViewDataTyped.Organization.OrganizationUrl</a>
-                                            </div>
+                                <div class="@ViewDataTyped.Organization.LogoFileResource != null ? col-xs-11 : col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
+                                        <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationName</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 fieldLabel text-right">@Html.Label("Short Name")</div>
+                                        <div class="col-xs-6">@ViewDataTyped.Organization.OrganizationShortName</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationType)</div>
+                                        <div class="col-xs-6">@(ViewDataTyped.Organization.OrganizationType != null ? ViewDataTyped.Organization.OrganizationType.OrganizationTypeName : string.Empty)</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.OrganizationPrimaryContact)</div>
+                                        <div class="col-xs-6">@(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, ViewDataTyped.Organization.PrimaryContactPerson).HasPermission ? ViewDataTyped.Organization.PrimaryContactPersonWithOrgAsUrl : ViewDataTyped.Organization.PrimaryContactPersonAsStringAndOrgAsUrl)</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 fieldLabel text-right">@Html.Label("Vendor")</div>
+                                        <div class="col-xs-6">@ViewDataTyped.Organization.Vendor.GetVendorNameWithFullStatewideVendorNumberAsUrl()</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 fieldLabel text-right">@Html.Label("Home Page")</div>
+                                        <div class="col-xs-6">
+                                            <a class="wrapLongString" href="@ViewDataTyped.Organization.OrganizationUrl">@ViewDataTyped.Organization.OrganizationUrl</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
-                                <a href="@ViewDataTyped.ManageGrantAllocationsUrl">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</a>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
+                            <a href="@ViewDataTyped.ManageGrantAllocationsUrl">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</a>
 
-                            </div>
-                            <div class="panel-body">
-                                @if (ViewDataTyped.Organization.GrantAllocations.Any())
-                                {
-                                    <ul>
-                                        @foreach (var grantAllocation in ViewDataTyped.Organization.GrantAllocations.OrderBy(x => x.GrantAllocationName))
-                                        {
-                                            <li>
-                                                @grantAllocation.DisplayNameAsUrl
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() set for this @FieldDefinition.Organization.GetFieldDefinitionLabel().</p>
-                                }
-                            </div>
+                        </div>
+                        <div class="panel-body">
+                            @if (ViewDataTyped.Organization.GrantAllocations.Any())
+                            {
+                                <ul>
+                                    @foreach (var grantAllocation in ViewDataTyped.Organization.GrantAllocations.OrderBy(x => x.GrantAllocationName))
+                                    {
+                                        <li>
+                                            @grantAllocation.DisplayNameAsUrl
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() set for this @FieldDefinition.Organization.GetFieldDefinitionLabel().</p>
+                            }
                         </div>
                     </div>
                 </div>
+            </div>
+            @if (ViewDataTyped.UserHasPermissionToViewPrograms)
+            {
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panelFirma">
@@ -194,6 +196,7 @@
                         </div>
                     </div>
                 </div>
+            }
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panelFirma">
