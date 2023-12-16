@@ -27,6 +27,8 @@ using LtInfo.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
+using Newtonsoft.Json;
+using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Views.User
 {
@@ -111,7 +113,15 @@ namespace ProjectFirma.Web.Views.User
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return new List<ValidationResult>();
+            var errors = new List<ValidationResult>();
+
+            if (BaseRoleID == Models.Role.Unassigned.RoleID && (RoleSimples != null && RoleSimples.Any()))
+            { 
+                errors.Add(new SitkaValidationResult<EditRolesViewModel, int>($"Cannot have an unassigned base role with assigned supplemental roles: {string.Join(", ", RoleSimples.Select(y => y.RoleDisplayName).ToList())}", x=> x.BaseRoleID));
+
+            }
+            return errors;
+
         }
     }
 }
