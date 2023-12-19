@@ -209,6 +209,6 @@ namespace ProjectFirma.Web.Models
     public partial class RoleCanAddEditUsersContactsOrganizations : Role
     {
         private RoleCanAddEditUsersContactsOrganizations(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
-        public static readonly RoleCanAddEditUsersContactsOrganizations Instance = new RoleCanAddEditUsersContactsOrganizations(14, @"CanAddEditUsersContactsOrganizations", @"Can add/edit users, contacts, organizations", @"Users with this role can add and edit a user's role and organization.", false);
+        public static readonly RoleCanAddEditUsersContactsOrganizations Instance = new RoleCanAddEditUsersContactsOrganizations(14, @"CanAddEditUsersContactsOrganizations", @"Can Add/Edit Users, Contacts, Organizations", @"Users with this role can add and edit Users, Contacts and Organizations.", false);
     }
 }
