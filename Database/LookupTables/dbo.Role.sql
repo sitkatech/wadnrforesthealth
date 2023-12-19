@@ -12,4 +12,4 @@ values
 (11, 'CanManagePageContent', 'Can Manage Page Content', 'Users with this role can edit content on custom pages',0),
 (12, 'CanViewLandownerInfo', 'Can View Landowner Info', 'Users with this role can view landowner information',0),
 (13, 'CanManageGrantsAndAgreements', 'Can Manage Grants and Agreements', 'Users with this role can manage Grants and Agreements', 0),
-(14, 'CanAddEditUsersContactsOrganizations', 'Can Add and Edit Users, Contacts, Organizations', 'Users with this role can add and edit Users, Contacts and Organizations.', 0)
+(14, 'CanAddEditUsersContactsOrganizations', 'Can Add/Edit Users, Contacts, Organizations', 'Users with this role can add and edit Users, Contacts and Organizations.', 0)

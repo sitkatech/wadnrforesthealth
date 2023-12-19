@@ -33,13 +33,13 @@ namespace ProjectFirma.Web.Views.User
     {
         public IndexGridSpec(Person currentPerson)
         {
-            var hasDeletePermission = new PersonDeleteFeature().HasPermissionByPerson(currentPerson);
-            if (hasDeletePermission)
-            {
-                Add(string.Empty,
-                    x => !x.IsFullUser() ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), hasDeletePermission, !x.HasDependentObjects(), true) : new HtmlString(""),
-                    30, DhtmlxGridColumnFilterType.None);
-            }
+            //var hasDeletePermission = new PersonDeleteFeature().HasPermissionByPerson(currentPerson);
+            //if (hasDeletePermission)
+            //{
+            //    Add(string.Empty,
+            //        x => x.IsFullUser() ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), hasDeletePermission, !x.HasDependentObjects(), true) : new HtmlString(""),
+            //        30, DhtmlxGridColumnFilterType.None);
+            //}
             Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, DhtmlxGridColumnFilterType.Html);
             Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 100, DhtmlxGridColumnFilterType.Html);
             Add("Email", a => a.Email, 200);
