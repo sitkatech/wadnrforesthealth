@@ -1054,5 +1054,27 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [FirmaAdminFeature]
+        public ContentResult BulkDeleteProjects()
+        {
+            return new ContentResult();
+        }
+
+        [HttpPost]
+        [FirmaAdminFeature]
+        public PartialViewResult BulkDeleteProjects(BulkDeleteProjectsViewModel viewModel)
+        {
+            var projectDisplayNames = new List<string>();
+
+            if (viewModel.ProjectIDList != null)
+            {
+                var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
+                projectDisplayNames = projects.Select(x => x.DisplayName).ToList();
+            }
+            var viewData = new BulkDeleteProjectsViewData(projectDisplayNames);
+            return RazorPartialView<BulkDeleteProjects, BulkDeleteProjectsViewData, BulkDeleteProjectsViewModel>(viewData, viewModel);
+        }
+
     }
 }

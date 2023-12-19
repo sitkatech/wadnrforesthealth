@@ -44,12 +44,22 @@ namespace ProjectFirma.Web.Views.Project
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
+            var userHasDeleteProjectPermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
 
+            if ((userHasTagManagePermissions && allowTaggingFunctionality) || userHasDeleteProjectPermissions)
+            {
+                AddCheckBoxColumn();
+                Add("ProjectID", x => x.ProjectID, 0);
+            }
             if (userHasTagManagePermissions && allowTaggingFunctionality)
             {
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
-                AddCheckBoxColumn();
-                Add("ProjectID", x => x.ProjectID, 0);
+                
+            }
+            if (userHasDeleteProjectPermissions)
+            {
+                BulkDeleteModalDialogForm = new BulkDeleteModalDialogForm(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.BulkDeleteProjects(null)), $"Delete Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Delete {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
+
             }
 
             if (userHasDeletePermissions && allowDeleteFunctionality)
