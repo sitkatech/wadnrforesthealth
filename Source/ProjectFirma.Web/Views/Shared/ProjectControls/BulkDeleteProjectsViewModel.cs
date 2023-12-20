@@ -31,11 +31,5 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
     {
         [Required]
         public List<int> ProjectIDList { get; set; }
-
-        [Required]
-        [StringLength(Models.Tag.FieldLengths.TagName)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TagName)]
-        [RegularExpression(@"^[a-zA-Z0-9-_\s]{1,}$", ErrorMessage = FirmaValidationMessages.LettersNumbersSpacesDashesAndUnderscoresOnly)]
-        public string TagName { get; set; }
     }
 }

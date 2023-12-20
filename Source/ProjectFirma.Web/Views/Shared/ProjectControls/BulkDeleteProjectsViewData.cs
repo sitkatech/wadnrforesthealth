@@ -28,14 +28,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 {
     public class BulkDeleteProjectsViewData : FirmaUserControlViewData
     {
-        public readonly string FindTagUrl;
         public readonly List<string> ProjectDisplayNames;
         public readonly string ProjectLabel;
 
         public BulkDeleteProjectsViewData(List<string> projectDisplayNames)
         {
             ProjectDisplayNames = projectDisplayNames;
-            FindTagUrl = SitkaRoute<TagController>.BuildUrlFromExpression(c => c.Find(null));
 
             ProjectLabel = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}" + (ProjectDisplayNames.Count > 1 ? "s" : String.Empty);
 
