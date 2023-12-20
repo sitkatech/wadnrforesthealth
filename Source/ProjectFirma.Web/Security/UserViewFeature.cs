@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
@@ -28,7 +29,7 @@ namespace ProjectFirma.Web.Security
     {
         private readonly FirmaFeatureWithContextImpl<Person> _firmaFeatureWithContextImpl;
 
-        public UserViewFeature() : base(Role.AllBaseRoles())
+        public UserViewFeature() : base(new List<Role>(Role.AllBaseRoles()){Role.CanAddEditUsersContactsOrganizations})
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Person>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
