@@ -44,9 +44,8 @@ namespace ProjectFirma.Web.Views.Project
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
-            var userHasDeleteProjectPermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
 
-            if ((userHasTagManagePermissions && allowTaggingFunctionality) || userHasDeleteProjectPermissions)
+            if ((userHasTagManagePermissions && allowTaggingFunctionality) || (userHasDeletePermissions && allowDeleteFunctionality))
             {
                 AddCheckBoxColumn();
                 Add("ProjectID", x => x.ProjectID, 0);
@@ -56,7 +55,7 @@ namespace ProjectFirma.Web.Views.Project
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
                 
             }
-            if (userHasDeleteProjectPermissions)
+            if (userHasDeletePermissions && allowDeleteFunctionality)
             {
                 BulkDeleteModalDialogForm = new BulkDeleteModalDialogForm(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.BulkDeleteProjects(null)), $"Delete Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Delete {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
 

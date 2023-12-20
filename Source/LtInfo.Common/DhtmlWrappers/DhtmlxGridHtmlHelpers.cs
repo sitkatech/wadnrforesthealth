@@ -317,7 +317,7 @@ namespace LtInfo.Common.DhtmlWrappers
                     bulkDeleteModalDialogForm.DialogUrl,
                     bulkDeleteModalDialogForm.DialogTitle,
                     ModalDialogFormHelper.DefaultDialogWidth,
-                    "Save",
+                    "Delete",
                     "Cancel",
                     new List<string>(),
                     null,
