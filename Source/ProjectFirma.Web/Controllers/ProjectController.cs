@@ -1054,5 +1054,70 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [ProjectDeleteFeature]
+        public ContentResult BulkDeleteProjects()
+        {
+            return new ContentResult();
+        }
+
+        [HttpPost]
+        [ProjectDeleteFeature]
+        public PartialViewResult BulkDeleteProjects(BulkDeleteProjectsViewModel viewModel)
+        {
+            var projectDisplayNames = new List<string>();
+
+            if (viewModel.ProjectIDList != null)
+            {
+                var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
+                projectDisplayNames = projects.Select(x => x.DisplayName).ToList();
+            }
+            var viewData = new BulkDeleteProjectsViewData(projectDisplayNames);
+            return RazorPartialView<BulkDeleteProjects, BulkDeleteProjectsViewData, BulkDeleteProjectsViewModel>(viewData, viewModel);
+        }
+
+        /// <summary>
+        /// Dummy get signature so that it can find the post action
+        /// </summary>
+        [HttpGet]
+        [ProjectDeleteFeature]
+        public ContentResult BulkDeleteProjectsModal()
+        {
+            return new ContentResult();
+        }
+
+        [HttpPost]
+        [ProjectDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult BulkDeleteProjectsModal(BulkDeleteProjectsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new ModalDialogFormJsonResult();
+            }
+            BulkDeleteProjectsImpl(viewModel);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private void BulkDeleteProjectsImpl(BulkDeleteProjectsViewModel viewModel)
+        {
+            if (viewModel.ProjectIDList != null)
+            {
+                var projects = HttpRequestStorage.DatabaseEntities.Projects
+                    .Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
+                foreach (var project in projects)
+                {
+                    //Unlink ProjectImportBlockLists before delete
+                    foreach (var blockListEntry in project.ProjectImportBlockLists)
+                    {
+                        blockListEntry.ProjectID = null;
+                    }
+
+                    project.ProjectImportBlockLists.Clear();
+                    project.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
+            }
+        }
+
     }
 }
