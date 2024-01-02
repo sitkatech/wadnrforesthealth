@@ -6,8 +6,9 @@
   -- q30 id 7
   -- q35 id 7
   -- q43 id 7
-  update dbo.FindYourForesterQuestion set ForesterRoleID = 7
-  where FindYourForesterQuestionID in (29,30,35,43)
+  --1/2/24 TK - dont want these updates anymore! 
+  --update dbo.FindYourForesterQuestion set ForesterRoleID = 7
+  --where FindYourForesterQuestionID in (29,30,35,43)
 
   -- q18 test = 'I am interested in financial assistance for forest management, forest health, fuels mitigation, or post-fire recovery.'
   update dbo.FindYourForesterQuestion set QuestionText = 'I am interested in financial assistance for forest management, forest health, fuels mitigation, or post-fire recovery.'
