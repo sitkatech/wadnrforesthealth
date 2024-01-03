@@ -24,6 +24,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.Office2013.Word;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
@@ -140,8 +141,20 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEdit(EditRolesViewModel viewModel, Person personBeingUpdated)
         {
-            var baseRoles = CurrentPerson.IsSitkaAdministrator() ? Role.AllBaseRoles() : CurrentPerson.IsAdministrator() ? Role.AllBaseRoles().Except(new[] { Role.EsaAdmin }) : Role.AllBaseRoles().Except(new[] {Role.Admin}).Except(new[] {Role.EsaAdmin});
             var canEditPersonBaseRole = CurrentPerson.IsAdministrator() || (CurrentPerson.HasRole(Role.CanAddEditUsersContactsOrganizations) && !personBeingUpdated.IsAdministrator());
+            var baseRoles = new List<Role>();
+            if (CurrentPerson.IsSitkaAdministrator())
+            {
+                baseRoles = Role.AllBaseRoles();
+            }
+            else if (CurrentPerson.IsAdministrator())
+            {
+                baseRoles = Role.AllBaseRoles().Except(new[] { Role.EsaAdmin }).ToList();
+            }
+            else if (canEditPersonBaseRole)
+            {
+                baseRoles = Role.AllBaseRoles().Except(new[] { Role.Admin }).Except(new[] { Role.EsaAdmin }).ToList();
+            } 
             var baseRolesAsSimples = baseRoles.Select(x => new RoleSimple(x)).ToList();
             var supplementalRoles = Role.AllSupplementalRoles();
             var supplementalRolesAsSimples = supplementalRoles.Select(x => new RoleSimple(x)).ToList();

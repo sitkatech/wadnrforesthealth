@@ -23,12 +23,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using DocumentFormat.OpenXml.Office2013.Word;
 using LtInfo.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using Newtonsoft.Json;
 using ProjectFirma.Web.Views.Shared;
+using Person = ProjectFirma.Web.Models.Person;
+using System.Web;
 
 namespace ProjectFirma.Web.Views.User
 {
@@ -64,11 +67,17 @@ namespace ProjectFirma.Web.Views.User
             ShouldReceiveSupportEmails = person.ReceiveSupportEmails;
         }
 
-        public void UpdateModel(Person person, Person currentPerson)
+        public void UpdateModel(Person personToUpdate, Person currentPerson)
         {
 
-            var downgradingFromSteward = person.HasRole(Models.Role.ProjectSteward) && BaseRoleID != Models.Role.ProjectSteward.RoleID;
-            var removingCanEditProgramRole = person.HasRole(Models.Role.CanEditProgram) && RoleSimples == null || (RoleSimples != null && RoleSimples.All(x => x.RoleID != Models.Role.CanEditProgram.RoleID));
+            var downgradingFromAdmin = (personToUpdate.HasRole(Models.Role.Admin) && BaseRoleID != Models.Role.Admin.RoleID) || (personToUpdate.HasRole(Models.Role.EsaAdmin) && BaseRoleID != Models.Role.EsaAdmin.RoleID);
+            var upgradingToAdmin = (!personToUpdate.HasRole(Models.Role.Admin) && BaseRoleID == Models.Role.Admin.RoleID) || (!personToUpdate.HasRole(Models.Role.EsaAdmin) && BaseRoleID == Models.Role.EsaAdmin.RoleID);
+            if ((downgradingFromAdmin || upgradingToAdmin) && !currentPerson.IsAdministrator())
+            {
+                throw new SitkaValidationException("You need more permissions to edit this person's role", new List<string>());
+            }
+            var downgradingFromSteward = personToUpdate.HasRole(Models.Role.ProjectSteward) && BaseRoleID != Models.Role.ProjectSteward.RoleID;
+            var removingCanEditProgramRole = personToUpdate.HasRole(Models.Role.CanEditProgram) && RoleSimples == null || (RoleSimples != null && RoleSimples.All(x => x.RoleID != Models.Role.CanEditProgram.RoleID));
 
 
             var newPersonRoles = new List<PersonRole>();
@@ -76,38 +85,38 @@ namespace ProjectFirma.Web.Views.User
             {
                 foreach (var roleSimple in RoleSimples)
                 {
-                    var newPersonRole = new PersonRole(person.PersonID, roleSimple.RoleID);
+                    var newPersonRole = new PersonRole(personToUpdate.PersonID, roleSimple.RoleID);
                     newPersonRoles.Add(newPersonRole);
                 }
             }
             
-            newPersonRoles.Add(new PersonRole(person.PersonID, BaseRoleID));
+            newPersonRoles.Add(new PersonRole(personToUpdate.PersonID, BaseRoleID));
             
 
-            person.PersonRoles.Merge(newPersonRoles, HttpRequestStorage.DatabaseEntities.PersonRoles.Local, (o1, o2) => o1.PersonID == o2.PersonID && o1.RoleID == o2.RoleID);
+            personToUpdate.PersonRoles.Merge(newPersonRoles, HttpRequestStorage.DatabaseEntities.PersonRoles.Local, (o1, o2) => o1.PersonID == o2.PersonID && o1.RoleID == o2.RoleID);
 
 
-            person.ReceiveSupportEmails = ShouldReceiveSupportEmails;
+            personToUpdate.ReceiveSupportEmails = ShouldReceiveSupportEmails;
 
-            if (ModelObjectHelpers.IsRealPrimaryKeyValue(person.PersonID))
+            if (ModelObjectHelpers.IsRealPrimaryKeyValue(personToUpdate.PersonID))
             {
-                person.UpdateDate = DateTime.Now; // Existing person
+                personToUpdate.UpdateDate = DateTime.Now; // Existing person
             }
             else
             {
-                person.CreateDate = DateTime.Now; // New person
+                personToUpdate.CreateDate = DateTime.Now; // New person
             }
 
             if (downgradingFromSteward)
             {                
-                HttpRequestStorage.DatabaseEntities.PersonStewardRegions.DeletePersonStewardRegion(person.PersonStewardRegions);
-                HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.DeletePersonStewardTaxonomyBranch(person.PersonStewardTaxonomyBranches);
-                HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.DeletePersonStewardOrganization(person.PersonStewardOrganizations);
+                HttpRequestStorage.DatabaseEntities.PersonStewardRegions.DeletePersonStewardRegion(personToUpdate.PersonStewardRegions);
+                HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.DeletePersonStewardTaxonomyBranch(personToUpdate.PersonStewardTaxonomyBranches);
+                HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.DeletePersonStewardOrganization(personToUpdate.PersonStewardOrganizations);
             }
 
             if (removingCanEditProgramRole)
             {
-                HttpRequestStorage.DatabaseEntities.ProgramPeople.DeleteProgramPerson(person.ProgramPeople);
+                HttpRequestStorage.DatabaseEntities.ProgramPeople.DeleteProgramPerson(personToUpdate.ProgramPeople);
             }
         }
 
