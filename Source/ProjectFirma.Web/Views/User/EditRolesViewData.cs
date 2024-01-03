@@ -30,11 +30,13 @@ namespace ProjectFirma.Web.Views.User
     {
         public List<RoleSimple> AllSupplementalRoles { get; }
         public List<SelectListItem> AllBaseRoles { get; }
+        public bool CanEditBaseRole { get; }
 
-        public EditRolesViewData(List<RoleSimple> supplementalRoles, List<RoleSimple> baseRoles)
+        public EditRolesViewData(List<RoleSimple> supplementalRoles, List<RoleSimple> baseRoles, bool isAdmin)
         {
             AllSupplementalRoles = supplementalRoles;
             AllBaseRoles = baseRoles.ToSelectList(x => x.RoleID.ToString(), y => y.RoleDisplayName).ToList();
+            CanEditBaseRole = isAdmin;
         }
     }
 }
