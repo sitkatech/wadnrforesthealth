@@ -37,6 +37,7 @@ using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.Shared.UserStewardshipAreas;
 using Detail = ProjectFirma.Web.Views.User.Detail;
 using DetailViewData = ProjectFirma.Web.Views.User.DetailViewData;
+using Person = ProjectFirma.Web.Models.Person;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -119,7 +120,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var person = personPrimaryKey.EntityObject;
             var viewModel = new EditRolesViewModel(person);
-            return ViewEdit(viewModel);
+            return ViewEdit(viewModel, person);
         }
 
         [HttpPost]
@@ -130,20 +131,33 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel);
+                return ViewEdit(viewModel, person);
             }
             viewModel.UpdateModel(person, CurrentPerson);
             SetMessageForDisplay($"Successfully updated the roles for {person.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditRolesViewModel viewModel)
+        private PartialViewResult ViewEdit(EditRolesViewModel viewModel, Person personBeingUpdated)
         {
-            var baseRoles = CurrentPerson.IsSitkaAdministrator() ? Role.AllBaseRoles() : Role.AllBaseRoles().Except(new[] { Role.EsaAdmin });
+            var canEditPersonBaseRole = CurrentPerson.IsAdministrator() || (CurrentPerson.HasRole(Role.CanAddEditUsersContactsOrganizations) && !personBeingUpdated.IsAdministrator());
+            var baseRoles = new List<Role>();
+            if (CurrentPerson.IsSitkaAdministrator())
+            {
+                baseRoles = Role.AllBaseRoles();
+            }
+            else if (CurrentPerson.IsAdministrator())
+            {
+                baseRoles = Role.AllBaseRoles().Except(new[] { Role.EsaAdmin }).ToList();
+            }
+            else if (canEditPersonBaseRole)
+            {
+                baseRoles = Role.AllBaseRoles().Except(new[] { Role.Admin }).Except(new[] { Role.EsaAdmin }).ToList();
+            } 
             var baseRolesAsSimples = baseRoles.Select(x => new RoleSimple(x)).ToList();
             var supplementalRoles = Role.AllSupplementalRoles();
             var supplementalRolesAsSimples = supplementalRoles.Select(x => new RoleSimple(x)).ToList();
-            var viewData = new EditRolesViewData(supplementalRolesAsSimples, baseRolesAsSimples);
+            var viewData = new EditRolesViewData(supplementalRolesAsSimples, baseRolesAsSimples, canEditPersonBaseRole);
             return RazorPartialView<EditRoles, EditRolesViewData, EditRolesViewModel>(viewData, viewModel);
         }
 
