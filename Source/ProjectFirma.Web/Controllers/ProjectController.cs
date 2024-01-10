@@ -42,6 +42,7 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
+using MoreLinq;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
@@ -1070,7 +1071,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             if (viewModel.ProjectIDList != null)
             {
                 var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
-                projectDisplayNames = projects.Select(x => x.DisplayName).ToList();
+                projectDisplayNames = projects.Select(x => x.DisplayName).Take(50).ToList();
             }
             var viewData = new BulkDeleteProjectsViewData(projectDisplayNames);
             return RazorPartialView<BulkDeleteProjects, BulkDeleteProjectsViewData, BulkDeleteProjectsViewModel>(viewData, viewModel);
@@ -1104,18 +1105,18 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             if (viewModel.ProjectIDList != null)
             {
                 var projects = HttpRequestStorage.DatabaseEntities.Projects
-                    .Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
-                foreach (var project in projects)
+                    .Where(x => viewModel.ProjectIDList.Contains(x.ProjectID));
+                projects.ForEach(x =>
                 {
-                    //Unlink ProjectImportBlockLists before delete
-                    foreach (var blockListEntry in project.ProjectImportBlockLists)
-                    {
-                        blockListEntry.ProjectID = null;
-                    }
+                    x.ProjectImportBlockLists.Clear();
+                    x.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                });
+                //foreach (var project in projects)
+                //{
+                //    project.ProjectImportBlockLists.Clear();
+                //    project.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                //}
 
-                    project.ProjectImportBlockLists.Clear();
-                    project.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                }
             }
         }
 

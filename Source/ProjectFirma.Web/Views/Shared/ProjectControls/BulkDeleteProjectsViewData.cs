@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         {
             ProjectDisplayNames = projectDisplayNames;
 
-            ProjectLabel = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}" + (ProjectDisplayNames.Count > 1 ? "s" : String.Empty);
+            ProjectLabel =  (ProjectDisplayNames.Count > 1 ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}" : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}");
 
         }
     }

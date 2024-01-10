@@ -20,12 +20,26 @@ namespace ProjectFirma.Web.Views.Program
         public ProjectListGridSpec(Person currentPerson, Models.Program currentProgram, Dictionary<int, List<Models.Program>> programsByProject)
         {
             var hasProgramManagePermissions = new ProgramManageFeature().HasPermissionByPerson(currentPerson);
+            var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
+
+            if (userHasDeletePermissions)
+            {
+                AddMasterCheckBoxColumn();
+                Add("ProjectID", x => x.ProjectID, 0);
+                BulkDeleteModalDialogForm = new BulkDeleteModalDialogForm(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.BulkDeleteProjects(null)), $"Delete Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Delete {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+            }
 
             if (hasProgramManagePermissions)
             {
                 Add(string.Empty, x => x.ProjectImportBlockLists
                         .Any(b => b.ProgramID == currentProgram.ProgramID) ? RemoveFromBlockListModalLink(x) : AddToBlockListModalLink(currentProgram, x),
                     125, DhtmlxGridColumnFilterType.None, true);
+            }
+
+            if (userHasDeletePermissions)
+            {
+                
             }
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(),

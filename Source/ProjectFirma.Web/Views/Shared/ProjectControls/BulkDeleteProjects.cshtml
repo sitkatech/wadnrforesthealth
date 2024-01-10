@@ -46,7 +46,7 @@ else
     using (Html.BeginForm<ProjectController>(x => x.BulkDeleteProjectsModal(null)))
     {
         <div style="min-height: 10px; max-height: 350px; overflow-y: auto; overflow-x: hidden">
-            <div style="margin: 5px 0">Deleting @Model.ProjectIDList.Count @ViewDataTyped.ProjectLabel:</div>
+            <div style="margin: 5px 0">Deleting @Model.ProjectIDList.Count @ViewDataTyped.ProjectLabel @(ViewDataTyped.ProjectDisplayNames.Count < Model.ProjectIDList.Count ? string.Format("(displaying the first {0} {1}.)", ViewDataTyped.ProjectDisplayNames.Count, FieldDefinition.ProjectName.GetFieldDefinitionLabelPluralized()) : string.Empty):</div>
             <ul>
                 @foreach (var projectName in ViewDataTyped.ProjectDisplayNames)
                 {

@@ -43,23 +43,13 @@ namespace ProjectFirma.Web.Views.Project
             , Dictionary<int, vTotalTreatedAcresByProject> totalTreatedAcresByProjectDictionary)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
-            var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
 
-            if ((userHasTagManagePermissions && allowTaggingFunctionality) || (userHasDeletePermissions && allowDeleteFunctionality))
+            if (userHasTagManagePermissions && allowTaggingFunctionality)
             {
                 AddMasterCheckBoxColumn();
                 Add("ProjectID", x => x.ProjectID, 0);
-            }
-            if (userHasTagManagePermissions && allowTaggingFunctionality)
-            {
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
                 
-            }
-
-            if (userHasDeletePermissions && allowDeleteFunctionality)
-            {
-                BulkDeleteModalDialogForm = new BulkDeleteModalDialogForm(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.BulkDeleteProjects(null)), $"Delete Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Delete {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
 
 
