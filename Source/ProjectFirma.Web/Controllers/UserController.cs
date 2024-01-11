@@ -172,7 +172,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDelete(Person person, ConfirmDialogFormViewModel viewModel)
         {
-            var canDelete = !person.HasDependentObjects() && person != CurrentPerson;
+            var canDelete = person != CurrentPerson;
             var confirmMessage = canDelete
                 ? $"Are you sure you want to delete {person.FullNameFirstLast}?"
                 : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage("Person", SitkaRoute<UserController>.BuildLinkFromExpression(x => x.Detail(person), "here"));
@@ -192,7 +192,9 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDelete(person, viewModel);
             }
             person.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            return new ModalDialogFormJsonResult();
+            var personText = person.IsFullUser() ? "User" : "Contact";
+            SetMessageForDisplay($"{personText} '{person.FullNameFirstLast}' has been deleted.");
+            return new ModalDialogFormJsonResult(SitkaRoute<UserController>.BuildUrlFromExpression(uc => uc.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts)));
         }
 
         [UserViewFeature]
@@ -305,6 +307,7 @@ namespace ProjectFirma.Web.Controllers
             person.IsActive = !person.IsActive;
             return new ModalDialogFormJsonResult();
         }
+
 
         [HttpGet]
         [UserEditAsAdminFeature]
