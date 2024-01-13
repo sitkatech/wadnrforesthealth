@@ -20,11 +20,14 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Hangfire;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -44,6 +47,7 @@ using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using MoreLinq;
 using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.ScheduledJobs;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
@@ -1104,18 +1108,23 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         {
             if (viewModel.ProjectIDList != null)
             {
-                var projects = HttpRequestStorage.DatabaseEntities.Projects
-                    .Where(x => viewModel.ProjectIDList.Contains(x.ProjectID));
-                projects.ForEach(x =>
+
+                string bulkProjectDeleteProc = "pBulkDeleteProjects";
+                using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
                 {
-                    x.ProjectImportBlockLists.Clear();
-                    x.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                });
-                //foreach (var project in projects)
-                //{
-                //    project.ProjectImportBlockLists.Clear();
-                //    project.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                //}
+                    using (var cmd = new SqlCommand(bulkProjectDeleteProc, sqlConnection))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProjectIDList", SqlDbType.Structured);
+                        cmd.Parameters["@ProjectIDList"].Direction = ParameterDirection.Input;
+                        cmd.Parameters["@ProjectIDList"].TypeName = "dbo.IDList";
+                        cmd.Parameters["@ProjectIDList"].Value = SqlHelpers.IntListToDataTable(viewModel.ProjectIDList);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                SetMessageForDisplay($"Successfully deleted {viewModel.ProjectIDList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             }
         }

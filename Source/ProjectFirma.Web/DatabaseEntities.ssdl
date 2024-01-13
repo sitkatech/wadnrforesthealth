@@ -7987,5 +7987,9 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' d
   <Property Name="SHAPE_Length" Type="float" />
   <Property Name="SHAPE_Area" Type="float" />
   <Property Name="GEOM" Type="geometry" />
-</EntityType>-->
+</EntityType>
+Errors Found During Generation:
+warning 6005: The function 'pBulkDeleteProjects' has a parameter 'ProjectIDList' at parameter index 0 that has a data type 'table type' which is currently not supported for the target .NET Framework version. The function was excluded.
+
+<Function Name="pBulkDeleteProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />-->
 </Schema>

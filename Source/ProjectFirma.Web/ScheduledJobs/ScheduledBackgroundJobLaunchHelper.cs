@@ -12,11 +12,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             LoaDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
-        public static void RunProjectBulkDeleteScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
-        {
-            ProjectBulkDeleteBackgroundJob.Instance.RunJob(jobCancellationToken);
-        }
-
         public static void RunProgramNotificationScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
             ProgramNotificationScheduledBackgroundJob.Instance.RunJob(jobCancellationToken);
