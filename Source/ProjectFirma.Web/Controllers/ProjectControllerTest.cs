@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Controllers
         /// </summary>
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void FlagChangesToForeignKeysReferencingProjectTableForDevelopersToUpdateBulkDeleteProjectsStoredProcedure()
+        public void FlagChangesToForeignKeysReferencingProjectTable()
         {
             const string sqlQueryString = @"
                         SELECT  
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Controllers
         /// </summary>
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void FlagChangesToForeignKeysReferencingProjectUpdateBatchTableForDevelopersToUpdateBulkDeleteProjectsStoredProcedure()
+        public void FlagChangesToForeignKeysReferencingProjectUpdateBatchTable()
         {
             const string sqlQueryString = @"
                         SELECT  
