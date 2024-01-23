@@ -64,7 +64,7 @@
     
     @if (ViewDataTyped.UserCanDeletePerson)
     {
-        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Delete User", "<span class='glyphicon glyphicon-trash' style='color:#fff'></span>"), ViewDataTyped.DeletePersonUrl, "Delete this contact?", 400, "Delete", "Cancel", new List<string>() { "btn", "btn-sm", "btn-firma" }, null, null)
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("<span class='glyphicon glyphicon-trash' style='color:#fff'></span> Delete {0}", ViewDataTyped.PersonIsMereContact ? "Contact" : "User"), ViewDataTyped.DeletePersonUrl, string.Format("Delete this {0}?", ViewDataTyped.PersonIsMereContact ? "Contact" : "User"), 400, "Delete", "Cancel", new List<string>() { "btn", "btn-sm", "btn-firma" }, null, null)
     }
 
 }
