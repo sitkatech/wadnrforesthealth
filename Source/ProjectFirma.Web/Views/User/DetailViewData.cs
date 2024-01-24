@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Views.User
             UserHasViewEverythingPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             IsViewingSelf = currentPerson != null && currentPerson.PersonID == personToView.PersonID;
             UserHasAdminPermission = new UserEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            UserCanDeletePerson = !personToView.IsFullUser() && new PersonDeleteFeature().HasPermissionByPerson(currentPerson);
+            UserCanDeletePerson = !personToView.IsFullUser() && new PersonDeleteFeature().HasPermission(currentPerson, personToView).HasPermission;
             DeletePersonUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Delete(personToView));
 
 
