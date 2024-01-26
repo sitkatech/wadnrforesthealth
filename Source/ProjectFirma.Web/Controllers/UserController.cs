@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Controllers
     {
         // 7/25/23 TK - originally tried to pass the enum as a variable but that complained because the enum cannot be null and a plain /User/Index URL would throw an error. doing it this way allows the plain /User/Index URL to work
         [HttpGet]
-        [ContactCreateAndViewFeature]
+        [UserAndContactIndexViewFeature]
         public ViewResult Index(int? selectedUsersStatusFilterTypeEnum = (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts)
         {
 
@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [ContactCreateAndViewFeature]
+        [UserAndContactIndexViewFeature]
         public GridJsonNetJObjectResult<Person> IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum usersStatusFilterType)
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
@@ -382,7 +382,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [ContactCreateAndViewFeature]
+        [ContactCreateFeature]
         public PartialViewResult AddContact()
         {
             var viewModel = new EditContactViewModel();
@@ -390,7 +390,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ContactCreateAndViewFeature]
+        [ContactCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult AddContact(EditContactViewModel viewModel)
         {

@@ -948,9 +948,10 @@
     <Compile Include="ScheduledJobs\VendorImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
-    <Compile Include="Security\ContactCreateAndViewFeature.cs" />
+    <Compile Include="Security\ContactCreateFeature.cs" />
     <Compile Include="Security\CountyViewFeature.cs" />
     <Compile Include="Security\CountyManageFeature.cs" />
+    <Compile Include="Security\UserAndContactIndexViewFeature.cs" />
     <Compile Include="Security\VendorViewFeature.cs" />
     <Compile Include="Security\FindYourForesterManageFeature.cs" />
     <Compile Include="Security\FindYourForesterViewFeature.cs" />

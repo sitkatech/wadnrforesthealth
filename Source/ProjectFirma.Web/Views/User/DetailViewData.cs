@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.User
         public bool UserHasPersonViewPermissions { get; }
         public bool UserHasEditBasicsPermission { get; }
         public bool UserHasViewEverythingPermissions { get; }
-        public bool UserCanViewAndCreateNewContacts { get; }
+        public bool UserCanViewPeople { get; }
         public bool IsViewingSelf { get; }
         public ProjectInfoForUserDetailGridSpec BasicProjectInfoGridSpec { get; }
         public string BasicProjectInfoGridName { get; }
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Views.User
 
             UserHasPersonViewPermissions = new UserViewFeature().HasPermission(currentPerson, personToView).HasPermission;
             UserHasEditBasicsPermission = new UserEditBasicsFeature().HasPermission(currentPerson,personToView).HasPermission;
-            UserCanViewAndCreateNewContacts = new ContactCreateAndViewFeature().HasPermissionByPerson(currentPerson);
+            UserCanViewPeople = new UserAndContactIndexViewFeature().HasPermissionByPerson(currentPerson);
             UserHasViewEverythingPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             IsViewingSelf = currentPerson != null && currentPerson.PersonID == personToView.PersonID;
             UserHasAdminPermission = new UserEditAsAdminFeature().HasPermissionByPerson(currentPerson);
