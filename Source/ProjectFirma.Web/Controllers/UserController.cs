@@ -37,6 +37,7 @@ using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.Shared.UserStewardshipAreas;
 using Detail = ProjectFirma.Web.Views.User.Detail;
 using DetailViewData = ProjectFirma.Web.Views.User.DetailViewData;
+using Person = ProjectFirma.Web.Models.Person;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -44,7 +45,7 @@ namespace ProjectFirma.Web.Controllers
     {
         // 7/25/23 TK - originally tried to pass the enum as a variable but that complained because the enum cannot be null and a plain /User/Index URL would throw an error. doing it this way allows the plain /User/Index URL to work
         [HttpGet]
-        [ContactCreateAndViewFeature]
+        [UserAndContactIndexViewFeature]
         public ViewResult Index(int? selectedUsersStatusFilterTypeEnum = (int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts)
         {
 
@@ -85,7 +86,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [ContactCreateAndViewFeature]
+        [UserAndContactIndexViewFeature]
         public GridJsonNetJObjectResult<Person> IndexGridJsonData(IndexGridSpec.UsersStatusFilterTypeEnum usersStatusFilterType)
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
@@ -119,7 +120,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var person = personPrimaryKey.EntityObject;
             var viewModel = new EditRolesViewModel(person);
-            return ViewEdit(viewModel);
+            return ViewEdit(viewModel, person);
         }
 
         [HttpPost]
@@ -130,20 +131,33 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel);
+                return ViewEdit(viewModel, person);
             }
             viewModel.UpdateModel(person, CurrentPerson);
             SetMessageForDisplay($"Successfully updated the roles for {person.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditRolesViewModel viewModel)
+        private PartialViewResult ViewEdit(EditRolesViewModel viewModel, Person personBeingUpdated)
         {
-            var baseRoles = CurrentPerson.IsSitkaAdministrator() ? Role.AllBaseRoles() : Role.AllBaseRoles().Except(new[] { Role.EsaAdmin });
+            var canEditPersonBaseRole = CurrentPerson.IsAdministrator() || (CurrentPerson.HasRole(Role.CanAddEditUsersContactsOrganizations) && !personBeingUpdated.IsAdministrator());
+            var baseRoles = new List<Role>();
+            if (CurrentPerson.IsSitkaAdministrator())
+            {
+                baseRoles = Role.AllBaseRoles();
+            }
+            else if (CurrentPerson.IsAdministrator())
+            {
+                baseRoles = Role.AllBaseRoles().Except(new[] { Role.EsaAdmin }).ToList();
+            }
+            else if (canEditPersonBaseRole)
+            {
+                baseRoles = Role.AllBaseRoles().Except(new[] { Role.Admin }).Except(new[] { Role.EsaAdmin }).ToList();
+            } 
             var baseRolesAsSimples = baseRoles.Select(x => new RoleSimple(x)).ToList();
             var supplementalRoles = Role.AllSupplementalRoles();
             var supplementalRolesAsSimples = supplementalRoles.Select(x => new RoleSimple(x)).ToList();
-            var viewData = new EditRolesViewData(supplementalRolesAsSimples, baseRolesAsSimples);
+            var viewData = new EditRolesViewData(supplementalRolesAsSimples, baseRolesAsSimples, canEditPersonBaseRole);
             return RazorPartialView<EditRoles, EditRolesViewData, EditRolesViewModel>(viewData, viewModel);
         }
 
@@ -158,7 +172,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDelete(Person person, ConfirmDialogFormViewModel viewModel)
         {
-            var canDelete = !person.HasDependentObjects() && person != CurrentPerson;
+            var canDelete = person != CurrentPerson;
             var confirmMessage = canDelete
                 ? $"Are you sure you want to delete {person.FullNameFirstLast}?"
                 : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage("Person", SitkaRoute<UserController>.BuildLinkFromExpression(x => x.Detail(person), "here"));
@@ -178,7 +192,9 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDelete(person, viewModel);
             }
             person.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            return new ModalDialogFormJsonResult();
+            var personText = person.IsFullUser() ? "User" : "Contact";
+            SetMessageForDisplay($"{personText} '{person.FullNameFirstLast}' has been deleted.");
+            return new ModalDialogFormJsonResult(SitkaRoute<UserController>.BuildUrlFromExpression(uc => uc.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts)));
         }
 
         [UserViewFeature]
@@ -292,6 +308,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+
         [HttpGet]
         [UserEditAsAdminFeature]
         public PartialViewResult EditStewardshipAreas(PersonPrimaryKey personPrimaryKey)
@@ -365,7 +382,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [ContactCreateAndViewFeature]
+        [ContactCreateFeature]
         public PartialViewResult AddContact()
         {
             var viewModel = new EditContactViewModel();
@@ -373,7 +390,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ContactCreateAndViewFeature]
+        [ContactCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult AddContact(EditContactViewModel viewModel)
         {

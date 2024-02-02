@@ -20,11 +20,14 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Hangfire;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -42,7 +45,9 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
+using MoreLinq;
 using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.ScheduledJobs;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
@@ -1052,6 +1057,76 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [ProjectDeleteFeature]
+        public ContentResult BulkDeleteProjects()
+        {
+            return new ContentResult();
+        }
+
+        [HttpPost]
+        [ProjectDeleteFeature]
+        public PartialViewResult BulkDeleteProjects(BulkDeleteProjectsViewModel viewModel)
+        {
+            var projectDisplayNames = new List<string>();
+
+            if (viewModel.ProjectIDList != null)
+            {
+                var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
+                projectDisplayNames = projects.Select(x => x.DisplayName).Take(50).ToList();
+            }
+            var viewData = new BulkDeleteProjectsViewData(projectDisplayNames);
+            return RazorPartialView<BulkDeleteProjects, BulkDeleteProjectsViewData, BulkDeleteProjectsViewModel>(viewData, viewModel);
+        }
+
+        /// <summary>
+        /// Dummy get signature so that it can find the post action
+        /// </summary>
+        [HttpGet]
+        [ProjectDeleteFeature]
+        public ContentResult BulkDeleteProjectsModal()
+        {
+            return new ContentResult();
+        }
+
+        [HttpPost]
+        [ProjectDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult BulkDeleteProjectsModal(BulkDeleteProjectsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new ModalDialogFormJsonResult();
+            }
+            BulkDeleteProjectsImpl(viewModel);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private void BulkDeleteProjectsImpl(BulkDeleteProjectsViewModel viewModel)
+        {
+            if (viewModel.ProjectIDList != null)
+            {
+
+                string bulkProjectDeleteProc = "pBulkDeleteProjects";
+                using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
+                {
+                    using (var cmd = new SqlCommand(bulkProjectDeleteProc, sqlConnection))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProjectIDList", SqlDbType.Structured);
+                        cmd.Parameters["@ProjectIDList"].Direction = ParameterDirection.Input;
+                        cmd.Parameters["@ProjectIDList"].TypeName = "dbo.IDList";
+                        cmd.Parameters["@ProjectIDList"].Value = SqlHelpers.IntListToDataTable(viewModel.ProjectIDList);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                SetMessageForDisplay($"Successfully deleted {viewModel.ProjectIDList.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+
+            }
         }
 
     }

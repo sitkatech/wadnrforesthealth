@@ -4,9 +4,9 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Create a Contact")]
-    public class ContactCreateAndViewFeature : FirmaBaseFeature
+    public class ContactCreateFeature : FirmaBaseFeature
     {
-        public ContactCreateAndViewFeature() : base(new List<IRole> { Role.Normal, Role.Admin, Role.ProjectSteward, Role.EsaAdmin })
+        public ContactCreateFeature() : base(new List<IRole> {Role.Admin, Role.EsaAdmin, Role.CanAddEditUsersContactsOrganizations })
         {
         }
 

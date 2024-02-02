@@ -59,11 +59,17 @@
 {
     @if (ViewDataTyped.UserHasAdminPermission && !ViewDataTyped.PersonIsMereContact)
     {
-        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} {1} User", "<span class='glyphicon glyphicon-edit blue''></span>", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), ViewDataTyped.ActivateInactivateUrl, string.Format("{0} this user?", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), 400, "Continue", "Cancel", null, null, null)
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} {1} User", "<span class='glyphicon glyphicon-edit blue'></span>", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), ViewDataTyped.ActivateInactivateUrl, string.Format("{0} this user?", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), 400, "Continue", "Cancel", null, null, null)
     }
+    
+    @if (ViewDataTyped.UserCanDeletePerson)
+    {
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("<span class='glyphicon glyphicon-trash' style='color:#fff'></span> Delete {0}", ViewDataTyped.PersonIsMereContact ? "Contact" : "User"), ViewDataTyped.DeletePersonUrl, string.Format("Delete this {0}?", ViewDataTyped.PersonIsMereContact ? "Contact" : "User"), 400, "Delete", "Cancel", new List<string>() { "btn", "btn-sm", "btn-firma" }, null, null)
+    }
+
 }
 
-@if (ViewDataTyped.UserCanViewAndCreateNewContacts)
+@if (ViewDataTyped.UserCanViewPeople)
 {
     <div>
         <a class="btn backButton" href="@ViewDataTyped.Index">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Users</a>

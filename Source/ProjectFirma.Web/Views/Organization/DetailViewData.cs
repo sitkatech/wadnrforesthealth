@@ -85,6 +85,7 @@ namespace ProjectFirma.Web.Views.Organization
         public int NumberOfStewardedProjects { get; }
         public int NumberOfLeadImplementedProjects { get; }
         public int NumberOfProjectsContributedTo { get; }
+        public bool UserHasPermissionToViewPrograms { get; }
 
         public DetailViewData(Person currentPerson,
                             Models.Organization organization,
@@ -212,6 +213,7 @@ namespace ProjectFirma.Web.Views.Organization
                 .Distinct()
                 .Count(x => x.IsActiveProject() && x.GetPrimaryContactOrganization() == Organization);
             NumberOfProjectsContributedTo = allAssociatedProjects.Distinct().ToList().GetActiveProjectsVisibleToUser(currentPerson).Count;
+            UserHasPermissionToViewPrograms = new ProgramViewFeature().HasPermissionByPerson(CurrentPerson);
         }
     }
 }

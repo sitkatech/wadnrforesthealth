@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.User
 
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());
-            UserCanAddContact = new ContactCreateAndViewFeature().HasPermissionByPerson(currentPerson);
+            UserCanAddContact = new ContactCreateFeature().HasPermissionByPerson(currentPerson);
 
             ActiveOnlyOrAllUsersSelectListItems = activeOnlyOrAllUsersSelectListItems;
             UserGridDropdownFilterId = "userGridDropdownFilterId";

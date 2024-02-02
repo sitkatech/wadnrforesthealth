@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.User
         public bool UserHasPersonViewPermissions { get; }
         public bool UserHasEditBasicsPermission { get; }
         public bool UserHasViewEverythingPermissions { get; }
-        public bool UserCanViewAndCreateNewContacts { get; }
+        public bool UserCanViewPeople { get; }
         public bool IsViewingSelf { get; }
         public ProjectInfoForUserDetailGridSpec BasicProjectInfoGridSpec { get; }
         public string BasicProjectInfoGridName { get; }
@@ -51,6 +51,10 @@ namespace ProjectFirma.Web.Views.User
         public string UserNotificationGridName { get; }
         public string UserNotificationGridDataUrl { get; }
         public string ActivateInactivateUrl { get; }
+
+        public string DeletePersonUrl { get; }
+        public bool UserCanDeletePerson { get; }
+
         public bool TenantHasStewardshipAreas { get; }
         public bool UserHasAdminPermission { get; }
         public bool PersonIsMereContact { get; }
@@ -63,11 +67,12 @@ namespace ProjectFirma.Web.Views.User
         public string UserInteractionEventsGridDataUrl { get; }
         public string InteractionEventsForWhichUserIsAContactGridTitle { get; }
 
-        public readonly AgreementGridSpec UserAgreementsGridSpec;
-        public readonly string UserAgreementsGridName;
-        public readonly string UserAgreementsGridDataUrl;
+        public AgreementGridSpec UserAgreementsGridSpec  { get; }
+        public string UserAgreementsGridName  { get; }
+        public string UserAgreementsGridDataUrl  { get; }
 
-        public readonly string AuthenticatorsDisplayString;
+        public string AuthenticatorsDisplayString  { get; }
+        public HtmlString EditRolesLink  { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -91,10 +96,14 @@ namespace ProjectFirma.Web.Views.User
 
             UserHasPersonViewPermissions = new UserViewFeature().HasPermission(currentPerson, personToView).HasPermission;
             UserHasEditBasicsPermission = new UserEditBasicsFeature().HasPermission(currentPerson,personToView).HasPermission;
-            UserCanViewAndCreateNewContacts = new ContactCreateAndViewFeature().HasPermissionByPerson(currentPerson);
+            UserCanViewPeople = new UserAndContactIndexViewFeature().HasPermissionByPerson(currentPerson);
             UserHasViewEverythingPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             IsViewingSelf = currentPerson != null && currentPerson.PersonID == personToView.PersonID;
             UserHasAdminPermission = new UserEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            UserCanDeletePerson = !personToView.IsFullUser() && new PersonDeleteFeature().HasPermission(currentPerson, personToView).HasPermission;
+            DeletePersonUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Delete(personToView));
+
+
             EditRolesLink = UserHasAdminPermission
                 ? ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditRoles(personToView)),
                     $"Edit Roles for User - {personToView.FullNameFirstLast}",
@@ -139,6 +148,6 @@ namespace ProjectFirma.Web.Views.User
 
         }
 
-        public readonly HtmlString EditRolesLink;
+        
     }
 }

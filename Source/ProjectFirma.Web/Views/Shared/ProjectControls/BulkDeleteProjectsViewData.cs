@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="OrganizationManageFeature.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="BulkDeleteProjectsViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -18,18 +18,25 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using ProjectFirma.Web.Models;
+
+using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
-namespace ProjectFirma.Web.Security
+namespace ProjectFirma.Web.Views.Shared.ProjectControls
 {
-    [SecurityFeatureDescription("Manage Organization")]
-    public class OrganizationManageFeature : FirmaFeature
+    public class BulkDeleteProjectsViewData : FirmaUserControlViewData
     {
+        public readonly List<string> ProjectDisplayNames;
+        public readonly string ProjectLabel;
 
-        public OrganizationManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanAddEditUsersContactsOrganizations })
+        public BulkDeleteProjectsViewData(List<string> projectDisplayNames)
         {
+            ProjectDisplayNames = projectDisplayNames;
+
+            ProjectLabel =  (ProjectDisplayNames.Count > 1 ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}" : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}");
+
         }
     }
 }

@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.Models
         public static readonly RoleCanManagePageContent CanManagePageContent = RoleCanManagePageContent.Instance;
         public static readonly RoleCanViewLandownerInfo CanViewLandownerInfo = RoleCanViewLandownerInfo.Instance;
         public static readonly RoleCanManageGrantsAndAgreements CanManageGrantsAndAgreements = RoleCanManageGrantsAndAgreements.Instance;
+        public static readonly RoleCanAddEditUsersContactsOrganizations CanAddEditUsersContactsOrganizations = RoleCanAddEditUsersContactsOrganizations.Instance;
 
         public static readonly List<Role> All;
         public static readonly ReadOnlyDictionary<int, Role> AllLookupDictionary;
@@ -37,7 +38,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Role()
         {
-            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram, CanManagePageContent, CanViewLandownerInfo, CanManageGrantsAndAgreements };
+            All = new List<Role> { Admin, Normal, Unassigned, EsaAdmin, ProjectSteward, CanEditProgram, CanManagePageContent, CanViewLandownerInfo, CanManageGrantsAndAgreements, CanAddEditUsersContactsOrganizations };
             AllLookupDictionary = new ReadOnlyDictionary<int, Role>(All.ToDictionary(x => x.RoleID));
         }
 
@@ -113,6 +114,8 @@ namespace ProjectFirma.Web.Models
             {
                 case RoleEnum.Admin:
                     return Admin;
+                case RoleEnum.CanAddEditUsersContactsOrganizations:
+                    return CanAddEditUsersContactsOrganizations;
                 case RoleEnum.CanEditProgram:
                     return CanEditProgram;
                 case RoleEnum.CanManageGrantsAndAgreements:
@@ -145,7 +148,8 @@ namespace ProjectFirma.Web.Models
         CanEditProgram = 10,
         CanManagePageContent = 11,
         CanViewLandownerInfo = 12,
-        CanManageGrantsAndAgreements = 13
+        CanManageGrantsAndAgreements = 13,
+        CanAddEditUsersContactsOrganizations = 14
     }
 
     public partial class RoleAdmin : Role
@@ -200,5 +204,11 @@ namespace ProjectFirma.Web.Models
     {
         private RoleCanManageGrantsAndAgreements(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
         public static readonly RoleCanManageGrantsAndAgreements Instance = new RoleCanManageGrantsAndAgreements(13, @"CanManageGrantsAndAgreements", @"Can Manage Grants and Agreements", @"Users with this role can manage Grants and Agreements", false);
+    }
+
+    public partial class RoleCanAddEditUsersContactsOrganizations : Role
+    {
+        private RoleCanAddEditUsersContactsOrganizations(int roleID, string roleName, string roleDisplayName, string roleDescription, bool isBaseRole) : base(roleID, roleName, roleDisplayName, roleDescription, isBaseRole) {}
+        public static readonly RoleCanAddEditUsersContactsOrganizations Instance = new RoleCanAddEditUsersContactsOrganizations(14, @"CanAddEditUsersContactsOrganizations", @"Can Add/Edit Users, Contacts, Organizations", @"Users with this role can add and edit Users, Contacts and Organizations.", false);
     }
 }

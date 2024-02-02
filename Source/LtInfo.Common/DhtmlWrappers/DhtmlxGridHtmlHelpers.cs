@@ -247,6 +247,7 @@ namespace LtInfo.Common.DhtmlWrappers
             var customExcelDownloadIconHtml = CreateFullDatabaseExcelDownloadIconHtml(gridName, gridSpec.CustomExcelDownloadUrl, gridSpec.CustomExcelDownloadLinkText ?? "Download Full Database");
             var createIconHtml = CreateCreateUrlHtml(gridSpec.CreateEntityUrl, gridSpec.CreateEntityUrlClass, gridSpec.CreateEntityModalDialogForm, gridSpec.CreateEntityActionPhrase, gridSpec.ObjectNameSingular);
             var tagIconHtml = CreateTagUrlHtml(gridName, gridSpec.BulkTagModalDialogForm);
+            var bulkDeleteIconHtml = CreateDeleteUrlHtml(gridName, gridSpec.BulkDeleteModalDialogForm);
             var arbitraryHtml = CreateArbitraryHtml(gridSpec.ArbitraryHtml, "    ");
             return $@"
             {
@@ -260,6 +261,7 @@ namespace LtInfo.Common.DhtmlWrappers
                         : string.Empty)
                 }
             {(!string.IsNullOrWhiteSpace(tagIconHtml) ? $"<span>{tagIconHtml}</span>" : string.Empty)}
+            {(!string.IsNullOrWhiteSpace(bulkDeleteIconHtml) ? $"<span>{bulkDeleteIconHtml}</span>" : string.Empty)}
             {
                     (!string.IsNullOrWhiteSpace(clearCookiesIconHtml)
                         ? $"<span>{clearCookiesIconHtml}</span>"
@@ -294,6 +296,28 @@ namespace LtInfo.Common.DhtmlWrappers
                     bulkTagModalDialogForm.DialogTitle,
                     ModalDialogFormHelper.DefaultDialogWidth,
                     "Save",
+                    "Cancel",
+                    new List<string>(),
+                    null,
+                    getProjectIDFunctionString).ToString();
+        }
+        public static string CreateDeleteUrlHtml(string gridName, BulkDeleteModalDialogForm bulkDeleteModalDialogForm)
+        {
+            if (bulkDeleteModalDialogForm == null)
+                return string.Empty;
+
+            var bulkDeleteIconHtml =
+                $"<span style=\"margin-right:5px\">{BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash")}</span>";
+
+            var getProjectIDFunctionString =
+                $"function() {{ return Sitka.{gridName}.getValuesFromCheckedGridRows({bulkDeleteModalDialogForm.CheckboxColumnIndex}, '{bulkDeleteModalDialogForm.ValueColumnName}', '{bulkDeleteModalDialogForm.ReturnListName}'); }}";
+
+            return
+                ModalDialogFormHelper.ModalDialogFormLink($"{bulkDeleteIconHtml}{bulkDeleteModalDialogForm.DialogLinkText}",
+                    bulkDeleteModalDialogForm.DialogUrl,
+                    bulkDeleteModalDialogForm.DialogTitle,
+                    ModalDialogFormHelper.DefaultDialogWidth,
+                    "Delete",
                     "Cancel",
                     new List<string>(),
                     null,

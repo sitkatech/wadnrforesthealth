@@ -1,6 +1,6 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="OrganizationManageFeature.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
-Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
+<copyright file="BulkDeleteModalDialogForm.cs" company="Environmental Science Associates">
+Copyright (c) Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
 
@@ -18,18 +18,27 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using ProjectFirma.Web.Models;
-using System.Collections.Generic;
-using System.Web.Mvc;
 
-namespace ProjectFirma.Web.Security
+namespace LtInfo.Common.DhtmlWrappers
 {
-    [SecurityFeatureDescription("Manage Organization")]
-    public class OrganizationManageFeature : FirmaFeature
+    public class BulkDeleteModalDialogForm
     {
+        public string DialogUrl;
+        public string DialogLinkText;
+        public string DialogTitle;
+        public int CheckboxColumnIndex;
+        public string ValueColumnName;
+        public string ReturnListName;
 
-        public OrganizationManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanAddEditUsersContactsOrganizations })
+        public BulkDeleteModalDialogForm(string dialogUrl, string dialogLinkText, string dialogTitle)
         {
+            DialogUrl = dialogUrl;
+            DialogLinkText = dialogLinkText;
+            DialogTitle = dialogTitle;
+            CheckboxColumnIndex = 0;
+            ValueColumnName = "ProjectID";
+            ReturnListName = "ProjectIDList";
+
         }
     }
 }
