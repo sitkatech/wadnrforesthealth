@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditImportBasicsViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditDefaultMappingsViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -32,7 +32,7 @@ using System.Web;
 
 namespace ProjectFirma.Web.Views.Program
 {
-    public class EditImportBasicsViewModel : FormViewModel, IValidatableObject
+    public class EditDefaultMappingsViewModel : FormViewModel, IValidatableObject
     {
 
 
@@ -96,11 +96,11 @@ namespace ProjectFirma.Web.Views.Program
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditImportBasicsViewModel()
+        public EditDefaultMappingsViewModel()
         {
         }
 
-        public EditImportBasicsViewModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
+        public EditDefaultMappingsViewModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
         {
             GisUploadSourceOrganizationID = gisUploadSourceOrganization.GisUploadSourceOrganizationID;
             ProjectTypeDefaultName = gisUploadSourceOrganization.ProjectTypeDefaultName;

@@ -287,6 +287,44 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult EditImportBasics(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            var viewModel = new EditImportBasicsViewModel(gisUploadSourceOrganization);
+            return ViewEditImportBasics(viewModel);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditImportBasics(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditImportBasicsViewModel viewModel)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditImportBasics(viewModel);
+            }
+            viewModel.UpdateModel(gisUploadSourceOrganization, CurrentPerson);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditImportBasics(EditImportBasicsViewModel viewModel)
+        {
+            var organizationsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
+                .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
+                .OrderBy(x => x.OrganizationName)
+                .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.OrganizationName);
+
+            var projectStages = ProjectStage.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProjectStageDisplayName);
+            var viewData = new EditImportBasicsViewData(organizationsAsSelectListItems, projectStages);
+            return RazorPartialView<EditImportBasics, EditImportBasicsViewData, EditImportBasicsViewModel>(viewData, viewModel);
+        }
+
 
         [HttpGet]
         [ProgramManageFeature]

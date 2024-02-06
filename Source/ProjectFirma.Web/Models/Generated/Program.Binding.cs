@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GisUploadSourceOrganizations.Any() || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectImportBlockLists.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || ProjectUpdatePrograms.Any() || Treatments.Any() || TreatmentUpdates.Any();
+            return (GisUploadSourceOrganization != null) || ProgramNotificationConfigurations.Any() || ProgramPeople.Any() || ProjectImportBlockLists.Any() || ProjectLocations.Any() || ProjectPrograms.Any() || ProjectUpdatePrograms.Any() || Treatments.Any() || TreatmentUpdates.Any();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(GisUploadSourceOrganizations.Any())
+            if((GisUploadSourceOrganization != null))
             {
                 dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
             }
@@ -253,7 +253,9 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProgramID; } set { ProgramID = value; } }
 
-        public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
+        protected virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
+        [NotMapped]
+        public GisUploadSourceOrganization GisUploadSourceOrganization { get { return GisUploadSourceOrganizations.SingleOrDefault(); } set { GisUploadSourceOrganizations = new List<GisUploadSourceOrganization>{value};} }
         public virtual ICollection<ProgramNotificationConfiguration> ProgramNotificationConfigurations { get; set; }
         public virtual ICollection<ProgramPerson> ProgramPeople { get; set; }
         public virtual ICollection<ProjectImportBlockList> ProjectImportBlockLists { get; set; }

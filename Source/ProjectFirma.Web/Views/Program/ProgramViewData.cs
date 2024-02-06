@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.Program
             UserHasEditProgramPermissions = new ProgramEditFeature().HasPermissionByPerson(currentPerson);
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
-            GisUploadSourceOrganization = program.GisUploadSourceOrganizations.FirstOrDefault();
+            GisUploadSourceOrganization = program.GisUploadSourceOrganization;
             ShowDownload = program.ProgramFileResource != null;
             ShowExampleGdbDownload = program.ProgramExampleGeospatialUploadFileResource != null;
         }
