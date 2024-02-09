@@ -35,61 +35,98 @@ namespace ProjectFirma.Web.Views.Program
     public class EditDefaultMappingsViewModel : FormViewModel, IValidatableObject
     {
 
-
         public int GisUploadSourceOrganizationID { get; set; }
 
-        [StringLength(GisUploadSourceOrganization.FieldLengths.ProjectTypeDefaultName)]
-        [DisplayName("Project Type Default Name")]
-        public string ProjectTypeDefaultName { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Project Identifier Column")]
+        public string ProjectIdentifierColumn { get; set; }
 
-        [StringLength(GisUploadSourceOrganization.FieldLengths.TreatmentTypeDefaultName)]
-        [DisplayName("Treatment Type Default Name")]
-        public string TreatmentTypeDefaultName { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("ProjectNameColumn")]
+        public string ProjectNameColumn { get; set; }
 
-        [DisplayName("Import Is Flattened")]
-        public bool ImportIsFlattened { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Completion Date Column")]
+        public string CompletionDateColumn { get; set; }
 
-        [DisplayName("Adjust Project Type Based On Treatment Type")]
-        public bool AdjustProjectTypeBasedOnTreatmentTypes { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Start Date Column")]
+        public string StartDateColumn { get; set; }
 
-        [DisplayName("Project Stage Default")]
-        [Required]
-        public int ProjectStageDefaultID { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Project Stage Column")]
+        public string ProjectStageColumn { get; set; }
 
-        [DisplayName("Data Derive Project Stage")]
-        public bool DataDeriveProjectStage { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Footprint Acres Column")]
+        public string FootprintAcresColumn { get; set; }
 
-        [DisplayName("Default Lead Implementer Organization")]
-        [Required]
-        public int DefaultLeadImplementerOrganizationID { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Private Landowner Column")]
+        public string PrivateLandownerColumn { get; set; }
 
-        [DisplayName("Relationship Type For Default Organization")]
-        [Required]
-        public int RelationshipTypeForDefaultOrganizationID { get; set; }
 
-        [DisplayName("Import As Detailed Location Instead Of Treatments")]
-        [Required]
-        public bool ImportAsDetailedLocationInsteadOfTreatments { get; set; }
 
-        [StringLength(GisUploadSourceOrganization.FieldLengths.ProjectDescriptionDefaultText)]
-        [DisplayName("Project Description Default Text")]
-        public string ProjectDescriptionDefaultText { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Treatment Type Column")]
+        public string TreatmentTypeColumn { get; set; }
 
-        [DisplayName("Apply Completed Date To Project")]
-        public bool ApplyCompletedDateToProject { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Treatment Detailed Activity Type Column")]
+        public string TreatmentDetailedActivityTypeColumn { get; set; }
 
-        [DisplayName("Apply Start Date To Treatments")]
-        public bool ApplyStartDateToTreatments { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Treated Acres Column")]
+        public string TreatedAcresColumn { get; set; }
 
-        [DisplayName("Apply End Date To Treatments")]
-        public bool ApplyEndDateToTreatments { get; set; }
 
-        [DisplayName("Apply Start Date To Project")]
-        public bool ApplyStartDateToProject { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Pruning Acres Column")]
+        public string PruningAcresColumn { get; set; }
 
-        [DisplayName("Import As Detailed Location In Addition To Treatments")]
-        public bool ImportAsDetailedLocationInAdditionToTreatments { get; set; }
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Thinning Acres Column")]
+        public string ThinningAcresColumn { get; set; }
 
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Chipping Acres Column")]
+        public string ChippingAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Mastication Acres Column")]
+        public string MasticationAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Grazing Acres Column")]
+        public string GrazingAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Lop And Scatter Acres Column")]
+        public string LopAndScatterAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Biomass Removal Acres Column")]
+        public string BiomassRemovalAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Hand Pile Acres Column")]
+        public string HandPileAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Hand Burn Pile Acres Column")]
+        public string HandBurnPileAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Machine Burn Pile Acres Column")]
+        public string MachineBurnPileAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Broadcast Burn Acres Column")]
+        public string BroadcastBurnAcresColumn { get; set; }
+
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Other Acres Column")]
+        public string OtherAcresColumn { get; set; }
 
 
 
@@ -103,41 +140,38 @@ namespace ProjectFirma.Web.Views.Program
         public EditDefaultMappingsViewModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
         {
             GisUploadSourceOrganizationID = gisUploadSourceOrganization.GisUploadSourceOrganizationID;
-            ProjectTypeDefaultName = gisUploadSourceOrganization.ProjectTypeDefaultName;
-            TreatmentTypeDefaultName = gisUploadSourceOrganization.TreatmentTypeDefaultName;
-            ImportIsFlattened = gisUploadSourceOrganization.ImportIsFlattened ?? false;
-            AdjustProjectTypeBasedOnTreatmentTypes = gisUploadSourceOrganization.AdjustProjectTypeBasedOnTreatmentTypes;
-            ProjectStageDefaultID = gisUploadSourceOrganization.ProjectStageDefaultID;
-            DataDeriveProjectStage = gisUploadSourceOrganization.DataDeriveProjectStage;
-            DefaultLeadImplementerOrganizationID = gisUploadSourceOrganization.DefaultLeadImplementerOrganizationID;
-            RelationshipTypeForDefaultOrganizationID = gisUploadSourceOrganization.RelationshipTypeForDefaultOrganizationID;
-            ImportAsDetailedLocationInsteadOfTreatments = gisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments;
-            ProjectDescriptionDefaultText = gisUploadSourceOrganization.ProjectDescriptionDefaultText;
-            ApplyCompletedDateToProject = gisUploadSourceOrganization.ApplyCompletedDateToProject;
-            ApplyStartDateToTreatments = gisUploadSourceOrganization.ApplyStartDateToTreatments;
-            ApplyEndDateToTreatments = gisUploadSourceOrganization.ApplyEndDateToTreatments;
-            ApplyStartDateToProject = gisUploadSourceOrganization.ApplyStartDateToProject;
-            ImportAsDetailedLocationInAdditionToTreatments = gisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments;
+            ProjectIdentifierColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectIdentifier.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            ProjectNameColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectName.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            CompletionDateColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.CompletionDate.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+
+            StartDateColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.PlannedDate.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            ProjectStageColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            FootprintAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.FootprintAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            PrivateLandownerColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.Landowner.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            TreatmentTypeColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            TreatmentDetailedActivityTypeColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            TreatedAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatedAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            PruningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            ThinningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            ChippingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            MasticationAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            GrazingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            LopAndScatterAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            BiomassRemovalAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            HandPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            HandBurnPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            MachineBurnPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            BroadcastBurnAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            OtherAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+
+
+
+
         }
 
         public void UpdateModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization, Person currentPerson)
         {
-            gisUploadSourceOrganization.GisUploadSourceOrganizationID = GisUploadSourceOrganizationID;
-            gisUploadSourceOrganization.ProjectTypeDefaultName = ProjectTypeDefaultName;
-            gisUploadSourceOrganization.TreatmentTypeDefaultName = TreatmentTypeDefaultName;
-            gisUploadSourceOrganization.ImportIsFlattened = ImportIsFlattened;
-            gisUploadSourceOrganization.AdjustProjectTypeBasedOnTreatmentTypes = AdjustProjectTypeBasedOnTreatmentTypes;
-            gisUploadSourceOrganization.ProjectStageDefaultID = ProjectStageDefaultID;
-            gisUploadSourceOrganization.DataDeriveProjectStage = DataDeriveProjectStage;
-            gisUploadSourceOrganization.DefaultLeadImplementerOrganizationID = DefaultLeadImplementerOrganizationID;
-            gisUploadSourceOrganization.RelationshipTypeForDefaultOrganizationID = RelationshipTypeForDefaultOrganizationID;
-            gisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments = ImportAsDetailedLocationInsteadOfTreatments;
-            gisUploadSourceOrganization.ProjectDescriptionDefaultText = ProjectDescriptionDefaultText;
-            gisUploadSourceOrganization.ApplyCompletedDateToProject = ApplyCompletedDateToProject;
-            gisUploadSourceOrganization.ApplyStartDateToTreatments = ApplyStartDateToTreatments;
-            gisUploadSourceOrganization.ApplyEndDateToTreatments = ApplyEndDateToTreatments;
-            gisUploadSourceOrganization.ApplyStartDateToProject = ApplyStartDateToProject;
-            gisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments = ImportAsDetailedLocationInAdditionToTreatments;
+            
 
         }
 

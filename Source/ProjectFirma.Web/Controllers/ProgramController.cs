@@ -317,12 +317,51 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
                 .OrderBy(x => x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
-                    x => x.OrganizationName);
+                    x => x.DisplayName);
 
             var projectStages = ProjectStage.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
                 x => x.ProjectStageDisplayName);
             var viewData = new EditImportBasicsViewData(organizationsAsSelectListItems, projectStages);
             return RazorPartialView<EditImportBasics, EditImportBasicsViewData, EditImportBasicsViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [ProgramManageFeature]
+        public PartialViewResult EditDefaultMappings(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            var viewModel = new EditDefaultMappingsViewModel(gisUploadSourceOrganization);
+            return ViewEditDefaultMappings(viewModel, gisUploadSourceOrganization);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditDefaultMappings(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditDefaultMappingsViewModel viewModel)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditDefaultMappings(viewModel, gisUploadSourceOrganization);
+            }
+            viewModel.UpdateModel(gisUploadSourceOrganization, CurrentPerson);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditDefaultMappings(EditDefaultMappingsViewModel viewModel, GisUploadSourceOrganization gisUploadSourceOrganization)
+        {
+            var organizationsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
+                .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
+                .OrderBy(x => x.OrganizationName)
+                .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.DisplayName);
+
+            var projectStages = ProjectStage.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProjectStageDisplayName);
+            var viewData = new EditDefaultMappingsViewData(organizationsAsSelectListItems, projectStages, gisUploadSourceOrganization);
+            return RazorPartialView<EditDefaultMappings, EditDefaultMappingsViewData, EditDefaultMappingsViewModel>(viewData, viewModel);
         }
 
 

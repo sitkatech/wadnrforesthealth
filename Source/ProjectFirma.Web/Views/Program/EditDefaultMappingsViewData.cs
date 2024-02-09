@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Program
 {
@@ -28,11 +29,14 @@ namespace ProjectFirma.Web.Views.Program
         public IEnumerable<SelectListItem> Organizations { get; }
         public IEnumerable<SelectListItem> ProjectStageSelectListItems { get; }
 
+        public GisUploadSourceOrganization GisUploadSourceOrganization { get; }
 
-        public EditDefaultMappingsViewData(IEnumerable<SelectListItem> organizations, IEnumerable<SelectListItem> projectStageSelectListItems)
+
+        public EditDefaultMappingsViewData(IEnumerable<SelectListItem> organizations, IEnumerable<SelectListItem> projectStageSelectListItems, GisUploadSourceOrganization gisUploadSourceOrganization)
         {
             ProjectStageSelectListItems = projectStageSelectListItems;
             Organizations = organizations;
+            GisUploadSourceOrganization = gisUploadSourceOrganization;
         }
     }
 }

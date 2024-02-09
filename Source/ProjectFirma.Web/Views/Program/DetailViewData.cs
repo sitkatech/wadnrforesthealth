@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Views.Program
         public string ProjectsBlockedGridDataUrl { get; }
 
         public string EditImportBasicsUrl { get; }
+        public string EditDefaultMappingsUrl { get; }
 
         public DetailViewData(Person currentPerson,
                               Models.Program program)
@@ -66,6 +67,7 @@ namespace ProjectFirma.Web.Views.Program
             EditProgramPeopleUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.EditProgramPeople(program));
             CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(program));
             EditImportBasicsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditImportBasics(program.GisUploadSourceOrganization));
+            EditDefaultMappingsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditDefaultMappings(program.GisUploadSourceOrganization));
 
             NotificationsGridSpec = new ProgramNotificationGridSpec(currentPerson, program)
             {

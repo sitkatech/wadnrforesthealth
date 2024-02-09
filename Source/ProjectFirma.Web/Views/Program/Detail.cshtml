@@ -427,6 +427,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditDefaultMappingsUrl, string.Format("Edit {0} Default Mappings", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
                         GDB Import Default Mappings
                     </h3>
                 </div>
@@ -448,17 +449,6 @@
                                 <span id="ProjectNameColumnMapping">@ViewDataTyped.ProjectNameColumnMapping()</span>
                             </div>
                         </div>
-                        @if (!ViewDataTyped.ImportIsFlattened())
-                        {
-                            <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
-                                    Treatment Type Column
-                                </div>
-                                <div class="col-xs-9">
-                                    <span id="TreatmentTypeColumnMapping">@ViewDataTyped.TreatmentTypeColumnMapping()</span>
-                                </div>
-                            </div>
-                        }
 
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
@@ -504,6 +494,15 @@
                         {
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
+                                    Treatment Type Column
+                                </div>
+                                <div class="col-xs-9">
+                                    <span id="TreatmentTypeColumnMapping">@ViewDataTyped.TreatmentTypeColumnMapping()</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Detailed Activity Type Column
                                 </div>
                                 <div class="col-xs-9">
@@ -519,6 +518,9 @@
                                 </div>
                             </div>
                         }
+                        
+                    
+
                         @if (ViewDataTyped.ImportIsFlattened())
                         {
                             <div class="row">

@@ -30,141 +30,208 @@ Source code is available upon request via <support@sitkatech.com>.
 @using (Html.BeginForm())
 {
 
+
+    <p>Please enter the column name identical to the source column of the data to be imported. If it does not match perfectly, data for that column will not be imported.</p>
+
 <div class="form-horizontal">
     <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectTypeDefaultName)
+            @Html.LabelWithSugarFor(m => m.ProjectIdentifierColumn)
         </div>
         <div class="col-sm-9">
-            @Html.TextBoxFor(m => m.ProjectTypeDefaultName, new { @class = "form-control", style = "width:100%" })
-            @Html.ValidationMessageFor(m => m.ProjectTypeDefaultName)
+            @Html.TextBoxFor(m => m.ProjectIdentifierColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.ProjectIdentifierColumn)
 
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.TreatmentTypeDefaultName)
+            @Html.LabelWithSugarFor(m => m.ProjectNameColumn)
         </div>
         <div class="col-sm-9">
-            @Html.TextBoxFor(m => m.TreatmentTypeDefaultName, new { @class = "form-control", style = "width:100%" })
-            @Html.ValidationMessageFor(m => m.TreatmentTypeDefaultName)
+            @Html.TextBoxFor(m => m.ProjectNameColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.ProjectNameColumn)
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ImportIsFlattened)
+            @Html.LabelWithSugarFor(m => m.CompletionDateColumn)
         </div>
         <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ImportIsFlattened)
-            @Html.ValidationMessageFor(m => m.ImportIsFlattened)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.AdjustProjectTypeBasedOnTreatmentTypes)
-        </div>
-        <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.AdjustProjectTypeBasedOnTreatmentTypes)
-            @Html.ValidationMessageFor(m => m.AdjustProjectTypeBasedOnTreatmentTypes)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectStageDefaultID)
-        </div>
-        <div class="col-sm-9">
-            @Html.DropDownListFor(m => m.ProjectStageDefaultID, ViewDataTyped.ProjectStageSelectListItems)
-            @Html.ValidationMessageFor(m => m.ProjectStageDefaultID)
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.DataDeriveProjectStage)
-        </div>
-        <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.DataDeriveProjectStage)
-            @Html.ValidationMessageFor(m => m.DataDeriveProjectStage)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.DefaultLeadImplementerOrganizationID)
-        </div>
-        <div class="col-sm-9">
-            @Html.DropDownListFor(m => m.DefaultLeadImplementerOrganizationID, ViewDataTyped.Organizations)
-            @Html.ValidationMessageFor(m => m.DefaultLeadImplementerOrganizationID)
-        </div>
-    </div>
-    <div class="form-group form-group-tight">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ImportAsDetailedLocationInsteadOfTreatments)
-        </div>
-        <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ImportAsDetailedLocationInsteadOfTreatments)
-            @Html.ValidationMessageFor(m => m.ImportAsDetailedLocationInsteadOfTreatments)
+            @Html.TextBoxFor(m => m.CompletionDateColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.CompletionDateColumn)
         </div>
     </div>
     
-    <div class="form-group form-group-tight">
+    <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ImportAsDetailedLocationInAdditionToTreatments)
+            @Html.LabelWithSugarFor(m => m.StartDateColumn)
         </div>
         <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ImportAsDetailedLocationInAdditionToTreatments)
-            @Html.ValidationMessageFor(m => m.ImportAsDetailedLocationInAdditionToTreatments)
+            @Html.TextBoxFor(m => m.StartDateColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.StartDateColumn)
         </div>
     </div>
-
-    <div class="form-group form-group-tight">
+    <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ProjectDescriptionDefaultText)
+            @Html.LabelWithSugarFor(m => m.ProjectStageColumn)
         </div>
         <div class="col-sm-9">
-            @Html.TextAreaWithMaxLengthFor(x => x.ProjectDescriptionDefaultText, new TextAreaForExtensions.TextAreaDimensions(null, 4), string.Empty)
-            @Html.ValidationMessageFor(x => x.ProjectDescriptionDefaultText)
+            @Html.TextBoxFor(m => m.ProjectStageColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.ProjectStageColumn)
         </div>
     </div>
-    
-    <div class="form-group form-group-tight">
+    <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ApplyStartDateToProject)
+            @Html.LabelWithSugarFor(m => m.FootprintAcresColumn)
         </div>
         <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ApplyStartDateToProject)
-            @Html.ValidationMessageFor(m => m.ApplyStartDateToProject)
+            @Html.TextBoxFor(m => m.FootprintAcresColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.FootprintAcresColumn)
         </div>
     </div>
-    <div class="form-group form-group-tight">
+    <div class="form-group">
         <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ApplyCompletedDateToProject)
+            @Html.LabelWithSugarFor(m => m.PrivateLandownerColumn)
         </div>
         <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ApplyCompletedDateToProject)
-            @Html.ValidationMessageFor(m => m.ApplyCompletedDateToProject)
+            @Html.TextBoxFor(m => m.PrivateLandownerColumn, new { @class = "form-control", style = "width:100%" })
+            @Html.ValidationMessageFor(m => m.PrivateLandownerColumn)
         </div>
     </div>
     
-    <div class="form-group form-group-tight">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ApplyStartDateToTreatments)
+    @if (ViewDataTyped.GisUploadSourceOrganization.ImportIsFlattened.HasValue && !ViewDataTyped.GisUploadSourceOrganization.ImportIsFlattened.Value)
+    {
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentTypeColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.TreatmentTypeColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentTypeColumn)
+            </div>
         </div>
-        <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ApplyStartDateToTreatments)
-            @Html.ValidationMessageFor(m => m.ApplyStartDateToTreatments)
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentDetailedActivityTypeColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.TreatmentDetailedActivityTypeColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentDetailedActivityTypeColumn)
+            </div>
         </div>
-    </div>
-    <div class="form-group form-group-tight">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(x => x.ApplyEndDateToTreatments)
+    }
+    else
+    {
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.PruningAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.PruningAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.PruningAcresColumn)
+            </div>
         </div>
-        <div class="col-sm-9">
-            @Html.CheckBoxFor(m => m.ApplyEndDateToTreatments)
-            @Html.ValidationMessageFor(m => m.ApplyEndDateToTreatments)
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ThinningAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.ThinningAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.ThinningAcresColumn)
+            </div>
         </div>
-    </div>
-
-
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ChippingAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.ChippingAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.ChippingAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.MasticationAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.MasticationAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.MasticationAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrazingAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.GrazingAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.GrazingAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.LopAndScatterAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.LopAndScatterAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.LopAndScatterAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.BiomassRemovalAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.BiomassRemovalAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.BiomassRemovalAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.HandPileAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.HandPileAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.HandPileAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.HandBurnPileAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.HandBurnPileAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.HandBurnPileAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.MachineBurnPileAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.MachineBurnPileAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.MachineBurnPileAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.BroadcastBurnAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.BroadcastBurnAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.BroadcastBurnAcresColumn)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.OtherAcresColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.OtherAcresColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.OtherAcresColumn)
+            </div>
+        </div>
+    }
 
 </div>
     @Html.HiddenFor(m => m.GisUploadSourceOrganizationID)
