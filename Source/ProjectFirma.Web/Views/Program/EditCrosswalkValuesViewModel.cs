@@ -37,96 +37,10 @@ namespace ProjectFirma.Web.Views.Program
 
         public int GisUploadSourceOrganizationID { get; set; }
 
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Project Identifier Column")]
-        public string ProjectIdentifierColumn { get; set; }
 
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("ProjectNameColumn")]
-        public string ProjectNameColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Completion Date Column")]
-        public string CompletionDateColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Start Date Column")]
-        public string StartDateColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Project Stage Column")]
-        public string ProjectStageColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Footprint Acres Column")]
-        public string FootprintAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Private Landowner Column")]
-        public string PrivateLandownerColumn { get; set; }
+        public List<CrosswalkMappingSimple> ProjectTypeSimples { get; set; }
 
 
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Treatment Type Column")]
-        public string TreatmentTypeColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Treatment Detailed Activity Type Column")]
-        public string TreatmentDetailedActivityTypeColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Treated Acres Column")]
-        public string TreatedAcresColumn { get; set; }
-
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Pruning Acres Column")]
-        public string PruningAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Thinning Acres Column")]
-        public string ThinningAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Chipping Acres Column")]
-        public string ChippingAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Mastication Acres Column")]
-        public string MasticationAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Grazing Acres Column")]
-        public string GrazingAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Lop And Scatter Acres Column")]
-        public string LopAndScatterAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Biomass Removal Acres Column")]
-        public string BiomassRemovalAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Hand Pile Acres Column")]
-        public string HandPileAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Hand Burn Pile Acres Column")]
-        public string HandBurnPileAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Machine Burn Pile Acres Column")]
-        public string MachineBurnPileAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Broadcast Burn Acres Column")]
-        public string BroadcastBurnAcresColumn { get; set; }
-
-        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("Other Acres Column")]
-        public string OtherAcresColumn { get; set; }
 
 
 
@@ -140,14 +54,34 @@ namespace ProjectFirma.Web.Views.Program
         public EditCrosswalkValuesViewModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
         {
             GisUploadSourceOrganizationID = gisUploadSourceOrganization.GisUploadSourceOrganizationID;
-            
+            ProjectTypeSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
+                                .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID)
+                                .Select(y => new CrosswalkMappingSimple(y)).ToList();
 
 
         }
 
         public void UpdateModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization, Person currentPerson)
         {
-            
+            var allGisCrossWalkDefaults = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.Local;
+
+            //var projectPeopleUpdated = ProjectPersonSimples.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.PersonID)).Select(x =>
+            //    new Models.ProjectPerson(project.ProjectID, x.PersonID, x.ProjectPersonRelationshipTypeID)).ToList();
+
+            //project.ProjectPeople.Merge(projectPeopleUpdated,
+            //    allProjectPeople,
+            //    (x, y) => x.ProjectID == y.ProjectID && x.PersonID == y.PersonID && x.ProjectPersonRelationshipTypeID == y.ProjectPersonRelationshipTypeID);
+
+            var projectTypeCrosswalksUpdated = ProjectTypeSimples.Select(x =>
+                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.ProjectType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList();
+
+            gisUploadSourceOrganization.GisCrossWalkDefaults.Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID).ToList().Merge(projectTypeCrosswalksUpdated,
+                allGisCrossWalkDefaults,
+                (x, y) => x.GisUploadSourceOrganizationID == y.GisUploadSourceOrganizationID && 
+                          x.FieldDefinitionID == y.FieldDefinitionID &&
+                          x.GisCrossWalkSourceValue == y.GisCrossWalkSourceValue &&
+                          x.GisCrossWalkMappedValue == y.GisCrossWalkMappedValue);
+
 
         }
 
@@ -156,6 +90,30 @@ namespace ProjectFirma.Web.Views.Program
 
             return new List<ValidationResult>();
 
+        }
+    }
+
+
+    public class CrosswalkMappingSimple
+    {
+        public int GisCrosswalkDefaultID { get; set; }
+        public int FieldDefinitionID { get; set; }
+        public string GisCrosswalkSourceValue { get; set; }
+        public string GisCrosswalkMappedValue { get; set; }
+
+        /// <summary>
+        /// Needed by the ModelBinder
+        /// </summary>
+        public CrosswalkMappingSimple()
+        {
+        }
+
+        public CrosswalkMappingSimple(GisCrossWalkDefault gisCrossWalkDefault)
+        {
+            GisCrosswalkDefaultID = gisCrossWalkDefault.GisCrossWalkDefaultID;
+            FieldDefinitionID = gisCrossWalkDefault.FieldDefinitionID;
+            GisCrosswalkSourceValue = gisCrossWalkDefault.GisCrossWalkSourceValue;
+            GisCrosswalkMappedValue = gisCrossWalkDefault.GisCrossWalkMappedValue;
         }
     }
 }

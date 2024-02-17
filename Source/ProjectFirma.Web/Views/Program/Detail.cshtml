@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
     <script src="@Url.Content("~/Content/bootstrap-toc/bootstrap-toc.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/Program/EditProgramPeopleController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/Program/EditCrosswalkValuesController.js")" type="text/javascript"></script>
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
 }
 
@@ -350,7 +351,7 @@
                                 <span id="ImportAsDetailedLocationInsteadOfTreatments">@ViewDataTyped.ImportAsDetailedLocationInsteadOfTreatments()</span>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
                                 Import As Detailed Location In Addition To Treatments
@@ -369,9 +370,9 @@
                                 <span id="ProjectDescriptionDefaultText">@ViewDataTyped.ProjectDescriptionDefaultText()</span>
                             </div>
                         </div>
-                        
-                        
-                        
+
+
+
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
                                 Apply Start Date To Project
@@ -389,7 +390,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
                                 Apply Start Date To Treatments
@@ -407,9 +408,9 @@
                             </div>
                         </div>
 
-                        
 
-                        
+
+
 
 
                     </div>
@@ -518,8 +519,8 @@
                                 </div>
                             </div>
                         }
-                        
-                    
+
+
 
                         @if (ViewDataTyped.ImportIsFlattened())
                         {
@@ -647,6 +648,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditCrosswalkValuesUrl, string.Format("Edit {0} Crosswalk Values", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
                         GDB Import Crosswalk Values
                     </h3>
                 </div>

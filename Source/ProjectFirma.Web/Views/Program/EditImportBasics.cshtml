@@ -53,6 +53,7 @@ Source code is available upon request via <support@sitkatech.com>.
     <div class="form-group">
         <div class="col-sm-3 control-label">
             @Html.LabelWithSugarFor(m => m.ImportIsFlattened)
+            <p class="smallExplanationText">*Note: If this value is changed, mapping data that is dependent on the import being flattened or not will be removed.</p>
         </div>
         <div class="col-sm-9">
             @Html.CheckBoxFor(m => m.ImportIsFlattened)
@@ -172,11 +173,11 @@ Source code is available upon request via <support@sitkatech.com>.
 }
 
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     jQuery(document).ready(function ()
     {
         HookupCheckIfFormIsDirty(undefined, ".submitProject");
 
 
     });
-</script>
+</script>*@

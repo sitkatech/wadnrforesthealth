@@ -32,6 +32,8 @@ namespace ProjectFirma.Web.Views.Program
         public IEnumerable<SelectListItem> TreatmentTypeSelectListItems { get; }
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeSelectListItems { get; }
 
+        public int ProjectTypeFieldDefinitionID { get; }
+
 
 
 
@@ -41,6 +43,7 @@ namespace ProjectFirma.Web.Views.Program
             ProjectTypeSelectListItems = projectTypeSelectListItems;
             TreatmentTypeSelectListItems = treatmentTypeSelectListItems;
             TreatmentDetailedActivityTypeSelectListItems = treatmentDetailedActivityTypeSelectListItems;
+            ProjectTypeFieldDefinitionID = Models.FieldDefinition.ProjectType.FieldDefinitionID;
         }
     }
 }

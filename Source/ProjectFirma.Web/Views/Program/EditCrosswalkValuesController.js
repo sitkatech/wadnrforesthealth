@@ -22,182 +22,39 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
     angularModelAndViewData) {
 
 
-    $scope.PersonToAdd = null;
-
     $scope.$watch(function() {
-        jQuery(".selectpicker").selectpicker("refresh");
+        //jQuery(".selectpicker").selectpicker("refresh");
 
         // so that unsavedChanges.js knows to check if the form has changed.
         jQuery("form").trigger("input");
     });
 
-    $scope.getAvailablePeopleForProjectPersonRelationshipType = function(projectPersonProjectPersonRelationshipType) {
-        var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
-        if (projectPersonProjectPersonRelationshipType.IsRequired || projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID === $scope.AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID) {
-            return peopleForProjectPersonRelationshipType;
-        } else {
-            var usedPeople = _.filter($scope.AngularModel.ProjectPersonSimples,
-                function(f) {
-                    return f.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
-                });
-            var usedPersonIDs = _.map(usedPeople,
-                function (f) {
-                    return f.PersonID;
-                });
 
-            var filteredList = _.filter(peopleForProjectPersonRelationshipType,
-                function (f) {
-                    return !_.includes(usedPersonIDs, f.PersonID);
-                });
+    $scope.addProjectType = function (selectedProjectTypeText, projectTypeSourceValue) {
 
-            return filteredList;
-        }
-    };
-
-    $scope.personIsValidForProjectPersonRelationshipType = function(person, projectPersonProjectPersonRelationshipType) {
-        var validProjectPersonRelationshipTypeIDs = _.map($scope.validProjectPersonRelationshipTypes(person.PersonID),
-            function(rt) {
-                return rt.ProjectPersonRelationshipTypeID;
-            });
-        return _.includes(validProjectPersonRelationshipTypeIDs, projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID);
-    };
-
-    $scope.chosenPeopleForProjectPersonRelationshipType = function(projectPersonProjectPersonRelationshipTypeID) {
-        var chosenPersonSimples = _.filter($scope.AngularModel.ProjectPersonSimples,
-            function(s) {
-                return s.ProjectPersonRelationshipTypeID === projectPersonProjectPersonRelationshipTypeID;
-            });
-
-        //console.log('chosen people');
-        //console.log(chosenPersonSimples);
-
-        var people = _.map(chosenPersonSimples,
-            function(s) {
-                var person =
-                    Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllPeople,
-                        "PersonID",
-                        s.PersonID);
-                return person;
-            });
-
-        //console.log('people to return');
-        //console.log(people);
-
-        return people;
-    };
-
-    $scope.addProjectPersonSimple = function(personID, projectPersonProjectPersonRelationshipTypeID) {
-        $scope.AngularModel.ProjectPersonSimples.push({
-            PersonID: Number(personID),
-            ProjectPersonRelationshipTypeID: projectPersonProjectPersonRelationshipTypeID
+        $scope.AngularModel.ProjectTypeSimples.push({
+            GisCrosswalkDefaultID: -1,
+            FieldDefinitionID: $scope.AngularViewData.ProjectTypeFieldDefinitionID,
+            GisCrosswalkSourceValue: projectTypeSourceValue,
+            GisCrosswalkMappedValue: selectedProjectTypeText
         });
-        $scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+        console.log("projectTypeSimples:" + $scope.AngularModel.ProjectTypeSimples);
     };
 
-    $scope.removeProjectPersonSimple = function(personID, projectPersonProjectPersonRelationshipTypeID) {
-        _.remove($scope.AngularModel.ProjectPersonSimples,
-            function(pos) {
-                return pos.PersonID == personID && pos.ProjectPersonRelationshipTypeID === projectPersonProjectPersonRelationshipTypeID;
+    //removeProjectTypeSimple(projectTypeSimple)
+    $scope.removeProjectTypeSimple = function (projectTypeSimpleToRemove) {
+        _.remove($scope.AngularModel.ProjectTypeSimples,
+            function (pos) {
+                return pos.FieldDefinitionID === projectTypeSimpleToRemove.FieldDefinitionID
+                    && pos.GisCrosswalkSourceValue === projectTypeSimpleToRemove.GisCrosswalkSourceValue
+                    && pos.GisCrosswalkMappedValue === projectTypeSimpleToRemove.GisCrosswalkMappedValue;
             });
     };
 
-    $scope.selectionChanged = function(personID, projectPersonProjectPersonRelationshipType) {
-        // changing the dropdown selection for a one-and-only-one(IsRequired) relationship type should update the model and of the primary contact relationship type
-        if (projectPersonProjectPersonRelationshipType.IsRequired || projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID === $scope.AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID) {
-            // if there's already a projectPersonSimple for this relationship type, just change the PersonID
-            var projectPersonSimple =
-                Sitka.Methods.findElementInJsonArray($scope.AngularModel.ProjectPersonSimples,
-                    "ProjectPersonRelationshipTypeID",
-                    projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID);
-
-            if (projectPersonSimple != null) {
-                projectPersonSimple.PersonID = Number(personID);
-            } else {
-                $scope.AngularModel.ProjectPersonSimples.push({
-                    PersonID: Number(personID),
-                    ProjectPersonRelationshipTypeID: projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID
-                });
-            }
-        } // but nothing should happen if it's a many-or-none relationship type
-    };
-
-    $scope.resetSelectedPersonID = function(projectPersonProjectPersonRelationshipTypeID) {
-        $scope.selectedPersonID[projectPersonProjectPersonRelationshipTypeID] = "";
-    };
-
-    $scope.isOptionSelected = function(person, projectPersonProjectPersonRelationshipType) {
-        if (projectPersonProjectPersonRelationshipType.IsRequired || projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID === $scope.AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID) {
-            return _.any($scope.AngularModel.ProjectPersonSimples,
-                function (pos) {
-                    return pos.PersonID == person.PersonID &&
-                        pos.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
-                });
-            
-        }
-        return false;
-    };
-
-    $scope.dropdownDefaultOption = function(projectPersonProjectPersonRelationshipType) {
-        if (projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject) {
-            return "Select the " + projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName;
-        } else {
-            return "Add a " + projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName;
-        }
-    };
-
-    $scope.validProjectPersonRelationshipTypes = function(personID) {
-        var person =
-            Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllPeople,
-                "PersonID",
-                personID);
-
-        var valid = person == null ? [] : person.ValidProjectPersonRelationshipTypeSimples;
-        return valid;
-    };
-
-    $scope.getSelectedPrimaryContactPerson = function (projectPersonProjectPersonRelationshipType) {
-
-        var selectedPrimaryContactPersonID =
-            Sitka.Methods.findElementInJsonArray($scope.AngularModel.ProjectPersonSimples,
-                "ProjectPersonRelationshipTypeID",
-                projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID).PersonID;
-
-        var selectedPrimaryContactPerson =
-            Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllPeople,
-                "PersonID",
-                selectedPrimaryContactPersonID);
-
-        return selectedPrimaryContactPerson;
-    }
-
-    $scope.primaryContactPersonHasNoPrimaryContact = function(projectPersonProjectPersonRelationshipType) {
-        return $scope.getSelectedPrimaryContactPerson(projectPersonProjectPersonRelationshipType).PrimaryContactPersonID == null;
-    }
-
-    $scope.primaryContactPerson = function (projectPersonProjectPersonRelationshipType) {
-        return $scope.getSelectedPrimaryContactPerson(projectPersonProjectPersonRelationshipType);
-    }
-
-    $scope.primaryContactPersonPersonDisplayName = function (projectPersonProjectPersonRelationshipType) {
-        if (projectPersonProjectPersonRelationshipType != null) {
-            return $scope.getSelectedPrimaryContactPerson(projectPersonProjectPersonRelationshipType).PrimaryContactPersonDisplayName;
-        }
-
-        return "nobody";
-    }
-
-    $scope.isPersonSelected = function (personID) {
-        var primaryContactPersonId = $scope.AngularModel.PrimaryContactPersonID;
-
-        return primaryContactPersonId === personID;
-    };
-
-    $scope.primaryContactPersonChange = function (personID) {
-        $scope.AngularModel.PrimaryContactPersonID = personID === "null" ? null : parseInt(personID);
-    }
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     //console.log($scope.AngularViewData);
-    $scope.selectedPersonID = {};
+    $scope.selectedProjectTypeID = null;
 });

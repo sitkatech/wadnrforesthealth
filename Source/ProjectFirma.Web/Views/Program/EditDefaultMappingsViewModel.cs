@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.Program
         public string ProjectIdentifierColumn { get; set; }
 
         [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
-        [DisplayName("ProjectNameColumn")]
+        [DisplayName("Project Name Column")]
         public string ProjectNameColumn { get; set; }
 
         [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]

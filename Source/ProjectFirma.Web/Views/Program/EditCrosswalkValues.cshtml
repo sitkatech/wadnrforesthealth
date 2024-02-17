@@ -1,23 +1,23 @@
 ﻿@*-----------------------------------------------------------------------
-<copyright file="EditCrosswalkValues.cshtml" company="Tahoe Regional Planning Agency and Environmental Science Associates">
-Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
-<author>Environmental Science Associates</author>
-</copyright>
+    <copyright file="EditCrosswalkValues.cshtml" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+    Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
+    <author>Environmental Science Associates</author>
+    </copyright>
 
-<license>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
 
-Source code is available upon request via <support@sitkatech.com>.
-</license>
------------------------------------------------------------------------*@
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
 @using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
@@ -28,7 +28,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @inherits ProjectFirma.Web.Views.Program.EditCrosswalkValues
 
 <script type="text/javascript">
-    // <![CDATA[    
+    // <![CDATA[
     angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
     {
         return {
@@ -55,45 +55,95 @@ Source code is available upon request via <support@sitkatech.com>.
 
 
 
-@using (Html.BeginForm())
-{
+
 
 
 <div class="form-horizontal" id="EditCrosswalkValuesAngularApp" ng-controller="EditCrosswalkValuesController">
-    
 
-    <div class="form-group">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectIdentifierColumn)
+
+    @*<div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectIdentifierColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.ProjectIdentifierColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.ProjectIdentifierColumn)
+
+            </div>
         </div>
-        <div class="col-sm-9">
-            @Html.TextBoxFor(m => m.ProjectIdentifierColumn, new { @class = "form-control", style = "width:100%" })
-            @Html.ValidationMessageFor(m => m.ProjectIdentifierColumn)
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectNameColumn)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.ProjectNameColumn, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.ProjectNameColumn)
+            </div>
+        </div>*@
 
+
+    <div class="row">
+        <div class="col-md-12"><label>Project Type</label></div>
+    </div>
+
+    <div class="row">
+        @*Selectpicker*@
+        <div class="col-md-12">
+            <div class="input-group" style="width: 100%;">
+                <input type="text" id="projectTypeSourceValueText" ng-model="projectTypeSourceValue" />
+
+                <select id="projectTypeSelectList" ng-model="selectedProjectTypeText" data-width="100%">
+                    <option value="" selected>Select one</option>
+                    <option ng-repeat="projectType in AngularViewData.ProjectTypeSelectListItems"
+                            ng-bind="projectType.Text"
+                            ng-value="projectType.Text"></option>
+                </select>
+                <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectType(selectedProjectTypeText, projectTypeSourceValue)" ng-disabled="!selectedProjectTypeText">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add
+                </button>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectNameColumn)
-        </div>
-        <div class="col-sm-9">
-            @Html.TextBoxFor(m => m.ProjectNameColumn, new { @class = "form-control", style = "width:100%" })
-            @Html.ValidationMessageFor(m => m.ProjectNameColumn)
+
+    <div class="row" ng-repeat="projectTypeSimple in AngularModel.ProjectTypeSimples" style="margin-top: 5px;">
+        @*Selections*@
+        <div class="col-md-12">
+            <span>
+                <a href="#" ng-click="removeProjectTypeSimple(projectTypeSimple); $event.preventDefault();">
+                    <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProjectType.GetFieldDefinitionLabel() mapping" alt="Remove @FieldDefinition.ProjectType.GetFieldDefinitionLabel() mapping"></i>
+                </a>
+            </span>
+            <span ng-bind="projectTypeSimple.GisCrosswalkSourceValue"></span>
+            <span ng-bind="projectTypeSimple.GisCrosswalkMappedValue"></span>
         </div>
     </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(m => m.GisUploadSourceOrganizationID)
+
+        <div ng-repeat="projectTypeSimple in AngularModel.ProjectTypeSimples">
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].GisCrosswalkDefaultID).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.GisCrosswalkDefaultID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].FieldDefinitionID).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.FieldDefinitionID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].GisCrosswalkMappedValue).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.GisCrosswalkMappedValue}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].GisCrosswalkSourceValue).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.GisCrosswalkSourceValue}}" />
+        </div>
+
+    }
 
 
 </div>
-    @Html.HiddenFor(m => m.GisUploadSourceOrganizationID)
-
-}
 
 
-<script type="text/javascript">
-    jQuery(document).ready(function ()
-    {
-        HookupCheckIfFormIsDirty(undefined, ".submitProject");
 
 
-    });
-</script>
+@*<script type="text/javascript">
+        jQuery(document).ready(function ()
+        {
+            HookupCheckIfFormIsDirty(undefined, ".submitProject");
+
+
+        });
+    </script>*@

@@ -55,6 +55,7 @@ namespace ProjectFirma.Web.Views.Program
 
         public string EditImportBasicsUrl { get; }
         public string EditDefaultMappingsUrl { get; }
+        public string EditCrosswalkValuesUrl { get; }
 
         public DetailViewData(Person currentPerson,
                               Models.Program program)
@@ -68,6 +69,7 @@ namespace ProjectFirma.Web.Views.Program
             CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(program));
             EditImportBasicsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditImportBasics(program.GisUploadSourceOrganization));
             EditDefaultMappingsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditDefaultMappings(program.GisUploadSourceOrganization));
+            EditCrosswalkValuesUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditCrosswalkValues(program.GisUploadSourceOrganization));
 
             NotificationsGridSpec = new ProgramNotificationGridSpec(currentPerson, program)
             {

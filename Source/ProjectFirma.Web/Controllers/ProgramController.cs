@@ -367,6 +367,53 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProgramManageFeature]
+        public PartialViewResult EditCrosswalkValues(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            var viewModel = new EditCrosswalkValuesViewModel(gisUploadSourceOrganization);
+            return ViewEditCrosswalkValues(viewModel, gisUploadSourceOrganization);
+        }
+
+        [HttpPost]
+        [ProgramManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditCrosswalkValues(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditCrosswalkValuesViewModel viewModel)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditCrosswalkValues(viewModel, gisUploadSourceOrganization);
+            }
+            viewModel.UpdateModel(gisUploadSourceOrganization, CurrentPerson);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditCrosswalkValues(EditCrosswalkValuesViewModel viewModel, GisUploadSourceOrganization gisUploadSourceOrganization)
+        {
+            var projectTypeSelectListItems = HttpRequestStorage.DatabaseEntities.ProjectTypes
+                .ToSelectList(x => x.ProjectTypeID.ToString(CultureInfo.InvariantCulture),
+                    x => x.ProjectTypeName);
+
+            var projectStageSelectListItems = ProjectStage.All.ToSelectList(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProjectStageName);
+
+            var treatmentTypeSelectListItems = TreatmentType.All.ToSelectList(
+                x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture),
+                x => x.TreatmentTypeName);
+
+            var treatmentDetailedActivityTypeSelectListItems = TreatmentDetailedActivityType.All.ToSelectList(
+                x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture),
+                x => x.TreatmentDetailedActivityTypeName);
+
+            var viewData = new EditCrosswalkValuesViewData(projectTypeSelectListItems, projectStageSelectListItems, treatmentTypeSelectListItems, treatmentDetailedActivityTypeSelectListItems);
+            return RazorPartialView<EditCrosswalkValues, EditCrosswalkValuesViewData, EditCrosswalkValuesViewModel>(viewData, viewModel);
+        }
+
+
+
+        [HttpGet]
+        [ProgramManageFeature]
         public PartialViewResult DeleteProgram(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
