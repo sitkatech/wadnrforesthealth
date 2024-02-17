@@ -39,10 +39,9 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
             GisCrosswalkMappedValue: selectedProjectTypeText
         });
         //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
-        console.log("projectTypeSimples:" + $scope.AngularModel.ProjectTypeSimples);
+
     };
 
-    //removeProjectTypeSimple(projectTypeSimple)
     $scope.removeProjectTypeSimple = function (projectTypeSimpleToRemove) {
         _.remove($scope.AngularModel.ProjectTypeSimples,
             function (pos) {
@@ -53,8 +52,30 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
     };
 
 
+    $scope.addProjectStage = function (selectedProjectStageText, projectStageSourceValue) {
+
+        $scope.AngularModel.ProjectStageSimples.push({
+            GisCrosswalkDefaultID: -1,
+            FieldDefinitionID: $scope.AngularViewData.ProjectStageFieldDefinitionID,
+            GisCrosswalkSourceValue: projectStageSourceValue,
+            GisCrosswalkMappedValue: selectedProjectStageText
+        });
+        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+
+    };
+
+    $scope.removeProjectStageSimple = function (projectStageSimpleToRemove) {
+        _.remove($scope.AngularModel.ProjectStageSimples,
+            function (pos) {
+                return pos.FieldDefinitionID === projectStageSimpleToRemove.FieldDefinitionID
+                    && pos.GisCrosswalkSourceValue === projectStageSimpleToRemove.GisCrosswalkSourceValue
+                    && pos.GisCrosswalkMappedValue === projectStageSimpleToRemove.GisCrosswalkMappedValue;
+            });
+    };
+
+
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     //console.log($scope.AngularViewData);
-    $scope.selectedProjectTypeID = null;
+
 });

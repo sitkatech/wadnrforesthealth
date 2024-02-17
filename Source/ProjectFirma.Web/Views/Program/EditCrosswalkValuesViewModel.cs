@@ -40,6 +40,8 @@ namespace ProjectFirma.Web.Views.Program
 
         public List<CrosswalkMappingSimple> ProjectTypeSimples { get; set; }
 
+        public List<CrosswalkMappingSimple> ProjectStageSimples { get; set; }
+
 
 
 
@@ -58,6 +60,10 @@ namespace ProjectFirma.Web.Views.Program
                                 .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID)
                                 .Select(y => new CrosswalkMappingSimple(y)).ToList();
 
+            ProjectStageSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
+                                    .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID)
+                                    .Select(y => new CrosswalkMappingSimple(y)).ToList();
+
 
         }
 
@@ -65,17 +71,13 @@ namespace ProjectFirma.Web.Views.Program
         {
             var allGisCrossWalkDefaults = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.Local;
 
-            //var projectPeopleUpdated = ProjectPersonSimples.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.PersonID)).Select(x =>
-            //    new Models.ProjectPerson(project.ProjectID, x.PersonID, x.ProjectPersonRelationshipTypeID)).ToList();
-
-            //project.ProjectPeople.Merge(projectPeopleUpdated,
-            //    allProjectPeople,
-            //    (x, y) => x.ProjectID == y.ProjectID && x.PersonID == y.PersonID && x.ProjectPersonRelationshipTypeID == y.ProjectPersonRelationshipTypeID);
-
-            var projectTypeCrosswalksUpdated = ProjectTypeSimples.Select(x =>
+            var projectCrosswalksUpdated = ProjectTypeSimples.Select(x =>
                 new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.ProjectType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList();
 
-            gisUploadSourceOrganization.GisCrossWalkDefaults.Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID).ToList().Merge(projectTypeCrosswalksUpdated,
+            projectCrosswalksUpdated.AddRange(ProjectStageSimples.Select(x =>
+                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.ProjectStage.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
+
+            gisUploadSourceOrganization.GisCrossWalkDefaults.Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID).ToList().Merge(projectCrosswalksUpdated,
                 allGisCrossWalkDefaults,
                 (x, y) => x.GisUploadSourceOrganizationID == y.GisUploadSourceOrganizationID && 
                           x.FieldDefinitionID == y.FieldDefinitionID &&
