@@ -1123,7 +1123,6 @@
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityLandscapeManageFeature.cs" />
     <Compile Include="Security\PriorityLandscapeManageFileResourceAsAdminFeature.cs" />
-    <Compile Include="Security\ProgramEditFeature.cs" />
     <Compile Include="Security\ProgramIndexViewJsonApiFeature.cs" />
     <Compile Include="Security\ProgramManageFeature.cs" />
     <Compile Include="Security\ProgramViewFeature.cs" />
