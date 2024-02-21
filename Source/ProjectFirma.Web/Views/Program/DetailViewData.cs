@@ -53,6 +53,10 @@ namespace ProjectFirma.Web.Views.Program
         public string ProjectsBlockedGridName { get; }
         public string ProjectsBlockedGridDataUrl { get; }
 
+        public string EditImportBasicsUrl { get; }
+        public string EditDefaultMappingsUrl { get; }
+        public string EditCrosswalkValuesUrl { get; }
+
         public DetailViewData(Person currentPerson,
                               Models.Program program)
                               : base(currentPerson, program)
@@ -63,6 +67,9 @@ namespace ProjectFirma.Web.Views.Program
             CrosswalkDefaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisCrossWalkDefaults : new List<GisCrossWalkDefault>();
             EditProgramPeopleUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.EditProgramPeople(program));
             CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(program));
+            EditImportBasicsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditImportBasics(program.GisUploadSourceOrganization));
+            EditDefaultMappingsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditDefaultMappings(program.GisUploadSourceOrganization));
+            EditCrosswalkValuesUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditCrosswalkValues(program.GisUploadSourceOrganization));
 
             NotificationsGridSpec = new ProgramNotificationGridSpec(currentPerson, program)
             {

@@ -31,10 +31,10 @@ namespace ProjectFirma.Web.Views.Program
             EditProgramUrl = program.GetEditUrl();
             DeleteDocumentUrl = program.GetDeleteDocumentUrl();
             DeleteExampleGdbDocumentUrl = program.GetDeleteExampleDocumentUrl();
-            UserHasEditProgramPermissions = new ProgramEditFeature().HasPermissionByPerson(currentPerson);
+            UserHasEditProgramPermissions = new ProgramManageFeature().HasPermissionByPerson(currentPerson);
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
-            GisUploadSourceOrganization = program.GisUploadSourceOrganizations.FirstOrDefault();
+            GisUploadSourceOrganization = program.GisUploadSourceOrganization;
             ShowDownload = program.ProgramFileResource != null;
             ShowExampleGdbDownload = program.ProgramExampleGeospatialUploadFileResource != null;
         }

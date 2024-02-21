@@ -102,7 +102,6 @@ namespace ProjectFirma.Web.Models
             this.ApplyStartDateToProject = applyStartDateToProject;
             this.ProgramID = program.ProgramID;
             this.Program = program;
-            program.GisUploadSourceOrganizations.Add(this);
             this.ImportAsDetailedLocationInAdditionToTreatments = importAsDetailedLocationInAdditionToTreatments;
             this.ApplyStartDateToTreatments = applyStartDateToTreatments;
             this.ApplyEndDateToTreatments = applyEndDateToTreatments;
