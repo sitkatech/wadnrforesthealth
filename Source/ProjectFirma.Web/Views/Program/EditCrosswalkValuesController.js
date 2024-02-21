@@ -74,6 +74,52 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
     };
 
 
+
+    $scope.addTreatmentType = function (selectedTreatmentTypeText, treatmentTypeSourceValue) {
+
+        $scope.AngularModel.TreatmentTypeSimples.push({
+            GisCrosswalkDefaultID: -1,
+            FieldDefinitionID: $scope.AngularViewData.TreatmentTypeFieldDefinitionID,
+            GisCrosswalkSourceValue: treatmentTypeSourceValue,
+            GisCrosswalkMappedValue: selectedTreatmentTypeText
+        });
+        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+
+    };
+
+    $scope.removeTreatmentTypeSimple = function (treatmentTypeSimpleToRemove) {
+        _.remove($scope.AngularModel.TreatmentTypeSimples,
+            function (pos) {
+                return pos.FieldDefinitionID === treatmentTypeSimpleToRemove.FieldDefinitionID
+                    && pos.GisCrosswalkSourceValue === treatmentTypeSimpleToRemove.GisCrosswalkSourceValue
+                    && pos.GisCrosswalkMappedValue === treatmentTypeSimpleToRemove.GisCrosswalkMappedValue;
+            });
+    };
+
+
+    $scope.addTreatmentDetailedActivityType = function (selectedTreatmentDetailedActivityTypeText, treatmentDetailedActivityTypeSourceValue) {
+
+        $scope.AngularModel.TreatmentDetailedActivityTypeSimples.push({
+            GisCrosswalkDefaultID: -1,
+            FieldDefinitionID: $scope.AngularViewData.TreatmentDetailedActivityTypeFieldDefinitionID,
+            GisCrosswalkSourceValue: treatmentDetailedActivityTypeSourceValue,
+            GisCrosswalkMappedValue: selectedTreatmentDetailedActivityTypeText
+        });
+        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+
+    };
+
+    $scope.removeTreatmentDetailedActivityTypeSimple = function (treatmentDetailedActivityTypeSimpleToRemove) {
+        _.remove($scope.AngularModel.TreatmentDetailedActivityTypeSimples,
+            function (pos) {
+                return pos.FieldDefinitionID === treatmentDetailedActivityTypeSimpleToRemove.FieldDefinitionID
+                    && pos.GisCrosswalkSourceValue === treatmentDetailedActivityTypeSimpleToRemove.GisCrosswalkSourceValue
+                    && pos.GisCrosswalkMappedValue === treatmentDetailedActivityTypeSimpleToRemove.GisCrosswalkMappedValue;
+            });
+    };
+
+
+
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     //console.log($scope.AngularViewData);

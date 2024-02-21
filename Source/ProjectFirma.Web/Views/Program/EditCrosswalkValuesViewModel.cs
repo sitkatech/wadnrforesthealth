@@ -42,6 +42,10 @@ namespace ProjectFirma.Web.Views.Program
 
         public List<CrosswalkMappingSimple> ProjectStageSimples { get; set; }
 
+        public List<CrosswalkMappingSimple> TreatmentTypeSimples { get; set; }
+        
+        public List<CrosswalkMappingSimple> TreatmentDetailedActivityTypeSimples { get; set; }
+
 
 
 
@@ -64,6 +68,14 @@ namespace ProjectFirma.Web.Views.Program
                                     .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID)
                                     .Select(y => new CrosswalkMappingSimple(y)).ToList();
 
+            TreatmentTypeSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
+                                    .Where(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID)
+                                    .Select(y => new CrosswalkMappingSimple(y)).ToList();
+
+            TreatmentDetailedActivityTypeSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
+                .Where(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)
+                .Select(y => new CrosswalkMappingSimple(y)).ToList();
+
 
         }
 
@@ -77,7 +89,15 @@ namespace ProjectFirma.Web.Views.Program
             projectCrosswalksUpdated.AddRange(ProjectStageSimples.Select(x =>
                 new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.ProjectStage.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
 
-            gisUploadSourceOrganization.GisCrossWalkDefaults.Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID).ToList().Merge(projectCrosswalksUpdated,
+            projectCrosswalksUpdated.AddRange(TreatmentTypeSimples.Select(x =>
+                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.TreatmentType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
+
+            projectCrosswalksUpdated.AddRange(TreatmentTypeSimples.Select(x =>
+                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
+
+
+            //.Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)
+            gisUploadSourceOrganization.GisCrossWalkDefaults.ToList().Merge(projectCrosswalksUpdated,
                 allGisCrossWalkDefaults,
                 (x, y) => x.GisUploadSourceOrganizationID == y.GisUploadSourceOrganizationID && 
                           x.FieldDefinitionID == y.FieldDefinitionID &&
