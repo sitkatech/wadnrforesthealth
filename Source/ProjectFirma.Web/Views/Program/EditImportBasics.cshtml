@@ -57,6 +57,7 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
         <div class="col-sm-9">
             @Html.CheckBoxFor(m => m.ImportIsFlattened)
+            <p class="smallExplanationText">If Import IS Flattened, the source data has 1 row per project being imported. <br/>If the Import is NOT Flattened, that means there is one row per treatment being imported.</p>
             @Html.ValidationMessageFor(m => m.ImportIsFlattened)
         </div>
     </div>
@@ -74,7 +75,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(m => m.ProjectStageDefaultID)
         </div>
         <div class="col-sm-9">
-            @Html.DropDownListFor(m => m.ProjectStageDefaultID, ViewDataTyped.ProjectStageSelectListItems)
+            @Html.DropDownListFor(m => m.ProjectStageDefaultID, ViewDataTyped.ProjectStageSelectListItems, new { @class = "form-control", style = "width:auto" })
             @Html.ValidationMessageFor(m => m.ProjectStageDefaultID)
         </div>
     </div>
@@ -93,7 +94,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(m => m.DefaultLeadImplementerOrganizationID)
         </div>
         <div class="col-sm-9">
-            @Html.DropDownListFor(m => m.DefaultLeadImplementerOrganizationID, ViewDataTyped.Organizations)
+            @Html.DropDownListFor(m => m.DefaultLeadImplementerOrganizationID, ViewDataTyped.Organizations, new { @class = "form-control", style = "width:auto" })
             @Html.ValidationMessageFor(m => m.DefaultLeadImplementerOrganizationID)
         </div>
     </div>
@@ -122,7 +123,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(x => x.ProjectDescriptionDefaultText)
         </div>
         <div class="col-sm-9">
-            @Html.TextAreaWithMaxLengthFor(x => x.ProjectDescriptionDefaultText, new TextAreaForExtensions.TextAreaDimensions(null, 4), string.Empty)
+            @Html.TextAreaWithMaxLengthFor(x => x.ProjectDescriptionDefaultText, new TextAreaForExtensions.TextAreaDimensions(null, 4), string.Empty, new List<string>() { "form-control" })
             @Html.ValidationMessageFor(x => x.ProjectDescriptionDefaultText)
         </div>
     </div>
@@ -173,11 +174,4 @@ Source code is available upon request via <support@sitkatech.com>.
 }
 
 
-@*<script type="text/javascript">
-    jQuery(document).ready(function ()
-    {
-        HookupCheckIfFormIsDirty(undefined, ".submitProject");
 
-
-    });
-</script>*@

@@ -32,13 +32,18 @@ namespace ProjectFirma.Web.Views.Program
         public IEnumerable<SelectListItem> TreatmentTypeSelectListItems { get; }
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeSelectListItems { get; }
 
+        //These FieldDefinitionIDs are used by the angular controller
         public int ProjectTypeFieldDefinitionID { get; }
         public int ProjectStageFieldDefinitionID { get; }
+        public int TreatmentTypeFieldDefinitionID { get; }
+        public int TreatmentDetailedActivityTypeFieldDefinitionID { get; }
+
+        public bool ImportIsFlattened { get; }
 
 
 
 
-        public EditCrosswalkValuesViewData(IEnumerable<SelectListItem> projectTypeSelectListItems, IEnumerable<SelectListItem> projectStageSelectListItems, IEnumerable<SelectListItem> treatmentTypeSelectListItems, IEnumerable<SelectListItem> treatmentDetailedActivityTypeSelectListItems)
+        public EditCrosswalkValuesViewData(IEnumerable<SelectListItem> projectTypeSelectListItems, IEnumerable<SelectListItem> projectStageSelectListItems, IEnumerable<SelectListItem> treatmentTypeSelectListItems, IEnumerable<SelectListItem> treatmentDetailedActivityTypeSelectListItems, bool importIsFlattened)
         {
             ProjectStageSelectListItems = projectStageSelectListItems;
             ProjectTypeSelectListItems = projectTypeSelectListItems;
@@ -46,6 +51,9 @@ namespace ProjectFirma.Web.Views.Program
             TreatmentDetailedActivityTypeSelectListItems = treatmentDetailedActivityTypeSelectListItems;
             ProjectTypeFieldDefinitionID = Models.FieldDefinition.ProjectType.FieldDefinitionID;
             ProjectStageFieldDefinitionID = Models.FieldDefinition.ProjectStage.FieldDefinitionID;
+            TreatmentTypeFieldDefinitionID = Models.FieldDefinition.TreatmentType.FieldDefinitionID;
+            TreatmentDetailedActivityTypeFieldDefinitionID = Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID;
+            ImportIsFlattened = importIsFlattened;
         }
     }
 }
