@@ -14,7 +14,8 @@ namespace ProjectFirma.Web.Views.Program
         public string EditProgramUrl { get; set; }
         public string DeleteDocumentUrl { get; set; }
         public string DeleteExampleGdbDocumentUrl { get; set; }
-        public bool UserHasEditProgramPermissions { get; set; }
+        public bool UserHasProgramManagePermissions { get; set; }
+        public bool UserHasProgramEditMappingsPermissions { get; set; }
 
         public string BackToProgramsText { get; set; }
 
@@ -31,7 +32,8 @@ namespace ProjectFirma.Web.Views.Program
             EditProgramUrl = program.GetEditUrl();
             DeleteDocumentUrl = program.GetDeleteDocumentUrl();
             DeleteExampleGdbDocumentUrl = program.GetDeleteExampleDocumentUrl();
-            UserHasEditProgramPermissions = new ProgramManageFeature().HasPermissionByPerson(currentPerson);
+            UserHasProgramManagePermissions = new ProgramManageFeature().HasPermissionByPerson(currentPerson);
+            UserHasProgramEditMappingsPermissions = new ProgramEditMappingsFeature().HasPermission(currentPerson, program.GisUploadSourceOrganization).HasPermission;
             BackToProgramsText = $"Back to all {Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}";
             ProgramsListUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.Index());
             GisUploadSourceOrganization = program.GisUploadSourceOrganization;
