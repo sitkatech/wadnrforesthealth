@@ -157,7 +157,16 @@ namespace ProjectFirma.Web.Controllers
 
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
+
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Single(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            var gisUploadSourceOrganization = new GisUploadSourceOrganization(program.ProgramName, false,
+                ProjectStage.Implementation, false, program.Organization,
+                leadImplementerRelationshipType, false, true, true, program, false, false, false);
+            gisUploadSourceOrganization.ImportIsFlattened = false;
+
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
+            HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.Add(gisUploadSourceOrganization);
+
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             if (viewModel.ProgramFileResourceData != null)
@@ -202,7 +211,13 @@ namespace ProjectFirma.Web.Controllers
 
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Single(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            var gisUploadSourceOrganization = new GisUploadSourceOrganization(program.ProgramName, false,
+                ProjectStage.Implementation, false, program.Organization,
+                leadImplementerRelationshipType, false, true, true, program, false, false, false);
+            gisUploadSourceOrganization.ImportIsFlattened = false;
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
+            HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.Add(gisUploadSourceOrganization);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             if (viewModel.ProgramFileResourceData != null)
             {

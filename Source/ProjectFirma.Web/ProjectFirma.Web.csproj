@@ -757,6 +757,7 @@
     <Compile Include="Controllers\CountyController.cs" />
     <Compile Include="Models\County.cs" />
     <Compile Include="Models\OrganizationCode.cs" />
+    <Compile Include="Models\ProgramTest.cs" />
     <Compile Include="Models\ProjectCountyUpdate.cs" />
     <Compile Include="Models\ProjectCounty.cs" />
     <Compile Include="Models\ProjectDocumentType.cs" />
