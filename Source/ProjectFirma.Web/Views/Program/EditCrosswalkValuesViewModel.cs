@@ -82,21 +82,40 @@ namespace ProjectFirma.Web.Views.Program
         public void UpdateModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization, Person currentPerson)
         {
             var allGisCrossWalkDefaults = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.Local;
+            var projectCrosswalksUpdated = new List<GisCrossWalkDefault>();
 
-            var projectCrosswalksUpdated = ProjectTypeSimples.Select(x =>
-                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.ProjectType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList();
+            if (ProjectTypeSimples != null && ProjectTypeSimples.Any())
+            {
+                projectCrosswalksUpdated.AddRange(ProjectTypeSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
+                    new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID,
+                        Models.FieldDefinition.ProjectType.FieldDefinitionID, x.GisCrosswalkSourceValue,
+                        x.GisCrosswalkMappedValue)));
+            }
 
-            projectCrosswalksUpdated.AddRange(ProjectStageSimples.Select(x =>
-                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.ProjectStage.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
+            if (ProjectStageSimples != null && ProjectStageSimples.Any())
+            {
+                projectCrosswalksUpdated.AddRange(ProjectStageSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
+                    new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID,
+                        Models.FieldDefinition.ProjectStage.FieldDefinitionID, x.GisCrosswalkSourceValue,
+                        x.GisCrosswalkMappedValue)));
+            }
 
-            projectCrosswalksUpdated.AddRange(TreatmentTypeSimples.Select(x =>
-                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.TreatmentType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
+            if (TreatmentTypeSimples != null && TreatmentTypeSimples.Any())
+            {
+                projectCrosswalksUpdated.AddRange(TreatmentTypeSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
+                    new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.TreatmentType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)));
+            }
 
-            projectCrosswalksUpdated.AddRange(TreatmentTypeSimples.Select(x =>
-                new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID, Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)).ToList());
+            if (TreatmentDetailedActivityTypeSimples != null && TreatmentDetailedActivityTypeSimples.Any())
+            {
+                projectCrosswalksUpdated.AddRange(TreatmentDetailedActivityTypeSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
+                    new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID,
+                        Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID,
+                        x.GisCrosswalkSourceValue, x.GisCrosswalkMappedValue)));
+            }
 
 
-            //.Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID || x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)
+
             gisUploadSourceOrganization.GisCrossWalkDefaults.ToList().Merge(projectCrosswalksUpdated,
                 allGisCrossWalkDefaults,
                 (x, y) => x.GisUploadSourceOrganizationID == y.GisUploadSourceOrganizationID && 

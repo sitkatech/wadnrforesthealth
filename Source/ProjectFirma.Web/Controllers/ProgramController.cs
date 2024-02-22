@@ -321,7 +321,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditImportBasics(viewModel);
             }
-            viewModel.UpdateModel(gisUploadSourceOrganization, CurrentPerson);
+            viewModel.UpdateModel(gisUploadSourceOrganization);
 
             return new ModalDialogFormJsonResult();
         }

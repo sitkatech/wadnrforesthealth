@@ -67,10 +67,10 @@
                 <label>Source Value:&nbsp;</label><input type="text" id="projectTypeSourceValueText" ng-model="projectTypeSourceValue" />
                 <label>Mapped to FHT Value: </label>
                 <select id="projectTypeSelectList" ng-model="selectedProjectTypeText" data-width="100%">
-                    <option value="" selected>Select one</option>
                     <option ng-repeat="projectType in AngularViewData.ProjectTypeSelectListItems"
                             ng-bind="projectType.Text"
-                            ng-value="projectType.Text"></option>
+                            ng-value="projectType.Text"
+                            ng-selected="$first"></option>
                 </select>
 
                 <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectType(selectedProjectTypeText, projectTypeSourceValue)"
@@ -104,10 +104,10 @@
                 <label>Source Value:&nbsp;</label><input type="text" id="projectStageSourceValueText" ng-model="projectStageSourceValue" />
                 <label>Mapped to FHT Value: </label>
                 <select id="projectStageSelectList" ng-model="selectedProjectStageText" data-width="100%">
-                    <option value="" selected>Select one</option>
                     <option ng-repeat="projectStage in AngularViewData.ProjectStageSelectListItems"
                             ng-bind="projectStage.Text"
-                            ng-value="projectStage.Text"></option>
+                            ng-value="projectStage.Text"
+                            ng-selected="$first"></option>
                 </select>
 
                 <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectStage(selectedProjectStageText, projectStageSourceValue)"
@@ -131,79 +131,81 @@
             <span ng-bind="projectStageSimple.GisCrosswalkMappedValue"></span>
         </div>
     </div>
+
     @if (!ViewDataTyped.ImportIsFlattened)
     {
-        <hr />
+        <div style="border: 1px solid #000; padding: 5px; margin-top: 10px;">
+            <p>Import is NOT Flattened fields</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <p><strong>@FieldDefinition.TreatmentType.FieldDefinitionDisplayName</strong></p>
+                    <div class="input-group" style="width: 100%;">
+                        <label>Source Value:&nbsp;</label><input type="text" id="treatmentTypeSourceValueText" ng-model="treatmentTypeSourceValue" />
+                        <label>Mapped to FHT Value: </label>
+                        <select id="treatmentTypeSelectList" ng-model="selectedTreatmentTypeText" data-width="100%">
+                            <option ng-repeat="treatmentType in AngularViewData.TreatmentTypeSelectListItems"
+                                    ng-bind="treatmentType.Text"
+                                    ng-value="treatmentType.Text"
+                                    ng-selected="$first"></option>
+                        </select>
 
-        <div class="row">
-            <div class="col-md-12">
-                <p><strong>@FieldDefinition.TreatmentType.FieldDefinitionDisplayName</strong></p>
-                <div class="input-group" style="width: 100%;">
-                    <label>Source Value:&nbsp;</label><input type="text" id="treatmentTypeSourceValueText" ng-model="treatmentTypeSourceValue" />
-                    <label>Mapped to FHT Value: </label>
-                    <select id="treatmentTypeSelectList" ng-model="selectedTreatmentTypeText" data-width="100%">
-                        <option value="" selected>Select one</option>
-                        <option ng-repeat="treatmentType in AngularViewData.TreatmentTypeSelectListItems"
-                                ng-bind="treatmentType.Text"
-                                ng-value="treatmentType.Text"></option>
-                    </select>
-
-                    <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentType(selectedTreatmentTypeText, treatmentTypeSourceValue)"
-                            ng-disabled="!selectedTreatmentTypeText && !treatmentTypeSourceValue">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        Add
-                    </button>
+                        <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentType(selectedTreatmentTypeText, treatmentTypeSourceValue)"
+                                ng-disabled="!selectedTreatmentTypeText && !treatmentTypeSourceValue">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row" ng-repeat="treatmentTypeSimple in AngularModel.TreatmentTypeSimples" style="margin-top: 5px;">
-            @*Selections*@
-            <div class="col-md-12">
-                <span>
-                    <a href="#" ng-click="removeTreatmentTypeSimple(treatmentTypeSimple); $event.preventDefault();">
-                        <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.TreatmentType.GetFieldDefinitionLabel() mapping" alt="Remove @FieldDefinition.TreatmentType.GetFieldDefinitionLabel() mapping"></i>
-                    </a>
-                </span>
-                <span ng-bind="treatmentTypeSimple.GisCrosswalkSourceValue"></span> =>
-                <span ng-bind="treatmentTypeSimple.GisCrosswalkMappedValue"></span>
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row">
-            <div class="col-md-12">
-                <p><strong>@FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionDisplayName</strong></p>
-                <div class="input-group" style="width: 100%;">
-                    <label>Source Value:&nbsp;</label><input type="text" id="treatmentDetailedActivityTypeSourceValueText" ng-model="treatmentDetailedActivityTypeSourceValue" />
-                    <label>Mapped to FHT Value: </label>
-                    <select id="treatmentDetailedActivityTypeSelectList" ng-model="selectedTreatmentDetailedActivityTypeText" data-width="100%">
-                        <option value="" selected>Select one</option>
-                        <option ng-repeat="treatmentDetailedActivityType in AngularViewData.TreatmentDetailedActivityTypeSelectListItems"
-                                ng-bind="treatmentDetailedActivityType.Text"
-                                ng-value="treatmentDetailedActivityType.Text"></option>
-                    </select>
-
-                    <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentDetailedActivityType(selectedTreatmentDetailedActivityTypeText, treatmentDetailedActivityTypeSourceValue)"
-                            ng-disabled="!selectedTreatmentDetailedActivityTypeText && !treatmentDetailedActivityTypeSourceValue">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        Add
-                    </button>
+            <div class="row" ng-repeat="treatmentTypeSimple in AngularModel.TreatmentTypeSimples" style="margin-top: 5px;">
+                @*Selections*@
+                <div class="col-md-12">
+                    <span>
+                        <a href="#" ng-click="removeTreatmentTypeSimple(treatmentTypeSimple); $event.preventDefault();">
+                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.TreatmentType.GetFieldDefinitionLabel() mapping" alt="Remove @FieldDefinition.TreatmentType.GetFieldDefinitionLabel() mapping"></i>
+                        </a>
+                    </span>
+                    <span ng-bind="treatmentTypeSimple.GisCrosswalkSourceValue"></span> =>
+                    <span ng-bind="treatmentTypeSimple.GisCrosswalkMappedValue"></span>
                 </div>
             </div>
-        </div>
 
-        <div class="row" ng-repeat="treatmentDetailedActivityTypeSimple in AngularModel.TreatmentDetailedActivityTypeSimples" style="margin-top: 5px;">
-            @*Selections*@
-            <div class="col-md-12">
-                <span>
-                    <a href="#" ng-click="removeTreatmentDetailedActivityTypeSimple(treatmentDetailedActivityTypeSimple); $event.preventDefault();">
-                        <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.TreatmentDetailedActivityType.GetFieldDefinitionLabel() mapping" alt="Remove @FieldDefinition.TreatmentDetailedActivityType.GetFieldDefinitionLabel() mapping"></i>
-                    </a>
-                </span>
-                <span ng-bind="treatmentDetailedActivityTypeSimple.GisCrosswalkSourceValue"></span> =>
-                <span ng-bind="treatmentDetailedActivityTypeSimple.GisCrosswalkMappedValue"></span>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><strong>@FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionDisplayName</strong></p>
+                    <div class="input-group" style="width: 100%;">
+                        <label>Source Value:&nbsp;</label><input type="text" id="treatmentDetailedActivityTypeSourceValueText" ng-model="treatmentDetailedActivityTypeSourceValue" />
+                        <label>Mapped to FHT Value: </label>
+                        <select id="treatmentDetailedActivityTypeSelectList" ng-model="selectedTreatmentDetailedActivityTypeText" data-width="100%">
+                            <option ng-repeat="treatmentDetailedActivityType in AngularViewData.TreatmentDetailedActivityTypeSelectListItems"
+                                    ng-bind="treatmentDetailedActivityType.Text"
+                                    ng-value="treatmentDetailedActivityType.Text"
+                                    ng-selected="$first"></option>
+                        </select>
+
+                        <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentDetailedActivityType(selectedTreatmentDetailedActivityTypeText, treatmentDetailedActivityTypeSourceValue)"
+                                ng-disabled="!(selectedTreatmentDetailedActivityTypeText.Value) && !treatmentDetailedActivityTypeSourceValue">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-repeat="treatmentDetailedActivityTypeSimple in AngularModel.TreatmentDetailedActivityTypeSimples" style="margin-top: 5px;">
+                @*Selections*@
+                <div class="col-md-12">
+                    <span>
+                        <a href="#" ng-click="removeTreatmentDetailedActivityTypeSimple(treatmentDetailedActivityTypeSimple); $event.preventDefault();">
+                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.TreatmentDetailedActivityType.GetFieldDefinitionLabel() mapping" alt="Remove @FieldDefinition.TreatmentDetailedActivityType.GetFieldDefinitionLabel() mapping"></i>
+                        </a>
+                    </span>
+                    <span ng-bind="treatmentDetailedActivityTypeSimple.GisCrosswalkSourceValue"></span> =>
+                    <span ng-bind="treatmentDetailedActivityTypeSimple.GisCrosswalkMappedValue"></span>
+                </div>
             </div>
         </div>
 

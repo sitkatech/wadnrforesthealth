@@ -63,9 +63,6 @@ namespace ProjectFirma.Web.Views.Program
         [Required]
         public int DefaultLeadImplementerOrganizationID { get; set; }
 
-        [DisplayName("Relationship Type For Default Organization")]
-        [Required]
-        public int RelationshipTypeForDefaultOrganizationID { get; set; }
 
         [DisplayName("Import As Detailed Location Instead Of Treatments")]
         [Required]
@@ -110,7 +107,6 @@ namespace ProjectFirma.Web.Views.Program
             ProjectStageDefaultID = gisUploadSourceOrganization.ProjectStageDefaultID;
             DataDeriveProjectStage = gisUploadSourceOrganization.DataDeriveProjectStage;
             DefaultLeadImplementerOrganizationID = gisUploadSourceOrganization.DefaultLeadImplementerOrganizationID;
-            RelationshipTypeForDefaultOrganizationID = gisUploadSourceOrganization.RelationshipTypeForDefaultOrganizationID;
             ImportAsDetailedLocationInsteadOfTreatments = gisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments;
             ProjectDescriptionDefaultText = gisUploadSourceOrganization.ProjectDescriptionDefaultText;
             ApplyCompletedDateToProject = gisUploadSourceOrganization.ApplyCompletedDateToProject;
@@ -120,8 +116,35 @@ namespace ProjectFirma.Web.Views.Program
             ImportAsDetailedLocationInAdditionToTreatments = gisUploadSourceOrganization.ImportAsDetailedLocationInAdditionToTreatments;
         }
 
-        public void UpdateModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization, Person currentPerson)
+        public void UpdateModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
         {
+            //2/21/24 TK - before we update fields, check if ImportIsFlattened changed and clear out the mapping data based on ImportIsFlattened
+            if (ImportIsFlattened != gisUploadSourceOrganization.ImportIsFlattened)
+            {
+
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentType.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatedAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID, null);
+                var crossWalkDefaultsToRemove = gisUploadSourceOrganization.GisCrossWalkDefaults.Where(x =>
+                    x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID ||
+                    x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID);
+
+                HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.RemoveRange(crossWalkDefaultsToRemove);
+
+            }
+
             gisUploadSourceOrganization.GisUploadSourceOrganizationID = GisUploadSourceOrganizationID;
             gisUploadSourceOrganization.ProjectTypeDefaultName = ProjectTypeDefaultName;
             gisUploadSourceOrganization.TreatmentTypeDefaultName = TreatmentTypeDefaultName;
@@ -130,7 +153,6 @@ namespace ProjectFirma.Web.Views.Program
             gisUploadSourceOrganization.ProjectStageDefaultID = ProjectStageDefaultID;
             gisUploadSourceOrganization.DataDeriveProjectStage = DataDeriveProjectStage;
             gisUploadSourceOrganization.DefaultLeadImplementerOrganizationID = DefaultLeadImplementerOrganizationID;
-            gisUploadSourceOrganization.RelationshipTypeForDefaultOrganizationID = RelationshipTypeForDefaultOrganizationID;
             gisUploadSourceOrganization.ImportAsDetailedLocationInsteadOfTreatments = ImportAsDetailedLocationInsteadOfTreatments;
             gisUploadSourceOrganization.ProjectDescriptionDefaultText = ProjectDescriptionDefaultText;
             gisUploadSourceOrganization.ApplyCompletedDateToProject = ApplyCompletedDateToProject;

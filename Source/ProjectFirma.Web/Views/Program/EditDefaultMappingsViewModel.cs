@@ -171,60 +171,32 @@ namespace ProjectFirma.Web.Views.Program
 
         public void UpdateModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
         {
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.ProjectIdentifier.FieldDefinitionID, ProjectIdentifierColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.ProjectName.FieldDefinitionID, ProjectNameColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.CompletionDate.FieldDefinitionID, CompletionDateColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.PlannedDate.FieldDefinitionID, StartDateColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.ProjectStage.FieldDefinitionID, ProjectStageColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.FootprintAcres.FieldDefinitionID, FootprintAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.Landowner.FieldDefinitionID, PrivateLandownerColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.TreatmentType.FieldDefinitionID, TreatmentTypeColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, TreatmentDetailedActivityTypeColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.TreatedAcres.FieldDefinitionID, TreatedAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID, PruningAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID, ThinningAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID, ChippingAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID, MasticationAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID, GrazingAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID, LopAndScatterAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID, BiomassRemovalAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID, HandPileAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID, HandBurnPileAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID, MachineBurnPileAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID, BroadcastBurnAcresColumn);
-            UpdateMappingColumnValue(gisUploadSourceOrganization, Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID, OtherAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ProjectIdentifier.FieldDefinitionID, ProjectIdentifierColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ProjectName.FieldDefinitionID, ProjectNameColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.CompletionDate.FieldDefinitionID, CompletionDateColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.PlannedDate.FieldDefinitionID, StartDateColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ProjectStage.FieldDefinitionID, ProjectStageColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.FootprintAcres.FieldDefinitionID, FootprintAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.Landowner.FieldDefinitionID, PrivateLandownerColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentType.FieldDefinitionID, TreatmentTypeColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, TreatmentDetailedActivityTypeColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatedAcres.FieldDefinitionID, TreatedAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID, PruningAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID, ThinningAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID, ChippingAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID, MasticationAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID, GrazingAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID, LopAndScatterAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID, BiomassRemovalAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID, HandPileAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID, HandBurnPileAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID, MachineBurnPileAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID, BroadcastBurnAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID, OtherAcresColumn);
 
         }
 
-        private void UpdateMappingColumnValue(GisUploadSourceOrganization gisUploadSourceOrganization, int fieldDefinitionID, string newColumnMapping)
-        {
-            //need to check for existing mapping and remove or just get out of this
-            if (string.IsNullOrEmpty(newColumnMapping))
-            {
-                var mappingsForFieldDefinition = HttpRequestStorage.DatabaseEntities.GisDefaultMappings.Where(x =>
-                    x.FieldDefinitionID == fieldDefinitionID && GisUploadSourceOrganizationID ==
-                    gisUploadSourceOrganization.GisUploadSourceOrganizationID);
-
-                if (mappingsForFieldDefinition.Any())
-                {
-                    HttpRequestStorage.DatabaseEntities.GisDefaultMappings.RemoveRange(mappingsForFieldDefinition);
-                }
-
-                return;
-            }
-
-            var defaultMapping = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == fieldDefinitionID);
-
-            if (defaultMapping == null)
-            {
-                var newMapping = new GisDefaultMapping(GisUploadSourceOrganizationID, fieldDefinitionID, newColumnMapping);
-                HttpRequestStorage.DatabaseEntities.GisDefaultMappings.Add(newMapping);
-            }
-            else
-            {
-                defaultMapping.GisDefaultMappingColumnName = newColumnMapping;
-            }
-        }
+        
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

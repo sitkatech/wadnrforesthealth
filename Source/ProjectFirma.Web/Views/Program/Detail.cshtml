@@ -493,6 +493,8 @@
                         </div>
                         @if (!ViewDataTyped.ImportIsFlattened())
                         {
+                            <hr />
+                            <p>Import is NOT Flattened fields</p>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Type Column
@@ -524,6 +526,8 @@
 
                         @if (ViewDataTyped.ImportIsFlattened())
                         {
+                            <hr />
+                            <p>Import is Flattened fields</p>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Pruning Acres Column
@@ -688,8 +692,8 @@
                                 }
                             </div>
                         </div>
-                        <br/>
-                        <hr/>
+                        <br />
+                        <hr />
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
                                 Project Stage:
@@ -711,6 +715,7 @@
                         @if (!ViewDataTyped.ImportIsFlattened())
                         {
                             <hr />
+                            <p>Import is NOT Flattened fields</p>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Type:
@@ -731,8 +736,8 @@
                                     }
                                 </div>
                             </div>
-                            <br/>
-                            <hr/>
+                            <br />
+                            <hr />
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Detailed Activity Type:
@@ -752,7 +757,7 @@
                                     }
                                 </div>
                             </div>
-                            
+
                         }
 
 
