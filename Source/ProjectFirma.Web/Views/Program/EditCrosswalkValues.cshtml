@@ -63,22 +63,27 @@
     <div class="row">
         <div class="col-md-12">
             <p><strong>@FieldDefinition.ProjectType.FieldDefinitionDisplayName</strong></p>
-            <div class="input-group" style="width: 100%;">
-                <label>Source Value:&nbsp;</label><input type="text" id="projectTypeSourceValueText" ng-model="projectTypeSourceValue" />
-                <label>Mapped to FHT Value: </label>
-                <select id="projectTypeSelectList" ng-model="selectedProjectTypeText" data-width="100%">
-                    <option ng-repeat="projectType in AngularViewData.ProjectTypeSelectListItems"
-                            ng-bind="projectType.Text"
-                            ng-value="projectType.Text"
-                            ng-selected="$first"></option>
-                </select>
+        </div>
+        <div class="col-md-4">
 
-                <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectType(selectedProjectTypeText, projectTypeSourceValue)"
-                        ng-disabled="!selectedProjectTypeText && !projectTypeSourceValue">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Add
-                </button>
-            </div>
+            <label>Source Value:&nbsp;</label><input type="text" id="projectTypeSourceValueText" ng-model="projectTypeSourceValue" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label>Mapped to FHT Value: </label>
+            <select id="projectTypeSelectList" ng-model="selectedProjectTypeText" class="form-control" data-width="100%">
+                <option ng-repeat="projectType in AngularViewData.ProjectTypeSelectListItems"
+                        ng-bind="projectType.Text"
+                        ng-value="projectType.Text"
+                        ng-selected="$first"></option>
+            </select>
+        </div>  
+        <div class="col-md-2">
+            <br />
+            <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectType(selectedProjectTypeText, projectTypeSourceValue)"
+                    ng-disabled="!selectedProjectTypeText && !projectTypeSourceValue">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
+            </button>
         </div>
     </div>
 
@@ -100,22 +105,26 @@
     <div class="row">
         <div class="col-md-12">
             <p><strong>@FieldDefinition.ProjectStage.FieldDefinitionDisplayName</strong></p>
-            <div class="input-group" style="width: 100%;">
-                <label>Source Value:&nbsp;</label><input type="text" id="projectStageSourceValueText" ng-model="projectStageSourceValue" />
-                <label>Mapped to FHT Value: </label>
-                <select id="projectStageSelectList" ng-model="selectedProjectStageText" data-width="100%">
-                    <option ng-repeat="projectStage in AngularViewData.ProjectStageSelectListItems"
-                            ng-bind="projectStage.Text"
-                            ng-value="projectStage.Text"
-                            ng-selected="$first"></option>
-                </select>
-
-                <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectStage(selectedProjectStageText, projectStageSourceValue)"
-                        ng-disabled="!selectedProjectStageText && !projectStageSourceValue">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Add
-                </button>
-            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Source Value:&nbsp;</label><input type="text" id="projectStageSourceValueText" ng-model="projectStageSourceValue" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label>Mapped to FHT Value: </label>
+            <select id="projectStageSelectList" ng-model="selectedProjectStageText" data-width="100%" class="form-control">
+                <option ng-repeat="projectStage in AngularViewData.ProjectStageSelectListItems"
+                        ng-bind="projectStage.Text"
+                        ng-value="projectStage.Text"
+                        ng-selected="$first"></option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <br/>
+            <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectStage(selectedProjectStageText, projectStageSourceValue)"
+                    ng-disabled="!selectedProjectStageText && !projectStageSourceValue">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
+            </button>
         </div>
     </div>
 
@@ -139,23 +148,30 @@
             <div class="row">
                 <div class="col-md-12">
                     <p><strong>@FieldDefinition.TreatmentType.FieldDefinitionDisplayName</strong></p>
-                    <div class="input-group" style="width: 100%;">
-                        <label>Source Value:&nbsp;</label><input type="text" id="treatmentTypeSourceValueText" ng-model="treatmentTypeSourceValue" />
-                        <label>Mapped to FHT Value: </label>
-                        <select id="treatmentTypeSelectList" ng-model="selectedTreatmentTypeText" data-width="100%">
-                            <option ng-repeat="treatmentType in AngularViewData.TreatmentTypeSelectListItems"
-                                    ng-bind="treatmentType.Text"
-                                    ng-value="treatmentType.Text"
-                                    ng-selected="$first"></option>
-                        </select>
-
-                        <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentType(selectedTreatmentTypeText, treatmentTypeSourceValue)"
-                                ng-disabled="!selectedTreatmentTypeText && !treatmentTypeSourceValue">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Add
-                        </button>
-                    </div>
                 </div>
+                <div class="col-md-4">
+                    <label>Source Value:&nbsp;</label><input type="text" id="treatmentTypeSourceValueText" ng-model="treatmentTypeSourceValue" class="form-control" />
+                    
+                </div>
+                <div class="col-md-6">
+                    <label>Mapped to FHT Value: </label>
+                    <select id="treatmentTypeSelectList" ng-model="selectedTreatmentTypeText" data-width="100%" class="form-control">
+                        <option ng-repeat="treatmentType in AngularViewData.TreatmentTypeSelectListItems"
+                                ng-bind="treatmentType.Text"
+                                ng-value="treatmentType.Text"
+                                ng-selected="$first"></option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <br/>
+                    <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentType(selectedTreatmentTypeText, treatmentTypeSourceValue)"
+                            ng-disabled="!selectedTreatmentTypeText && !treatmentTypeSourceValue">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add
+                    </button>
+                </div>
+                    
+                
             </div>
 
             <div class="row" ng-repeat="treatmentTypeSimple in AngularModel.TreatmentTypeSimples" style="margin-top: 5px;">
@@ -176,22 +192,27 @@
             <div class="row">
                 <div class="col-md-12">
                     <p><strong>@FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionDisplayName</strong></p>
-                    <div class="input-group" style="width: 100%;">
-                        <label>Source Value:&nbsp;</label><input type="text" id="treatmentDetailedActivityTypeSourceValueText" ng-model="treatmentDetailedActivityTypeSourceValue" />
-                        <label>Mapped to FHT Value: </label>
-                        <select id="treatmentDetailedActivityTypeSelectList" ng-model="selectedTreatmentDetailedActivityTypeText" data-width="100%">
-                            <option ng-repeat="treatmentDetailedActivityType in AngularViewData.TreatmentDetailedActivityTypeSelectListItems"
-                                    ng-bind="treatmentDetailedActivityType.Text"
-                                    ng-value="treatmentDetailedActivityType.Text"
-                                    ng-selected="$first"></option>
-                        </select>
-
-                        <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentDetailedActivityType(selectedTreatmentDetailedActivityTypeText, treatmentDetailedActivityTypeSourceValue)"
-                                ng-disabled="!(selectedTreatmentDetailedActivityTypeText.Value) && !treatmentDetailedActivityTypeSourceValue">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Add
-                        </button>
-                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Source Value:&nbsp;</label><input type="text" id="treatmentDetailedActivityTypeSourceValueText" ng-model="treatmentDetailedActivityTypeSourceValue" class="form-control" />
+                    
+                </div>
+                <div class="col-md-6">
+                    <label>Mapped to FHT Value: </label>
+                    <select id="treatmentDetailedActivityTypeSelectList" ng-model="selectedTreatmentDetailedActivityTypeText" data-width="100%" class="form-control">
+                        <option ng-repeat="treatmentDetailedActivityType in AngularViewData.TreatmentDetailedActivityTypeSelectListItems"
+                                ng-bind="treatmentDetailedActivityType.Text"
+                                ng-value="treatmentDetailedActivityType.Text"
+                                ng-selected="$first"></option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <br/>
+                    <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentDetailedActivityType(selectedTreatmentDetailedActivityTypeText, treatmentDetailedActivityTypeSourceValue)"
+                            ng-disabled="!(selectedTreatmentDetailedActivityTypeText.Value) && !treatmentDetailedActivityTypeSourceValue">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add
+                    </button>
                 </div>
             </div>
 
