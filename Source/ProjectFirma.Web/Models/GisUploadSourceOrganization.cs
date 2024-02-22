@@ -1,4 +1,6 @@
-﻿namespace ProjectFirma.Web.Models
+﻿using System.Collections.Generic;
+
+namespace ProjectFirma.Web.Models
 {
     public partial class GisUploadSourceOrganization : IAuditableEntity
     {

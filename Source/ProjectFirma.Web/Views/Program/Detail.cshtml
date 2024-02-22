@@ -267,7 +267,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditImportBasicsUrl, string.Format("Edit {0} Import Basics", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditImportBasicsUrl, string.Format("Edit {0} Import Basics", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramEditMappingsPermissions)
                         GDB Import Basics
                     </h3>
                 </div>
@@ -428,7 +428,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditDefaultMappingsUrl, string.Format("Edit {0} Default Mappings", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditDefaultMappingsUrl, string.Format("Edit {0} Default Mappings", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramEditMappingsPermissions)
                         GDB Import Default Mappings
                     </h3>
                 </div>
@@ -493,6 +493,8 @@
                         </div>
                         @if (!ViewDataTyped.ImportIsFlattened())
                         {
+                            <hr />
+                            <p>Import is NOT Flattened fields</p>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Type Column
@@ -524,6 +526,8 @@
 
                         @if (ViewDataTyped.ImportIsFlattened())
                         {
+                            <hr />
+                            <p>Import is Flattened fields</p>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Pruning Acres Column
@@ -648,7 +652,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditCrosswalkValuesUrl, string.Format("Edit {0} Crosswalk Values", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditCrosswalkValuesUrl, string.Format("Edit {0} Crosswalk Values", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramEditMappingsPermissions)
                         GDB Import Crosswalk Values
                     </h3>
                 </div>
@@ -688,8 +692,8 @@
                                 }
                             </div>
                         </div>
-                        <br/>
-                        <hr/>
+                        <br />
+                        <hr />
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
                                 Project Stage:
@@ -711,6 +715,7 @@
                         @if (!ViewDataTyped.ImportIsFlattened())
                         {
                             <hr />
+                            <p>Import is NOT Flattened fields</p>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Type:
@@ -731,8 +736,8 @@
                                     }
                                 </div>
                             </div>
-                            <br/>
-                            <hr/>
+                            <br />
+                            <hr />
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Detailed Activity Type:
@@ -752,7 +757,7 @@
                                     }
                                 </div>
                             </div>
-                            
+
                         }
 
 

@@ -747,6 +747,7 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
     <Compile Include="Controllers\ProjectControllerTest.cs" />
     <Compile Include="Models\AgreementProject.cs" />
+    <Compile Include="Models\GisUploadSourceOrganizationModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationPriority.cs" />
     <Compile Include="Models\GrantAllocationSource.cs" />
     <Compile Include="Models\GrantAllocationLikelyPerson.cs" />
