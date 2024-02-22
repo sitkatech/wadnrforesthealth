@@ -123,6 +123,15 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.ValidationMessageFor(m => m.TreatmentDetailedActivityTypeColumn)
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatedAcresColumn)
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.TreatedAcresColumn, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.TreatedAcresColumn)
+                </div>
+            </div>
         }
         else
         {
