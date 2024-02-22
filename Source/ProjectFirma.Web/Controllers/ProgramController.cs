@@ -157,7 +157,16 @@ namespace ProjectFirma.Web.Controllers
 
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
+
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Single(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            var gisUploadSourceOrganization = new GisUploadSourceOrganization(program.ProgramName, false,
+                ProjectStage.Implementation, false, program.Organization,
+                leadImplementerRelationshipType, false, true, true, program, false, false, false);
+            gisUploadSourceOrganization.ImportIsFlattened = false;
+
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
+            HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.Add(gisUploadSourceOrganization);
+
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             if (viewModel.ProgramFileResourceData != null)
@@ -202,7 +211,13 @@ namespace ProjectFirma.Web.Controllers
 
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Single(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            var gisUploadSourceOrganization = new GisUploadSourceOrganization(program.ProgramName, false,
+                ProjectStage.Implementation, false, program.Organization,
+                leadImplementerRelationshipType, false, true, true, program, false, false, false);
+            gisUploadSourceOrganization.ImportIsFlattened = false;
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
+            HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.Add(gisUploadSourceOrganization);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             if (viewModel.ProgramFileResourceData != null)
             {
@@ -288,7 +303,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         public PartialViewResult EditImportBasics(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
         {
             var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
@@ -297,7 +312,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditImportBasics(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditImportBasicsViewModel viewModel)
         {
@@ -327,7 +342,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         public PartialViewResult EditDefaultMappings(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
         {
             var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
@@ -336,7 +351,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditDefaultMappings(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditDefaultMappingsViewModel viewModel)
         {
@@ -366,7 +381,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         public PartialViewResult EditCrosswalkValues(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
         {
             var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
@@ -375,7 +390,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditCrosswalkValues(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditCrosswalkValuesViewModel viewModel)
         {

@@ -71,7 +71,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramUrl, string.Format("Edit {0}", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramUrl, string.Format("Edit {0}", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         Basics
                     </h3>
                 </div>
@@ -139,7 +139,7 @@
                                 <span>
                                     @if (ViewDataTyped.ShowDownload)
                                     {
-                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteDocumentUrl, ViewDataTyped.UserHasProgramManagePermissions)
 
                                         <a href="@ViewDataTyped.Program.ProgramFileResource.FileResourceUrl" target="_blank">
                                             @ViewDataTyped.Program.ProgramFileResource.OriginalCompleteFileName
@@ -161,7 +161,7 @@
                                 <span>
                                     @if (ViewDataTyped.ShowExampleGdbDownload)
                                     {
-                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteExampleGdbDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteExampleGdbDocumentUrl, ViewDataTyped.UserHasProgramManagePermissions)
 
                                         <a href="@ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.FileResourceUrl" target="_blank">
                                             @ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.OriginalCompleteFileName
@@ -182,7 +182,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramPeopleUrl, string.Format("Edit Program Editors for the {0} program", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramPeopleUrl, string.Format("Edit Program Editors for the {0} program", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         Program Editors
                     </h3>
                 </div>
@@ -267,7 +267,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditImportBasicsUrl, string.Format("Edit {0} Import Basics", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditImportBasicsUrl, string.Format("Edit {0} Import Basics", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         GDB Import Basics
                     </h3>
                 </div>
@@ -428,7 +428,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditDefaultMappingsUrl, string.Format("Edit {0} Default Mappings", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditDefaultMappingsUrl, string.Format("Edit {0} Default Mappings", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         GDB Import Default Mappings
                     </h3>
                 </div>
@@ -648,7 +648,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditCrosswalkValuesUrl, string.Format("Edit {0} Crosswalk Values", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditCrosswalkValuesUrl, string.Format("Edit {0} Crosswalk Values", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         GDB Import Crosswalk Values
                     </h3>
                 </div>
