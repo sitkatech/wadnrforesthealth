@@ -73,14 +73,14 @@
             <select id="projectTypeSelectList" ng-model="selectedProjectTypeText" class="form-control" data-width="100%">
                 <option ng-repeat="projectType in AngularViewData.ProjectTypeSelectListItems"
                         ng-bind="projectType.Text"
-                        ng-value="projectType.Text"
+                        ng-value="projectType.Text" 
                         ng-selected="$first"></option>
             </select>
         </div>  
         <div class="col-md-2">
             <br />
             <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectType(selectedProjectTypeText, projectTypeSourceValue)"
-                    ng-disabled="!selectedProjectTypeText && !projectTypeSourceValue">
+                    ng-disabled="!selectedProjectTypeText || !projectTypeSourceValue">
                 <span class="glyphicon glyphicon-plus"></span>
                 Add
             </button>
@@ -121,7 +121,7 @@
         <div class="col-md-2">
             <br/>
             <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectStage(selectedProjectStageText, projectStageSourceValue)"
-                    ng-disabled="!selectedProjectStageText && !projectStageSourceValue">
+                    ng-disabled="!selectedProjectStageText || !projectStageSourceValue">
                 <span class="glyphicon glyphicon-plus"></span>
                 Add
             </button>
@@ -165,7 +165,7 @@
                 <div class="col-md-2">
                     <br/>
                     <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentType(selectedTreatmentTypeText, treatmentTypeSourceValue)"
-                            ng-disabled="!selectedTreatmentTypeText && !treatmentTypeSourceValue">
+                            ng-disabled="!selectedTreatmentTypeText || !treatmentTypeSourceValue">
                         <span class="glyphicon glyphicon-plus"></span>
                         Add
                     </button>
@@ -209,7 +209,7 @@
                 <div class="col-md-2">
                     <br/>
                     <button type="button" class="btn btn-sm btn-firma" ng-click="addTreatmentDetailedActivityType(selectedTreatmentDetailedActivityTypeText, treatmentDetailedActivityTypeSourceValue)"
-                            ng-disabled="!(selectedTreatmentDetailedActivityTypeText.Value) && !treatmentDetailedActivityTypeSourceValue">
+                            ng-disabled="!(selectedTreatmentDetailedActivityTypeText.Value) || !treatmentDetailedActivityTypeSourceValue">
                         <span class="glyphicon glyphicon-plus"></span>
                         Add
                     </button>
