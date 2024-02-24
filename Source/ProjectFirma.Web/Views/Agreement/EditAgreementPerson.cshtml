@@ -42,7 +42,7 @@
             @Html.LabelWithSugarFor(m => m.PersonID)
         </div>
         <div class="col-sm-9">
-            @Html.DropDownListFor(m => m.PersonID, ViewDataTyped.Contacts, new { @class = "form-control", style = "width:auto" })
+            @Html.SearchableDropDownListFor(m => m.PersonID, ViewDataTyped.Contacts, new { style = "width: auto;", @class = "form-control selectpicker" })
             @Html.ValidationMessageFor(m => m.PersonID)
         </div>
     </div>
