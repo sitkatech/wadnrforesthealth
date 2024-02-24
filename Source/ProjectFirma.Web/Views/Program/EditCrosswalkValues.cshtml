@@ -192,12 +192,6 @@
     {
         @Html.HiddenFor(m => m.GisUploadSourceOrganizationID)
 
-        <div ng-repeat="projectTypeSimple in AngularModel.ProjectTypeSimples">
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].GisCrosswalkDefaultID).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.GisCrosswalkDefaultID}}" />
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].FieldDefinitionID).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.FieldDefinitionID}}" />
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].GisCrosswalkMappedValue).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.GisCrosswalkMappedValue}}" />
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectTypeSimples[0].GisCrosswalkSourceValue).ToString().Replace("0", "{{$index}}")" value="{{projectTypeSimple.GisCrosswalkSourceValue}}" />
-        </div>
 
         <div ng-repeat="projectStageSimple in AngularModel.ProjectStageSimples">
             <input type="hidden" name="@Html.NameFor(x => x.ProjectStageSimples[0].GisCrosswalkDefaultID).ToString().Replace("0", "{{$index}}")" value="{{projectStageSimple.GisCrosswalkDefaultID}}" />
