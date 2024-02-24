@@ -435,88 +435,93 @@
                 <div class="panel-body">
                     <div class="basicsLayout">
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Identifier Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectIdentifierColumnMapping">@ViewDataTyped.ProjectIdentifierColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Name Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectNameColumnMapping">@ViewDataTyped.ProjectNameColumnMapping()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Completion Date Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="CompletionDateColumnMapping">@ViewDataTyped.CompletionDateColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Start Date Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="StartDateColumnMapping">@ViewDataTyped.StartDateColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Stage Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectStageColumnMapping">@ViewDataTyped.ProjectStageColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Footprint Acres Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="FootprintAcresColumnMapping">@ViewDataTyped.FootprintAcresColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Private Landowner Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="PrivateLandownerColumnMapping">@ViewDataTyped.PrivateLandownerColumnMapping()</span>
                             </div>
                         </div>
                         @if (!ViewDataTyped.ImportIsFlattened())
                         {
                             <hr />
-                            <p>Import is NOT Flattened fields</p>
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 text-right" style="text-decoration: underline;">
+                                    Import is NOT Flattened fields
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Treatment Type Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="TreatmentTypeColumnMapping">@ViewDataTyped.TreatmentTypeColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Treatment Detailed Activity Type Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="TreatmentDetailedActivityTypeColumnMapping">@ViewDataTyped.TreatmentDetailedActivityTypeColumnMapping()</span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Treated Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="TreatedAcresColumnMapping">@ViewDataTyped.TreatedAcresColumnMapping()</span>
                                 </div>
                             </div>
@@ -527,111 +532,115 @@
                         @if (ViewDataTyped.ImportIsFlattened())
                         {
                             <hr />
-                            <p>Import is Flattened fields</p>
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 text-right" style="text-decoration: underline;">
+                                    Import is Flattened fields
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Pruning Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="PruningAcresColumnMapping">@ViewDataTyped.PruningAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Thinning Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="ThinningAcresColumnMapping">@ViewDataTyped.ThinningAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Chipping Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="ChippingAcresColumnMapping">@ViewDataTyped.ChippingAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Mastication Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="MasticationAcresColumnMapping">@ViewDataTyped.MasticationAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Grazing Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="GrazingAcresColumnMapping">@ViewDataTyped.GrazingAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Lop and Scatter Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="LopAndScatterAcresColumnMapping">@ViewDataTyped.LopAndScatterAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Biomass Removal Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="BiomassRemovalAcresColumnMapping">@ViewDataTyped.BiomassRemovalAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Hand Pile Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="HandPileAcresColumnMapping">@ViewDataTyped.HandPileAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Hand Burn Pile Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="HandPileBurnAcresColumnMapping">@ViewDataTyped.HandPileBurnAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Machine Burn Pile Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="MachinePileBurnAcresColumnMapping">@ViewDataTyped.MachinePileBurnAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Broadcast Burn Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="BroadcastBurnAcresColumnMapping">@ViewDataTyped.BroadcastBurnAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Other Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="OtherAcresColumnMapping">@ViewDataTyped.OtherAcresColumnMapping()</span>
                                 </div>
                             </div>
@@ -697,7 +706,11 @@
                         @if (!ViewDataTyped.ImportIsFlattened())
                         {
                             <hr />
-                            <p>Import is NOT Flattened fields</p>
+                            <div class="row">
+                                <div class="col-xs-3 text-right" style="text-decoration: underline;">
+                                    Import is NOT Flattened fields
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-xs-3 fieldLabel text-right">
                                     Treatment Type:
