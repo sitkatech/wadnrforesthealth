@@ -65,7 +65,6 @@ namespace ProjectFirma.Web.Views.Program
 
 
         [DisplayName("Import As Detailed Location Instead Of Treatments")]
-        [Required]
         public bool ImportAsDetailedLocationInsteadOfTreatments { get; set; }
 
         [StringLength(GisUploadSourceOrganization.FieldLengths.ProjectDescriptionDefaultText)]

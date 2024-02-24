@@ -122,6 +122,9 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
-    //console.log($scope.AngularViewData);
 
+    $scope.selectedProjectTypeText = $scope.AngularViewData.ProjectTypeSelectListItems[0].Text;
+    $scope.selectedProjectStageText = $scope.AngularViewData.ProjectStageSelectListItems[0].Text;
+    $scope.selectedTreatmentTypeText = $scope.AngularViewData.TreatmentTypeSelectListItems[0].Text;
+    $scope.selectedTreatmentDetailedActivityTypeText = $scope.AngularViewData.TreatmentDetailedActivityTypeSelectListItems[0].Text;
 });
