@@ -54,53 +54,7 @@
 
 
 
-
-
-
-
 <div class="form-horizontal" id="EditCrosswalkValuesAngularApp" ng-controller="EditCrosswalkValuesController">
-
-    <div class="row">
-        <div class="col-md-12">
-            <p><strong>@FieldDefinition.ProjectType.FieldDefinitionDisplayName</strong></p>
-        </div>
-        <div class="col-md-4">
-
-            <label>Source Value:&nbsp;</label><input type="text" id="projectTypeSourceValueText" ng-model="projectTypeSourceValue" class="form-control" />
-        </div>
-        <div class="col-md-6">
-            <label>Mapped to FHT Value: </label>
-            <select id="projectTypeSelectList" ng-model="selectedProjectTypeText" class="form-control" data-width="100%">
-                <option ng-repeat="projectType in AngularViewData.ProjectTypeSelectListItems"
-                        ng-bind="projectType.Text"
-                        ng-value="projectType.Text" 
-                        ng-selected="$first"></option>
-            </select>
-        </div>  
-        <div class="col-md-2">
-            <br />
-            <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectType(selectedProjectTypeText, projectTypeSourceValue)"
-                    ng-disabled="!selectedProjectTypeText || !projectTypeSourceValue">
-                <span class="glyphicon glyphicon-plus"></span>
-                Add
-            </button>
-        </div>
-    </div>
-
-    <div class="row" ng-repeat="projectTypeSimple in AngularModel.ProjectTypeSimples" style="margin-top: 5px;">
-        @*Selections*@
-        <div class="col-md-12">
-            <span>
-                <a href="#" ng-click="removeProjectTypeSimple(projectTypeSimple); $event.preventDefault();">
-                    <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProjectType.GetFieldDefinitionLabel() mapping" alt="Remove @FieldDefinition.ProjectType.GetFieldDefinitionLabel() mapping"></i>
-                </a>
-            </span>
-            <span ng-bind="projectTypeSimple.GisCrosswalkSourceValue"></span> =>
-            <span ng-bind="projectTypeSimple.GisCrosswalkMappedValue"></span>
-        </div>
-    </div>
-
-    <hr />
 
     <div class="row">
         <div class="col-md-12">

@@ -26,14 +26,12 @@ namespace ProjectFirma.Web.Views.Program
 {
     public class EditCrosswalkValuesViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> ProjectTypeSelectListItems { get; }
         public IEnumerable<SelectListItem> ProjectStageSelectListItems { get; }
 
         public IEnumerable<SelectListItem> TreatmentTypeSelectListItems { get; }
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeSelectListItems { get; }
 
         //These FieldDefinitionIDs are used by the angular controller
-        public int ProjectTypeFieldDefinitionID { get; }
         public int ProjectStageFieldDefinitionID { get; }
         public int TreatmentTypeFieldDefinitionID { get; }
         public int TreatmentDetailedActivityTypeFieldDefinitionID { get; }
@@ -43,13 +41,12 @@ namespace ProjectFirma.Web.Views.Program
 
 
 
-        public EditCrosswalkValuesViewData(IEnumerable<SelectListItem> projectTypeSelectListItems, IEnumerable<SelectListItem> projectStageSelectListItems, IEnumerable<SelectListItem> treatmentTypeSelectListItems, IEnumerable<SelectListItem> treatmentDetailedActivityTypeSelectListItems, bool importIsFlattened)
+        public EditCrosswalkValuesViewData( IEnumerable<SelectListItem> projectStageSelectListItems, IEnumerable<SelectListItem> treatmentTypeSelectListItems, IEnumerable<SelectListItem> treatmentDetailedActivityTypeSelectListItems, bool importIsFlattened)
         {
             ProjectStageSelectListItems = projectStageSelectListItems;
-            ProjectTypeSelectListItems = projectTypeSelectListItems;
             TreatmentTypeSelectListItems = treatmentTypeSelectListItems;
             TreatmentDetailedActivityTypeSelectListItems = treatmentDetailedActivityTypeSelectListItems;
-            ProjectTypeFieldDefinitionID = Models.FieldDefinition.ProjectType.FieldDefinitionID;
+
             ProjectStageFieldDefinitionID = Models.FieldDefinition.ProjectStage.FieldDefinitionID;
             TreatmentTypeFieldDefinitionID = Models.FieldDefinition.TreatmentType.FieldDefinitionID;
             TreatmentDetailedActivityTypeFieldDefinitionID = Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID;

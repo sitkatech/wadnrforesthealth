@@ -30,27 +30,6 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
     });
 
 
-    $scope.addProjectType = function (selectedProjectTypeText, projectTypeSourceValue) {
-
-        $scope.AngularModel.ProjectTypeSimples.push({
-            GisCrosswalkDefaultID: -1,
-            FieldDefinitionID: $scope.AngularViewData.ProjectTypeFieldDefinitionID,
-            GisCrosswalkSourceValue: projectTypeSourceValue,
-            GisCrosswalkMappedValue: selectedProjectTypeText
-        });
-        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
-
-    };
-
-    $scope.removeProjectTypeSimple = function (projectTypeSimpleToRemove) {
-        _.remove($scope.AngularModel.ProjectTypeSimples,
-            function (pos) {
-                return pos.FieldDefinitionID === projectTypeSimpleToRemove.FieldDefinitionID
-                    && pos.GisCrosswalkSourceValue === projectTypeSimpleToRemove.GisCrosswalkSourceValue
-                    && pos.GisCrosswalkMappedValue === projectTypeSimpleToRemove.GisCrosswalkMappedValue;
-            });
-    };
-
 
     $scope.addProjectStage = function (selectedProjectStageText, projectStageSourceValue) {
 
@@ -123,7 +102,6 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
-    $scope.selectedProjectTypeText = $scope.AngularViewData.ProjectTypeSelectListItems[0].Text;
     $scope.selectedProjectStageText = $scope.AngularViewData.ProjectStageSelectListItems[0].Text;
     $scope.selectedTreatmentTypeText = $scope.AngularViewData.TreatmentTypeSelectListItems[0].Text;
     $scope.selectedTreatmentDetailedActivityTypeText = $scope.AngularViewData.TreatmentDetailedActivityTypeSelectListItems[0].Text;

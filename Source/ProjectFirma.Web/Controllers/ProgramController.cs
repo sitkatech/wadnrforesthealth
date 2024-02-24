@@ -421,7 +421,7 @@ namespace ProjectFirma.Web.Controllers
                 x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture),
                 x => x.TreatmentDetailedActivityTypeName);
 
-            var viewData = new EditCrosswalkValuesViewData(projectTypeSelectListItems, projectStageSelectListItems, treatmentTypeSelectListItems, treatmentDetailedActivityTypeSelectListItems, gisUploadSourceOrganization.ImportIsFlattened ?? false);
+            var viewData = new EditCrosswalkValuesViewData(projectStageSelectListItems, treatmentTypeSelectListItems, treatmentDetailedActivityTypeSelectListItems, gisUploadSourceOrganization.ImportIsFlattened ?? false);
             return RazorPartialView<EditCrosswalkValues, EditCrosswalkValuesViewData, EditCrosswalkValuesViewModel>(viewData, viewModel);
         }
 

@@ -37,9 +37,6 @@ namespace ProjectFirma.Web.Views.Program
 
         public int GisUploadSourceOrganizationID { get; set; }
 
-
-        public List<CrosswalkMappingSimple> ProjectTypeSimples { get; set; }
-
         public List<CrosswalkMappingSimple> ProjectStageSimples { get; set; }
 
         public List<CrosswalkMappingSimple> TreatmentTypeSimples { get; set; }
@@ -60,9 +57,6 @@ namespace ProjectFirma.Web.Views.Program
         public EditCrosswalkValuesViewModel(Models.GisUploadSourceOrganization gisUploadSourceOrganization)
         {
             GisUploadSourceOrganizationID = gisUploadSourceOrganization.GisUploadSourceOrganizationID;
-            ProjectTypeSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
-                                .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectType.FieldDefinitionID)
-                                .Select(y => new CrosswalkMappingSimple(y)).ToList();
 
             ProjectStageSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
                                     .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID)
@@ -83,14 +77,6 @@ namespace ProjectFirma.Web.Views.Program
         {
             var allGisCrossWalkDefaults = HttpRequestStorage.DatabaseEntities.GisCrossWalkDefaults.Local;
             var projectCrosswalksUpdated = new List<GisCrossWalkDefault>();
-
-            if (ProjectTypeSimples != null && ProjectTypeSimples.Any())
-            {
-                projectCrosswalksUpdated.AddRange(ProjectTypeSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
-                    new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID,
-                        Models.FieldDefinition.ProjectType.FieldDefinitionID, x.GisCrosswalkSourceValue,
-                        x.GisCrosswalkMappedValue)));
-            }
 
             if (ProjectStageSimples != null && ProjectStageSimples.Any())
             {
