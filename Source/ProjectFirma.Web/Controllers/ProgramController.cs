@@ -576,7 +576,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        [ProgramManageFeature]
+        [ProgramViewFeature]
         public GridJsonNetJObjectResult<ProgramNotificationConfiguration> ProgramNotificationGridJsonData(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
@@ -586,7 +586,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [ProgramManageFeature]
+        [ProgramViewFeature]
         public GridJsonNetJObjectResult<Project> ProgramProjectListGridJson(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
@@ -605,7 +605,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [ProgramManageFeature]
+        [ProgramViewFeature]
         public GridJsonNetJObjectResult<ProjectImportBlockList> ProgramProjectBlockListGridJson(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
