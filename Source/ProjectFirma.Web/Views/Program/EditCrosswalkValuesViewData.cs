@@ -27,12 +27,14 @@ namespace ProjectFirma.Web.Views.Program
     public class EditCrosswalkValuesViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> ProjectStageSelectListItems { get; }
+        public IEnumerable<SelectListItem> LeadImplementerSelectListItems { get; }
 
         public IEnumerable<SelectListItem> TreatmentTypeSelectListItems { get; }
         public IEnumerable<SelectListItem> TreatmentDetailedActivityTypeSelectListItems { get; }
 
         //These FieldDefinitionIDs are used by the angular controller
         public int ProjectStageFieldDefinitionID { get; }
+        public int LeadImplementerFieldDefinitionID { get; }
         public int TreatmentTypeFieldDefinitionID { get; }
         public int TreatmentDetailedActivityTypeFieldDefinitionID { get; }
 
@@ -41,13 +43,15 @@ namespace ProjectFirma.Web.Views.Program
 
 
 
-        public EditCrosswalkValuesViewData( IEnumerable<SelectListItem> projectStageSelectListItems, IEnumerable<SelectListItem> treatmentTypeSelectListItems, IEnumerable<SelectListItem> treatmentDetailedActivityTypeSelectListItems, bool importIsFlattened)
+        public EditCrosswalkValuesViewData(IEnumerable<SelectListItem> leadImplementerSelectListItems, IEnumerable<SelectListItem> projectStageSelectListItems, IEnumerable<SelectListItem> treatmentTypeSelectListItems, IEnumerable<SelectListItem> treatmentDetailedActivityTypeSelectListItems, bool importIsFlattened)
         {
             ProjectStageSelectListItems = projectStageSelectListItems;
+            LeadImplementerSelectListItems = leadImplementerSelectListItems;
             TreatmentTypeSelectListItems = treatmentTypeSelectListItems;
             TreatmentDetailedActivityTypeSelectListItems = treatmentDetailedActivityTypeSelectListItems;
 
             ProjectStageFieldDefinitionID = Models.FieldDefinition.ProjectStage.FieldDefinitionID;
+            LeadImplementerFieldDefinitionID = Models.FieldDefinition.LeadImplementerOrganization.FieldDefinitionID;
             TreatmentTypeFieldDefinitionID = Models.FieldDefinition.TreatmentType.FieldDefinitionID;
             TreatmentDetailedActivityTypeFieldDefinitionID = Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID;
             ImportIsFlattened = importIsFlattened;

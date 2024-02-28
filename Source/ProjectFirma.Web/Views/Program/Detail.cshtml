@@ -491,7 +491,17 @@
                                 <span id="PrivateLandownerColumnMapping">@ViewDataTyped.PrivateLandownerColumnMapping()</span>
                             </div>
                         </div>
-                        @if (!ViewDataTyped.ImportIsFlattened())
+                        <div class="row">
+                            <div class="col-xs-4 fieldLabel text-right">
+                                Lead Implementer Column
+                            </div>
+                            <div class="col-xs-8">
+                                <span id="LeadImplementerColumnMapping">@ViewDataTyped.LeadImplementerColumnMapping()</span>
+                            </div>
+                        </div>
+                    
+
+                    @if (!ViewDataTyped.ImportIsFlattened())
                         {
                             <hr />
                             <div class="row">
@@ -691,6 +701,24 @@
                             </div>
                             <div class="col-xs-9">
                                 @foreach (var crosswalk in ViewDataTyped.ProjectStageCrosswalks())
+                                {
+                                    <div class="col-xs-3 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue
+                                    </div>
+                                    <div class="col-xs-1">=></div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-xs-3 fieldLabel text-right">
+                                Lead Implementer:
+                            </div>
+                            <div class="col-xs-9">
+                                @foreach (var crosswalk in ViewDataTyped.LeadImplementerCrosswalks())
                                 {
                                     <div class="col-xs-3 col-xs-offset-2">
                                         @crosswalk.GisCrossWalkSourceValue

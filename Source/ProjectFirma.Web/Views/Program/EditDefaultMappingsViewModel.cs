@@ -65,6 +65,10 @@ namespace ProjectFirma.Web.Views.Program
         [DisplayName("Private Landowner Column")]
         public string PrivateLandownerColumn { get; set; }
 
+        [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
+        [DisplayName("Lead Implementer Column")]
+        public string LeadImplementerColumn { get; set; }
+
 
 
         [StringLength(GisDefaultMapping.FieldLengths.GisDefaultMappingColumnName)]
@@ -148,9 +152,13 @@ namespace ProjectFirma.Web.Views.Program
             ProjectStageColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             FootprintAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.FootprintAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             PrivateLandownerColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.Landowner.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            LeadImplementerColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.LeadImplementerOrganization.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+
+
             TreatmentTypeColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             TreatmentDetailedActivityTypeColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             TreatedAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatedAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+
             PruningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             ThinningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             ChippingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
@@ -178,9 +186,13 @@ namespace ProjectFirma.Web.Views.Program
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ProjectStage.FieldDefinitionID, ProjectStageColumn);
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.FootprintAcres.FieldDefinitionID, FootprintAcresColumn);
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.Landowner.FieldDefinitionID, PrivateLandownerColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.LeadImplementerOrganization.FieldDefinitionID, LeadImplementerColumn);
+
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentType.FieldDefinitionID, TreatmentTypeColumn);
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, TreatmentDetailedActivityTypeColumn);
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatedAcres.FieldDefinitionID, TreatedAcresColumn);
+
+
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID, PruningAcresColumn);
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID, ThinningAcresColumn);
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID, ChippingAcresColumn);

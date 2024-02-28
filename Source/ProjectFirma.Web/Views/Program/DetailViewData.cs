@@ -110,9 +110,9 @@ namespace ProjectFirma.Web.Views.Program
             return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.TreatmentDetailedActivityType).ToList();
         }
 
-        public List<GisCrossWalkDefault> ProjectTypeCrosswalks()
+        public List<GisCrossWalkDefault> LeadImplementerCrosswalks()
         {
-            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.ProjectType).ToList();
+            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.LeadImplementerOrganization).ToList();
         }
 
         public List<GisCrossWalkDefault> ProjectStageCrosswalks()
@@ -201,6 +201,17 @@ namespace ProjectFirma.Web.Views.Program
 
             return null;
         }
+
+        public string LeadImplementerColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.LeadImplementerOrganization);
+            }
+
+            return null;
+        }
+
 
         public string TreatmentDetailedActivityTypeColumnMapping()
         {
