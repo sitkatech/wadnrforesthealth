@@ -245,6 +245,13 @@
             <input type="hidden" name="@Html.NameFor(x => x.ProjectStageSimples[0].GisCrosswalkSourceValue).ToString().Replace("0", "{{$index}}")" value="{{projectStageSimple.GisCrosswalkSourceValue}}" />
         </div>
 
+        <div ng-repeat="leadImplementerSimple in AngularModel.LeadImplementerSimples">
+            <input type="hidden" name="@Html.NameFor(x => x.LeadImplementerSimples[0].GisCrosswalkDefaultID).ToString().Replace("0", "{{$index}}")" value="{{leadImplementerSimple.GisCrosswalkDefaultID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.LeadImplementerSimples[0].FieldDefinitionID).ToString().Replace("0", "{{$index}}")" value="{{leadImplementerSimple.FieldDefinitionID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.LeadImplementerSimples[0].GisCrosswalkMappedValue).ToString().Replace("0", "{{$index}}")" value="{{leadImplementerSimple.GisCrosswalkMappedValue}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.LeadImplementerSimples[0].GisCrosswalkSourceValue).ToString().Replace("0", "{{$index}}")" value="{{leadImplementerSimple.GisCrosswalkSourceValue}}" />
+        </div>
+
         <div ng-repeat="treatmentTypeSimple in AngularModel.TreatmentTypeSimples">
             <input type="hidden" name="@Html.NameFor(x => x.TreatmentTypeSimples[0].GisCrosswalkDefaultID).ToString().Replace("0", "{{$index}}")" value="{{treatmentTypeSimple.GisCrosswalkDefaultID}}" />
             <input type="hidden" name="@Html.NameFor(x => x.TreatmentTypeSimples[0].FieldDefinitionID).ToString().Replace("0", "{{$index}}")" value="{{treatmentTypeSimple.FieldDefinitionID}}" />
