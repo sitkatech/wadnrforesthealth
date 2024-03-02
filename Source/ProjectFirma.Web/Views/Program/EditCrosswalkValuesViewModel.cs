@@ -39,6 +39,8 @@ namespace ProjectFirma.Web.Views.Program
 
         public List<CrosswalkMappingSimple> ProjectStageSimples { get; set; }
 
+        public List<CrosswalkMappingSimple> LeadImplementerSimples { get; set; }
+
         public List<CrosswalkMappingSimple> TreatmentTypeSimples { get; set; }
         
         public List<CrosswalkMappingSimple> TreatmentDetailedActivityTypeSimples { get; set; }
@@ -58,6 +60,10 @@ namespace ProjectFirma.Web.Views.Program
         {
             GisUploadSourceOrganizationID = gisUploadSourceOrganization.GisUploadSourceOrganizationID;
 
+            LeadImplementerSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
+                                    .Where(x => x.FieldDefinitionID == Models.FieldDefinition.LeadImplementerOrganization.FieldDefinitionID)
+                                    .Select(y => new CrosswalkMappingSimple(y)).ToList();
+
             ProjectStageSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
                                     .Where(x => x.FieldDefinitionID == Models.FieldDefinition.ProjectStage.FieldDefinitionID)
                                     .Select(y => new CrosswalkMappingSimple(y)).ToList();
@@ -67,8 +73,8 @@ namespace ProjectFirma.Web.Views.Program
                                     .Select(y => new CrosswalkMappingSimple(y)).ToList();
 
             TreatmentDetailedActivityTypeSimples = gisUploadSourceOrganization.GisCrossWalkDefaults
-                .Where(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)
-                .Select(y => new CrosswalkMappingSimple(y)).ToList();
+                                    .Where(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)
+                                    .Select(y => new CrosswalkMappingSimple(y)).ToList();
 
 
         }
@@ -83,6 +89,14 @@ namespace ProjectFirma.Web.Views.Program
                 projectCrosswalksUpdated.AddRange(ProjectStageSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
                     new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID,
                         Models.FieldDefinition.ProjectStage.FieldDefinitionID, x.GisCrosswalkSourceValue,
+                        x.GisCrosswalkMappedValue)));
+            }
+
+            if (LeadImplementerSimples != null && LeadImplementerSimples.Any())
+            {
+                projectCrosswalksUpdated.AddRange(LeadImplementerSimples.Where(y => !string.IsNullOrEmpty(y.GisCrosswalkMappedValue)).Select(x =>
+                    new Models.GisCrossWalkDefault(gisUploadSourceOrganization.GisUploadSourceOrganizationID,
+                        Models.FieldDefinition.LeadImplementerOrganization.FieldDefinitionID, x.GisCrosswalkSourceValue,
                         x.GisCrosswalkMappedValue)));
             }
 

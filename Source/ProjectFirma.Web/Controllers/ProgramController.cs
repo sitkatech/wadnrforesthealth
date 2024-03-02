@@ -406,9 +406,9 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditCrosswalkValues(EditCrosswalkValuesViewModel viewModel, GisUploadSourceOrganization gisUploadSourceOrganization)
         {
-            var projectTypeSelectListItems = HttpRequestStorage.DatabaseEntities.ProjectTypes
-                .ToSelectList(x => x.ProjectTypeID.ToString(CultureInfo.InvariantCulture),
-                    x => x.ProjectTypeName);
+            var leadImplementerSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x => x.OrganizationName)
+                .ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.OrganizationName);
 
             var projectStageSelectListItems = ProjectStage.All.ToSelectList(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
                 x => x.ProjectStageName);
@@ -421,7 +421,7 @@ namespace ProjectFirma.Web.Controllers
                 x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture),
                 x => x.TreatmentDetailedActivityTypeName);
 
-            var viewData = new EditCrosswalkValuesViewData(projectStageSelectListItems, treatmentTypeSelectListItems, treatmentDetailedActivityTypeSelectListItems, gisUploadSourceOrganization.ImportIsFlattened ?? false);
+            var viewData = new EditCrosswalkValuesViewData(leadImplementerSelectListItems, projectStageSelectListItems, treatmentTypeSelectListItems, treatmentDetailedActivityTypeSelectListItems, gisUploadSourceOrganization.ImportIsFlattened ?? false);
             return RazorPartialView<EditCrosswalkValues, EditCrosswalkValuesViewData, EditCrosswalkValuesViewModel>(viewData, viewModel);
         }
 

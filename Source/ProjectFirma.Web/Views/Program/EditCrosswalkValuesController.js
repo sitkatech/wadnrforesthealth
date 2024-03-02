@@ -54,6 +54,30 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
 
 
 
+    $scope.addLeadImplementer = function (selectedLeadImplementerText, leadImplementerSourceValue) {
+
+        $scope.AngularModel.LeadImplementerSimples.push({
+            GisCrosswalkDefaultID: -1,
+            FieldDefinitionID: $scope.AngularViewData.LeadImplementerFieldDefinitionID,
+            GisCrosswalkSourceValue: leadImplementerSourceValue,
+            GisCrosswalkMappedValue: selectedLeadImplementerText
+        });
+        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+
+    };
+
+    $scope.removeLeadImplementerSimple = function (leadImplementerSimpleToRemove) {
+        _.remove($scope.AngularModel.LeadImplementerSimples,
+            function (pos) {
+                return pos.FieldDefinitionID === leadImplementerSimpleToRemove.FieldDefinitionID
+                    && pos.GisCrosswalkSourceValue === leadImplementerSimpleToRemove.GisCrosswalkSourceValue
+                    && pos.GisCrosswalkMappedValue === leadImplementerSimpleToRemove.GisCrosswalkMappedValue;
+            });
+    };
+
+
+
+
     $scope.addTreatmentType = function (selectedTreatmentTypeText, treatmentTypeSourceValue) {
 
         $scope.AngularModel.TreatmentTypeSimples.push({
@@ -103,6 +127,7 @@ angular.module("ProjectFirmaApp").controller("EditCrosswalkValuesController", fu
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
     $scope.selectedProjectStageText = $scope.AngularViewData.ProjectStageSelectListItems[0].Text;
+    $scope.selectedLeadImplementerText = $scope.AngularViewData.LeadImplementerSelectListItems[0].Text;
     $scope.selectedTreatmentTypeText = $scope.AngularViewData.TreatmentTypeSelectListItems[0].Text;
     $scope.selectedTreatmentDetailedActivityTypeText = $scope.AngularViewData.TreatmentDetailedActivityTypeSelectListItems[0].Text;
 });
