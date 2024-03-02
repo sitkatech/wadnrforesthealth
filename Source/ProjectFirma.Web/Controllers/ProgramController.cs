@@ -406,7 +406,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditCrosswalkValues(EditCrosswalkValuesViewModel viewModel, GisUploadSourceOrganization gisUploadSourceOrganization)
         {
-            var leadImplementerSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
+            var leadImplementerSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x => x.OrganizationName)
                 .ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.OrganizationName);
 
