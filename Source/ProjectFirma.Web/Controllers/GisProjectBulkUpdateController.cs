@@ -637,8 +637,8 @@ namespace ProjectFirma.Web.Controllers
                     var successfullyMappedLeadImplementer = false;
                     if (!string.IsNullOrEmpty(leadImplementerString))
                     {
-                        var leadImplementerMappedString = leadImplementerCrossWalks.Single(x =>
-                                x.GisCrossWalkSourceValue.Equals(leadImplementerString, StringComparison.InvariantCultureIgnoreCase))
+                        var leadImplementerMappedString = leadImplementerCrossWalks.SingleOrDefault(x =>
+                                x.GisCrossWalkSourceValue.Equals(leadImplementerString, StringComparison.InvariantCultureIgnoreCase))?
                             .GisCrossWalkMappedValue;
 
                         if (!string.IsNullOrEmpty(leadImplementerMappedString))
