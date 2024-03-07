@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        public static void ImportProjects(GisUploadAttempt gisUploadAttempt, GisMetadataViewModel viewModel, out int projectListCount, out int skippedProjectCount, out int existingProjectCount)
+        public static void ImportProjects(GisUploadAttempt gisUploadAttempt, GisMetadataViewModel viewModel, out List<ProjectSimpleForGisLogging> newProjectListLog, out List<ProjectSimpleForGisLogging> skippedProjectListLog, out List<ProjectSimpleForGisLogging> existingProjectListLog)
         {
 
             var projectIdentifierMetadataAttribute = GenerateSingleMetadataAttribute(gisUploadAttempt, viewModel.ProjectIdentifierMetadataAttributeID);
@@ -164,8 +164,10 @@ namespace ProjectFirma.Web.Controllers
 
             var otherProjectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().Single(x => string.Equals("Other", x.ProjectTypeName.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
-            existingProjectCount = 0;
-            skippedProjectCount = 0;
+            newProjectListLog = new List<ProjectSimpleForGisLogging>();
+            existingProjectListLog = new List<ProjectSimpleForGisLogging>();
+            skippedProjectListLog = new List<ProjectSimpleForGisLogging>();
+
             var projectList = new List<Project>();
             var newPersonList = new List<Person>();
             var newProjectPersonList = new List<ProjectPerson>();
@@ -194,11 +196,15 @@ namespace ProjectFirma.Web.Controllers
             foreach (var blockListEntry in projectImportBlockList)
             {
                 if (!string.IsNullOrEmpty(blockListEntry.ProjectGisIdentifier) && string.IsNullOrEmpty(blockListEntry.ProjectName))
+                {
                     if (distinctProjectIdentifiers.Remove(blockListEntry.ProjectGisIdentifier))
-                        skippedProjectCount++;
+                    {
+                        skippedProjectListLog.Add(new ProjectSimpleForGisLogging(blockListEntry.ProjectGisIdentifier, string.Empty));
+                    }
+                }
             }
 
-            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program, currentCounter, ref existingProjectCount, ref skippedProjectCount);
+            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program, currentCounter, ref existingProjectListLog, ref skippedProjectListLog, ref newProjectListLog);
 
             MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID);
 
@@ -243,7 +249,6 @@ namespace ProjectFirma.Web.Controllers
 
             ExecPClearGisImportTables();
 
-            projectListCount = projectList.Count;
         }
 
         [HttpPost]
@@ -252,9 +257,29 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
-            ImportProjects(gisUploadAttempt, viewModel, out var projectListCount, out var skippedProjectCount, out var existingProjectCount);
+            ImportProjects(gisUploadAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog);
 
-            SetMessageForDisplay($"Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+            var message = $"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
+
+            if (newProjectListLog.Count > 0)
+            {
+                message += $" New Projects are:<br/> {string.Join("<br/>", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ";
+            }
+
+            message += $"<br/>Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
+
+            if (existingProjectListLog.Count > 0)
+            {
+                message += $" Updated Projects are:<br/> {string.Join("<br/>", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ";
+            }
+
+            message += $"<br/>Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ";
+            if (skippedProjectListLog.Count > 0)
+            {
+                message += $"Skipped Projects are:<br/> {string.Join("<br/>", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}";
+            }
+            
+            SetMessageForDisplay(message);
 
             return new ModalDialogFormJsonResult();
         }
@@ -419,7 +444,7 @@ namespace ProjectFirma.Web.Controllers
             GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary,
             Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
             List<GisCrossWalkDefault> gisCrossWalkDefaultList, GisUploadAttempt gisUploadAttempt, ProjectType otherProjectType, List<Project> projectList, Program program,
-            int currentCounter, ref int existingProjectCounter, ref int skippedProjectCounter)
+            int currentCounter, ref List<ProjectSimpleForGisLogging> existingProjectListLog, ref List<ProjectSimpleForGisLogging> skippedProjectListLog, ref List<ProjectSimpleForGisLogging> newProjectListLog)
         {
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
             {
@@ -427,7 +452,7 @@ namespace ProjectFirma.Web.Controllers
                     completionDateDictionary, startDateDictionary, projectNameDictionary,
                     projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType,
                     gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, program,
-                    ref currentCounter, ref existingProjectCounter, ref skippedProjectCounter);
+                    ref currentCounter, ref existingProjectListLog, ref skippedProjectListLog, ref newProjectListLog);
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
@@ -789,8 +814,9 @@ namespace ProjectFirma.Web.Controllers
                                         GisUploadSourceOrganization gisUploadSourceOrganization,
                                         Program program,
                                         ref int newProjectNumberCounter,
-                                        ref int existingProjectCounter,
-                                        ref int skippedProjectCounter)
+                                        ref List<ProjectSimpleForGisLogging> existingProjectListLog,
+                                        ref List<ProjectSimpleForGisLogging> skippedProjectListLog,
+                                        ref List<ProjectSimpleForGisLogging> newProjectListLog)
         {
 
             var trimmedDistinctGisValue = distinctGisValue.Trim();
@@ -820,18 +846,21 @@ namespace ProjectFirma.Web.Controllers
 
 
             //Skip projects which match the import block list on ProjectName and, if provided on the block list, ProjectGisIdentifier
-            if (projectImportBlockList.Any(x => x.ProjectName == projectName && (x.ProjectGisIdentifier == null || x.ProjectGisIdentifier == distinctGisValue)))
+            var blockListEntryNameMatch = projectImportBlockList.FirstOrDefault(x => x.ProjectName == projectName &&
+                                                                            (x.ProjectGisIdentifier == null || x.ProjectGisIdentifier == distinctGisValue));
+            if (blockListEntryNameMatch != null)
             {
-                skippedProjectCounter++;
+                skippedProjectListLog.Add(new ProjectSimpleForGisLogging(blockListEntryNameMatch.ProjectGisIdentifier, blockListEntryNameMatch.ProjectName));
                 return;
             }
 
             if (projectAlreadyExists)
             {
                 //Skip projects which match on the FK ProjectID
-                if (projectImportBlockList.Any(x => x.ProjectID == project.ProjectID))
+                var blockListEntryProjectIdMatch = projectImportBlockList.FirstOrDefault(x => x.ProjectID == project.ProjectID);
+                if (blockListEntryProjectIdMatch != null)
                 {
-                    skippedProjectCounter++;
+                    skippedProjectListLog.Add(new ProjectSimpleForGisLogging(blockListEntryProjectIdMatch.ProjectGisIdentifier, blockListEntryProjectIdMatch.ProjectName));
                     return;
                 }
 
@@ -903,11 +932,12 @@ namespace ProjectFirma.Web.Controllers
             if (!projectAlreadyExists)
             {
                 projectList.Add(project);
+                newProjectListLog.Add(new ProjectSimpleForGisLogging(project));
                 newProjectNumberCounter++;
             }
             else
             {
-                existingProjectCounter++;
+                existingProjectListLog.Add(new ProjectSimpleForGisLogging(project));
             }
         }
 
