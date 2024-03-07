@@ -18,6 +18,7 @@ using System.Data.Entity.Spatial;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using log4net;
 
@@ -259,27 +260,28 @@ namespace ProjectFirma.Web.Controllers
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
             ImportProjects(gisUploadAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog);
 
-            var message = $"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
+            var message = new StringBuilder();
+            message.Append($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             if (newProjectListLog.Count > 0)
             {
-                message += $" New Projects are:<br/> {string.Join("<br/>", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ";
+                message.Append($" New {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are:<br/> {string.Join("<br/>", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ");
             }
 
-            message += $"<br/>Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.";
+            message.Append($"<br/>Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
             if (existingProjectListLog.Count > 0)
             {
-                message += $" Updated Projects are:<br/> {string.Join("<br/>", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ";
+                message.Append($" Updated {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are:<br/> {string.Join("<br/>", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ");
             }
 
-            message += $"<br/>Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ";
+            message.Append($"<br/>Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ");
             if (skippedProjectListLog.Count > 0)
             {
-                message += $"Skipped Projects are:<br/> {string.Join("<br/>", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}";
+                message.Append($"Skipped {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are:<br/> {string.Join("<br/>", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}");
             }
             
-            SetMessageForDisplay(message);
+            SetMessageForDisplay(message.ToString());
 
             return new ModalDialogFormJsonResult();
         }
