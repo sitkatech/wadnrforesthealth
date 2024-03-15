@@ -246,7 +246,7 @@ namespace ProjectFirma.Web.Controllers
             UpdateProjectCounties(gisUploadAttempt, distinctProjectIdentifiers, viewModel.ProjectIdentifierMetadataAttributeID);
 
             UpdateProjectTypesIfNeeded(gisUploadAttempt);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             ExecPClearGisImportTables();
 
@@ -334,7 +334,7 @@ namespace ProjectFirma.Web.Controllers
             SitkaHttpApplication.Logger.Info($"starting MakeProjectOrganizationsAndSave() for gisUploadAttempt:{gisUploadAttempt.GisUploadAttemptID}");
             var projectOrganizationsToAdd = UpdateProjectOrganizationRecords(gisUploadAttempt, distinctProjectIdentifiers, gisCrossWalkDefaultList, leadImplementerDictionary,  projectIdentifierMetadataAttribute);
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.AddRange(projectOrganizationsToAdd);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         private static void MakeProjectPeopleAndSave(GisUploadAttempt gisUploadAttempt,
@@ -381,7 +381,7 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.People.AddRange(newPersonList);
             HttpRequestStorage.DatabaseEntities.ProjectPeople.AddRange(newProjectPersonList);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         private static void MakeProjectLocationsAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers,
@@ -444,7 +444,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         private static void MakeProjectsAndSave(List<string> distinctProjectIdentifiers, List<Project> existingProjects, List<ProjectImportBlockList> projectImportBlockList,
@@ -464,7 +464,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         private static void UpdateProjectRegions(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
@@ -495,14 +495,14 @@ namespace ProjectFirma.Web.Controllers
                 .ToList()
                 .ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             var projectUplandRegionsToAdd = projectRegions.Where(x =>
                     !allProjectUplandRegionsAkListExceptDeletes.Contains(new {x.ProjectID, x.DNRUplandRegionID}))
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectRegions.AddRange(projectUplandRegionsToAdd);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             AddProjectCoordinators(gisUploadAttempt, projectsWithUplandDnrRegions);
         }
@@ -573,14 +573,14 @@ namespace ProjectFirma.Web.Controllers
                 !projectsWithPriorityLandscapesToDeleteAkList.Contains(x));
 
             projectsWithPriorityLandscapesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             var projectPriorityLandscapesToAdd = projectPriorityLandscapes.Where(x =>
                     !allProjectPriorityLandscapesExceptDeletes.Contains(new { x.ProjectID, x.PriorityLandscapeID }))
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.AddRange(projectPriorityLandscapesToAdd);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         private static void UpdateProjectCounties(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, int? gisMetadataAttributeIdentier)
@@ -612,13 +612,13 @@ namespace ProjectFirma.Web.Controllers
 
             projectsWithCountiesToDelete.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
             var projectCountiesToAdd = projectCounties.Where(x =>
                     !allProjectCountiesExceptDeletes.Contains(new {x.ProjectID, x.CountyID}))
                 .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectCounties.AddRange(projectCountiesToAdd);
-            HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         private static List<ProjectOrganization> UpdateProjectOrganizationRecords(GisUploadAttempt gisUploadAttempt, List<string> distinctIdentifiersFromGisUploadAttempt, List<GisCrossWalkDefault> gisCrossWalkDefaultList, Dictionary<int, List<GisFeatureMetadataAttribute>> leadImplementerDictionary, GisMetadataAttribute projectIdentifierMetadataAttribute)

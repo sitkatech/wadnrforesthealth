@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
                 HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
-                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
                 
                 var featureList = new List<Feature>();
                 foreach (var record in featuresFromApi)
