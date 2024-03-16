@@ -5,6 +5,7 @@ using Hangfire;
 using log4net;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
@@ -44,6 +45,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 ScheduledBackgroundLockByJobName.Add(jobName, new object());
             }
             _concurrencySetting = concurrencySetting;
+            
         }
 
         /// <summary>
@@ -53,6 +55,11 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             // ReSharper disable once StringLiteralTypo
             var jobRunTimestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
+            if (!HttpRequestStorage.PersonIsSet())
+            {
+                HttpRequestStorage.Person = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
+            }
             try
             {
                 // No-Op if we're not running in an allowed environment
