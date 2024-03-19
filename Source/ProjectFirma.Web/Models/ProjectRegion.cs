@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
                 var regionDisplayString = ViewUtilities.NotFoundString;
                 if (DNRUplandRegion is null)
                 {
-                    var region = HttpRequestStorage.DatabaseEntities.Counties.Find(DNRUplandRegionID);
+                    var region = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Find(DNRUplandRegionID);
                     if (region != null)
                     {
                         regionDisplayString = region.DisplayName;
