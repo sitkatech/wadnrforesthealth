@@ -157,7 +157,16 @@ namespace ProjectFirma.Web.Controllers
 
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
+
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Single(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            var gisUploadSourceOrganization = new GisUploadSourceOrganization(program.ProgramName, false,
+                ProjectStage.Implementation, false, program.Organization,
+                leadImplementerRelationshipType, false, true, true, program, false, false, false);
+            gisUploadSourceOrganization.ImportIsFlattened = false;
+
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
+            HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.Add(gisUploadSourceOrganization);
+
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             if (viewModel.ProgramFileResourceData != null)
@@ -202,7 +211,13 @@ namespace ProjectFirma.Web.Controllers
 
             var program = new Program(organization, true, DateTime.Now, CurrentPerson, false);
             viewModel.UpdateModel(program, CurrentPerson, true);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Single(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            var gisUploadSourceOrganization = new GisUploadSourceOrganization(program.ProgramName, false,
+                ProjectStage.Implementation, false, program.Organization,
+                leadImplementerRelationshipType, false, true, true, program, false, false, false);
+            gisUploadSourceOrganization.ImportIsFlattened = false;
             HttpRequestStorage.DatabaseEntities.Programs.Add(program);
+            HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.Add(gisUploadSourceOrganization);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             if (viewModel.ProgramFileResourceData != null)
             {
@@ -286,6 +301,130 @@ namespace ProjectFirma.Web.Controllers
             }
             return new ModalDialogFormJsonResult();
         }
+
+        [HttpGet]
+        [ProgramEditMappingsFeature]
+        public PartialViewResult EditImportBasics(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            var viewModel = new EditImportBasicsViewModel(gisUploadSourceOrganization);
+            return ViewEditImportBasics(viewModel);
+        }
+
+        [HttpPost]
+        [ProgramEditMappingsFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditImportBasics(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditImportBasicsViewModel viewModel)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditImportBasics(viewModel);
+            }
+            viewModel.UpdateModel(gisUploadSourceOrganization);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditImportBasics(EditImportBasicsViewModel viewModel)
+        {
+            var organizationsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
+                .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
+                .OrderBy(x => x.OrganizationName)
+                .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.DisplayName);
+
+            var projectStages = ProjectStage.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProjectStageDisplayName);
+            var viewData = new EditImportBasicsViewData(organizationsAsSelectListItems, projectStages);
+            return RazorPartialView<EditImportBasics, EditImportBasicsViewData, EditImportBasicsViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [ProgramEditMappingsFeature]
+        public PartialViewResult EditDefaultMappings(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            var viewModel = new EditDefaultMappingsViewModel(gisUploadSourceOrganization);
+            return ViewEditDefaultMappings(viewModel, gisUploadSourceOrganization);
+        }
+
+        [HttpPost]
+        [ProgramEditMappingsFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditDefaultMappings(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditDefaultMappingsViewModel viewModel)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditDefaultMappings(viewModel, gisUploadSourceOrganization);
+            }
+            viewModel.UpdateModel(gisUploadSourceOrganization);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditDefaultMappings(EditDefaultMappingsViewModel viewModel, GisUploadSourceOrganization gisUploadSourceOrganization)
+        {
+            var organizationsAsSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations
+                .Where(x => !string.Equals(x.OrganizationName, Organization.OrganizationUnknown))
+                .OrderBy(x => x.OrganizationName)
+                .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.DisplayName);
+
+            var projectStages = ProjectStage.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProjectStageDisplayName);
+            var viewData = new EditDefaultMappingsViewData(organizationsAsSelectListItems, projectStages, gisUploadSourceOrganization);
+            return RazorPartialView<EditDefaultMappings, EditDefaultMappingsViewData, EditDefaultMappingsViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [ProgramEditMappingsFeature]
+        public PartialViewResult EditCrosswalkValues(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            var viewModel = new EditCrosswalkValuesViewModel(gisUploadSourceOrganization);
+            return ViewEditCrosswalkValues(viewModel, gisUploadSourceOrganization);
+        }
+
+        [HttpPost]
+        [ProgramEditMappingsFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditCrosswalkValues(GisUploadSourceOrganizationPrimaryKey gisUploadSourceOrganizationPrimaryKey, EditCrosswalkValuesViewModel viewModel)
+        {
+            var gisUploadSourceOrganization = gisUploadSourceOrganizationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditCrosswalkValues(viewModel, gisUploadSourceOrganization);
+            }
+            viewModel.UpdateModel(gisUploadSourceOrganization, CurrentPerson);
+
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditCrosswalkValues(EditCrosswalkValuesViewModel viewModel, GisUploadSourceOrganization gisUploadSourceOrganization)
+        {
+            var leadImplementerSelectListItems = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x => x.OrganizationName)
+                .ToSelectList(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.OrganizationName);
+
+            var projectStageSelectListItems = ProjectStage.All.ToSelectList(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture),
+                x => x.ProjectStageName);
+
+            var treatmentTypeSelectListItems = TreatmentType.All.ToSelectList(
+                x => x.TreatmentTypeID.ToString(CultureInfo.InvariantCulture),
+                x => x.TreatmentTypeName);
+
+            var treatmentDetailedActivityTypeSelectListItems = TreatmentDetailedActivityType.All.ToSelectList(
+                x => x.TreatmentDetailedActivityTypeID.ToString(CultureInfo.InvariantCulture),
+                x => x.TreatmentDetailedActivityTypeName);
+
+            var viewData = new EditCrosswalkValuesViewData(leadImplementerSelectListItems, projectStageSelectListItems, treatmentTypeSelectListItems, treatmentDetailedActivityTypeSelectListItems, gisUploadSourceOrganization.ImportIsFlattened ?? false);
+            return RazorPartialView<EditCrosswalkValues, EditCrosswalkValuesViewData, EditCrosswalkValuesViewModel>(viewData, viewModel);
+        }
+
 
 
         [HttpGet]
@@ -437,7 +576,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        [ProgramManageFeature]
+        [ProgramViewFeature]
         public GridJsonNetJObjectResult<ProgramNotificationConfiguration> ProgramNotificationGridJsonData(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
@@ -447,7 +586,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [ProgramManageFeature]
+        [ProgramViewFeature]
         public GridJsonNetJObjectResult<Project> ProgramProjectListGridJson(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
@@ -466,7 +605,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [ProgramManageFeature]
+        [ProgramViewFeature]
         public GridJsonNetJObjectResult<ProjectImportBlockList> ProgramProjectBlockListGridJson(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;

@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Linq;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Views.Reports;
 
 namespace ProjectFirma.Web.Models
 {
@@ -44,4 +45,23 @@ namespace ProjectFirma.Web.Models
             IsLoa = isLoa;
         }
     }
+
+    public class ProjectSimpleForGisLogging
+    {
+        public string ProjectGisIdentifier { get; set; }
+        public string ProjectName { get; set; }
+
+        public ProjectSimpleForGisLogging(Project project)
+        {
+            ProjectGisIdentifier = project.ProjectGisIdentifier;
+            ProjectName = project.ProjectName;
+        }
+
+        public ProjectSimpleForGisLogging(string projectGisIdentifier, string projectName)
+        {
+            ProjectGisIdentifier = projectGisIdentifier;
+            ProjectName = projectName;
+        }
+    }
+
 }

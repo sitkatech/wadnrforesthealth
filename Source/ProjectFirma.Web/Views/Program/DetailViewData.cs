@@ -53,6 +53,10 @@ namespace ProjectFirma.Web.Views.Program
         public string ProjectsBlockedGridName { get; }
         public string ProjectsBlockedGridDataUrl { get; }
 
+        public string EditImportBasicsUrl { get; }
+        public string EditDefaultMappingsUrl { get; }
+        public string EditCrosswalkValuesUrl { get; }
+
         public DetailViewData(Person currentPerson,
                               Models.Program program)
                               : base(currentPerson, program)
@@ -63,6 +67,9 @@ namespace ProjectFirma.Web.Views.Program
             CrosswalkDefaults = GisUploadSourceOrganization != null ? GisUploadSourceOrganization.GisCrossWalkDefaults : new List<GisCrossWalkDefault>();
             EditProgramPeopleUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(c => c.EditProgramPeople(program));
             CreateNewProgramNotificationConfigurationUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(program));
+            EditImportBasicsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditImportBasics(program.GisUploadSourceOrganization));
+            EditDefaultMappingsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditDefaultMappings(program.GisUploadSourceOrganization));
+            EditCrosswalkValuesUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditCrosswalkValues(program.GisUploadSourceOrganization));
 
             NotificationsGridSpec = new ProgramNotificationGridSpec(currentPerson, program)
             {
@@ -103,9 +110,9 @@ namespace ProjectFirma.Web.Views.Program
             return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.TreatmentDetailedActivityType).ToList();
         }
 
-        public List<GisCrossWalkDefault> ProjectTypeCrosswalks()
+        public List<GisCrossWalkDefault> LeadImplementerCrosswalks()
         {
-            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.ProjectType).ToList();
+            return CrosswalkDefaults.Where(x => x.FieldDefinition == Models.FieldDefinition.LeadImplementerOrganization).ToList();
         }
 
         public List<GisCrossWalkDefault> ProjectStageCrosswalks()
@@ -194,6 +201,17 @@ namespace ProjectFirma.Web.Views.Program
 
             return null;
         }
+
+        public string LeadImplementerColumnMapping()
+        {
+            if (GisUploadSourceOrganization != null)
+            {
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.LeadImplementerOrganization);
+            }
+
+            return null;
+        }
+
 
         public string TreatmentDetailedActivityTypeColumnMapping()
         {

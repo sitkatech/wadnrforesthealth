@@ -57,36 +57,36 @@ Source code is available upon request via <support@sitkatech.com>.
                 <div id="projectLocationInformationContainer" style="padding-left: 20px"></div>
             </div>
             <hr />
-            <div style="margin-bottom: 5px">
-                <label>
-                    Counties
-                </label>
-                <ul class="noListStyle">
-                    @foreach (var county in ViewDataTyped.Counties.OrderBy(x => x.DisplayName))
-                    {
-                        <li>
-                            <a href="@county.GetDetailUrl()">@county.CountyName </a>
-                        </li>
-                    }
-                    @if (!ViewDataTyped.Counties.Any())
-                    {
-                        <li style="list-style-type: none; margin-left: -40px;">
-                            None Selected
-                        </li>
-                    }
-                </ul>
+        }
+        <div style="margin-bottom: 5px">
+            <label>
+                Counties
+            </label>
+            <ul class="noListStyle">
+                @foreach (var county in ViewDataTyped.Counties.OrderBy(x => x.DisplayName))
+                {
+                    <li>
+                        <a href="@county.GetDetailUrl()">@county.CountyName </a>
+                    </li>
+                }
+                @if (!ViewDataTyped.Counties.Any())
+                {
+                    <li style="list-style-type: none; margin-left: -40px;">
+                        None Selected
+                    </li>
+                }
+            </ul>
+        </div>
+        @if (!string.IsNullOrEmpty(ViewDataTyped.NoCountiesExplanation))
+        {
+        <div style="margin-bottom: 5px">
+            <label>
+                Counties Notes
+            </label>
+            <div style="padding-left: 20px">
+                @ViewDataTyped.NoCountiesExplanation
             </div>
-            if (!string.IsNullOrEmpty(ViewDataTyped.NoCountiesExplanation))
-            {
-                <div style="margin-bottom: 5px">
-                    <label>
-                        Counties Notes
-                    </label>
-                    <div style="padding-left: 20px">
-                        @ViewDataTyped.NoCountiesExplanation
-                    </div>
-                </div>
-            }
+        </div>
         }
         <hr />
         <div style="margin-bottom: 5px">

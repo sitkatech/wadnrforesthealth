@@ -747,6 +747,7 @@
     <Compile Include="Models\Generated\WashingtonLegislativeDistrictPrimaryKey.Binding.cs" />
     <Compile Include="Controllers\ProjectControllerTest.cs" />
     <Compile Include="Models\AgreementProject.cs" />
+    <Compile Include="Models\GisUploadSourceOrganizationModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationPriority.cs" />
     <Compile Include="Models\GrantAllocationSource.cs" />
     <Compile Include="Models\GrantAllocationLikelyPerson.cs" />
@@ -757,6 +758,7 @@
     <Compile Include="Controllers\CountyController.cs" />
     <Compile Include="Models\County.cs" />
     <Compile Include="Models\OrganizationCode.cs" />
+    <Compile Include="Models\ProgramTest.cs" />
     <Compile Include="Models\ProjectCountyUpdate.cs" />
     <Compile Include="Models\ProjectCounty.cs" />
     <Compile Include="Models\ProjectDocumentType.cs" />
@@ -951,6 +953,7 @@
     <Compile Include="Security\ContactCreateFeature.cs" />
     <Compile Include="Security\CountyViewFeature.cs" />
     <Compile Include="Security\CountyManageFeature.cs" />
+    <Compile Include="Security\ProgramEditMappingsFeature.cs" />
     <Compile Include="Security\UserAndContactIndexViewFeature.cs" />
     <Compile Include="Security\VendorViewFeature.cs" />
     <Compile Include="Security\FindYourForesterManageFeature.cs" />
@@ -1123,7 +1126,6 @@
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityLandscapeManageFeature.cs" />
     <Compile Include="Security\PriorityLandscapeManageFileResourceAsAdminFeature.cs" />
-    <Compile Include="Security\ProgramEditFeature.cs" />
     <Compile Include="Security\ProgramIndexViewJsonApiFeature.cs" />
     <Compile Include="Security\ProgramManageFeature.cs" />
     <Compile Include="Security\ProgramViewFeature.cs" />
@@ -1332,6 +1334,15 @@
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
+    <Compile Include="Views\Program\EditCrosswalkValues.cs" />
+    <Compile Include="Views\Program\EditDefaultMappings.cs" />
+    <Compile Include="Views\Program\EditCrosswalkValuesViewData.cs" />
+    <Compile Include="Views\Program\EditCrosswalkValuesViewModel.cs" />
+    <Compile Include="Views\Program\EditImportBasics.cs" />
+    <Compile Include="Views\Program\EditDefaultMappingsViewData.cs" />
+    <Compile Include="Views\Program\EditImportBasicsViewData.cs" />
+    <Compile Include="Views\Program\EditDefaultMappingsViewModel.cs" />
+    <Compile Include="Views\Program\EditImportBasicsViewModel.cs" />
     <Compile Include="Views\ProjectInvoice\ProjectInvoiceDetail.cs" />
     <Compile Include="Views\ProjectInvoice\ProjectInvoiceDetailViewData.cs" />
     <Compile Include="Views\DNRUplandRegion\ProjectInfoGridSpecForRegionDetail.cs" />
@@ -1685,6 +1696,7 @@
     <Content Include="Views\InteractionEvent\InteractionEventController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
     <Content Include="Views\Program\EditProgramPeopleController.js" />
+    <Content Include="Views\Program\EditCrosswalkValuesController.js" />
     <Content Include="Views\ProjectCreate\DNRUplandRegions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
     <Content Include="Views\GrantAllocation\Detail.cshtml" />
@@ -2816,6 +2828,9 @@
     <Content Include="Views\Vendor\Detail.cshtml" />
     <Content Include="Views\ProjectInvoice\ProjectInvoiceDetail.cshtml" />
     <Content Include="Views\Shared\ProjectControls\BulkDeleteProjects.cshtml" />
+    <Content Include="Views\Program\EditImportBasics.cshtml" />
+    <Content Include="Views\Program\EditDefaultMappings.cshtml" />
+    <Content Include="Views\Program\EditCrosswalkValues.cshtml" />
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

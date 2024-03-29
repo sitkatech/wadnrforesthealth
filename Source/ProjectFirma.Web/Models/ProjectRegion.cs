@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -10,9 +11,35 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var region = DNRUplandRegion != null ? DNRUplandRegion.DisplayName : ViewUtilities.NotFoundString;
-                var project = Project != null ? Project.DisplayName : ViewUtilities.NotFoundString;
-                return $"Region: {region}, {FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {project}";
+                var regionDisplayString = ViewUtilities.NotFoundString;
+                if (DNRUplandRegion is null)
+                {
+                    var region = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Find(DNRUplandRegionID);
+                    if (region != null)
+                    {
+                        regionDisplayString = region.DisplayName;
+                    }
+                }
+                else
+                {
+                    regionDisplayString = DNRUplandRegion.DisplayName;
+                }
+
+                var projectDisplayString = ViewUtilities.NotFoundString;
+                if (Project is null)
+                {
+                    var project = HttpRequestStorage.DatabaseEntities.Projects.Find(ProjectID);
+                    if (project != null)
+                    {
+                        projectDisplayString = project.DisplayName;
+                    }
+                }
+                else
+                {
+                    projectDisplayString = Project.DisplayName;
+                }
+
+                return $"{FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}: {regionDisplayString}, {FieldDefinition.Project.GetFieldDefinitionLabel()}: {projectDisplayString}";
             }
         }
     }

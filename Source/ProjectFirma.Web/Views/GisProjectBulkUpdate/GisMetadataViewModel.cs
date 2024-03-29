@@ -54,6 +54,10 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
         [DisplayName("Project Stage Column")]
         public int? ProjectStageMetadataAttributeID { get; set; }
 
+        [DisplayName("Lead Implementer Column")]
+        public int? LeadImplementerMetadataAttributeID { get; set; }
+
+
         [DisplayName("Footprint Acres Column")]
         public int? FootprintAcresMetadataAttributeID { get; set; }
 
@@ -122,6 +126,8 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             CompletionDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.CompletionDate) ?? 0;
             StartDateMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.PlannedDate);
             ProjectStageMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectStage);
+            LeadImplementerMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.LeadImplementerOrganization);
+
             FootprintAcresMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.FootprintAcres);
             PrivateLandownerMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.Landowner);
             PrimaryContactMetadataAttributeID = GetPossibleDefaultMetadataAttributeID(gisMetadataAttributes, defaults, Models.FieldDefinition.ProjectPrimaryContact);
@@ -150,14 +156,14 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             {
                 var projectIdentifierGisMetadataAttribute = gisMetadataAttributes
                     .SingleOrDefault(x => string.Equals(x.GisMetadataAttributeName,
-                        projectIdentifierDefault.GisDefaultMappingColumnName));
+                        projectIdentifierDefault.GisDefaultMappingColumnName, StringComparison.InvariantCultureIgnoreCase));
 
                 if (projectIdentifierGisMetadataAttribute == null)
                 {
                     projectIdentifierGisMetadataAttribute = gisMetadataAttributes
                         .FirstOrDefault(x => string.Equals(x.GisMetadataAttributeName,
                             projectIdentifierDefault.GisDefaultMappingColumnName) || (projectIdentifierDefault.GisDefaultMappingColumnName.Length > 10 && string.Equals(x.GisMetadataAttributeName,
-                            projectIdentifierDefault.GisDefaultMappingColumnName.Substring(0, 10))));
+                            projectIdentifierDefault.GisDefaultMappingColumnName.Substring(0, 10), StringComparison.InvariantCultureIgnoreCase)));
                 }
 
 

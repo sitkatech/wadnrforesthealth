@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
     <script src="@Url.Content("~/Content/bootstrap-toc/bootstrap-toc.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/Program/EditProgramPeopleController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/Program/EditCrosswalkValuesController.js")" type="text/javascript"></script>
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
 }
 
@@ -70,7 +71,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramUrl, string.Format("Edit {0}", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramUrl, string.Format("Edit {0}", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         Basics
                     </h3>
                 </div>
@@ -138,7 +139,7 @@
                                 <span>
                                     @if (ViewDataTyped.ShowDownload)
                                     {
-                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteDocumentUrl, ViewDataTyped.UserHasProgramManagePermissions)
 
                                         <a href="@ViewDataTyped.Program.ProgramFileResource.FileResourceUrl" target="_blank">
                                             @ViewDataTyped.Program.ProgramFileResource.OriginalCompleteFileName
@@ -160,7 +161,7 @@
                                 <span>
                                     @if (ViewDataTyped.ShowExampleGdbDownload)
                                     {
-                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteExampleGdbDocumentUrl, ViewDataTyped.UserHasEditProgramPermissions)
+                                        @ModalDialogFormHelper.MakeDeleteIconLink(ViewDataTyped.DeleteExampleGdbDocumentUrl, ViewDataTyped.UserHasProgramManagePermissions)
 
                                         <a href="@ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.FileResourceUrl" target="_blank">
                                             @ViewDataTyped.Program.ProgramExampleGeospatialUploadFileResource.OriginalCompleteFileName
@@ -181,7 +182,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramPeopleUrl, string.Format("Edit Program Editors for the {0} program", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasEditProgramPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProgramPeopleUrl, string.Format("Edit Program Editors for the {0} program", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramManagePermissions)
                         Program Editors
                     </h3>
                 </div>
@@ -266,143 +267,150 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditImportBasicsUrl, string.Format("Edit {0} Import Basics", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramEditMappingsPermissions)
                         GDB Import Basics
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div class="basicsLayout">
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Type Default Name
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectTypeDefaultName">@ViewDataTyped.ProjectTypeDefaultName()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Treatment Type Default Name
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="TreatmentTypeDefaultName">@ViewDataTyped.TreatmentTypeDefaultName()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Import Is Flattened
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ImportIsFlattened">@ViewDataTyped.ImportIsFlattenedString()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Adjust Project Type Based On Treatment Types
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="AdjustProjectTypeBasedOnTreatmentTypes">@ViewDataTyped.AdjustProjectTypeBasedOnTreatmentTypes()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Stage Default
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectStageDefault">@ViewDataTyped.ProjectStageDefault()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Data Derive Project Stage
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="DataDeriveProjectStage">@ViewDataTyped.DataDeriveProjectStage()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Default Lead Implementer Organization
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="DefaultLeadImplementerOrganization">@ViewDataTyped.DefaultLeadImplementerOrganization()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Relationship Type For Default Organization
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="RelationshipTypeForDefaultOrganization">@ViewDataTyped.RelationshipTypeForDefaultOrganization()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Import As Detailed Location Instead Of Treatments
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ImportAsDetailedLocationInsteadOfTreatments">@ViewDataTyped.ImportAsDetailedLocationInsteadOfTreatments()</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
+                                Import As Detailed Location In Addition To Treatments
+                            </div>
+                            <div class="col-xs-8">
+                                <span id="ImportAsDetailedLocationInAdditionToTreatments">@ViewDataTyped.ImportAsDetailedLocationInAdditionToTreatments()</span>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Description Default Text
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectDescriptionDefaultText">@ViewDataTyped.ProjectDescriptionDefaultText()</span>
                             </div>
                         </div>
 
+
+
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
+                                Apply Start Date To Project
+                            </div>
+                            <div class="col-xs-8">
+                                <span id="ApplyStartDateToProject">@ViewDataTyped.ApplyStartDateToProject()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Apply Completed Date To Project
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ApplyCompletedDateToProject">@ViewDataTyped.ApplyCompletedDateToProject()</span>
                             </div>
                         </div>
 
+
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Apply Start Date To Treatments
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ApplyStartDateToTreatments">@ViewDataTyped.ApplyStartDateToTreatments()</span>
                             </div>
                         </div>
-
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Apply End Date To Treatments
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ApplyEndDateToTreatments">@ViewDataTyped.ApplyEndDateToTreatments()</span>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
-                                Apply Start Date To Project
-                            </div>
-                            <div class="col-xs-9">
-                                <span id="ApplyStartDateToProject">@ViewDataTyped.ApplyStartDateToProject()</span>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
-                                Import As Detailed Location In Addition To Treatments
-                            </div>
-                            <div class="col-xs-9">
-                                <span id="ImportAsDetailedLocationInAdditionToTreatments">@ViewDataTyped.ImportAsDetailedLocationInAdditionToTreatments()</span>
-                            </div>
-                        </div>
+
+
 
 
                     </div>
@@ -420,204 +428,229 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditDefaultMappingsUrl, string.Format("Edit {0} Default Mappings", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramEditMappingsPermissions)
                         GDB Import Default Mappings
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div class="basicsLayout">
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Identifier Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectIdentifierColumnMapping">@ViewDataTyped.ProjectIdentifierColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Name Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectNameColumnMapping">@ViewDataTyped.ProjectNameColumnMapping()</span>
                             </div>
                         </div>
-                        @if (!ViewDataTyped.ImportIsFlattened())
-                        {
-                            <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
-                                    Treatment Type Column
-                                </div>
-                                <div class="col-xs-9">
-                                    <span id="TreatmentTypeColumnMapping">@ViewDataTyped.TreatmentTypeColumnMapping()</span>
-                                </div>
-                            </div>
-                        }
 
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Completion Date Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="CompletionDateColumnMapping">@ViewDataTyped.CompletionDateColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Start Date Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="StartDateColumnMapping">@ViewDataTyped.StartDateColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Project Stage Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="ProjectStageColumnMapping">@ViewDataTyped.ProjectStageColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Footprint Acres Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="FootprintAcresColumnMapping">@ViewDataTyped.FootprintAcresColumnMapping()</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3 fieldLabel text-right">
+                            <div class="col-xs-4 fieldLabel text-right">
                                 Private Landowner Column
                             </div>
-                            <div class="col-xs-9">
+                            <div class="col-xs-8">
                                 <span id="PrivateLandownerColumnMapping">@ViewDataTyped.PrivateLandownerColumnMapping()</span>
                             </div>
                         </div>
-                        @if (!ViewDataTyped.ImportIsFlattened())
+                        <div class="row">
+                            <div class="col-xs-4 fieldLabel text-right">
+                                Lead Implementer Column
+                            </div>
+                            <div class="col-xs-8">
+                                <span id="LeadImplementerColumnMapping">@ViewDataTyped.LeadImplementerColumnMapping()</span>
+                            </div>
+                        </div>
+                    
+
+                    @if (!ViewDataTyped.ImportIsFlattened())
                         {
+                            <hr />
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 text-right" style="text-decoration: underline;">
+                                    Import is NOT Flattened fields
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-xs-4 fieldLabel text-right">
+                                    Treatment Type Column
+                                </div>
+                                <div class="col-xs-8">
+                                    <span id="TreatmentTypeColumnMapping">@ViewDataTyped.TreatmentTypeColumnMapping()</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Treatment Detailed Activity Type Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="TreatmentDetailedActivityTypeColumnMapping">@ViewDataTyped.TreatmentDetailedActivityTypeColumnMapping()</span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Treated Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="TreatedAcresColumnMapping">@ViewDataTyped.TreatedAcresColumnMapping()</span>
                                 </div>
                             </div>
                         }
+
+
+
                         @if (ViewDataTyped.ImportIsFlattened())
                         {
+                            <hr />
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 text-right" style="text-decoration: underline;">
+                                    Import is Flattened fields
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Pruning Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="PruningAcresColumnMapping">@ViewDataTyped.PruningAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Thinning Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="ThinningAcresColumnMapping">@ViewDataTyped.ThinningAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Chipping Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="ChippingAcresColumnMapping">@ViewDataTyped.ChippingAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Mastication Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="MasticationAcresColumnMapping">@ViewDataTyped.MasticationAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Grazing Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="GrazingAcresColumnMapping">@ViewDataTyped.GrazingAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Lop and Scatter Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="LopAndScatterAcresColumnMapping">@ViewDataTyped.LopAndScatterAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Biomass Removal Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="BiomassRemovalAcresColumnMapping">@ViewDataTyped.BiomassRemovalAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Hand Pile Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="HandPileAcresColumnMapping">@ViewDataTyped.HandPileAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Hand Burn Pile Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="HandPileBurnAcresColumnMapping">@ViewDataTyped.HandPileBurnAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Machine Burn Pile Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="MachinePileBurnAcresColumnMapping">@ViewDataTyped.MachinePileBurnAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Broadcast Burn Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="BroadcastBurnAcresColumnMapping">@ViewDataTyped.BroadcastBurnAcresColumnMapping()</span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-3 fieldLabel text-right">
+                                <div class="col-xs-4 fieldLabel text-right">
                                     Other Acres Column
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-8">
                                     <span id="OtherAcresColumnMapping">@ViewDataTyped.OtherAcresColumnMapping()</span>
                                 </div>
                             </div>
@@ -638,105 +671,124 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditCrosswalkValuesUrl, string.Format("Edit {0} Crosswalk Values", ViewDataTyped.Program.ProgramName), 950, ViewDataTyped.UserHasProgramEditMappingsPermissions)
                         GDB Import Crosswalk Values
                     </h3>
                 </div>
-            </div>
-            <div class="panel-body">
-                <div class="basicsLayout">
-                    @if (!ViewDataTyped.ImportIsFlattened())
-                    {
+            
+                <div class="panel-body">
+                    <div class="basicsLayout">
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
                                 Forest Health Tracker Field
                             </div>
                             <div class="col-xs-9">
-                                <div class="col-xs-4 col-xs-offset-2">
+                                <div class="col-xs-3 col-xs-offset-2">
                                     <label>Source Value</label>
                                 </div>
+                                <div class="col-xs-1">=></div>
                                 <div class="col-xs-6">
                                     <label>Forest Health Tracker Value</label>
                                 </div>
                             </div>
                         </div>
                         <hr />
+
+
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
-                                Treatment Type:
+                                Project Stage:
                             </div>
                             <div class="col-xs-9">
-
-                                @foreach (var crosswalk in ViewDataTyped.TreatmentTypeCrosswalks())
+                                @foreach (var crosswalk in ViewDataTyped.ProjectStageCrosswalks())
                                 {
-                                    <div class="row">
-                                        <div class="col-xs-4 col-xs-offset-2">
-                                            @crosswalk.GisCrossWalkSourceValue =>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            @crosswalk.GisCrossWalkMappedValue
-                                        </div>
+                                    <div class="col-xs-3 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue
+                                    </div>
+                                    <div class="col-xs-1">=></div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
                                     </div>
                                 }
                             </div>
                         </div>
-                        <br />
-                        <hr />
+                        
+                        <hr/>
+
                         <div class="row">
                             <div class="col-xs-3 fieldLabel text-right">
-                                Treatment Detailed Activity Type:
+                                Lead Implementer:
                             </div>
                             <div class="col-xs-9">
-                                @foreach (var crosswalk in ViewDataTyped.TreatmentDetailedActivityTypeCrosswalks())
+                                @foreach (var crosswalk in ViewDataTyped.LeadImplementerCrosswalks())
                                 {
-                                    <div class="row">
-                                        <div class="col-xs-4 col-xs-offset-2">
-                                            @crosswalk.GisCrossWalkSourceValue =>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            @crosswalk.GisCrossWalkMappedValue
-                                        </div>
+                                    <div class="col-xs-3 col-xs-offset-2">
+                                        @crosswalk.GisCrossWalkSourceValue
+                                    </div>
+                                    <div class="col-xs-1">=></div>
+                                    <div class="col-xs-6">
+                                        @crosswalk.GisCrossWalkMappedValue
                                     </div>
                                 }
                             </div>
                         </div>
-                        <br />
-                        <hr />
-                    }
 
-                    <div class="row">
-                        <div class="col-xs-3 fieldLabel text-right">
-                            Project Type:
-                        </div>
-                        <div class="col-xs-9">
-                            @foreach (var crosswalk in ViewDataTyped.ProjectTypeCrosswalks())
-                            {
-                                <div class="col-xs-4 col-xs-offset-2">
-                                    @crosswalk.GisCrossWalkSourceValue =>
+                        @if (!ViewDataTyped.ImportIsFlattened())
+                        {
+                            <hr />
+                            <div class="row">
+                                <div class="col-xs-3 text-right" style="text-decoration: underline;">
+                                    Import is NOT Flattened fields
                                 </div>
-                                <div class="col-xs-6">
-                                    @crosswalk.GisCrossWalkMappedValue
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">
+                                    Treatment Type:
                                 </div>
-                            }
-                        </div>
+                                <div class="col-xs-9">
+
+                                    @foreach (var crosswalk in ViewDataTyped.TreatmentTypeCrosswalks())
+                                    {
+                                        <div class="row">
+                                            <div class="col-xs-3 col-xs-offset-2">
+                                                @crosswalk.GisCrossWalkSourceValue
+                                            </div>
+                                            <div class="col-xs-1">=></div>
+                                            <div class="col-xs-6">
+                                                @crosswalk.GisCrossWalkMappedValue
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="row">
+                                <div class="col-xs-3 fieldLabel text-right">
+                                    Treatment Detailed Activity Type:
+                                </div>
+                                <div class="col-xs-9">
+                                    @foreach (var crosswalk in ViewDataTyped.TreatmentDetailedActivityTypeCrosswalks())
+                                    {
+                                        <div class="row">
+                                            <div class="col-xs-3 col-xs-offset-2">
+                                                @crosswalk.GisCrossWalkSourceValue
+                                            </div>
+                                            <div class="col-xs-1">=></div>
+                                            <div class="col-xs-6">
+                                                @crosswalk.GisCrossWalkMappedValue
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        }
+
+
+
                     </div>
-                    <br />
-                    <hr />
-                    <div class="row">
-                        <div class="col-xs-3 fieldLabel text-right">
-                            Project Stage:
-                        </div>
-                        <div class="col-xs-9">
-                            @foreach (var crosswalk in ViewDataTyped.ProjectStageCrosswalks())
-                            {
-                                <div class="col-xs-4 col-xs-offset-2">
-                                    @crosswalk.GisCrossWalkSourceValue =>
-                                </div>
-                                <div class="col-xs-6">
-                                    @crosswalk.GisCrossWalkMappedValue
-                                </div>
-                            }
-                        </div>
-                    </div>
+                
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
 using Hangfire;
@@ -84,7 +85,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
                 HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
-                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
                 
                 var featureList = new List<Feature>();
                 foreach (var record in featuresFromApi)
@@ -110,10 +111,29 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
 
-                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var projectListCount, out var skippedProjectCount, out var existingProjectCount);
+                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog);
 
-               var message = $"LOA Data Import Job Successfully imported {projectListCount} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. TotalRecordCount: {totalRecordCount}; FeaturesFromApiCount: {featuresFromApi.Count}. Successfully updated {existingProjectCount} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. Skipped adding/updating {skippedProjectCount} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. From Arc URL: {arcOnlineUrl}";
-               Logger.Info(message);
+                var message = new StringBuilder();
+                message.AppendLine($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+
+                if (newProjectListLog.Count > 0)
+                {
+                    message.AppendLine($" New {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ");
+                }
+
+                message.AppendLine($"Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+
+                if (existingProjectListLog.Count > 0)
+                {
+                    message.AppendLine($" Updated {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ");
+                }
+
+                message.AppendLine($"Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ");
+                if (skippedProjectListLog.Count > 0)
+                {
+                    message.AppendLine($"Skipped {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}");
+                }
+                Logger.Info(message);
 
             }
             catch (Exception ex)
