@@ -114,10 +114,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // 1:30 AM  pacific tasks is 8:36am utc
-            var oneThirtyAmCronString = MakeDailyCronJobStringFromUtcTime(8, 36);
+            var oneThirtyAmCronString = MakeDailyCronJobStringFromUtcTime(7, 02);
             AddRecurringJob(ProgramNotificationScheduledBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramNotificationScheduledBackgroundJob(JobCancellationToken.Null), oneThirtyAmCronString, recurringJobIds);
 
-            var loaDataImportCronString = MakeDailyCronJobStringFromUtcTime(8, 56);
+            var loaDataImportCronString = MakeDailyCronJobStringFromUtcTime(7, 15);
             AddRecurringJob(LoaDataImportBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunLoaDataImportScheduledBackgroundJob(JobCancellationToken.Null), loaDataImportCronString, recurringJobIds);
 
 
