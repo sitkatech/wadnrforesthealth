@@ -62,6 +62,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var countResponse = arcUtility.ProcessRepsonse<LoaProjectApiCountResponse>(response);
                 var totalRecordCount = countResponse.count;
 
+                Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
+
                 // loop until we get all the records, the max returned is 5000
                 var featuresFromApi = new List<LoaProjectFeatureDto>();
                 var resultOffset = 0;
