@@ -1586,7 +1586,6 @@
     <Content Include="Content\documents\Reports-Model-Documentation.xlsx" />
     <Content Include="Content\documents\Reports-User-Guide.docx" />
     <Content Include="Content\documents\Reports-User-Guide.pdf" />
-    <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -1643,8 +1642,9 @@
     <Content Include="phantomjs-license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\jquery-1.11.0.js" />
-    <Content Include="Scripts\jquery-1.11.0.min.js" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.fancybox-buttons.js" />
@@ -1655,6 +1655,7 @@
     <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -1676,7 +1677,6 @@
     <Content Include="Views\Agreement\EditAgreementPerson.cshtml" />
     <Content Include="pdf\WADNR_FHT_User_Guide-aba865.pdf" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-1.11.0.min.map" />
     <Content Include="Views\ExcelUpload\ImportLoaExcelFile.cshtml" />
     <Content Include="Views\ExcelUpload\ManageExcelUploadsAndEtl.cshtml" />
     <Content Include="Views\FindYourForester\ManageFindYourForester.cshtml" />
@@ -3989,7 +3989,6 @@
     <Content Include="Content\bootstrap-typeahead\bootstrap3-typeahead.min.js.map">
       <DependentUpon>bootstrap3-typeahead.min.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-1.11.0.min.js.map" />
     <Content Include="Scripts\jquery.form.min.js">
       <DependentUpon>jquery.form.js</DependentUpon>
     </Content>
