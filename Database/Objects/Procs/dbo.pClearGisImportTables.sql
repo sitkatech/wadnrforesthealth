@@ -12,6 +12,9 @@ begin
 	--reset seed number and 
 	DBCC CHECKIDENT ('dbo.GisFeatureMetadataAttribute', RESEED, 0);
 	DBCC CHECKIDENT ('dbo.GisFeature', RESEED, 0);
+
+	DBCC CHECKIDENT ('dbo.GisFeatureMetadataAttribute', RESEED);
+	DBCC CHECKIDENT ('dbo.GisFeature', RESEED);
 	
 	--rebuild index on these 2 tables
 	alter index all on dbo.GisFeatureMetadataAttribute rebuild;
