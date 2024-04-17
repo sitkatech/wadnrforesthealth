@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using Hangfire;
 using Hangfire.SqlServer;
 using Hangfire.Storage;
+using log4net;
 using LtInfo.Common.DesignByContract;
 using NUnit.Framework;
 using Owin;
@@ -19,13 +22,49 @@ namespace ProjectFirma.Web.ScheduledJobs
     /// </summary>
     public class ScheduledBackgroundJobBootstrapper
     {
+        protected static readonly ILog Logger = LogManager.GetLogger("ScheduledBackgroundJobBootstrapper");
+
         /// <summary>
         /// Configuration entry point for <see cref="FirmaOwinStartup"/> via the <see cref="Microsoft.Owin.OwinStartupAttribute"/>
         /// </summary>
         public static void ConfigureHangfireAndScheduledBackgroundJobs(IAppBuilder app)
         {
+            ClearHangFireJobQueue();
+
             ConfigureHangfire(app);
             ConfigureScheduledBackgroundJobs();
+
+            RescheduleHangFireJobs();
+        }
+
+        private static void ClearHangFireJobQueue()
+        {
+            Logger.Info($"Starting 'ScheduledBackgroundJobBootstrapper' ClearHangFireJobQueue");
+            string vendorImportProc = "dbo.pHangFireClearJobQueue";
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
+            {
+                using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending 'ScheduledBackgroundJobBootstrapper' ClearHangFireJobQueue");
+        }
+
+        private static void RescheduleHangFireJobs()
+        {
+            Logger.Info($"Starting 'ScheduledBackgroundJobBootstrapper' RescheduleHangFireJobs");
+            string vendorImportProc = "dbo.pHangFireRescheduleJobs";
+            using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
+            {
+                using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending 'ScheduledBackgroundJobBootstrapper' RescheduleHangFireJobs");
         }
 
         /// <summary>
@@ -114,10 +153,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // 1:30 AM  pacific tasks is 8:36am utc
-            var oneThirtyAmCronString = MakeDailyCronJobStringFromUtcTime(8, 36);
+            var oneThirtyAmCronString = MakeDailyCronJobStringFromUtcTime(7, 02);
             AddRecurringJob(ProgramNotificationScheduledBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramNotificationScheduledBackgroundJob(JobCancellationToken.Null), oneThirtyAmCronString, recurringJobIds);
 
-            var loaDataImportCronString = MakeDailyCronJobStringFromUtcTime(8, 56);
+            var loaDataImportCronString = MakeDailyCronJobStringFromUtcTime(7, 15);
             AddRecurringJob(LoaDataImportBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunLoaDataImportScheduledBackgroundJob(JobCancellationToken.Null), loaDataImportCronString, recurringJobIds);
 
 

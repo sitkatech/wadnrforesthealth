@@ -34,10 +34,10 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            ProcessRemindersImpl();
+            ProcessRemindersImpl(jobCancellationToken);
         }
 
-        protected virtual void ProcessRemindersImpl()
+        protected virtual void ProcessRemindersImpl(IJobCancellationToken jobCancellationToken)
         {
             Logger.Info($"Processing '{JobName}'.");
 
@@ -57,6 +57,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 HttpRequestStorage.DatabaseEntities.ProgramNotificationSents.AddRange(notificationSents);
                 HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
+                jobCancellationToken.ThrowIfCancellationRequested();
             }
 
         }
