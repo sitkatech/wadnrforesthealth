@@ -38,11 +38,11 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataEasternUrl);
-            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataWesternUrl);
+            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataEasternUrl, jobCancellationToken);
+            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataWesternUrl, jobCancellationToken);
         }
 
-        private void DownloadArcOnlineDataAndImportProjects(string arcOnlineUrl)
+        private void DownloadArcOnlineDataAndImportProjects(string arcOnlineUrl, IJobCancellationToken jobCancellationToken)
         {
             var arcUtility = new ArcGisOnlineUtility();
             HttpClient httpClient = new HttpClient();
@@ -62,6 +62,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var countResponse = arcUtility.ProcessRepsonse<LoaProjectApiCountResponse>(response);
                 var totalRecordCount = countResponse.count;
 
+                Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
+
                 // loop until we get all the records, the max returned is 5000
                 var featuresFromApi = new List<LoaProjectFeatureDto>();
                 var resultOffset = 0;
@@ -76,6 +78,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                     featuresFromApi.AddRange(processedResponse.features);
 
                     resultOffset += processedResponse.features.Count;
+
+                    jobCancellationToken.ThrowIfCancellationRequested();
                 } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
 
                 Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
@@ -99,6 +103,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                             featureList.Add(feature);
                         }
                     }
+
+                    jobCancellationToken.ThrowIfCancellationRequested();
                 }
                 var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
 
