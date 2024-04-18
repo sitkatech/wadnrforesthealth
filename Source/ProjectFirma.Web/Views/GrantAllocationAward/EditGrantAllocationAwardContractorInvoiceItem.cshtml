@@ -27,7 +27,7 @@
     // <![CDATA[
 
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
         jQuery("input[type=radio][name=@Html.IdFor(m => m.TypeID)]").on("change", function () {
             //debugger;
             if (jQuery(this).val() == @GrantAllocationAwardContractorInvoiceType.Hourly.GrantAllocationAwardContractorInvoiceTypeID) {

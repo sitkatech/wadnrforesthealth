@@ -65,7 +65,7 @@ else
 </div> @*This is intentionally down here because the document ready needs to be after the EditProjectLocation document ready*@
                 <script type="text/javascript">
         // <![CDATA[
-        jQuery(document).ready(function() { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectRegionsViewData.EditProjectRegionsFormID", ".submitProject"); });
+        jQuery(function() { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectRegionsViewData.EditProjectRegionsFormID", ".submitProject"); });
 
         function saveForm(autoAdvance)
         {

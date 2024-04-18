@@ -18,6 +18,6 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-jQuery(document).ready(function () {
+jQuery(function () {
     jQuery(".sitkaDatePicker").datepicker();
 });

@@ -84,7 +84,7 @@
 <script type="text/javascript">
     // <![CDATA[
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
         // This is fragile- depends on the ViewData ClassificationSystems and Classifications being ordered in the same way
         @for (var i = 0; i < ViewDataTyped.ClassificationSystems.OrderBy(x => x.ClassificationSystemName).SelectMany(x => x.Classifications.OrderBy(y => y.DisplayName)).ToList().Count; i++)
         {

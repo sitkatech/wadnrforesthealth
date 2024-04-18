@@ -36,7 +36,7 @@
             AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
         };
     });
-    jQuery(document).ready(function ()
+    jQuery(function ()
     {
         angular.bootstrap(jQuery("#EditCrosswalkValuesAngularApp"), ["ProjectFirmaApp"]);
 
@@ -276,7 +276,7 @@
 
 
 @*<script type="text/javascript">
-        jQuery(document).ready(function ()
+        jQuery(function ()
         {
             HookupCheckIfFormIsDirty(undefined, ".submitProject");
 

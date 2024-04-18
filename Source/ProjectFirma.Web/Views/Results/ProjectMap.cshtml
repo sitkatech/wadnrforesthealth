@@ -411,7 +411,7 @@
         displayProjectsWithLocationArea(initialCustomization);
     }
 
-    jQuery(document).ready(function() {
+    jQuery(function() {
         //debugger;
         var projectLocationsMapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectLocationsMapInitJson).ToString(Formatting.None));
         if (!projectFirmaMap) {

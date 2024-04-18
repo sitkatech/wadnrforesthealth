@@ -58,7 +58,7 @@
 
     <script type="text/javascript">
         @*Handle closing the modal when "generate" button is clicked. Required since the controller action doesn't actually close the modal by returning a default ModalDialogFormJsonResult.'*@
-        jQuery(document).ready(function() {
+        jQuery(function() {
             jQuery("#ltinfo-modal-dialog-save-button-id").on("click",
                 function () {
                     jQuery(".progress-bar").html("Generating...");

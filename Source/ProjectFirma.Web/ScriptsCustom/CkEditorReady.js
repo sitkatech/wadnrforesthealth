@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 CKEDITOR.disableAutoInline = true;
 
-jQuery(document).ready(function ()
+jQuery(function ()
 {
     jQuery("form").on("submit", function () {
 
