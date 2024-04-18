@@ -364,7 +364,7 @@
         filterPropertyNameDropdown.selectpicker();
         filterPropertyNameDropdown.selectpicker('val', initialCustomization.FilterPropertyName);
 
-        var filterPropertyNameOptions = jQuery("option", filterPropertyNameDropdown);
+        var filterPropertyNameOptions = jQuery("option[value]", filterPropertyNameDropdown);
 
         filterPropertyNameDropdown.on("click", function() {
             filterPropertyNameOptions.each(function(index, option) {
@@ -377,6 +377,9 @@
 
         filterPropertyNameOptions.each(function(index, option) {
             var filterPropertyNameSelected = option.value;
+            if (!filterPropertyNameSelected) {
+                return;
+            }
             var filterPropertyValueDropdown = jQuery("#" + filterPropertyNameSelected);
 
             filterPropertyValueDropdown.attr("data-selected-text-format", "count>1");
