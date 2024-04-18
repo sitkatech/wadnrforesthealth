@@ -29,7 +29,7 @@ angular.module("ProjectFirmaApp")
                         limit: Number.MAX_VALUE
                     });
 
-                finder.bind("typeahead:select",
+                finder.on("typeahead:select",
                     function (event, suggestion) {
                         $scope.togglePriorityLandscape(suggestion.PriorityLandscapeID, suggestion.PriorityLandscapeName, function() {
                             $scope.$apply();
