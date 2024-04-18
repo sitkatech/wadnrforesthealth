@@ -188,7 +188,7 @@
         }
 
 
-        jQuery("#@Html.IdFor(x => x.ApplyToAllProjectTypes)").change(function () {
+        jQuery("#@Html.IdFor(x => x.ApplyToAllProjectTypes)").on("change", function () {
             if (this.value === 'False') {
                 jQuery(".projectTypeCheckbox").attr("disabled", false);
                 jQuery("#ApplyToSomeProjectTypesDiv").css("background-color", "white");

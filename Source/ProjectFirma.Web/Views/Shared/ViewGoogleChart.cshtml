@@ -155,7 +155,7 @@
         var itemCount = jQuery("#subcategoryDropdownFor" + chartName + " option").length;
         if (itemCount > 1)
         {
-            templateDropdown.change(function()
+            templateDropdown.on("change", function()
             {
                 jQuery(".chartGroup" + chartName).css("display", "none");
                 jQuery("#" + (templateDropdown.val() + "_container")).css("display", "");
@@ -171,7 +171,7 @@
         @* ReSharper disable once UseOfImplicitGlobalInFunctionScope *@
         GoogleCharts.drawCharts(googleCharts); //height and width get set in javascript for enlarged charts
         @* ReSharper disable once UseOfImplicitGlobalInFunctionScope *@
-        jQuery(window).resize(function() { GoogleCharts.drawCharts(googleCharts); });
+        jQuery(window).on("resize", function() { GoogleCharts.drawCharts(googleCharts); });
     });
 </script>
     

@@ -129,7 +129,7 @@
                 purchaseAuthority.val('');
             }
 
-            purchaseAuthorityIsLandownerCostShare.change(function() {
+            purchaseAuthorityIsLandownerCostShare.on("change", function() {
                 var value = purchaseAuthorityIsLandownerCostShare.val();
                 if (value == 'False') {
                     purchaseAuthority.removeAttr('disabled');

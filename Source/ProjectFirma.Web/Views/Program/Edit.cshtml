@@ -160,7 +160,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
         setName(true);
 
-        jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").change(function() {
+        jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").on("change", function() {
             setName(false);
         });
     });

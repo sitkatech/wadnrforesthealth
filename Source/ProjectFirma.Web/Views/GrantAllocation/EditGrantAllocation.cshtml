@@ -91,8 +91,8 @@
             }
         });
 
-        jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").change();
-        jQuery("#@Html.IdFor(m => m.DivisionID)").change();
+        jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").trigger("change");
+        jQuery("#@Html.IdFor(m => m.DivisionID)").trigger("change");
     });
     // ]]>
 </script>

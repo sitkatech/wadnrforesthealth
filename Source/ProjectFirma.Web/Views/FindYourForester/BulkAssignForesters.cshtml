@@ -99,7 +99,7 @@
 
     function SelectedUserToChangeEvents()
     {
-        selectedUser.change(selectedUserChanged);
+        selectedUser.on("change", selectedUserChanged);
     }
     function selectedUserChanged() { 
         var currentSelectedPersonNumber = jQuery('#' + '@Html.IdFor(m => m.SelectedForesterPersonID)' + ' option:selected' ).index();

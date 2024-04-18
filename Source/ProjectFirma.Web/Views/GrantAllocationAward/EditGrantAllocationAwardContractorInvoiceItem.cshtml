@@ -69,7 +69,7 @@
             CalculateTotalField();
         });
 
-        jQuery("input[type=radio][name=@Html.IdFor(m => m.TypeID)]:checked").change();
+        jQuery("input[type=radio][name=@Html.IdFor(m => m.TypeID)]:checked").trigger("change");
 
     });
 
