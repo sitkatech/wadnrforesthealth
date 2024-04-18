@@ -52,5 +52,11 @@
     "inputFiles": [
       "ScriptsCustom/sitka.grid.js"
     ]
+  },
+  {
+    "outputFileName": "Content/qtip/jquery.qtip.min.js",
+    "inputFiles": [
+      "Content/qtip/jquery.qtip.js"
+    ]
   }
 ]
