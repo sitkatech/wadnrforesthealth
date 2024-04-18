@@ -41,7 +41,7 @@ Source code is available upon request via <support@sitkatech.com>.
     jQuery(document).ready(function()
     {
         var galleryScope = jQuery("#@ViewDataTyped.GalleryName");
-        galleryScope.find(".keyPhotoButton").click(function() {
+        galleryScope.find(".keyPhotoButton").on("click", function() {
             var selectKeyPhotoButton = jQuery(this);
             var selectKeyPhotoButtonLabel = selectKeyPhotoButton.find("label");
             var selectionMode = selectKeyPhotoButtonLabel.html() == "Done";
@@ -60,7 +60,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 galleryImagesContainer.unbind("click.fb"); //unhooks fancybox
 
                 filmStrip.css("background-color", "#BACF9E");
-                galleryImages.click(function() {
+                galleryImages.on("click", function() {
                     var listItem = jQuery(this);
                     filmStrip.find("li .keyPhotoIcon").removeClass("setKeyPhoto");
                     listItem.addClass("setKeyPhoto");

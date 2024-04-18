@@ -73,7 +73,7 @@ Source code is available upon request via <support@sitkatech.com>.
         var list = document.getElementById("sortables-list");
         sortedSortables = Sortable.create(list);
 
-        jQuery('#ltinfo-modal-dialog-save-button-id').click(function() {
+        jQuery('#ltinfo-modal-dialog-save-button-id').on("click", function() {
             var idArray = sortedSortables.toArray();
             var form = jQuery("form");
             for (var i = 0; i < idArray.length; i++) {

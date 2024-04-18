@@ -98,8 +98,8 @@ Source code is available upon request via <support@sitkatech.com>.
         for (var j = 0; j < projectLocationStagingIDs.length; ++j)
         {
             var projectLocationStagingId = projectLocationStagingIDs[j];
-            jQuery("#SelectedProperty_" + projectLocationStagingId).change(updateFeatureCollectionJson);
-            jQuery("#ShouldImport_" + projectLocationStagingId).click(updateFeatureCollectionJson);
+            jQuery("#SelectedProperty_" + projectLocationStagingId).on("change", updateFeatureCollectionJson);
+            jQuery("#ShouldImport_" + projectLocationStagingId).on("click", updateFeatureCollectionJson);
         }
     });
 </script>

@@ -611,7 +611,7 @@ Sitka.Grid.Class.Grid.prototype.buildWithArguments = function (hideHeader, group
         jQuery('#' + theGridElement).css('cursor', 'wait');
         // Disable grid selectors
         var selector = "#" + theGridElement + " input";
-        jQuery(selector).each(function (i, item) { jQuery(item).attr("disabled", "disabled"); });
+        jQuery(selector).each(function (i, item) { jQuery(item).prop("disabled", true); });
         return true;
     };
     var setDefaultCursor = function () {
@@ -619,7 +619,7 @@ Sitka.Grid.Class.Grid.prototype.buildWithArguments = function (hideHeader, group
         jQuery('#' + theGridElement).css('cursor', 'default');
         var selector = "#" + theGridElement + " input";
         // Re-enable grid selectors
-        jQuery(selector).each(function (i, item) { jQuery(item).removeAttr("disabled"); });
+        jQuery(selector).each(function (i, item) { jQuery(item).prop("disabled", false); });
         return true;
     };
     // Here we compare the number of columns in the cookie to the number in the grid. If they don't match equally,

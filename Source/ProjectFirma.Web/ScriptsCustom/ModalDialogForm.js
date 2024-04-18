@@ -82,7 +82,7 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
     dialogDiv.draggable({ handle: ".modal-header" });
 
     var saveButton = jQuery("#" + saveButtonId); 
-    saveButton.click(function () {
+    saveButton.on("click", function () {
 
         saveButton.attr("disabled", "disabled");
         jQuery("#" + cancelButtonID).attr("disabled", "disabled");

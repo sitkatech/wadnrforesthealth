@@ -193,7 +193,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 var searchButton = jQuery("input[name=search]");
                 var resetButton = jQuery("button#btnResetSearch");
 
-                expandLevelButton.click(function()
+                expandLevelButton.on("click", function()
                 {
                     var maximumExpansion = 1;
                     for (var i = 0; i < treeSources.length; ++i)
@@ -222,7 +222,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     }
                 });
 
-                collapseLevelButton.click(function()
+                collapseLevelButton.on("click", function()
                 {
                     var maximumExpansion = 1;
 
@@ -259,7 +259,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
                         if (e && e.which === $.ui.keyCode.ESCAPE || jQuery.trim(match) === "")
                         {
-                            resetButton.click();
+                            resetButton.trigger("click");
                             return;
                         }
                         var n = 0;
@@ -274,7 +274,7 @@ Source code is available upon request via <support@sitkatech.com>.
                         jQuery("span#matches").text("(" + n + " matches)");
                     });
 
-                resetButton.click(function(e)
+                resetButton.on("click", function(e)
                     {
                         searchButton.val("");
                         jQuery("span#matches").text("");

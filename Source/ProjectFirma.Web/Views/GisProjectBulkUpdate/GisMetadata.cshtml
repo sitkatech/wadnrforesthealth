@@ -343,7 +343,7 @@
 
     jQuery(document)
         .ready(function() {
-            jQuery("#uploadAdvance").click(createProjectsAndAdvanceCurrentPage);
+            jQuery("#uploadAdvance").on("click", createProjectsAndAdvanceCurrentPage);
 
 
             if ('@ViewDataTyped.IsFlattened' == 'True' || '@ViewDataTyped.IsFlattened' == 'true') {
