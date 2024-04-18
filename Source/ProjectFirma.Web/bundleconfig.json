@@ -58,5 +58,11 @@
     "inputFiles": [
       "Content/qtip/jquery.qtip.js"
     ]
+  },
+  {
+    "outputFileName": "ScriptsCustom/sitkaAjax.min.js",
+    "inputFiles": [
+      "ScriptsCustom/sitkaAjax.js"
+    ]
   }
 ]

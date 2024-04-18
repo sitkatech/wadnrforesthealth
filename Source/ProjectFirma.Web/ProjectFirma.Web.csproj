@@ -2139,7 +2139,9 @@
     <Content Include="ScriptsCustom\sitka.js" />
     <Content Include="ScriptsCustom\sitka.min.js" />
     <Content Include="ScriptsCustom\sitkaAjax.js" />
-    <Content Include="ScriptsCustom\sitkaAjax.min.js" />
+    <Content Include="ScriptsCustom\sitkaAjax.min.js">
+      <DependentUpon>sitkaAjax.js</DependentUpon>
+    </Content>
     <Content Include="ScriptsCustom\SitkaFileExtensionsValidation.js" />
     <Content Include="ScriptsCustom\SitkaFileExtensionsValidation.min.js" />
     <Content Include="ScriptsCustom\unsavedChanges.js" />
