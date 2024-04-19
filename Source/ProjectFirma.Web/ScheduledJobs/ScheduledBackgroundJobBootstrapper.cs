@@ -152,11 +152,11 @@ namespace ProjectFirma.Web.ScheduledJobs
                 AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
             }
 
-            // 1:30 AM  pacific tasks is 8:36am utc
-            var oneThirtyAmCronString = MakeDailyCronJobStringFromUtcTime(7, 02);
+            // 11:00 pm pacific tasks is 7:00am utc
+            var oneThirtyAmCronString = MakeDailyUtcCronJobStringFromLocalTime(23, 02);
             AddRecurringJob(ProgramNotificationScheduledBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramNotificationScheduledBackgroundJob(JobCancellationToken.Null), oneThirtyAmCronString, recurringJobIds);
 
-            var loaDataImportCronString = MakeDailyCronJobStringFromUtcTime(7, 15);
+            var loaDataImportCronString = MakeDailyUtcCronJobStringFromLocalTime(23, 15);
             AddRecurringJob(LoaDataImportBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunLoaDataImportScheduledBackgroundJob(JobCancellationToken.Null), loaDataImportCronString, recurringJobIds);
 
 
