@@ -46,5 +46,23 @@
     "inputFiles": [
       "Content/leaflet/leaflet.MakiMarkers/Leaflet.MakiMarkers.js"
     ]
+  },
+  {
+    "outputFileName": "ScriptsCustom/sitka.grid.min.js",
+    "inputFiles": [
+      "ScriptsCustom/sitka.grid.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/qtip/jquery.qtip.min.js",
+    "inputFiles": [
+      "Content/qtip/jquery.qtip.js"
+    ]
+  },
+  {
+    "outputFileName": "ScriptsCustom/sitkaAjax.min.js",
+    "inputFiles": [
+      "ScriptsCustom/sitkaAjax.js"
+    ]
   }
 ]

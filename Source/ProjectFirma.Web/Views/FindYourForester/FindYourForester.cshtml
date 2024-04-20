@@ -118,7 +118,7 @@
     }
 
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
 
         
 
@@ -211,7 +211,7 @@
 
 
         //zoom to address
-        jQuery('#btnZoomToAddress').click(function() {
+        jQuery('#btnZoomToAddress').on("click", function() {
 
 
             var dataAddress = jQuery('#txtZoomAddress').val();

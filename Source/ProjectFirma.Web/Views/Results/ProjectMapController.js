@@ -151,7 +151,7 @@ angular.module("ProjectFirmaApp")
         };
 
 
-        jQuery(document).ready(function() {
+        jQuery(function() {
             initializeMap();
         });
 

@@ -1587,7 +1587,6 @@
     <Content Include="Content\documents\Reports-Model-Documentation.xlsx" />
     <Content Include="Content\documents\Reports-User-Guide.docx" />
     <Content Include="Content\documents\Reports-User-Guide.pdf" />
-    <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -1597,12 +1596,6 @@
     <Content Include="Content\leaflet\images\washington_location_detailed.png" />
     <Content Include="Content\leaflet\images\washington_priority_landscape.png" />
     <Content Include="Content\leaflet\images\washington_upland_region.png" />
-    <Content Include="Content\qtip\jquery.qtip.es5.js">
-      <DependentUpon>jquery.qtip.js</DependentUpon>
-    </Content>
-    <Content Include="Content\qtip\jquery.qtip.es5.min.js">
-      <DependentUpon>jquery.qtip.es5.js</DependentUpon>
-    </Content>
     <Content Include="Content\qtip\jquery.qtip.validation.es5.js">
       <DependentUpon>jquery.qtip.validation.js</DependentUpon>
     </Content>
@@ -1628,9 +1621,17 @@
     <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
     <Content Include="Content\themes\base\menu.css" />
     <Content Include="Content\themes\base\progressbar.css" />
     <Content Include="Content\themes\base\resizable.css" />
@@ -1644,10 +1645,13 @@
     <Content Include="phantomjs-license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\jquery-1.11.0.js" />
-    <Content Include="Scripts\jquery-1.11.0.min.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.13.2.js" />
+    <Content Include="Scripts\jquery-ui-1.13.2.min.js" />
     <Content Include="Scripts\jquery.fancybox-buttons.js" />
     <Content Include="Scripts\jquery.fancybox-media.js" />
     <Content Include="Scripts\jquery.fancybox-thumbs.js" />
@@ -1656,6 +1660,8 @@
     <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -1677,7 +1683,6 @@
     <Content Include="Views\Agreement\EditAgreementPerson.cshtml" />
     <Content Include="pdf\WADNR_FHT_User_Guide-aba865.pdf" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-1.11.0.min.map" />
     <Content Include="Views\ExcelUpload\ImportLoaExcelFile.cshtml" />
     <Content Include="Views\ExcelUpload\ManageExcelUploadsAndEtl.cshtml" />
     <Content Include="Views\FindYourForester\ManageFindYourForester.cshtml" />
@@ -2069,7 +2074,6 @@
     </Content>
     <Content Include="ScriptsCustom\bootstrap-ckeditor-fix.min.js.map" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.min.js.map" />
-    <Content Include="ScriptsCustom\CkEditorReady.min.js.map" />
     <Content Include="ScriptsCustom\DatePickerReady.min.js.map" />
     <Content Include="ScriptsCustom\FancyboxReady.min.js.map" />
     <Content Include="ScriptsCustom\Maps\ProjectFirmaMaps.GeoServerMap.min.js.map" />
@@ -2112,8 +2116,6 @@
     <Content Include="ScriptsCustom\bootstrap-ckeditor-fix.js" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.js" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.min.js" />
-    <Content Include="ScriptsCustom\CkEditorReady.js" />
-    <Content Include="ScriptsCustom\CkEditorReady.min.js" />
     <Content Include="ScriptsCustom\DatePickerReady.js" />
     <Content Include="ScriptsCustom\DatePickerReady.min.js" />
     <Content Include="ScriptsCustom\FancyboxReady.js" />
@@ -2129,11 +2131,15 @@
     <Content Include="ScriptsCustom\qtippopuphelper.js" />
     <Content Include="ScriptsCustom\qtippopuphelper.min.js" />
     <Content Include="ScriptsCustom\sitka.grid.js" />
-    <Content Include="ScriptsCustom\sitka.grid.min.js" />
+    <Content Include="ScriptsCustom\sitka.grid.min.js">
+      <DependentUpon>sitka.grid.js</DependentUpon>
+    </Content>
     <Content Include="ScriptsCustom\sitka.js" />
     <Content Include="ScriptsCustom\sitka.min.js" />
     <Content Include="ScriptsCustom\sitkaAjax.js" />
-    <Content Include="ScriptsCustom\sitkaAjax.min.js" />
+    <Content Include="ScriptsCustom\sitkaAjax.min.js">
+      <DependentUpon>sitkaAjax.js</DependentUpon>
+    </Content>
     <Content Include="ScriptsCustom\SitkaFileExtensionsValidation.js" />
     <Content Include="ScriptsCustom\SitkaFileExtensionsValidation.min.js" />
     <Content Include="ScriptsCustom\unsavedChanges.js" />
@@ -3990,7 +3996,6 @@
     <Content Include="Content\bootstrap-typeahead\bootstrap3-typeahead.min.js.map">
       <DependentUpon>bootstrap3-typeahead.min.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-1.11.0.min.js.map" />
     <Content Include="Scripts\jquery.form.min.js">
       <DependentUpon>jquery.form.js</DependentUpon>
     </Content>

@@ -82,11 +82,20 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
     dialogDiv.draggable({ handle: ".modal-header" });
 
     var saveButton = jQuery("#" + saveButtonId); 
-    saveButton.click(function () {
+    saveButton.on("click", function () {
 
         saveButton.attr("disabled", "disabled");
         jQuery("#" + cancelButtonID).attr("disabled", "disabled");
         jQuery("." + "modal-close-button").attr("disabled", "disabled");
+
+        // 7/10/2023 TK - moved from /ScriptsCustom/CkEditorReady.js due to an order of operations issue with jQuery 3.7. remove when upgrading to tinyMCE
+        for (var i in CKEDITOR.instances) {
+            var ckEditorForDiv = CKEDITOR.instances[i];
+            var id = ckEditorForDiv.name;
+            var ckEditorHtml = ckEditorForDiv.getData();
+
+            jQuery("#" + id).val(ckEditorHtml);
+        }
 
         // Manually submit the form
         var form = findBootstrapDialogForm(optionalDialogFormId, dialogDiv);

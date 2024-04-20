@@ -539,7 +539,7 @@
 
             jQuery('#displayFlattenedByTreatmentArea').prop('checked', '');
 
-            jQuery('#displayFlattenedByTreatmentArea').change(function () {
+            jQuery('#displayFlattenedByTreatmentArea').on("change", function () {
                 if (this.checked) {
                     jQuery("#treatmentGridNonFlattened").hide();
                     jQuery("#treatmentGridFlattened").show();

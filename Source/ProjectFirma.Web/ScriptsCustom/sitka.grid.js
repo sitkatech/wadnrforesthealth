@@ -201,7 +201,7 @@ dhtmlXGridObject.prototype._in_header_formatted_numeric_filter = function (a, b)
 };
 
 function getCheckboxCellValue(a) {
-    var elem = jQuery(jQuery(a).find("[type='checkbox']")[0]).attr('selected');
+    var elem = jQuery(jQuery(a).find("[type='checkbox']")[0]).prop('selected');
 
     var result = 2;
     if (elem != 'undefined') {
@@ -441,14 +441,15 @@ Sitka.Grid.Class.Grid.prototype.strictHtmlFilter = function (t, i) {
             }
             if (val && (!col[i]._childIndexes || col[i]._childIndexes[column] != col[i]._childIndexes[column - 1]))
                 c[val] = true;
-        }
-        ;
+        };
         this.dma(false);
 
         var vals = this.combos[column];
-        for (d in c)
-            if (c[d] === true)
-                f.push(vals ? (vals.get(d) || d) : d);
+        for (var dTest in c) {
+            if (c[dTest] === true) {
+                f.push(vals ? (vals.get(dTest) || dTest) : dTest);
+            }
+        }
         return f.sort();
     };
 
@@ -611,7 +612,7 @@ Sitka.Grid.Class.Grid.prototype.buildWithArguments = function (hideHeader, group
         jQuery('#' + theGridElement).css('cursor', 'wait');
         // Disable grid selectors
         var selector = "#" + theGridElement + " input";
-        jQuery(selector).each(function (i, item) { jQuery(item).attr("disabled", "disabled"); });
+        jQuery(selector).each(function (i, item) { jQuery(item).prop("disabled", true); });
         return true;
     };
     var setDefaultCursor = function () {
@@ -619,7 +620,7 @@ Sitka.Grid.Class.Grid.prototype.buildWithArguments = function (hideHeader, group
         jQuery('#' + theGridElement).css('cursor', 'default');
         var selector = "#" + theGridElement + " input";
         // Re-enable grid selectors
-        jQuery(selector).each(function (i, item) { jQuery(item).removeAttr("disabled"); });
+        jQuery(selector).each(function (i, item) { jQuery(item).prop("disabled", false); });
         return true;
     };
     // Here we compare the number of columns in the cookie to the number in the grid. If they don't match equally,
