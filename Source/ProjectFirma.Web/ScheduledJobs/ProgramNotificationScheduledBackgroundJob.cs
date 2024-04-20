@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 HttpRequestStorage.DatabaseEntities.ProgramNotificationSents.AddRange(notificationSents);
                 HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
-                jobCancellationToken.ThrowIfCancellationRequested();
+                jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
             }
 
         }
