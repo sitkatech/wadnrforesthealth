@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                     resultOffset += processedResponse.features.Count;
 
-                    jobCancellationToken.ThrowIfCancellationRequested();
+                    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
                 } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
 
                 Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
@@ -89,7 +89,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
                 HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
-                HttpRequestStorage.DatabaseEntities.SaveChanges();
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
                 
                 var featureList = new List<Feature>();
                 foreach (var record in featuresFromApi)
@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                         }
                     }
 
-                    jobCancellationToken.ThrowIfCancellationRequested();
+                    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
                 }
                 var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
 
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
 
-                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog);
+                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog, jobCancellationToken);
 
                 var message = new StringBuilder();
                 message.AppendLine($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
