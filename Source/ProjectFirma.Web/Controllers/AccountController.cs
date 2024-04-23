@@ -167,8 +167,20 @@ namespace ProjectFirma.Web.Controllers
                     Email = email,
                     OrganizationID = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization().OrganizationID
                 };
-                person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
 
+
+                if (authenticator.ToEnum == AuthenticatorEnum.ADFS)
+                {
+                    SitkaHttpApplication.Logger.InfoFormat($"In {nameof(ProcessLogin)} - Setup of WA DNR account and mapping ADFS role groups. [{userDetailsStringForLogging}]");
+                    //4/23/24 TK - We no longer want to set the Persons Role based on their AD role group. Default all WADNR employees to Normal on initial login. and allow admins to manage roles in FHT from there
+                    person.PersonRoles.Add(new PersonRole(person, Role.Normal));
+                    person.OrganizationID = OrganizationModelExtensions.WadnrID;
+                }
+                else
+                {
+                    person.PersonRoles.Add(new PersonRole(person, Role.Unassigned));
+                }
+                
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 shouldSendNewUserCreatedMessage = true;
@@ -192,20 +204,7 @@ namespace ProjectFirma.Web.Controllers
             person.Email = email;
             person.UpdateDate = DateTime.Now;
 
-            if (authenticator.ToEnum == AuthenticatorEnum.ADFS)
-            {
-                SitkaHttpApplication.Logger.InfoFormat($"In {nameof(ProcessLogin)} - Setup of WA DNR account and mapping ADFS role groups. [{userDetailsStringForLogging}]");
-                if (roleGroups.Any())
-                {
-                    var roleFromClaims = MapRoleFromClaims(roleGroups);
-                    if (!person.PersonRoles.Select(x => x.RoleID).Contains(roleFromClaims.RoleID))
-                    {
-                        person.PersonRoles.Where(x => x.Role.IsBaseRole).ToList().ForEach(x => HttpRequestStorage.DatabaseEntities.PersonRoles.Remove(x));
-                        person.PersonRoles.Add(new PersonRole(person, roleFromClaims));
-                    }
-                }
-                person.OrganizationID = OrganizationModelExtensions.WadnrID;
-            }
+            
 
             HttpRequestStorage.DatabaseEntities.SaveChanges(person);
 
