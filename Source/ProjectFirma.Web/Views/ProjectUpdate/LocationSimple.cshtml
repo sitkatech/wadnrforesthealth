@@ -86,7 +86,7 @@ else
                 </text>
             }
             form.append('<input type="hidden" name="@Html.NameFor(x => x.AutoAdvance)" value="' + autoAdvance + '" />');
-            form.submit();
+            form.trigger("submit");
         }
         // ]]>
     </script>

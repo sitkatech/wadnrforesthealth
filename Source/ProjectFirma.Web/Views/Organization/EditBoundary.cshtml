@@ -43,7 +43,7 @@
                             $gisUploadResults.html(jQuery("#gisUploadErrorHtml").html());
                         }
                     });
-                    $form.submit();
+                    $form.trigger("submit");
                 }
             });
         });

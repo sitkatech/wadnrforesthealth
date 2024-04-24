@@ -110,7 +110,7 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
             return false;
         }
         //console.log('Form appears to be valid, submitting');
-        form.submit();
+        form.trigger("submit");
         return true;
     });
 

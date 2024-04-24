@@ -83,7 +83,7 @@ else
             // we need to inject the comments field if we are in "Submitted" state
 
             form.append('<input type="hidden" name="@Html.NameFor(x => x.AutoAdvance)" value="' + autoAdvance + '" />');
-            form.submit();
+            form.trigger("submit");
         }
         // ]]>
                 </script>}

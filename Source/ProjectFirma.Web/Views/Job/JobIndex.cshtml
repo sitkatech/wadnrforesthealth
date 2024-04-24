@@ -121,7 +121,7 @@
     // <![CDATA[
 
     jQuery(function () {
-        jQuery('form').submit(function() {
+        jQuery('form').on("submit", function() {
             jQuery(".job-run-btn").attr("disabled", "disabled");
         });
     });
