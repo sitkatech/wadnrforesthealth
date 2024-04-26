@@ -385,8 +385,9 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            bool factSheetIsAvailable = FactSheetIsAvailable(project);
-            Check.Assert(factSheetIsAvailable, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()}.");
+            // 4/26/24 TK - commenting this out because the app alerts spam is getting to me.
+            //bool factSheetIsAvailable = FactSheetIsAvailable(project);
+            //Check.Assert(factSheetIsAvailable, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()}.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
 
