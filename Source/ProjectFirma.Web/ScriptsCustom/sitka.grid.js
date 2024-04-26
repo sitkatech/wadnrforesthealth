@@ -807,7 +807,7 @@ Sitka.Grid.Class.Grid.prototype.hasSavedFilters = function () {
     // one of the filters is set to something.
     var filterValues = this.getFilterValuesFromGrid();
     var filterStringForCookie = filterValues.join('');
-    var filterTrimmed = jQuery.trim(filterStringForCookie);
+    var filterTrimmed = filterStringForCookie.trim();
 
     return filterTrimmed.length > 0;
 };
