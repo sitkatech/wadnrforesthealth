@@ -277,15 +277,17 @@
 <script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationDetailController.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
-     var app = angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
-        function() {
-            return {
-                "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
-                "AngularViewData":
-                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
-            };
-        });
+    jQuery(function() {
+        var app = angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+            function() {
+                return {
+                    "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
+                    "AngularViewData":
+                        @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
+                };
+            });
 
-    angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationDetailController\"]"), ["ProjectFirmaApp"]);
+        angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationDetailController\"]"), ["ProjectFirmaApp"]);
+    });
     // ]]>
 </script>
