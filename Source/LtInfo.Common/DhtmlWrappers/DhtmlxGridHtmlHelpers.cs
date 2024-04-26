@@ -207,7 +207,7 @@ namespace LtInfo.Common.DhtmlWrappers
                     ui.size.width = ui.originalSize.width;
                 }}
             }});
-            jQuery(window).resize(function()
+            jQuery(window).on( ""resize"", function()
             {{
                 Sitka.{0}.resizeGridWidths(); 
             }});
@@ -218,7 +218,7 @@ namespace LtInfo.Common.DhtmlWrappers
         {
             const string template = @"
         Sitka.{0}.resizeGridWithVerticalFill();
-        jQuery(window).resize(function()
+        jQuery(window).on( ""resize"", function()
         {{
             Sitka.{0}.resizeGridWithVerticalFill();
         }});";
