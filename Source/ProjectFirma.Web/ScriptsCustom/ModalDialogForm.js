@@ -117,7 +117,7 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
     dialogDiv.on("hide.bs.modal", function()
     {
         // Remove all qTip tooltips
-        jQuery("*", dialogDiv).qtip("hide");
+        //jQuery("*", dialogDiv).qtip("hide");
     });
 
     dialogDiv.on("hidden.bs.modal", function()
