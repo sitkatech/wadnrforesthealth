@@ -28,15 +28,18 @@ Source code is available upon request via <support@sitkatech.com>.
 <script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationSimpleController.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
-        function() {
-            return {
-                "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
-                "AngularViewData":
-                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None)),
-            };
-        });
-    angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationSimpleController\"]"), ["ProjectFirmaApp"]);
+    jQuery(function() {
+        var app = angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+            function() {
+                return {
+                    "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
+                    "AngularViewData":
+                        @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None)),
+                };
+            });
+
+        angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationSimpleController\"]"), ["ProjectFirmaApp"]);
+    });
     // ]]>
 </script>
 <style>
@@ -66,7 +69,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </div>
 
 @Html.ValidationSummary()
-<div class="row" ng-app="ProjectFirmaApp" ng-controller="ProjectLocationSimpleController">
+<div class="row" ng-controller="ProjectLocationSimpleController">
     <div class="col-xs-12 col-md-5 col-lg-4">
         <form method="POST" action="@ViewDataTyped.MapPostUrl" id="@ViewDataTyped.MapFormID">
             @Html.LabelWithSugarFor(FieldDefinition.ProjectLocation, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
