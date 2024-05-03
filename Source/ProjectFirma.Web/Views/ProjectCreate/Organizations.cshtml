@@ -38,7 +38,7 @@
                 return false;
             }
             jQuery("<input type='hidden' name='@Html.NameFor(x => x.AutoAdvance)' value=" + autoAdvance + " />").appendTo(form);
-            form.submit();
+            form.trigger("submit");
             return true;
         }
         // ]]>
@@ -62,7 +62,7 @@
 
 <script>
     // <![CDATA[
-    jQuery(document).ready(function () {
+    jQuery(function () {
         HookupCheckIfFormIsDirty("form");
     });
     // ]]>

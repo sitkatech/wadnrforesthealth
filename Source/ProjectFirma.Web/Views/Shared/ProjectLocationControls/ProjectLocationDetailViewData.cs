@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             AnnotationMaxLength = annotationMaxLength;
             HasProjectLocationPoint = hasProjectLocationPoint;
             ViewDataForAngular = new ProjectLocationDetailViewDataForAngular(mapInitJson, editableLayerGeoJson, arcGisLayerGeoJson, annotationMaxLength);
-            SimplePointMarkerImg = "https://api.tiles.mapbox.com/v3/marker/pin-s-marker+838383.png";
+            SimplePointMarkerImg = $"https://api.tiles.mapbox.com/v3/marker/pin-s-marker+838383.png?access_token={FirmaWebConfiguration.MapBoxApiKey}";
         }
     }
 

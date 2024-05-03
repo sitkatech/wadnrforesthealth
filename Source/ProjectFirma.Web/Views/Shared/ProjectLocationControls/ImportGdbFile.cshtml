@@ -92,11 +92,11 @@ Source code is available upon request via <support@sitkatech.com>.
                     gisUploadResults.html("<div class='alert alert-danger' style='position: fixed; top: 50%; width:500px'>There was a problem uploading your file geodatabase. Verify it meets the requirements and is not corrupt.</div>");
                 }
             });
-            form.submit();
+            form.trigger("submit");
         }
     }
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
 
         var modalDialog = jQuery(".modal");
         if (!Sitka.Methods.isUndefinedNullOrEmpty(modalDialog)) {
@@ -105,6 +105,6 @@ Source code is available upon request via <support@sitkatech.com>.
             });
         }
         jQuery("#" + "@ModalDialogFormHelper.SaveButtonID").prop("disabled", true);
-        jQuery("#" + "@Html.IdFor(x => x.FileResourceData)").change(uploadGisFile);
+        jQuery("#" + "@Html.IdFor(x => x.FileResourceData)").on("change", uploadGisFile);
     });
 </script>

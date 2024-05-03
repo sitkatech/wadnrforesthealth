@@ -160,7 +160,7 @@ var ProjectFirma = {
                     events: {
                         render: function(event, api)
                         {
-                            $(window).bind('keydown', function(e)
+                            $(window).on('keydown', function(e)
                             {
                                 if (e.keyCode === 27)
                                 {

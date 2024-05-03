@@ -36,7 +36,7 @@
             AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.AngularViewData))
         };
     });
-    jQuery(document).ready(function () {
+    jQuery(function () {
 
         angular.bootstrap(jQuery("#EditInteractionEventAngularApp"), ["ProjectFirmaApp"]);
 

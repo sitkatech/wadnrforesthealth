@@ -84,7 +84,7 @@
 <script type="text/javascript">
     // <![CDATA[
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
         // This is fragile- depends on the ViewData ClassificationSystems and Classifications being ordered in the same way
         @for (var i = 0; i < ViewDataTyped.ClassificationSystems.OrderBy(x => x.ClassificationSystemName).SelectMany(x => x.Classifications.OrderBy(y => y.DisplayName)).ToList().Count; i++)
         {
@@ -107,7 +107,7 @@
         }
 
         //Create on-change event
-        jQuery(checkBox).change(function () {
+        jQuery(checkBox).on("change", function () {
             var notesTextAreaForCheckboxFunction = jQuery("#@Html.IdFor(x => x.ProjectClassificationSimples[i].ProjectClassificationNotesForBinding)");
             var charactersRemainingFunction =
                 jQuery("#CharactersRemaining_@(Html.IdFor(x => x.ProjectClassificationSimples[i].ProjectClassificationNotesForBinding))");
@@ -139,7 +139,7 @@
         }
 
         jQuery("<input type='hidden' name='@Html.NameFor(x => x.AutoAdvance)' value=" + autoAdvance + " />").appendTo(form);
-        form.submit();
+        form.trigger("submit");
     }
 
     // ]]>

@@ -120,8 +120,8 @@
 <script type="text/javascript">
     // <![CDATA[
 
-    jQuery(document).ready(function () {
-        jQuery('form').submit(function() {
+    jQuery(function () {
+        jQuery('form').on("submit", function() {
             jQuery(".job-run-btn").attr("disabled", "disabled");
         });
     });

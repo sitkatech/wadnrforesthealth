@@ -135,7 +135,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 
 <script type="text/javascript">
-    jQuery(document).ready(function ()
+    jQuery(function ()
     {
         HookupCheckIfFormIsDirty(undefined, ".submitProject");
 
@@ -160,7 +160,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
         setName(true);
 
-        jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").change(function() {
+        jQuery("#@Html.IdFor(x => x.IsDefaultForBulkImportOnly)").on("change", function() {
             setName(false);
         });
     });

@@ -335,7 +335,7 @@
                     gisUploadResults.html("<div class='alert alert-danger' style='position: fixed; top: 50%; width:500px'>There was a problem creating the Projects</div>");
                 }
             });
-            form.submit();
+            form.trigger("submit");
         }
     }
 
@@ -343,7 +343,7 @@
 
     jQuery(document)
         .ready(function() {
-            jQuery("#uploadAdvance").click(createProjectsAndAdvanceCurrentPage);
+            jQuery("#uploadAdvance").on("click", createProjectsAndAdvanceCurrentPage);
 
 
             if ('@ViewDataTyped.IsFlattened' == 'True' || '@ViewDataTyped.IsFlattened' == 'true') {

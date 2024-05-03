@@ -28,6 +28,7 @@ Source code is available upon request via <support@sitkatech.com>.
 <script type="text/javascript" src="@Url.Content("~/Content/typeahead/typeahead.min.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
+    jQuery(function () {
     angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
         function() {
             return {
@@ -36,7 +37,8 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
             };
         });
-    angular.bootstrap(jQuery("[ng-controller=\"EditProjectRegionsController\"]"), ["ProjectFirmaApp"]);
+        angular.bootstrap(jQuery("[ng-controller=\"EditProjectRegionsController\"]"), ["ProjectFirmaApp"]);
+    });
     // ]]>
 </script>
 <style>
@@ -60,7 +62,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </div>
 
 @Html.ValidationSummary()
-<div class="row" ng-app="ProjectFirmaApp" ng-controller="EditProjectRegionsController">
+<div class="row" ng-controller="EditProjectRegionsController">
     <div class="col-xs-12 col-md-4">
         <form action="@ViewDataTyped.EditProjectRegionsUrl" method="POST" id="@ViewDataTyped.EditProjectRegionsFormID">
             <div class="input-group" id="scrollable-dropdown-menu" style="margin-bottom: 10px;">

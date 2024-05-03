@@ -48,23 +48,5 @@
     @Html.HiddenFor(m => m.PriorityLandscapeID)
 }
 
-<script>
-    @*
-    * 9/21/20 TK - There is probably a better way to do this. CKEditor needs to have the value moved to the correct text area for postback to work
-    * Copied this JS from: C:\git\sitkatech\wadnrforesthealth\Source\ProjectFirma.Web\ScriptsCustom\CkEditorReady.js
-    *@
-    jQuery(document).ready(function ()
-    {
-        jQuery("#@string.Format("priorityLandscapeForm{0}", Model.PriorityLandscapeID)").on("submit", function () {
 
-            for (var i in CKEDITOR.instances)
-            {
-                var ckEditorForDiv = CKEDITOR.instances[i];
-                var id = ckEditorForDiv.name;
-                var ckEditorHtml = ckEditorForDiv.getData();
-                jQuery("#" + id).val(ckEditorHtml);
-            }
-        });
-    });
-</script>
 

@@ -174,7 +174,7 @@
     </div>
 </form>
 <script type="text/javascript">
-    jQuery(document).ready(function () {
+    jQuery(function () {
 
         var initialState = jQuery("#@Html.IdFor(x => x.ApplyToAllProjectTypes)")[0];
         var initialStateValue = initialState.options[initialState.selectedIndex].value;
@@ -188,7 +188,7 @@
         }
 
 
-        jQuery("#@Html.IdFor(x => x.ApplyToAllProjectTypes)").change(function () {
+        jQuery("#@Html.IdFor(x => x.ApplyToAllProjectTypes)").on("change", function () {
             if (this.value === 'False') {
                 jQuery(".projectTypeCheckbox").attr("disabled", false);
                 jQuery("#ApplyToSomeProjectTypesDiv").css("background-color", "white");

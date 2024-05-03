@@ -44,7 +44,7 @@
 
     var initialAllocationAmount = @this.Model.AllocationAmount
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
         jQuery("#@Html.IdFor(m => m.DivisionID)").on("change", function () {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").prop("disabled", true);
@@ -91,8 +91,8 @@
             }
         });
 
-        jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").change();
-        jQuery("#@Html.IdFor(m => m.DivisionID)").change();
+        jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").trigger("change");
+        jQuery("#@Html.IdFor(m => m.DivisionID)").trigger("change");
     });
     // ]]>
 </script>
@@ -366,7 +366,7 @@
             AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
         };
     });
-    jQuery(document).ready(function ()
+    jQuery(function ()
     {
         angular.bootstrap(jQuery("#EditGrantAllocationAngularApp"), ["ProjectFirmaApp"]);
 

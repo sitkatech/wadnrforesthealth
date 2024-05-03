@@ -42,7 +42,7 @@ Source code is available upon request via <support@sitkatech.com>.
             var noMeasuresDiv = jQuery("#ExplanationForNoMeasuresDiv");
             noMeasuresDiv.appendTo(form);
             jQuery("<input type='hidden' name='@Html.NameFor(x => x.AutoAdvance)' value=" + autoAdvance + " />").appendTo(form);
-            form.submit();
+            form.trigger("submit");
             return true;
         }
         // ]]>
@@ -91,7 +91,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <script type="text/javascript">
     // <![CDATA[
-    jQuery(document).ready(function () {
+    jQuery(function () {
         HookupCheckIfFormIsDirty("form", ".submitProject");
     });
     // ]]>

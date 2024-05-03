@@ -354,7 +354,7 @@
         colorPropertyNameDropdown.selectpicker();
         colorPropertyNameDropdown.selectpicker('val', initialCustomization.ColorByPropertyName);
 
-        colorPropertyNameDropdown.change(function() {
+        colorPropertyNameDropdown.on("change", function() {
             map.changePropertyToColorProjectLocationsBy(this.value);
             jQuery("#mapLegendTitle").html(colorPropertyNameDropdown.find("option:selected").data("displayname") + ":");
             updateCustomUrlPopover();
@@ -364,9 +364,9 @@
         filterPropertyNameDropdown.selectpicker();
         filterPropertyNameDropdown.selectpicker('val', initialCustomization.FilterPropertyName);
 
-        var filterPropertyNameOptions = jQuery("option", filterPropertyNameDropdown);
+        var filterPropertyNameOptions = jQuery("option[value]", filterPropertyNameDropdown);
 
-        filterPropertyNameDropdown.change(function() {
+        filterPropertyNameDropdown.on("click", function() {
             filterPropertyNameOptions.each(function(index, option) {
                 jQuery("#" + option.value).selectpicker('hide');
             });
@@ -377,6 +377,9 @@
 
         filterPropertyNameOptions.each(function(index, option) {
             var filterPropertyNameSelected = option.value;
+            if (!filterPropertyNameSelected) {
+                return;
+            }
             var filterPropertyValueDropdown = jQuery("#" + filterPropertyNameSelected);
 
             filterPropertyValueDropdown.attr("data-selected-text-format", "count>1");
@@ -387,7 +390,7 @@
             filterPropertyValueDropdown.selectpicker('hide');
             filterPropertyValueDropdown.selectpicker('selectAll');
 
-            filterPropertyValueDropdown.change(function() {
+            filterPropertyValueDropdown.on("change", function() {
                 var filterPropertyValueSelected = filterPropertyValueDropdown.val();
 
                 var actualFilter = [];
@@ -411,7 +414,7 @@
         displayProjectsWithLocationArea(initialCustomization);
     }
 
-    jQuery(document).ready(function() {
+    jQuery(function() {
         //debugger;
         var projectLocationsMapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectLocationsMapInitJson).ToString(Formatting.None));
         if (!projectFirmaMap) {
@@ -424,7 +427,7 @@
         buildAndInitializeDropdowns(projectFirmaMap, projectLocationsMapInitJson.ProjectMapCustomization);
 
         var clusterLocationsCheckbox = jQuery("#ClusterLocations");
-        clusterLocationsCheckbox.change(function() {
+        clusterLocationsCheckbox.on("change", function() {
             projectFirmaMap.changeClustering(clusterLocationsCheckbox.is(":checked"));
         });
 
@@ -436,13 +439,13 @@
         var geocodeMarker = L.marker();
 
         //zoom to address
-        jQuery('#btnZoomToAddress').click(function() {
+        jQuery('#btnZoomToAddress').on("click", function() {
 
 
             var dataAddress = jQuery('#txtZoomAddress').val();
             var dataZip = jQuery('#txtZoomZip').val();
 
-            if (jQuery.trim(dataZip).length === 0) {
+            if (dataZip.trim().length === 0) {
                 jQuery('#errZoomNoZipCode').show();
             } else {
 
@@ -472,7 +475,7 @@
 
         });
 
-        jQuery('#showBasinwideProjectsToast').click(function() {
+        jQuery('#showBasinwideProjectsToast').on("click", function() {
             jQuery("#mapPanel").removeClass("col-md-12");
             jQuery("#mapPanel").addClass("col-md-8");
 
@@ -483,7 +486,7 @@
             projectFirmaMap.map.invalidateSize();
         });
 
-        jQuery('#hideBasinwideProjectsToast').click(function() {
+        jQuery('#hideBasinwideProjectsToast').on("click", function() {
             jQuery("#mapPanel").removeClass("col-md-8");
             jQuery("#mapPanel").addClass("col-md-12");
 

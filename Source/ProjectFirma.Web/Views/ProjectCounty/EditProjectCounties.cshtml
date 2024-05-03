@@ -28,15 +28,17 @@ Source code is available upon request via <support@sitkatech.com>.
 <script type="text/javascript" src="@Url.Content("~/Content/typeahead/typeahead.min.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
-        function() {
-            return {
-                "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
-                "AngularViewData":
-                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
-            };
-        });
-    angular.bootstrap(jQuery("[ng-controller=\"EditProjectCountiesController\"]"), ["ProjectFirmaApp"]);
+    jQuery(function() {
+        angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+            function() {
+                return {
+                    "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
+                    "AngularViewData":
+                        @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
+                };
+            });
+        angular.bootstrap(jQuery("[ng-controller=\"EditProjectCountiesController\"]"), ["ProjectFirmaApp"]);
+    });
     // ]]>
 </script>
 <style>
@@ -60,7 +62,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </div>
 
 @Html.ValidationSummary()
-<div class="row" ng-app="ProjectFirmaApp" ng-controller="EditProjectCountiesController">
+<div class="row" ng-controller="EditProjectCountiesController">
     <div class="col-xs-12 col-md-4">
         <form action="@ViewDataTyped.EditProjectCountiesUrl" method="POST" id="@ViewDataTyped.EditProjectCountiesFormID">
             <div class="input-group" id="scrollable-dropdown-menu" style="margin-bottom: 10px;">

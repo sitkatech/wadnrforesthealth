@@ -20,7 +20,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Hangfire;
 using log4net;
+using ProjectFirma.Web.ScheduledJobs;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -139,7 +141,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        public static void ImportProjects(GisUploadAttempt gisUploadAttempt, GisMetadataViewModel viewModel, out List<ProjectSimpleForGisLogging> newProjectListLog, out List<ProjectSimpleForGisLogging> skippedProjectListLog, out List<ProjectSimpleForGisLogging> existingProjectListLog)
+        public static void ImportProjects(GisUploadAttempt gisUploadAttempt, GisMetadataViewModel viewModel, out List<ProjectSimpleForGisLogging> newProjectListLog, out List<ProjectSimpleForGisLogging> skippedProjectListLog, out List<ProjectSimpleForGisLogging> existingProjectListLog, IJobCancellationToken jobCancellationToken)
         {
             SitkaHttpApplication.Logger.Info($"starting ImportProjects() for gisUploadAttempt:{gisUploadAttempt.GisUploadAttemptID}");
             var projectIdentifierMetadataAttribute = GenerateSingleMetadataAttribute(gisUploadAttempt, viewModel.ProjectIdentifierMetadataAttributeID);
@@ -203,11 +205,12 @@ namespace ProjectFirma.Web.Controllers
                         skippedProjectListLog.Add(new ProjectSimpleForGisLogging(blockListEntry.ProjectGisIdentifier, string.Empty));
                     }
                 }
+                jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
             }
 
-            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program, currentCounter, ref existingProjectListLog, ref skippedProjectListLog, ref newProjectListLog);
+            MakeProjectsAndSave(distinctProjectIdentifiers, existingProjects, projectImportBlockList, projectIdentifierMetadataAttribute, completionDateDictionary, startDateDictionary, projectNameDictionary, projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType, projectList, gisUploadAttempt.GisUploadSourceOrganization.Program, currentCounter, ref existingProjectListLog, ref skippedProjectListLog, ref newProjectListLog, jobCancellationToken);
 
-            MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID);
+            MakeProjectLocationsAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, projectLocationList, gisUploadAttempt.GisUploadSourceOrganization.ProgramID, jobCancellationToken);
 
             MakeProjectPeopleAndSave(gisUploadAttempt, distinctProjectIdentifiers, projectIdentifierMetadataAttribute, privateLandOwnerDictionary, primaryContactDictionary, existingPersons, newPersonList, newProjectPersonList);
 
@@ -259,7 +262,7 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult GisMetadata(GisUploadAttemptPrimaryKey gisUploadAttemptPrimaryKey, GisMetadataViewModel viewModel)
         {
             var gisUploadAttempt = gisUploadAttemptPrimaryKey.EntityObject;
-            ImportProjects(gisUploadAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog);
+            ImportProjects(gisUploadAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog, null);
 
             var message = new StringBuilder();
             message.Append($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
@@ -385,7 +388,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         private static void MakeProjectLocationsAndSave(GisUploadAttempt gisUploadAttempt, List<string> distinctProjectIdentifiers,
-            GisMetadataAttribute projectIdentifierMetadataAttribute, List<ProjectLocation> projectLocationList, int programID)
+            GisMetadataAttribute projectIdentifierMetadataAttribute, List<ProjectLocation> projectLocationList, int programID, IJobCancellationToken jobCancellationToken)
         {
             SitkaHttpApplication.Logger.Info($"starting MakeProjectLocationsAndSave() for gisUploadAttempt:{gisUploadAttempt.GisUploadAttemptID}");
             var projectProgramList = HttpRequestStorage.DatabaseEntities.ProjectPrograms
@@ -441,6 +444,7 @@ namespace ProjectFirma.Web.Controllers
                         project.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.PointOnMap.ProjectLocationSimpleTypeID;
                     }
                 }
+                jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectLocations.AddRange(projectLocationList);
@@ -451,7 +455,7 @@ namespace ProjectFirma.Web.Controllers
             GisMetadataAttribute projectIdentifierMetadataAttribute, Dictionary<int, List<GisFeatureMetadataAttribute>> completionDateDictionary,
             Dictionary<int, List<GisFeatureMetadataAttribute>> startDateDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectNameDictionary, Dictionary<int, List<GisFeatureMetadataAttribute>> projectStageDictionary,
             List<GisCrossWalkDefault> gisCrossWalkDefaultList, GisUploadAttempt gisUploadAttempt, ProjectType otherProjectType, List<Project> projectList, Program program,
-            int currentCounter, ref List<ProjectSimpleForGisLogging> existingProjectListLog, ref List<ProjectSimpleForGisLogging> skippedProjectListLog, ref List<ProjectSimpleForGisLogging> newProjectListLog)
+            int currentCounter, ref List<ProjectSimpleForGisLogging> existingProjectListLog, ref List<ProjectSimpleForGisLogging> skippedProjectListLog, ref List<ProjectSimpleForGisLogging> newProjectListLog, IJobCancellationToken jobCancellationToken)
         {
             SitkaHttpApplication.Logger.Info($"starting MakeProjectsAndSave() for gisUploadAttempt:{gisUploadAttempt.GisUploadAttemptID}");
             foreach (var distinctProjectIdentifier in distinctProjectIdentifiers)
@@ -461,6 +465,8 @@ namespace ProjectFirma.Web.Controllers
                     projectStageDictionary, gisCrossWalkDefaultList, gisUploadAttempt, otherProjectType,
                     gisUploadAttempt.GisUploadAttemptID, projectList, gisUploadAttempt.GisUploadSourceOrganization, program,
                     ref currentCounter, ref existingProjectListLog, ref skippedProjectListLog, ref newProjectListLog);
+
+                jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
             }
 
             HttpRequestStorage.DatabaseEntities.Projects.AddRange(projectList);

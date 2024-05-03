@@ -66,7 +66,7 @@ else
 </div> @*This is intentionally down here because the document ready needs to be after the EditProjectLocation document ready*@
                 <script type="text/javascript">
         // <![CDATA[
-        jQuery(document).ready(function() { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectCountiesViewData.EditProjectCountiesFormID", ".submitProject"); });
+        jQuery(function() { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectCountiesViewData.EditProjectCountiesFormID", ".submitProject"); });
 
         function saveForm(autoAdvance)
         {
@@ -83,7 +83,7 @@ else
             // we need to inject the comments field if we are in "Submitted" state
 
             form.append('<input type="hidden" name="@Html.NameFor(x => x.AutoAdvance)" value="' + autoAdvance + '" />');
-            form.submit();
+            form.trigger("submit");
         }
         // ]]>
                 </script>}

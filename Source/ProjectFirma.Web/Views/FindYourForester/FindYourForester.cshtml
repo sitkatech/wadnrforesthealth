@@ -118,7 +118,7 @@
     }
 
 
-    jQuery(document).ready(function () {
+    jQuery(function () {
 
         
 
@@ -211,13 +211,13 @@
 
 
         //zoom to address
-        jQuery('#btnZoomToAddress').click(function() {
+        jQuery('#btnZoomToAddress').on("click", function() {
 
 
             var dataAddress = jQuery('#txtZoomAddress').val();
             var dataZip = jQuery('#txtZoomZip').val();
 
-            if (jQuery.trim(dataZip).length === 0) {
+            if (dataZip.trim().length === 0) {
                 jQuery('#errZoomNoZipCode').show();
             } else {
 

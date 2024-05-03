@@ -63,7 +63,7 @@
 </div>
 
 <script type="text/javascript">
-    jQuery(document).ready(function()
+    jQuery(function()
     {
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
         var sitkaMap = new ProjectFirmaMaps.Map(mapInitJson, null, true);

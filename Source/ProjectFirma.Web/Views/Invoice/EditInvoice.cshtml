@@ -267,7 +267,7 @@
                 matchAmount.attr('disabled', 'disabled');
             }
 
-            matchAmountType.change(function() {
+            matchAmountType.on("change", function() {
                 if (this.value == dollarValueMatchTypeID) {
                     matchAmount.removeAttr('disabled');
                 } else {

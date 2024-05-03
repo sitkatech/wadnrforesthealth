@@ -171,7 +171,7 @@
                         if (mouAgreementTypeIdHasValue == 'True' || mouAgreementTypeIdHasValue == 'true' ||
                             ndaAgreementTypeIdHasValue == 'True' || ndaAgreementTypeIdHasValue == 'true') {
                             updateDisabledFieldsIfMouOrNdaIsSelected(mouAgreementTypeId, ndaAgreementTypeId);
-                            jQuery("#@Html.IdFor(m => m.AgreementTypeID)").change(function() {
+                            jQuery("#@Html.IdFor(m => m.AgreementTypeID)").on("change", function() {
                                 updateDisabledFieldsIfMouOrNdaIsSelected(mouAgreementTypeId, ndaAgreementTypeId);
                             });
                         }

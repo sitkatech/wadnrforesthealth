@@ -33,15 +33,7 @@ Source code is available upon request via <support@sitkatech.com>.
             margin-top: 5px;
         }
     </style>
-    <script type="text/javascript">
-        // <![CDATA[
 
-        jQuery(document).ready(function ()
-        {
-
-        });
-        // ]]>
-    </script>
 }
 
 @Html.ValidationSummary()
@@ -160,7 +152,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     gisUploadResults.html("<div class='alert alert-danger' style='position: fixed; top: 50%; width:500px'>There was a problem uploading your file geodatabase. Verify it meets the requirements and is not corrupt.</div>");
                 }
             });
-            form.submit();
+            form.trigger("submit");
         }
     }
 
@@ -169,7 +161,7 @@ Source code is available upon request via <support@sitkatech.com>.
     jQuery(document)
         .ready(function() {
             // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
-            jQuery("#uploadWithAdvance").click(uploadGisFileAndAdvanceCurrentPage);
+            jQuery("#uploadWithAdvance").on("click", uploadGisFileAndAdvanceCurrentPage);
 
 
         });

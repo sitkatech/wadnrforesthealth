@@ -31,7 +31,7 @@
             jQuery("<input type='hidden' name='@Html.NameFor(x => x.AutoAdvance)' value=" + autoAdvance + " />")
                 .appendTo(form);
 
-            form.submit();
+            form.trigger("submit");
             return true;
         }
         // ]]>
@@ -78,7 +78,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        jQuery(document).ready(function () {
+        jQuery(function () {
             // add the comments box to the form so it gets handled correctly.
             var commentsTextArea = jQuery("#commentsSection");
             jQuery("form").append(commentsTextArea);

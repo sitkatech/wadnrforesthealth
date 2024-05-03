@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 // sitka.js
 
-jQuery(document).ready(function ()
+jQuery(function ()
 {
     // Some clients (EE right now) does not use Fancybox at present, 
     // so only interact with it if necessary.
@@ -52,7 +52,7 @@ Number.prototype.formatMoney = function (currency_symbol, decimal_places, decima
 };
 
 
-jQuery(document).ready(function () {
+jQuery(function () {
     if (jQuery(".sitka-date-picker").length && jQuery(".sitka-date-picker").datepicker.length) {
         jQuery(".sitka-date-picker").datepicker();
     }
