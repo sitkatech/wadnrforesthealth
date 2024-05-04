@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -51,46 +51,46 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteContractorInvoiceUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteContractorInvoiceUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditContractorInvoiceUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditContractorInvoiceUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
             //need column for file download
 
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDescription.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDescription, 200, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceNumber.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceNumber, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDate, 125, DhtmlxGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDescription.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDescription, 200, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceNumber.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceNumber, 125, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDate, 125, AgGridColumnFormatType.Date);
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceForemanHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceForemanHours, 125, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceForemanRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceForemanRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add("Foreman Amount", s => s.GrantAllocationAwardContractorInvoiceForemanAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceForemanHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceForemanHours, 125, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceForemanRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceForemanRate, 125, AgGridColumnFormatType.CurrencyWithCents);
+            Add("Foreman Amount", s => s.GrantAllocationAwardContractorInvoiceForemanAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceLaborHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceLaborHours, 125, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceLaborRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceLaborRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add("Labor Amount", s => s.GrantAllocationAwardContractorInvoiceLaborAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceLaborHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceLaborHours, 125, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceLaborRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceLaborRate, 125, AgGridColumnFormatType.CurrencyWithCents);
+            Add("Labor Amount", s => s.GrantAllocationAwardContractorInvoiceLaborAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceGrappleHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceGrappleHours, 125, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceGrappleRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceGrappleRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add("Grapple Amount", s => s.GrantAllocationAwardContractorInvoiceGrappleAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceGrappleHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceGrappleHours, 125, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceGrappleRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceGrappleRate, 125, AgGridColumnFormatType.CurrencyWithCents);
+            Add("Grapple Amount", s => s.GrantAllocationAwardContractorInvoiceGrappleAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceMasticationHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceMasticationHours, 125, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceMasticationRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceMasticationRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add("Mastication Amount", s => s.GrantAllocationAwardContractorInvoiceMasticationAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceMasticationHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceMasticationHours, 125, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceMasticationRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceMasticationRate, 125, AgGridColumnFormatType.CurrencyWithCents);
+            Add("Mastication Amount", s => s.GrantAllocationAwardContractorInvoiceMasticationAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add("Invoice w/o Tax", s => s.GrantAllocationAwardContractorInvoiceTotalWithoutTax, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Invoice w/o Tax", s => s.GrantAllocationAwardContractorInvoiceTotalWithoutTax, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceTaxRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceTaxRate, 125, DhtmlxGridColumnFormatType.Percent);
-            Add("Tax Amount", s => s.GrantAllocationAwardContractorInvoiceTaxAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceTaxRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceTaxRate, 125, AgGridColumnFormatType.Percent);
+            Add("Tax Amount", s => s.GrantAllocationAwardContractorInvoiceTaxAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add("Invoice Total", s => s.GrantAllocationAwardContractorInvoiceTotalWithTax, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Invoice Total", s => s.GrantAllocationAwardContractorInvoiceTotalWithTax, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceAcresReported.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceAcresReported, 125, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceNotes.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceNotes, 250, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceAcresReported.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceAcresReported, 125, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceNotes.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceNotes, 250, AgGridColumnFilterType.Text);
         }
     }
 }

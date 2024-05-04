@@ -24,7 +24,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -74,18 +74,18 @@ namespace ProjectFirma.Web.Views.FocusArea
             var userHasDeletePermissions = new GrantAllocationAwardDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasDeletePermissions, x.CanGrantAllocationAwardBeDeleted(), true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasDeletePermissions, x.CanGrantAllocationAwardBeDeleted(), true), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.GrantModification.Grant.GetGrantNumberAsUrl(), 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.FocusArea.ToGridHeaderString(), x => x.FocusArea.GetDisplayNameAsUrl(), 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.GrantAllocationAwardAmount.ToGridHeaderString(), x => x.GrantAllocationAwardAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add("Spent Amount", x => x.SpentAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add("Remaining Amount", x => x.Balance, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardExpirationDate.ToGridHeaderString(), x => x.GrantAllocationAwardExpirationDate, 90, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.GrantModification.Grant.GetGrantNumberAsUrl(), 140, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FocusArea.ToGridHeaderString(), x => x.FocusArea.GetDisplayNameAsUrl(), 140, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardAmount.ToGridHeaderString(), x => x.GrantAllocationAwardAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add("Spent Amount", x => x.SpentAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add("Remaining Amount", x => x.Balance, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardExpirationDate.ToGridHeaderString(), x => x.GrantAllocationAwardExpirationDate, 90, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

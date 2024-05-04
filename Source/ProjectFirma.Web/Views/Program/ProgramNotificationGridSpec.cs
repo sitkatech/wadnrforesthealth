@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -41,12 +41,12 @@ namespace ProjectFirma.Web.Views.Program
                 var contentUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(x => x.NewProgramNotificationConfiguration(programToAssociate.PrimaryKey));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new Program Notification");
 
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular}"),
-                    hasProgramManagePermissions), 30, DhtmlxGridColumnFilterType.None, true);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular}"),
+                    hasProgramManagePermissions), 30, AgGridColumnFilterType.None, true);
             }
-            Add("Program Notification Type", a => a.ProgramNotificationType.ProgramNotificationTypeDisplayName, 300, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Recurrence Interval in Years", a => a.RecurrenceInterval.RecurrenceIntervalInYears.ToString(), 100, DhtmlxGridColumnFilterType.Numeric);
-            Add("Notification Email Text", a => a.NotificationEmailTextHtmlString, 600, DhtmlxGridColumnFilterType.Html);
+            Add("Program Notification Type", a => a.ProgramNotificationType.ProgramNotificationTypeDisplayName, 300, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Recurrence Interval in Years", a => a.RecurrenceInterval.RecurrenceIntervalInYears.ToString(), 100, AgGridColumnFilterType.Numeric);
+            Add("Notification Email Text", a => a.NotificationEmailTextHtmlString, 600, AgGridColumnFilterType.Html);
 
 
         }

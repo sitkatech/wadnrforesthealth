@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.User
@@ -31,11 +31,11 @@ namespace ProjectFirma.Web.Views.User
         public UserNotificationGridSpec()
         {
             Add("Date", x => x.NotificationDate, 120);
-            Add("Notification Type", x => x.NotificationType.NotificationTypeDisplayName, 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Notification Type", x => x.NotificationType.NotificationTypeDisplayName, 140, AgGridColumnFilterType.SelectFilterStrict);
             Add("Notification",
                 x => x.NotificationType.GetFullDescriptionFromUserPerspective(x),
                 500,
-                DhtmlxGridColumnFilterType.Html);
+                AgGridColumnFilterType.Html);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", x => x.NotificationProjects.Count, 100);
             Add($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", x =>
             {
@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Views.User
                     return new HtmlString(string.Empty);
                 }
                 return notificationProject.Project.DisplayNameAsUrl;
-            }, 200, DhtmlxGridColumnFilterType.Html);
+            }, 200, AgGridColumnFilterType.Html);
         }
     }
 }

@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using LtInfo.Common;
 using ProjectFirma.Web.Models;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.Role
@@ -30,9 +30,9 @@ namespace ProjectFirma.Web.Views.Role
     {
         public IndexGridSpec()
         {
-            Add("Role", a => a.GetDisplayNameAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
+            Add("Role", a => a.GetDisplayNameAsUrl(), 200, AgGridColumnFilterType.Html);
             Add("Count", a => a.GetPeopleWithRole().Count, 50);
-            Add("Is Base Role?", a => a.IsBaseRole.ToYesNo(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Is Base Role?", a => a.IsBaseRole.ToYesNo(), 100, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

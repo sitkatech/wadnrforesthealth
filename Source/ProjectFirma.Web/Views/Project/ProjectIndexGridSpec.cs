@@ -28,7 +28,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -53,18 +53,18 @@ namespace ProjectFirma.Web.Views.Project
             }
 
 
-            Add(string.Empty, x => MakeFactSheetUrl(x), 30, DhtmlxGridColumnFilterType.None);
+            Add(string.Empty, x => MakeFactSheetUrl(x), 30, AgGridColumnFilterType.None);
 
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),200, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),200, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, DhtmlxGridColumnFormatType.Decimal );
-            Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => x.ProjectPrograms.ToProgramListDisplay(false), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add($"Associated {Models.FieldDefinition.County.ToGridHeaderString()}", x => x.ProjectCounties.FirstOrDefault()?.County?.CountyName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, AgGridColumnFormatType.Decimal );
+            Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => x.ProjectPrograms.ToProgramListDisplay(false), 90, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, AgGridColumnFilterType.SelectFilterStrict);
+            Add($"Associated {Models.FieldDefinition.County.ToGridHeaderString()}", x => x.ProjectCounties.FirstOrDefault()?.County?.CountyName, 125, AgGridColumnFilterType.SelectFilterStrict);
         }
 
         private static HtmlString MakeFactSheetUrl(Models.Project project)
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.Project
             // Only offer FactSheet viewer if one is actually available
             if (ProjectController.FactSheetIsAvailable(project))
             {
-                return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString());
+                return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), FirmaAgGridHtmlHelpers.FactSheetIcon.ToString());
             }
 
             return new HtmlString(string.Empty);

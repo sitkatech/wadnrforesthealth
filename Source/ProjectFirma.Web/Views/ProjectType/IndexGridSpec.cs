@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -35,8 +35,8 @@ namespace ProjectFirma.Web.Views.ProjectType
             if (new ProjectTypeManageFeature().HasPermissionByPerson(currentPerson))
             {
                 Add(string.Empty,
-                    x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, !x.HasDependentObjects(), true),
-                    30, DhtmlxGridColumnFilterType.None);
+                    x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, !x.HasDependentObjects(), true),
+                    30, AgGridColumnFilterType.None);
             }
 
             if (MultiTenantHelpers.IsTaxonomyLevelTrunk())
@@ -47,13 +47,13 @@ namespace ProjectFirma.Web.Views.ProjectType
             {
                 Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.TaxonomyBranch.SummaryUrl, a.TaxonomyBranch.TaxonomyBranchName), 300);
             }
-            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetSummaryUrl(), a.ProjectTypeName), 350, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetSummaryUrl(), a.ProjectTypeName), 350, AgGridColumnFilterType.Html);
             Add("Description", a => a.ProjectTypeDescriptionHtmlString, 350);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 90);
             Add($"# of {Models.FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized()}", a => a.ProjectTypePerformanceMeasures.Count, 90);
-            Add("Sort Order", a => a.ProjectTypeSortOrder, 90, DhtmlxGridColumnFormatType.None);
+            Add("Sort Order", a => a.ProjectTypeSortOrder, 90, AgGridColumnFormatType.None);
 
-            Add($"{Models.FieldDefinition.LimitVisibilityToAdmin.GetFieldDefinitionLabel()}", a => a.LimitVisibilityToAdmin.ToYesNo(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add($"{Models.FieldDefinition.LimitVisibilityToAdmin.GetFieldDefinitionLabel()}", a => a.LimitVisibilityToAdmin.ToYesNo(), 90, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -38,10 +38,10 @@ namespace ProjectFirma.Web.Views.OrganizationAndRelationshipType
 
             if (hasManagePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, x.CanDelete(), true), 30, DhtmlxGridColumnFilterType.None);
-                Add(string.Empty, a => DhtmlxGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<OrganizationAndRelationshipTypeController>.BuildUrlFromExpression(t => t.EditRelationshipType(a)),
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, x.CanDelete(), true), 30, AgGridColumnFilterType.None);
+                Add(string.Empty, a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<OrganizationAndRelationshipTypeController>.BuildUrlFromExpression(t => t.EditRelationshipType(a)),
                         $"Edit {Models.FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()} \"{a.RelationshipTypeName}\"")),
-                    30, DhtmlxGridColumnFilterType.None);
+                    30, AgGridColumnFilterType.None);
                 basicsColumnGroupCount += 2;
             }
 

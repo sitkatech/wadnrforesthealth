@@ -2710,8 +2710,6 @@
     <Compile Include="Views\Shared\SupportForm.cs" />
     <Compile Include="Views\Shared\SupportFormViewData.cs" />
     <Compile Include="Views\Shared\SupportFormViewModel.cs" />
-    <Compile Include="Views\FirmaDhtmlxGridHtmlHelpers.cs" />
-    <Compile Include="Views\FirmaDhtmlxGridHtmlHelpersTest.cs" />
     <Compile Include="Views\FirmaUserControlViewData.cs" />
     <Compile Include="Views\LtInfoMenuItem.cs" />
     <Compile Include="Views\LtInfoMenuItemTest.cs" />
@@ -4564,15 +4562,6 @@
     <Content Include="Scripts\ckeditor\README.md" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.BuildDhtmlxGridHeaderTest.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateArbitraryHtmlTest.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateClearAllCookiesIconHtmlTest.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateCreateUrlHtmlTestWithCreatePopupForm.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateCreateUrlHtmlTestWithCreateUrl.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateFilteredExcelDownloadIconHtmlTest.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateFilteredStateHtmlWithFilterBarTest.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateFilterIconHtmlWithFilterBarTest.approved.txt" />
-    <Content Include="Views\FirmaDhtmlxGridHtmlHelpersTest.CreateViewingRowCountGridHeaderHtmlTest.approved.txt" />
     <Content Include="Views\User\EditRoles.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Detail.cshtml" />

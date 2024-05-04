@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -51,19 +51,19 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteSuppliesLineItemUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteSuppliesLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditSuppliesLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditSuppliesLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDescription.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDate.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDate, 125, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesAmount.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesNotes.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDescription.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDescription, 200, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemTarOrMonth , 125, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDate.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDate, 125, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesAmount.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesNotes.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemNotes, 250, AgGridColumnFilterType.Text);
         }
     }
 }

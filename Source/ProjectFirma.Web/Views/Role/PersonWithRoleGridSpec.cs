@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.Role
@@ -30,10 +30,10 @@ namespace ProjectFirma.Web.Views.Role
     {
         public PersonWithRoleGridSpec()
         {
-            Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 200, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 200, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.OrganizationOrBlankString, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Last Activity", a => a.LastActivityDate.ToString(), 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 200, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 200, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.OrganizationOrBlankString, 200, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Last Activity", a => a.LastActivityDate.ToString(), 200, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

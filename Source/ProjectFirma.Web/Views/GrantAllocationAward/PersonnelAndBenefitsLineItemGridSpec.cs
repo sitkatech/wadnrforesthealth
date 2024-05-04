@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Web;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -52,24 +52,24 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeletePersonnelAndBenefitsLineItemUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeletePersonnelAndBenefitsLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditPersonnelAndBenefitsLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditPersonnelAndBenefitsLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsName.ToGridHeaderString(), s => s.Person != null ? s.Person.GetFullNameFirstLastAndOrgShortNameAsUrl() : new HtmlString(string.Empty), 200, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsDate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemDate, 125, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarHours.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours, 125, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsHourlyRate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add("Hourly Total", s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsFringeRate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add("Fringe Total", s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add("TAR Total", s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarTotal, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsNotes.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsName.ToGridHeaderString(), s => s.Person != null ? s.Person.GetFullNameFirstLastAndOrgShortNameAsUrl() : new HtmlString(string.Empty), 200, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth , 125, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsDate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemDate, 125, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarHours.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours, 125, AgGridColumnFormatType.Integer, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsHourlyRate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate, 125, AgGridColumnFormatType.CurrencyWithCents);
+            Add("Hourly Total", s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsFringeRate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate, 125, AgGridColumnFormatType.CurrencyWithCents);
+            Add("Fringe Total", s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add("TAR Total", s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarTotal, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsNotes.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemNotes, 250, AgGridColumnFilterType.Text);
         }
     }
 }

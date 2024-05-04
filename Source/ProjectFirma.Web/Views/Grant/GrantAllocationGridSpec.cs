@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -59,30 +59,30 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
 
             if (userHasCreatePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, "Duplicate Grant Allocation"), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, "Duplicate Grant Allocation"), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification.Grant.GrantNumber, GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationName), 250, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add(Models.FieldDefinition.GrantModification.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GrantModification.GetDetailUrl(), x.GrantModification.GrantModificationName), 250, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationCurrentBalance.ToGridHeaderString(), x => x.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification.Grant.GrantNumber, GrantNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationName), 250, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.GrantModification.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GrantModification.GetDetailUrl(), x.GrantModification.GrantModificationName), 250, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationCurrentBalance.ToGridHeaderString(), x => x.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantManager.ToGridHeaderString(), x => x.GrantManager != null ? x.GrantManager.FullNameFirstLastAndOrgShortName : string.Empty, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.GetAllProgramManagerPersonNamesAsString(), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 90, DhtmlxGridColumnFormatType.Date);
-            Add($"Parent Grant {Models.FieldDefinition.GrantStatus.ToGridHeaderString()}", x => x.GrantModification.Grant.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Division.ToGridHeaderString(), x => x.DivisionNameDisplay, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.DNRUplandRegion.ToGridHeaderString(), x => x.RegionNameDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.FederalFundCode.ToGridHeaderString(), x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantManager.ToGridHeaderString(), x => x.GrantManager != null ? x.GrantManager.FullNameFirstLastAndOrgShortName : string.Empty, 150, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.GetAllProgramManagerPersonNamesAsString(), 150, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
+            Add($"Parent Grant {Models.FieldDefinition.GrantStatus.ToGridHeaderString()}", x => x.GrantModification.Grant.GrantStatus.GrantStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.Division.ToGridHeaderString(), x => x.DivisionNameDisplay, 180, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.DNRUplandRegion.ToGridHeaderString(), x => x.RegionNameDisplay, 100, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FederalFundCode.ToGridHeaderString(), x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, AgGridColumnFilterType.SelectFilterStrict);
             
         }
 

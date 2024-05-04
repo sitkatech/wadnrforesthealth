@@ -19,7 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -33,8 +33,8 @@ namespace ProjectFirma.Web.Views.MapLayer
         {
             if (userCanManage)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit External Map Layer")), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit External Map Layer")), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.ExternalMapLayerDisplayName.ToGridHeaderString(), x => x?.DisplayName, 150);

@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common.DesignByContract;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -63,29 +63,29 @@ namespace ProjectFirma.Web.Views.Grant
             var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
 
             var userHasEditPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
                                                                     new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.GrantModificationName}"),
-                                                                    userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
+                                                                    userHasEditPermissions), 30, AgGridColumnFilterType.None);
             }
 
             if (userHasCreatePermissions && grantToAssociate != null)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{x.GrantModificationName}\" to New {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}"), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{x.GrantModificationName}\" to New {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.GrantModificationStartDate, 100, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.GrantModificationEndDate, 100, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantModificationPurpose.ToGridHeaderString(), x => x.GrantModificationPurposeNamesAsCommaDelimitedString, 200, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.GrantModificationAmount.ToGridHeaderString(), x => x.GrantModificationAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantModificationDescription.ToGridHeaderString(), x => x.GrantModificationDescription, 125, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.GrantModificationStartDate, 100, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.GrantModificationEndDate, 100, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 100, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationPurpose.ToGridHeaderString(), x => x.GrantModificationPurposeNamesAsCommaDelimitedString, 200, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantModificationAmount.ToGridHeaderString(), x => x.GrantModificationAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantModificationDescription.ToGridHeaderString(), x => x.GrantModificationDescription, 125, AgGridColumnFilterType.Text);
         }
     }
 }

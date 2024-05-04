@@ -94,16 +94,16 @@
 
     @if (ViewDataTyped.CanLaunchProjectOrProposalWizard)
     {
-        <a class="btn btn-firma" href="@ViewDataTyped.ProjectWizardUrl" title="@ViewDataTyped.ProjectUpdateButtonText">@DhtmlxGridHtmlHelpers.EditIconBootstrap @ViewDataTyped.ProjectUpdateButtonText</a>
+        <a class="btn btn-firma" href="@ViewDataTyped.ProjectWizardUrl" title="@ViewDataTyped.ProjectUpdateButtonText">@AgGridHtmlHelpers.EditIconBootstrap @ViewDataTyped.ProjectUpdateButtonText</a>
     }
     @if (ViewDataTyped.CanViewProjectFactSheet)
     {
-        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
+        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@FirmaAgGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
     }
      
     @if (ViewDataTyped.UserHasEditProjectPermissions && ViewDataTyped.Project.IsInLandownerAssistanceProgram)
     {
-        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download Financial Assistance Approval Letter">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download Financial Assistance Approval Letter</a>
+        <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download Financial Assistance Approval Letter">@FirmaAgGridHtmlHelpers.EnvelopeIcon Download Financial Assistance Approval Letter</a>
     }
 }
 

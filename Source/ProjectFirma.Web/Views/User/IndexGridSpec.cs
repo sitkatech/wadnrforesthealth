@@ -23,7 +23,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Security;
 
@@ -37,23 +37,23 @@ namespace ProjectFirma.Web.Views.User
             //if (hasDeletePermission)
             //{
             //    Add(string.Empty,
-            //        x => x.IsFullUser() ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), hasDeletePermission, !x.HasDependentObjects(), true) : new HtmlString(""),
-            //        30, DhtmlxGridColumnFilterType.None);
+            //        x => x.IsFullUser() ? AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), hasDeletePermission, !x.HasDependentObjects(), true) : new HtmlString(""),
+            //        30, AgGridColumnFilterType.None);
             //}
-            Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, DhtmlxGridColumnFilterType.Html);
-            Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 100, DhtmlxGridColumnFilterType.Html);
+            Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, AgGridColumnFilterType.Html);
+            Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 100, AgGridColumnFilterType.Html);
             Add("Email", a => a.Email, 200);
             Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => GetOrganizationShortNameUrl(a), 200);
             Add("Phone", a => a.Phone.ToPhoneNumberString(), 100);
             Add("Last Activity", a => a.LastActivityDate, 120);
-            Add("Base Role", a => a.IsFullUser() ? a.GetUsersBaseRole().RoleDisplayName : "N/A", 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Supplemental Role(s)", a => a.IsFullUser() ? string.Join(", ", a.GetUsersSupplementalRoles().Select(x => x.RoleDisplayName)) : "N/A", 100, DhtmlxGridColumnFilterType.Text);
-            Add("Active?", a => a.IsActive.ToYesNo(), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            //Add("Receives Support Emails?", a => a.IsFullUser() ? a.ReceiveSupportEmails.ToYesNo(): "N/A", 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Base Role", a => a.IsFullUser() ? a.GetUsersBaseRole().RoleDisplayName : "N/A", 100, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Supplemental Role(s)", a => a.IsFullUser() ? string.Join(", ", a.GetUsersSupplementalRoles().Select(x => x.RoleDisplayName)) : "N/A", 100, AgGridColumnFilterType.Text);
+            Add("Active?", a => a.IsActive.ToYesNo(), 75, AgGridColumnFilterType.SelectFilterStrict);
+            //Add("Receives Support Emails?", a => a.IsFullUser() ? a.ReceiveSupportEmails.ToYesNo(): "N/A", 100, AgGridColumnFilterType.SelectFilterStrict);
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
-            Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
-            Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
-            Add("Authentication Methods", x => string.Join(", ", x.PersonAllowedAuthenticators.OrderBy(paa => paa.Authenticator.AuthenticatorName).Select(paa => paa.Authenticator.AuthenticatorName)), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Added On", x => x.CreateDate, 130, AgGridColumnFormatType.Date);
+            Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, AgGridColumnFilterType.Html);
+            Add("Authentication Methods", x => string.Join(", ", x.PersonAllowedAuthenticators.OrderBy(paa => paa.Authenticator.AuthenticatorName).Select(paa => paa.Authenticator.AuthenticatorName)), 75, AgGridColumnFilterType.SelectFilterStrict);
         }
 
         private static HtmlString GetOrganizationShortNameUrl(Person person)
