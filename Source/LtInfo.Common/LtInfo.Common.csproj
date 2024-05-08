@@ -184,6 +184,7 @@
     <Compile Include="AgGridWrappers\AgGridHtmlHelpers.cs" />
     <Compile Include="AgGridWrappers\AgGridResizeType.cs" />
     <Compile Include="AgGridWrappers\AutoGridSpec.cs" />
+    <Compile Include="AgGridWrappers\BulkDeleteModalDialogForm.cs" />
     <Compile Include="AgGridWrappers\BulkTagModalDialogForm.cs" />
     <Compile Include="AgGridWrappers\ColumnSpec.cs" />
     <Compile Include="AgGridWrappers\GridOutputFormat.cs" />

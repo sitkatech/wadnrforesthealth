@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="AgGridColumnSortType.cs" company="Environmental Science Associates">
+<copyright file="BulkDeleteModalDialogForm.cs" company="Environmental Science Associates">
 Copyright (c) Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -21,13 +21,24 @@ Source code is available upon request via <support@sitkatech.com>.
 
 namespace LtInfo.Common.AgGridWrappers
 {
-    public class AgGridColumnSortType
+    public class BulkDeleteModalDialogForm
     {
-        public string SortingType { get; private set; }
+        public string DialogUrl;
+        public string DialogLinkText;
+        public string DialogTitle;
+        public int CheckboxColumnIndex;
+        public string ValueColumnName;
+        public string ReturnListName;
 
-        public AgGridColumnSortType(string sortingType)
+        public BulkDeleteModalDialogForm(string dialogUrl, string dialogLinkText, string dialogTitle)
         {
-            SortingType = sortingType;
+            DialogUrl = dialogUrl;
+            DialogLinkText = dialogLinkText;
+            DialogTitle = dialogTitle;
+            CheckboxColumnIndex = 0;
+            ValueColumnName = "ProjectID";
+            ReturnListName = "ProjectIDList";
+
         }
     }
 }

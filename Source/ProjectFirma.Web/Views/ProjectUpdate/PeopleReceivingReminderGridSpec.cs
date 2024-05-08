@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             if (showCheckbox)
             {
-                AddCheckBoxColumn();
+                AddMasterCheckBoxColumn();
                 Add("PersonID", x => x.PersonID, 0);
             }
             Add(Models.FieldDefinition.OrganizationPrimaryContact.ToGridHeaderString(), x => x.GetFullNameFirstLastAndOrgShortNameAsUrl(), 220);

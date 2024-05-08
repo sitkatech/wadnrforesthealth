@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.Project
             // Only offer FactSheet viewer if one is actually available
             if (ProjectController.FactSheetIsAvailable(project))
             {
-                return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), FirmaAgGridHtmlHelpers.FactSheetIcon.ToString());
+                return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString());
             }
 
             return new HtmlString(string.Empty);

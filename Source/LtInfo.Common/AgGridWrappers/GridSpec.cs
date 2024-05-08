@@ -45,12 +45,10 @@ namespace LtInfo.Common.AgGridWrappers
         public string CreateEntityActionPhrase { get; set; }
         public string CreateEntityUrl { get; set; }
         public string CreateEntityUrlClass { get; set; }
-        /// <summary>
-        /// ONly in Armstrong; Corral, Toad do not use this because we use the built-in dhtmlxgrid excel functionality. Can delete if/when Armstrong is updated.
-        /// </summary>
+
         public string CsvDownloadUrl { get; set; }
         /// <summary>
-        /// This download URL is in addition to the built-in automatically generated dhtmlxgrid download of the table
+        /// This download URL is in addition to the built-in automatically generated ag-grid download of the table
         /// If this field is set to a value, the custom download button is automatically created when the table is rendered
         /// </summary>
         public string CustomExcelDownloadUrl { get; set; }
@@ -62,6 +60,10 @@ namespace LtInfo.Common.AgGridWrappers
         public ModalDialogForm CreateEntityModalDialogForm { get; set; }
         public BulkTagModalDialogForm BulkTagModalDialogForm { get; set; }
         public SelectProjectsModalDialogForm GenerateReportModalDialogForm { get; set; }
+        public BulkDeleteModalDialogForm BulkDeleteModalDialogForm { get; set; }
+
+        // todo: ag grid update - reimplement disableSmartRendering functionality
+        public bool DisableSmartRendering { get; set; }
 
         public bool ShowFilterBar { get; set; }
 
@@ -145,15 +147,31 @@ namespace LtInfo.Common.AgGridWrappers
             return Add(columnName, valueFunction, gridWidth, AgGridColumnFilterType.SelectFilterHtmlStrict);
         }
 
-        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, AgGridColumnFilterType agGridColumnFilterType, int gridWidthFlex = 0)
+        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, AgGridColumnFilterType agGridColumnFilterType)
         {
-            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, AgGridColumnAlignType.Left, gridWidthFlex);
+            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, AgGridColumnAlignType.Left, AgGridColumnFormatType.None, false);
+        }
+
+        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, AgGridColumnFilterType agGridColumnFilterType, bool hiddenColumnForCsv)
+        {
+            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, AgGridColumnAlignType.Left, AgGridColumnFormatType.None, hiddenColumnForCsv);
         }
 
         public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, AgGridColumnFilterType agGridColumnFilterType, AgGridColumnAlignType agGridColumnAlignType)
         {
-            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, agGridColumnAlignType);
+            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, agGridColumnAlignType, AgGridColumnFormatType.None, false);
         }
+
+        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, AgGridColumnFilterType agGridColumnFilterType, AgGridColumnAlignType agGridColumnAlignType, bool hiddenColumnForCsv)
+        {
+            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, agGridColumnAlignType, AgGridColumnFormatType.None, hiddenColumnForCsv);
+        }
+
+        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, AgGridColumnFormatType agGridColumnFormatType, AgGridColumnFilterType agGridColumnFilterType)
+        {
+            return Add(columnName, valueFunction, null, gridWidth, null, agGridColumnFilterType, AgGridColumnAggregationType.None, AgGridColumnAlignType.Right, agGridColumnFormatType, false);
+        }
+
 
         private ColumnSpec<T> Add(string columnName,
             Func<T, HtmlString> valueFunction,
@@ -163,11 +181,14 @@ namespace LtInfo.Common.AgGridWrappers
             AgGridColumnFilterType agGridColumnFilterType,
             AgGridColumnAggregationType agGridColumnAggregationType,
             AgGridColumnAlignType agGridColumnAlignType,
-            int gridWidthFlex = 0)
+            AgGridColumnFormatType agGridColumnFormatType,
+            bool hiddenColumnForCsv,
+            int gridWidthFlex = 0
+            )
         {
             var columnSpec = new ColumnSpec<T>(columnName, valueFunction, gridWidth,
                 AgGridColumnDataType.ReadOnlyHtmlText, AgGridColumnFormatType.None,
-                agGridColumnAlignType, new AgGridColumnSortType("htmlstring"), agGridColumnFilterType, agGridColumnAggregationType, cssClassFunction, titleFunction, gridWidthFlex);
+                agGridColumnAlignType, new AgGridColumnSortType("htmlstring"), agGridColumnFilterType, agGridColumnAggregationType, cssClassFunction, titleFunction, gridWidthFlex, hiddenColumnForCsv);
             Add(columnSpec);
             return columnSpec;
         }
@@ -403,7 +424,7 @@ namespace LtInfo.Common.AgGridWrappers
 
         #region CheckBox column
 
-        public ColumnSpec<T> AddCheckBoxColumn()
+        public ColumnSpec<T> AddMasterCheckBoxColumn()
         {
             var columnSpec = new ColumnSpec<T>("#master_checkbox", x => 0.ToString(), 28, AgGridColumnDataType.Checkbox,
                 AgGridColumnFormatType.None, AgGridColumnAlignType.Center, new AgGridColumnSortType("ch"), AgGridColumnFilterType.None, AgGridColumnAggregationType.None, null, null);

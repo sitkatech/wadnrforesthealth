@@ -31,18 +31,18 @@ using LtInfo.Common.ModalDialog;
 namespace LtInfo.Common.AgGridWrappers
 {
     /// <summary>
-    ///     Helper class for DhtmlxGrid expects following content to be set up in local project
-    ///     /Content/css/dhtmlxgrid_skin.css
-    ///     /Content/img/bg-edit-single.png
-    ///     /Content/img/bg-delete-single.png
+    ///     Helper class for AgGrid
     /// </summary>
     public static class AgGridHtmlHelpers
     {
         public static readonly HtmlString PlusIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus-sign gi-1x blue");
         public static readonly HtmlString UndoIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-regular undo gi-1x blue");
         public static readonly HtmlString EditIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit gi-1x blue");
+        public static readonly HtmlString DuplicateIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-duplicate gi-1x blue");
+        public static readonly HtmlString FileIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file gi-1x blue");
         public static readonly HtmlString DeleteIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue");
         public static readonly HtmlString OkCircleIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIconWithHiddenText("glyphicon-ok-circle gi-1x blue", "Yes");
+        public static readonly HtmlString FactSheetIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-search gi-1x blue");
 
         public const string EditIcon = "<img src=\"/Content/img/bg-edit-single.png\" />";
         public const string DeleteIcon = "<img src=\"/Content/img/bg-delete-single.png\" />";
@@ -541,6 +541,20 @@ namespace LtInfo.Common.AgGridWrappers
         }
 
         /// <summary>
+        /// For making an edit icon on the grid with an editor in a jquery ui dialog, but also supports permissions.
+        /// Returns empty HTML string if no permissions
+        /// </summary>
+        public static HtmlString MakeEditIconAsModalDialogLinkBootstrap(ModalDialogForm modalDialogForm, bool hasEditPermissions)
+        {
+            if (!hasEditPermissions)
+            {
+                return new HtmlString(string.Empty);
+            }
+
+            return MakeModalDialogLink($"{EditIconBootstrap}<span style=\"display:none\">Edit</span>", modalDialogForm.ContentUrl, modalDialogForm.DialogWidth, modalDialogForm.DialogTitle, modalDialogForm.OnJavascriptReadyFunction);
+        }
+
+        /// <summary>
         /// For making an edit icon on the grid with an editor in a jquery ui dialog
         /// </summary>
         public static HtmlString MakeEditIconAsModalDialogLinkBootstrap(string editDialogUrl, string formTitle)
@@ -600,9 +614,9 @@ namespace LtInfo.Common.AgGridWrappers
         /// <param name="deleteDialogUrl"></param>
         /// <param name="userHasDeletePermission"></param>
         /// <returns></returns>
-        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission)
+        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission, bool addDeleteSpan)
         {
-            return MakeDeleteIconAndLinkBootstrap(deleteDialogUrl, userHasDeletePermission, true);
+            return MakeDeleteIconAndLinkBootstrap(deleteDialogUrl, userHasDeletePermission, true, addDeleteSpan);
         }
 
         /// <summary>
@@ -613,11 +627,32 @@ namespace LtInfo.Common.AgGridWrappers
         /// <param name="userHasDeletePermission">Does the given user have permission to perform a delete?</param>
         /// <param name="deletePossibleForObject">Is a delete possible for the given object?</param>
         /// <returns></returns>
-        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission, bool deletePossibleForObject)
+        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission, bool deletePossibleForObject, bool addDeleteSpan)
         {
-            var deleteIcon = deletePossibleForObject ? $"{DeleteIconBootstrap}<span style=\"display:none\">Delete</span>"
+            var deleteSpan = addDeleteSpan ? "<span style=\"display:none\">Delete</span>" : string.Empty;
+            var deleteIconToUse = addDeleteSpan
+                ? DeleteIconBootstrap
+                : BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue", "Delete");
+            var deleteIcon = deletePossibleForObject ? $"{deleteIconToUse}{deleteSpan}"
                 : BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x disabled").ToString();
             return ModalDialogFormHelper.MakeDeleteLink(deleteIcon, deleteDialogUrl, new List<string>(), userHasDeletePermission);
+        }
+
+        /// <summary>
+        /// For making a duplicate icon on the grid with an editor in a jquery ui dialog
+        /// </summary>
+        public static HtmlString MakeDuplicateIconAndLinkBootstrap(string dialogContentUrl, int dialogWidth, string dialogTitle)
+        {
+            return MakeModalDialogLink($"{DuplicateIconBootstrap}<span style=\"display:none\">Duplicate</span>", dialogContentUrl, dialogWidth, dialogTitle, null);
+        }
+
+
+        public static HtmlString MakeFileDownloadIconAsHyperlinkBootstrap(string fileDownloadUrl, string titleHoverText)
+        {
+            var dictionary = new Dictionary<string, string>();
+            dictionary.Add("target", "_blank");
+            return !string.IsNullOrEmpty(fileDownloadUrl) ? UrlTemplate.MakeHrefString(fileDownloadUrl,
+                $"{FileIconBootstrap}<span style=\"display:none\">{titleHoverText}</span>", titleHoverText, dictionary) : new HtmlString(string.Empty);
         }
     }
 }

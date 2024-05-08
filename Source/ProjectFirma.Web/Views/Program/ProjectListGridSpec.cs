@@ -52,13 +52,13 @@ namespace ProjectFirma.Web.Views.Program
                 160, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(),
                 x => new HtmlString(x.ProjectStage.ProjectStageDisplayName),
-                100, AgGridColumnFilterType.SelectFilterStrict, DhtmlxGridColumnAlignType.Center, false);
+                100, AgGridColumnFilterType.SelectFilterStrict, AgGridColumnAlignType.Center, false);
             Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 180, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.UpdatesFromImport.ToGridHeaderString(),
                 x => x.ProjectImportBlockLists.Any(b => b.ProgramID == currentProgram.ProgramID)
                     ? new HtmlString("<span class='red'>Blocked</span>")
                     : new HtmlString("Updates"),
-                80, AgGridColumnFilterType.SelectFilterHtmlStrict, DhtmlxGridColumnAlignType.Center, true);
+                80, AgGridColumnFilterType.SelectFilterHtmlStrict, AgGridColumnAlignType.Center, true);
         }
 
         private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)

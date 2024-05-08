@@ -51,6 +51,7 @@ namespace LtInfo.Common.AgGridWrappers
         private readonly Func<T, string> _titleFunction;
         public readonly int GridWidth;
         public readonly int GridWidthFlex;
+        public readonly bool HiddenColumnForCsv;
         public readonly AgGridColumnSortType AgGridColumnSortType;
         public readonly AgGridColumnAlignType AgGridColumnAlignType;
         public readonly AgGridColumnDataType AgGridColumnDataType;
@@ -135,11 +136,31 @@ namespace LtInfo.Common.AgGridWrappers
             HtmlString
         }
 
-        private ColumnSpec(string columnName, int gridWidth, AgGridColumnDataType agGridColumnDataType,
-            AgGridColumnFormatType agGridColumnFormatType, AgGridColumnAlignType agGridColumnAlignType,
-            AgGridColumnSortType agGridColumnSortType, AgGridColumnFilterType agGridColumnFilterType,
-            AgGridColumnAggregationType agGridColumnAggregationType, Func<T, string> cssClassFunction,
-            Func<T, string> titleFunction)
+        private ColumnSpec(string columnName, int gridWidth,
+            AgGridColumnDataType agGridColumnDataType,
+            AgGridColumnFormatType agGridColumnFormatType,
+            AgGridColumnAlignType agGridColumnAlignType,
+            AgGridColumnSortType agGridColumnSortType,
+            AgGridColumnFilterType agGridColumnFilterType,
+            AgGridColumnAggregationType agGridColumnAggregationType,
+            Func<T, string> cssClassFunction,
+            Func<T, string> titleFunction) : this(columnName, gridWidth, agGridColumnDataType, agGridColumnFormatType, agGridColumnAlignType, agGridColumnSortType, agGridColumnFilterType, agGridColumnAggregationType, cssClassFunction, titleFunction, false)
+        {
+
+        }
+
+        public const string HideColumnText = "HideColumnText";
+
+        private ColumnSpec(string columnName, int gridWidth, 
+            AgGridColumnDataType agGridColumnDataType,
+            AgGridColumnFormatType agGridColumnFormatType, 
+            AgGridColumnAlignType agGridColumnAlignType,
+            AgGridColumnSortType agGridColumnSortType, 
+            AgGridColumnFilterType agGridColumnFilterType,
+            AgGridColumnAggregationType agGridColumnAggregationType, 
+            Func<T, string> cssClassFunction,
+            Func<T, string> titleFunction,
+            bool hiddenColumnForCsv)
         {
             ColumnName = columnName;
             AgGridColumnDataType = agGridColumnDataType;
@@ -151,6 +172,7 @@ namespace LtInfo.Common.AgGridWrappers
             AgGridColumnAlignType = agGridColumnAlignType;
             _cssClassFunction = cssClassFunction;
             _titleFunction = titleFunction;
+            HiddenColumnForCsv = hiddenColumnForCsv;
         }
 
         public ColumnSpec(string columnName, Func<T, string> stringValueFunc, int gridWidth,
@@ -348,16 +370,33 @@ namespace LtInfo.Common.AgGridWrappers
             _funcType = FuncType.NullableDecimal;
         }
 
+
         public ColumnSpec(string columnName, Func<T, HtmlString> htmlStringValueFunc, int gridWidth,
             AgGridColumnDataType agGridColumnDataType, AgGridColumnFormatType agGridColumnFormatType,
             AgGridColumnAlignType agGridColumnAlignType, AgGridColumnSortType agGridColumnSortType,
             AgGridColumnFilterType agGridColumnFilterType,
             AgGridColumnAggregationType agGridColumnAggregationType, Func<T, string> cssClassFunction,
-            Func<T, string> titleFunction, int gridWidthFlex)
+            Func<T, string> titleFunction, bool hiddenColumnForCsv)
             : this(
                 columnName, gridWidth, agGridColumnDataType, agGridColumnFormatType, agGridColumnAlignType,
                 agGridColumnSortType, agGridColumnFilterType, agGridColumnAggregationType, cssClassFunction,
-                titleFunction)
+                titleFunction, hiddenColumnForCsv)
+        {
+            _htmlStringValueFunc = htmlStringValueFunc;
+            _funcType = FuncType.HtmlString;
+            //GridWidthFlex = gridWidthFlex;
+        }
+
+        public ColumnSpec(string columnName, Func<T, HtmlString> htmlStringValueFunc, int gridWidth,
+            AgGridColumnDataType agGridColumnDataType, AgGridColumnFormatType agGridColumnFormatType,
+            AgGridColumnAlignType agGridColumnAlignType, AgGridColumnSortType agGridColumnSortType,
+            AgGridColumnFilterType agGridColumnFilterType,
+            AgGridColumnAggregationType agGridColumnAggregationType, Func<T, string> cssClassFunction,
+            Func<T, string> titleFunction, int gridWidthFlex, bool hiddenColumnForCsv)
+            : this(
+                columnName, gridWidth, agGridColumnDataType, agGridColumnFormatType, agGridColumnAlignType,
+                agGridColumnSortType, agGridColumnFilterType, agGridColumnAggregationType, cssClassFunction,
+                titleFunction, hiddenColumnForCsv)
         {
             _htmlStringValueFunc = htmlStringValueFunc;
             _funcType = FuncType.HtmlString;
