@@ -18,10 +18,10 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.BootstrapWrappers
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
 @inherits ProjectFirma.Web.Views.Vendor.Index
 @section JavascriptAndStylesContent
@@ -33,5 +33,5 @@
 
 <div style="margin-top: 10px">
     @*Vendors grid*@
-    @Html.DhtmlxGridCustomGridHeadersOnly(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+    @Html.AgGridCustomGridHeadersOnly(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
 </div>

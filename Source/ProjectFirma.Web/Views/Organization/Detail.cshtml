@@ -24,7 +24,7 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using MoreLinq
@@ -191,7 +191,7 @@
                                 @FieldDefinition.Program.GetFieldDefinitionLabelPluralized()
                             </div>
                             <div class="panel-body">
-                                @Html.DhtmlxGrid(ViewDataTyped.ProgramGridSpec, ViewDataTyped.ProgramGridName, ViewDataTyped.ProgramGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                @Html.AgGrid(ViewDataTyped.ProgramGridSpec, ViewDataTyped.ProgramGridName, ViewDataTyped.ProgramGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                                         @(ViewDataTyped.NumberOfProjectsContributedTo == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
                                     </li>
                                 </ul>
-                                @Html.DhtmlxGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectOrganizationsGridName, ViewDataTyped.ProjectOrganizationsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                @Html.AgGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectOrganizationsGridName, ViewDataTyped.ProjectOrganizationsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>
                     </div>
@@ -301,7 +301,7 @@
                                     @ViewDataTyped.Organization.OrganizationName is associated with the following @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()
                                 </p>
 
-                                @Html.DhtmlxGrid(ViewDataTyped.AgreementOrganizationsGridSpec, ViewDataTyped.AgreementOrganizationsGridName, ViewDataTyped.AgreementOrganizationsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                @Html.AgGrid(ViewDataTyped.AgreementOrganizationsGridSpec, ViewDataTyped.AgreementOrganizationsGridName, ViewDataTyped.AgreementOrganizationsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>
                     </div>
@@ -316,7 +316,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <p></p>
-                                    @Html.DhtmlxGrid(ViewDataTyped.ProposalsGridSpec, ViewDataTyped.ProposalsGridName, ViewDataTyped.ProposalsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                    @Html.AgGrid(ViewDataTyped.ProposalsGridSpec, ViewDataTyped.ProposalsGridName, ViewDataTyped.ProposalsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                                 </div>
                             </div>
                         </div>
@@ -332,7 +332,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <p></p>
-                                    @Html.DhtmlxGrid(ViewDataTyped.PendingProjectsGridSpec, ViewDataTyped.PendingProjectsGridName, ViewDataTyped.PendingProjectsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                    @Html.AgGrid(ViewDataTyped.PendingProjectsGridSpec, ViewDataTyped.PendingProjectsGridName, ViewDataTyped.PendingProjectsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                                 </div>
                             </div>
                         </div>
@@ -437,7 +437,7 @@
                                 @FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
                             </div>
                             <div class="panel-body">
-                                @Html.DhtmlxGrid(ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridSpec, ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridName, ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridSpec, ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridName, ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>
                     </div>

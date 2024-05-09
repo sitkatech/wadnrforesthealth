@@ -18,7 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
@@ -40,7 +40,7 @@
 <div style="margin-top: 10px">
 
     <h3>@FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()</h3>
-    @Html.DhtmlxGrid(ViewDataTyped.InteractionEventGridSpec, ViewDataTyped.InteractionEventGridName, ViewDataTyped.InteractionEventGridDataUrl, "height: 255px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+    @Html.AgGrid(ViewDataTyped.InteractionEventGridSpec, ViewDataTyped.InteractionEventGridName, ViewDataTyped.InteractionEventGridDataUrl, "height: 255px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
 
 
 </div>

@@ -20,7 +20,7 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using ProjectFirma.Web.Views.Grant
 @inherits ProjectFirma.Web.Views.Grant.GrantIndex
 
@@ -38,17 +38,17 @@
     
     @* Grant Grid *@
     <h3>Grants</h3>
-    @Html.DhtmlxGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, "height:255px;", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+    @Html.AgGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, "height:255px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
 
     <br />
 
     @* Grant Allocation Grid *@
     <h3>Grant Allocations</h3>
     <div id="grantAllocationGridWithData">
-        @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
     </div>
     <div id="grantAllocationGridWithoutDataForNoGrantFilterResults">
-        @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationNoDataGridSpec, ViewDataTyped.GrantAllocationNoDataGridName, ViewDataTyped.GrantAllocationNoDataGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.GrantAllocationNoDataGridSpec, ViewDataTyped.GrantAllocationNoDataGridName, ViewDataTyped.GrantAllocationNoDataGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
     </div>
 </div>
 

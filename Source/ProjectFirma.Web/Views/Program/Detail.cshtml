@@ -20,7 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
@@ -214,7 +214,7 @@
                 <div class="panel-body">
                     <div>
 
-                        @Html.DhtmlxGrid(ViewDataTyped.NotificationsGridSpec, ViewDataTyped.NotificationsGridName, ViewDataTyped.NotificationsGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.NotificationsGridSpec, ViewDataTyped.NotificationsGridName, ViewDataTyped.NotificationsGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
 
                     </div>
                 </div>
@@ -234,7 +234,7 @@
                 </div>
                 <div class="panel-body">
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.ProjectsGridSpec, ViewDataTyped.ProjectsGridName, ViewDataTyped.ProjectsGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.ProjectsGridSpec, ViewDataTyped.ProjectsGridName, ViewDataTyped.ProjectsGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
                     </div>
                 </div>
             </div>
@@ -253,7 +253,7 @@
                 </div>
                 <div class="panel-body">
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.ProjectsBlockedGridSpec, ViewDataTyped.ProjectsBlockedGridName, ViewDataTyped.ProjectsBlockedGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.ProjectsBlockedGridSpec, ViewDataTyped.ProjectsBlockedGridName, ViewDataTyped.ProjectsBlockedGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
                     </div>
                 </div>
             </div>

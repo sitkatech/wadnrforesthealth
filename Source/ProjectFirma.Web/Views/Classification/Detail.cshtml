@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views
@@ -111,7 +111,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 <h2>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</h2>
             </div>
             <div class="panel-body">
-                @Html.DhtmlxGrid(ViewDataTyped.ProjectThemeProjectListGridSpec, ViewDataTyped.ProjectThemeProjectListGridName, ViewDataTyped.ProjectThemeProjectListGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                @Html.AgGrid(ViewDataTyped.ProjectThemeProjectListGridSpec, ViewDataTyped.ProjectThemeProjectListGridName, ViewDataTyped.ProjectThemeProjectListGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
             </div>
         </div>
     </div>

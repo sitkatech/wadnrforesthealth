@@ -1197,6 +1197,7 @@
     <Compile Include="Views\FindYourForester\BulkAssignForestersViewData.cs" />
     <Compile Include="Views\FindYourForester\FindYourForesterViewData.cs" />
     <Compile Include="Views\FindYourForester\ManageFindYourForesterViewData.cs" />
+    <Compile Include="Views\FirmaAgGridHtmlHelpers.cs" />
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
     <Compile Include="Views\GisFeature\Detail.cs" />
     <Compile Include="Views\GisFeature\DetailViewData.cs" />

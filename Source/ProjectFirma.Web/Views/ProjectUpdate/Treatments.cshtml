@@ -18,7 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
@@ -36,7 +36,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel-body" id="treatmentGridNonFlattened">
-            @Html.DhtmlxGrid(ViewDataTyped.TreatmentUpdateGridSpec, ViewDataTyped.TreatmentUpdateGrid, ViewDataTyped.TreatmentUpdateGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+            @Html.AgGrid(ViewDataTyped.TreatmentUpdateGridSpec, ViewDataTyped.TreatmentUpdateGrid, ViewDataTyped.TreatmentUpdateGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
         </div>
     </div>
 </div>

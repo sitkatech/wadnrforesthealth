@@ -20,7 +20,7 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @inherits ProjectFirma.Web.Views.Reports.Projects
 @section JavascriptAndStylesContent
 {
@@ -36,5 +36,5 @@
             @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
         </div>
 
-        @Html.DhtmlxGrid(ViewDataTyped.ProjectListGridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.ProjectListGridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", AgGridResizeType.VerticalFillHorizontalAutoFit)
     </div>

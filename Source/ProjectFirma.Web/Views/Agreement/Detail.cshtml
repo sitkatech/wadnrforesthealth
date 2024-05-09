@@ -20,7 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
@@ -281,7 +281,7 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.AgreementPersonGridSpec, ViewDataTyped.AgreementPersonGridName, ViewDataTyped.AgreementPersonGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    @Html.AgGrid(ViewDataTyped.AgreementPersonGridSpec, ViewDataTyped.AgreementPersonGridName, ViewDataTyped.AgreementPersonGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>
