@@ -35,8 +35,8 @@ namespace ProjectFirma.Web.Views.Reports
         {
             if (hasManagePermissions)
             {
-                Add(string.Empty, a => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Delete(a)), !a.IsSystemTemplate, true), 30, AgGridColumnFilterType.None);
-                Add(string.Empty, a => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Edit(a)), "Edit Report Template")), 30, AgGridColumnFilterType.None);
+                Add("Delete", a => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Delete(a)), !a.IsSystemTemplate, true), 30, AgGridColumnFilterType.None);
+                Add("Edit", a => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<ReportsController>.BuildUrlFromExpression(t => t.Edit(a)), "Edit Report Template")), 30, AgGridColumnFilterType.None);
             }
             Add("Report Title", a => a.DisplayName, 200);
             Add("Description", a => a.Description, 400);

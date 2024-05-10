@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.TaxonomyBranch
         {
             if (new TaxonomyBranchManageFeature().HasPermissionByPerson(currentPerson))
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, AgGridColumnFilterType.None);
             }
 
             if (MultiTenantHelpers.IsTaxonomyLevelTrunk())

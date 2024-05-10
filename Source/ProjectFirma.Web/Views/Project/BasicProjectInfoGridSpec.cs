@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Views.Project
                 Add("ProjectID", x => x.ProjectID, 0);
             }
 
-            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
+            Add("Fact Sheet", x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, AgGridColumnFilterType.Html);
             

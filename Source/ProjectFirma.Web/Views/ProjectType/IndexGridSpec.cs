@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.ProjectType
         {
             if (new ProjectTypeManageFeature().HasPermissionByPerson(currentPerson))
             {
-                Add(string.Empty,
+                Add("Delete",
                     x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, !x.HasDependentObjects(), true),
                     30, AgGridColumnFilterType.None);
             }

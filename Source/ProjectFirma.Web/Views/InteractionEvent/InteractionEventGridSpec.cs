@@ -79,14 +79,14 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
             if (userHasManagePermissions)
             {
-                Add(string.Empty,
+                Add("Delete",
                     x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasManagePermissions, true),
                     30, AgGridColumnFilterType.None);
             }
 
             if (userHasManagePermissions)
             {
-                Add(string.Empty,
+                Add("Edit",
                     x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
                         new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InteractionEventTitle}"),
                         userHasManagePermissions), 30, AgGridColumnFilterType.None);

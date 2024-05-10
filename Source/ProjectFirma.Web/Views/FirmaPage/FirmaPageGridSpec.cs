@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.FirmaPage
         {            
             if (hasManagePermissions)
             {
-                Add(string.Empty, a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<FirmaPageController>.BuildUrlFromExpression(t => t.EditInDialog(a)),
+                Add("Edit", a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<FirmaPageController>.BuildUrlFromExpression(t => t.EditInDialog(a)),
                         $"Edit Intro Content for '{a.FirmaPageType.FirmaPageTypeDisplayName}'")),
                     30);
             }

@@ -21,13 +21,13 @@ namespace ProjectFirma.Web.Views.Agreement
             var userHasEditPermissions = new AgreementEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit this Agreement Contact")), 30, AgGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit this Agreement Contact")), 30, AgGridColumnFilterType.None);
             }
 
             var userHasDeletePermissions = new AgreementDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             Add("First Name", x => x.Person.GetFirstNameAsUrl(), 125, AgGridColumnFilterType.Text);
             Add("Last Name", x => x.Person.GetLastNameAsUrl(), 125, AgGridColumnFilterType.Text);

@@ -52,12 +52,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeletePersonnelAndBenefitsLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeletePersonnelAndBenefitsLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditPersonnelAndBenefitsLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditPersonnelAndBenefitsLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsName.ToGridHeaderString(), s => s.Person != null ? s.Person.GetFullNameFirstLastAndOrgShortNameAsUrl() : new HtmlString(string.Empty), 200, AgGridColumnFilterType.Html);

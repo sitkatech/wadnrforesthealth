@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.FieldDefinition
         {            
             if (hasManagePermissions)
             {
-                Add(string.Empty,
+                Add("Edit",
                     a =>
                         UrlTemplate.MakeHrefString(SitkaRoute<FieldDefinitionController>.BuildUrlFromExpression(t => t.Edit(a)),
                             AgGridHtmlHelpers.EditIconBootstrap.ToString(),

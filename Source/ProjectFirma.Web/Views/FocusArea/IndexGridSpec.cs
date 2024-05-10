@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.FocusArea
         public IndexGridSpec(Person person)
         {
             
-            Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted(), true), 30, AgGridColumnFilterType.None);
+            Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted(), true), 30, AgGridColumnFilterType.None);
             Add(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FocusAreaName), 195, AgGridColumnFilterType.Html);
             Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Region", a => a.DNRUplandRegion.DNRUplandRegionName, 75, AgGridColumnFilterType.SelectFilterHtmlStrict);

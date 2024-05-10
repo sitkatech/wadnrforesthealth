@@ -27,12 +27,12 @@ namespace ProjectFirma.Web.Views.Program
                 AddMasterCheckBoxColumn();
                 Add("ProjectID", x => x.ProjectID, 0);
                 BulkDeleteModalDialogForm = new BulkDeleteModalDialogForm(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.BulkDeleteProjects(null)), $"Delete Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Delete {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
 
             if (hasProgramManagePermissions)
             {
-                Add(string.Empty, x => x.ProjectImportBlockLists
+                Add("Remove", x => x.ProjectImportBlockLists
                         .Any(b => b.ProgramID == currentProgram.ProgramID) ? RemoveFromBlockListModalLink(x) : AddToBlockListModalLink(currentProgram, x),
                     125, AgGridColumnFilterType.None, true);
             }

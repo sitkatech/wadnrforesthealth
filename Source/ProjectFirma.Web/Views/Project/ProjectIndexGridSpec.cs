@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Project
             }
 
 
-            Add(string.Empty, x => MakeFactSheetUrl(x), 30, AgGridColumnFilterType.None);
+            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.None);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 125, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",225, AgGridColumnFilterType.HtmlLinkJson);
@@ -68,15 +68,15 @@ namespace ProjectFirma.Web.Views.Project
             Add($"Associated {Models.FieldDefinition.County.ToGridHeaderString()}", x => x.ProjectCounties.FirstOrDefault()?.County?.CountyName, 125, AgGridColumnFilterType.SelectFilterStrict);
         }
 
-        private static HtmlString MakeFactSheetUrl(Models.Project project)
+        private static string MakeFactSheetUrlJson(Models.Project project)
         {
             // Only offer FactSheet viewer if one is actually available
             if (ProjectController.FactSheetIsAvailable(project))
             {
-                return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString());
+                return $"{{ \"link\":\"{project.GetFactSheetUrl()}\",\"displayText\":\"{AgGridHtmlHelpers.FactSheetIcon.ToString()}\" }}";
             }
 
-            return new HtmlString(string.Empty);
+            return string.Empty;
         }
         
 

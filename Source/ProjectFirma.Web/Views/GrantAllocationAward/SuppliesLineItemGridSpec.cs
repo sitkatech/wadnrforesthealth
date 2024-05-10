@@ -51,12 +51,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteSuppliesLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteSuppliesLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditSuppliesLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditSuppliesLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDescription.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDescription, 200, AgGridColumnFilterType.Text);

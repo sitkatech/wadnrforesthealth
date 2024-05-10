@@ -51,12 +51,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteContractorInvoiceUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteContractorInvoiceUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditContractorInvoiceUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditContractorInvoiceUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
             //need column for file download

@@ -51,12 +51,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTravelLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTravelLineItemUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTravelLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTravelLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantAllocationAwardTravelName.ToGridHeaderString(), s => s.Person != null ? s.Person.FullNameFirstLastAndOrgShortName : string.Empty, 200, AgGridColumnFilterType.Text);

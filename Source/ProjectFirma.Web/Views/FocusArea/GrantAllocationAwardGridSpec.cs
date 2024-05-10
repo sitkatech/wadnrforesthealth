@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             var userHasDeletePermissions = new GrantAllocationAwardDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasDeletePermissions, x.CanGrantAllocationAwardBeDeleted(), true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasDeletePermissions, x.CanGrantAllocationAwardBeDeleted(), true), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, AgGridColumnFilterType.SelectFilterStrict);

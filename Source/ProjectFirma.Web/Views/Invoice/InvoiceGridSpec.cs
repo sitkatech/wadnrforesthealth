@@ -54,13 +54,13 @@ namespace ProjectFirma.Web.Views.Invoice
             var userHasEditPermissions = new InvoiceEditFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceNumber}"),
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceNumber}"),
                     userHasEditPermissions), 30, AgGridColumnFilterType.None, true);
             }
 
             if (invoiceFileExistsOnAtLeastOne)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, AgGridColumnFilterType.None);
+                Add("Download Invoice", x => AgGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant != null ? x.Grant.GetGrantNumberAsUrl(): new HtmlString(string.Empty), 180,

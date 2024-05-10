@@ -33,13 +33,13 @@ namespace ProjectFirma.Web.Views.Project
     {
         public ProposalsGridSpec(Person currentPerson)
         {
-            Add(string.Empty, x =>
+            Add("Delete", x =>
             {
                 var userHasDeletePermission = new ProjectDeleteProposalFeature().HasPermission(currentPerson, x).HasPermission;
                 return AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteProposalUrl(),
                         userHasDeletePermission, true, true);
             }, 30, AgGridColumnFilterType.None);
-            Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsHyperlinkBootstrap(x.GetProjectCreateUrl(), new ProjectCreateFeature().HasPermission(currentPerson, x).HasPermission), 30, AgGridColumnFilterType.None);
+            Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsHyperlinkBootstrap(x.GetProjectCreateUrl(), new ProjectCreateFeature().HasPermission(currentPerson, x).HasPermission), 30, AgGridColumnFilterType.None);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, AgGridColumnFilterType.Html);

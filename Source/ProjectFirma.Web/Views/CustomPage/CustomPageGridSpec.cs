@@ -38,11 +38,11 @@ namespace ProjectFirma.Web.Views.CustomPage
         {            
             if (hasManagePermissions)
             {               
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true, true), 30, AgGridColumnFilterType.None);
-                Add(string.Empty, a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<CustomPageController>.BuildUrlFromExpression(t => t.Edit(a)),
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true, true), 30, AgGridColumnFilterType.None);
+                Add("Edit", a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<CustomPageController>.BuildUrlFromExpression(t => t.Edit(a)),
                         "Edit")),
                     30, AgGridColumnFilterType.None);
-                Add(string.Empty, a => AgGridHtmlHelpers.MakeModalDialogLink("<span>Edit Content</span>",
+                Add("Edit Content", a => AgGridHtmlHelpers.MakeModalDialogLink("<span>Edit Content</span>",
                     SitkaRoute<CustomPageController>.BuildUrlFromExpression(y => y.EditInDialog(a)),
                     800,
                     $"Edit Content for {a.CustomPageDisplayName}",

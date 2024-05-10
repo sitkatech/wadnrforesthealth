@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.Program
 
             if (hasProgramManagePermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.IsDefaultProgramForImportOnly, true), 30, AgGridColumnFilterType.None, true);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.IsDefaultProgramForImportOnly, true), 30, AgGridColumnFilterType.None, true);
             }
             Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramNameDisplay), 400, AgGridColumnFilterType.Html);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => UrlTemplate.MakeHrefString(a.Organization.GetDetailUrl(), a.Organization.OrganizationName), 400, AgGridColumnFilterType.Html);

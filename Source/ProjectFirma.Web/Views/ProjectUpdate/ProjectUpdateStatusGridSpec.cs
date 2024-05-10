@@ -135,7 +135,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         private void AddViewOnlyColumn()
         {
-            Add(String.Empty,
+            Add("View",
                 x =>
                 {
                     var latestNotApprovedUpdateBatch = x.GetLatestNotApprovedUpdateBatch();
@@ -168,7 +168,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         private void AddEditAndOrViewColumn()
         {
 
-            Add(String.Empty,
+            Add("Edit",
                 x =>
                 {
                     var latestUpdateState = x.GetLatestUpdateState();

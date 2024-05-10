@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNameSingular} for {projectForCreatingNewTreatments.DisplayName}");
             }
 
-            Add(string.Empty, x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUrl(), $"Edit Treatment"), userHasEditPermissions), buttonGridWidth, AgGridColumnFilterType.None);
+            Add("Edit", x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUrl(), $"Edit Treatment"), userHasEditPermissions), buttonGridWidth, AgGridColumnFilterType.None);
 
             Add("Treatment Area Name", a => a.ProjectLocation?.ProjectLocationName ?? "", 200, AgGridColumnFilterType.SelectFilterStrict);
             Add("Treatment ID", a => a.TreatmentID.ToString(), 75, AgGridColumnFilterType.Text);

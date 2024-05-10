@@ -33,8 +33,8 @@ namespace ProjectFirma.Web.Views.MapLayer
         {
             if (userCanManage)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit External Map Layer")), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit External Map Layer")), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.ExternalMapLayerDisplayName.ToGridHeaderString(), x => x?.DisplayName, 150);

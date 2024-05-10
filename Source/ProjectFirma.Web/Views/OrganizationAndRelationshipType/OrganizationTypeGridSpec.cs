@@ -37,8 +37,8 @@ namespace ProjectFirma.Web.Views.OrganizationAndRelationshipType
         {            
             if (hasManagePermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, AgGridColumnFilterType.None);
-                Add(string.Empty, a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<OrganizationAndRelationshipTypeController>.BuildUrlFromExpression(t => t.EditOrganizationType(a)),
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, AgGridColumnFilterType.None);
+                Add("Edit", a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<OrganizationAndRelationshipTypeController>.BuildUrlFromExpression(t => t.EditOrganizationType(a)),
                         $"Edit {Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabel()} '{a.OrganizationTypeName}'")),
                     30, AgGridColumnFilterType.None);
             }

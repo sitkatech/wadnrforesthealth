@@ -63,20 +63,20 @@ namespace ProjectFirma.Web.Views.Grant
             var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
 
             var userHasEditPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
                                                                     new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.GrantModificationName}"),
                                                                     userHasEditPermissions), 30, AgGridColumnFilterType.None);
             }
 
             if (userHasCreatePermissions && grantToAssociate != null)
             {
-                Add(string.Empty, x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{x.GrantModificationName}\" to New {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
+                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} \"{x.GrantModificationName}\" to New {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, AgGridColumnFilterType.SelectFilterHtmlStrict);

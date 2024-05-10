@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.Views.Project
     {
         public ProjectInfoForUserDetailGridSpec(Person currentPerson, Person contactPerson = null)
         {
-            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.Project.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
+            Add("Fact Sheet", x => UrlTemplate.MakeHrefString(x.Project.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.Project.GetDetailUrl(), x.Project.ProjectName), 300, AgGridColumnFilterType.Html);
             if (contactPerson != null && !contactPerson.IsFullUser())
             {
