@@ -1652,6 +1652,7 @@
     <Content Include="ScriptsCustom\agGrid\esa-ag-grid.js" />
     <Content Include="ScriptsCustom\agGrid\HtmlFilterComponent.js" />
     <Content Include="ScriptsCustom\agGrid\HtmlFloatingFilterComponent.js" />
+    <Content Include="ScriptsCustom\agGrid\HtmlLinkJsonRenderer.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />

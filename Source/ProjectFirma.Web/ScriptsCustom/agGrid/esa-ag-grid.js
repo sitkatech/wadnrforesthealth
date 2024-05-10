@@ -22,7 +22,7 @@ function decimalFormatter(params) {
         return null;
     }
     var floatValue = Number.parseFloat(params.value);
-    return formatNumber(floatValue); //formatNumber(integerValue);
+    return formatNumber(floatValue);
 }
 
 function formatNumber(number) {
@@ -123,5 +123,31 @@ function htmlFilterTextMatcher( filterOption, value, filterText) {
             // should never happen
             console.warn('invalid filter type ' + filter);
             return false;
+    }
+}
+
+function htmlLinkJsonFilterTextMatcher(filterOption, value, filterText) {
+    if (filterText == null) {
+        return false;
+    }
+    value = value.displayText;
+    switch (filterOption) {
+    case 'contains':
+        return value.indexOf(filterText) >= 0;
+    case 'notContains':
+        return value.indexOf(filterText) < 0;
+    case 'equals':
+        return value === filterText;
+    case 'notEqual':
+        return value != filterText;
+    case 'startsWith':
+        return value.indexOf(filterText) === 0;
+    case 'endsWith':
+        const index = value.lastIndexOf(filterText);
+        return index >= 0 && index === (value.length - filterText.length);
+    default:
+        // should never happen
+        console.warn('invalid filter type ' + filter);
+        return false;
     }
 }

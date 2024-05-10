@@ -37,14 +37,8 @@ namespace ProjectFirma.Web.Views.Program
                     125, AgGridColumnFilterType.None, true);
             }
 
-            if (userHasDeletePermissions)
-            {
-                
-            }
 
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(),
-                x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber),
-                105, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 105, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(),
                 x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),
                 300, AgGridColumnFilterType.Html);
