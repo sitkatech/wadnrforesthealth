@@ -40,8 +40,8 @@ namespace ProjectFirma.Web.Views.Program
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 105, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(),
-                x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),
-                300, AgGridColumnFilterType.Html);
+                x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",
+                300, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName,
                 160, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(),

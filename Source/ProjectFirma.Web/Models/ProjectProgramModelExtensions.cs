@@ -22,9 +22,8 @@ namespace ProjectFirma.Web.Models
             {
                 if (!program.IsDefaultProgramForImportOnly || showDefaultsAsWell)
                 {
-                    var stringReturn = UrlTemplate.MakeHrefString(
-                        program.GetDetailUrl(),
-                        program.DisplayName).ToString();
+                    //5/9/24 TK: todo: making this text only to prevent performance issues ideally this would be a list of links
+                    var stringReturn = program.DisplayName; //UrlTemplate.MakeHrefString(program.GetDetailUrl(), program.DisplayName).ToString();
                     listOfStrings.Add(stringReturn);
                 }
             }
