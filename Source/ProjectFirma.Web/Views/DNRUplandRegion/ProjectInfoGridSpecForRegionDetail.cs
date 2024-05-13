@@ -23,7 +23,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             //    Add("ProjectID", x => x.ProjectID, 0);
             //}
 
-            Add("Lead Implementer", x => $"{{ \"link\":\"{x.GetLeadImplementer().GetDetailUrl()}\",\"displayText\":\"{x.GetLeadImplementer().DisplayName}\" }}" , 300, AgGridColumnFilterType.HtmlLinkJson);
+            Add("Lead Implementer", x => GetLeadImplementerHtmlLinkJson(x.GetLeadImplementer()) , 300, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.ProjectPrograms.ToProgramListDisplay(true), 300, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}", 300, AgGridColumnFilterType.HtmlLinkJson);
 
@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.County.ToGridHeaderString(), x => new HtmlString(string.Join(", ", x.GetProjectCounties().Select(y => y.DisplayName))), 150, AgGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetPrimaryContact().GetDetailUrl()}\",\"displayText\":\"{x.GetPrimaryContact().FullNameFirstLast}\" }}", 150, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => GetPrimaryContactHtmlLinkJson(x.GetPrimaryContact()), 150, AgGridColumnFilterType.Text);
 
 
             Add($"Total {Models.FieldDefinition.TreatedAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalTreatedAcres, 90, AgGridColumnFormatType.Decimal);
@@ -65,10 +65,31 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             if (userHasTagManagePermissions)
             {
-                Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayNameAsUrl))), 100, AgGridColumnFilterType.Html);
+                Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayName))), 100, AgGridColumnFilterType.Html);
             }
 
                       
+        }
+
+        private string GetPrimaryContactHtmlLinkJson(Person person)
+        {
+            if (person == null)
+            {
+                return string.Empty;
+            }
+
+            return $"{{ \"link\":\"{person.GetDetailUrl()}\",\"displayText\":\"{person.FullNameFirstLast}\" }}";
+        }
+        
+        
+        private string GetLeadImplementerHtmlLinkJson(Models.Organization org)
+        {
+            if (org == null)
+            {
+                return string.Empty;
+            }
+
+            return $"{{ \"link\":\"{org.GetDetailUrl()}\",\"displayText\":\"{org.DisplayName}\" }}";
         }
     }
 }

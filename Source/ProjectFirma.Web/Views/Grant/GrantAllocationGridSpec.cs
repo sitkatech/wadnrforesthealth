@@ -67,8 +67,8 @@ namespace ProjectFirma.Web.Views.Grant
                 Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, "Duplicate Grant Allocation"), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification.Grant.GrantNumber, GrantNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationName), 250, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification.Grant.GrantNumber, GrantNumberColumnWidth, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationName), 250, AgGridColumnFilterType.Html);
             Add(Models.FieldDefinition.GrantModification.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GrantModification.GetDetailUrl(), x.GrantModification.GrantModificationName), 250, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationCurrentBalance.ToGridHeaderString(), x => x.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
