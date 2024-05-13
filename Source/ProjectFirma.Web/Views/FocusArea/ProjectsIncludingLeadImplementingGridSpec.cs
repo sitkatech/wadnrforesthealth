@@ -24,7 +24,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -36,29 +36,29 @@ namespace ProjectFirma.Web.Views.FocusArea
     {
         public ProjectsIncludingLeadImplementingGridSpec(Person currentPerson, bool showSubmittalStatus)
         {
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FhtProjectNumber), 100, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DisplayName), 350, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DisplayName), 350, AgGridColumnFilterType.Html);
 
             if (showSubmittalStatus)
             {
-                Add("Submittal Status", a => a.ProjectApprovalStatus.ProjectApprovalStatusDisplayName, 110, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                Add("Submittal Status", a => a.ProjectApprovalStatus.ProjectApprovalStatusDisplayName, 110, AgGridColumnFilterType.SelectFilterStrict);
             }
             
-            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), a => a.ProjectStage.ProjectStageDisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), a => a.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             //Add(Models.FieldDefinition.ProjectRelationshipType.ToGridHeaderStringPlural(Models.FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabelPluralized()),
-            //    a => a.AssocatedFocusAreaNames(focusArea), 180, DhtmlxGridColumnFilterType.Text);
+            //    a => a.AssocatedFocusAreaNames(focusArea), 180, AgGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.ProjectInitiationDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.ExpirationDate, 115, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.CompletionDate, 90, DhtmlxGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.ProjectInitiationDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.ExpirationDate, 115, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.CompletionDate, 90, AgGridColumnFormatType.Date);
             Add($"Number Of Reported {MultiTenantHelpers.GetPerformanceMeasureName()} Records", x => x.PerformanceMeasureActuals.Count, 100);
             Add($"Number Of {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel()} Records", x => x.ProjectGrantAllocationExpenditures.Count, 100);
-            Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.EstimatedTotalCost, 85, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.ProjectGrantAllocationRequestTotalAmount.ToGridHeaderString(), x => x.GetTotalFunding(), 85, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.EstimatedTotalCost, 85, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.ProjectGrantAllocationRequestTotalAmount.ToGridHeaderString(), x => x.GetTotalFunding(), 85, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.ProjectDescription, 200);
             if (new FirmaAdminFeature().HasPermissionByPerson(currentPerson))
             {
-                Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayNameAsUrl))), 100, DhtmlxGridColumnFilterType.Html);
+                Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayNameAsUrl))), 100, AgGridColumnFilterType.Html);
             }
             Add("# of Photos", x => x.ProjectImages.Count, 60);
         }

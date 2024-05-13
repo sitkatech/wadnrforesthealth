@@ -22,13 +22,13 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.ProjectCreate
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @inherits ProjectFirma.Web.Views.Project.MyOrganizationsProjects
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
 }
 
 @section RightOfPageTitle
@@ -45,7 +45,7 @@ Source code is available upon request via <support@sitkatech.com>.
         <h2>@Html.LabelWithSugarFor(FieldDefinition.Project, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) @FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</h2>
     </div>
     <div class="panel-body">
-        @Html.DhtmlxGrid(ViewDataTyped.ProjectsGridSpec, ViewDataTyped.ProjectsGridName, ViewDataTyped.ProjectsGridDataUrl, "height:400px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.ProjectsGridSpec, ViewDataTyped.ProjectsGridName, ViewDataTyped.ProjectsGridDataUrl, "height:400px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
     </div>
 </div>
 
@@ -55,7 +55,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="panel-body">
         <div>
-            @Html.DhtmlxGrid(ViewDataTyped.ProposalsesGridSpec, ViewDataTyped.ProposalsGridName, ViewDataTyped.ProposalsGridDataUrl, "height: 400px;", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+            @Html.AgGrid(ViewDataTyped.ProposalsesGridSpec, ViewDataTyped.ProposalsGridName, ViewDataTyped.ProposalsGridDataUrl, "height: 400px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
         </div>
     </div>
 </div>

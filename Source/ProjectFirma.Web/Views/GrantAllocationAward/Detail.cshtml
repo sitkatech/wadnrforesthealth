@@ -21,7 +21,7 @@
 @using LtInfo.Common
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Models
@@ -31,7 +31,7 @@
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
 
 }
 
@@ -208,7 +208,7 @@
                     </div>
                     
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.SuppliesLineItemGridSpec, ViewDataTyped.SuppliesLineItemGridName, ViewDataTyped.SuppliesLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.SuppliesLineItemGridSpec, ViewDataTyped.SuppliesLineItemGridName, ViewDataTyped.SuppliesLineItemGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
                 </div>
@@ -246,7 +246,7 @@
                     </div>
 
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.PersonnelAndBenefitsLineItemGridSpec, ViewDataTyped.PersonnelAndBenefitsLineItemGridName, ViewDataTyped.PersonnelAndBenefitsLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.PersonnelAndBenefitsLineItemGridSpec, ViewDataTyped.PersonnelAndBenefitsLineItemGridName, ViewDataTyped.PersonnelAndBenefitsLineItemGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
                 </div>
@@ -283,7 +283,7 @@
                     </div>
 
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.TravelLineItemGridSpec, ViewDataTyped.TravelLineItemGridName, ViewDataTyped.TravelLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.TravelLineItemGridSpec, ViewDataTyped.TravelLineItemGridName, ViewDataTyped.TravelLineItemGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
                 </div>
@@ -329,7 +329,7 @@
                     @* Landowner Cost Share Section *@
 
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.LandownerCostShareLineItemGridSpec, ViewDataTyped.LandownerCostShareLineItemGridName, ViewDataTyped.LandownerCostShareLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.LandownerCostShareLineItemGridSpec, ViewDataTyped.LandownerCostShareLineItemGridName, ViewDataTyped.LandownerCostShareLineItemGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
                     <hr />
@@ -351,7 +351,7 @@
 
 
                     <div>
-                        @Html.DhtmlxGrid(ViewDataTyped.ContractorInvoiceItemGridSpec, ViewDataTyped.ContractorInvoiceItemGridName, ViewDataTyped.ContractorInvoiceItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                        @Html.AgGrid(ViewDataTyped.ContractorInvoiceItemGridSpec, ViewDataTyped.ContractorInvoiceItemGridName, ViewDataTyped.ContractorInvoiceItemGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
 

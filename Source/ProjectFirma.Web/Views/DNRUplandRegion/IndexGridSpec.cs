@@ -19,9 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
-using LtInfo.Common.Views;
+using LtInfo.Common.AgGridWrappers;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.DNRUplandRegion
@@ -30,7 +28,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
     {
         public IndexGridSpec(Person currentPerson)
         {
-            Add(Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DNRUplandRegionName), 300, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, a => $"{{ \"link\":\"{a.GetDetailUrl()}\",\"displayText\":\"{a.DisplayName}\" }}", 300, AgGridColumnFilterType.HtmlLinkJson);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 65);
         }
     }

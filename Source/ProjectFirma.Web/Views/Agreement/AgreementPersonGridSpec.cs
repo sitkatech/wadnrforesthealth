@@ -1,5 +1,5 @@
 ﻿using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -21,18 +21,18 @@ namespace ProjectFirma.Web.Views.Agreement
             var userHasEditPermissions = new AgreementEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit this Agreement Contact")), 30, DhtmlxGridColumnFilterType.None);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit this Agreement Contact")), 30, AgGridColumnFilterType.None);
             }
 
             var userHasDeletePermissions = new AgreementDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
-            Add("First Name", x => x.Person.GetFirstNameAsUrl(), 125, DhtmlxGridColumnFilterType.Text);
-            Add("Last Name", x => x.Person.GetLastNameAsUrl(), 125, DhtmlxGridColumnFilterType.Text);
-            Add("Agreement Role", x => x.AgreementPersonRole.AgreementPersonRoleDisplayName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Person.Organization.GetDisplayNameWithoutAbbreviationAsUrl(), 250, DhtmlxGridColumnFilterType.Html);
+            Add("First Name", x => x.Person.GetFirstNameAsUrl(), 125, AgGridColumnFilterType.Text);
+            Add("Last Name", x => x.Person.GetLastNameAsUrl(), 125, AgGridColumnFilterType.Text);
+            Add("Agreement Role", x => x.AgreementPersonRole.AgreementPersonRoleDisplayName, 125, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Person.Organization.GetDisplayNameWithoutAbbreviationAsUrl(), 250, AgGridColumnFilterType.Html);
            
         }
     }

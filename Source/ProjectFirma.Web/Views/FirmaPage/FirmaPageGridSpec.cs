@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -33,13 +33,13 @@ namespace ProjectFirma.Web.Views.FirmaPage
         {            
             if (hasManagePermissions)
             {
-                Add(string.Empty, a => DhtmlxGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<FirmaPageController>.BuildUrlFromExpression(t => t.EditInDialog(a)),
+                Add("Edit", a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<FirmaPageController>.BuildUrlFromExpression(t => t.EditInDialog(a)),
                         $"Edit Intro Content for '{a.FirmaPageType.FirmaPageTypeDisplayName}'")),
                     30);
             }
-            Add("Page Name", a => UrlTemplate.MakeHrefString(a.FirmaPageType.GetViewUrl(), a.FirmaPageType.FirmaPageTypeDisplayName), 180, DhtmlxGridColumnFilterType.Text);
-            Add("Has Content", a => a.HasPageContent.ToYesNo(), 85, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Type", a => a.FirmaPageType.FirmaPageRenderType.FirmaPageRenderTypeDisplayName, 110, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Page Name", a => UrlTemplate.MakeHrefString(a.FirmaPageType.GetViewUrl(), a.FirmaPageType.FirmaPageTypeDisplayName), 180, AgGridColumnFilterType.Text);
+            Add("Has Content", a => a.HasPageContent.ToYesNo(), 85, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Type", a => a.FirmaPageType.FirmaPageRenderType.FirmaPageRenderTypeDisplayName, 110, AgGridColumnFilterType.SelectFilterStrict);
             Add("FirmaPageID", a => a.FirmaPageID, 0);
         }
     }

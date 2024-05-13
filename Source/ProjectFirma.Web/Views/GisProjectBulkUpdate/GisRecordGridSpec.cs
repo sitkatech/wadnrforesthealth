@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -55,14 +55,14 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
                 .ToList();
 
 
-            Add("ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GisFeatureID.ToString()), 90, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add("Is Valid", x => (x.IsValid ?? false).ToString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Calculated Area in Acres", x => x.CalculatedArea.ToString(), 90, DhtmlxGridColumnFilterType.Numeric);
+            Add("ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GisFeatureID.ToString()), 90, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("Is Valid", x => (x.IsValid ?? false).ToString(), 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Calculated Area in Acres", x => x.CalculatedArea.ToString(), 90, AgGridColumnFilterType.Numeric);
 
             foreach (var fGetColumnNamesForTableResult in columnsOrdered)
             {
                 Add(fGetColumnNamesForTableResult.GisMetadataAttribute.GisMetadataAttributeName
-                    , x => x.GisFeatureMetadataAttributes.SingleOrDefault(y => y.GisMetadataAttributeID == fGetColumnNamesForTableResult.GisMetadataAttributeID)?.GisFeatureMetadataAttributeValue, 90, DhtmlxGridColumnFilterType.Text);
+                    , x => x.GisFeatureMetadataAttributes.SingleOrDefault(y => y.GisMetadataAttributeID == fGetColumnNamesForTableResult.GisMetadataAttributeID)?.GisFeatureMetadataAttributeValue, 90, AgGridColumnFilterType.Text);
             }
 
         }

@@ -24,7 +24,7 @@ using System.Web;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -38,8 +38,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public ProjectUpdateBatchGridSpec()
         {
             Add("Date", x => x.LastUpdateDate, 120);
-            Add($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update Status", x => x.ProjectUpdateState.ProjectUpdateStateDisplayName, 170, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Updated By", x => x.LastUpdatePerson.FullNameFirstLastAndOrgShortName, 350, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update Status", x => x.ProjectUpdateState.ProjectUpdateStateDisplayName, 170, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Updated By", x => x.LastUpdatePerson.FullNameFirstLastAndOrgShortName, 350, AgGridColumnFilterType.SelectFilterStrict);
             Add($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update Details",
                 pub =>
                 {
