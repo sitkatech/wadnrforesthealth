@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Project
             }
 
 
-            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.None);
+            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.HtmlLinkJson);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 125, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",225, AgGridColumnFilterType.HtmlLinkJson);
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.Project
             // Only offer FactSheet viewer if one is actually available
             if (ProjectController.FactSheetIsAvailable(project))
             {
-                return $"{{ \"link\":\"{project.GetFactSheetUrl()}\",\"displayText\":\"{AgGridHtmlHelpers.FactSheetIcon.ToString()}\" }}";
+                return $"{{ \"link\":\"{project.GetFactSheetUrl()}\",\"displayText\":\"<span class='glyphicon glyphicon-search gi-1x blue'></span>\" }}";
             }
 
             return string.Empty;
