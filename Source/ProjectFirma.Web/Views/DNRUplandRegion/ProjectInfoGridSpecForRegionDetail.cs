@@ -23,9 +23,9 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             //    Add("ProjectID", x => x.ProjectID, 0);
             //}
 
-            Add("Lead Implementer", x => x.GetLeadImplementer().GetDisplayNameAsUrl(), 300, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("Lead Implementer", x => $"{{ \"link\":\"{x.GetLeadImplementer().GetDetailUrl()}\",\"displayText\":\"{x.GetLeadImplementer().DisplayName}\" }}" , 300, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.ProjectPrograms.ToProgramListDisplay(true), 300, AgGridColumnFilterType.SelectFilterHtmlStrict);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}", 300, AgGridColumnFilterType.HtmlLinkJson);
 
             var landownerRelationshipType = ProjectPersonRelationshipType.PrivateLandowner;
             var userHasViewLandownerNamePermissions = landownerRelationshipType.IsViewableByUser(currentPerson);
@@ -34,9 +34,9 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 Add(Models.FieldDefinition.Landowner.ToGridHeaderString(), x => string.Join(", ", x.GetPrivateLandowners().Select(y => y.FullNameFirstLast)), 150, AgGridColumnFilterType.Text);
             }
 
-            Add(Models.FieldDefinition.County.ToGridHeaderString(), x => new HtmlString(string.Join(", ", x.GetProjectCounties().Select(y => y.GetCountyDisplayNameAsUrl()))), 150, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.County.ToGridHeaderString(), x => new HtmlString(string.Join(", ", x.GetProjectCounties().Select(y => y.DisplayName))), 150, AgGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => x.GetPrimaryContact().GetFullNameFirstLastAsUrl(), 150, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetPrimaryContact().GetDetailUrl()}\",\"displayText\":\"{x.GetPrimaryContact().FullNameFirstLast}\" }}", 150, AgGridColumnFilterType.Text);
 
 
             Add($"Total {Models.FieldDefinition.TreatedAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalTreatedAcres, 90, AgGridColumnFormatType.Decimal);
@@ -68,27 +68,6 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayNameAsUrl))), 100, AgGridColumnFilterType.Html);
             }
 
-
-
-
-            //old columns not needed
-            //Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
-
-
-            //Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
-            
-            
-            //if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
-            //{
-            //    Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
-            //        AgGridColumnFilterType.Html);
-            //}
-            //Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.GetPrimaryContactOrganization().GetShortNameAsUrl(), 150, AgGridColumnFilterType.Html);
-            
-            
-            //Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.EstimatedTotalCost, 110, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            //Add(Models.FieldDefinition.ProjectGrantAllocationRequestTotalAmount.ToGridHeaderString(), x => x.GetTotalFunding(), 110, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            //Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.ProjectDescription, 300);
                       
         }
     }
