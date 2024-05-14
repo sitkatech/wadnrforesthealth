@@ -22,7 +22,7 @@ using System.Web;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -51,14 +51,14 @@ namespace ProjectFirma.Web.Views.Program
 
             if (hasProgramManagePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.IsDefaultProgramForImportOnly, true), 30, DhtmlxGridColumnFilterType.None, true);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.IsDefaultProgramForImportOnly, true), 30, AgGridColumnFilterType.None, true);
             }
-            Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramNameDisplay), 400, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => UrlTemplate.MakeHrefString(a.Organization.GetDetailUrl(), a.Organization.OrganizationName), 400, DhtmlxGridColumnFilterType.Html);
+            Add("Program", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProgramNameDisplay), 400, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => UrlTemplate.MakeHrefString(a.Organization.GetDetailUrl(), a.Organization.OrganizationName), 400, AgGridColumnFilterType.Html);
             Add("Short Name", a => a.ProgramShortName, 100);
             Add("Project Count", a => a.ProjectPrograms.Count, 60);
-            Add("Is Active", a => a.ProgramIsActive.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Is Default for Bulk Import Only", a => a.IsDefaultProgramForImportOnly.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Is Active", a => a.ProgramIsActive.ToYesNo(), 80, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Is Default for Bulk Import Only", a => a.IsDefaultProgramForImportOnly.ToYesNo(), 80, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

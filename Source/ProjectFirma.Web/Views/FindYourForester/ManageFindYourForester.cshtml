@@ -21,7 +21,7 @@
 @using LtInfo.Common
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
@@ -29,7 +29,7 @@
 @inherits ProjectFirma.Web.Views.FindYourForester.ManageFindYourForester
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
 }
 
@@ -55,7 +55,7 @@
                     <h2>Forester Work Units</h2>
                 </div>
                 <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    @Html.AgGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>

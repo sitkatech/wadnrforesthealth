@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -54,36 +54,36 @@ namespace ProjectFirma.Web.Views.Invoice
             var userHasEditPermissions = new InvoiceEditFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceNumber}"),
-                    userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None, true);
+                Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InvoiceNumber}"),
+                    userHasEditPermissions), 30, AgGridColumnFilterType.None, true);
             }
 
             if (invoiceFileExistsOnAtLeastOne)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, DhtmlxGridColumnFilterType.None);
+                Add("Download Invoice", x => AgGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant != null ? x.Grant.GetGrantNumberAsUrl(): new HtmlString(string.Empty), 180,
-                DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.InvoiceNumber.ToGridHeaderString(), x => x.InvoiceNumber, 90, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDate, 90, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.Fund.ToGridHeaderString(), x => x.Fund, 90, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.Appn.ToGridHeaderString(), x => x.Appn, 90, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndex?.ProgramIndexCode, 40, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCode?.ProjectCodeName, 40, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.SubObject.ToGridHeaderString(), x => x.SubObject, 90, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.OrganizationCode.ToGridHeaderString(), x => x.OrganizationCode?.OrganizationCodeValue, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.InvoiceNumber.ToGridHeaderString(), x => x.InvoiceNumber, 90, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDate, 90, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.Fund.ToGridHeaderString(), x => x.Fund, 90, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.Appn.ToGridHeaderString(), x => x.Appn, 90, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndex?.ProgramIndexCode, 40, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCode?.ProjectCodeName, 40, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.SubObject.ToGridHeaderString(), x => x.SubObject, 90, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.OrganizationCode.ToGridHeaderString(), x => x.OrganizationCode?.OrganizationCodeValue, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.MatchAmount.ToGridHeaderString(), x => x.MatchAmountForDisplay, 60);
-            Add(Models.FieldDefinition.PaymentAmount.ToGridHeaderString(), x => x.PaymentAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.FormattedNumeric);
+            Add(Models.FieldDefinition.PaymentAmount.ToGridHeaderString(), x => x.PaymentAmount.ToStringCurrency(), 90, AgGridColumnFilterType.FormattedNumeric);
 
 
             Add(Models.FieldDefinition.InvoiceStatus.ToGridHeaderString(), x =>
-                x.InvoiceStatus.InvoiceStatusDisplayName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                x.InvoiceStatus.InvoiceStatusDisplayName, InvoiceGridSpec.InvoiceColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InvoiceApprovalStatus.ToGridHeaderString(), x =>
-                    x.InvoiceApprovalStatus.InvoiceApprovalStatusName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                    x.InvoiceApprovalStatus.InvoiceApprovalStatusName, InvoiceGridSpec.InvoiceColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
 
             Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x => x.InvoiceIdentifyingName,
-                InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.Text);
+                InvoiceGridSpec.InvoiceColumnWidth, AgGridColumnFilterType.Text);
 
         }
     }

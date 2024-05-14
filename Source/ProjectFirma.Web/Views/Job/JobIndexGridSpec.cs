@@ -19,7 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 
@@ -39,23 +39,23 @@ namespace ProjectFirma.Web.Views.Job
 
             if (hasManageTagPermissions)
             {
-                //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
+                //Add(string.Empty, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
             }
 
             const int dateWidth = 125;
 
-            Add("RawJSONImportID", a => a.ArcOnlineFinanceApiRawJsonImportID.ToString(), 50, DhtmlxGridColumnFilterType.Numeric);
-            Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.ArcOnlineFinanceApiRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Create Date", a => a.CreateDate, dateWidth, DhtmlxGridColumnFormatType.Date);
-            Add("Biennium Fiscal Year", a => a.BienniumFiscalYear.ToString(), 100, DhtmlxGridColumnFilterType.Numeric);
-            Add("Json Import Status Type Name", a => a.JsonImportStatusTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Json Import Date", a => a.JsonImportDate, dateWidth, DhtmlxGridColumnFormatType.DateTime);
-            Add("Finance API Last Load Date", a => a.FinanceApiLastLoadDate, dateWidth, DhtmlxGridColumnFormatType.DateTime);
+            Add("RawJSONImportID", a => a.ArcOnlineFinanceApiRawJsonImportID.ToString(), 50, AgGridColumnFilterType.Numeric);
+            Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.ArcOnlineFinanceApiRawJsonImportTableTypeName, 200, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Create Date", a => a.CreateDate, dateWidth, AgGridColumnFormatType.Date);
+            Add("Biennium Fiscal Year", a => a.BienniumFiscalYear.ToString(), 100, AgGridColumnFilterType.Numeric);
+            Add("Json Import Status Type Name", a => a.JsonImportStatusTypeName, 200, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Json Import Date", a => a.JsonImportDate, dateWidth, AgGridColumnFormatType.DateTime);
+            Add("Finance API Last Load Date", a => a.FinanceApiLastLoadDate, dateWidth, AgGridColumnFormatType.DateTime);
             Add("JSON Data Length", a => a.RawJsonStringLength.Value.ToString(), 100);
 
             // Would be great to also have metadata about how many records deleted/updated/inserted.
 
-            //Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.DisplayName), 200, DhtmlxGridColumnFilterType.Html);
+            //Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.DisplayName), 200, AgGridColumnFilterType.Html);
 
         }
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -27,38 +27,32 @@ namespace ProjectFirma.Web.Views.Program
                 AddMasterCheckBoxColumn();
                 Add("ProjectID", x => x.ProjectID, 0);
                 BulkDeleteModalDialogForm = new BulkDeleteModalDialogForm(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.BulkDeleteProjects(null)), $"Delete Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Delete {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
 
             if (hasProgramManagePermissions)
             {
-                Add(string.Empty, x => x.ProjectImportBlockLists
+                Add("Remove", x => x.ProjectImportBlockLists
                         .Any(b => b.ProgramID == currentProgram.ProgramID) ? RemoveFromBlockListModalLink(x) : AddToBlockListModalLink(currentProgram, x),
-                    125, DhtmlxGridColumnFilterType.None, true);
+                    125, AgGridColumnFilterType.None, true);
             }
 
-            if (userHasDeletePermissions)
-            {
-                
-            }
 
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(),
-                x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber),
-                105, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 105, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(),
-                x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),
-                300, DhtmlxGridColumnFilterType.Html);
+                x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",
+                300, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName,
-                160, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                160, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(),
                 x => new HtmlString(x.ProjectStage.ProjectStageDisplayName),
-                100, DhtmlxGridColumnFilterType.SelectFilterStrict, DhtmlxGridColumnAlignType.Center, false);
-            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 180, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+                100, AgGridColumnFilterType.SelectFilterStrict, AgGridColumnAlignType.Center, false);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 180, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.UpdatesFromImport.ToGridHeaderString(),
                 x => x.ProjectImportBlockLists.Any(b => b.ProgramID == currentProgram.ProgramID)
                     ? new HtmlString("<span class='red'>Blocked</span>")
                     : new HtmlString("Updates"),
-                80, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict, DhtmlxGridColumnAlignType.Center, true);
+                80, AgGridColumnFilterType.SelectFilterHtmlStrict, AgGridColumnAlignType.Center, true);
         }
 
         private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)

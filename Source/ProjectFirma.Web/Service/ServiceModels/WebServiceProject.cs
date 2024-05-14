@@ -25,7 +25,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Models;
 using LtInfo.Common.Views;
 

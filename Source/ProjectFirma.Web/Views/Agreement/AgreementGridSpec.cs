@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Web;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -57,23 +57,25 @@ namespace ProjectFirma.Web.Views.Agreement
             Add(AgreementIDHiddenColumn, x => x.PrimaryKey, 0);
             if (userHasDeletePermissions && showDeleteColumn)
             {
-                Add(DeleteColumnName, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, false), 30, DhtmlxGridColumnFilterType.None, true);
+                // todo: AgGrid update fix make delete icon and link bootstrap
+                //Add(DeleteColumnName, x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, false), 30, AgGridColumnFilterType.None, true);
             }
 
             if (agreementFileExistsOnAtLeastOne)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Agreement file"), 30, DhtmlxGridColumnFilterType.None);
+                // todo: AgGrid update fix make file download icon and link bootstrap
+                //Add(string.Empty, x => AgGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Agreement file"), 30, AgGridColumnFilterType.None);
             }
-            Add(Models.FieldDefinition.AgreementType.ToGridHeaderString("Type"), x => x.AgreementType?.AgreementTypeAbbrev, 70, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add(Models.FieldDefinition.AgreementNumber.ToGridHeaderString("Number"), x => x.AgreementNumber, 100, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.Grant.ToGridHeaderString(), x => x.GetListOfGrantHrefs() , 130, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetOrganizationDetailUrl(), x.Organization.DisplayName), 130, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.AgreementTitle.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl() , x.AgreementTitle), 180, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.AgreementStartDate.ToGridHeaderString("Start Date"), x => x.StartDate, 120, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.AgreementEndDate.ToGridHeaderString("End Date"), x => x.EndDate, 120, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.AgreementAmount.ToGridHeaderString("Amount"), x => x.AgreementAmount, 70, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndices.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCodes.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.AgreementType.ToGridHeaderString("Type"), x => x.AgreementType?.AgreementTypeAbbrev, 70, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.AgreementNumber.ToGridHeaderString("Number"), x => x.AgreementNumber, 100, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Grant.ToGridHeaderString(), x => x.GetListOfGrantHrefs() , 130, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetOrganizationDetailUrl(), x.Organization.DisplayName), 130, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.AgreementTitle.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl() , x.AgreementTitle), 180, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.AgreementStartDate.ToGridHeaderString("Start Date"), x => x.StartDate, 120, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.AgreementEndDate.ToGridHeaderString("End Date"), x => x.EndDate, 120, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.AgreementAmount.ToGridHeaderString("Amount"), x => x.AgreementAmount, 70, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndices.ToDistinctOrderedCsvList(), 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCodes.ToDistinctOrderedCsvList(), 90, AgGridColumnFilterType.Text);
         }
 
     }

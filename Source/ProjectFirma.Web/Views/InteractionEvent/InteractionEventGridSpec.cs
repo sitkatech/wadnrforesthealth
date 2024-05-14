@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
@@ -79,24 +79,24 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
             if (userHasManagePermissions)
             {
-                Add(string.Empty,
-                    x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasManagePermissions, true),
-                    30, DhtmlxGridColumnFilterType.None);
+                Add("Delete",
+                    x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasManagePermissions, true),
+                    30, AgGridColumnFilterType.None);
             }
 
             if (userHasManagePermissions)
             {
-                Add(string.Empty,
-                    x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
+                Add("Edit",
+                    x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
                         new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InteractionEventTitle}"),
-                        userHasManagePermissions), 30, DhtmlxGridColumnFilterType.None);
+                        userHasManagePermissions), 30, AgGridColumnFilterType.None);
             }
 
-            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 150, DhtmlxGridColumnFilterType.Html);
-            Add("Description", x => x.InteractionEventDescription, 200, DhtmlxGridColumnFilterType.Text);
-            Add("Date", x => x.InteractionEventDate, 80, DhtmlxGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(), x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson?.FullNameFirstLast, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 150, AgGridColumnFilterType.Html);
+            Add("Description", x => x.InteractionEventDescription, 200, AgGridColumnFilterType.Text);
+            Add("Date", x => x.InteractionEventDate, 80, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(), x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson?.FullNameFirstLast, 180, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

@@ -21,7 +21,7 @@
 @using LtInfo.Common
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Views
 @using ProjectFirma.Web.Common
@@ -38,7 +38,7 @@
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <link href="~/Content/bootstrap-tags/bootstrap-tags.min.css" rel="stylesheet" type="text/css" />
@@ -137,7 +137,7 @@
                     @FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized()
                 </div>
                 <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationAwardGridSpec, ViewDataTyped.GrantAllocationAwardGridName, ViewDataTyped.GrantAllocationAwardGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    @Html.AgGrid(ViewDataTyped.GrantAllocationAwardGridSpec, ViewDataTyped.GrantAllocationAwardGridName, ViewDataTyped.GrantAllocationAwardGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>
@@ -173,7 +173,7 @@
                     Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>
@@ -188,7 +188,7 @@
                         @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
                     </div>
                     <div class="panel-body">
-                        @Html.DhtmlxGrid(ViewDataTyped.ProjectCalendarYearExpendituresGridSpec, ViewDataTyped.ProjectCalendarYearExpendituresGridName, ViewDataTyped.ProjectCalendarYearExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                        @Html.DhtmlxGrid(ViewDataTyped.ProjectCalendarYearExpendituresGridSpec, ViewDataTyped.ProjectCalendarYearExpendituresGridName, ViewDataTyped.ProjectCalendarYearExpendituresGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                     @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
                 </div>
                 <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    @Html.AgGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>

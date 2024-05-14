@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -34,18 +34,18 @@ namespace ProjectFirma.Web.Views.PerformanceMeasure
     {
         public PerformanceMeasureReportedValuesGridSpec(Models.PerformanceMeasure performanceMeasure)
         {
-            Add(Models.FieldDefinition.ReportingYear.ToGridHeaderString(), a => a.GetCalendarYearDisplay(), 60, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ReportingYear.ToGridHeaderString(), a => a.GetCalendarYearDisplay(), 60, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.Project.ToGridHeaderString(),
                 a => UrlTemplate.MakeHrefString(a.ProjectUrl, a.ProjectName),
                 350,
-                DhtmlxGridColumnFilterType.Html);
+                AgGridColumnFilterType.Html);
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
                 Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.Project.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
-                    DhtmlxGridColumnFilterType.Html);
+                    AgGridColumnFilterType.Html);
             }
-            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetShortNameAsUrl(), 150, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), a => a.Project.ProjectStage.ProjectStageDisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetShortNameAsUrl(), 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), a => a.Project.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             if (performanceMeasure.HasRealSubcategories)
             {
                 foreach (var performanceMeasureSubcategory in
@@ -66,19 +66,19 @@ namespace ProjectFirma.Web.Views.PerformanceMeasure
                             }
 
                             return string.Empty;
-                        }, 120, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                        }, 120, AgGridColumnFilterType.SelectFilterStrict);
                 }
             }
             var reportedValueColumnName = $"{Models.FieldDefinition.ReportedValue.ToGridHeaderString()} ({performanceMeasure.MeasurementUnitType.MeasurementUnitTypeDisplayName})";
 
             if (performanceMeasure.IsAggregatable)
             {
-                Add(reportedValueColumnName, a => a.ReportedValue, 150, DhtmlxGridColumnFormatType.Decimal,
-                    DhtmlxGridColumnAggregationType.Total);
+                Add(reportedValueColumnName, a => a.ReportedValue, 150, AgGridColumnFormatType.Decimal,
+                    AgGridColumnAggregationType.Total);
             }
             else
             {
-                Add(reportedValueColumnName, a => a.ReportedValue, 150, DhtmlxGridColumnFormatType.Decimal);
+                Add(reportedValueColumnName, a => a.ReportedValue, 150, AgGridColumnFormatType.Decimal);
             }
         }
     }

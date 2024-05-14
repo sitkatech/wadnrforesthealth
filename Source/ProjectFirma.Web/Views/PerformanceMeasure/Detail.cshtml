@@ -25,7 +25,7 @@
 @using ProjectFirma.Web.Views.Shared.TextControls
 @using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Common
@@ -33,7 +33,7 @@
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="@Url.Content("~/Views/PerformanceMeasureMonitoringProgram/PerformanceMeasureMonitoringProgramController.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/PerformanceMeasure/EditSubcategoriesAndOptionsController.js")"></script>
 
@@ -73,7 +73,7 @@
 @*@section RightOfPageTitle
     {
         <div>
-            <a class="btn" href="@ViewDataTyped.PerformanceMeasure.GetInfoSheetUrl()">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon View Info Sheet</a>
+            <a class="btn" href="@ViewDataTyped.PerformanceMeasure.GetInfoSheetUrl()">@AgGridHtmlHelpers.FactSheetIcon View Info Sheet</a>
         </div>
     }*@
 <div>
@@ -223,7 +223,7 @@
         <h2>Expected @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() Results per @FieldDefinition.Project.GetFieldDefinitionLabel()</h2>
     </div>
     <div class="panel-body">
-        @Html.DhtmlxGrid(ViewDataTyped.PerformanceMeasureExpectedGridSpec, ViewDataTyped.PerformanceMeasureExpectedsGridName, ViewDataTyped.PerformanceMeasureExpectedsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.PerformanceMeasureExpectedGridSpec, ViewDataTyped.PerformanceMeasureExpectedsGridName, ViewDataTyped.PerformanceMeasureExpectedsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
     </div>
 </div>
 
@@ -232,7 +232,7 @@
         <h2>Reported @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() Results per @FieldDefinition.Project.GetFieldDefinitionLabel()</h2>
     </div>
     <div class="panel-body">
-        @Html.DhtmlxGrid(ViewDataTyped.PerformanceMeasureReportedValuesGridSpec, ViewDataTyped.PerformanceMeasureReportedValuesGridName, ViewDataTyped.PerformanceMeasureReportedValuesGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.PerformanceMeasureReportedValuesGridSpec, ViewDataTyped.PerformanceMeasureReportedValuesGridName, ViewDataTyped.PerformanceMeasureReportedValuesGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
     </div>
 </div>
 
