@@ -141,7 +141,7 @@ INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefin
 GO
 INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Group Selection Cut (UA/RH/FH)', N'Thinning')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Permanent Land Clearing', N'Land Use conversion')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Permanent Land Clearing', N'Other')
 GO
 INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Precommercial Thin', N'Thinning')
 GO
@@ -167,25 +167,25 @@ INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefin
 GO
 INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'TSI Need Created- Pruning', N'Fuel Break')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Control of Understory Vegetation', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Control of Understory Vegetation', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Tree Encroachment Control', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Tree Encroachment Control', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Tree Release and Weed', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Tree Release and Weed', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Site Preparation for Natural Regeneration - Manual', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Site Preparation for Natural Regeneration - Manual', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Site Preparation for Planting - Mechanical', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Site Preparation for Planting - Mechanical', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Site Preparation for Planting - Other', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Site Preparation for Planting - Other', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Initiate Natural Regeneration', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Initiate Natural Regeneration', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Slashing - Pre-Site Preparation', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Slashing - Pre-Site Preparation', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Plant Trees', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Plant Trees', N'Regen')
 GO
-INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Fill-in or Replant Trees', N'Tree establishment')
+INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Fill-in or Replant Trees', N'Regen')
 GO
 INSERT [dbo].[GisCrossWalkDefault] ([GisUploadSourceOrganizationID], [FieldDefinitionID], [GisCrossWalkSourceValue], [GisCrossWalkMappedValue]) VALUES (14, 469, N'Range Site Treatment for Water Conservation', N'Other')
 GO
