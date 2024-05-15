@@ -130,21 +130,23 @@ function htmlLinkJsonFilterTextMatcher(filterOption, value, filterText) {
     if (filterText == null) {
         return false;
     }
-    value = value.displayText;
+
+    var jsonObj = JSON.parse(value);
+    var textToCompare = jsonObj.displaytext;
     switch (filterOption) {
     case 'contains':
-        return value.indexOf(filterText) >= 0;
+            return textToCompare.indexOf(filterText) >= 0;
     case 'notContains':
-        return value.indexOf(filterText) < 0;
+            return textToCompare.indexOf(filterText) < 0;
     case 'equals':
-        return value === filterText;
+            return textToCompare === filterText;
     case 'notEqual':
-        return value != filterText;
+            return textToCompare != filterText;
     case 'startsWith':
-        return value.indexOf(filterText) === 0;
+            return textToCompare.indexOf(filterText) === 0;
     case 'endsWith':
-        const index = value.lastIndexOf(filterText);
-        return index >= 0 && index === (value.length - filterText.length);
+            const index = textToCompare.lastIndexOf(filterText);
+            return index >= 0 && index === (textToCompare.length - filterText.length);
     default:
         // should never happen
         console.warn('invalid filter type ' + filter);
