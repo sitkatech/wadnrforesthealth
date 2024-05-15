@@ -329,6 +329,10 @@ namespace LtInfo.Common.AgGridWrappers
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlLinkJsonFilterTextMatcher( filterOption, value, filterText)  }");
                         columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
                         break;
+                    case AgGridColumnFilterType.HtmlLinkJsonWithNoFilter:
+                        columnDefinitionStringBuilder.Append(", \"filter\": false");
+                        columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
+                        break;
                     default:
                         break;
                 }

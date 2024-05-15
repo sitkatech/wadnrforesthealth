@@ -10,7 +10,7 @@
         this.selectedValues = [];
         this.dropdowns = [];
         this.field = null;
-        console.log(params);
+        //console.log(params);
         if (params.colDef) {
             this.field = params.colDef.field;
             this.columnContainsMultipleValues = params.colDef.columnContainsMultipleValues;

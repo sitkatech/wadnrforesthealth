@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Project
             }
 
 
-            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.HtmlLinkJson);
+            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.HtmlLinkJsonWithNoFilter);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 125, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",225, AgGridColumnFilterType.HtmlLinkJson);
