@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.Project
             {
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
                 AddMasterCheckBoxColumn();
-                Add("ProjectID", x => x.ProjectID, 0);
+                Add(AgGridHtmlHelpers.ProjectIdForModalColumnName, x => x.ProjectID, 0);
             }
 
             Add("Fact Sheet", x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);

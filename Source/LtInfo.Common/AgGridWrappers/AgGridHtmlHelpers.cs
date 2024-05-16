@@ -44,6 +44,8 @@ namespace LtInfo.Common.AgGridWrappers
         public static readonly HtmlString OkCircleIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIconWithHiddenText("glyphicon-ok-circle gi-1x blue", "Yes");
         public static readonly HtmlString FactSheetIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-search gi-1x blue");
 
+        public const string ProjectIdForModalColumnName = "ProjectIDForModal";
+
         public const string EditIcon = "<img src=\"/Content/img/bg-edit-single.png\" />";
         public const string DeleteIcon = "<img src=\"/Content/img/bg-delete-single.png\" />";
         public const string DeleteIconGrey = "<img src=\"/Content/img/bg-delete-single-grey.png\" />";
@@ -666,5 +668,7 @@ namespace LtInfo.Common.AgGridWrappers
             return !string.IsNullOrEmpty(fileDownloadUrl) ? UrlTemplate.MakeHrefString(fileDownloadUrl,
                 $"{FileIconBootstrap}<span style=\"display:none\">{titleHoverText}</span>", titleHoverText, dictionary) : new HtmlString(string.Empty);
         }
+
+        
     }
 }
