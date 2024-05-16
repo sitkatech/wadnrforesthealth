@@ -89,7 +89,7 @@ namespace LtInfo.Common.AgGridWrappers
             }}
 
             function {0}OnBtnExport() {{
-                {0}GridOptions.api.exportDataAsCsv({{ processCellCallback: removeHtmlFromColumnForCVSDownload, fileName: '{0}' + 'Export' }});
+                {0}GridOptions.api.exportDataAsCsv({{ fileName: '{0}' + 'Export' }});
             }}
 
             function {0}GetValuesFromCheckedGridRows(valueColumnName, returnListName) {{
@@ -328,10 +328,13 @@ namespace LtInfo.Common.AgGridWrappers
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlLinkJsonFilterTextMatcher( filterOption, value, filterText)  }");
                         columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
                         break;
                     case AgGridColumnFilterType.HtmlLinkJsonWithNoFilter:
                         columnDefinitionStringBuilder.Append(", \"filter\": false");
                         columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
+
                         break;
                     default:
                         break;
