@@ -46,9 +46,7 @@ namespace LtInfo.Common.AgGridWrappers
 
         public const string ProjectIdForModalColumnName = "ProjectIDForModal";
 
-        public const string EditIcon = "<img src=\"/Content/img/bg-edit-single.png\" />";
-        public const string DeleteIcon = "<img src=\"/Content/img/bg-delete-single.png\" />";
-        public const string DeleteIconGrey = "<img src=\"/Content/img/bg-delete-single-grey.png\" />";
+
 
         public const string Skin = "mm";
         public const int SkinRowHeight = 30;
@@ -345,6 +343,9 @@ namespace LtInfo.Common.AgGridWrappers
                 switch (columnSpec.AgGridColumnFormatType)
                 {
                     case AgGridColumnFormatType.Currency:
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": currencyFormatter");
+                        break;
+                    case AgGridColumnFormatType.CurrencyWithCents:
                         columnDefinitionStringBuilder.Append(", \"valueFormatter\": currencyFormatter");
                         break;
                     case AgGridColumnFormatType.Integer:

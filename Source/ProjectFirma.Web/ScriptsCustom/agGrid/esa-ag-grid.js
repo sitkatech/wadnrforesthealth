@@ -6,7 +6,7 @@ function currencyFormatter(params) {
         return null;
     }
     var floatValue = Number.parseFloat(params.value).toFixed(2);
-    return "$" + formatNumber(floatValue);
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(floatValue);
 }
 
 function integerFormatter(params) {
@@ -26,8 +26,7 @@ function decimalFormatter(params) {
 }
 
 function formatNumber(number) {
-    // this puts commas into the number eg 1000 goes to 1,000
-    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    return new Intl.NumberFormat("en-US").format(number);
 }
 
 function removeHtmlFromColumnForCVSDownload(column, value) {

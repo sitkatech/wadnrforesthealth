@@ -46,7 +46,7 @@
         <hr />
         <div class="row" style="margin-top: 10px;">
             <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
-                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", AgGridHtmlHelpers.EditIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
+                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", AgGridHtmlHelpers.EditIconBootstrap, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
             </div>
         </div>
         if (ViewDataTyped.CanEditInvoicePaymentRequests)
