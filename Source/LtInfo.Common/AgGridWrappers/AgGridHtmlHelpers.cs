@@ -320,6 +320,7 @@ namespace LtInfo.Common.AgGridWrappers
                     case AgGridColumnFilterType.Html:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlFilterTextMatcher( filterOption, value, filterText)  }");
+                        columnDefinitionStringBuilder.Append(", \"comparator\": HtmlRemovalSorting");
                         break;
                     case AgGridColumnFilterType.Text:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
@@ -329,12 +330,13 @@ namespace LtInfo.Common.AgGridWrappers
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlLinkJsonFilterTextMatcher( filterOption, value, filterText)  }");
                         columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
                         columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
+                        columnDefinitionStringBuilder.Append(", \"comparator\": JsonDisplayTextSorting");
                         break;
                     case AgGridColumnFilterType.HtmlLinkJsonWithNoFilter:
                         columnDefinitionStringBuilder.Append(", \"filter\": false");
                         columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
                         columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
-
+                        columnDefinitionStringBuilder.Append(", \"sortable\": false");
                         break;
                     default:
                         break;

@@ -152,3 +152,18 @@ function htmlLinkJsonFilterTextMatcher(filterOption, value, filterText) {
         return false;
     }
 }
+
+function JsonDisplayTextSorting(valueA, valueB, nodeA, nodeB, isDescending) {
+    var displayTextA = JSON.parse(valueA).displayText.toLowerCase();
+    var displayTextB = JSON.parse(valueB).displayText.toLowerCase();
+    if (displayTextA == displayTextB) return 0;
+    return (displayTextA > displayTextB) ? 1 : -1;
+}
+
+
+function HtmlRemovalSorting(valueA, valueB, nodeA, nodeB, isDescending) {
+    var noHtmlValueA = removeHtmlFromString(valueA).toLowerCase();
+    var noHtmlValueB = removeHtmlFromString(valueB).toLowerCase();
+    if (noHtmlValueA == noHtmlValueB) return 0;
+    return (noHtmlValueA > noHtmlValueB) ? 1 : -1;
+}
