@@ -5,12 +5,12 @@ select * from dbo.Program
 usfs programs = (2,12,13,14)
 
 
-SELECT distinct p.ProjectID from dbo.Project as p join dbo.ProjectProgram as pp on p.ProjectID = pp.ProjectID where ProgramID in (2,12,13,14) and p.ProjectName like '(PALS)%'
+SELECT distinct p.ProjectID, p.ProjectName from dbo.Project as p join dbo.ProjectProgram as pp on p.ProjectID = pp.ProjectID where ProgramID in (2,12,13,14) and p.ProjectName not like '(PALS)%'
 
 */
 
 DROP TABLE IF EXISTS #projectsToDelete 
-SELECT distinct p.ProjectID INTO #projectsToDelete from dbo.Project as p join dbo.ProjectProgram as pp on p.ProjectID = pp.ProjectID where ProgramID in (2,12,13,14) and p.ProjectName like '(PALS)%'
+SELECT distinct p.ProjectID INTO #projectsToDelete from dbo.Project as p join dbo.ProjectProgram as pp on p.ProjectID = pp.ProjectID where ProgramID in (2,12,13,14) and p.ProjectName not like '(PALS)%'
 
 --select * from #projectsToDelete
 
@@ -23,6 +23,8 @@ delete t from dbo.Treatment as t where t.ProjectID in (select * from #projectsTo
 delete tu from dbo.TreatmentUpdate as tu join dbo.ProjectUpdateBatch as pub on tu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
 delete plu from dbo.ProjectLocationUpdate as plu join dbo.ProjectLocation as pl on plu.ProjectLocationID = pl.ProjectLocationID where pl.ProjectID in (select * from #projectsToDelete)
+
+delete plu from dbo.ProjectLocationStaging as plu where plu.ProjectID in (select * from #projectsToDelete)
 
 delete from dbo.ProjectLocation where ProjectID in (select * from #projectsToDelete)
 
@@ -71,5 +73,7 @@ delete from dbo.ProjectGrantAllocationRequest where ProjectID in (select * from 
 delete from dbo.ProjectPerson where ProjectID in (select * from #projectsToDelete)
 delete from dbo.NotificationProject where ProjectID in (select * from #projectsToDelete)
 delete from dbo.ProjectDocument where ProjectID in (select * from #projectsToDelete)
+
+update dbo.ProjectImportBlockList set ProjectID = null where ProjectID in (select * from #projectsToDelete)
 
 delete p from dbo.Project as p where p.ProjectID in (select * from #projectsToDelete)
