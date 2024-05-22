@@ -22,7 +22,7 @@ delete t from dbo.Treatment as t where t.ProjectID in (select * from #projectsTo
 
 delete tu from dbo.TreatmentUpdate as tu join dbo.ProjectUpdateBatch as pub on tu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
-delete plu from dbo.ProjectLocationUpdate as plu where plu.ProjectLocationID in (select ProjectLocationID from dbo.ProjectLocation where ProjectID in (select * from #projectsToDelete))
+delete plu from dbo.ProjectLocationUpdate as plu join dbo.ProjectLocation as pl on plu.ProjectLocationID = pl.ProjectLocationID where pl.ProjectID in (select * from #projectsToDelete)
 
 delete from dbo.ProjectLocation where ProjectID in (select * from #projectsToDelete)
 
@@ -41,18 +41,35 @@ delete from dbo.ProjectImage where ProjectID in (select * from #projectsToDelete
 delete from dbo.ProjectClassification where ProjectID in (select * from #projectsToDelete)
 
 
-delete from dbo.ProjectUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete))
+delete pu from dbo.ProjectUpdate as pu join dbo.ProjectUpdateBatch as pub on pu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
-delete from dbo.ProjectOrganizationUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete))
+delete pou from dbo.ProjectOrganizationUpdate as pou join dbo.ProjectUpdateBatch as pub on pou.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
-delete from dbo.ProjectUpdateHistory where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete))
+delete puh from dbo.ProjectUpdateHistory as puh join dbo.ProjectUpdateBatch as pub on puh.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
-delete from dbo.ProjectRegionUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete))
+delete pru from dbo.ProjectRegionUpdate as pru join dbo.ProjectUpdateBatch as pub on pru.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
-delete from dbo.ProjectUpdateProgram where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete))
+delete pup from dbo.ProjectUpdateProgram as pup join dbo.ProjectUpdateBatch as pub on pup.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
+delete pfsu from dbo.ProjectFundingSourceUpdate as pfsu join dbo.ProjectUpdateBatch as pub on pfsu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
+
+delete ppu from dbo.ProjectPersonUpdate as ppu join dbo.ProjectUpdateBatch as pub on ppu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
+
+delete ppu from dbo.ProjectPriorityLandscapeUpdate as ppu join dbo.ProjectUpdateBatch as pub on ppu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
+
+delete ppu from dbo.ProjectExternalLinkUpdate as ppu join dbo.ProjectUpdateBatch as pub on ppu.ProjectUpdateBatchID = pub.ProjectUpdateBatchID where ProjectID in (select * from #projectsToDelete)
 
 
 delete from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete)
+
+
+delete from dbo.ProjectTag where ProjectID in (select * from #projectsToDelete)
+
+delete from dbo.AgreementProject where ProjectID in (select * from #projectsToDelete)
+delete from dbo.ProjectFundingSource where ProjectID in (select * from #projectsToDelete)
+delete from dbo.ProjectGrantAllocationRequest where ProjectID in (select * from #projectsToDelete)
+delete from dbo.ProjectPerson where ProjectID in (select * from #projectsToDelete)
+delete from dbo.NotificationProject where ProjectID in (select * from #projectsToDelete)
+delete from dbo.ProjectDocument where ProjectID in (select * from #projectsToDelete)
 
 delete p from dbo.Project as p where p.ProjectID in (select * from #projectsToDelete)
