@@ -130,6 +130,10 @@ function htmlLinkJsonFilterTextMatcher(filterOption, value, filterText) {
         return false;
     }
 
+    if (!value) {
+        return false;
+    }
+
     var jsonObj = JSON.parse(value);
     var textToCompare = jsonObj.displaytext;
     switch (filterOption) {
@@ -154,8 +158,25 @@ function htmlLinkJsonFilterTextMatcher(filterOption, value, filterText) {
 }
 
 function JsonDisplayTextSorting(valueA, valueB, nodeA, nodeB, isDescending) {
-    var displayTextA = JSON.parse(valueA).displayText.toLowerCase();
-    var displayTextB = JSON.parse(valueB).displayText.toLowerCase();
+    
+    var displayTextA = "";
+    var displayTextB = "";
+
+
+    if (valueA) {
+        var jsonObjectA = JSON.parse(valueA);
+        if (jsonObjectA.displayText) {
+            displayTextA = jsonObjectA.displayText.toLowerCase();
+        }
+    }
+
+    if (valueB) {
+        var jsonObjectB = JSON.parse(valueB);
+        if (jsonObjectB.displayText) {
+            displayTextB = jsonObjectB.displayText.toLowerCase();
+        }
+    }
+    
     if (displayTextA == displayTextB) return 0;
     return (displayTextA > displayTextB) ? 1 : -1;
 }
