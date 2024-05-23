@@ -174,7 +174,7 @@ namespace LtInfo.Common.AgGridWrappers
                 {4}; // insert method to resize grid vertically if grid resize type is VerticalResizableHorizontalAutoFit
                 var {0}PinnedBottomData = {0}GeneratePinnedBottomData();
                 if({0}PinnedBottomData){{
-                    {0}GridOptionsApi.setPinnedBottomRowData([{0}PinnedBottomData]);
+                    {0}GridOptionsApi.setGridOption('pinnedBottomRowData',[{0}PinnedBottomData]);
                 }}
             }});
         }}
@@ -320,7 +320,7 @@ namespace LtInfo.Common.AgGridWrappers
                     case AgGridColumnFilterType.Html:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlFilterTextMatcher( filterOption, value, filterText)  }");
-                        columnDefinitionStringBuilder.Append(", \"comparator\": HtmlRemovalSorting");
+                        //columnDefinitionStringBuilder.Append(", \"comparator\": HtmlRemovalSorting");
                         break;
                     case AgGridColumnFilterType.Text:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
