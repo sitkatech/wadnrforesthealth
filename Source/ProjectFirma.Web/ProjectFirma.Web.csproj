@@ -939,6 +939,7 @@
     <Compile Include="SawSamlResponseTest.cs" />
     <Compile Include="ScheduledJobs\ArcGisOnlineUtility.cs" />
     <Compile Include="ScheduledJobs\JobCancellationTokenExtensions.cs" />
+    <Compile Include="ScheduledJobs\UsfsDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\LoaDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
