@@ -6,7 +6,7 @@ function currencyFormatter(params) {
         return null;
     }
     var floatValue = Number.parseFloat(params.value).toFixed(2);
-    return "$" + formatNumber(floatValue);
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(floatValue);
 }
 
 function integerFormatter(params) {
@@ -26,8 +26,7 @@ function decimalFormatter(params) {
 }
 
 function formatNumber(number) {
-    // this puts commas into the number eg 1000 goes to 1,000
-    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    return new Intl.NumberFormat("en-US").format(number);
 }
 
 function removeHtmlFromColumnForCVSDownload(column, value) {
@@ -130,24 +129,62 @@ function htmlLinkJsonFilterTextMatcher(filterOption, value, filterText) {
     if (filterText == null) {
         return false;
     }
-    value = value.displayText;
+
+    if (!value) {
+        return false;
+    }
+
+    var jsonObj = JSON.parse(value);
+    var textToCompare = jsonObj.displaytext;
     switch (filterOption) {
     case 'contains':
-        return value.indexOf(filterText) >= 0;
+            return textToCompare.indexOf(filterText) >= 0;
     case 'notContains':
-        return value.indexOf(filterText) < 0;
+            return textToCompare.indexOf(filterText) < 0;
     case 'equals':
-        return value === filterText;
+            return textToCompare === filterText;
     case 'notEqual':
-        return value != filterText;
+            return textToCompare != filterText;
     case 'startsWith':
-        return value.indexOf(filterText) === 0;
+            return textToCompare.indexOf(filterText) === 0;
     case 'endsWith':
-        const index = value.lastIndexOf(filterText);
-        return index >= 0 && index === (value.length - filterText.length);
+            const index = textToCompare.lastIndexOf(filterText);
+            return index >= 0 && index === (textToCompare.length - filterText.length);
     default:
         // should never happen
         console.warn('invalid filter type ' + filter);
         return false;
     }
+}
+
+function JsonDisplayTextSorting(valueA, valueB, nodeA, nodeB, isDescending) {
+    
+    var displayTextA = "";
+    var displayTextB = "";
+
+
+    if (valueA) {
+        var jsonObjectA = JSON.parse(valueA);
+        if (jsonObjectA.displayText) {
+            displayTextA = jsonObjectA.displayText.toLowerCase();
+        }
+    }
+
+    if (valueB) {
+        var jsonObjectB = JSON.parse(valueB);
+        if (jsonObjectB.displayText) {
+            displayTextB = jsonObjectB.displayText.toLowerCase();
+        }
+    }
+    
+    if (displayTextA == displayTextB) return 0;
+    return (displayTextA > displayTextB) ? 1 : -1;
+}
+
+
+function HtmlRemovalSorting(valueA, valueB, nodeA, nodeB, isDescending) {
+    var noHtmlValueA = removeHtmlFromString(valueA).toLowerCase();
+    var noHtmlValueB = removeHtmlFromString(valueB).toLowerCase();
+    if (noHtmlValueA == noHtmlValueB) return 0;
+    return (noHtmlValueA > noHtmlValueB) ? 1 : -1;
 }

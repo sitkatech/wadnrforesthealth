@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.Project
             {
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
                 AddMasterCheckBoxColumn();
-                Add("ProjectID", x => x.ProjectID, 0);
+                Add(AgGridHtmlHelpers.ProjectIdForModalColumnName, x => x.ProjectID, 0);
             }
 
             Add("Fact Sheet", x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Project
                 Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
                     AgGridColumnFilterType.Html);
             }
-            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetPrimaryContactOrganization().GetDetailUrl()}\",\"displayText\":\"{x.GetPrimaryContactOrganization().OrganizationShortNameIfAvailable}\" }}" , 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetPrimaryContactOrganization().GetDetailUrl()}\",\"displayText\":\"{x.GetPrimaryContactOrganization().OrganizationShortNameIfAvailable}\" }}" , 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectInitiationDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.GetExpirationDateFormatted(), 115, AgGridColumnFilterType.SelectFilterStrict);

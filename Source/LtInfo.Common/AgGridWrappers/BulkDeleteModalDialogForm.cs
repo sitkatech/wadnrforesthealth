@@ -36,7 +36,7 @@ namespace LtInfo.Common.AgGridWrappers
             DialogLinkText = dialogLinkText;
             DialogTitle = dialogTitle;
             CheckboxColumnIndex = 0;
-            ValueColumnName = "ProjectID";
+            ValueColumnName = AgGridHtmlHelpers.ProjectIdForModalColumnName;
             ReturnListName = "ProjectIDList";
 
         }

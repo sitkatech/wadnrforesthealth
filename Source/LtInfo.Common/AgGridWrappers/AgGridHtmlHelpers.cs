@@ -44,9 +44,9 @@ namespace LtInfo.Common.AgGridWrappers
         public static readonly HtmlString OkCircleIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIconWithHiddenText("glyphicon-ok-circle gi-1x blue", "Yes");
         public static readonly HtmlString FactSheetIcon = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-search gi-1x blue");
 
-        public const string EditIcon = "<img src=\"/Content/img/bg-edit-single.png\" />";
-        public const string DeleteIcon = "<img src=\"/Content/img/bg-delete-single.png\" />";
-        public const string DeleteIconGrey = "<img src=\"/Content/img/bg-delete-single-grey.png\" />";
+        public const string ProjectIdForModalColumnName = "ProjectIDForModal";
+
+
 
         public const string Skin = "mm";
         public const int SkinRowHeight = 30;
@@ -78,22 +78,22 @@ namespace LtInfo.Common.AgGridWrappers
     <!-- The grid will be the size that this element is given. -->
     <div class=""row"">
         <div class=""col-md-6""><span id=""{0}RowCountText""></span> <a id=""{0}ClearFilters"" style=""display: none"" href=""javascript: void(0);"" onclick=""{0}ClearFilters()"">(clear filters)</a></div>
-        <div class=""col-md-6 text-right gridDownloadContainer"">{9}<a class=""excelbutton"" href=""javascript: void(0);""  onclick=""{0}OnBtnExport()"">Download Table</a>{8}</div>
+        <div class=""col-md-6 text-right gridDownloadContainer"">{9}<span>{10}</span><a class=""excelbutton"" href=""javascript: void(0);""  onclick=""{0}OnBtnExport()"">Download Table</a>{8}</div>
     </div>
     <div id=""{0}DivID"" class=""ag-theme-alpine"" style=""{6}""></div>
     <script type=""text/javascript"">
 
             function {0}ClearFilters(){{
-                {0}GridOptions.api.setFilterModel(null);
+                {0}GridOptionsApi.setFilterModel(null);
                 document.getElementById(""{0}ClearFilters"").style.display = ""none"";
             }}
 
             function {0}OnBtnExport() {{
-                {0}GridOptions.api.exportDataAsCsv({{ processCellCallback: removeHtmlFromColumnForCVSDownload, fileName: '{0}' + 'Export' }});
+                {0}GridOptionsApi.exportDataAsCsv({{ fileName: '{0}' + 'Export' }});
             }}
 
             function {0}GetValuesFromCheckedGridRows(valueColumnName, returnListName) {{
-                const selectedData = {0}GridOptions.api.getSelectedRows();
+                const selectedData = {0}GridOptionsApi.getSelectedRows();
                 var values = selectedData.map((row) => row[valueColumnName]);
                 var returnList = new Object();
                 returnList[returnListName] = values
@@ -101,7 +101,7 @@ namespace LtInfo.Common.AgGridWrappers
             }}
 
             function {0}GetValueFromSelectedGridRow(valueColumnName) {{
-                const selectedData = {0}GridOptions.api.getSelectedRows();
+                const selectedData = {0}GridOptionsApi.getSelectedRows();
                 var values = selectedData.map((row) => row[valueColumnName]);
                 return values[0];
             }}
@@ -123,7 +123,7 @@ namespace LtInfo.Common.AgGridWrappers
                 // generate a row-data with null values
                 var result = {{}};
 
-                {0}GridOptions.api.getAllGridColumns().forEach(item => {{
+                {0}GridOptionsApi.getAllGridColumns().forEach(item => {{
                     result[item.colId] = null;
                     if(item.colDef.aggregationType === ""total"") {{
                         columnsWithAggregation.push(item.colId);
@@ -138,7 +138,7 @@ namespace LtInfo.Common.AgGridWrappers
                 
                 columnsWithAggregation.forEach(element => {{
                   //console.log('element', element);
-                    {0}GridOptions.api.forEachNodeAfterFilter((rowNode) => {{
+                    {0}GridOptionsApi.forEachNodeAfterFilter((rowNode) => {{
                         if (rowNode.data[element]){{
                             if(target[element]){{
                                 target[element] = (Number.parseFloat(target[element]) + Number.parseFloat(rowNode.data[element]));
@@ -159,7 +159,7 @@ namespace LtInfo.Common.AgGridWrappers
 
         // Function to demonstrate calling grid's API
         function {0}Deselect(){{
-            {0}GridOptions.api.deselectAll()
+            {0}GridOptionsApi.deselectAll()
         }}
 
         function {0}LoadGridData(url){{
@@ -168,13 +168,13 @@ namespace LtInfo.Common.AgGridWrappers
             .then(response => response.json())
             .then(data => {{
                 // load fetched data into grid
-                {0}GridOptions.api.setRowData(data);
+                {0}GridOptionsApi.setGridOption('rowData', data);
                 {0}TotalRowCount = data.length;
-                document.getElementById(""{0}RowCountText"").innerText=""Currently Viewing ""+{0}GridOptions.api.getDisplayedRowCount()+ "" out of "" + {0}TotalRowCount + "" {3}""; 
+                document.getElementById(""{0}RowCountText"").innerText=""Currently Viewing ""+{0}GridOptionsApi.getDisplayedRowCount()+ "" out of "" + {0}TotalRowCount + "" {3}""; 
                 {4}; // insert method to resize grid vertically if grid resize type is VerticalResizableHorizontalAutoFit
                 var {0}PinnedBottomData = {0}GeneratePinnedBottomData();
                 if({0}PinnedBottomData){{
-                    {0}GridOptions.api.setPinnedBottomRowData([{0}PinnedBottomData]);
+                    {0}GridOptionsApi.setGridOption('pinnedBottomRowData',[{0}PinnedBottomData]);
                 }}
             }});
         }}
@@ -198,13 +198,13 @@ namespace LtInfo.Common.AgGridWrappers
 
 
           onFilterChanged: function() {{
-            document.getElementById(""{0}RowCountText"").innerText=""Currently Viewing ""+{0}GridOptions.api.getDisplayedRowCount()+ "" out of "" + {0}TotalRowCount + "" {3}"";
-            if(Object.keys({0}GridOptions.api.getFilterModel()).length !== 0){{
+            document.getElementById(""{0}RowCountText"").innerText=""Currently Viewing ""+{0}GridOptionsApi.getDisplayedRowCount()+ "" out of "" + {0}TotalRowCount + "" {3}"";
+            if(Object.keys({0}GridOptionsApi.getFilterModel()).length !== 0){{
                 document.getElementById(""{0}ClearFilters"").style.display = ""inline-block"";
             }}
             var {0}PinnedBottomData = {0}GeneratePinnedBottomData();
             if({0}PinnedBottomData){{
-                {0}GridOptions.api.setPinnedBottomRowData([{0}PinnedBottomData]);
+                {0}GridOptionsApi.setPinnedBottomRowData([{0}PinnedBottomData]);
             }}
           }},
 
@@ -219,7 +219,7 @@ namespace LtInfo.Common.AgGridWrappers
         // get div to host the grid
         const {0}GridDiv = document.getElementById(""{0}DivID"");
         // new grid instance, passing in the hosting DIV and Grid Options
-        new agGrid.Grid({0}GridDiv, {0}GridOptions);
+        const {0}GridOptionsApi = agGrid.createGrid({0}GridDiv, {0}GridOptions);
         var {0}TotalRowCount = 0;
         {0}LoadGridData(""{1}"");
     </script>";
@@ -320,6 +320,7 @@ namespace LtInfo.Common.AgGridWrappers
                     case AgGridColumnFilterType.Html:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlFilterTextMatcher( filterOption, value, filterText)  }");
+                        //columnDefinitionStringBuilder.Append(", \"comparator\": HtmlRemovalSorting");
                         break;
                     case AgGridColumnFilterType.Text:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
@@ -328,6 +329,14 @@ namespace LtInfo.Common.AgGridWrappers
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlLinkJsonFilterTextMatcher( filterOption, value, filterText)  }");
                         columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
+                        columnDefinitionStringBuilder.Append(", \"comparator\": JsonDisplayTextSorting");
+                        break;
+                    case AgGridColumnFilterType.HtmlLinkJsonWithNoFilter:
+                        columnDefinitionStringBuilder.Append(", \"filter\": false");
+                        columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkJsonRenderer");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
+                        columnDefinitionStringBuilder.Append(", \"sortable\": false");
                         break;
                     default:
                         break;
@@ -336,6 +345,9 @@ namespace LtInfo.Common.AgGridWrappers
                 switch (columnSpec.AgGridColumnFormatType)
                 {
                     case AgGridColumnFormatType.Currency:
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": currencyFormatter");
+                        break;
+                    case AgGridColumnFormatType.CurrencyWithCents:
                         columnDefinitionStringBuilder.Append(", \"valueFormatter\": currencyFormatter");
                         break;
                     case AgGridColumnFormatType.Integer:
@@ -403,7 +415,9 @@ namespace LtInfo.Common.AgGridWrappers
             var additionalIcons =
                 $"{(!string.IsNullOrWhiteSpace(arbitraryHtml) ? $"<span>{arbitraryHtml}</span>" : string.Empty)}{(!string.IsNullOrWhiteSpace(generateReportsIconHtml) ? $"<span>{generateReportsIconHtml}</span>" : string.Empty)}{(!string.IsNullOrWhiteSpace(tagIconHtml) ? $"<span>{tagIconHtml}</span>" : string.Empty)}";
 
-            return String.Format(template, gridName, optionalGridDataUrl, columnDefinitionStringBuilder, gridSpec.ObjectNamePlural, resizeGridFunction, makeVerticalResizable, styleString, columnsWithAggregationStringBuilder, customDownloadLink, additionalIcons);//, gridSpec.LoadingBarHtml, metaDivHtml, styleString, javascriptDocumentReadyHtml);
+            var createEntityHtml = CreateCreateUrlHtml(gridSpec.CreateEntityUrl, gridSpec.CreateEntityUrlClass, gridSpec.CreateEntityModalDialogForm, gridSpec.CreateEntityActionPhrase, gridSpec.ObjectNameSingular);
+
+            return String.Format(template, gridName, optionalGridDataUrl, columnDefinitionStringBuilder, gridSpec.ObjectNamePlural, resizeGridFunction, makeVerticalResizable, styleString, columnsWithAggregationStringBuilder, customDownloadLink, additionalIcons, createEntityHtml);//, gridSpec.LoadingBarHtml, metaDivHtml, styleString, javascriptDocumentReadyHtml);
         }
 
 
@@ -658,6 +672,43 @@ namespace LtInfo.Common.AgGridWrappers
             dictionary.Add("target", "_blank");
             return !string.IsNullOrEmpty(fileDownloadUrl) ? UrlTemplate.MakeHrefString(fileDownloadUrl,
                 $"{FileIconBootstrap}<span style=\"display:none\">{titleHoverText}</span>", titleHoverText, dictionary) : new HtmlString(string.Empty);
+        }
+
+        /// <summary>
+        /// Typically, we either have a create new button that goes to a new page
+        /// or a modal dialog version of the create new record
+        /// </summary>
+        /// <param name="createUrl"></param>
+        /// <param name="createUrlClass"></param>
+        /// <param name="createPopupForm"></param>
+        /// <param name="createActionPhrase"></param>
+        /// <param name="objectNameSingular"></param>
+        /// <returns></returns>
+        public static string CreateCreateUrlHtml(string createUrl, string createUrlClass, ModalDialogForm createPopupForm, string createActionPhrase, string objectNameSingular)
+        {
+            var createString = !string.IsNullOrEmpty(createActionPhrase) ? createActionPhrase : $"Create New {objectNameSingular}";
+            var createUrlHtml = String.Empty;
+            if (!String.IsNullOrWhiteSpace(createUrl))
+            {
+                createUrlHtml = String.Format(@"<a class=""process create {0}"" href=""{1}"" title=""{2}"">{2}</a>",
+                    String.IsNullOrEmpty(createUrlClass) ? String.Empty : createUrlClass,
+                    createUrl,
+                    createString);
+            }
+            else if (createPopupForm != null)
+            {
+                createUrlHtml = MakeModalDialogLink($"{PlusIconBootstrap} {createString}",
+                    createPopupForm.ContentUrl,
+                    createPopupForm.DialogWidth,
+                    createPopupForm.DialogTitle,
+                    true,
+                    createPopupForm.SaveButtonText,
+                    createPopupForm.CancelButtonText,
+                    null,
+                    createPopupForm.OnJavascriptReadyFunction,
+                    null).ToString();
+            }
+            return createUrlHtml;
         }
     }
 }

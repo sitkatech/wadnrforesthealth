@@ -48,13 +48,13 @@ namespace ProjectFirma.Web.Views.Project
             if (userHasTagManagePermissions && allowTaggingFunctionality)
             {
                 AddMasterCheckBoxColumn();
-                Add("ProjectID", x => x.ProjectID, 0);
+                Add(AgGridHtmlHelpers.ProjectIdForModalColumnName, x => x.ProjectID, 0);
                 BulkTagModalDialogForm = new BulkTagModalDialogForm(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.BulkTagProjects(null)), $"Tag Checked {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", $"Tag {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
                 
             }
 
 
-            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.HtmlLinkJson);
+            Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.HtmlLinkJsonWithNoFilter);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 125, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",225, AgGridColumnFilterType.HtmlLinkJson);

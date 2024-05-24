@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.Reports
             , Dictionary<int, List<Models.Program>> programsByProject)
         {
             AddMasterCheckBoxColumn(); //For selecting to generate reports
-            Add("ProjectID", x => x.ProjectID, 0);
+            Add(AgGridHtmlHelpers.ProjectIdForModalColumnName, x => x.ProjectID, 0);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),200, AgGridColumnFilterType.Html);
