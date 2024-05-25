@@ -159,6 +159,9 @@ namespace ProjectFirma.Web.ScheduledJobs
             var loaDataImportCronString = MakeDailyUtcCronJobStringFromLocalTime(23, 15);
             AddRecurringJob(LoaDataImportBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunLoaDataImportScheduledBackgroundJob(JobCancellationToken.Null), loaDataImportCronString, recurringJobIds);
 
+            var usfsDataImportCronString = MakeDailyUtcCronJobStringFromLocalTime(22, 45);
+            AddRecurringJob(UsfsDataImportBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunUsfsDataImportScheduledBackgroundJob(JobCancellationToken.Null), usfsDataImportCronString, recurringJobIds);
+
 
             // See ConfigureScheduledBackgroundJobs in Gemini for further examples of how to schedule things at various time intervals. 
             // Commented out examples below.

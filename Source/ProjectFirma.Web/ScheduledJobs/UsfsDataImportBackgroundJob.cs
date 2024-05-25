@@ -18,7 +18,7 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         public static UsfsDataImportBackgroundJob Instance;
 
-        public static int LoaGisUploadSourceOrganizationID = 3;
+        public static int UsfsGisUploadSourceOrganizationID = 14;
 
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
@@ -32,13 +32,13 @@ namespace ProjectFirma.Web.ScheduledJobs
             Instance = new UsfsDataImportBackgroundJob();
         }
 
-        public UsfsDataImportBackgroundJob() : base("LOA Data Import Background Job", ConcurrencySetting.RunJobByItself)
+        public UsfsDataImportBackgroundJob() : base("USFS Data Import Background Job", ConcurrencySetting.RunJobByItself)
         {
         }
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataEasternUrl, jobCancellationToken);
+            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisUsfsDataUrl, jobCancellationToken);
         }
 
         private void DownloadArcOnlineDataAndImportProjects(string arcOnlineUrl, IJobCancellationToken jobCancellationToken)
@@ -50,8 +50,22 @@ namespace ProjectFirma.Web.ScheduledJobs
                 return;
             }
 
-            var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null";
-            queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner,email";
+            var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == UsfsGisUploadSourceOrganizationID);
+
+            if (uploadSourceOrganization == null)
+            {
+                throw new ApplicationException($"GisUploadSourceOrganization(ID:{UsfsGisUploadSourceOrganizationID}) does not exist");
+            }
+
+            var activitiesForWhereClause = uploadSourceOrganization.GisCrossWalkDefaults.Select(x => $"'{x.GisCrossWalkSourceValue}'").Distinct().ToList();
+
+            var outFields = "DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES";
+            var whereClause = $"DATE_COMPLETED>= DATE '2017-01-01' AND ACTIVITY  IN ({string.Join(",", activitiesForWhereClause)})";
+            var waStateBoundary = "-1.390677682508256E7,5697587.764863089,-1.2991930881749049E7,6283237.237876828";
+            var geometryType = "esriGeometryEnvelope";
+            var spatialRel = "esriSpatialRelIntersects";
+
+            var queryString = $"?f=json&outSr=4326&geometry={waStateBoundary}&geometryType={geometryType}&inSR=3857&spatialRel={spatialRel}&outFields={outFields}&where={whereClause}";
             var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
             try
             {
@@ -64,81 +78,81 @@ namespace ProjectFirma.Web.ScheduledJobs
                 Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
 
                 // loop until we get all the records, the max returned is 2000
-                var featuresFromApi = new List<UsfsProjectFeatureDto>();
-                var resultOffset = 0;
-                UsfsProjectGeometriesDto processedResponse;
-                do
-                {
-                    var requestUri = arcOnlineUrlWithQueryString + $"&resultOffset={resultOffset}";
+                //    var featuresFromApi = new List<UsfsProjectFeatureDto>();
+                //    var resultOffset = 0;
+                //    UsfsProjectGeometriesDto processedResponse;
+                //    do
+                //    {
+                //        var requestUri = arcOnlineUrlWithQueryString + $"&resultOffset={resultOffset}";
 
-                    response = httpClient.GetAsync(requestUri).Result;
-                    response.EnsureSuccessStatusCode();
-                    processedResponse = arcUtility.ProcessRepsonse<UsfsProjectGeometriesDto>(response);
-                    featuresFromApi.AddRange(processedResponse.features);
+                //        response = httpClient.GetAsync(requestUri).Result;
+                //        response.EnsureSuccessStatusCode();
+                //        processedResponse = arcUtility.ProcessRepsonse<UsfsProjectGeometriesDto>(response);
+                //        featuresFromApi.AddRange(processedResponse.features);
 
-                    resultOffset += processedResponse.features.Count;
+                //        resultOffset += processedResponse.features.Count;
 
-                    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
-                } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
+                //        jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
+                //    } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
 
-                Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
+                //    Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
 
-                var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
-                var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
-                var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
+                //    var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
 
-                HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
-                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
-                
-                var featureList = new List<Feature>();
-                foreach (var record in featuresFromApi)
-                {
-                    if (record.geometry != null && record.geometry.rings != null)
-                    {
-                        var approvalAttribute = record.attributes.NEPA_DOC_NBR;
-                        if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
-                        {
-                            var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
-                            featureList.Add(feature);
-                        }
-                    }
+                //    var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
-                    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
-                }
-                var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
+                //    HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
+                //    HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
-                GisProjectBulkUpdateController.SaveGisUploadToNormalizedFieldsUsingGeoJson(gisAttempt, featureCollection);
+                //    var featureList = new List<Feature>();
+                //    foreach (var record in featuresFromApi)
+                //    {
+                //        if (record.geometry != null && record.geometry.rings != null)
+                //        {
+                //            var approvalAttribute = record.attributes.NEPA_DOC_NBR;
+                //            if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
+                //            {
+                //                var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
+                //                featureList.Add(feature);
+                //            }
+                //        }
 
-                var gisMetadataAttributeIDs = gisAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
-                var metadataAttributes =
-                    HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
-                        gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
+                //        jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
+                //    }
+                //    var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
 
-                var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
+                //    GisProjectBulkUpdateController.SaveGisUploadToNormalizedFieldsUsingGeoJson(gisAttempt, featureCollection);
 
-                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog, jobCancellationToken);
+                //    var gisMetadataAttributeIDs = gisAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
+                //    var metadataAttributes =
+                //        HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
+                //            gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
 
-                var message = new StringBuilder();
-                message.AppendLine($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+                //    var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
 
-                if (newProjectListLog.Count > 0)
-                {
-                    message.AppendLine($" New {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ");
-                }
+                //    GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog, jobCancellationToken);
 
-                message.AppendLine($"Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+                //    var message = new StringBuilder();
+                //    message.AppendLine($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
-                if (existingProjectListLog.Count > 0)
-                {
-                    message.AppendLine($" Updated {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ");
-                }
+                //    if (newProjectListLog.Count > 0)
+                //    {
+                //        message.AppendLine($" New {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ");
+                //    }
 
-                message.AppendLine($"Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ");
-                if (skippedProjectListLog.Count > 0)
-                {
-                    message.AppendLine($"Skipped {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}");
-                }
-                Logger.Info(message);
+                //    message.AppendLine($"Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+
+                //    if (existingProjectListLog.Count > 0)
+                //    {
+                //        message.AppendLine($" Updated {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ");
+                //    }
+
+                //    message.AppendLine($"Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ");
+                //    if (skippedProjectListLog.Count > 0)
+                //    {
+                //        message.AppendLine($"Skipped {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}");
+                //    }
+                //    Logger.Info(message);
 
             }
             catch (Exception ex)
@@ -174,7 +188,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private class UsfsProjectAttributesDto
         {
-            //DATE_COMPLETED, ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES
+            //DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES
             public string NEPA_DOC_NBR { get; set; }
             public string NEPA_PROJECT_NAME { get; set; }
 
