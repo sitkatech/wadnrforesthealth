@@ -937,6 +937,7 @@
     <Compile Include="ReportTemplates\ReportTemplateGenerator.cs" />
     <Compile Include="ReportTemplates\ReportTemplateTests.cs" />
     <Compile Include="SawSamlResponseTest.cs" />
+    <Compile Include="ScheduledJobs\AgolPostRequestObject.cs" />
     <Compile Include="ScheduledJobs\ArcGisOnlineUtility.cs" />
     <Compile Include="ScheduledJobs\JobCancellationTokenExtensions.cs" />
     <Compile Include="ScheduledJobs\UsfsDataImportBackgroundJob.cs" />

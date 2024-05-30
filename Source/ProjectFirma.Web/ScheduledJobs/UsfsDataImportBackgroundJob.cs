@@ -1,16 +1,11 @@
-﻿using System;
+﻿using Hangfire;
+using Newtonsoft.Json;
+using ProjectFirma.Web.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using GeoJSON.Net.Feature;
-using GeoJSON.Net.Geometry;
-using Hangfire;
-using LtInfo.Common.DesignByContract;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.GisProjectBulkUpdate;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
@@ -69,8 +64,55 @@ namespace ProjectFirma.Web.ScheduledJobs
             var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
             try
             {
+                //var formContent = new FormUrlEncodedContent(new[]
+                //{
+                //    new KeyValuePair<string, string>("comment", comment),
+                //    new KeyValuePair<string, string>("questionId", questionId)
+                //});
+                var agolPostRequestObject = new AgolPostRequestObject()
+                {
+                    where = whereClause,
+                    f = "json",
+                    outSR = "4326",
+                    geometry = waStateBoundary,
+                    geometryType = geometryType,
+                    inSR = "3857",
+                    spatialRel = spatialRel,
+                    outFields = outFields,
+                    returnCountOnly = true
+                    
+                };
+
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("where", whereClause),
+                    new KeyValuePair<string, string>("f", "json"),
+                    new KeyValuePair<string, string>("outSR", "4326"),
+                    new KeyValuePair<string, string>("geometry", waStateBoundary),
+                    new KeyValuePair<string, string>("geometryType", geometryType),
+                    new KeyValuePair<string, string>("inSR", "3857"),
+                    new KeyValuePair<string, string>("spatialRel", spatialRel),
+                    new KeyValuePair<string, string>("outFields", outFields),
+                    new KeyValuePair<string, string>("returnCountOnly", "true"),
+                });
+
+                string jsonObject = JsonConvert.SerializeObject(agolPostRequestObject);
+                StringContent jsonContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                //using HttpResponseMessage response = await httpClient.PostAsync(
+                //    "todos",
+                //    jsonContent);
+
+                //response.EnsureSuccessStatusCode()
+                //    .WriteRequestToConsole();
+
+                //var jsonResponse = await response.Content.ReadAsStringAsync();
+                //Console.WriteLine($"{jsonResponse}\n");
+
+
+
                 //get the total records available
-                var response = httpClient.GetAsync(arcOnlineUrlWithQueryString + "&returnCountOnly=true").Result;
+                var response = httpClient.PostAsync(arcOnlineUrl, formContent).Result;
                 response.EnsureSuccessStatusCode();
                 var countResponse = arcUtility.ProcessRepsonse<UsfsProjectApiCountResponse>(response);
                 var totalRecordCount = countResponse.count;
