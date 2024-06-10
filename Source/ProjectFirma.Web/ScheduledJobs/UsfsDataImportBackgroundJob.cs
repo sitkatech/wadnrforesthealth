@@ -40,10 +40,8 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             var arcUtility = new ArcGisOnlineUtility();
             HttpClient httpClient = new HttpClient();
-            if (!arcUtility.AddApplicationAuthToken(httpClient))
-            {
-                return;
-            }
+
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "WADNR Forest Health Tracker");
 
             var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == UsfsGisUploadSourceOrganizationID);
 
@@ -69,35 +67,36 @@ namespace ProjectFirma.Web.ScheduledJobs
                 //    new KeyValuePair<string, string>("comment", comment),
                 //    new KeyValuePair<string, string>("questionId", questionId)
                 //});
-                var agolPostRequestObject = new AgolPostRequestObject()
-                {
-                    where = whereClause,
-                    f = "json",
-                    outSR = "4326",
-                    geometry = waStateBoundary,
-                    geometryType = geometryType,
-                    inSR = "3857",
-                    spatialRel = spatialRel,
-                    outFields = outFields,
-                    returnCountOnly = true
+                //var agolPostRequestObject = new AgolPostRequestObject()
+                //{
+                //    where = whereClause,
+                //    f = "json",
+                //    outSR = "4326",
+                //    geometry = waStateBoundary,
+                //    geometryType = geometryType,
+                //    inSR = "3857",
+                //    spatialRel = spatialRel,
+                //    outFields = outFields,
+                //    returnCountOnly = true
                     
-                };
+                //};
 
                 var formContent = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("where", whereClause),
+                    //new KeyValuePair<string, string>("where", whereClause),
+                    new KeyValuePair<string, string>("where", "1=1"),
                     new KeyValuePair<string, string>("f", "json"),
                     new KeyValuePair<string, string>("outSR", "4326"),
-                    new KeyValuePair<string, string>("geometry", waStateBoundary),
-                    new KeyValuePair<string, string>("geometryType", geometryType),
-                    new KeyValuePair<string, string>("inSR", "3857"),
-                    new KeyValuePair<string, string>("spatialRel", spatialRel),
+                    //new KeyValuePair<string, string>("geometry", waStateBoundary),
+                    //new KeyValuePair<string, string>("geometryType", geometryType),
+                    //new KeyValuePair<string, string>("inSR", "3857"),
+                    //new KeyValuePair<string, string>("spatialRel", spatialRel),
                     new KeyValuePair<string, string>("outFields", outFields),
                     new KeyValuePair<string, string>("returnCountOnly", "true"),
                 });
 
-                string jsonObject = JsonConvert.SerializeObject(agolPostRequestObject);
-                StringContent jsonContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+                //string jsonObject = JsonConvert.SerializeObject(agolPostRequestObject);
+                //StringContent jsonContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
 
                 //using HttpResponseMessage response = await httpClient.PostAsync(
                 //    "todos",
@@ -112,9 +111,9 @@ namespace ProjectFirma.Web.ScheduledJobs
 
 
                 //get the total records available
-                var response = httpClient.PostAsync(arcOnlineUrl, formContent).Result;
-                response.EnsureSuccessStatusCode();
-                var countResponse = arcUtility.ProcessRepsonse<UsfsProjectApiCountResponse>(response);
+                var response = httpClient.PostAsync(arcOnlineUrl, formContent);
+                response.Result.EnsureSuccessStatusCode();
+                var countResponse = arcUtility.ProcessRepsonse<UsfsProjectApiCountResponse>(response.Result);
                 var totalRecordCount = countResponse.count;
 
                 Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
