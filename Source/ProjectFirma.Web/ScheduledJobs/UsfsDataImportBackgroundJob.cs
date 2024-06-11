@@ -123,12 +123,10 @@ namespace ProjectFirma.Web.ScheduledJobs
                 {
                     if (record.geometry != null && record.geometry.rings != null)
                     {
-                        var approvalAttribute = record.attributes.NEPA_DOC_NBR;
-                        if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
-                        {
-                            var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
-                            featureList.Add(feature);
-                        }
+
+                        var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
+                        featureList.Add(feature);
+                        
                     }
 
                     jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();

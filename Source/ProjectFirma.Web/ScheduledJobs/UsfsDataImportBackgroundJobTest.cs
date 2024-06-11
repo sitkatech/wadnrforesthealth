@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         [Ignore("mainly used for debugging purposes")]
         [Test, Description("Simple test to at least get some coverage of USFS. However test can take over 7 minutes. Can be useful for performance profiling.")]
-        public void WholeJobShouldRunWithoutErrors()
+        public void WholeUsfsJobShouldRunWithoutErrors()
         {
             var jobCancellationToken = new JobCancellationToken(false);
             Assert.DoesNotThrow(() => UsfsDataImportBackgroundJob.Instance.RunJob(jobCancellationToken), $"Job {nameof(UsfsDataImportBackgroundJob)} should complete without exceptions");
@@ -19,7 +19,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         [Ignore("mainly used for debugging purposes")]
         [Test, Description("Simple test to at least get some coverage of USFS. sample post request")]
-        public async void WhoCaresTest()
+        public async void TestPostQueryToUsfsEndpoint()
         {
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("User-Agent", "WADNR Forest Health Tracker");
