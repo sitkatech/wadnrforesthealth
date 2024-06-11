@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             throw new NotImplementedException();
         }
 
-        public T ProcessRepsonse<T>(HttpResponseMessage response)
+        public T ProcessResponse<T>(HttpResponseMessage response)
         {
             using (var sr = new StreamReader(response.Content.ReadAsStreamAsync().Result))
             {
@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             {
                 response = httpClient.PostAsync(url, htmlContent).Result;
                 response.EnsureSuccessStatusCode();
-                arcGISAuthorization = ProcessRepsonse<ArcGISApplicationAuthorizationDto>(response);
+                arcGISAuthorization = ProcessResponse<ArcGISApplicationAuthorizationDto>(response);
             }
             catch (Exception e)
             {

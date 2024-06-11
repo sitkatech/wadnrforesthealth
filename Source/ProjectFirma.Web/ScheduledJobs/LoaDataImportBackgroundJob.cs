@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 //get the total records available
                 var response = httpClient.GetAsync(arcOnlineUrlWithQueryString + "&returnCountOnly=true").Result;
                 response.EnsureSuccessStatusCode();
-                var countResponse = arcUtility.ProcessRepsonse<LoaProjectApiCountResponse>(response);
+                var countResponse = arcUtility.ProcessResponse<LoaProjectApiCountResponse>(response);
                 var totalRecordCount = countResponse.count;
 
                 Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                     response = httpClient.GetAsync(requestUri).Result;
                     response.EnsureSuccessStatusCode();
-                    processedResponse = arcUtility.ProcessRepsonse<LoaProjectGeometriesDto>(response);
+                    processedResponse = arcUtility.ProcessResponse<LoaProjectGeometriesDto>(response);
                     featuresFromApi.AddRange(processedResponse.features);
 
                     resultOffset += processedResponse.features.Count;

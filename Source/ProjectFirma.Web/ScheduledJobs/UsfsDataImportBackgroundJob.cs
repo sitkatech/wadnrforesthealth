@@ -6,6 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using GeoJSON.Net.Feature;
+using GeoJSON.Net.Geometry;
+using LtInfo.Common.DesignByContract;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.GisProjectBulkUpdate;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
@@ -58,142 +64,109 @@ namespace ProjectFirma.Web.ScheduledJobs
             var geometryType = "esriGeometryEnvelope";
             var spatialRel = "esriSpatialRelIntersects";
 
-            var queryString = $"?f=json&outSr=4326&geometry={waStateBoundary}&geometryType={geometryType}&inSR=3857&spatialRel={spatialRel}&outFields={outFields}&where={whereClause}";
-            var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
+            var baseFormNameValueCollection = new[]
+            {
+                new KeyValuePair<string, string>("where", whereClause),
+                new KeyValuePair<string, string>("where", "1=1"),
+                new KeyValuePair<string, string>("f", "json"),
+                new KeyValuePair<string, string>("outSR", "4326"),
+                new KeyValuePair<string, string>("geometry", waStateBoundary),
+                new KeyValuePair<string, string>("geometryType", geometryType),
+                new KeyValuePair<string, string>("inSR", "3857"),
+                new KeyValuePair<string, string>("spatialRel", spatialRel),
+                new KeyValuePair<string, string>("outFields", outFields),
+
+            };
+
+            var returnCountNameValueCollection = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("returnCountOnly", "true"));
+            var returnCountFormContent = new FormUrlEncodedContent(returnCountNameValueCollection);
+
             try
             {
-                //var formContent = new FormUrlEncodedContent(new[]
-                //{
-                //    new KeyValuePair<string, string>("comment", comment),
-                //    new KeyValuePair<string, string>("questionId", questionId)
-                //});
-                //var agolPostRequestObject = new AgolPostRequestObject()
-                //{
-                //    where = whereClause,
-                //    f = "json",
-                //    outSR = "4326",
-                //    geometry = waStateBoundary,
-                //    geometryType = geometryType,
-                //    inSR = "3857",
-                //    spatialRel = spatialRel,
-                //    outFields = outFields,
-                //    returnCountOnly = true
-                    
-                //};
-
-                var formContent = new FormUrlEncodedContent(new[]
-                {
-                    //new KeyValuePair<string, string>("where", whereClause),
-                    new KeyValuePair<string, string>("where", "1=1"),
-                    new KeyValuePair<string, string>("f", "json"),
-                    new KeyValuePair<string, string>("outSR", "4326"),
-                    //new KeyValuePair<string, string>("geometry", waStateBoundary),
-                    //new KeyValuePair<string, string>("geometryType", geometryType),
-                    //new KeyValuePair<string, string>("inSR", "3857"),
-                    //new KeyValuePair<string, string>("spatialRel", spatialRel),
-                    new KeyValuePair<string, string>("outFields", outFields),
-                    new KeyValuePair<string, string>("returnCountOnly", "true"),
-                });
-
-                //string jsonObject = JsonConvert.SerializeObject(agolPostRequestObject);
-                //StringContent jsonContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-                //using HttpResponseMessage response = await httpClient.PostAsync(
-                //    "todos",
-                //    jsonContent);
-
-                //response.EnsureSuccessStatusCode()
-                //    .WriteRequestToConsole();
-
-                //var jsonResponse = await response.Content.ReadAsStringAsync();
-                //Console.WriteLine($"{jsonResponse}\n");
-
-
-
                 //get the total records available
-                var response = httpClient.PostAsync(arcOnlineUrl, formContent);
-                response.Result.EnsureSuccessStatusCode();
-                var countResponse = arcUtility.ProcessRepsonse<UsfsProjectApiCountResponse>(response.Result);
+                var returnCountResponse = httpClient.PostAsync(arcOnlineUrl, returnCountFormContent);
+                returnCountResponse.Result.EnsureSuccessStatusCode();
+                var countResponse = arcUtility.ProcessResponse<UsfsProjectApiCountResponse>(returnCountResponse.Result);
                 var totalRecordCount = countResponse.count;
 
-                Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
+                Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrl}");
 
                 // loop until we get all the records, the max returned is 2000
-                //    var featuresFromApi = new List<UsfsProjectFeatureDto>();
-                //    var resultOffset = 0;
-                //    UsfsProjectGeometriesDto processedResponse;
-                //    do
-                //    {
-                //        var requestUri = arcOnlineUrlWithQueryString + $"&resultOffset={resultOffset}";
+                var featuresFromApi = new List<UsfsProjectFeatureDto>();
+                var resultOffset = 0;
+                UsfsProjectGeometriesDto processedResponse;
+                do
+                {
+                    var currentRequestFormData = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("resultOffset", resultOffset.ToString()));
 
-                //        response = httpClient.GetAsync(requestUri).Result;
-                //        response.EnsureSuccessStatusCode();
-                //        processedResponse = arcUtility.ProcessRepsonse<UsfsProjectGeometriesDto>(response);
-                //        featuresFromApi.AddRange(processedResponse.features);
+                    var response = httpClient.PostAsync(arcOnlineUrl, new FormUrlEncodedContent(currentRequestFormData)).Result;
+                    response.EnsureSuccessStatusCode();
+                    processedResponse = arcUtility.ProcessResponse<UsfsProjectGeometriesDto>(response);
+                    featuresFromApi.AddRange(processedResponse.features);
 
-                //        resultOffset += processedResponse.features.Count;
+                    resultOffset += processedResponse.features.Count;
 
-                //        jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
-                //    } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
+                    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
+                } while (processedResponse.features.Count > 0 && featuresFromApi.Count < totalRecordCount);
 
-                //    Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
+                Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
 
-                //    var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
+                var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
 
-                //    var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
+                var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
-                //    HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
-                //    HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+                HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
 
-                //    var featureList = new List<Feature>();
-                //    foreach (var record in featuresFromApi)
-                //    {
-                //        if (record.geometry != null && record.geometry.rings != null)
-                //        {
-                //            var approvalAttribute = record.attributes.NEPA_DOC_NBR;
-                //            if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
-                //            {
-                //                var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
-                //                featureList.Add(feature);
-                //            }
-                //        }
+                var featureList = new List<Feature>();
+                foreach (var record in featuresFromApi)
+                {
+                    if (record.geometry != null && record.geometry.rings != null)
+                    {
+                        var approvalAttribute = record.attributes.NEPA_DOC_NBR;
+                        if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
+                        {
+                            var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
+                            featureList.Add(feature);
+                        }
+                    }
 
-                //        jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
-                //    }
-                //    var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
+                    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
+                }
+                var featureCollection = new FeatureCollection(featureList.Where(GisProjectBulkUpdateController.IsUsableFeatureGeoJson).ToList());
 
-                //    GisProjectBulkUpdateController.SaveGisUploadToNormalizedFieldsUsingGeoJson(gisAttempt, featureCollection);
+                GisProjectBulkUpdateController.SaveGisUploadToNormalizedFieldsUsingGeoJson(gisAttempt, featureCollection);
 
-                //    var gisMetadataAttributeIDs = gisAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
-                //    var metadataAttributes =
-                //        HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
-                //            gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
+                var gisMetadataAttributeIDs = gisAttempt.GisUploadAttemptGisMetadataAttributes.Select(x => x.GisMetadataAttributeID).ToList();
+                var metadataAttributes =
+                    HttpRequestStorage.DatabaseEntities.GisMetadataAttributes.Where(x =>
+                        gisMetadataAttributeIDs.Contains(x.GisMetadataAttributeID));
 
-                //    var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
+                var viewModel = new GisMetadataViewModel(gisAttempt, metadataAttributes.ToList());
 
-                //    GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog, jobCancellationToken);
+                GisProjectBulkUpdateController.ImportProjects(gisAttempt, viewModel, out var newProjectListLog, out var skippedProjectListLog, out var existingProjectListLog, jobCancellationToken);
 
-                //    var message = new StringBuilder();
-                //    message.AppendLine($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+                var message = new StringBuilder();
+                message.AppendLine($"Successfully imported {newProjectListLog.Count} new {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
-                //    if (newProjectListLog.Count > 0)
-                //    {
-                //        message.AppendLine($" New {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ");
-                //    }
+                if (newProjectListLog.Count > 0)
+                {
+                    message.AppendLine($" New {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", newProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))} ");
+                }
 
-                //    message.AppendLine($"Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
+                message.AppendLine($"Successfully updated {existingProjectListLog.Count} existing {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.");
 
-                //    if (existingProjectListLog.Count > 0)
-                //    {
-                //        message.AppendLine($" Updated {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ");
-                //    }
+                if (existingProjectListLog.Count > 0)
+                {
+                    message.AppendLine($" Updated {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", existingProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}  ");
+                }
 
-                //    message.AppendLine($"Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ");
-                //    if (skippedProjectListLog.Count > 0)
-                //    {
-                //        message.AppendLine($"Skipped {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}");
-                //    }
-                //    Logger.Info(message);
+                message.AppendLine($"Skipped adding/updating {skippedProjectListLog.Count} {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}. ");
+                if (skippedProjectListLog.Count > 0)
+                {
+                    message.AppendLine($"Skipped {FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} are: {string.Join(", ", skippedProjectListLog.Select(x => $"({x.ProjectGisIdentifier}){x.ProjectName}"))}");
+                }
+                Logger.Info(message);
 
             }
             catch (Exception ex)
