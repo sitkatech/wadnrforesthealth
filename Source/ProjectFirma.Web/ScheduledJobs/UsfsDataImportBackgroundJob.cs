@@ -1,24 +1,25 @@
-﻿using System;
+﻿using Hangfire;
+using Newtonsoft.Json;
+using ProjectFirma.Web.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
-using Hangfire;
 using LtInfo.Common.DesignByContract;
-using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.GisProjectBulkUpdate;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
-    public class LoaDataImportBackgroundJob : ScheduledBackgroundJobBase
+    public class UsfsDataImportBackgroundJob : ScheduledBackgroundJobBase
     {
-        public static LoaDataImportBackgroundJob Instance;
+        public static UsfsDataImportBackgroundJob Instance;
 
-        public static int LoaGisUploadSourceOrganizationID = 3;
+        public static int UsfsGisUploadSourceOrganizationID = 14;
 
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
@@ -27,54 +28,80 @@ namespace ProjectFirma.Web.ScheduledJobs
             FirmaEnvironmentType.Qa
         };
 
-        static LoaDataImportBackgroundJob()
+        static UsfsDataImportBackgroundJob()
         {
-            Instance = new LoaDataImportBackgroundJob();
+            Instance = new UsfsDataImportBackgroundJob();
         }
 
-        public LoaDataImportBackgroundJob() : base("LOA Data Import Background Job", ConcurrencySetting.RunJobByItself)
+        public UsfsDataImportBackgroundJob() : base("USFS Data Import Background Job", ConcurrencySetting.RunJobByItself)
         {
         }
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataEasternUrl, jobCancellationToken);
-            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisLoaDataWesternUrl, jobCancellationToken);
+            DownloadArcOnlineDataAndImportProjects(FirmaWebConfiguration.ArcGisUsfsDataUrl, jobCancellationToken);
         }
 
         private void DownloadArcOnlineDataAndImportProjects(string arcOnlineUrl, IJobCancellationToken jobCancellationToken)
         {
             var arcUtility = new ArcGisOnlineUtility();
             HttpClient httpClient = new HttpClient();
-            if (!arcUtility.AddApplicationAuthToken(httpClient))
+
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "WADNR Forest Health Tracker");
+
+            var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == UsfsGisUploadSourceOrganizationID);
+
+            if (uploadSourceOrganization == null)
             {
-                return;
+                throw new ApplicationException($"GisUploadSourceOrganization(ID:{UsfsGisUploadSourceOrganizationID}) does not exist");
             }
 
-            var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null";
-            queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner,email";
-            var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
+            var activitiesForWhereClause = uploadSourceOrganization.GisCrossWalkDefaults.Select(x => $"'{x.GisCrossWalkSourceValue}'").Distinct().ToList();
+
+            var outFields = "DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES";
+            var whereClause = $"DATE_COMPLETED>= DATE '2017-01-01' AND ACTIVITY  IN ({string.Join(",", activitiesForWhereClause)})";
+            var waStateBoundary = "-1.390677682508256E7,5697587.764863089,-1.2991930881749049E7,6283237.237876828";
+            var geometryType = "esriGeometryEnvelope";
+            var spatialRel = "esriSpatialRelIntersects";
+
+            var baseFormNameValueCollection = new[]
+            {
+                new KeyValuePair<string, string>("where", whereClause),
+                new KeyValuePair<string, string>("where", "1=1"),
+                new KeyValuePair<string, string>("f", "json"),
+                new KeyValuePair<string, string>("outSR", "4326"),
+                new KeyValuePair<string, string>("geometry", waStateBoundary),
+                new KeyValuePair<string, string>("geometryType", geometryType),
+                new KeyValuePair<string, string>("inSR", "3857"),
+                new KeyValuePair<string, string>("spatialRel", spatialRel),
+                new KeyValuePair<string, string>("outFields", outFields),
+
+            };
+
+            var returnCountNameValueCollection = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("returnCountOnly", "true"));
+            var returnCountFormContent = new FormUrlEncodedContent(returnCountNameValueCollection);
+
             try
             {
                 //get the total records available
-                var response = httpClient.GetAsync(arcOnlineUrlWithQueryString + "&returnCountOnly=true").Result;
-                response.EnsureSuccessStatusCode();
-                var countResponse = arcUtility.ProcessResponse<LoaProjectApiCountResponse>(response);
+                var returnCountResponse = httpClient.PostAsync(arcOnlineUrl, returnCountFormContent);
+                returnCountResponse.Result.EnsureSuccessStatusCode();
+                var countResponse = arcUtility.ProcessResponse<UsfsProjectApiCountResponse>(returnCountResponse.Result);
                 var totalRecordCount = countResponse.count;
 
-                Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrlWithQueryString}");
+                Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrl}");
 
-                // loop until we get all the records, the max returned is 5000
-                var featuresFromApi = new List<LoaProjectFeatureDto>();
+                // loop until we get all the records, the max returned is 2000
+                var featuresFromApi = new List<UsfsProjectFeatureDto>();
                 var resultOffset = 0;
-                LoaProjectGeometriesDto processedResponse;
+                UsfsProjectGeometriesDto processedResponse;
                 do
                 {
-                    var requestUri = arcOnlineUrlWithQueryString + $"&resultOffset={resultOffset}";
+                    var currentRequestFormData = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("resultOffset", resultOffset.ToString()));
 
-                    response = httpClient.GetAsync(requestUri).Result;
+                    var response = httpClient.PostAsync(arcOnlineUrl, new FormUrlEncodedContent(currentRequestFormData)).Result;
                     response.EnsureSuccessStatusCode();
-                    processedResponse = arcUtility.ProcessResponse<LoaProjectGeometriesDto>(response);
+                    processedResponse = arcUtility.ProcessResponse<UsfsProjectGeometriesDto>(response);
                     featuresFromApi.AddRange(processedResponse.features);
 
                     resultOffset += processedResponse.features.Count;
@@ -85,23 +112,21 @@ namespace ProjectFirma.Web.ScheduledJobs
                 Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
 
                 var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
-                var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
+
                 var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
                 HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
                 HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
-                
+
                 var featureList = new List<Feature>();
                 foreach (var record in featuresFromApi)
                 {
                     if (record.geometry != null && record.geometry.rings != null)
                     {
-                        var approvalAttribute = record.attributes.Approval_ID;
-                        if (approvalAttribute.Length <= Project.FieldLengths.ProjectName)
-                        {
-                            var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
-                            featureList.Add(feature);
-                        }
+
+                        var feature = new Feature(new Polygon(record.geometry.rings), record.attributes);
+                        featureList.Add(feature);
+                        
                     }
 
                     jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
@@ -157,72 +182,36 @@ namespace ProjectFirma.Web.ScheduledJobs
         // ReSharper disable CollectionNeverUpdated.Local
         // ReSharper disable UnusedMember.Local
 #pragma warning disable IDE1006 // Naming Styles
-        private class LoaProjectApiCountResponse
+        private class UsfsProjectApiCountResponse
         {
             public int count { get; set; }
         }
 
-        private class LoaProjectGeometriesDto
+        private class UsfsProjectGeometriesDto
         {
-            public List<LoaProjectFeatureDto> features { get; set; }
+            public List<UsfsProjectFeatureDto> features { get; set; }
         }
 
-        private class LoaProjectFeatureDto
+        private class UsfsProjectFeatureDto
         {
-            public LoaProjectAttributesDto attributes { get; set; }
+            public UsfsProjectAttributesDto attributes { get; set; }
             public GeometryDto geometry { get; set; }
         }
 
-        private class LoaProjectAttributesDto
+        private class UsfsProjectAttributesDto
         {
-            public string OBJECTID { get; set; }
-            public string Landowner { get; set; }
-            public string Approval_ID { get; set; }
-            public string Project_Status { get; set; }
-            public string Date_Time_Collected { get; set; }
-            public string Forester { get; set; }
-            public string Collection_Method { get; set; }
-            public string Grant_Name { get; set; }
-            public string Fund_Source { get; set; }
-            public string Agreement_Number { get; set; }
-            public string Project_Index_Code { get; set; }
-            public string Region_ID { get; set; }
-            public string GIS_Acres { get; set; }
-            public string Homes { get; set; }
-            public string Other_Structures { get; set; }
-            public string Comments { get; set; }
-            public string Brush_Treatment { get; set; }
-            public string Thin_Treatment { get; set; }
-            public string Prune_Treatment { get; set; }
-            public string Slash_Treatment { get; set; }
-            public string Burn_Treatment { get; set; }
-            public string Other_Treatment { get; set; }
-            public string Prune_Acres { get; set; }
-            public string Brush_Acres { get; set; }
-            public string Thin_Acres { get; set; }
-            public string Chip_Acres { get; set; }
-            public string Mast_Mow_Acres { get; set; }
-            public string LopScat_Acres { get; set; }
-            public string Biomass_Acres { get; set; }
-            public string Handpile_Acres { get; set; }
-            public string Graze_Acres { get; set; }
-            public string HandBurn_Acres { get; set; }
-            public string RxBurn_Acres { get; set; }
-            public string MachBurn_Acres { get; set; }
-            public string Other_Acres { get; set; }
+            //DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES
+            public string NEPA_DOC_NBR { get; set; }
+            public string NEPA_PROJECT_NAME { get; set; }
+
             public string Date_Completed { get; set; }
-            public string Year_Completed { get; set; }
-            public string Maint_Period { get; set; }
-            public string Rate_Funded { get; set; }
-            public string FHT_Project_Number { get; set; }
-            public string created_user { get; set; }
-            public string created_date { get; set; }
-            public string last_edited_user { get; set; }
-            public string last_edited_date { get; set; }
-            public string GlobalID { get; set; }
-            public string Shape__Area { get; set; }
-            public string Shape__Length { get; set; }
-            public string email { get; set; }
+            public string Activity { get; set; }
+
+            public string DATE_AWARDED { get; set; }
+            public string GIS_ACRES { get; set; }
+
+
+
         }
 
         private class GeometryDto

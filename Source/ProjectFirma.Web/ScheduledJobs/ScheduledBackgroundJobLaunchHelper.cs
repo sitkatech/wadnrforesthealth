@@ -3,13 +3,18 @@
 namespace ProjectFirma.Web.ScheduledJobs
 {
     /// <summary>
-    /// When running jobs via Hangfire, the job execution is serialized.  Much better to have a static void function for that to avoid problems. This class provides the functions that can be wired to Hangire.
+    /// When running jobs via Hangfire, the job execution is serialized.  Much better to have a static void function for that to avoid problems. This class provides the functions that can be wired to Hangfire.
     /// </summary>
     public static class ScheduledBackgroundJobLaunchHelper
     {
         public static void RunLoaDataImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
             LoaDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
+        }
+
+        public static void RunUsfsDataImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        {
+            UsfsDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
         public static void RunProgramNotificationScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
