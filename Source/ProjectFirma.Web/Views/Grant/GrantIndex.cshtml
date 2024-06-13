@@ -50,5 +50,34 @@
     @*<div id="grantAllocationGridWithoutDataForNoGrantFilterResults">
         @Html.AgGrid(ViewDataTyped.GrantAllocationNoDataGridSpec, ViewDataTyped.GrantAllocationNoDataGridName, ViewDataTyped.GrantAllocationNoDataGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
     </div>*@
+    
+<script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            @(ViewDataTyped.GrantGridName)GridOptionsApi.addEventListener('selectionChanged', mySelectionChangedHandler);
+
+        });
+
+        function mySelectionChangedHandler() {
+
+            const selectedRows = @(ViewDataTyped.GrantGridName)GridOptionsApi.getSelectedRows();
+            
+            if (selectedRows.length === 1) {
+                console.log("inside selectedRows ==== 1 ");
+                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('GrantNumber', {
+                    filterType: 'text',
+                    type: 'contains',
+                    filter: selectedRows[0].GrantNumberAsText,
+                });
+            } else {
+                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('GrantNumber', null);
+            }
+
+            // Tell grid to run filter operation again
+            @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.onFilterChanged();
+
+        }
+</script>
 </div>
 
