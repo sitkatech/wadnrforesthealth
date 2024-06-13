@@ -55,11 +55,11 @@
 
         document.addEventListener("DOMContentLoaded", () => {
 
-            @(ViewDataTyped.GrantGridName)GridOptionsApi.addEventListener('selectionChanged', mySelectionChangedHandler);
+            @(ViewDataTyped.GrantGridName)GridOptionsApi.addEventListener('selectionChanged', onGrantGridRowSelection);
 
         });
 
-        function mySelectionChangedHandler() {
+        function onGrantGridRowSelection() {
 
             const selectedRows = @(ViewDataTyped.GrantGridName)GridOptionsApi.getSelectedRows();
             
