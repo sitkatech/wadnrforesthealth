@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             var geometryType = "esriGeometryPolygon";
             var spatialRel = "esriSpatialRelIntersects";
 
-            var baseFormNameValueCollection = new[]
+            var returnCountNameValueCollection = new[]
             {
                 new KeyValuePair<string, string>("where", whereClause),
                 new KeyValuePair<string, string>("f", "json"),
@@ -75,11 +75,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 new KeyValuePair<string, string>("inSR", "4326"),
                 new KeyValuePair<string, string>("spatialRel", spatialRel),
                 new KeyValuePair<string, string>("outFields", outFields),
-                //resultRecordCount
+                new KeyValuePair<string, string>("returnIdsOnly", "true")
             };
-
-            var returnCountNameValueCollection = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("returnCountOnly", "true"));
-            //var returnCountFormContent = new FormUrlEncodedContent(returnCountNameValueCollection);
 
             try
             {
@@ -90,30 +87,61 @@ namespace ProjectFirma.Web.ScheduledJobs
                 var returnCountResponse = httpClient.PostAsync(arcOnlineUrl, encodedContent);
                 returnCountResponse.Result.EnsureSuccessStatusCode();
                 var countResponse = arcUtility.ProcessResponse<UsfsProjectApiCountResponse>(returnCountResponse.Result);
-                var totalRecordCount = countResponse.count;
+                var totalRecordCount = countResponse.objectIds.Count;//countResponse.count;
 
                 Logger.Info($"DownloadArcOnlineDataAndImportProjects: Attempting to download {totalRecordCount} from API endpoint: {arcOnlineUrl}");
 
+
+                var baseFormNameValueCollection = new[]
+                {
+                    //new KeyValuePair<string, string>("where", whereClause),
+                    new KeyValuePair<string, string>("f", "json"),
+                    new KeyValuePair<string, string>("outSR", "4326"),
+                    //new KeyValuePair<string, string>("geometry", waStateBoundary),
+                    //new KeyValuePair<string, string>("geometryType", geometryType),
+                    //new KeyValuePair<string, string>("inSR", "4326"),
+                    //new KeyValuePair<string, string>("spatialRel", spatialRel),
+                    new KeyValuePair<string, string>("outFields", outFields),
+                    //new KeyValuePair<string, string>("returnIdsOnly", "true")
+                };
+
                 // loop until we get all the records, the max returned is 2000
                 var featuresFromApi = new List<UsfsProjectFeatureDto>();
-                var resultOffset = 0;
-                UsfsProjectGeometriesDto processedResponse;
-                do
+                var batchSize = 1000; // Process in batches of 1000
+                for (int i = 0; i < countResponse.objectIds.Count; i += batchSize)
                 {
-                    Logger.Info($"resultOffset is currently set to {resultOffset}");
-                    var currentRequestFormData = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("resultOffset", resultOffset.ToString()));
-                    var currentRequestEncodedItems = currentRequestFormData.Select(i => WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value));
+                    var batchIds = countResponse.objectIds.Skip(i).Take(batchSize).ToList();
+                    // Adjust the whereClause or the request to include batchIds
+                    // Example: var whereClause = $"OBJECTID IN ({string.Join(",", batchIds)})";
+                    // Note: The actual implementation depends on the API's support for querying by IDs
+
+                    var currentRequestFormData = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("where", $"OBJECTID in ({string.Join(",", batchIds)})"));
+                    var currentRequestEncodedItems = currentRequestFormData.Select(item => WebUtility.UrlEncode(item.Key) + "=" + WebUtility.UrlEncode(item.Value));
                     var currentRequestEncodedContent = new StringContent(String.Join("&", currentRequestEncodedItems), null, "application/x-www-form-urlencoded");
 
                     var response = httpClient.PostAsync(arcOnlineUrl, currentRequestEncodedContent).Result;
                     response.EnsureSuccessStatusCode();
-                    processedResponse = arcUtility.ProcessResponse<UsfsProjectGeometriesDto>(response);
+                    var processedResponse = arcUtility.ProcessResponse<UsfsProjectGeometriesDto>(response);
                     featuresFromApi.AddRange(processedResponse.features);
 
-                    resultOffset += processedResponse.features.Count;
-
                     jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
-                } while (processedResponse.features.Count > 0);// && featuresFromApi.Count < totalRecordCount);
+                }
+                //do
+                //{
+                //    Logger.Info($"resultOffset is currently set to {resultOffset}");
+                //    var currentRequestFormData = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("resultOffset", resultOffset.ToString()));
+                //    var currentRequestEncodedItems = currentRequestFormData.Select(i => WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value));
+                //    var currentRequestEncodedContent = new StringContent(String.Join("&", currentRequestEncodedItems), null, "application/x-www-form-urlencoded");
+
+                //    var response = httpClient.PostAsync(arcOnlineUrl, currentRequestEncodedContent).Result;
+                //    response.EnsureSuccessStatusCode();
+                //    processedResponse = arcUtility.ProcessResponse<UsfsProjectGeometriesDto>(response);
+                //    featuresFromApi.AddRange(processedResponse.features);
+
+                //    resultOffset += processedResponse.features.Count;
+
+                //    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
+                //} while (processedResponse.features.Count > 0);// && featuresFromApi.Count < totalRecordCount);
 
 
                 //Check.Require(featuresFromApi.Count == totalRecordCount,
@@ -210,7 +238,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 #pragma warning disable IDE1006 // Naming Styles
         private class UsfsProjectApiCountResponse
         {
-            public int count { get; set; }
+            public List<int> objectIds { get; set; }
         }
 
         private class UsfsProjectGeometriesDto
