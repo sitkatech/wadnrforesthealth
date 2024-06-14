@@ -951,6 +951,7 @@
     <Compile Include="ScheduledJobs\ProgramNotificationScheduledBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ArcOnlineFinanceApiUpdateBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\UsfsDataImportBackgroundJobTest.cs" />
+    <Compile Include="ScheduledJobs\UsfsDataImportBackgroundJobVariable.cs" />
     <Compile Include="ScheduledJobs\VendorImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />

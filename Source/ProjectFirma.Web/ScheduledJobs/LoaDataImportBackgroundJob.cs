@@ -149,6 +149,10 @@ namespace ProjectFirma.Web.ScheduledJobs
                     $"Exception: {ex.GetType()}; Message: {ex.Message}; Occurred in {nameof(DownloadArcOnlineDataAndImportProjects)} while processing with Arc URL {arcOnlineUrl}",
                     ex);
             }
+            finally
+            {
+                httpClient.Dispose();
+            }
         }
 
         // ReSharper disable InconsistentNaming
