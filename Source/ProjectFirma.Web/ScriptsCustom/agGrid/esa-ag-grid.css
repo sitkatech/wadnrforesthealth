@@ -3,11 +3,11 @@
 
 .ag-filter .filter-options {
      background-color: #fff;
-     border: 1px solid rgba($black, 0.2);
      max-height: 250px;
      overflow: auto;
      border-radius: 4px;
      padding: 2px;
+     min-width: 200px !important;
  }
 
 .filter-options label.filter-option {

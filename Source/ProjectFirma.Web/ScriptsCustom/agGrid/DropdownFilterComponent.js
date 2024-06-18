@@ -32,6 +32,7 @@
             }
             
         });
+        //console.log("dropdown fields for:" + this.params.colDef.field);
         //console.log(this.dropdownValues);
         this.gui = document.createElement('div');
         this.gui.classList.add("filter-options");
@@ -180,7 +181,14 @@
             this.dropdowns.forEach(dropdown => {
                 dropdown.checked = false;
             });
+        } else {
+
+            this.selectedValues = model;
+            this.dropdowns.forEach(dropdown => {
+                dropdown.checked = this.selectedValues.includes(dropdown.name);
+            });
         }
+        
         this.selectedValues = model;
         this.extractFilterValues();
     }

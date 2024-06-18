@@ -55,7 +55,6 @@
         document.addEventListener("DOMContentLoaded", () => {
 
             @(ViewDataTyped.GrantGridName)GridOptionsApi.addEventListener('selectionChanged', onGrantGridRowSelection);
-            @(ViewDataTyped.GrantGridName)GridOptionsApi.setGridOption('rowSelection', 'single');
 
         });
 
@@ -63,14 +62,10 @@
 
             const selectedRows = @(ViewDataTyped.GrantGridName)GridOptionsApi.getSelectedRows();
 
-            if (selectedRows.length === 1) {
+            if (selectedRows.length > 0) {
 
                 @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName',
-                    {
-                        filterType: 'text',
-                        type: 'contains',
-                        filter: selectedRows[0].@(FieldDefinition.GrantNumber.FieldDefinitionName)AsText,
-                });
+                    selectedRows.map(row => row.@(FieldDefinition.GrantNumber.FieldDefinitionName)AsText));
             } else {
                 @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName', null);
             }
