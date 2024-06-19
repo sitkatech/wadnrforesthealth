@@ -78,18 +78,7 @@ namespace LtInfo.Common.AgGridWrappers
         {
             get
             {
-                var noSpecialChars = Regex.Replace(ColumnNameInnerText, @"[\-\(\)/]", string.Empty);
-                var acceptableColumnName = noSpecialChars.Replace(" ", "").Replace("#", "Num").Replace("...", "").Replace(".", "_");
-
-                // Move digits to the end.
-                if (Regex.IsMatch(acceptableColumnName, @"^\d+"))
-                {
-                    var match = Regex.Match(acceptableColumnName, @"\d+");
-
-                    acceptableColumnName = acceptableColumnName.Replace(match.ToString(), "") + "_" + match;
-                }
-
-                return acceptableColumnName;
+                return ColumnNameInnerText.ToStringSpecialForJavascript();
             }
         }
 

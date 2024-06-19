@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.AgGridWrappers
@@ -36,20 +37,21 @@
 </div>
 
 <div style="margin-top: 10px">
-    
+
     @* Grant Grid *@
-    <h3>Grants</h3>
+    <h3>@FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()</h3>
     @Html.AgGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, null, AgGridResizeType.VerticalResizableHorizontalAutoFit)
 
     <br />
 
     @* Grant Allocation Grid *@
-    <h3>Grant Allocations</h3>
+    <h3>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</h3>
+    <div id="grantAllocationGridAlertBox" class="alert alert-info" role="alert" style="display: none;"></div>
     <div id="grantAllocationGridWithData">
         @Html.AgGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
     </div>
 
-    
+
     <script>
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -59,15 +61,24 @@
         });
 
         function onGrantGridRowSelection() {
+            jQuery("#grantAllocationGridAlertBox").hide();
 
             const selectedRows = @(ViewDataTyped.GrantGridName)GridOptionsApi.getSelectedRows();
 
             if (selectedRows.length > 0) {
 
-                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName',
-                    selectedRows.map(row => row.@(FieldDefinition.GrantNumber.FieldDefinitionName)AsText));
+                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()',
+                    selectedRows.map(row => row.@(FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript())AsText));
+
+                //console.log(@(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.getColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName'));
+
+                if (!@(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.getColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()')) {
+                    jQuery("#grantAllocationGridAlertBox").text("No @FieldDefinition.GrantNumber.GetFieldDefinitionLabel() matches your selection of '" + selectedRows.map(row => row.@(FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript())AsText).join(',') + "' in the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Grid");
+                    jQuery("#grantAllocationGridAlertBox").show();
+                }
+
             } else {
-                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName', null);
+                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()', null);
             }
 
             // Tell grid to run filter operation again

@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.Grant
 {
     public class GrantGridSpec : GridSpec<Models.Grant>
     {
-        public static string GrantNumberHiddenColumnName = $"{Models.FieldDefinition.GrantNumber.FieldDefinitionName}AsText";
+        public static string GrantNumberHiddenColumnName = $"{Models.FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()}AsText";
 
         public GrantGridSpec(Models.Person currentPerson)
         {
