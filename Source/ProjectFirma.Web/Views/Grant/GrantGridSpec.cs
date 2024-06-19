@@ -52,6 +52,7 @@ namespace ProjectFirma.Web.Views.Grant
 
             // hidden column for grant number for use by JavaScript
             Add(GrantNumberHiddenColumnName, x => x.GrantNumber, 0);
+
             if (userHasDeletePermissions)
             {
                 Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);

@@ -68,12 +68,12 @@
             if (selectedRows.length > 0) {
 
                 @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()',
-                    selectedRows.map(row => row.@(FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript())AsText));
+                    selectedRows.map(row => row.@(GrantGridSpec.GrantNumberHiddenColumnName)));
 
                 //console.log(@(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.getColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName'));
 
                 if (!@(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.getColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()')) {
-                    jQuery("#grantAllocationGridAlertBox").text("No @FieldDefinition.GrantNumber.GetFieldDefinitionLabel() matches your selection of '" + selectedRows.map(row => row.@(FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript())AsText).join(',') + "' in the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Grid");
+                    jQuery("#grantAllocationGridAlertBox").text("No @FieldDefinition.GrantNumber.GetFieldDefinitionLabel() matches your selection of '" + selectedRows.map(row => row.@(GrantGridSpec.GrantNumberHiddenColumnName)).join(',') + "' in the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Grid");
                     jQuery("#grantAllocationGridAlertBox").show();
                 }
 
