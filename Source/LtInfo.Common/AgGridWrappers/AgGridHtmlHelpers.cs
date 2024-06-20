@@ -134,11 +134,13 @@ namespace LtInfo.Common.AgGridWrappers
                 return {0}CalculatePinnedBottomData(result, columnsWithAggregation);
             }}
             function {0}CalculatePinnedBottomData(target, columnsWithAggregation){{
-                //console.log(target);
-                
+                //console.log('beginning of CalcPinnedBottomData, target:' + JSON.stringify(target));
+
                 columnsWithAggregation.forEach(element => {{
                   //console.log('element', element);
+                    target[element] = 0;
                     {0}GridOptionsApi.forEachNodeAfterFilter((rowNode) => {{
+                        //console.log('rowNode.data[element]', rowNode.data[element]);
                         if (rowNode.data[element]){{
                             if(target[element]){{
                                 target[element] = (Number.parseFloat(target[element]) + Number.parseFloat(rowNode.data[element]));
