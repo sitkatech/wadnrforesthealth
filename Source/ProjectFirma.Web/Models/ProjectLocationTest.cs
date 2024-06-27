@@ -25,7 +25,8 @@ namespace ProjectFirma.Web.Models
                         where p.ProjectLocationPoint.STIntersects(l.ProjectLocationGeometry) = 0
                         and p.ProjectLocationPoint.STDistance(l.ProjectLocationGeometry.STCentroid())
                         > 0.001  
-                        and p.CreateGisUploadAttemptID is not null";
+                        and p.CreateGisUploadAttemptID is not null
+                        order by p.ProjectID";
             var result = ExecAdHocSql(sqlQueryString);
             Approvals.Verify(result.TableToHumanReadableString());
         }
