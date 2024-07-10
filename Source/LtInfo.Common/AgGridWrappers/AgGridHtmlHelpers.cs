@@ -466,18 +466,16 @@ namespace LtInfo.Common.AgGridWrappers
             var getProjectIDFunctionString =
                 $"function() {{ return {gridName}GetValuesFromCheckedGridRows('{modalDialogForm.ValueColumnName}', '{modalDialogForm.ReturnListName}'); }}";
 
-            //todo: AgGrid update fix modal dialog form link
-            //return ModalDialogFormHelper.ModalDialogFormLink($"{tagIconHtml} Generate Reports",
-            //    modalDialogForm.DialogUrl,
-            //    modalDialogForm.DialogTitle,
-            //    ModalDialogFormHelper.DefaultDialogWidth,
-            //    "Generate",
-            //    "Close",
-            //    new List<string>(),
-            //    null,
-            //    getProjectIDFunctionString,
-            //    true).ToString();
-            return string.Empty;
+
+            return ModalDialogFormHelper.ModalDialogFormLink($"{tagIconHtml} Generate Reports",
+                modalDialogForm.DialogUrl,
+                modalDialogForm.DialogTitle,
+                ModalDialogFormHelper.DefaultDialogWidth,
+                "Generate",
+                "Close",
+                new List<string>(),
+                null,
+                getProjectIDFunctionString).ToString();
 
         }
 
