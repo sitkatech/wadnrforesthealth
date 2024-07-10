@@ -72,7 +72,6 @@
         var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
         var rootUrl = "@FirmaWebConfiguration.WebMapServiceUrl";
 
-        var myGrid = Sitka.@ViewDataTyped.GridName;
         var findYourForesterRoleID = @ViewDataTyped.DefaultForesterRoleID;
         var selectedPolygon = null;
 
@@ -88,7 +87,7 @@
             window.history.pushState({}, '', pageUrlTemplate.ParameterReplace(findYourForesterRoleID));
 
             var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
-            myGrid.grid.clearAndLoad(dataUrl, function(){}, 'json');
+            @(ViewDataTyped.GridName)LoadGridData(dataUrl);
 
         });
 
@@ -96,11 +95,11 @@
             highlightForester(e);
         });
 
-        function getForesterWorkUnitIDFromRowID(rowId) {
-            var columnIndex = myGrid.getColumnIndexByName('@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName');
-            var cell = myGrid.grid.cellById(rowId, columnIndex);
-            var cellValue = cell.getValue();
-            return cellValue;
+        function getForesterWorkUnitIDFromRowNode(rowNode) {
+
+            var foresterWorkUnitId = rowNode.data.@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName;
+            return foresterWorkUnitId;
+
         }
 
         var defaultWfsParameters = {
@@ -112,36 +111,42 @@
             typeNames: '@FirmaWebConfiguration.GetFindYourForesterWmsLayerName()',
         };
 
-        function highlightMapFromGridClick(rowId, colIndex) {
-            var foresterWorkUnitId = getForesterWorkUnitIDFromRowID(rowId);
-            // Check for previous selected polygon layer and possibly remove it
-            if (selectedPolygon) {
-                selectedPolygon.removeFrom(sitkaMap.map);
-                sitkaMap.map.closePopup();
-            }
+        function highlightMapFromGridClick(event) {
 
-            var customWfsParams = {
-                cql_filter: 'PrimaryKey=' + foresterWorkUnitId
-            };
-
-            var parametersWfs = L.Util.extend(defaultWfsParameters, customWfsParams);
-            jQuery.ajax({
-                url : rootUrl + L.Util.getParamString(parametersWfs),
-                dataType : 'json'
-            }).done(function(data) {
-                // Create the newly selected polygon layer using WFS
-                if (data.features.length > 0) {
-                    selectedPolygon = L.geoJSON(data);
-                    selectedPolygon.addTo(sitkaMap.map);
-
+            if (event.node.isSelected()) {
+                var foresterWorkUnitId = getForesterWorkUnitIDFromRowNode(event.node);
+                // Check for previous selected polygon layer and possibly remove it
+                if (selectedPolygon) {
+                    selectedPolygon.removeFrom(sitkaMap.map);
+                    sitkaMap.map.closePopup();
                 }
 
-            }).fail(function (data) {
-                console.log(data);
-            });
+                var customWfsParams = {
+                    cql_filter: 'PrimaryKey=' + foresterWorkUnitId
+                };
+
+                var parametersWfs = L.Util.extend(defaultWfsParameters, customWfsParams);
+                jQuery.ajax({
+                    url : rootUrl + L.Util.getParamString(parametersWfs),
+                    dataType : 'json'
+                }).done(function(data) {
+                    // Create the newly selected polygon layer using WFS
+                    if (data.features.length > 0) {
+                        selectedPolygon = L.geoJSON(data);
+                        selectedPolygon.addTo(sitkaMap.map);
+
+                    }
+
+                }).fail(function (data) {
+                    console.log(data);
+                });
+            }
+
 
         };
-        myGrid.grid.attachEvent("onRowSelect", highlightMapFromGridClick);
+
+        @(ViewDataTyped.GridName)GridOptionsApi.addEventListener('rowSelected', highlightMapFromGridClick);
+
 
 
         var defaultWmsParameters = {
@@ -165,14 +170,16 @@
                     if (!result || !result.properties) return;
 
                     var foresterWorkUnitID = result.properties.PrimaryKey;
-                    var numberOfRows = myGrid.grid.getRowsNum();
-                    for (var i = 0; i < numberOfRows; i++) {
-                        var id = myGrid.grid.getRowId(i);
-                        var cellValue = getForesterWorkUnitIDFromRowID(id);
+                    
+                    @(ViewDataTyped.GridName)GridOptionsApi.forEachNode((rowNode, index) => {
+                        var cellValue = getForesterWorkUnitIDFromRowNode(rowNode);
                         if (foresterWorkUnitID == cellValue) {
-                            myGrid.grid.selectRowById(id);
+                            
+                            rowNode.setSelected(true);
                         }
-                    }
+
+                    });
+
                 });
 
             });
@@ -219,6 +226,7 @@
                 }
 
             }).fail(function (data) {
+                console.log("Ajax call to highlight Forester failed");
                 console.log(data);
             });
 

@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             DefaultForesterRoleID = initialForesterRoleIdToLoad;
 
             var getForesterWorkUnitID =
-                $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows({0}, \'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
+                $"function() {{ return {GridName}GetValuesFromCheckedGridRows(\'ForesterWorkUnitID\', \'ForesterWorkUnitIDList\'); }}";
  
             var modalDialogFormLink = ModalDialogFormHelper.ModalDialogFormLink(
                 "<span class=\"glyphicon glyphicon-edit\" style=\"margin-right:5px\"></span>Manage Forester Assignments",
