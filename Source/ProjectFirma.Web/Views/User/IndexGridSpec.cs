@@ -50,10 +50,10 @@ namespace ProjectFirma.Web.Views.User
             Add("Supplemental Role(s)", a => a.IsFullUser() ? string.Join(", ", a.GetUsersSupplementalRoles().Select(x => x.RoleDisplayName)) : "N/A", 100, AgGridColumnFilterType.Text);
             Add("Active?", a => a.IsActive.ToYesNo(), 75, AgGridColumnFilterType.SelectFilterStrict);
             //Add("Receives Support Emails?", a => a.IsFullUser() ? a.ReceiveSupportEmails.ToYesNo(): "N/A", 100, AgGridColumnFilterType.SelectFilterStrict);
-            Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
+            Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 220);
             Add("Added On", x => x.CreateDate, 130, AgGridColumnFormatType.Date);
             Add("Added By", x => x.AddedByPerson == null ? string.Empty : $"{{ \"link\":\"{x.AddedByPerson.GetDetailUrl()}\",\"displayText\":\"{x.AddedByPerson.FullNameFirstLast}\" }}", 200, AgGridColumnFilterType.HtmlLinkJson);
-            Add("Authentication Methods", x => string.Join(", ", x.PersonAllowedAuthenticators.OrderBy(paa => paa.Authenticator.AuthenticatorName).Select(paa => paa.Authenticator.AuthenticatorName)), 75, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Authentication Methods", x => string.Join(", ", x.PersonAllowedAuthenticators.OrderBy(paa => paa.Authenticator.AuthenticatorName).Select(paa => paa.Authenticator.AuthenticatorName)), 150, AgGridColumnFilterType.SelectFilterStrict);
         }
 
         private static string GetOrganizationShortNameUrlJson(Person person)

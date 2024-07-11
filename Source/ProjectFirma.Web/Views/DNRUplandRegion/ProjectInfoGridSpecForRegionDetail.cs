@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.County.ToGridHeaderString(), x => new HtmlString(string.Join(", ", x.GetProjectCounties().Select(y => y.DisplayName))), 150, AgGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => GetPrimaryContactHtmlLinkJson(x.GetPrimaryContact()), 150, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.PrimaryContact.ToGridHeaderString(), x => GetPrimaryContactHtmlLinkJson(x.GetPrimaryContact()), 150, AgGridColumnFilterType.HtmlLinkJson);
 
 
             Add($"Total {Models.FieldDefinition.TreatedAcres.GetFieldDefinitionLabelPluralized()}", x => x.TotalTreatedAcres, 90, AgGridColumnFormatType.Decimal);

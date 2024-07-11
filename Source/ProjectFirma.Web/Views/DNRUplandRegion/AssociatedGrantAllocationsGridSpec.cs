@@ -27,25 +27,25 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             Add("Program Index",
                 x => string.Join(", ",
                     x.GrantAllocationProgramIndexProjectCodes?.Where(y=>y.ProgramIndex != null).Select(y => y.ProgramIndex?.AuditDescriptionString) ??
-                    Array.Empty<string>()), 60, AgGridColumnFilterType.Text);
+                    Array.Empty<string>()), 80, AgGridColumnFilterType.Text);
 
             Add("Project Code",
                 x => string.Join(", ",
                     x.GrantAllocationProgramIndexProjectCodes?.Where(y=> y.ProjectCode != null).Select(y =>  y.ProjectCode?.ProjectCodeName).Distinct() ??
-                    Array.Empty<string>()), 50, AgGridColumnFilterType.Text);
+                    Array.Empty<string>()), 80, AgGridColumnFilterType.Text);
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification?.Grant.GetGrantNumberAsUrl(), 150, AgGridColumnFilterType.Text);
 
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 75, AgGridColumnFormatType.Date);
 
-            Add(Models.FieldDefinition.GrantAllocationFundFSPs.ToGridHeaderString(), x => x.HasFundFSPs.ToYesNo("N/A"), 50, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationFundFSPs.ToGridHeaderString(), x => x.HasFundFSPs.ToYesNo("N/A"), 80, AgGridColumnFilterType.SelectFilterStrict);
 
             Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => x.DisplayNameAsUrl, 175, AgGridColumnFilterType.Html);
 
             Add(Models.FieldDefinition.GrantAllocationSource.ToGridHeaderString(), x => x.GrantAllocationSource?.GrantAllocationSourceDisplayName, 175,
                 AgGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.GrantAllocationAllocation.ToGridHeaderString(), x => x.GetAllocationStringForDnrUplandRegionGrid(), 50, AgGridColumnFormatType.None, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationAllocation.ToGridHeaderString(), x => x.GetAllocationStringForDnrUplandRegionGrid(), 75, AgGridColumnFormatType.None, AgGridColumnFilterType.Html);
 
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 100, AgGridColumnFormatType.CurrencyWithCents,
                 AgGridColumnAggregationType.Total);

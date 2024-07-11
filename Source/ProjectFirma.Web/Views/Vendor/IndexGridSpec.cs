@@ -37,8 +37,8 @@ namespace ProjectFirma.Web.Views.Vendor
         {
             CustomExcelDownloadUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(vc => vc.VendorsExcelDownloadImpl());
             Add("Vendor Name", a => $"{{ \"link\":\"{a.GetDetailUrl()}\",\"displayText\":\"{a.VendorName}\" }}", 200, AgGridColumnFilterType.HtmlLinkJson);
-            Add("Statewide Vendor Number", a => a.StatewideVendorNumber.ToString(), 100, AgGridColumnFilterType.Html);
-            Add("Statewide Vendor Number Suffix", a => a.StatewideVendorNumberSuffix.ToString(), 75, AgGridColumnFilterType.Html);
+            Add("Statewide Vendor Number", a => a.StatewideVendorNumber.ToString(), 150, AgGridColumnFilterType.Html);
+            Add("Statewide Vendor Number Suffix", a => a.StatewideVendorNumberSuffix.ToString(), 150, AgGridColumnFilterType.Html);
             Add("Billing Agency", a => a.BillingAgency, 75, AgGridColumnFilterType.Html);
             Add("Billing Sub Agency", a => a.BillingSubAgency, 75);
             Add("Billing Fund", a => a.BillingFund, 75, AgGridColumnFilterType.Html);

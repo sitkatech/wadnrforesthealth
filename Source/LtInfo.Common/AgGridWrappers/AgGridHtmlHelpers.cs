@@ -289,7 +289,7 @@ namespace LtInfo.Common.AgGridWrappers
                 }
                 else
                 {
-                    columnDefinitionStringBuilder.AppendFormat(", \"initialWidth\": {0}", columnSpec.GridWidth + 30); // 8/8/2023 SB add to the width instead of editing every hard coded column in every GridSpec class
+                    columnDefinitionStringBuilder.AppendFormat(", \"initialWidth\": {0}", columnSpec.GridWidth + 60); // 8/8/2023 SB add to the width instead of editing every hard coded column in every GridSpec class
                 }
 
                 if (columnSpec.GridWidthFlex > 0)

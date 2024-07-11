@@ -69,8 +69,8 @@ namespace ProjectFirma.Web.Views.Invoice
             Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDate, 90, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.Fund.ToGridHeaderString(), x => x.Fund, 90, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.Appn.ToGridHeaderString(), x => x.Appn, 90, AgGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndex?.ProgramIndexCode, 40, AgGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCode?.ProjectCodeName, 40, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndex?.ProgramIndexCode, 80, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCode?.ProjectCodeName, 80, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.SubObject.ToGridHeaderString(), x => x.SubObject, 90, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.OrganizationCode.ToGridHeaderString(), x => x.OrganizationCode?.OrganizationCodeValue, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.MatchAmount.ToGridHeaderString(), x => x.MatchAmountForDisplay, 60);
