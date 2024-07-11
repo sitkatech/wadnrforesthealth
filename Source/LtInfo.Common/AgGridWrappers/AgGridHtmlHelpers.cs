@@ -190,7 +190,7 @@ namespace LtInfo.Common.AgGridWrappers
           ],
 
           // default col def properties get applied to all columns
-          defaultColDef: {{sortable: true, filter: true, floatingFilter:true, wrapHeaderText: true, autoHeaderHeight: true, }},
+          defaultColDef: {{sortable: true, filter: true, floatingFilter:true, wrapHeaderText: true,  }},
           rowSelection: 'multiple', // allow rows to be selected
           animateRows: true, // have rows animate to new positions when sorted
 

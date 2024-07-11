@@ -1657,6 +1657,9 @@
     <Content Include="ScriptsCustom\agGrid\HtmlFilterComponent.js" />
     <Content Include="ScriptsCustom\agGrid\HtmlFloatingFilterComponent.js" />
     <Content Include="ScriptsCustom\agGrid\HtmlLinkJsonRenderer.js" />
+    <Content Include="Scripts\agGrid\ag-grid-community.min.noStyle.js" />
+    <Content Include="Scripts\agGrid\ag-grid.css" />
+    <Content Include="Scripts\agGrid\ag-theme-alpine.css" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -2150,7 +2153,6 @@
     <Content Include="ScriptsCustom\SitkaFileExtensionsValidation.min.js" />
     <Content Include="ScriptsCustom\unsavedChanges.js" />
     <Content Include="ScriptsCustom\unsavedChanges.min.js" />
-    <Content Include="Scripts\autonumeric\autonumeric-4.2.15.min.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
     <Content Include="Scripts\waypoints.min.js" />
     <Content Include="Views\Home\FeaturedProjects.cshtml" />
@@ -4455,6 +4457,7 @@
   <ItemGroup>
     <Folder Include="Content\img\MimeTypeIcons\" />
     <Folder Include="Content\themes\base\minified\images\" />
+    <Folder Include="Scripts\autonumeric\" />
     <Folder Include="Views\Help\" />
   </ItemGroup>
   <ItemGroup>
