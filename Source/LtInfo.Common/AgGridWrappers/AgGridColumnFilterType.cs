@@ -31,7 +31,8 @@ namespace LtInfo.Common.AgGridWrappers
         SelectFilterHtmlStrict,
         DateRange,
         HtmlLinkJson,
-        HtmlLinkJsonWithNoFilter
+        HtmlLinkJsonWithNoFilter,
+        HtmlLinkListJson,
 
     }
 }

@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             //}
 
             Add("Lead Implementer", x => GetLeadImplementerHtmlLinkJson(x.GetLeadImplementer()) , 300, AgGridColumnFilterType.HtmlLinkJson);
-            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.ProjectPrograms.ToProgramListDisplay(true), 300, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.ProjectPrograms.ToProgramListDisplayForAgGrid(true), 300, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}", 300, AgGridColumnFilterType.HtmlLinkJson);
 
             var landownerRelationshipType = ProjectPersonRelationshipType.PrivateLandowner;

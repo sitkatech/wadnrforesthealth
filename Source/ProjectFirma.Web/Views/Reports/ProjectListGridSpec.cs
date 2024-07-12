@@ -50,14 +50,14 @@ namespace ProjectFirma.Web.Views.Reports
 
             Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 100, AgGridColumnFormatType.Decimal );
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 90, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => Program(x, programsByProject), 90, AgGridColumnFilterType.HtmlLinkListJson);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, AgGridColumnFilterType.SelectFilterStrict);
             Add($"Associated {Models.FieldDefinition.County.ToGridHeaderString()}", x => x.ProjectCounties.FirstOrDefault()?.County?.CountyName, 125, AgGridColumnFilterType.SelectFilterStrict);
         }
 
-        private static HtmlString Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
+        private static string Program(Models.Project project, Dictionary<int, List<Models.Program>> programsByProject)
         {
-            return project.ProjectPrograms.ToProgramListDisplay(false);
+            return project.ProjectPrograms.ToProgramListDisplayForAgGrid(false);
         }
 
         private decimal TotalTreatedAcres(Models.Project project,

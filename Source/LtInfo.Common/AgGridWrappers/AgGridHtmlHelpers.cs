@@ -341,6 +341,13 @@ namespace LtInfo.Common.AgGridWrappers
                         columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkJsonFormatter");
                         columnDefinitionStringBuilder.Append(", \"sortable\": false");
                         break;
+                    case AgGridColumnFilterType.HtmlLinkListJson:
+                        columnDefinitionStringBuilder.Append(", \"filter\": HtmlLinkListDropdownFilterComponent");
+                        //columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlLinkJsonFilterTextMatcher( filterOption, value, filterText)  }");
+                        columnDefinitionStringBuilder.Append(", \"cellRenderer\": HtmlLinkListJsonRenderer");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlLinkListJsonFormatter");
+                        //columnDefinitionStringBuilder.Append(", \"comparator\": JsonDisplayTextSorting");
+                        break;
                     default:
                         break;
                 }

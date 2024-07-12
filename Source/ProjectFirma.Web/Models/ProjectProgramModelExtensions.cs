@@ -2,39 +2,38 @@
 using System.Linq;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.AgGridWrappers;
 
 namespace ProjectFirma.Web.Models
 {
     public static class ProjectProgramModelExtensions
     {
-        public static HtmlString ToProgramListDisplay(this IEnumerable<ProjectProgram> projectPrograms)
+        public static string ToProgramListDisplayForAgGrid(this IEnumerable<ProjectProgram> projectPrograms)
         {
-            return projectPrograms.ToProgramListDisplay(true);
+            return projectPrograms.ToProgramListDisplayForAgGrid(true);
         }
 
-        public static HtmlString ToProgramListDisplay(this IEnumerable<ProjectProgram> projectPrograms, bool showDefaultsAsWell)
+        public static string ToProgramListDisplayForAgGrid(this IEnumerable<ProjectProgram> projectPrograms, bool showDefaultsAsWell)
         {
 
             var programs = projectPrograms.Select(x => x.Program).ToList();
 
-            var listOfStrings = new List<string>();
+            var listOfJsonStrings = new List<HtmlLinkObject>();
             foreach (var program in programs)
             {
                 if (!program.IsDefaultProgramForImportOnly || showDefaultsAsWell)
                 {
-                    //5/9/24 TK: todo: making this text only to prevent performance issues ideally this would be a list of links
-                    var stringReturn = program.DisplayName; //UrlTemplate.MakeHrefString(program.GetDetailUrl(), program.DisplayName).ToString();
-                    listOfStrings.Add(stringReturn);
+                    var stringReturn = new HtmlLinkObject(program.DisplayName, program.GetDetailUrl());
+                    listOfJsonStrings.Add(stringReturn);
                 }
             }
 
-            var returnList = string.Join(", ", listOfStrings);
-            if (listOfStrings.Any())
+            if (listOfJsonStrings.Any())
             {
-                return new HtmlString(returnList);
+                return listOfJsonStrings.ToJsonArrayForAgGrid();
             }
 
-            return new HtmlString(string.Empty);
+            return string.Empty;
 
         }
 

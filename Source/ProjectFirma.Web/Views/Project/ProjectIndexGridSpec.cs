@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.Project
 
             Add(Models.FieldDefinition.ProjectTotalCompletedTreatmentAcres.ToGridHeaderString(), x => TotalTreatedAcres(x,totalTreatedAcresByProjectDictionary), 200, AgGridColumnFormatType.Decimal );
             Add($"{MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship().RelationshipTypeName} Organization", x => x.GetPrimaryContactOrganization()?.DisplayName, 200, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => x.ProjectPrograms.ToProgramListDisplay(false), 200, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.Program.ToGridHeaderStringPlural("Programs"), x => x.ProjectPrograms.ToProgramListDisplayForAgGrid(false), 200, AgGridColumnFilterType.HtmlLinkListJson);
             Add($"Associated {Models.FieldDefinition.PriorityLandscape.ToGridHeaderString()}", x => x.ProjectPriorityLandscapes.FirstOrDefault()?.PriorityLandscape?.DisplayName, 125, AgGridColumnFilterType.SelectFilterStrict);
             Add($"Associated {Models.FieldDefinition.County.ToGridHeaderString()}", x => x.ProjectCounties.FirstOrDefault()?.County?.CountyName, 125, AgGridColumnFilterType.SelectFilterStrict);
         }

@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using DocumentFormat.OpenXml.Drawing;
 using LtInfo.Common.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -46,6 +47,11 @@ namespace LtInfo.Common.AgGridWrappers
         public static string ToJsonObjectForAgGrid(this HtmlLinkObject htmlLinkObject)
         {
             return $"{{ \"link\":\"{htmlLinkObject.Url}\",\"displayText\":\"{htmlLinkObject.DisplayText}\" }}";
+        }
+
+        public static string ToJsonArrayForAgGrid(this List<HtmlLinkObject> htmlLinkObjects)
+        {
+            return $"{{ \"links\": [{string.Join(",", htmlLinkObjects.Select(x => x.ToJsonObjectForAgGrid()))}] }}";
         }
 
     }
