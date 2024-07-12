@@ -55,9 +55,9 @@ namespace ProjectFirma.Web.Views.Project
 
 
             Add("Fact Sheet", x => MakeFactSheetUrlJson(x), 30, AgGridColumnFilterType.HtmlLinkJsonWithNoFilter);
-
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 125, AgGridColumnFilterType.HtmlLinkJson);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",225, AgGridColumnFilterType.HtmlLinkJson);
+            //$"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}"
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.FhtProjectNumber, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 125, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => new HtmlLinkObject(x.ProjectName, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 225, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
 

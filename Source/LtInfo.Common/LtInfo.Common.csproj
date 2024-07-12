@@ -183,6 +183,7 @@
     <Compile Include="AgGridWrappers\AgGridColumnSortType.cs" />
     <Compile Include="AgGridWrappers\AgGridHtmlHelpers.cs" />
     <Compile Include="AgGridWrappers\AgGridResizeType.cs" />
+    <Compile Include="AgGridWrappers\HtmlLinkObject.cs" />
     <Compile Include="AgGridWrappers\AutoGridSpec.cs" />
     <Compile Include="AgGridWrappers\BulkDeleteModalDialogForm.cs" />
     <Compile Include="AgGridWrappers\BulkTagModalDialogForm.cs" />
