@@ -18,10 +18,13 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Web.UI.HtmlControls;
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
 using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.ModalDialog;
+using LtInfo.Common.Models;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 
@@ -35,9 +38,9 @@ namespace ProjectFirma.Web.Views.FirmaPage
             {
                 Add("Edit", a => AgGridHtmlHelpers.MakeLtInfoEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(SitkaRoute<FirmaPageController>.BuildUrlFromExpression(t => t.EditInDialog(a)),
                         $"Edit Intro Content for '{a.FirmaPageType.FirmaPageTypeDisplayName}'")),
-                    30);
+                    30, AgGridColumnFilterType.None);
             }
-            Add("Page Name", a => UrlTemplate.MakeHrefString(a.FirmaPageType.GetViewUrl(), a.FirmaPageType.FirmaPageTypeDisplayName), 180, AgGridColumnFilterType.Text);
+            Add("Page Name", a => new HtmlLinkObject(a.FirmaPageType.FirmaPageTypeDisplayName, a.FirmaPageType.GetViewUrl()).ToJsonObjectForAgGrid(), 180, AgGridColumnFilterType.HtmlLinkJson);
             Add("Has Content", a => a.HasPageContent.ToYesNo(), 85, AgGridColumnFilterType.SelectFilterStrict);
             Add("Type", a => a.FirmaPageType.FirmaPageRenderType.FirmaPageRenderTypeDisplayName, 110, AgGridColumnFilterType.SelectFilterStrict);
             Add("FirmaPageID", a => a.FirmaPageID, 0);

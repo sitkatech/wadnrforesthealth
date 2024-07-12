@@ -64,9 +64,9 @@ namespace ProjectFirma.Web.Views.Grant
             }
 
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantNumber), GrantAllocationGridSpec.GrantNumberColumnWidth, AgGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.CFDANumber, 90, AgGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.GrantName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantTitle), 250, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantNumber, x.GetDetailUrl()).ToJsonObjectForAgGrid(), GrantAllocationGridSpec.GrantNumberColumnWidth, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.CFDANumber, 120, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantName.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantTitle, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.TotalAwardAmount.ToGridHeaderString(), x => x.GetTotalAwardAmount(), 90, AgGridColumnFormatType.CurrencyWithCents);
             Add(Models.FieldDefinition.GrantCurrentBalance.ToGridHeaderString(), x => x.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(), 90, AgGridColumnFormatType.CurrencyWithCents);
             Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);

@@ -37,6 +37,31 @@ namespace ProjectFirma.Web.Models
 
         }
 
+        public static HtmlString ToProgramListDisplay(this IEnumerable<ProjectProgram> projectPrograms, bool showDefaultsAsWell)
+        {
+
+            var programs = projectPrograms.Select(x => x.Program).ToList();
+
+            var listOfStrings = new List<string>();
+            foreach (var program in programs)
+            {
+                if (!program.IsDefaultProgramForImportOnly || showDefaultsAsWell)
+                {
+                    var stringReturn = UrlTemplate.MakeHrefString(program.GetDetailUrl(), program.DisplayName).ToString();
+                    listOfStrings.Add(stringReturn);
+                }
+            }
+
+            var returnList = string.Join(", ", listOfStrings);
+            if (listOfStrings.Any())
+            {
+                return new HtmlString(returnList);
+            }
+
+            return new HtmlString(string.Empty);
+
+        }
+
 
     }
 }

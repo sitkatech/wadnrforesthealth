@@ -49,7 +49,7 @@ namespace LtInfo.Common.AgGridWrappers
             return $"{{ \"link\":\"{htmlLinkObject.Url}\",\"displayText\":\"{htmlLinkObject.DisplayText}\" }}";
         }
 
-        public static string ToJsonArrayForAgGrid(this List<HtmlLinkObject> htmlLinkObjects)
+        public static string ToJsonArrayForAgGrid(this IEnumerable<HtmlLinkObject> htmlLinkObjects)
         {
             return $"{{ \"links\": [{string.Join(",", htmlLinkObjects.Select(x => x.ToJsonObjectForAgGrid()))}] }}";
         }

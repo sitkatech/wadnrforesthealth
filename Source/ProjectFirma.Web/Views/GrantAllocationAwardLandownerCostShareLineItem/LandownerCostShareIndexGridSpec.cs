@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAwardLandownerCostShareLineItem
 
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(),
                 a => a.GrantAllocationAwardID != null ? a.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited() : "Not Available",
-                75, AgGridColumnFilterType.Text);
+                125, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStatus.GetFieldDefinitionLabel(), a => a.GetStatusDisplayName(), 125, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStartDate.GetFieldDefinitionLabel(), a => a.Treatments.FirstOrDefault()?.TreatmentStartDate ?? DateTime.MinValue, 125, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareEndDate.GetFieldDefinitionLabel(), a => a.Treatments.FirstOrDefault()?.TreatmentEndDate ?? DateTime.MinValue, 125, AgGridColumnFormatType.Date);
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAwardLandownerCostShareLineItem
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.GetFieldDefinitionLabel(), a => a.Treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.BroadcastBurn)?.TreatmentTreatedAcres ?? 0, 75, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.GetFieldDefinitionLabel(), a => a.Treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.HandPileBurn)?.TreatmentTreatedAcres ?? 0, 75, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.GetFieldDefinitionLabel(), a => a.Treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.MachinePileBurn)?.TreatmentTreatedAcres ?? 0, 75, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.GetFieldDefinitionLabel(), a => a.Treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Other)?.TreatmentTreatedAcres ?? 0, 75, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.GetFieldDefinitionLabel(), a => a.Treatments.SingleOrDefault(x => x.TreatmentDetailedActivityType == TreatmentDetailedActivityType.Other)?.TreatmentTreatedAcres ?? 0, 125, AgGridColumnFormatType.Decimal, AgGridColumnAggregationType.Total);
 
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareAllocatedAmount.ToGridHeaderString(), a => a.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareTotalCost.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemTotalCost, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);

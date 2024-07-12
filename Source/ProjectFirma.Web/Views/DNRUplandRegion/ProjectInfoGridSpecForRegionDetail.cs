@@ -24,8 +24,8 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             //}
 
             Add("Lead Implementer", x => GetLeadImplementerHtmlLinkJson(x.GetLeadImplementer()) , 300, AgGridColumnFilterType.HtmlLinkJson);
-            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.ProjectPrograms.ToProgramListDisplayForAgGrid(true), 300, AgGridColumnFilterType.SelectFilterHtmlStrict);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}", 300, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.Program.ToGridHeaderString(), x => x.ProjectPrograms.ToProgramListDisplayForAgGrid(true), 300, AgGridColumnFilterType.HtmlLinkListJson);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => new HtmlLinkObject(x.ProjectName, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 300, AgGridColumnFilterType.HtmlLinkJson);
 
             var landownerRelationshipType = ProjectPersonRelationshipType.PrivateLandowner;
             var userHasViewLandownerNamePermissions = landownerRelationshipType.IsViewableByUser(currentPerson);
@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.PercentageMatch.ToGridHeaderString(), x => x.PercentageMatch, 90, AgGridColumnFormatType.Percent);
 
-            Add(Models.FieldDefinition.GrantAllocation.ToGridHeaderString(), x => x.GetExpectedFundingGrantAllocationsAsCommaDelimitedList(), 300, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocation.ToGridHeaderString(), x => x.GetExpectedFundingGrantAllocationsAsCommaDelimitedListForAgGrid(), 300, AgGridColumnFilterType.HtmlLinkListJson);
 
 
 

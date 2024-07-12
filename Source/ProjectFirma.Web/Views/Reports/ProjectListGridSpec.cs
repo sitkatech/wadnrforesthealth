@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.HtmlControls;
 using LtInfo.Common;
 using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
@@ -43,8 +44,8 @@ namespace ProjectFirma.Web.Views.Reports
             AddMasterCheckBoxColumn(); //For selecting to generate reports
             Add(AgGridHtmlHelpers.ProjectIdForModalColumnName, x => x.ProjectID, 0);
 
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName),200, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.FhtProjectNumber, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 100, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => new HtmlLinkObject(x.ProjectName, x.GetDetailUrl()).ToJsonObjectForAgGrid(),200, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType.DisplayName, 120, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
 

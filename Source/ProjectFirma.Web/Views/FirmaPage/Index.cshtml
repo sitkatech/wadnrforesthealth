@@ -50,16 +50,18 @@ Source code is available upon request via <support@sitkatech.com>.
     // <![CDATA[
     jQuery(function()
     {
-        var sitkaGrid = Sitka.@ViewDataTyped.GridName;
-        sitkaGrid.grid.attachEvent("onRowSelect", function(id)
+        function displayFirmaPageFromGridClick(event)
         {
-            var firmaPageId = sitkaGrid.grid.cells(id, sitkaGrid.getColumnIndexByName("FirmaPageID")).getValue();
-            var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.FirmaPageUrl.ToJS()));
-            var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
-            SitkaAjax.load(jQuery("#firmaPage"), dataUrl);
-        });
-        sitkaGrid.grid.attachEvent("onXLE", function() { sitkaGrid.grid.selectRow(0, true); });
-        sitkaGrid.grid.attachEvent("onFilterEnd", function() { sitkaGrid.grid.selectRow(0, true); });
+            if (event.node.isSelected()) {
+                
+                var firmaPageId = event.node.data.FirmaPageID;
+                var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.FirmaPageUrl.ToJS()));
+                var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
+                SitkaAjax.load(jQuery("#firmaPage"), dataUrl);
+            }
+        }
+
+        @(ViewDataTyped.GridName)GridOptionsApi.addEventListener('rowSelected', displayFirmaPageFromGridClick);
     });
     // ]]>
 </script>
