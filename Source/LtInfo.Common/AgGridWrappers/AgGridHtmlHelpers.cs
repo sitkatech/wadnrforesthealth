@@ -89,7 +89,7 @@ namespace LtInfo.Common.AgGridWrappers
             }}
 
             function {0}OnBtnExport() {{
-                {0}GridOptionsApi.exportDataAsCsv({{ fileName: '{0}' + 'Export' }});
+                {0}GridOptionsApi.exportDataAsCsv({{ fileName: '{0}_Export', columnKeys: [{11}] }});
             }}
 
             function {0}GetValuesFromCheckedGridRows(valueColumnName, returnListName) {{
@@ -231,6 +231,7 @@ namespace LtInfo.Common.AgGridWrappers
             //{{ field: ""NumofProjects"" }}
             var columnDefinitionStringBuilder = new StringBuilder();
             var columnsWithAggregationStringBuilder = new StringBuilder();
+            var columnsForCsvOutput = new List<string>();
             var isFirstLoop = true;
             foreach (var columnSpec in gridSpec)
             {
@@ -291,6 +292,12 @@ namespace LtInfo.Common.AgGridWrappers
                 else
                 {
                     columnDefinitionStringBuilder.AppendFormat(", \"initialWidth\": {0}", columnSpec.GridWidth + 60); // 8/8/2023 SB add to the width instead of editing every hard coded column in every GridSpec class
+                }
+
+                //only add columns that are not buttons or hidden to the csv output
+                if (columnSpec.GridWidth > 35)
+                {
+                    columnsForCsvOutput.Add(columnSpec.ColumnNameForJavascript);
                 }
 
                 if (columnSpec.GridWidthFlex > 0)
@@ -427,7 +434,9 @@ namespace LtInfo.Common.AgGridWrappers
 
             var createEntityHtml = CreateCreateUrlHtml(gridSpec.CreateEntityUrl, gridSpec.CreateEntityUrlClass, gridSpec.CreateEntityModalDialogForm, gridSpec.CreateEntityActionPhrase, gridSpec.ObjectNameSingular);
 
-            return String.Format(template, gridName, optionalGridDataUrl, columnDefinitionStringBuilder, gridSpec.ObjectNamePlural, resizeGridFunction, makeVerticalResizable, styleString, columnsWithAggregationStringBuilder, customDownloadLink, additionalIcons, createEntityHtml);//, gridSpec.LoadingBarHtml, metaDivHtml, styleString, javascriptDocumentReadyHtml);
+            var columnsForCsvDownloadString = string.Join(",", columnsForCsvOutput.Select(x => $"\"{x}\""));
+
+            return String.Format(template, gridName, optionalGridDataUrl, columnDefinitionStringBuilder, gridSpec.ObjectNamePlural, resizeGridFunction, makeVerticalResizable, styleString, columnsWithAggregationStringBuilder, customDownloadLink, additionalIcons, createEntityHtml, columnsForCsvDownloadString);//, gridSpec.LoadingBarHtml, metaDivHtml, styleString, javascriptDocumentReadyHtml);
         }
 
 
