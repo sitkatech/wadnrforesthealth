@@ -270,7 +270,7 @@ namespace LtInfo.Common.AgGridWrappers
                 columnDefinitionStringBuilder.Append("<span data-ref=\\\"eFilter\\\" class=\\\"ag-header-icon ag-filter-icon\\\"></span>");
                 columnDefinitionStringBuilder.Append("</div></div>\" }");//close headerComponentParams object
 
-                bool resizable = !(columnSpec.GridWidth < 35);// most cols with a width < 35px are icon buttons (like edit, delete, download fact sheet)  
+                bool resizable = !(columnSpec.GridWidth <= 35);// most cols with a width <= 35px are icon buttons (like edit, delete, download fact sheet)  
                 columnDefinitionStringBuilder.AppendFormat(", \"resizable\": {0}", resizable.ToString().ToLower());
 
                 if (!resizable)
@@ -285,7 +285,7 @@ namespace LtInfo.Common.AgGridWrappers
                     columnDefinitionStringBuilder.Append(", \"hide\": true");
 
                 }
-                else if (columnSpec.GridWidth < 35)
+                else if (columnSpec.GridWidth <= 35)
                 {
                     columnDefinitionStringBuilder.AppendFormat(", \"initialWidth\": {0}", columnSpec.GridWidth);
                 }
