@@ -315,8 +315,9 @@ namespace LtInfo.Common.AgGridWrappers
                     case AgGridColumnFilterType.SelectFilterStrict:
                     case AgGridColumnFilterType.SelectFilterHtmlStrict:
                         //columnDefinitionStringBuilder.Append(", \"floatingFilterComponent\": DropdownFloatingFilterComponent");
-                        //columnDefinitionStringBuilder.AppendFormat(", \"floatingFilterComponentParams\": {{suppressFilterButton: false, field: \"{0}\"}}", columnSpec.ColumnNameForJavascript);
+                        //columnDefinitionStringBuilder.AppendFormat(", \"floatingFilterComponentParams\": {{suppressFilterButton: false, field: \"{0}\"}}", columnSpec.ColumnNameForJavascript);HtmlRemovalFormatter
                         columnDefinitionStringBuilder.Append(", \"filter\": DropdownFilterComponent");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlRemovalFormatter");
                         break;
                     case AgGridColumnFilterType.FormattedNumeric:
                     case AgGridColumnFilterType.Numeric:
@@ -331,6 +332,7 @@ namespace LtInfo.Common.AgGridWrappers
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");
                         columnDefinitionStringBuilder.Append(", \"filterParams\": { \"textMatcher\": ({ filterOption, value, filterText }) => htmlFilterTextMatcher( filterOption, value, filterText)  }");
                         //columnDefinitionStringBuilder.Append(", \"comparator\": HtmlRemovalSorting");
+                        columnDefinitionStringBuilder.Append(", \"valueFormatter\": HtmlRemovalFormatter");
                         break;
                     case AgGridColumnFilterType.Text:
                         columnDefinitionStringBuilder.Append(", \"filter\": \"agTextColumnFilter\"");

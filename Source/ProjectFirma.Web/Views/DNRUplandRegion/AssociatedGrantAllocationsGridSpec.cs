@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                     x.GrantAllocationProgramIndexProjectCodes?.Where(y=> y.ProjectCode != null).Select(y =>  y.ProjectCode?.ProjectCodeName).Distinct() ??
                     Array.Empty<string>()), 80, AgGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification?.Grant.GetGrantNumberAsUrl(), 150, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantModification?.Grant.GrantNumber, x.GrantModification?.Grant.GetDetailUrl()).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
 
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 75, AgGridColumnFormatType.Date);
 
