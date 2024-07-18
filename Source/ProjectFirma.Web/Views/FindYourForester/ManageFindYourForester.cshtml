@@ -112,8 +112,6 @@
         function checkAndRemoveSelectedPolygon()
         {
             if (selectedPolygon) {
-                //debugger;
-                //selectedPolygon.remove();
                 selectedPolygon.forEach((element) => sitkaMap.map.removeLayer(element));
                 selectedPolygon = [];
                 sitkaMap.map.closePopup();

@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.Organization
             {
                 Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.OrganizationName), 400, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), a => new HtmlLinkObject(a.OrganizationName,a.GetDetailUrl()).ToJsonObjectForAgGrid(), 400, AgGridColumnFilterType.HtmlLinkJson);
             Add("Short Name", a => a.OrganizationShortName, 100);
             Add(Models.FieldDefinition.OrganizationType.ToGridHeaderString(), a => a.OrganizationType?.OrganizationTypeName, 130, AgGridColumnFilterType.SelectFilterStrict);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetAllActiveProjects(currentPerson).Count, 180);

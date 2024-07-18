@@ -41,15 +41,15 @@ namespace ProjectFirma.Web.Views.User
             {
                 if (x.NotificationType == NotificationType.ProjectUpdateReminder)
                 {
-                    return new HtmlString(string.Empty);
+                    return new HtmlLinkObject(string.Empty, string.Empty).ToJsonObjectForAgGrid();
                 }
                 var notificationProject = x.NotificationProjects.SingleOrDefault();
                 if (notificationProject == null)
                 {
-                    return new HtmlString(string.Empty);
+                    return new HtmlLinkObject(string.Empty, string.Empty).ToJsonObjectForAgGrid();
                 }
-                return notificationProject.Project.DisplayNameAsUrl;
-            }, 200, AgGridColumnFilterType.Html);
+                return new HtmlLinkObject(notificationProject.Project.DisplayName, notificationProject.Project.GetDetailUrl()).ToJsonObjectForAgGrid();
+            }, 200, AgGridColumnFilterType.HtmlLinkJson);
         }
     }
 }

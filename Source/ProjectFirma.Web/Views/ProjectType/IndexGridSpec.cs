@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.ProjectType
             {
                 Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.TaxonomyBranch.SummaryUrl, a.TaxonomyBranch.TaxonomyBranchName), 300);
             }
-            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetSummaryUrl(), a.ProjectTypeName), 350, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => new HtmlLinkObject(a.ProjectTypeName,a.GetSummaryUrl()).ToJsonObjectForAgGrid(), 350, AgGridColumnFilterType.HtmlLinkJson);
             Add("Description", a => a.ProjectTypeDescriptionHtmlString, 350);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 90);
             Add($"# of {Models.FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized()}", a => a.ProjectTypePerformanceMeasures.Count, 90);

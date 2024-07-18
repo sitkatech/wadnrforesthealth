@@ -51,10 +51,10 @@ namespace ProjectFirma.Web.Views.Project
             
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
-                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
-                    AgGridColumnFilterType.Html);
+                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.GetCanStewardProjectsOrganization().GetShortNameAsAgGridLinkJson(), 150,
+                    AgGridColumnFilterType.HtmlLinkJson);
             }
-            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetPrimaryContactOrganization().GetDetailUrl()}\",\"displayText\":\"{x.GetPrimaryContactOrganization().OrganizationShortNameIfAvailable}\" }}" , 150, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.GetPrimaryContactOrganization().GetShortNameAsAgGridLinkJson(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectInitiationDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.GetExpirationDateFormatted(), 115, AgGridColumnFilterType.SelectFilterStrict);
@@ -64,8 +64,19 @@ namespace ProjectFirma.Web.Views.Project
             Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.ProjectDescription, 300);
             if (userHasTagManagePermissions)
             {
-                Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayName))), 100, AgGridColumnFilterType.Html);    
+                Add("Tags", x => GetProjectTagsAsAgGridListObject(x), 100, AgGridColumnFilterType.HtmlLinkListJson);    
             }            
+        }
+
+        private string GetProjectTagsAsAgGridListObject(Models.Project x)
+        {
+            var list = new List<HtmlLinkObject>();
+            if (x.ProjectTags.Any())
+            {
+                list.AddRange(x.ProjectTags.Select(pt => new HtmlLinkObject(pt.Tag.DisplayName, pt.Tag.SummaryUrl)));
+            }
+
+            return list.ToJsonArrayForAgGrid();
         }
     }
 }

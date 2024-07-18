@@ -40,9 +40,15 @@ namespace ProjectFirma.Web.Views.TaxonomyTrunk
             }
 
             Add(Models.FieldDefinition.TaxonomyTrunk.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.TaxonomyTrunkName), 240);
-            Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => new HtmlString(string.Join("<br/>", a.TaxonomyBranches.SortByOrderThenName().Select(x => x.GetDisplayNameAsUrl()))), 340, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => GetBranchesAsLinksForAgGrid(a), 340, AgGridColumnFilterType.HtmlLinkListJson);
             Add("# of Projects", a => a.GetAssociatedProjects(person).Count, 90);
             Add("Sort Order", a => a.TaxonomyTrunkSortOrder, 90, AgGridColumnFormatType.None);
+        }
+
+        private static string GetBranchesAsLinksForAgGrid(Models.TaxonomyTrunk a)
+        {
+            var projectTypesAsHtmlLinkObjects = a.TaxonomyBranches.SortByOrderThenName().Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl));
+            return projectTypesAsHtmlLinkObjects.ToJsonArrayForAgGrid();
         }
     }
 }

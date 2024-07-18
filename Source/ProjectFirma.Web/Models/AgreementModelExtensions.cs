@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.AgGridWrappers;
 using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -38,6 +39,14 @@ namespace ProjectFirma.Web.Models
             var distinctListOfGrantHrefs = distinctListOfGrants.Select(x =>
                 UrlTemplate.MakeHrefString(GrantDetailUrlTemplate.ParameterReplace(x.GrantID), x.GrantNumber));
             return new HtmlString(string.Join(", ", distinctListOfGrantHrefs.Select(x => x.ToHtmlString())));
+        }
+        
+        public static string GetListOfGrantHrefsForAgGrid(this Models.Agreement agreement)
+        {
+            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.GrantAllocation.GrantModification.Grant).DistinctBy(x => x.GrantNumber).OrderBy(x => x.GrantNumber, StringComparer.InvariantCultureIgnoreCase);
+
+            var distinctListOfGrantHrefs = distinctListOfGrants.Select(x => new HtmlLinkObject(x.GrantNumber, GrantDetailUrlTemplate.ParameterReplace(x.GrantID)));
+            return distinctListOfGrantHrefs.ToJsonArrayForAgGrid();
         }
 
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));

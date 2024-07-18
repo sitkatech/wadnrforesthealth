@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectInfoForUserDetailGridSpec(Person currentPerson, Person contactPerson = null)
         {
             Add("Fact Sheet", x => UrlTemplate.MakeHrefString(x.Project.GetFactSheetUrl(), AgGridHtmlHelpers.FactSheetIcon.ToString()), 30, AgGridColumnFilterType.None);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.Project.GetDetailUrl(), x.Project.ProjectName), 300, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => new HtmlLinkObject(x.Project.ProjectName,x.Project.GetDetailUrl()).ToJsonObjectForAgGrid(), 300, AgGridColumnFilterType.HtmlLinkJson);
             if (contactPerson != null && !contactPerson.IsFullUser())
             {
                 Add(Models.FieldDefinition.ContactRelationshipType.ToGridHeaderString(),
@@ -20,10 +20,10 @@ namespace ProjectFirma.Web.Views.Project
             }
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
-                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.Project.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
-                    AgGridColumnFilterType.Html);
+                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.Project.GetCanStewardProjectsOrganization().GetShortNameAsAgGridLinkJson(), 150,
+                    AgGridColumnFilterType.HtmlLinkJson);
             }
-            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetShortNameAsUrl(), 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetShortNameAsAgGridLinkJson(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.Project.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectInitiationDate.ToGridHeaderString(), x => x.Project.GetPlannedDate(), 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.Project.GetExpirationDateFormatted(), 115, AgGridColumnFilterType.SelectFilterStrict);

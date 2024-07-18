@@ -16,15 +16,15 @@ namespace ProjectFirma.Web.Views.Organization
         public ProjectGrantAllocationExpendituresForOrganizationGridSpec(Models.Organization organization)
         {
             Add(Models.FieldDefinition.Project.ToGridHeaderString(),
-                a => UrlTemplate.MakeHrefString(a.Project.GetDetailUrl(), a.Project.DisplayName),
+                a => new HtmlLinkObject(a.Project.DisplayName,a.Project.GetDetailUrl()).ToJsonObjectForAgGrid(),
                 250,
-                AgGridColumnFilterType.Html);
+                AgGridColumnFilterType.HtmlLinkJson);
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
-                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.Project.GetCanStewardProjectsOrganization().GetDisplayNameAsUrl(), 150,
-                    AgGridColumnFilterType.Html);
+                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.Project.GetCanStewardProjectsOrganization().GetDisplayNameAsAgGridLink(), 150,
+                    AgGridColumnFilterType.HtmlLinkJson);
             }
-            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetDisplayNameAsUrl(), 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.PrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetDisplayNameAsAgGridLink(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.Project.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.OrganizationType.ToGridHeaderString(), x => x.GrantAllocation.BottommostOrganization.OrganizationType?.OrganizationTypeName, 80, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocation.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GrantAllocation.SummaryUrl, x.GrantAllocation.DisplayName), 120);

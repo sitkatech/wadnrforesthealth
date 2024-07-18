@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.HtmlControls;
 using LtInfo.Common;
 using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
@@ -35,8 +36,8 @@ namespace ProjectFirma.Web.Views.Program
             }
 
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(),
-                x => (x.Project != null) ? UrlTemplate.MakeHrefString(x.Project.GetDetailUrl(), x.Project.ProjectName) : new HtmlString(x.ProjectName),
-                300, AgGridColumnFilterType.Html);
+                x => ((x.Project != null) ? new HtmlLinkObject(x.Project.ProjectName,x.Project.GetDetailUrl()) : new HtmlLinkObject(x.ProjectName, string.Empty)).ToJsonObjectForAgGrid(),
+                300, AgGridColumnFilterType.HtmlLinkJson);
 
             Add(Models.FieldDefinition.ProjectIdentifier.ToGridHeaderString(),
                 x => (x.Project != null) ? x.Project.ProjectGisIdentifier : x.ProjectGisIdentifier,

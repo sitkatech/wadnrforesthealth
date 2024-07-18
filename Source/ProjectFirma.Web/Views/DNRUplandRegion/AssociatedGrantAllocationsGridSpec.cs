@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.GrantAllocationFundFSPs.ToGridHeaderString(), x => x.HasFundFSPs.ToYesNo("N/A"), 80, AgGridColumnFilterType.SelectFilterStrict);
 
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => x.DisplayNameAsUrl, 175, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl).ToJsonObjectForAgGrid(), 175, AgGridColumnFilterType.HtmlLinkJson);
 
             Add(Models.FieldDefinition.GrantAllocationSource.ToGridHeaderString(), x => x.GrantAllocationSource?.GrantAllocationSourceDisplayName, 175,
                 AgGridColumnFilterType.SelectFilterStrict);
@@ -68,8 +68,8 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 AgGridColumnAggregationType.Total);
 
             Add(Models.FieldDefinition.GrantAllocationLikelyToUse.ToGridHeaderString(),
-                x => x.ToLikelyToUsePeopleListDisplay(),
-                175, AgGridColumnFilterType.Html);
+                x => x.ToLikelyToUsePeopleListDisplayForAgGrid(),
+                175, AgGridColumnFilterType.HtmlLinkListJson);
 
             Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x =>
             {

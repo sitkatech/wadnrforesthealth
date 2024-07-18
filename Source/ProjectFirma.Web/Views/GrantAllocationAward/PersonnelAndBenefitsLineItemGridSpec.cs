@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditPersonnelAndBenefitsLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsName.ToGridHeaderString(), s => s.Person != null ? s.Person.GetFullNameFirstLastAndOrgShortNameAsUrl() : new HtmlString(string.Empty), 200, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsName.ToGridHeaderString(), s => s.Person != null ? new HtmlLinkObject(s.Person.FullNameFirstLastAndOrg, s.Person.GetDetailUrl()).ToJsonObjectForAgGrid() : new HtmlLinkObject(string.Empty,string.Empty).ToJsonObjectForAgGrid(), 200, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth , 125, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsDate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemDate, 125, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarHours.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours, 125, AgGridColumnFormatType.Integer, AgGridColumnAggregationType.Total);

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.Role
     {
         public IndexGridSpec()
         {
-            Add("Role", a => a.GetDisplayNameAsUrl(), 200, AgGridColumnFilterType.Html);
+            Add("Role", a => new HtmlLinkObject(a.GetRoleDisplayName(), a.GetSummaryUrl()).ToJsonObjectForAgGrid(), 200, AgGridColumnFilterType.HtmlLinkJson);
             Add("Count", a => a.GetPeopleWithRole().Count, 50);
             Add("Is Base Role?", a => a.IsBaseRole.ToYesNo(), 100, AgGridColumnFilterType.SelectFilterStrict);
         }

@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.Agreement
             Add("First Name", x => x.Person.GetFirstNameAsUrl(), 125, AgGridColumnFilterType.Text);
             Add("Last Name", x => x.Person.GetLastNameAsUrl(), 125, AgGridColumnFilterType.Text);
             Add("Agreement Role", x => x.AgreementPersonRole.AgreementPersonRoleDisplayName, 125, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Person.Organization.GetDisplayNameWithoutAbbreviationAsUrl(), 250, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Person.Organization.GetDisplayNameWithoutAbbreviationAsAgGridLinkJson(), 250, AgGridColumnFilterType.HtmlLinkJson);
            
         }
     }

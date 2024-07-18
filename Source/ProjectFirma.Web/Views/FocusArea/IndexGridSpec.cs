@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.FocusArea
         {
             
             Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted(), true), 30, AgGridColumnFilterType.None);
-            Add(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FocusAreaName), 195, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), a => new HtmlLinkObject(a.FocusAreaName, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 195, AgGridColumnFilterType.HtmlLinkJson);
             Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Region", a => a.DNRUplandRegion.DNRUplandRegionName, 75, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);

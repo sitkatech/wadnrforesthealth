@@ -35,9 +35,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public ProjectCalendarYearExpendituresGridSpec(IEnumerable<int> calendarYearsForProjectExpenditures)
         {
             Add(Models.FieldDefinition.Project.ToGridHeaderString(),
-                a => UrlTemplate.MakeHrefString(a.Project.GetDetailUrl(), a.Project.DisplayName),
+                a => new HtmlLinkObject(a.Project.DisplayName, a.Project.GetDetailUrl()).ToJsonObjectForAgGrid(),
                 350,
-                AgGridColumnFilterType.Html);
+                AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.Project.ProjectStage.ProjectStageDisplayName, 90, AgGridColumnFilterType.SelectFilterStrict);
             foreach (var year in calendarYearsForProjectExpenditures)
             {

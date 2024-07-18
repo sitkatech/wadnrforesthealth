@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.County
     {
         public IndexGridSpec(Person currentPerson)
         {
-            Add(Models.FieldDefinition.County.FieldDefinitionDisplayName, a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.CountyName), 300, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.County.FieldDefinitionDisplayName, a => new HtmlLinkObject(a.CountyName, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 300, AgGridColumnFilterType.HtmlLinkJson);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 65);
         }
     }

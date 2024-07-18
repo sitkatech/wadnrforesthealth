@@ -36,8 +36,9 @@ namespace ProjectFirma.Web.Views.FocusArea
     {
         public ProjectsIncludingLeadImplementingGridSpec(Person currentPerson, bool showSubmittalStatus)
         {
-            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FhtProjectNumber), 100, AgGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DisplayName), 350, AgGridColumnFilterType.Html);
+
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), a => new HtmlLinkObject(a.FhtProjectNumber, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 100, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => new HtmlLinkObject(a.DisplayName, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 350, AgGridColumnFilterType.HtmlLinkJson);
 
             if (showSubmittalStatus)
             {
@@ -58,9 +59,20 @@ namespace ProjectFirma.Web.Views.FocusArea
             Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.ProjectDescription, 200);
             if (new FirmaAdminFeature().HasPermissionByPerson(currentPerson))
             {
-                Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayNameAsUrl))), 100, AgGridColumnFilterType.Html);
+                Add("Tags", x => GetProjectTagsAsAgGridListObject(x), 100, AgGridColumnFilterType.HtmlLinkListJson);
             }
             Add("# of Photos", x => x.ProjectImages.Count, 60);
+        }
+
+        private string GetProjectTagsAsAgGridListObject(Models.Project x)
+        {
+            var list = new List<HtmlLinkObject>();
+            if (x.ProjectTags.Any())
+            {
+                list.AddRange(x.ProjectTags.Select(pt => new HtmlLinkObject(pt.Tag.DisplayName, pt.Tag.SummaryUrl)));
+            }
+
+            return list.ToJsonArrayForAgGrid(); 
         }
     }
 }

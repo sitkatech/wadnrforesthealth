@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Web;
+using System.Web.UI.HtmlControls;
 using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -44,7 +45,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             
             Add($"Role", a => a.ForesterRole.ForesterRoleDisplayName, 225, AgGridColumnFilterType.None);
             Add($"Forester Work Unit Name", a => a.ForesterWorkUnitName, 165);
-            Add($"Assigned to Person", a => a.PersonID.HasValue ? a.Person.GetFullNameFirstLastAsUrl() : new HtmlString("unassigned") , 200, AgGridColumnFilterType.Html);
+            Add($"Assigned to Person", a => a.PersonID.HasValue ? new HtmlLinkObject(a.Person.FullNameFirstLast, a.Person.GetDetailUrl()).ToJsonObjectForAgGrid() : new HtmlLinkObject("unassigned", string.Empty).ToJsonObjectForAgGrid() , 200, AgGridColumnFilterType.HtmlLinkJson);
         }
     }
 }

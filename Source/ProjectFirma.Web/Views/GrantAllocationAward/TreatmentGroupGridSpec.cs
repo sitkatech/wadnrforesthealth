@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using LtInfo.Common;
 using LtInfo.Common.AgGridWrappers;
@@ -32,7 +33,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //Add(string.Empty, x => x.Treatments.First().GrantAllocationAwardLandownerCostShareLineItemID.HasValue ? AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GetEditLandownerCostShareLineItemUrl(), $"Edit {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()}"), userHasEditPermissions) : new HtmlString(string.Empty), buttonGridWidth, AgGridColumnFilterType.None);
 
             Add("Treatment Area Name", a => a.ProjectLocation?.ProjectLocationName ?? "", 200, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAward.ToGridHeaderString(), a => a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAwardID != null ? UrlTemplate.MakeHrefString(a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAward.GetDetailUrl(), a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAward.GrantAllocationAwardName) : new HtmlString($"No {Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} set"), 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationAward.ToGridHeaderString(), a => a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAwardID != null ? new HtmlLinkObject(a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAward.GrantAllocationAwardName, a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAward.GetDetailUrl()).ToJsonObjectForAgGrid() : new HtmlLinkObject($"No {Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} set", string.Empty).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(),
                 a => a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAwardID != null ? a.Treatments.First().GrantAllocationAwardLandownerCostShareLineItem?.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited() : "Not Available",
                 75, AgGridColumnFilterType.Text);

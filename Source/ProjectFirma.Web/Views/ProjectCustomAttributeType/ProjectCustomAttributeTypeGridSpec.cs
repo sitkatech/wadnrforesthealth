@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
         {
             Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), ModalDialogFormHelper.DefaultDialogWidth, "Edit Attribute")), 30, AgGridColumnFilterType.None);
-            Add(Models.FieldDefinition.ProjectCustomAttribute.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.ProjectCustomAttributeTypeName), 200, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectCustomAttribute.ToGridHeaderString(), a => new HtmlLinkObject(a.ProjectCustomAttributeTypeName, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 200, AgGridColumnFilterType.HtmlLinkJson);
             Add("Description", a => a.ProjectCustomAttributeTypeDescription, 300);
             Add(Models.FieldDefinition.ProjectCustomAttributeDataType.ToGridHeaderString(), a => a.ProjectCustomAttributeDataType.ProjectCustomAttributeDataTypeDisplayName, 100, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.MeasurementUnit.ToGridHeaderString(), a => a.GetMeasurementUnitDisplayName(), 100, AgGridColumnFilterType.SelectFilterStrict);

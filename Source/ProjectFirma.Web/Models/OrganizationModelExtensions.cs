@@ -25,6 +25,7 @@ using System.Web;
 using GeoJSON.Net.Feature;
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
@@ -46,6 +47,12 @@ namespace ProjectFirma.Web.Models
             return organization != null ? UrlTemplate.MakeHrefString(organization.GetDetailUrl(), organization.DisplayName) : new HtmlString(null);
         }
 
+        public static string GetDisplayNameAsAgGridLink(this Organization organization)
+        {
+
+            return (organization != null ? new HtmlLinkObject(organization.DisplayName, organization.GetDetailUrl()) : new HtmlLinkObject(string.Empty,string.Empty)).ToJsonObjectForAgGrid();
+        }
+
         public static HtmlString GetDisplayNameAsUrlBlankTarget(this Organization organization)
         {
             return organization != null ? UrlTemplate.MakeHrefStringBlankTarget(organization.GetDetailUrl(), organization.DisplayName) : new HtmlString(null);
@@ -58,9 +65,20 @@ namespace ProjectFirma.Web.Models
                 : new HtmlString(null);
         }
 
+        public static string GetDisplayNameWithoutAbbreviationAsAgGridLinkJson(this Organization organization)
+        {
+            return organization != null
+                ? new HtmlLinkObject(organization.DisplayNameWithoutAbbreviation, organization.GetDetailUrl()).ToJsonObjectForAgGrid()
+                : new HtmlLinkObject(string.Empty, string.Empty).ToJsonObjectForAgGrid();
+        }
+
         public static HtmlString GetShortNameAsUrl(this Organization organization)
         {          
             return organization != null ? UrlTemplate.MakeHrefString(organization.GetDetailUrl(), organization.OrganizationShortName ?? organization.OrganizationName) : new HtmlString(null);
+        }
+        public static string GetShortNameAsAgGridLinkJson(this Organization organization)
+        {
+            return (organization != null ? new HtmlLinkObject(organization.OrganizationShortName ?? organization.OrganizationName,organization.GetDetailUrl() ) : new HtmlLinkObject(string.Empty,string.Empty)).ToJsonObjectForAgGrid();
         }
 
         public static readonly UrlTemplate<int> SummaryUrlTemplate = new UrlTemplate<int>(SitkaRoute<OrganizationController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));

@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Linq;
 using System.Web;
 using LtInfo.Common;
@@ -40,7 +41,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditLandownerCostShareLineItemUrl(), $"Edit {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()}"), userHasEditPermissions), buttonGridWidth, AgGridColumnFilterType.None);
 
-            Add(Models.FieldDefinition.GrantAllocationAward.ToGridHeaderString(), a => a.GrantAllocationAwardID != null ? UrlTemplate.MakeHrefString(a.GrantAllocationAward.GetDetailUrl(), a.GrantAllocationAward.GrantAllocationAwardName) : new HtmlString($"No {Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} set"), 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.GrantAllocationAward.ToGridHeaderString(), a => a.GrantAllocationAwardID != null ? new HtmlLinkObject(a.GrantAllocationAward.GrantAllocationAwardName, a.GrantAllocationAward.GetDetailUrl()).ToJsonObjectForAgGrid() : new HtmlLinkObject($"No {Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} set", string.Empty).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(),
                 a => a.GrantAllocationAwardID != null ? a.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited() : "Not Available",
                 75, AgGridColumnFilterType.Text);

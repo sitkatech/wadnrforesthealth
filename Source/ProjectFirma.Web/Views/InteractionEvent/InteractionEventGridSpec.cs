@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
                         userHasManagePermissions), 30, AgGridColumnFilterType.None);
             }
 
-            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 150, AgGridColumnFilterType.Html);
+            Add("Title", x => new HtmlLinkObject(x.InteractionEventTitle,x.GetDetailUrl()).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add("Description", x => x.InteractionEventDescription, 200, AgGridColumnFilterType.Text);
             Add("Date", x => x.InteractionEventDate, 80, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(), x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180, AgGridColumnFilterType.SelectFilterStrict);

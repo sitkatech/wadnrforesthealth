@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 Add("Edit", x => AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditLandownerCostShareLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} Line Item")), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.Project.GetDetailUrl(), a.Project.ProjectName), 150, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => new HtmlLinkObject(a.Project.ProjectName, a.Project.GetDetailUrl()).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(),
                 a => a.GrantAllocationAwardID != null ? a.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited() : "Not Available",
                 75, AgGridColumnFilterType.Text);

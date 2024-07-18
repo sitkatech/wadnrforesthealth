@@ -45,9 +45,15 @@ namespace ProjectFirma.Web.Views.TaxonomyBranch
                 Add(Models.FieldDefinition.TaxonomyTrunk.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.TaxonomyTrunk.SummaryUrl, a.TaxonomyTrunk.TaxonomyTrunkName), 210);    
             }            
             Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.TaxonomyBranchName), 240);
-            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => new HtmlString(string.Join("<br/>", a.ProjectTypes.SortByOrderThenName().Select(x => x.GetDisplayNameAsUrl()))), 420, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => GetProjectTypesAsLinksForAgGrid(a), 420, AgGridColumnFilterType.HtmlLinkListJson);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 90);
             Add("Sort Order", a => a.TaxonomyBranchSortOrder, 90, AgGridColumnFormatType.None);
+        }
+
+        private static string GetProjectTypesAsLinksForAgGrid(Models.TaxonomyBranch a)
+        {
+            var projectTypesAsHtmlLinkObjects = a.ProjectTypes.SortByOrderThenName().Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl));
+            return projectTypesAsHtmlLinkObjects.ToJsonArrayForAgGrid();
         }
     }
 }

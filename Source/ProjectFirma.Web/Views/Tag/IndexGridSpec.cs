@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.Tag
                 Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
             }
 
-            Add(Models.FieldDefinition.TagName.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.DisplayName), 200, AgGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.TagName.ToGridHeaderString(), a => new HtmlLinkObject(a.DisplayName,a.SummaryUrl).ToJsonObjectForAgGrid(), 200, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.TagDescription.ToGridHeaderString(), a => a.TagDescription, 600);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.ProjectTags.Count, 65);
         }
