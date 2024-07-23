@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             Add("Spent Amount", x => x.SpentAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add("Remaining Amount", x => x.Balance, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardExpirationDate.ToGridHeaderString(), x => x.GrantAllocationAwardExpirationDate, 90, AgGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsForAgGrid(), 90, AgGridColumnFilterType.HtmlLinkListJson);
         }
     }
 }

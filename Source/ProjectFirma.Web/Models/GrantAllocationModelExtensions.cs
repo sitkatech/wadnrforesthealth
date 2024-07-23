@@ -28,6 +28,7 @@ using LtInfo.Common.Models;
 using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.GrantAllocation;
+using LtInfo.Common.AgGridWrappers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -105,6 +106,19 @@ namespace ProjectFirma.Web.Models
             }
 
             return string.Join(", ", programIndexProjectCodePairs);
+        }
+
+        public static string GetAssociatedProgramIndexProjectCodePairsForAgGrid(this GrantAllocation grantAllocation)
+        {
+            List<HtmlLinkObject> programIndexProjectCodePairs = new List<HtmlLinkObject>();
+
+            foreach (var pair in grantAllocation.GrantAllocationProgramIndexProjectCodes)
+            {
+                var pairText = new HtmlLinkObject(pair.ProgramIndexProjectCodeDisplayString, string.Empty);
+                programIndexProjectCodePairs.Add(pairText);
+            }
+
+            return programIndexProjectCodePairs.ToJsonArrayForAgGrid();
         }
 
 

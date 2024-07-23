@@ -28,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using System.Collections.Generic;
 
 namespace ProjectFirma.Web.Views.Grant
 {
@@ -81,10 +82,12 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.Division.ToGridHeaderString(), x => x.DivisionNameDisplay, 180, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.DNRUplandRegion.ToGridHeaderString(), x => x.RegionNameDisplay, 100, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.FederalFundCode.ToGridHeaderString(), x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GetAssociatedProgramIndexProjectCodePairsForAgGrid(), 90, AgGridColumnFilterType.HtmlLinkListJson);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, AgGridColumnFilterType.SelectFilterStrict);
             
         }
+
+        
 
     }
 }
