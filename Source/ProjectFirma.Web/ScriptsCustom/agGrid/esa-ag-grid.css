@@ -31,3 +31,9 @@
 .gridDownloadContainer .excelbutton {
     margin-left: 10px;
 }
+
+/*  #f8f8f8 --ag-header-background-color */
+
+.ag-floating-bottom-viewport .ag-floating-bottom-container .ag-row {
+    background-color: var(--ag-header-background-color);
+}
