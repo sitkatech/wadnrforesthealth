@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Program
                 Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.IsDefaultProgramForImportOnly, true), 30, AgGridColumnFilterType.None, true);
             }
             Add("Program", a => new HtmlLinkObject(a.ProgramNameDisplay, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 400, AgGridColumnFilterType.HtmlLinkJson);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => new HtmlLinkObject(a.Organization.OrganizationName, a.Organization.GetDetailUrl()).ToJsonObjectForAgGrid(), 400, AgGridColumnFilterType.HtmlLinkListJson);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString("Parent Organization"), a => new HtmlLinkObject(a.Organization.OrganizationName, a.Organization.GetDetailUrl()).ToJsonObjectForAgGrid(), 400, AgGridColumnFilterType.HtmlLinkJson);
             Add("Short Name", a => a.ProgramShortName, 100);
             Add("Project Count", a => a.ProjectPrograms.Count, 60);
             Add("Is Active", a => a.ProgramIsActive.ToYesNo(), 80, AgGridColumnFilterType.SelectFilterStrict);

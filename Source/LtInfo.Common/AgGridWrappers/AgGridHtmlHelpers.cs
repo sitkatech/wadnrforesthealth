@@ -272,7 +272,7 @@ namespace LtInfo.Common.AgGridWrappers
 
                 bool resizable = !(columnSpec.GridWidth <= 35);// most cols with a width <= 35px are icon buttons (like edit, delete, download fact sheet)  
                 columnDefinitionStringBuilder.AppendFormat(", \"resizable\": {0}", resizable.ToString().ToLower());
-                bool autoHeaderHeight = !(columnSpec.GridWidth < 35);// most cols with a width < 35px are icon buttons (like edit, delete, download fact sheet) and we do not want to adjust the header height for these
+                bool autoHeaderHeight = !(columnSpec.GridWidth <= 35);// most cols with a width < 35px are icon buttons (like edit, delete, download fact sheet) and we do not want to adjust the header height for these
                 columnDefinitionStringBuilder.AppendFormat(", \"autoHeaderHeight\": {0}", autoHeaderHeight.ToString().ToLower());
 
                 if (!resizable)
