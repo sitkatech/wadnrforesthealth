@@ -562,5 +562,26 @@ namespace LtInfo.Common
         {
             return htmlString != null && containAbsoluteUrlWithApplicationDomainReferenceRegEx.IsMatch(htmlString);
         }
+
+        /// <summary>
+        /// This is used primarily for javascript strings that need to be used in variable names. ColumnSpecs are a good example.
+        /// </summary>
+        /// <param name="myString"></param>
+        /// <returns></returns>
+        public static string ToStringSpecialForJavascript(this string myString)
+        {
+            var noSpecialChars = Regex.Replace(myString, @"[\-\(\)/]", string.Empty);
+            var acceptableColumnName = noSpecialChars.Replace(" ", "").Replace("#", "Num").Replace("...", "").Replace(".", "_");
+
+            // Move digits to the end.
+            if (Regex.IsMatch(acceptableColumnName, @"^\d+"))
+            {
+                var match = Regex.Match(acceptableColumnName, @"\d+");
+
+                acceptableColumnName = acceptableColumnName.Replace(match.ToString(), "") + "_" + match;
+            }
+
+            return acceptableColumnName;
+        }
     }
 }

@@ -19,7 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
@@ -30,12 +30,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public GrantAllocationExpendituresGridSpec()
         {
-            Add(Models.FieldDefinition.CostType.ToGridHeaderString(), gae => gae.CostType?.CostTypeDisplayName, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add( "Biennium", gae => gae.Biennium.ToString() , 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Fiscal Month", gae => gae.FiscalMonth.ToString(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Calendar Year", gae => gae.CalendarYear.ToString(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Calendar Month", gae => gae.CalendarMonth.ToString(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Expenditure", gae => gae.ExpenditureAmount, 100, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.CostType.ToGridHeaderString(), gae => gae.CostType?.CostTypeDisplayName, 150, AgGridColumnFilterType.SelectFilterStrict);
+            Add( "Biennium", gae => gae.Biennium.ToString() , 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Fiscal Month", gae => gae.FiscalMonth.ToString(), 100, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Calendar Year", gae => gae.CalendarYear.ToString(), 100, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Calendar Month", gae => gae.CalendarMonth.ToString(), 100, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Expenditure", gae => gae.ExpenditureAmount, 100, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
         }
     }
 }

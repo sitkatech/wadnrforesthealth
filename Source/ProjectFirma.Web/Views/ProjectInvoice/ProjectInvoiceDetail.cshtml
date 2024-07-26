@@ -20,7 +20,7 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Models
 @using LtInfo.Common
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Common
@@ -34,7 +34,7 @@
 
 <div class="row">
     <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
-        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add {1}", FirmaDhtmlxGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.AddInvoicePaymentRequestUrl, string.Format("Create New {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
+        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add {1}", FirmaAgGridHtmlHelpers.PlusIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), ViewDataTyped.AddInvoicePaymentRequestUrl, string.Format("Create New {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
     </div>
 </div>
 
@@ -46,14 +46,14 @@
         <hr />
         <div class="row" style="margin-top: 10px;">
             <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
-                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", FirmaDhtmlxGridHtmlHelpers.EditIcon, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
+                @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Edit {1}", AgGridHtmlHelpers.EditIconBootstrap, FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), SitkaRoute<InvoiceController>.BuildUrlFromExpression(x => x.EditInvoicePaymentRequest(invoicePaymentRequest.PrimaryKey)), string.Format("Edit {0}", FieldDefinition.InvoicePaymentRequest.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.CanEditInvoicePaymentRequests)
             </div>
         </div>
         if (ViewDataTyped.CanEditInvoicePaymentRequests)
         {
             <div class="row" style="margin-top: 10px;">
                 <div class="col-xs-4 col-xs-offset-8" style="text-align: right;">
-                    <a class="btn btn-firma" href="@ViewDataTyped.GetDownloadInvoicePaymentRequestUrl(invoicePaymentRequest)" title="Download Invoice Payment Request">@FirmaDhtmlxGridHtmlHelpers.EnvelopeIcon Download Invoice Payment Request</a>
+                    <a class="btn btn-firma" href="@ViewDataTyped.GetDownloadInvoicePaymentRequestUrl(invoicePaymentRequest)" title="Download Invoice Payment Request">@FirmaAgGridHtmlHelpers.EnvelopeIcon Download Invoice Payment Request</a>
                 </div>
             </div>
         }
@@ -103,7 +103,7 @@
         </div>
 
 
-        @Html.DhtmlxGrid(new InvoiceGridSpec(ViewDataTyped.CurrentPerson, invoicePaymentRequest.Invoices.Any(x => x.InvoiceFileResourceID.HasValue), invoicePaymentRequest), ViewDataTyped.InvoiceGridNamePrefix + invoicePaymentRequest.InvoicePaymentRequestID, SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData(invoicePaymentRequest)), "height:240px;", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+        @Html.AgGrid(new InvoiceGridSpec(ViewDataTyped.CurrentPerson, invoicePaymentRequest.Invoices.Any(x => x.InvoiceFileResourceID.HasValue), invoicePaymentRequest), ViewDataTyped.InvoiceGridNamePrefix + invoicePaymentRequest.InvoicePaymentRequestID, SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData(invoicePaymentRequest)), "height:240px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
 
     }
 }

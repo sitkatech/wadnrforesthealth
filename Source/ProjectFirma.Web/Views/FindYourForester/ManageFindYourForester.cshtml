@@ -21,7 +21,7 @@
 @using LtInfo.Common
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
@@ -29,7 +29,7 @@
 @inherits ProjectFirma.Web.Views.FindYourForester.ManageFindYourForester
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
 }
 
@@ -55,7 +55,7 @@
                     <h2>Forester Work Units</h2>
                 </div>
                 <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    @Html.AgGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>
@@ -72,15 +72,11 @@
         var pageUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.PageUrlTemplate.ToJS()));
         var rootUrl = "@FirmaWebConfiguration.WebMapServiceUrl";
 
-        var myGrid = Sitka.@ViewDataTyped.GridName;
         var findYourForesterRoleID = @ViewDataTyped.DefaultForesterRoleID;
-        var selectedPolygon = null;
+        var selectedPolygon = [];
 
         sitkaMap.map.on("overlayadd", function (e) {
-            if (selectedPolygon) {
-                selectedPolygon.removeFrom(sitkaMap.map);
-                sitkaMap.map.closePopup();
-            }
+            checkAndRemoveSelectedPolygon();
 
             var layer = Object.values(e.layer._layers)[0];
             findYourForesterRoleID = layer.ContextObjectId;
@@ -88,19 +84,20 @@
             window.history.pushState({}, '', pageUrlTemplate.ParameterReplace(findYourForesterRoleID));
 
             var dataUrl = dataUrlTemplate.ParameterReplace(findYourForesterRoleID);
-            myGrid.grid.clearAndLoad(dataUrl, function(){}, 'json');
+            @(ViewDataTyped.GridName)LoadGridData(dataUrl);
 
         });
+
 
         sitkaMap.map.on("click", function (e) {
             highlightForester(e);
         });
 
-        function getForesterWorkUnitIDFromRowID(rowId) {
-            var columnIndex = myGrid.getColumnIndexByName('@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName');
-            var cell = myGrid.grid.cellById(rowId, columnIndex);
-            var cellValue = cell.getValue();
-            return cellValue;
+        function getForesterWorkUnitIDFromRowNode(rowNode) {
+
+            var foresterWorkUnitId = rowNode.data.@ManageFindYourForesterGridSpec.ForesterWorkUnitIDColumnName;
+            return foresterWorkUnitId;
+
         }
 
         var defaultWfsParameters = {
@@ -112,36 +109,58 @@
             typeNames: '@FirmaWebConfiguration.GetFindYourForesterWmsLayerName()',
         };
 
-        function highlightMapFromGridClick(rowId, colIndex) {
-            var foresterWorkUnitId = getForesterWorkUnitIDFromRowID(rowId);
-            // Check for previous selected polygon layer and possibly remove it
+        function checkAndRemoveSelectedPolygon()
+        {
             if (selectedPolygon) {
-                selectedPolygon.removeFrom(sitkaMap.map);
+                selectedPolygon.forEach((element) => sitkaMap.map.removeLayer(element));
+                selectedPolygon = [];
                 sitkaMap.map.closePopup();
             }
+        }
 
-            var customWfsParams = {
-                cql_filter: 'PrimaryKey=' + foresterWorkUnitId
-            };
+        function highlightMapFromGridClick(event) {
 
-            var parametersWfs = L.Util.extend(defaultWfsParameters, customWfsParams);
-            jQuery.ajax({
-                url : rootUrl + L.Util.getParamString(parametersWfs),
-                dataType : 'json'
-            }).done(function(data) {
-                // Create the newly selected polygon layer using WFS
-                if (data.features.length > 0) {
-                    selectedPolygon = L.geoJSON(data);
-                    selectedPolygon.addTo(sitkaMap.map);
-
+            if (event.node.isSelected() && event.source !== 'api') {
+                var foresterWorkUnitId = getForesterWorkUnitIDFromRowNode(event.node);
+                // Check for previous selected polygon layer and possibly remove it
+                if (event.source !== 'checkboxSelected') {
+                    checkAndRemoveSelectedPolygon();
                 }
 
-            }).fail(function (data) {
-                console.log(data);
-            });
+                var customWfsParams = {
+                    cql_filter: 'PrimaryKey=' + foresterWorkUnitId
+                };
+
+                var parametersWfs = L.Util.extend(defaultWfsParameters, customWfsParams);
+                jQuery.ajax({
+                    url: rootUrl + L.Util.getParamString(parametersWfs),
+                    dataType: 'json'
+                }).done(function(data) {
+                    // Create the newly selected polygon layer using WFS
+                    if (data.features.length > 0) {
+                        var shapeSelected = L.geoJSON(data);
+                        shapeSelected.ForesterWorkUnitID = foresterWorkUnitId;
+                        selectedPolygon.push(shapeSelected);
+                        shapeSelected.addTo(sitkaMap.map);
+
+
+                    }
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
+            } else if (!event.node.isSelected() && event.source == 'checkboxSelected') {
+                var foresterWorkUnitId = getForesterWorkUnitIDFromRowNode(event.node);
+                var selectedItem = selectedPolygon.find(({ ForesterWorkUnitID }) => ForesterWorkUnitID === foresterWorkUnitId);
+                selectedPolygon.pop(selectedItem);
+                sitkaMap.map.removeLayer(selectedItem);
+            }
+
 
         };
-        myGrid.grid.attachEvent("onRowSelect", highlightMapFromGridClick);
+
+        @(ViewDataTyped.GridName)GridOptionsApi.addEventListener('rowSelected', highlightMapFromGridClick);
+
 
 
         var defaultWmsParameters = {
@@ -158,30 +177,32 @@
 
         function highlightForester(e) {
 
+            // Check for previous selected polygon layer and possibly remove it
+            checkAndRemoveSelectedPolygon();
+
+            var selectedForesterWorkUnitId = null;
             var ajaxCalls = sitkaMap.popupForWMSAndVectorLayers(sitkaMap.getWmsLayers(true), sitkaMap.getVectorLayers(true), e.latlng);
             sitkaMap.carryOutPromises(ajaxCalls).then(results => {
                 results.forEach(result => {
-
+                    
                     if (!result || !result.properties) return;
 
                     var foresterWorkUnitID = result.properties.PrimaryKey;
-                    var numberOfRows = myGrid.grid.getRowsNum();
-                    for (var i = 0; i < numberOfRows; i++) {
-                        var id = myGrid.grid.getRowId(i);
-                        var cellValue = getForesterWorkUnitIDFromRowID(id);
+                    
+                    @(ViewDataTyped.GridName)GridOptionsApi.forEachNode((rowNode, index) => {
+                        var cellValue = getForesterWorkUnitIDFromRowNode(rowNode);
+                        rowNode.setSelected(false);
                         if (foresterWorkUnitID == cellValue) {
-                            myGrid.grid.selectRowById(id);
+                            rowNode.setSelected(true, true, 'api');
+                            selectedForesterWorkUnitId = cellValue;
                         }
-                    }
+
+                    });
+
                 });
 
             });
 
-            // Check for previous selected polygon layer and possibly remove it
-            if (selectedPolygon) {
-                selectedPolygon.removeFrom(sitkaMap.map);
-                sitkaMap.map.closePopup();
-            }
 
             var customWmsParams = {
                 bbox: sitkaMap.map.getBounds().toBBoxString(),
@@ -201,24 +222,15 @@
                 // Create the newly selected polygon layer using WFS
                 if (data.features.length > 0) {
 
-                    selectedPolygon = L.geoJSON(data);
-                    selectedPolygon.addTo(sitkaMap.map);
-
-                    var properties = data.features[0].properties;
-                    var roleLine = "<strong>" + properties.ForesterRoleDisplayName + "</strong><br/>";
-                    var nameLine = properties.FirstName + " " + properties.LastName + "<br/>";
-                    var workUnitLine = properties.ForesterWorkUnitName + "<br/>";
-
-                    var dataString = "<p>" + roleLine + nameLine + workUnitLine + "</p>";
-
-                    L.popup()
-                        .setLatLng(e.latlng)
-                        .setContent(dataString)
-                        .openOn(sitkaMap.map);
+                    var shapeSelected = L.geoJSON(data);
+                    shapeSelected.ForesterWorkUnitID = selectedForesterWorkUnitId;
+                    selectedPolygon.push(shapeSelected);
+                    shapeSelected.addTo(sitkaMap.map);
 
                 }
 
             }).fail(function (data) {
+                console.log("Ajax call to highlight Forester failed");
                 console.log(data);
             });
 

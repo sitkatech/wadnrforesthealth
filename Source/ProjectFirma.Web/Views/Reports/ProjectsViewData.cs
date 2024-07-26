@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.BootstrapWrappers;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Views.Reports
             GridDataUrl = SitkaRoute<ReportsController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData());
 
             var tagIconHtml = $"<span style=\"margin-right:5px\">{BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file")}</span>";
-            var getProjectIDFunctionString = $"function() {{ return Sitka.{GridName}.getValuesFromCheckedGridRows(0, 'ProjectID', 'ProjectIDList'); }}";
+            var getProjectIDFunctionString = $"function() {{ return {GridName}GetValuesFromCheckedGridRows('{AgGridHtmlHelpers.ProjectIdForModalColumnName}', 'ProjectIDList'); }}";
             var dialogUrl = SitkaRoute<ReportsController>.BuildUrlFromExpression(x => x.SelectReportToGenerateFromSelectedProjects());
             var dialogTitle = "Confirm Generate Reports";
 

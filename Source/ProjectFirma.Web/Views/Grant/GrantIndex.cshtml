@@ -18,15 +18,17 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
+@using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Grant
 @inherits ProjectFirma.Web.Views.Grant.GrantIndex
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
 }
 
 
@@ -35,78 +37,54 @@
 </div>
 
 <div style="margin-top: 10px">
-    
+
     @* Grant Grid *@
-    <h3>Grants</h3>
-    @Html.DhtmlxGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, "height:255px;", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+    <h3>@FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()</h3>
+    @Html.AgGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, null, AgGridResizeType.VerticalResizableHorizontalAutoFit)
 
     <br />
 
     @* Grant Allocation Grid *@
-    <h3>Grant Allocations</h3>
+    <h3>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</h3>
+    <div id="grantAllocationGridAlertBox" class="alert alert-info" role="alert" style="display: none;"></div>
     <div id="grantAllocationGridWithData">
-        @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+        @Html.AgGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
     </div>
-    <div id="grantAllocationGridWithoutDataForNoGrantFilterResults">
-        @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationNoDataGridSpec, ViewDataTyped.GrantAllocationNoDataGridName, ViewDataTyped.GrantAllocationNoDataGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
-    </div>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            @(ViewDataTyped.GrantGridName)GridOptionsApi.addEventListener('selectionChanged', onGrantGridRowSelection);
+
+        });
+
+        function onGrantGridRowSelection() {
+            jQuery("#grantAllocationGridAlertBox").hide();
+
+            const selectedRows = @(ViewDataTyped.GrantGridName)GridOptionsApi.getSelectedRows();
+
+            if (selectedRows.length > 0) {
+
+                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()',
+                    selectedRows.map(row => row.@(GrantGridSpec.GrantNumberHiddenColumnName)));
+
+                //console.log(@(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.getColumnFilterModel('@FieldDefinition.GrantNumber.FieldDefinitionName'));
+
+                if (!@(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.getColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()')) {
+                    jQuery("#grantAllocationGridAlertBox").text("No @FieldDefinition.GrantNumber.GetFieldDefinitionLabel() matches your selection of '" + selectedRows.map(row => row.@(GrantGridSpec.GrantNumberHiddenColumnName)).join(',') + "' in the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Grid");
+                    jQuery("#grantAllocationGridAlertBox").show();
+                }
+
+            } else {
+                @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.setColumnFilterModel('@FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()', null);
+            }
+
+            // Tell grid to run filter operation again
+            @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.onFilterChanged();
+
+        }
+    </script>
 </div>
 
-<script type="text/javascript">
-    // <![CDATA[
-    var displayEmptyGrid = false;
-    jQuery(function()
-    {
-        //console.log('jQuery Document Ready');
-        var grantGrid = Sitka.@ViewDataTyped.GrantGridName;
-        
-        // Get current selected grant number from Parent grid for a given rowId
-        function getCurrentSelectedGrantNumberInParentGrid(rowId)
-        {
-            //console.log('getCurrentSelectedGrantNumberInParentGrid('+ rowId +')');
-            var grantNumberColumnIndexForParentGrantGrid = grantGrid.getColumnIndexByName('@GrantGridSpec.GrantNumberHiddenColumnName');
-            var currentSelectedGrantNumberInParentGrantGrid = grantGrid.grid.cells(rowId, grantNumberColumnIndexForParentGrantGrid).getValue();
-            //console.log('grantNumberColumnIndexForParentGrantGrid: ' + grantNumberColumnIndexForParentGrantGrid);
-            //console.log('currentSelectedGrantNumberInParentGrantGrid: ' + currentSelectedGrantNumberInParentGrantGrid);
-            return currentSelectedGrantNumberInParentGrantGrid;
-        }
-
-        // Select given grant number in the Child grid
-        function selectGivenGrantNumberFilterInChildGrid(currentSelectedGrantNumberInParentGrantGrid)
-        {
-            //console.log('selectGivenGrantNumberFilterInChildGrid(' + currentSelectedGrantNumberInParentGrantGrid + ')');
-            var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
-            var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
-            //console.log('Grant allocation child grid grant column index: ' + grantNumberColumnIndexForChildGrantGrid);
-            var grantNumberFilterForChildGrantGrid = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndexForChildGrantGrid);
-            //console.log('Got filter element for child grantNumberColumnIndex: ' + grantNumberColumnIndexForChildGrantGrid);
-            //console.log('Filter element for child grantNumberColumnIndex: ' + grantNumberFilterForChildGrantGrid);
-            grantNumberFilterForChildGrantGrid.value = currentSelectedGrantNumberInParentGrantGrid;
-            // This conditional block is used to show/hide a grid with "no results" versus a grid that is filtered to available results
-            if (grantNumberFilterForChildGrantGrid.value === '') {
-                jQuery("#grantAllocationGridWithData").hide();
-                jQuery("#grantAllocationGridWithoutDataForNoGrantFilterResults").show();
-            }
-            else
-            {
-                jQuery("#grantAllocationGridWithoutDataForNoGrantFilterResults").hide();
-                jQuery("#grantAllocationGridWithData").show();
-            }
-            //console.log(grantNumberFilterForChildGrantGrid.value === '' ? 'empty string' : grantNumberFilterForChildGrantGrid.value);
-            grantAllocationGrid.grid.filterByAll();
-
-            //console.log('grantGrid onRowSelect - exiting');
-        }
-
-        grantGrid.grid.attachEvent("onRowSelect", function (rowId)
-        {
-            //console.log('grantGrid - onRowSelect - RowID: ' + rowId);
-            var currentSelectedGrantNumberInParentGrid = getCurrentSelectedGrantNumberInParentGrid(rowId);
-            selectGivenGrantNumberFilterInChildGrid(currentSelectedGrantNumberInParentGrid);
-        });
-        grantGrid.grid.attachEvent("onXLE", function() { grantGrid.grid.selectRow(0, true); });
-        grantGrid.grid.attachEvent("onFilterEnd", function() { grantGrid.grid.selectRow(0, true); });
-    });
-    // ]]>
-
-</script>

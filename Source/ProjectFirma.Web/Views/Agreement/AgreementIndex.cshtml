@@ -23,7 +23,7 @@
 @using ProjectFirma.Web.Views.Project
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.Views
 @using ProjectFirma.Web.Views.Agreement
 @using ProjectFirma.Web.Views.Grant
@@ -32,7 +32,7 @@
 
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
 }
 
 
@@ -44,7 +44,7 @@
     
     @* Agreement Grid *@
     <h3>Agreements</h3>
-    @Html.DhtmlxGrid(ViewDataTyped.AgreementGridSpec, ViewDataTyped.AgreementGridName, ViewDataTyped.AgreementGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+    @Html.AgGrid(ViewDataTyped.AgreementGridSpec, ViewDataTyped.AgreementGridName, ViewDataTyped.AgreementGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
 
    
 </div>

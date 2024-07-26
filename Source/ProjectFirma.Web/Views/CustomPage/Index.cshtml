@@ -21,11 +21,11 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @inherits ProjectFirma.Web.Views.CustomPage.Index
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
 }
 
 <div class="container-fluid">
@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <div class="col-md-7">
-            @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+            @Html.AgGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", AgGridResizeType.VerticalFillHorizontalAutoFit)
         </div>
         <div class="col-md-5">
             <h2 style="margin-top: 0">Page Content</h2>
@@ -49,16 +49,18 @@
     // <![CDATA[
     jQuery(function()
     {
-        var sitkaGrid = Sitka.@ViewDataTyped.GridName;
-        sitkaGrid.grid.attachEvent("onRowSelect", function(id)
+        function displayFirmaPageFromGridClick(event)
         {
-            var firmaPageId = sitkaGrid.grid.cells(id, sitkaGrid.getColumnIndexByName("CustomPageID")).getValue();
-            var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.CustomPageUrl.ToJS()));
-            var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
-            SitkaAjax.load(jQuery("#customPage"), dataUrl);
-        });
-        sitkaGrid.grid.attachEvent("onXLE", function() { sitkaGrid.grid.selectRow(0, true); });
-        sitkaGrid.grid.attachEvent("onFilterEnd", function() { sitkaGrid.grid.selectRow(0, true); });
+            if (event.node.isSelected()) {
+                
+                var firmaPageId = event.node.data.CustomPageID;
+                var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.CustomPageUrl.ToJS()));
+                var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
+                SitkaAjax.load(jQuery("#customPage"), dataUrl);
+            }
+        }
+
+        @(ViewDataTyped.GridName)GridOptionsApi.addEventListener('rowSelected', displayFirmaPageFromGridClick);
     });
     // ]]>
 </script>

@@ -21,11 +21,11 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @inherits ProjectFirma.Web.Views.FirmaPage.Index
 @section JavascriptAndStylesContent
 {
-    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ AgGridIncludes.RenderPartialView(Html); }
 }
 
 
@@ -37,7 +37,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-md-7">
-            @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+            @Html.AgGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "", AgGridResizeType.VerticalFillHorizontalAutoFit)
         </div>
         <div class="col-md-5">
             <h2 style="margin-top: 0">Page Content</h2>
@@ -50,16 +50,18 @@ Source code is available upon request via <support@sitkatech.com>.
     // <![CDATA[
     jQuery(function()
     {
-        var sitkaGrid = Sitka.@ViewDataTyped.GridName;
-        sitkaGrid.grid.attachEvent("onRowSelect", function(id)
+        function displayFirmaPageFromGridClick(event)
         {
-            var firmaPageId = sitkaGrid.grid.cells(id, sitkaGrid.getColumnIndexByName("FirmaPageID")).getValue();
-            var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.FirmaPageUrl.ToJS()));
-            var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
-            SitkaAjax.load(jQuery("#firmaPage"), dataUrl);
-        });
-        sitkaGrid.grid.attachEvent("onXLE", function() { sitkaGrid.grid.selectRow(0, true); });
-        sitkaGrid.grid.attachEvent("onFilterEnd", function() { sitkaGrid.grid.selectRow(0, true); });
+            if (event.node.isSelected()) {
+                
+                var firmaPageId = event.node.data.FirmaPageID;
+                var dataUrlTemplate = new Sitka.UrlTemplate(@Html.Raw(ViewDataTyped.FirmaPageUrl.ToJS()));
+                var dataUrl = dataUrlTemplate.ParameterReplace(firmaPageId);
+                SitkaAjax.load(jQuery("#firmaPage"), dataUrl);
+            }
+        }
+
+        @(ViewDataTyped.GridName)GridOptionsApi.addEventListener('rowSelected', displayFirmaPageFromGridClick);
     });
     // ]]>
 </script>

@@ -22,7 +22,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.TaxonomyBranch
         {
             if (new TaxonomyBranchManageFeature().HasPermissionByPerson(currentPerson))
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, DhtmlxGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, AgGridColumnFilterType.None);
             }
 
             if (MultiTenantHelpers.IsTaxonomyLevelTrunk())
@@ -45,9 +45,15 @@ namespace ProjectFirma.Web.Views.TaxonomyBranch
                 Add(Models.FieldDefinition.TaxonomyTrunk.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.TaxonomyTrunk.SummaryUrl, a.TaxonomyTrunk.TaxonomyTrunkName), 210);    
             }            
             Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.TaxonomyBranchName), 240);
-            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => new HtmlString(string.Join("<br/>", a.ProjectTypes.SortByOrderThenName().Select(x => x.GetDisplayNameAsUrl()))), 420, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => GetProjectTypesAsLinksForAgGrid(a), 420, AgGridColumnFilterType.HtmlLinkListJson);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 90);
-            Add("Sort Order", a => a.TaxonomyBranchSortOrder, 90, DhtmlxGridColumnFormatType.None);
+            Add("Sort Order", a => a.TaxonomyBranchSortOrder, 90, AgGridColumnFormatType.None);
+        }
+
+        private static string GetProjectTypesAsLinksForAgGrid(Models.TaxonomyBranch a)
+        {
+            var projectTypesAsHtmlLinkObjects = a.ProjectTypes.SortByOrderThenName().Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl));
+            return projectTypesAsHtmlLinkObjects.ToJsonArrayForAgGrid();
         }
     }
 }

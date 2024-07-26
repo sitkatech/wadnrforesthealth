@@ -25,6 +25,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using Microsoft.Ajax.Utilities;
@@ -211,10 +212,10 @@ namespace ProjectFirma.Web.Models
             return project.ProjectOrganizations.Where(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID).Select(x => x.Organization).SingleOrDefault();
         }
 
-        public static HtmlString GetExpectedFundingGrantAllocationsAsCommaDelimitedList(this Project project)
+        public static string GetExpectedFundingGrantAllocationsAsCommaDelimitedListForAgGrid(this Project project)
         {
             var grantAllocations = project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation);
-            return new HtmlString(string.Join(", ", grantAllocations.Select(x => x.DisplayNameAsUrl)));
+            return grantAllocations.Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl)).ToJsonArrayForAgGrid();
         }
     }
 }

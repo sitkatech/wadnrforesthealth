@@ -19,7 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using ProjectFirma.Web.Models;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.Project
@@ -29,8 +29,8 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectNotificationGridSpec()
         {
             Add("Date", x => x.NotificationDate, 120);
-            Add("Notification Type", x => x.NotificationType.NotificationTypeDisplayName, 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Notification", x => x.NotificationType.GetFullDescriptionFromProjectPerspective(), 400, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Notification Type", x => x.NotificationType.NotificationTypeDisplayName, 140, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Notification", x => x.NotificationType.GetFullDescriptionFromProjectPerspective(), 400, AgGridColumnFilterType.SelectFilterStrict);
             Add("Person Notified", x => x.Person.GetFullNameFirstLastAndOrgAsUrl(), 400);
         }
     }

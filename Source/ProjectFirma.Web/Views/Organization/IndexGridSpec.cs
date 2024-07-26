@@ -22,7 +22,7 @@ using System.Web;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 
@@ -35,15 +35,15 @@ namespace ProjectFirma.Web.Views.Organization
             var userViewFeature = new UserViewFeature();
             if (hasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, AgGridColumnFilterType.None);
             }
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.OrganizationName), 400, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), a => new HtmlLinkObject(a.OrganizationName,a.GetDetailUrl()).ToJsonObjectForAgGrid(), 400, AgGridColumnFilterType.HtmlLinkJson);
             Add("Short Name", a => a.OrganizationShortName, 100);
-            Add(Models.FieldDefinition.OrganizationType.ToGridHeaderString(), a => a.OrganizationType?.OrganizationTypeName, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetAllActiveProjects(currentPerson).Count, 90);
-            Add($"# of {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()} in this system associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.Grants.Count, 90);
-            Add($"# of Forest Health Tracker User Accounts associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.People.Count, 90);
-            Add("Is Active", a => a.IsActive.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.OrganizationType.ToGridHeaderString(), a => a.OrganizationType?.OrganizationTypeName, 130, AgGridColumnFilterType.SelectFilterStrict);
+            Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetAllActiveProjects(currentPerson).Count, 180);
+            Add($"# of {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()} in this system associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.Grants.Count, 250);
+            Add($"# of Forest Health Tracker User Accounts associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.People.Count, 270);
+            Add("Is Active", a => a.IsActive.ToYesNo(), 80, AgGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

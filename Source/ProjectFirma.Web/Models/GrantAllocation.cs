@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.AgGridWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
@@ -136,23 +137,28 @@ namespace ProjectFirma.Web.Models
         }
 
 
-        public HtmlString ToLikelyToUsePeopleListDisplay()
+        public string ToLikelyToUsePeopleListDisplayForAgGrid()
         {
+            var listOfHtmlLinkObjects = new List<HtmlLinkObject>();
 
-            var likelyToUse = GrantAllocationLikelyPeople.Select(x=>x.Person.GetFullNameFirstLastAsUrl()).ToList();
-            
-            var returnList = string.Join(", ", likelyToUse);
             if (LikelyToUse == true)
             {
-                if(likelyToUse.Any()) return new HtmlString(returnList);
-                return new HtmlString(string.Empty);
+                var likelyToUse = GrantAllocationLikelyPeople.Select(x => x.Person != null ? new HtmlLinkObject(x.Person.FullNameFirstLast, x.Person.GetDetailUrl()) : new HtmlLinkObject(string.Empty, string.Empty)).ToList();
+                if (likelyToUse.Any())
+                {
+                    return likelyToUse.ToJsonArrayForAgGrid();
+                }
+                listOfHtmlLinkObjects.Add(new HtmlLinkObject(string.Empty, string.Empty));
+                return listOfHtmlLinkObjects.ToJsonArrayForAgGrid();
             }
             else if (LikelyToUse == null)
             {
-                return new HtmlString("N/A");
+                listOfHtmlLinkObjects.Add(new HtmlLinkObject("N/A", string.Empty));
+                return listOfHtmlLinkObjects.ToJsonArrayForAgGrid();
             }
 
-            return new HtmlString("Contractual Only");
+            listOfHtmlLinkObjects.Add(new HtmlLinkObject("Contractual Only", string.Empty));
+            return listOfHtmlLinkObjects.ToJsonArrayForAgGrid();
 
         }
         private Dictionary<int, string> AllocationColor = new Dictionary<int, string>()

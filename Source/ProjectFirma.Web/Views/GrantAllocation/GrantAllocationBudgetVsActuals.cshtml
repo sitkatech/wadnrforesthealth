@@ -20,7 +20,7 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
@@ -40,7 +40,7 @@
                 Budget Vs Actuals
             </div>
             <div class="panel-body">
-                @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationBudgetVsActualsGridSpec, ViewDataTyped.GrantAllocationBudgetVsActualsGridName, ViewDataTyped.GrantAllocationBudgetVsActualsGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
+                @Html.AgGrid(ViewDataTyped.GrantAllocationBudgetVsActualsGridSpec, ViewDataTyped.GrantAllocationBudgetVsActualsGridName, ViewDataTyped.GrantAllocationBudgetVsActualsGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
             </div>
         </div>
     </div>

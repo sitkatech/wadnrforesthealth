@@ -23,7 +23,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Controllers;
@@ -36,24 +36,24 @@ namespace ProjectFirma.Web.Views.Vendor
         public IndexGridSpec(Person currentPerson)
         {
             CustomExcelDownloadUrl = SitkaRoute<VendorController>.BuildUrlFromExpression(vc => vc.VendorsExcelDownloadImpl());
-            Add("Vendor Name", a => UrlTemplate.MakeHrefStringBlankTarget(a.GetDetailUrl(), a.VendorName), 200, DhtmlxGridColumnFilterType.Html);
-            Add("Statewide Vendor Number", a => a.StatewideVendorNumber.ToString(), 100, DhtmlxGridColumnFilterType.Html);
-            Add("Statewide Vendor Number Suffix", a => a.StatewideVendorNumberSuffix.ToString(), 75, DhtmlxGridColumnFilterType.Html);
-            Add("Billing Agency", a => a.BillingAgency, 75, DhtmlxGridColumnFilterType.Html);
+            Add("Vendor Name", a => $"{{ \"link\":\"{a.GetDetailUrl()}\",\"displayText\":\"{a.VendorName}\" }}", 200, AgGridColumnFilterType.HtmlLinkJson);
+            Add("Statewide Vendor Number", a => a.StatewideVendorNumber.ToString(), 150, AgGridColumnFilterType.Text);
+            Add("Statewide Vendor Number Suffix", a => a.StatewideVendorNumberSuffix.ToString(), 150, AgGridColumnFilterType.Text);
+            Add("Billing Agency", a => a.BillingAgency, 75, AgGridColumnFilterType.Text);
             Add("Billing Sub Agency", a => a.BillingSubAgency, 75);
-            Add("Billing Fund", a => a.BillingFund, 75, DhtmlxGridColumnFilterType.Html);
-            Add("Billing Fund Breakout", a => a.BillingFundBreakout, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Vendor Address Line 1", a => a.VendorAddressLine1, 150, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Address Line 2", a => a.VendorAddressLine2, 100, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Address Line 3", a => a.VendorAddressLine3, 100, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor City", a => a.VendorCity, 75, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor State", a => a.VendorState, 75, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Zip", a => a.VendorZip, 75, DhtmlxGridColumnFilterType.Html);
-            Add("Remarks", a => a.Remarks, 100, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Phone", a => a.VendorPhone.ToPhoneNumberString(), 100, DhtmlxGridColumnFilterType.Html);
-            Add("Vendor Status", a => a.VendorStatus, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Taxpayer ID Number", a => a.TaxpayerIdNumber, 75, DhtmlxGridColumnFilterType.Html);
-            Add("Email", a => a.Email, 200, DhtmlxGridColumnFilterType.Html);
+            Add("Billing Fund", a => a.BillingFund, 75, AgGridColumnFilterType.Text);
+            Add("Billing Fund Breakout", a => a.BillingFundBreakout, 75, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Vendor Address Line 1", a => a.VendorAddressLine1, 150, AgGridColumnFilterType.Text);
+            Add("Vendor Address Line 2", a => a.VendorAddressLine2, 100, AgGridColumnFilterType.Text);
+            Add("Vendor Address Line 3", a => a.VendorAddressLine3, 100, AgGridColumnFilterType.Text);
+            Add("Vendor City", a => a.VendorCity, 75, AgGridColumnFilterType.Text);
+            Add("Vendor State", a => a.VendorState, 75, AgGridColumnFilterType.Text);
+            Add("Vendor Zip", a => a.VendorZip, 75, AgGridColumnFilterType.Text);
+            Add("Remarks", a => a.Remarks, 100, AgGridColumnFilterType.Text);
+            Add("Vendor Phone", a => a.VendorPhone.ToPhoneNumberString(), 100, AgGridColumnFilterType.Text);
+            Add("Vendor Status", a => a.VendorStatus, 75, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Taxpayer ID Number", a => a.TaxpayerIdNumber, 75, AgGridColumnFilterType.Text);
+            Add("Email", a => a.Email, 200, AgGridColumnFilterType.Text);
         }
     }
 }

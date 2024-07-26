@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.AgGridWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
@@ -32,10 +32,10 @@ namespace ProjectFirma.Web.Views.FocusArea
         public IndexGridSpec(Person person)
         {
             
-            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted(), true), 30, DhtmlxGridColumnFilterType.None);
-            Add(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FocusAreaName), 195, DhtmlxGridColumnFilterType.Html);
-            Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add("Region", a => a.DNRUplandRegion.DNRUplandRegionName, 75, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted(), true), 30, AgGridColumnFilterType.None);
+            Add(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), a => new HtmlLinkObject(a.FocusAreaName, a.GetDetailUrl()).ToJsonObjectForAgGrid(), 195, AgGridColumnFilterType.HtmlLinkJson);
+            Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, AgGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("Region", a => a.DNRUplandRegion.DNRUplandRegionName, 75, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
         }
     }
