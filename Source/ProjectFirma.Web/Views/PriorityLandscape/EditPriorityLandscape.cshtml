@@ -48,7 +48,7 @@
                 @Html.LabelWithSugarFor(m => m.PriorityLandscapeDescription)
             </div>
             <div class="col-xs-10">
-                @Html.CkEditorFor(x => x.PriorityLandscapeDescription, CkEditorExtension.CkEditorToolbar.Minimal, true, false, 200)
+                @Html.TinyMCEEditorFor(x => x.PriorityLandscapeDescription, TinyMCEExtension.TinyMCEToolbarStyle.AllOnOneRowNoMaximize, true, false, 200)
                 @Html.ValidationMessageFor(m => m.PriorityLandscapeDescription)
             </div>
         </div>
