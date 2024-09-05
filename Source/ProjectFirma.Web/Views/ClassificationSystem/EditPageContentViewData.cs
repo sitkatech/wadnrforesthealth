@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Views.ClassificationSystem
     public class EditPageContentViewData : FirmaUserControlViewData
     {
         public readonly TinyMCEExtension.TinyMCEToolbarStyle EditorToolbar;
-        public readonly string FileBrowserImageUploadUrl;
 
         public EditPageContentViewData(TinyMCEExtension.TinyMCEToolbarStyle editorToolbar)
         {

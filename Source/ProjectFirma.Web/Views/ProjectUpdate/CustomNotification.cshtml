@@ -27,6 +27,10 @@ Source code is available upon request via <support@sitkatech.com>.
 
  
 <style>
+    #CkEditorForNotificationContent {
+        height: 400px;
+        overflow-y: auto;
+    }
 
     .customMessageHeader .row {
         margin-bottom: 5px;
@@ -103,7 +107,7 @@ else
         <script>
             function sendPreviewEmail()
             {
-                var editorId = "@("EditorFor" + Html.IdFor(x => x.NotificationContent))";
+                var editorId = "@("CkEditorFor" + Html.IdFor(x => x.NotificationContent))";
                 var ckEditor = CKEDITOR.instances[editorId];
                 var subject = jQuery("#@Html.IdFor(x => x.Subject)");
                 var postData = {
