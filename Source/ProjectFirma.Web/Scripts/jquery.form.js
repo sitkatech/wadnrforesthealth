@@ -126,7 +126,7 @@ $.fn.ajaxSubmit = function(options) {
     }, options);
 
     // hook for manipulating the form data before it is extracted;
-    // convenient for use with rich editors like tinyMCE or FCKEditor
+    // convenient for use with rich editors like tinyMCE 
     var veto = {};
     this.trigger('form-pre-serialize', [this, options, veto]);
     if (veto.veto) {

@@ -88,13 +88,11 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
         jQuery("#" + cancelButtonID).attr("disabled", "disabled");
         jQuery("." + "modal-close-button").attr("disabled", "disabled");
 
-        // 7/10/2023 TK - moved from /ScriptsCustom/CkEditorReady.js due to an order of operations issue with jQuery 3.7. remove when upgrading to tinyMCE
-        for (var i in CKEDITOR.instances) {
-            var ckEditorForDiv = CKEDITOR.instances[i];
-            var id = ckEditorForDiv.name;
-            var ckEditorHtml = ckEditorForDiv.getData();
-
-            jQuery("#" + id).val(ckEditorHtml);
+        var editors = tinyMCE.get();
+        for (var i in editors) {
+            var id = editors[i].id;
+            var editorHtml = editors[i].getContent();
+            jQuery("#" + id).val(editorHtml);
         }
 
         // Manually submit the form

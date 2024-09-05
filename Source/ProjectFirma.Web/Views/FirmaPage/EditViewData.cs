@@ -24,13 +24,11 @@ namespace ProjectFirma.Web.Views.FirmaPage
 {
     public class EditViewData : FirmaUserControlViewData
     {
-        public readonly CkEditorExtension.CkEditorToolbar CkEditorToolbar;
-        public readonly string FileBrowserImageUploadUrl;
+        public readonly TinyMCEExtension.TinyMCEToolbarStyle EditorToolbar;
 
-        public EditViewData(CkEditorExtension.CkEditorToolbar ckEditorToolbar, string fileBrowserImageUploadUrl)
+        public EditViewData(TinyMCEExtension.TinyMCEToolbarStyle editorToolbar)
         {
-            CkEditorToolbar = ckEditorToolbar;
-            FileBrowserImageUploadUrl = fileBrowserImageUploadUrl;
+            EditorToolbar = editorToolbar;
         }
     }
 }

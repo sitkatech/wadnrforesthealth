@@ -25,13 +25,11 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
     public class EditPageContentViewData : FirmaUserControlViewData
     {
-        public readonly CkEditorExtension.CkEditorToolbar CkEditorToolbar;
-        public readonly string FileBrowserImageUploadUrl;
+        public readonly TinyMCEExtension.TinyMCEToolbarStyle EditorToolbar;
 
-        public EditPageContentViewData(CkEditorExtension.CkEditorToolbar ckEditorToolbar, string fileBrowserImageUploadUrl)
+        public EditPageContentViewData(TinyMCEExtension.TinyMCEToolbarStyle editorToolbar)
         {
-            CkEditorToolbar = ckEditorToolbar;
-            FileBrowserImageUploadUrl = fileBrowserImageUploadUrl;
+            EditorToolbar = editorToolbar;
         }
     }
 }
