@@ -55,7 +55,9 @@
     <add key="ArcGisClientId" value="${arcgis-client-id}" />
     <add key="ArcGisClientSecret" value="${arcgis-client-secret}" />
     <add key="ArcGisUsfsDataUrl" value="${arcgis-usfs-data-url}" />
-    <add key="MapBoxApiKey" value="${mapbox-api-key}" />
+    <add key="ArcGisUsfsNepaBoundaryDataUrl" value="${arcgis-usfs-nepa-boundary-data-url}" />
+    
+	  <add key="MapBoxApiKey" value="${mapbox-api-key}" />
     <add key="aspnet:MaxJsonDeserializerMembers" value="20000" />
   </appSettings>
   <system.net>
