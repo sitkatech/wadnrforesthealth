@@ -940,6 +940,7 @@
     <Compile Include="ScheduledJobs\AgolPostRequestObject.cs" />
     <Compile Include="ScheduledJobs\ArcGisOnlineUtility.cs" />
     <Compile Include="ScheduledJobs\JobCancellationTokenExtensions.cs" />
+    <Compile Include="ScheduledJobs\UsfsNepaBoundaryDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\UsfsDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\LoaDataImportBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
