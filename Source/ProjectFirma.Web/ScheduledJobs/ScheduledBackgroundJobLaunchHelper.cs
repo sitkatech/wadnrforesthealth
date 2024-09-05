@@ -17,6 +17,11 @@ namespace ProjectFirma.Web.ScheduledJobs
             UsfsDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
+        public static void RunUsfsNepaBoundaryDataImportBackgroundJob(IJobCancellationToken jobCancellationToken)
+        {
+            UsfsNepaBoundaryDataImportBackgroundJob.Instance.RunJob(jobCancellationToken);
+        }
+
         public static void RunProgramNotificationScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
             ProgramNotificationScheduledBackgroundJob.Instance.RunJob(jobCancellationToken);
