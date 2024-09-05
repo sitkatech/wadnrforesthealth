@@ -2220,7 +2220,6 @@
     <Content Include="Content\typeahead\typeahead.min.js">
       <DependentUpon>typeahead.js</DependentUpon>
     </Content>
-    <Content Include="ScriptsCustom\bootstrap-ckeditor-fix.min.js.map" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.min.js.map" />
     <Content Include="ScriptsCustom\DatePickerReady.min.js.map" />
     <Content Include="ScriptsCustom\FancyboxReady.min.js.map" />
@@ -2260,7 +2259,6 @@
     <Content Include="Content\Bootstrap\firma\iswcc.theme.less" />
     <Content Include="Content\Bootstrap\firma\dnr.theme.less" />
     <Content Include="Content\img\WashingtonDepartmentOfNaturalResources\site.webmanifest" />
-    <Content Include="ScriptsCustom\bootstrap-ckeditor-fix.js" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.js" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.min.js" />
     <Content Include="ScriptsCustom\DatePickerReady.js" />
@@ -3623,12 +3621,6 @@
     <Content Include="WebServices.svc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\CkEditorExtensionTest.GenerateCkEditorInlineDivTest.approved.txt" />
-    <Content Include="Common\CkEditorExtensionTest.GenerateCkEditorInlineForTest.approved.txt" />
-    <Content Include="Common\CkEditorExtensionTest.GenerateJavascriptWithAllToolbarsTest.approved.txt" />
-    <Content Include="Common\CkEditorExtensionTest.GenerateJavascriptWithMinimalToolbarTest.approved.txt" />
-    <Content Include="Common\CkEditorExtensionTest.GenerateJavascriptWithMinimalWithImagesToolbarTest.approved.txt" />
-    <Content Include="Common\CkEditorExtensionTest.GenerateJavascriptWithNoToolbarTest.approved.txt" />
     <Content Include="Content\angular\angular-animate.js" />
     <Content Include="Content\angular\angular-animate.min.js" />
     <Content Include="Content\angular\angular-aria.js" />

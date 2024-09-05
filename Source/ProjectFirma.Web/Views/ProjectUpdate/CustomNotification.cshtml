@@ -27,11 +27,6 @@ Source code is available upon request via <support@sitkatech.com>.
 
  
 <style>
-    #CkEditorForNotificationContent {
-        height: 400px;
-        overflow-y: auto;
-    }
-
     .customMessageHeader .row {
         margin-bottom: 5px;
     }
@@ -107,11 +102,11 @@ else
         <script>
             function sendPreviewEmail()
             {
-                var editorId = "@("CkEditorFor" + Html.IdFor(x => x.NotificationContent))";
-                var ckEditor = CKEDITOR.instances[editorId];
+                var editorId = "@("TinyMCEEditorFor" + Html.IdFor(x => x.NotificationContent))";
+                var editorData = tinymce.get(editorId).getContent();
                 var subject = jQuery("#@Html.IdFor(x => x.Subject)");
                 var postData = {
-                    NotificationContent: ckEditor.getData(),
+                    NotificationContent: editorData,
                     Subject: subject.val()
                 };
                 SitkaAjax.post(@Html.Raw(ViewDataTyped.SendPreviewEmailUrl.ToJS()), postData,
