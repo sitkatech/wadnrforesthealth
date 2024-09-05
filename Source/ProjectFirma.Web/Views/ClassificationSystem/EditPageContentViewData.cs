@@ -25,12 +25,12 @@ namespace ProjectFirma.Web.Views.ClassificationSystem
 {
     public class EditPageContentViewData : FirmaUserControlViewData
     {
-        public readonly CkEditorExtension.CkEditorToolbar CkEditorToolbar;
+        public readonly TinyMCEExtension.TinyMCEToolbarStyle EditorToolbar;
         public readonly string FileBrowserImageUploadUrl;
 
-        public EditPageContentViewData(CkEditorExtension.CkEditorToolbar ckEditorToolbar)
+        public EditPageContentViewData(TinyMCEExtension.TinyMCEToolbarStyle editorToolbar)
         {
-            CkEditorToolbar = ckEditorToolbar;
+            EditorToolbar = editorToolbar;
         }
     }
 }

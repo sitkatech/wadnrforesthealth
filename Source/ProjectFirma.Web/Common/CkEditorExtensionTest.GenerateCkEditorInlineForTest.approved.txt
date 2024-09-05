@@ -1,11 +1,11 @@
-﻿<div contenteditable="true" data-cke-editor-id="ProgramPageContent" id="CkEditorForProgramPageContent">
+﻿<div contenteditable="true" data-cke-editor-id="ProgramPageContent" id="EditorForProgramPageContent">
 Some html text
 </div>
 <script language="javascript" type="text/javascript">
     // <![CDATA[
     jQuery(document).ready(function ()
     {
-        CKEDITOR.inline("CkEditorForProgramPageContent", {
+        CKEDITOR.inline("EditorForProgramPageContent", {
            toolbar:
            [
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript', 'RemoveFormat' ] },

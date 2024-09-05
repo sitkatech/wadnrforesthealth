@@ -2,7 +2,7 @@
     // <![CDATA[
     jQuery(document).ready(function ()
     {
-        CKEDITOR.replace("CkEditorForProgramPageContent", {
+        CKEDITOR.replace("EditorForProgramPageContent", {
            toolbar:
            [
             { name: 'document',    groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', 'Templates', 'document' ] },

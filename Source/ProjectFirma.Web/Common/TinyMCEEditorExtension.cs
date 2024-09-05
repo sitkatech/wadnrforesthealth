@@ -121,7 +121,9 @@ namespace ProjectFirma.Web.Common
                 // <![CDATA[
                 jQuery(document).ready(function ()
                 {{
+                   tinymce.remove();    
                    tinymce.init({{
+                            license_key: 'gpl',
                             selector: '#{0}',
                             menubar: false,
                             toolbar: '{1}',

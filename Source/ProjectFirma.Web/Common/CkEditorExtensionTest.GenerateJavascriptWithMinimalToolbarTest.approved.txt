@@ -2,7 +2,7 @@
     // <![CDATA[
     jQuery(document).ready(function ()
     {
-        CKEDITOR.replace("CkEditorForProgramPageContent", {
+        CKEDITOR.replace("EditorForProgramPageContent", {
            toolbar:
            [
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Subscript', 'Superscript', 'RemoveFormat' ] },

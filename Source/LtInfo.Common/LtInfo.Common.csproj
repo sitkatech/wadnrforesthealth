@@ -417,7 +417,7 @@
     <Compile Include="Validation.cs" />
     <Compile Include="ValidationAttributes.cs" />
     <Compile Include="VersionInformation.cs" />
-    <Compile Include="Views\CKEditorWithMaxLengthAttribute.cs" />
+    <Compile Include="Views\EditorWithMaxLengthAttribute.cs" />
     <Compile Include="Views\DownloadFileDescriptor.cs" />
     <Compile Include="Views\FieldTemplateMetadata.cs" />
     <Compile Include="Views\TextAreaWithMaxLengthAttribute.cs" />

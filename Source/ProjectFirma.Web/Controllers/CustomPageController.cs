@@ -96,9 +96,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditInDialog(EditHtmlContentInDialogViewModel viewModel, CustomPage customPage)
         {
-            var ckEditorToolbar = CkEditorExtension.CkEditorToolbar.All;
-            var viewData = new EditHtmlContentInDialogViewData(ckEditorToolbar,
-                SitkaRoute<FileResourceController>.BuildUrlFromExpression(x => x.CkEditorUploadFileResourceForCustomPage(customPage)));
+            var editorToolbar = TinyMCEExtension.TinyMCEToolbarStyle.All;
+            var viewData = new EditHtmlContentInDialogViewData(editorToolbar);
             return RazorPartialView<EditHtmlContentInDialog, EditHtmlContentInDialogViewData, EditHtmlContentInDialogViewModel>(viewData, viewModel);
         }
 
