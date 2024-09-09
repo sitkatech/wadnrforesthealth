@@ -124,6 +124,7 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
         // page but just hides it. For the server side
         // validation tooltips to show up you need to
         // remove the original form the page
+        tinymce.remove("#" + dialogDivID + " textarea");
         jQuery("#" + dialogDivID).remove();
     });
 
