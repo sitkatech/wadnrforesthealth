@@ -1693,7 +1693,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\tinymce\icons\default\icons.min.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
-    <Content Include="Scripts\tinymce\models\dom\model.min.js" />
+    <Content Include="Scripts\tinymce\models\dom\model.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\tinymce\plugins\accordion\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\anchor\plugin.min.js" />
