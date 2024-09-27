@@ -217,8 +217,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditPageContent(EditPageContentViewModel viewModel, DNRUplandRegion region)
         {
-            var ckEditorToolbar = CkEditorExtension.CkEditorToolbar.AllOnOneRowNoMaximize;
-            var viewData = new EditPageContentViewData(ckEditorToolbar, SitkaRoute<FileResourceController>.BuildUrlFromExpression(x => x.CkEditorUploadFileResourceForDnrUplandRegionPage(region)));
+            var editorToolbar = TinyMCEExtension.TinyMCEToolbarStyle.AllOnOneRowNoMaximize;
+            var viewData = new EditPageContentViewData(editorToolbar);
             return RazorPartialView<EditPageContent, EditPageContentViewData, EditPageContentViewModel>(viewData, viewModel);
         }
 

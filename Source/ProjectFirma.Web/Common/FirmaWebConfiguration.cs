@@ -69,6 +69,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string ArcGisClientSecret = SitkaConfiguration.GetRequiredAppSetting("ArcGisClientSecret");
 
         public static readonly string ArcGisUsfsDataUrl = SitkaConfiguration.GetRequiredAppSetting("ArcGisUsfsDataUrl");
+        public static readonly string ArcGisUsfsNepaBoundaryDataUrl = SitkaConfiguration.GetRequiredAppSetting("ArcGisUsfsNepaBoundaryDataUrl");
+        
 
         public static readonly string MapBoxApiKey = SitkaConfiguration.GetRequiredAppSetting("MapBoxApiKey");
 

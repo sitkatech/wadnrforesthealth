@@ -24,13 +24,11 @@ namespace ProjectFirma.Web.Views.Shared.TextControls
 {
     public class EditRtfContentViewData : FirmaUserControlViewData
     {
-        public readonly CkEditorExtension.CkEditorToolbar CkEditorToolbar;
-        public readonly string FileBrowserImageUploadUrl;
+        public readonly TinyMCEExtension.TinyMCEToolbarStyle EditorToolbar;
 
-        public EditRtfContentViewData(CkEditorExtension.CkEditorToolbar ckEditorToolbar, string fileBrowserImageUploadUrl)
+        public EditRtfContentViewData(TinyMCEExtension.TinyMCEToolbarStyle editorToolbar)
         {
-            CkEditorToolbar = ckEditorToolbar;
-            FileBrowserImageUploadUrl = fileBrowserImageUploadUrl;
+            EditorToolbar = editorToolbar;
         }
     }
 }

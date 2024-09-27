@@ -20,6 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*@
 @model HttpPostedFileBase
 @Html.TextBox("", null, new { type = "file" })
-<script>
+<script type="text/javascript">
     jQuery("#@ViewData.TemplateInfo.HtmlFieldPrefix").fileinput({ showUpload: false, showPreview: false, showRemove: false, defaultPreviewContent: "", allowedPreviewTypes: false, multiple: false, showCaption: true, browseClass: "btn btn-sm btn-firma" });
 </script>
