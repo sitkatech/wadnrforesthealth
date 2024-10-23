@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Linq;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.ExcelWorkbookUtilities;
@@ -29,8 +31,13 @@ namespace ProjectFirma.Web.Views.Project
     {
         public ProjectExcelSpec()
         {
-            var organizationFieldDefinitionLabelSingle = Models.FieldDefinition.Organization.GetFieldDefinitionLabel();
+            
             AddColumn(Models.FieldDefinition.ProjectName.GetFieldDefinitionLabel(), x => x.ProjectName);
+            AddColumn(Models.FieldDefinition.FhtProjectNumber.GetFieldDefinitionLabel(), x => x.FhtProjectNumber);
+            AddColumn("Program Identifier", x => x.ProjectGisIdentifier);
+            AddColumn(Models.FieldDefinition.Program.GetFieldDefinitionLabel(), x => string.Join(",", x.ProjectPrograms.Select(y => y.Program.ProgramNameDisplay)));
+
+            var organizationFieldDefinitionLabelSingle = Models.FieldDefinition.Organization.GetFieldDefinitionLabel();
             var organizationFieldDefinitionLabelPluralized = Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
 
             var allProjectGrantAllocationExpenditures =
@@ -52,7 +59,9 @@ namespace ProjectFirma.Web.Views.Project
                     AddColumn(y.ClassificationSystemNamePluralized, x => string.Join(",", x.ProjectClassifications.Where(z => z.Classification.ClassificationSystem == y).Select(tc => tc.Classification.DisplayName)));
                 });
             AddColumn(Models.FieldDefinition.PriorityLandscape.GetFieldDefinitionLabelPluralized(), x => string.Join(",", x.GetProjectPriorityLandscapes().Select(y => y.PriorityLandscapeName)));
-            AddColumn("Regions", x => string.Join(",", x.GetProjectRegions().Select(y => y.DNRUplandRegionName)));
+            AddColumn(Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel(), x => string.Join(",", x.GetProjectRegions().Select(y => y.DNRUplandRegionName)));
+            AddColumn(Models.FieldDefinition.County.GetFieldDefinitionLabel(), x => string.Join(",", x.GetProjectCounties().Select(y => y.CountyName)));
+            AddColumn(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), x => x.FocusAreaID.HasValue ? x.FocusArea.FocusAreaName : string.Empty);
             AddColumn(Models.FieldDefinition.ProjectInitiationDate.GetFieldDefinitionLabel(), x => x.GetImplementationStartYear());
             AddColumn(Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel(), x => x.GetCompletionYear());
             AddColumn(Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel(), x => x.ProjectDescription);
