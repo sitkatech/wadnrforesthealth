@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.Project
             AddColumn(Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel(), x => x.ProjectDescription);
             AddColumn(Models.FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(), x => x.EstimatedTotalCost);
             AddColumn(Models.FieldDefinition.ProjectGrantAllocationRequestTotalAmount.GetFieldDefinitionLabel(), x => x.GetTotalFunding());
-            AddColumn("State", a => a.ProjectLocationStateProvince);
+            //AddColumn("State", a => a.ProjectLocationStateProvince);
             AddColumn($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Notes", a => a.ProjectLocationNotes);
         }
     }
