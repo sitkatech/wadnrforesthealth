@@ -21,6 +21,8 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -35,6 +37,7 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Organization;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.ProjectControls;
 using Detail = ProjectFirma.Web.Views.Organization.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Organization.DetailViewData;
 using Index = ProjectFirma.Web.Views.Organization.Index;
@@ -201,10 +204,34 @@ namespace ProjectFirma.Web.Controllers
                 layers.Add(new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", projectDetailLocationsFeatureCollection, "blue", 1, LayerInitialVisibility.Hide));
             }
 
-            var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
-            layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show));
+            var boundingBox = GetBoundingBoxFromProjectIdListImpl(projectsAsSimpleLocations.Select(x => x.ProjectID).ToList()); //BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
+            layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide));
 
             return new MapInitJson($"organization_{organization.OrganizationID}_Map", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
+        }
+
+        private void GetBoundingBoxFromProjectIdListImpl(List<int> projectIdList)
+        {
+            if (projectIdList != null)
+            {
+
+                string bulkProjectDeleteProc = "fGetBoundingBoxForProjectIdList";
+                using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
+                {
+                    using (var cmd = new SqlCommand(bulkProjectDeleteProc, sqlConnection))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProjectIDList", SqlDbType.Structured);
+                        cmd.Parameters["@ProjectIDList"].Direction = ParameterDirection.Input;
+                        cmd.Parameters["@ProjectIDList"].TypeName = "dbo.IDList";
+                        cmd.Parameters["@ProjectIDList"].Value = SqlHelpers.IntListToDataTable(projectIdList);
+                        var returnVal = cmd.ExecuteScalar();
+                        return returnVal;
+                    }
+                }
+               
+            }
         }
 
         private static ViewGoogleChartViewData GetCalendarYearExpendituresFromOrganizationGrantAllocationsLineChartViewData(Organization organization)
