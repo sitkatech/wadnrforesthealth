@@ -204,35 +204,42 @@ namespace ProjectFirma.Web.Controllers
                 layers.Add(new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", projectDetailLocationsFeatureCollection, "blue", 1, LayerInitialVisibility.Hide));
             }
 
-            var boundingBox = GetBoundingBoxFromProjectIdListImpl(projectsAsSimpleLocations.Select(x => x.ProjectID).ToList()); //BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
+            var projectIDsForBoundingBox = projectsAsSimpleLocations.Select(x => x.ProjectID).ToList();
+            var boundingBoxPoints = HttpRequestStorage.DatabaseEntities.GetfGetBoundingBoxForProjectIdLists(projectIDsForBoundingBox).FirstOrDefault();
+
+            var boundingBox = new BoundingBox(boundingBoxPoints.ToString());
+            //var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
             layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide));
 
             return new MapInitJson($"organization_{organization.OrganizationID}_Map", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
         }
 
-        private void GetBoundingBoxFromProjectIdListImpl(List<int> projectIdList)
-        {
-            if (projectIdList != null)
-            {
+        //private string GetBoundingBoxFromProjectIdListImpl(List<int> projectIdList)
+        //{
+        //    if (projectIdList != null)
+        //    {
 
-                string bulkProjectDeleteProc = "fGetBoundingBoxForProjectIdList";
-                using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
-                {
-                    using (var cmd = new SqlCommand(bulkProjectDeleteProc, sqlConnection))
-                    {
+        //        string bulkProjectDeleteProc = "fGetBoundingBoxForProjectIdList";
+        //        using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
+        //        {
+        //            using (var cmd = new SqlCommand(bulkProjectDeleteProc, sqlConnection))
+        //            {
 
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@ProjectIDList", SqlDbType.Structured);
-                        cmd.Parameters["@ProjectIDList"].Direction = ParameterDirection.Input;
-                        cmd.Parameters["@ProjectIDList"].TypeName = "dbo.IDList";
-                        cmd.Parameters["@ProjectIDList"].Value = SqlHelpers.IntListToDataTable(projectIdList);
-                        var returnVal = cmd.ExecuteScalar();
-                        return returnVal;
-                    }
-                }
-               
-            }
-        }
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Parameters.Add("@ProjectIDList", SqlDbType.Structured);
+        //                cmd.Parameters["@ProjectIDList"].Direction = ParameterDirection.Input;
+        //                cmd.Parameters["@ProjectIDList"].TypeName = "dbo.IDList";
+        //                cmd.Parameters["@ProjectIDList"].Value = SqlHelpers.IntListToDataTable(projectIdList);
+        //                var returnVal = cmd.ExecuteReader();
+        //                returnVal.
+        //                return returnVal.ToString();
+        //            }
+        //        }
+
+        //    }
+
+        //    return string.Empty;
+        //}
 
         private static ViewGoogleChartViewData GetCalendarYearExpendituresFromOrganizationGrantAllocationsLineChartViewData(Organization organization)
         {
@@ -479,5 +486,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData,
                 viewModel);
         }
+
     }
 }

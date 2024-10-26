@@ -7993,7 +7993,16 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' d
 Errors Found During Generation:
 warning 6005: The function 'fGetBoundingBoxForProjectIdList' has a parameter 'ProjectIDList' at parameter index 0 that has a data type 'table type' which is currently not supported for the target .NET Framework version. The function was excluded.
 
-<Function Name="fGetBoundingBoxForProjectIdList" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+<Function Name="fGetBoundingBoxForProjectIdList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <ReturnType>
+    <CollectionType>
+      <RowType>
+        <Property Name="SW" Type="geometry" Nullable="false" />
+        <Property Name="NE" Type="geometry" Nullable="false" />
+      </RowType>
+    </CollectionType>
+  </ReturnType>
+</Function>
 Errors Found During Generation:
 warning 6005: The function 'pBulkDeleteProjects' has a parameter 'ProjectIDList' at parameter index 0 that has a data type 'table type' which is currently not supported for the target .NET Framework version. The function was excluded.
 
