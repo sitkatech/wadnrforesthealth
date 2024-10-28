@@ -7,8 +7,10 @@ create function dbo.fGetBoundingBoxForProjectIdList(@ProjectIDList dbo.IDList re
 returns @rtnTable TABLE 
 (
     -- columns returned by the function
-    SW geometry NOT NULL,
-    NE geometry NOT NULL
+    SWLatitude float NOT NULL,
+	SWLongitude float NOT NULL,
+    NELatitude float NOT NULL,
+	NELongitude float NOT NULL
 )
 begin
 	declare @myBoundingBox varchar(1000);
@@ -19,7 +21,7 @@ begin
 
 	declare @g geometry = geometry::STGeomFromText(@myBoundingBox, 0);
 	insert into @rtnTable
-	select @g.STPointN(1) as [SW], @g.STPointN(3) as [NE];
+	select @g.STPointN(1).STX as [SWLatitude], @g.STPointN(1).STY as [SWLongitude], @g.STPointN(3).STX as [NELatitude], @g.STPointN(3).STY as [NELongitude];
 
 	return
 end

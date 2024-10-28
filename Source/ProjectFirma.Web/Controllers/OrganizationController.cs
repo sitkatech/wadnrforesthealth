@@ -207,7 +207,7 @@ namespace ProjectFirma.Web.Controllers
             var projectIDsForBoundingBox = projectsAsSimpleLocations.Select(x => x.ProjectID).ToList();
             var boundingBoxPoints = HttpRequestStorage.DatabaseEntities.GetfGetBoundingBoxForProjectIdLists(projectIDsForBoundingBox).FirstOrDefault();
 
-            var boundingBox = new BoundingBox(boundingBoxPoints.ToString());
+            var boundingBox = new BoundingBox(new Point(boundingBoxPoints.SWLatitude, boundingBoxPoints.SWLongitude), new Point(boundingBoxPoints.NELatitude, boundingBoxPoints.NELongitude));
             //var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
             layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide));
 

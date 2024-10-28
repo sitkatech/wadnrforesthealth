@@ -7997,8 +7997,10 @@ warning 6005: The function 'fGetBoundingBoxForProjectIdList' has a parameter 'Pr
   <ReturnType>
     <CollectionType>
       <RowType>
-        <Property Name="SW" Type="geometry" Nullable="false" />
-        <Property Name="NE" Type="geometry" Nullable="false" />
+        <Property Name="SWLatitude" Type="float" Nullable="false" />
+        <Property Name="SWLongitude" Type="float" Nullable="false" />
+        <Property Name="NELatitude" Type="float" Nullable="false" />
+        <Property Name="NELongitude" Type="float" Nullable="false" />
       </RowType>
     </CollectionType>
   </ReturnType>

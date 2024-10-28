@@ -26,9 +26,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public fGetBoundingBoxForProjectIdList_Result() : this()
+        public fGetBoundingBoxForProjectIdList_Result(double sWLatitude, double sWLongitude, double nELatitude, double nELongitude) : this()
         {
-
+            this.SWLatitude = sWLatitude;
+            this.SWLongitude = sWLongitude;
+            this.NELatitude = nELatitude;
+            this.NELongitude = nELongitude;
         }
 
         /// <summary>
@@ -36,12 +39,18 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public fGetBoundingBoxForProjectIdList_Result(fGetBoundingBoxForProjectIdList_Result fGetBoundingBoxForProjectIdList_Result) : this()
         {
-
+            this.SWLatitude = fGetBoundingBoxForProjectIdList_Result.SWLatitude;
+            this.SWLongitude = fGetBoundingBoxForProjectIdList_Result.SWLongitude;
+            this.NELatitude = fGetBoundingBoxForProjectIdList_Result.NELatitude;
+            this.NELongitude = fGetBoundingBoxForProjectIdList_Result.NELongitude;
             CallAfterConstructor(fGetBoundingBoxForProjectIdList_Result);
         }
 
         partial void CallAfterConstructor(fGetBoundingBoxForProjectIdList_Result fGetBoundingBoxForProjectIdList_Result);
 
-
+        public double SWLatitude { get; set; }
+        public double SWLongitude { get; set; }
+        public double NELatitude { get; set; }
+        public double NELongitude { get; set; }
     }
 }
