@@ -237,10 +237,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }
 
         [DbFunction("DatabaseEntities", "fGetBoundingBoxForProjectIdList")]
-        public virtual IQueryable<fGetBoundingBoxForProjectIdList_Result> GetfGetBoundingBoxForProjectIdLists(IntList projectIDListParameter)
+        public virtual IQueryable<fGetBoundingBoxForProjectIdList_Result> GetfGetBoundingBoxForProjectIdLists(string projectIDListParameter)
         {
             
-            var projectIDList = new System.Data.Entity.Core.Objects.ObjectParameter("projectIDList", typeof(IntList))
+            var projectIDList = new System.Data.Entity.Core.Objects.ObjectParameter("projectIDList", typeof(string))
             {
                 Value = projectIDListParameter
             };

@@ -7681,6 +7681,19 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fGetBoundingBoxForProjectIdList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProjectIDList" Type="varchar(max)" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="SWLatitude" Type="float" Nullable="false" />
+          <Property Name="SWLongitude" Type="float" Nullable="false" />
+          <Property Name="NELatitude" Type="float" Nullable="false" />
+          <Property Name="NELongitude" Type="float" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
   </Function>
@@ -7990,21 +8003,6 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' d
   <Property Name="SHAPE_Area" Type="float" />
   <Property Name="GEOM" Type="geometry" />
 </EntityType>
-Errors Found During Generation:
-warning 6005: The function 'fGetBoundingBoxForProjectIdList' has a parameter 'ProjectIDList' at parameter index 0 that has a data type 'table type' which is currently not supported for the target .NET Framework version. The function was excluded.
-
-<Function Name="fGetBoundingBoxForProjectIdList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-  <ReturnType>
-    <CollectionType>
-      <RowType>
-        <Property Name="SWLatitude" Type="float" Nullable="false" />
-        <Property Name="SWLongitude" Type="float" Nullable="false" />
-        <Property Name="NELatitude" Type="float" Nullable="false" />
-        <Property Name="NELongitude" Type="float" Nullable="false" />
-      </RowType>
-    </CollectionType>
-  </ReturnType>
-</Function>
 Errors Found During Generation:
 warning 6005: The function 'pBulkDeleteProjects' has a parameter 'ProjectIDList' at parameter index 0 that has a data type 'table type' which is currently not supported for the target .NET Framework version. The function was excluded.
 
