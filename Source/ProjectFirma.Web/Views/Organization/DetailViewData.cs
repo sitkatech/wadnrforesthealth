@@ -102,11 +102,8 @@ namespace ProjectFirma.Web.Views.Organization
             UserHasOrganizationManagePermissions = new OrganizationManageFeature().HasPermissionByPerson(CurrentPerson);
 
             EditOrganizationUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.Edit(organization));
-            EditBoundaryUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.EditBoundary(organization));
-            DeleteOrganizationBoundaryUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    c => c.DeleteOrganizationBoundary(organization));
+            EditBoundaryUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.EditBoundary(organization));
+            DeleteOrganizationBoundaryUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.DeleteOrganizationBoundary(organization));
 
             ProjectsIncludingLeadImplementingGridSpec =
                 new ProjectsIncludingLeadImplementingGridSpec(organization, CurrentPerson, false)
@@ -116,18 +113,14 @@ namespace ProjectFirma.Web.Views.Organization
                     SaveFiltersInCookie = true
                 };
             ProjectOrganizationsGridName = "projectOrganizationsFromOrganizationGrid";
-            ProjectOrganizationsGridDataUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    tc => tc.ProjectsIncludingLeadImplementingGridJsonData(organization));
+            ProjectOrganizationsGridDataUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.ProjectsIncludingLeadImplementingGridJsonData(organization));
 
             AgreementOrganizationsGridSpec = new AgreementGridSpec(CurrentPerson, atLeastOneAgreementHasFile, false, false)
             {
                 CustomExcelDownloadUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.AgreementsExcelDownload(organization.PrimaryKey))
             };
             AgreementOrganizationsGridName = "agreementOrganizationsFromOrganizationGrid";
-            AgreementOrganizationsGridDataUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    tc => tc.AgreementOrganizationGridJsonData(organization));
+            AgreementOrganizationsGridDataUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.AgreementOrganizationGridJsonData(organization));
 
             ProjectStewardOrLeadImplementorFieldDefinitionName = MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship()
                 ? Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.GetFieldDefinitionLabel()
@@ -142,9 +135,7 @@ namespace ProjectFirma.Web.Views.Organization
                 };
 
             ProjectGrantAllocationExpendituresForOrganizationGridName = "projectCalendarYearExpendituresForOrganizationGrid";
-            ProjectGrantAllocationExpendituresForOrganizationGridDataUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    tc => tc.ProjectGrantAllocationExpendituresForOrganizationGridJsonData(organization));
+            ProjectGrantAllocationExpendituresForOrganizationGridDataUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationExpendituresForOrganizationGridJsonData(organization));
 
             // Might be too weak; do we want to make this more specific?
             ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());

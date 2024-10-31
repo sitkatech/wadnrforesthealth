@@ -143,7 +143,7 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = GetMapInitJson(organization, out var hasSpatialData, CurrentPerson);
 
-            var performanceMeasures = organization.GetAllActiveProjectsAndProposals(CurrentPerson).ToList()
+            var performanceMeasures = organization.GetAllActiveProjectsAndProposals(CurrentPerson)
                 .SelectMany(x => x.PerformanceMeasureActuals)
                 .Select(x => x.PerformanceMeasure).Distinct()
                 .OrderBy(x => x.PerformanceMeasureDisplayName)
@@ -207,39 +207,12 @@ namespace ProjectFirma.Web.Controllers
             var projectIDsForBoundingBox = projectsAsSimpleLocations.Select(x => x.ProjectID).ToList();
             var boundingBoxPoints = HttpRequestStorage.DatabaseEntities.GetfGetBoundingBoxForProjectIdLists(string.Join(",", projectIDsForBoundingBox)).FirstOrDefault();
 
-            var boundingBox = new BoundingBox(new Point(boundingBoxPoints.SWLatitude, boundingBoxPoints.SWLongitude), new Point(boundingBoxPoints.NELatitude, boundingBoxPoints.NELongitude));
-            //var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
+            var boundingBox = new BoundingBox(new Point(boundingBoxPoints.SWLongitude, boundingBoxPoints.SWLatitude), new Point(boundingBoxPoints.NELongitude, boundingBoxPoints.NELatitude));
             layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide));
 
             return new MapInitJson($"organization_{organization.OrganizationID}_Map", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
         }
 
-        //private string GetBoundingBoxFromProjectIdListImpl(List<int> projectIdList)
-        //{
-        //    if (projectIdList != null)
-        //    {
-
-        //        string bulkProjectDeleteProc = "fGetBoundingBoxForProjectIdList";
-        //        using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
-        //        {
-        //            using (var cmd = new SqlCommand(bulkProjectDeleteProc, sqlConnection))
-        //            {
-
-        //                cmd.CommandType = CommandType.StoredProcedure;
-        //                cmd.Parameters.Add("@ProjectIDList", SqlDbType.Structured);
-        //                cmd.Parameters["@ProjectIDList"].Direction = ParameterDirection.Input;
-        //                cmd.Parameters["@ProjectIDList"].TypeName = "dbo.IDList";
-        //                cmd.Parameters["@ProjectIDList"].Value = SqlHelpers.IntListToDataTable(projectIdList);
-        //                var returnVal = cmd.ExecuteReader();
-        //                returnVal.
-        //                return returnVal.ToString();
-        //            }
-        //        }
-
-        //    }
-
-        //    return string.Empty;
-        //}
 
         private static ViewGoogleChartViewData GetCalendarYearExpendituresFromOrganizationGrantAllocationsLineChartViewData(Organization organization)
         {
@@ -381,8 +354,7 @@ namespace ProjectFirma.Web.Controllers
             // provided
             projectGrantAllocationExpenditures.AddRange(givenOrganization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures));
 
-            var projectGrantAllocationExpendituresToShow =
-                projectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
+            var projectGrantAllocationExpendituresToShow = projectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
             var gridSpec = new ProjectGrantAllocationExpendituresForOrganizationGridSpec(givenOrganization);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure>(projectGrantAllocationExpendituresToShow, gridSpec);
             return gridJsonNetJObjectResult;
