@@ -557,8 +557,8 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
             if (wmsLayers[j].wmsParams.cql_filter) {
                 geospatialAreaWMSParams.cql_filter = wmsLayers[j].wmsParams.cql_filter;
             }
-            var query = layer._url + L.Util.getParamString(geospatialAreaWMSParams, null, true);            
-            ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query }))
+            var query = layer._url;// + L.Util.getParamString(geospatialAreaWMSParams, null, true);     
+            ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query, type: "POST", data: L.Util.getParamString(geospatialAreaWMSParams, null, true) }))
                 .then(function (response) {
                     return self.formatGeospatialAreaResponse(response).then(function(status) {
                             return status;

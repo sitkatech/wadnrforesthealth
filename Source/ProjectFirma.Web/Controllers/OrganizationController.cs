@@ -197,11 +197,15 @@ namespace ProjectFirma.Web.Controllers
                 layers.Add(new LayerGeoJson("Projects", projectSimpleLocationsFeatureCollection, "blue", 1, LayerInitialVisibility.Show));
             }
 
-            var projectDetailLocationsFeatureCollection = allActiveProjectsAndProposals.SelectMany(x => x.GetProjectLocationDetails()).ToGeoJsonFeatureCollection();
-            if (projectDetailLocationsFeatureCollection.Features.Any())
+            var allVisibleProjectIds = allActiveProjectsAndProposals.Select(x => x.ProjectID).ToList();
+            if (allVisibleProjectIds.Any())
             {
                 hasSpatialData = true;
-                layers.Add(new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", projectDetailLocationsFeatureCollection, "blue", 1, LayerInitialVisibility.Hide));
+                var projectDetailedLocationLayer = new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "blue", 1,
+                LayerInitialVisibility.Hide, $"ProjectID in ({string.Join(",",allVisibleProjectIds)})", true);
+                layers.Add(projectDetailedLocationLayer);
+
             }
 
             var projectIDsForBoundingBox = projectsAsSimpleLocations.Select(x => x.ProjectID).ToList();
