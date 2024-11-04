@@ -1421,6 +1421,9 @@
       <End Role="TreatmentCode" EntitySet="TreatmentCode" />
       <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
     </AssociationSet>
+    <FunctionImport Name="fGetBoundingBoxForProjectIdList" ReturnType="Collection(ProjectFirma.Web.Models.fGetBoundingBoxForProjectIdList_Result)" IsComposable="true">
+      <Parameter Name="ProjectIDList" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
       <Parameter Name="psTableName" Type="String" />
     </FunctionImport>
@@ -1444,6 +1447,12 @@
       <Parameter Name="delimiter" Type="String" />
     </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="fGetBoundingBoxForProjectIdList_Result">
+    <Property Name="SWLatitude" Type="Double" Nullable="false" />
+    <Property Name="SWLongitude" Type="Double" Nullable="false" />
+    <Property Name="NELatitude" Type="Double" Nullable="false" />
+    <Property Name="NELongitude" Type="Double" Nullable="false" />
+  </ComplexType>
   <ComplexType Name="fGetColumnNamesForTable_Result">
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />

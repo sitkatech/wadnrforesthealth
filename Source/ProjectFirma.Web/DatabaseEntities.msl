@@ -2529,6 +2529,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetBoundingBoxForProjectIdList" FunctionImportName="fGetBoundingBoxForProjectIdList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetBoundingBoxForProjectIdList_Result">
+          <ScalarProperty Name="SWLatitude" ColumnName="SWLatitude" />
+          <ScalarProperty Name="SWLongitude" ColumnName="SWLongitude" />
+          <ScalarProperty Name="NELatitude" ColumnName="NELatitude" />
+          <ScalarProperty Name="NELongitude" ColumnName="NELongitude" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fGetColumnNamesForTable" FunctionImportName="fGetColumnNamesForTable">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fGetColumnNamesForTable_Result">

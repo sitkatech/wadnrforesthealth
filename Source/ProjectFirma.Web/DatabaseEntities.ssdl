@@ -7681,6 +7681,19 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fGetBoundingBoxForProjectIdList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProjectIDList" Type="varchar(max)" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="SWLatitude" Type="float" Nullable="false" />
+          <Property Name="SWLongitude" Type="float" Nullable="false" />
+          <Property Name="NELatitude" Type="float" Nullable="false" />
+          <Property Name="NELongitude" Type="float" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
   </Function>
@@ -7799,6 +7812,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
   </Function>
+  <Function Name="pHangFireClearJobQueue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pHangFireRescheduleJobs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pImportLoaTabularData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Mode="In" />

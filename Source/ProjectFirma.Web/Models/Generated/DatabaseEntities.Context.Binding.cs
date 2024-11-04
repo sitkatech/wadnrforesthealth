@@ -229,11 +229,24 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<vSingularGrantAllocation> vSingularGrantAllocations { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<vTotalTreatedAcresByProject> vTotalTreatedAcresByProjects { get; set; }
+        public virtual DbSet<fGetBoundingBoxForProjectIdList_Result> fGetBoundingBoxForProjectIdListResults { get; set; }
         public virtual DbSet<fGetColumnNamesForTable_Result> fGetColumnNamesForTableResults { get; set; }
         public virtual DbSet<fGetProjectDnrUploadRegion_Result> fGetProjectDnrUploadRegionResults { get; set; }
         public virtual DbSet<fGetProjectPriorityLandscape_Result> fGetProjectPriorityLandscapeResults { get; set; }
         public virtual DbSet<fGetUploadProgramCounty_Result> fGetUploadProgramCountyResults { get; set; }
         public virtual DbSet<fnSplitString_Result> fnSplitStringResults { get; set; }
+
+        [DbFunction("DatabaseEntities", "fGetBoundingBoxForProjectIdList")]
+        public virtual IQueryable<fGetBoundingBoxForProjectIdList_Result> GetfGetBoundingBoxForProjectIdLists(string projectIDListParameter)
+        {
+            
+            var projectIDList = new System.Data.Entity.Core.Objects.ObjectParameter("projectIDList", typeof(string))
+            {
+                Value = projectIDListParameter
+            };
+            return (this as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext
+                  .CreateQuery<fGetBoundingBoxForProjectIdList_Result>("DatabaseEntities.fGetBoundingBoxForProjectIdList(@ProjectIDList)",projectIDList);
+        }
 
         [DbFunction("DatabaseEntities", "fGetColumnNamesForTable")]
         public virtual IQueryable<fGetColumnNamesForTable_Result> GetfGetColumnNamesForTables(string psTableNameParameter)
