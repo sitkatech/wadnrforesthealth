@@ -203,7 +203,7 @@ namespace ProjectFirma.Web.Controllers
                 hasSpatialData = true;
                 var projectDetailedLocationLayer = new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "blue", 1,
-                LayerInitialVisibility.Hide, $"ProjectID in ({string.Join(",",allVisibleProjectIds)})", true);
+                LayerInitialVisibility.Hide, $"OrganizationIDList like '%|{organization.OrganizationID}|%'", true);
                 layers.Add(projectDetailedLocationLayer);
 
             }
