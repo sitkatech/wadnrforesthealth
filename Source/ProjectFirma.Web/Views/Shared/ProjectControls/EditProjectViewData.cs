@@ -46,6 +46,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public List<ProgramSimple> AllPrograms { get; }
         public int ProjectID { get; set; }
 
+        public bool IsProjectNameImported { get; set; }
+
 
         public EditProjectViewData(EditProjectType editProjectType,
             string projectTypeDisplayName,
@@ -58,7 +60,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             IEnumerable<Models.FocusArea> focusAreas,
             bool projectTypeHasBeenSet,
             List<ProgramSimple> allPrograms,
-            int projectID)
+            int projectID,
+            bool isProjectNameImported)
         {
             EditProjectTypeIntroductoryText = editProjectType.IntroductoryText;
             ProjectTypeDisplayName = projectTypeDisplayName;
@@ -78,6 +81,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectTypeHasBeenSet = projectTypeHasBeenSet;
             AllPrograms = allPrograms;
             ProjectID = projectID;
+            IsProjectNameImported = isProjectNameImported;
         }
     }
 }

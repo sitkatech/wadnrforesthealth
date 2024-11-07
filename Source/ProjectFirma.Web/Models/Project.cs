@@ -69,6 +69,23 @@ namespace ProjectFirma.Web.Models
             return project == null;
         }
 
+        public bool IsProjectNameImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program).ToList();
+
+            foreach(var program in programsToCheck)
+            {
+                if (program.GisUploadSourceOrganization.GisDefaultMappings.Any(x => x.FieldDefinitionID == FieldDefinition.ProjectName.FieldDefinitionID && !string.IsNullOrEmpty(x.GisDefaultMappingColumnName)))
+                {
+                    return true;
+                }
+            }
+
+
+
+            return false;
+        }
+
         public decimal TotalPlannedFootprintAcres
         {
             get

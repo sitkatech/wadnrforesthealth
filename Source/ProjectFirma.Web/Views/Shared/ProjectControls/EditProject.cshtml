@@ -78,7 +78,15 @@
                 @Html.LabelWithSugarFor(m => m.ProjectName)
             </div>
             <div class="col-xs-8">
-                @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
+                @if (ViewDataTyped.IsProjectNameImported)
+                {
+                    @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @readonly = true })
+                }
+                else
+                {
+                    @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
+                }
+
                 @Html.ValidationMessageFor(m => m.ProjectName)
             </div>
         </div>
