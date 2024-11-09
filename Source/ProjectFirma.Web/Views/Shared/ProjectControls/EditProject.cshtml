@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using ProjectFirma.Web.Views.Shared.ProjectControls
 @using LtInfo.Common.HtmlHelperExtensions
 @using Newtonsoft.Json.Linq
@@ -81,6 +82,7 @@
                 @if (ViewDataTyped.IsProjectNameImported)
                 {
                     @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @readonly = true })
+                    <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
                 }
                 else
                 {
@@ -114,7 +116,15 @@
                 @Html.LabelWithSugarFor(m => m.ProjectStageID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new { style = "width: auto;", @class = "form-control" })
+                @if (ViewDataTyped.IsProjectStageImported)
+                {
+                    @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new { style = "width: auto;", @class = "form-control" })
+                }
                 @Html.ValidationMessageFor(m => m.ProjectStageID)
             </div>
         </div>
@@ -129,11 +139,19 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.PlannedDate)
+                @Html.LabelWithSugarFor(m => m.ProjectInitiationDate)
             </div>
             <div class="col-xs-8">
-                @Html.EditorFor(m => m.PlannedDate, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.PlannedDate)
+                @if (ViewDataTyped.IsProjectInitiationDateImported)
+                {
+                    @Html.TextBox("Completion Date", Model.ProjectInitiationDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                }
+                else
+                {
+                    @Html.EditorFor(m => m.ProjectInitiationDate, new { style = "width: auto;", @class = "form-control" })
+                }
+                @Html.ValidationMessageFor(m => m.ProjectInitiationDate)
             </div>
         </div>
 
@@ -152,7 +170,15 @@
                 @Html.LabelWithSugarFor(m => m.CompletionDate)
             </div>
             <div class="col-xs-8">
-                @Html.EditorFor(m => m.CompletionDate, new { style = "width: auto;", @class = "form-control" })
+                @if (ViewDataTyped.IsCompletionDateImported)
+                {
+                    @Html.TextBox("Completion Date", Model.CompletionDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                }
+                else
+                {
+                    @Html.EditorFor(m => m.CompletionDate, new { style = "width: auto;", @class = "form-control" })
+                }
                 @Html.ValidationMessageFor(m => m.CompletionDate)
             </div>
         </div>
@@ -162,7 +188,16 @@
                 @Html.LabelWithSugarFor(m => m.ProjectGisIdentifier)
             </div>
             <div class="col-xs-8">
-                @Html.TextBoxFor(m => m.ProjectGisIdentifier, new { @class = "form-control" })
+                @if (ViewDataTyped.IsProjectIdentifierImported)
+                {
+                    @Html.TextBoxFor(m => m.ProjectGisIdentifier, new { @class = "form-control", @readonly = true })
+                    <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                }
+                else
+                {
+                    @Html.TextBoxFor(m => m.ProjectGisIdentifier, new { @class = "form-control" })
+                }
+
                 @Html.ValidationMessageFor(m => m.ProjectGisIdentifier)
             </div>
         </div>
@@ -198,6 +233,7 @@
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
                     </span>
+
                 </div>
             </div>
         </div>
@@ -207,11 +243,14 @@
             <div class="row narrowRow">
                 <div class="col-xs-4 control-label">
                     @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
+                    
                 </div>
-                <div class="col-xs-8 col-xs-offset-4" ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
-
-                    <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectProgram)" style="cursor: pointer"></span>
-                    <span ng-bind="projectProgram.DisplayString"></span>
+                <div class="col-xs-8 col-xs-offset-4">
+                    <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
+                        <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectProgram)" style="cursor: pointer"></span>
+                        <span ng-bind="projectProgram.DisplayString"></span>
+                    </div>
+                    <p class="smallExplanationText">Caution: if you remove a program, data may no longer be imported for this project.</p>
                 </div>
             </div>
         </div>

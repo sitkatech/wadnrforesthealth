@@ -111,7 +111,12 @@ namespace ProjectFirma.Web.Controllers
                 projectTypeHasBeenSet,
                 allPrograms,
                 project.ProjectID,
-                project.IsProjectNameImported()
+                project.IsProjectNameImported(),
+                project.IsProjectIdentifierImported(),
+                project.IsProjectInitiationDateImported(),
+                project.IsCompletionDateImported(),
+                project.IsProjectStageImported(),
+                Models.Project.ImportedFieldWarningMessage
             );
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
         }
