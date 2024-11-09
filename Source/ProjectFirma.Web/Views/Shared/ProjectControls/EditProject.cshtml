@@ -144,8 +144,9 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsProjectInitiationDateImported)
                 {
-                    @Html.TextBox("Completion Date", Model.ProjectInitiationDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    @Html.TextBox("Project Initiation Date", Model.ProjectInitiationDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                    @Html.HiddenFor(m => m.ProjectInitiationDate)
                 }
                 else
                 {
@@ -174,6 +175,7 @@
                 {
                     @Html.TextBox("Completion Date", Model.CompletionDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                    @Html.HiddenFor(m => m.CompletionDate)
                 }
                 else
                 {
