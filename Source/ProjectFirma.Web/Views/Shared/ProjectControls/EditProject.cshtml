@@ -81,7 +81,7 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsProjectNameImported)
                 {
-                    @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @readonly = true })
+                    @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @disabled = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
                 }
                 else
@@ -118,8 +118,9 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsProjectStageImported)
                 {
-                    @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    @Html.TextBox("Project Stage", Model.ProjectStageName, new { style = "width: auto;", @class = "form-control", @disabled = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                    @Html.HiddenFor(m => m.ProjectStageID)
                 }
                 else
                 {
@@ -144,7 +145,7 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsProjectInitiationDateImported)
                 {
-                    @Html.TextBox("Project Initiation Date", Model.ProjectInitiationDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    @Html.TextBox("Project Initiation Date", Model.ProjectInitiationDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @disabled = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
                     @Html.HiddenFor(m => m.ProjectInitiationDate)
                 }
@@ -173,7 +174,7 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsCompletionDateImported)
                 {
-                    @Html.TextBox("Completion Date", Model.CompletionDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @readonly = true })
+                    @Html.TextBox("Completion Date", Model.CompletionDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @disabled = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
                     @Html.HiddenFor(m => m.CompletionDate)
                 }
@@ -192,7 +193,7 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsProjectIdentifierImported)
                 {
-                    @Html.TextBoxFor(m => m.ProjectGisIdentifier, new { @class = "form-control", @readonly = true })
+                    @Html.TextBoxFor(m => m.ProjectGisIdentifier, new { @class = "form-control", @disabled = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
                 }
                 else

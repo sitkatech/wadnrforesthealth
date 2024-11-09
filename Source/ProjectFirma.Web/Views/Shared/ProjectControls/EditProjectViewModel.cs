@@ -81,6 +81,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
 
         /// <summary>
+        /// Only used to display the Project Stage Name when the ProjectStage is not editable
+        /// </summary>
+        public string ProjectStageName { get; set; }
+
+        /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
         public EditProjectViewModel()
@@ -95,6 +100,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             OldProjectStageID = project.ProjectStageID;
+            ProjectStageName = project.ProjectStage.ProjectStageDisplayName;
             ExpirationDate = project.ExpirationDate;
             ProjectInitiationDate = project.PlannedDate;
             CompletionDate = project.CompletionDate;
