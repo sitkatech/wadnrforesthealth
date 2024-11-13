@@ -89,6 +89,12 @@ namespace ProjectFirma.Web.Models
             return CheckIfFieldIsImported(programsToCheck, FieldDefinition.CompletionDate);
         }
 
+        public bool IsLeadImplementerOrganizationImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.LeadImplementerOrganization);
+        }
+
         /// <summary>
         /// Field is Planned Date in the DB. but we refer to it as the Project Initiation Date throughout the site.
         /// The import mappings are setup to use the PlannedDate field definition
