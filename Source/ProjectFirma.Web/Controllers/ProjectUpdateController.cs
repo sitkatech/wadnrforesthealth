@@ -275,7 +275,7 @@ namespace ProjectFirma.Web.Controllers
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, projectCustomAttributeTypes, focusAreas, allPrograms);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, projectCustomAttributeTypes, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -3045,7 +3045,7 @@ namespace ProjectFirma.Web.Controllers
             var allRelationshipTypes = HttpRequestStorage.DatabaseEntities.RelationshipTypes.ToList();
             var defaultPrimaryContact = projectUpdateBatch.Project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
             
-            var editOrganizationsViewData = new EditOrganizationsViewData(allOrganizations, allRelationshipTypes, defaultPrimaryContact);
+            var editOrganizationsViewData = new EditOrganizationsViewData(allOrganizations, allRelationshipTypes, defaultPrimaryContact, projectUpdateBatch.Project?.IsLeadImplementerOrganizationImported() ?? false, false);
 
             var projectOrganizationsDetailViewData = new ProjectOrganizationsDetailViewData(projectUpdateBatch.ProjectOrganizationUpdates.Select(x => new ProjectOrganizationRelationship(x.ProjectUpdateBatch.Project, x.Organization, x.RelationshipType)).ToList(), projectUpdateBatch.ProjectUpdate.GetPrimaryContact());
             var viewData = new OrganizationsViewData(CurrentPerson, projectUpdateBatch, updateStatus, editOrganizationsViewData, organizationsValidationResult,projectOrganizationsDetailViewData);
@@ -3104,7 +3104,7 @@ namespace ProjectFirma.Web.Controllers
             var allPeople = HttpRequestStorage.DatabaseEntities.People.ToList();
 
             var editPersonsViewData =
-                new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
+                new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson, projectUpdateBatch.Project.IsPrivateLandownerImported(), false);
 
             var projectPersonsDetailViewData = new ProjectPeopleDetailViewData(projectUpdateBatch.ProjectPersonUpdates.Select(x => new ProjectPersonRelationship(x.ProjectUpdateBatch.Project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
             var viewData = new ContactsViewData(CurrentPerson, projectUpdateBatch, updateStatus, editPersonsViewData, organizationsValidationResult,projectPersonsDetailViewData);

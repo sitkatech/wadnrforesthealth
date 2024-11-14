@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public DateTime? ExpirationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectInitiationDate)]
-        public DateTime? PlannedDate { get; set; }
+        public DateTime? ProjectInitiationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
@@ -81,6 +81,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
 
         /// <summary>
+        /// Only used to display the Project Stage Name when the ProjectStage is not editable
+        /// </summary>
+        public string ProjectStageName { get; set; }
+
+        /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
         public EditProjectViewModel()
@@ -95,8 +100,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             OldProjectStageID = project.ProjectStageID;
+            ProjectStageName = project.ProjectStage.ProjectStageDisplayName;
             ExpirationDate = project.ExpirationDate;
-            PlannedDate = project.PlannedDate;
+            ProjectInitiationDate = project.PlannedDate;
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
@@ -119,7 +125,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.ProjectTypeID = ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectStageID = ProjectStageID;
             project.ExpirationDate = ExpirationDate;
-            project.PlannedDate = PlannedDate;
+            project.PlannedDate = ProjectInitiationDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
@@ -177,7 +183,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (CompletionDate < PlannedDate)
+            if (CompletionDate < ProjectInitiationDate)
             {
                 yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>(
                     FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,

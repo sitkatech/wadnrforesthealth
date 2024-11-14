@@ -46,7 +46,7 @@ Source code is available upon request via <support@sitkatech.com>.
     });
     // ]]>
 </script>
-<script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
+
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 
 <style>
@@ -94,13 +94,28 @@ Source code is available upon request via <support@sitkatech.com>.
                     @*Selectpicker*@
                     <div class="col-md-12">
                         <div class="input-group" style="width: 100%;">
-                            <select class="selectpicker" id="todo{{AngularViewData.PrimaryContactProjectPersonRelationshipType.RelationshipTypeID}}" ng-model="selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID], AngularViewData.PrimaryContactProjectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
-                                <option value="" selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactProjectPersonRelationshipType)">Select one</option>
-                                <option ng-repeat="person in getAvailablePeopleForProjectPersonRelationshipType(AngularViewData.PrimaryContactProjectPersonRelationshipType)"
-                                        ng-bind="person.FullName"
-                                        ng-value="person.PersonID"
-                                        ng-selected="isOptionSelected(person,AngularViewData.PrimaryContactProjectPersonRelationshipType)"></option>
-                            </select>
+                            @if (ViewDataTyped.IsPrivateLandownerImported && !ViewDataTyped.IsCreateWorkflow)
+                            {
+                                <select class="selectpicker" disabled="disabled" id="todo{{AngularViewData.PrimaryContactProjectPersonRelationshipType.RelationshipTypeID}}" ng-model="selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID], AngularViewData.PrimaryContactProjectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
+                                    <option value="" selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactProjectPersonRelationshipType)">Select one</option>
+                                    <option ng-repeat="person in getAvailablePeopleForProjectPersonRelationshipType(AngularViewData.PrimaryContactProjectPersonRelationshipType)"
+                                            ng-bind="person.FullName"
+                                            ng-value="person.PersonID"
+                                            ng-selected="isOptionSelected(person,AngularViewData.PrimaryContactProjectPersonRelationshipType)"></option>
+                                </select>
+                                <p class="smallExplanationText">@Project.ImportedFieldWarningMessage</p>
+                            }
+                            else
+                            {
+                                <select class="selectpicker" id="todo{{AngularViewData.PrimaryContactProjectPersonRelationshipType.RelationshipTypeID}}" ng-model="selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID], AngularViewData.PrimaryContactProjectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
+                                    <option value="" selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactProjectPersonRelationshipType)">Select one</option>
+                                    <option ng-repeat="person in getAvailablePeopleForProjectPersonRelationshipType(AngularViewData.PrimaryContactProjectPersonRelationshipType)"
+                                            ng-bind="person.FullName"
+                                            ng-value="person.PersonID"
+                                            ng-selected="isOptionSelected(person,AngularViewData.PrimaryContactProjectPersonRelationshipType)"></option>
+                                </select>
+                            }
+                            
                         </div>
                     </div>
                 </div>

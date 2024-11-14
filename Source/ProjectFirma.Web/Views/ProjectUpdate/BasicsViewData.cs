@@ -47,11 +47,17 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; private set; }
 
+        public string ImportedFieldWarningMessage { get; set; }
+
 
         public BasicsViewData(Person currentPerson, Models.ProjectUpdate projectUpdate,
-            IEnumerable<ProjectStage> projectStages, UpdateStatus updateStatus,
+            IEnumerable<ProjectStage> projectStages, 
+            UpdateStatus updateStatus,
             BasicsValidationResult basicsValidationResult,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<Models.FocusArea> focusAreas, List<Models.Program> allPrograms)
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, 
+            List<Models.FocusArea> focusAreas, 
+            List<Models.Program> allPrograms,
+            string importedFieldWarningMessage)
             : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, basicsValidationResult.GetWarningMessages(), ProjectUpdateSection.Basics.ProjectUpdateSectionDisplayName)
         {
             ProjectUpdate = projectUpdate;
@@ -68,6 +74,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                         
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
             BasicsViewDataForAngular = new BasicsViewDataForAngular(allPrograms.Select(x=>new ProgramSimple(x)).ToList(), projectUpdate.ProjectUpdateBatchID);
+            ImportedFieldWarningMessage = importedFieldWarningMessage;
         }
     }
 

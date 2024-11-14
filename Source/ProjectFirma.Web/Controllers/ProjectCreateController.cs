@@ -1432,7 +1432,7 @@ namespace ProjectFirma.Web.Controllers
             var allRelationshipTypes = HttpRequestStorage.DatabaseEntities.RelationshipTypes.ToList();
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
             
-            var editOrganizationsViewData = new EditOrganizationsViewData(allOrganizations, allRelationshipTypes, defaultPrimaryContact);
+            var editOrganizationsViewData = new EditOrganizationsViewData(allOrganizations, allRelationshipTypes, defaultPrimaryContact, project.IsLeadImplementerOrganizationImported(), true);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectOrganizationsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectOrganizationsSectionComplete;
@@ -1480,7 +1480,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
 
-            var editContactsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
+            var editContactsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson, project.IsPrivateLandownerImported(), true);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectContactsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectContactsSectionComplete;

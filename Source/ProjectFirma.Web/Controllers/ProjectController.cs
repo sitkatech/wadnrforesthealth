@@ -110,7 +110,13 @@ namespace ProjectFirma.Web.Controllers
                 focusAreas,
                 projectTypeHasBeenSet,
                 allPrograms,
-                project.ProjectID
+                project.ProjectID,
+                project.IsProjectNameImported(),
+                project.IsProjectIdentifierImported(),
+                project.IsProjectInitiationDateImported(),
+                project.IsCompletionDateImported(),
+                project.IsProjectStageImported(),
+                Models.Project.ImportedFieldWarningMessage
             );
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
         }

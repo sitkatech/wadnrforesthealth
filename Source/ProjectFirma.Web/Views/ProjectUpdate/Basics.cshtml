@@ -99,7 +99,17 @@
             <div class="col-sm-8" style="padding-left: 10px;">
                 @if (ViewDataTyped.IsEditable)
                 {
-                    @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    if (ViewDataTyped.Project.IsProjectStageImported())
+                    {
+                        @Html.TextBox("Project Stage", ViewDataTyped.Project.ProjectStage.ProjectStageDisplayName, new { style = "width: auto;", @class = "form-control", @disabled = true })
+                        <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                        @Html.HiddenFor(m => m.ProjectStageID)
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    }
+
                     @Html.ValidationMessageFor(m => m.ProjectStageID)
                 }
                 else
@@ -118,7 +128,16 @@
             <div class="col-sm-8">
                 @if (ViewDataTyped.IsEditable)
                 {
-                    @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    if (ViewDataTyped.Project.IsProjectInitiationDateImported())
+                    {
+                        @Html.TextBox("Project Initiation Date", Model.PlannedDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @disabled = true })
+                        <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                        @Html.HiddenFor(m => m.PlannedDate)
+                    }
+                    else
+                    {
+                        @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    }
                     @Html.ValidationMessageFor(m => m.PlannedDate)
                 }
                 else
@@ -150,7 +169,16 @@
             <div class="col-sm-8">
                 @if (ViewDataTyped.IsEditable)
                 {
-                    @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
+                    if (ViewDataTyped.Project.IsCompletionDateImported())
+                    {
+                        @Html.TextBox("Completion Date", Model.CompletionDate.ToStringDate(), new { style = "width: auto;", @class = "form-control", @disabled = true })
+                        <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                        @Html.HiddenFor(m => m.CompletionDate)
+                    }
+                    else
+                    {
+                        @Html.EditorFor(m => m.CompletionDate, new { style = "width: auto;", @class = "form-control" })
+                    }
                     @Html.ValidationMessageFor(m => m.CompletionDate)
                 }
                 else
@@ -211,10 +239,13 @@
                 <div class="col-xs-4 control-label">
                     @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
                 </div>
-                <div class="col-xs-8 col-xs-offset-4" ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples | orderBy:[getProgramName]">
+                <div class="col-xs-8 col-xs-offset-4">
+                    <div ng-repeat="projectUpdateProgram in AngularModel.ProjectUpdateProgramSimples | orderBy:[getProgramName]">
 
-                    <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectUpdateProgram)" style="cursor: pointer"></span>
-                    <span ng-bind="projectUpdateProgram.DisplayString"></span>
+                        <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectUpdateProgram)" style="cursor: pointer"></span>
+                        <span ng-bind="projectUpdateProgram.DisplayString"></span>
+                    </div>
+                    <p class="smallExplanationText">Caution: if you remove a program, data may no longer be imported for this project.</p>
                 </div>
             </div>
         </div>

@@ -39,7 +39,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
         public string DefaultPrimaryContactPersonName { get; }
         public string AddOrganizationUrl { get; }
 
-        public EditOrganizationsViewData(IEnumerable<Models.Organization> organizations, List<RelationshipType> allRelationshipTypes, Person defaultPrimaryContactPerson)
+        public bool IsLeadImplementerImported { get; }
+        public bool IsCreateWorkflow { get; }
+
+        public EditOrganizationsViewData(IEnumerable<Models.Organization> organizations, List<RelationshipType> allRelationshipTypes, Person defaultPrimaryContactPerson, bool isLeadImplementerImported, bool isCreateWorkflow)
         {
             AllOrganizations = organizations.Where(x => x.OrganizationType.OrganizationTypeRelationshipTypes.Any()).Select(x => new OrganizationSimple(x)).ToList();
 
@@ -47,10 +50,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
             PrimaryContactRelationshipTypeSimple = primaryContactRelationshipType != null
                 ? new RelationshipTypeSimple(primaryContactRelationshipType)
                 : null;
-            AllRelationshipTypes = allRelationshipTypes.Except(new[] {primaryContactRelationshipType}).Select(x => new RelationshipTypeSimple(x)).ToList();
+            AllRelationshipTypes = allRelationshipTypes.Except(new[] { primaryContactRelationshipType }).Select(x => new RelationshipTypeSimple(x)).ToList();
             DefaultPrimaryContactPersonID = defaultPrimaryContactPerson?.PersonID;
             DefaultPrimaryContactPersonName = defaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             AddOrganizationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingOrganization());
+            IsLeadImplementerImported = isLeadImplementerImported;
+            IsCreateWorkflow = isCreateWorkflow;
         }
     }
 }
