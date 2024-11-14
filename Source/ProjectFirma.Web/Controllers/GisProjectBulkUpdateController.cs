@@ -19,6 +19,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Web.Mvc;
 using Hangfire;
 using log4net;
@@ -40,7 +41,6 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpPost]
         [GisAttemptUploadViewFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult SourceOrganizationSelection(SourceOrganizationTypeSelectionViewModel viewModel)
         {
             var gisSourceOrganizations = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.ToList();
@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Controllers
             var gisAttempt = new GisUploadAttempt(viewModel.SourceOrganizationID.Value, CurrentPerson.PersonID, DateTime.Now);
 
             HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            HttpRequestStorage.DatabaseEntities.SaveChanges(IsolationLevel.ReadUncommitted);
             return new ModalDialogFormJsonResult(
                         SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.InstructionsGisImport(gisAttempt.GisUploadAttemptID)));
 
