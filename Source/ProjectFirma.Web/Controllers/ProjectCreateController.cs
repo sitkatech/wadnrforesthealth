@@ -1480,7 +1480,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
 
-            var editContactsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
+            var editContactsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson, project.IsPrivateLandownerImported(), true);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectContactsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectContactsSectionComplete;

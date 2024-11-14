@@ -3104,7 +3104,7 @@ namespace ProjectFirma.Web.Controllers
             var allPeople = HttpRequestStorage.DatabaseEntities.People.ToList();
 
             var editPersonsViewData =
-                new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
+                new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson, projectUpdateBatch.Project.IsPrivateLandownerImported(), false);
 
             var projectPersonsDetailViewData = new ProjectPeopleDetailViewData(projectUpdateBatch.ProjectPersonUpdates.Select(x => new ProjectPersonRelationship(x.ProjectUpdateBatch.Project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
             var viewData = new ContactsViewData(CurrentPerson, projectUpdateBatch, updateStatus, editPersonsViewData, organizationsValidationResult,projectPersonsDetailViewData);
