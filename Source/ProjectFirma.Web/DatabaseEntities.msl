@@ -1261,7 +1261,6 @@
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
           <ScalarProperty Name="IsProgramManager" ColumnName="IsProgramManager" />
           <ScalarProperty Name="CreatedAsPartOfBulkImport" ColumnName="CreatedAsPartOfBulkImport" />
-          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1856,7 +1855,6 @@
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="ProjectPersonRelationshipTypeID" ColumnName="ProjectPersonRelationshipTypeID" />
           <ScalarProperty Name="CreatedAsPartOfBulkImport" ColumnName="CreatedAsPartOfBulkImport" />
-          <ScalarProperty Name="CreateGisUploadAttemptID" ColumnName="CreateGisUploadAttemptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
