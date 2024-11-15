@@ -81,8 +81,9 @@
             <div class="col-xs-8">
                 @if (ViewDataTyped.IsProjectNameImported)
                 {
-                    @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", @disabled = true })
+                    @Html.TextBox("Project Name", Model.ProjectName, new { @class = "form-control", @disabled = true })
                     <p class="smallExplanationText">@ViewDataTyped.ImportedFieldWarningMessage</p>
+                    @Html.HiddenFor(m => m.ProjectName)
                 }
                 else
                 {
