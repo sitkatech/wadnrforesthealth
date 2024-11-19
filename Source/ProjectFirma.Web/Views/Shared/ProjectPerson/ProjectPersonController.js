@@ -84,6 +84,16 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
         return people;
     };
 
+    $scope.checkForFieldImport = function (relationshipTypeID) {
+
+        if ($scope.AngularViewData.IsPrivateLandownerImported &&
+            $scope.AngularViewData.PrivateLandownerRelationshipID === relationshipTypeID) {
+            return true;
+        }
+
+        return false;
+    }
+
     $scope.addProjectPersonSimple = function(personID, projectPersonProjectPersonRelationshipTypeID) {
         $scope.AngularModel.ProjectPersonSimples.push({
             PersonID: Number(personID),

@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
 
         public bool IsPrivateLandownerImported { get; }
         public bool IsCreateWorkflow { get; }
+        public int PrivateLandownerRelationshipID { get; }
 
         public EditPeopleViewData(IEnumerable<Person> allPeople, IEnumerable<ProjectPersonRelationshipType> allRelationshipTypes, Person currentPerson, bool isPrivateLandownerImported, bool isCreateWorkflow )
         {
@@ -51,6 +52,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
             IsPrivateLandownerImported = isPrivateLandownerImported;
             IsCreateWorkflow = isCreateWorkflow;
+            PrivateLandownerRelationshipID = ProjectPersonRelationshipType.PrivateLandowner.ProjectPersonRelationshipTypeID;
         }
     }
 }
