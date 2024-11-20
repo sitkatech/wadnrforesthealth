@@ -46,7 +46,7 @@ Source code is available upon request via <support@sitkatech.com>.
     });
     // ]]>
 </script>
-
+<script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 
 <style>
@@ -57,6 +57,11 @@ Source code is available upon request via <support@sitkatech.com>.
     .col-xs-5.personIdSelectGroup div.bootstrap-select.btn-group {
         width: 100%;
     }
+    .btn-default.disabled, .btn-default.disabled:hover, .btn-default.disabled:focus, #projectWizardContent .btn-default.disabled, #projectWizardContent .btn-default.disabled:hover, #projectWizardContent .btn-default.disabled:focus {
+        background-color: #eee;
+        color: #555
+    }
+
 </style>
 
 <div class="validationError">
@@ -135,7 +140,9 @@ Source code is available upon request via <support@sitkatech.com>.
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Add
                             </button>
+
                         </div>
+                        <p class="smallExplanationText" ng-show="checkForFieldImport(projectPersonRelationshipType.ProjectPersonRelationshipTypeID)">@Project.ImportedFieldWarningMessage</p>
                     </div>
                 </div>
 
