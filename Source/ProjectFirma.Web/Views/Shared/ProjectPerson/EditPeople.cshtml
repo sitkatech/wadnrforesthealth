@@ -150,7 +150,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     @*Selections*@
                     <div class="col-md-12">
                         <span>
-                            <a href="#" ng-click="removeProjectPersonSimple(person.PersonID, projectPersonRelationshipType.ProjectPersonRelationshipTypeID); $event.preventDefault();">
+                            <a href="#" ng-hide="checkForFieldImport(projectPersonRelationshipType.ProjectPersonRelationshipTypeID)" ng-click="removeProjectPersonSimple(person.PersonID, projectPersonRelationshipType.ProjectPersonRelationshipTypeID); $event.preventDefault();">
                                 <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()"></i>
                             </a>
                         </span><span ng-bind="person.FullName"></span>
