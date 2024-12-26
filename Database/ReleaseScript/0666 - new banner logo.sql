@@ -3,10 +3,10 @@ DECLARE @fileBinary varbinary(max)
 
 IF @@SERVERNAME = 'DESCHUTES' or @@SERVERNAME = 'KETTLE'
     SET @fileBinary =  (SELECT bulkcolumn
-        FROM OPENROWSET( BULK N'C:\Sitka\WADNRForestHealth\wwwroot\Content\img\wa_dnr-logo2.png', SINGLE_BLOB ) AS y );
+        FROM OPENROWSET( BULK N'C:\Sitka\WADNRForestHealth\wwwroot\Content\img\wa_dnr_logo2.png', SINGLE_BLOB ) AS y );
 ELSE
     SET @fileBinary =  (SELECT bulkcolumn
-        FROM OPENROWSET( BULK N'C:\git\sitkatech\wadnrforesthealth\Source\ProjectFirma.Web\Content\img\wa_dnr-logo2.png', SINGLE_BLOB ) AS y );
+        FROM OPENROWSET( BULK N'C:\git\sitkatech\wadnrforesthealth\Source\ProjectFirma.Web\Content\img\wa_dnr_logo2.png', SINGLE_BLOB ) AS y );
     
 insert into dbo.FileResource (FileResourceMimeTypeID, OriginalBaseFilename, OriginalFileExtension, FileResourceGUID, FileResourceData, CreatePersonID, CreateDate)
 values
