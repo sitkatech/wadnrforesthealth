@@ -489,10 +489,6 @@
       <End Role="GisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="GisUploadAttemptGisMetadataAttributes" EntitySet="GisUploadAttemptGisMetadataAttribute" />
     </AssociationSet>
-    <AssociationSet Name="FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
-      <End Role="PeopleWhereYouAreTheCreateGisUploadAttempt" EntitySet="Person" />
-    </AssociationSet>
     <AssociationSet Name="FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="ProjectsWhereYouAreTheCreateGisUploadAttempt" EntitySet="Project" />
@@ -500,10 +496,6 @@
     <AssociationSet Name="FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="LastUpdateGisUploadAttempt" EntitySet="GisUploadAttempt" />
       <End Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" EntitySet="Project" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
-      <End Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" EntitySet="ProjectPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
       <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
@@ -1421,6 +1413,9 @@
       <End Role="TreatmentCode" EntitySet="TreatmentCode" />
       <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
     </AssociationSet>
+    <FunctionImport Name="fGetBoundingBoxForProjectIdList" ReturnType="Collection(ProjectFirma.Web.Models.fGetBoundingBoxForProjectIdList_Result)" IsComposable="true">
+      <Parameter Name="ProjectIDList" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="fGetColumnNamesForTable" ReturnType="Collection(ProjectFirma.Web.Models.fGetColumnNamesForTable_Result)" IsComposable="true">
       <Parameter Name="psTableName" Type="String" />
     </FunctionImport>
@@ -1444,6 +1439,12 @@
       <Parameter Name="delimiter" Type="String" />
     </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="fGetBoundingBoxForProjectIdList_Result">
+    <Property Name="SWLatitude" Type="Double" Nullable="false" />
+    <Property Name="SWLongitude" Type="Double" Nullable="false" />
+    <Property Name="NELatitude" Type="Double" Nullable="false" />
+    <Property Name="NELongitude" Type="Double" Nullable="false" />
+  </ComplexType>
   <ComplexType Name="fGetColumnNamesForTable_Result">
     <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
     <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
@@ -1963,10 +1964,8 @@
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadAttempts" ToRole="GisUploadSourceOrganization" />
     <NavigationProperty Name="GisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" ToRole="GisUploadAttemptCreatePerson" />
     <NavigationProperty Name="GisUploadAttemptGisMetadataAttributes" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptGisMetadataAttribute_GisUploadAttempt_GisUploadAttemptID" FromRole="GisUploadAttempt" ToRole="GisUploadAttemptGisMetadataAttributes" />
-    <NavigationProperty Name="PeopleWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="PeopleWhereYouAreTheCreateGisUploadAttempt" />
     <NavigationProperty Name="ProjectsWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" />
     <NavigationProperty Name="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="LastUpdateGisUploadAttempt" ToRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" />
-    <NavigationProperty Name="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" />
     <NavigationProperty Name="TreatmentsWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" />
     <NavigationProperty Name="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="UpdateGisUploadAttempt" ToRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" />
     <NavigationProperty Name="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="CreateGisUploadAttempt" ToRole="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" />
@@ -2927,14 +2926,12 @@
     <Property Name="VendorID" Type="Int32" />
     <Property Name="IsProgramManager" Type="Boolean" />
     <Property Name="CreatedAsPartOfBulkImport" Type="Boolean" />
-    <Property Name="CreateGisUploadAttemptID" Type="Int32" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" Relationship="ProjectFirma.Web.Models.FK_DNRUplandRegion_Person_DNRUplandRegionCoordinatorID_PersonID" FromRole="DNRUplandRegionCoordinator" ToRole="DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="ForesterWorkUnits" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="Person" ToRole="ForesterWorkUnits" />
     <NavigationProperty Name="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptCreatePerson" ToRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" />
-    <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="PeopleWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
     <NavigationProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" />
     <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardTravelLineItems" />
@@ -3691,8 +3688,6 @@
     <Property Name="PersonID" Type="Int32" Nullable="false" />
     <Property Name="ProjectPersonRelationshipTypeID" Type="Int32" Nullable="false" />
     <Property Name="CreatedAsPartOfBulkImport" Type="Boolean" />
-    <Property Name="CreateGisUploadAttemptID" Type="Int32" />
-    <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Person_PersonID" FromRole="ProjectPeople" ToRole="Person" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Project_ProjectID" FromRole="ProjectPeople" ToRole="Project" />
   </EntityType>
@@ -5313,18 +5308,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="0..1" />
-    <End Role="PeopleWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Person" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreateGisUploadAttempt">
-        <PropertyRef Name="GisUploadAttemptID" />
-      </Principal>
-      <Dependent Role="PeopleWhereYouAreTheCreateGisUploadAttempt">
-        <PropertyRef Name="CreateGisUploadAttemptID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
     <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="0..1" />
     <End Role="ProjectsWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
@@ -5346,18 +5329,6 @@
       </Principal>
       <Dependent Role="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt">
         <PropertyRef Name="LastUpdateGisUploadAttemptID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="0..1" />
-    <End Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.ProjectPerson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreateGisUploadAttempt">
-        <PropertyRef Name="GisUploadAttemptID" />
-      </Principal>
-      <Dependent Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt">
-        <PropertyRef Name="CreateGisUploadAttemptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

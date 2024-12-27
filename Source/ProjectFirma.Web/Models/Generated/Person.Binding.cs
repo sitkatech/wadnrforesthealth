@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string firstName, string lastName, string email, string phone, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID, bool? isProgramManager, bool? createdAsPartOfBulkImport, int? createGisUploadAttemptID) : this()
+        public Person(int personID, string firstName, string lastName, string email, string phone, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID, bool? isProgramManager, bool? createdAsPartOfBulkImport) : this()
         {
             this.PersonID = personID;
             this.FirstName = firstName;
@@ -109,7 +109,6 @@ namespace ProjectFirma.Web.Models
             this.VendorID = vendorID;
             this.IsProgramManager = isProgramManager;
             this.CreatedAsPartOfBulkImport = createdAsPartOfBulkImport;
-            this.CreateGisUploadAttemptID = createGisUploadAttemptID;
         }
 
         /// <summary>
@@ -782,7 +781,6 @@ namespace ProjectFirma.Web.Models
         public int? VendorID { get; set; }
         public bool? IsProgramManager { get; set; }
         public bool? CreatedAsPartOfBulkImport { get; set; }
-        public int? CreateGisUploadAttemptID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonID; } set { PersonID = value; } }
 
@@ -847,7 +845,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<TabularDataImport> TabularDataImportsWhereYouAreTheUploadPerson { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
 
         public static class FieldLengths
         {

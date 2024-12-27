@@ -116,13 +116,14 @@ namespace ProjectFirma.Web.Models
 
         public static List<Project> GetAllAssociatedProjectsForOrgVisibleToUser(this Organization organization, Person currentPerson)
         {
-            var allAsociatedProjects = organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationRequests).Select(x => x.Project)
-                .Union(organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures)
-                    .Select(x => x.Project))
+            var allAssociatedProjects = organization.GrantAllocations
+                .SelectMany(x => x.ProjectGrantAllocationRequests.Select(r => r.Project))
+                .Union(organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures.Select(e => e.Project)))
                 .Union(organization.ProjectOrganizations.Select(x => x.Project))
                 .ToList();
+
             var projectViewFeature = new ProjectViewFeature();
-            return allAsociatedProjects.Where(p => projectViewFeature.HasPermission(currentPerson, p).HasPermission).ToList();
+            return allAssociatedProjects.Where(p => projectViewFeature.HasPermission(currentPerson, p).HasPermission).ToList();
         }
 
         public static  List<Project> GetAllActiveProjectsAndProposals(this Organization organization, Person currentPerson)

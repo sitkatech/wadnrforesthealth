@@ -21,6 +21,8 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -35,6 +37,7 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Organization;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.ProjectControls;
 using Detail = ProjectFirma.Web.Views.Organization.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Organization.DetailViewData;
 using Index = ProjectFirma.Web.Views.Organization.Index;
@@ -140,7 +143,7 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = GetMapInitJson(organization, out var hasSpatialData, CurrentPerson);
 
-            var performanceMeasures = organization.GetAllActiveProjectsAndProposals(CurrentPerson).ToList()
+            var performanceMeasures = organization.GetAllActiveProjectsAndProposals(CurrentPerson)
                 .SelectMany(x => x.PerformanceMeasureActuals)
                 .Select(x => x.PerformanceMeasure).Distinct()
                 .OrderBy(x => x.PerformanceMeasureDisplayName)
@@ -194,18 +197,26 @@ namespace ProjectFirma.Web.Controllers
                 layers.Add(new LayerGeoJson("Projects", projectSimpleLocationsFeatureCollection, "blue", 1, LayerInitialVisibility.Show));
             }
 
-            var projectDetailLocationsFeatureCollection = allActiveProjectsAndProposals.SelectMany(x => x.GetProjectLocationDetails()).ToGeoJsonFeatureCollection();
-            if (projectDetailLocationsFeatureCollection.Features.Any())
+            var allVisibleProjectIds = allActiveProjectsAndProposals.Select(x => x.ProjectID).ToList();
+            if (allVisibleProjectIds.Any())
             {
                 hasSpatialData = true;
-                layers.Add(new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", projectDetailLocationsFeatureCollection, "blue", 1, LayerInitialVisibility.Hide));
+                var projectDetailedLocationLayer = new LayerGeoJson($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Detailed Mapping", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "blue", 1,
+                LayerInitialVisibility.Hide, $"OrganizationIDList like '%|{organization.OrganizationID}|%'", true);
+                layers.Add(projectDetailedLocationLayer);
+
             }
 
-            var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
-            layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show));
+            var projectIDsForBoundingBox = projectsAsSimpleLocations.Select(x => x.ProjectID).ToList();
+            var boundingBoxPoints = HttpRequestStorage.DatabaseEntities.GetfGetBoundingBoxForProjectIdLists(string.Join(",", projectIDsForBoundingBox)).FirstOrDefault();
+
+            var boundingBox = new BoundingBox(new Point(boundingBoxPoints.SWLongitude, boundingBoxPoints.SWLatitude), new Point(boundingBoxPoints.NELongitude, boundingBoxPoints.NELatitude));
+            layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide));
 
             return new MapInitJson($"organization_{organization.OrganizationID}_Map", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
         }
+
 
         private static ViewGoogleChartViewData GetCalendarYearExpendituresFromOrganizationGrantAllocationsLineChartViewData(Organization organization)
         {
@@ -347,8 +358,7 @@ namespace ProjectFirma.Web.Controllers
             // provided
             projectGrantAllocationExpenditures.AddRange(givenOrganization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures));
 
-            var projectGrantAllocationExpendituresToShow =
-                projectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
+            var projectGrantAllocationExpendituresToShow = projectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
             var gridSpec = new ProjectGrantAllocationExpendituresForOrganizationGridSpec(givenOrganization);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure>(projectGrantAllocationExpendituresToShow, gridSpec);
             return gridJsonNetJObjectResult;
@@ -452,5 +462,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData,
                 viewModel);
         }
+
     }
 }

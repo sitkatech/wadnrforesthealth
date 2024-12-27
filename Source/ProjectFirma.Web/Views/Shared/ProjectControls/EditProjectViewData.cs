@@ -46,6 +46,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public List<ProgramSimple> AllPrograms { get; }
         public int ProjectID { get; set; }
 
+        public bool IsProjectNameImported { get; set; }
+        public bool IsProjectIdentifierImported { get; set; }
+        public bool IsProjectInitiationDateImported { get; set; }
+        public bool IsCompletionDateImported { get; set; }
+        public bool IsProjectStageImported { get; set; }
+        public string ImportedFieldWarningMessage { get; set; }
+
 
         public EditProjectViewData(EditProjectType editProjectType,
             string projectTypeDisplayName,
@@ -58,7 +65,14 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             IEnumerable<Models.FocusArea> focusAreas,
             bool projectTypeHasBeenSet,
             List<ProgramSimple> allPrograms,
-            int projectID)
+            int projectID,
+            bool isProjectNameImported,
+            bool isProjectIdentifierImported,
+            bool isProjectInitiationDateImported,
+            bool isCompletionDateImported,
+            bool isProjectStageImported,
+            string importedFieldWarningMessage
+            )
         {
             EditProjectTypeIntroductoryText = editProjectType.IntroductoryText;
             ProjectTypeDisplayName = projectTypeDisplayName;
@@ -78,6 +92,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectTypeHasBeenSet = projectTypeHasBeenSet;
             AllPrograms = allPrograms;
             ProjectID = projectID;
+            IsProjectNameImported = isProjectNameImported;
+            IsProjectIdentifierImported = isProjectIdentifierImported;
+            IsProjectInitiationDateImported = isProjectInitiationDateImported;
+            IsCompletionDateImported = isCompletionDateImported;
+            IsProjectStageImported = isProjectStageImported;
+            ImportedFieldWarningMessage = importedFieldWarningMessage;
         }
     }
 }

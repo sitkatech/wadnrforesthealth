@@ -69,6 +69,68 @@ namespace ProjectFirma.Web.Models
             return project == null;
         }
 
+        public const string ImportedFieldWarningMessage = "This field is imported for the program. To edit data, visit the system of record.";
+
+        public bool IsProjectNameImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.ProjectName);
+        }
+
+        public bool IsProjectIdentifierImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.ProjectIdentifier);
+        }
+
+        public bool IsCompletionDateImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.CompletionDate);
+        }
+
+        public bool IsLeadImplementerOrganizationImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.LeadImplementerOrganization);
+        }
+
+        public bool IsPrivateLandownerImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.Landowner);
+        }
+
+        /// <summary>
+        /// Field is Planned Date in the DB. but we refer to it as the Project Initiation Date throughout the site.
+        /// The import mappings are setup to use the PlannedDate field definition
+        /// </summary>
+        /// <returns></returns>
+        public bool IsProjectInitiationDateImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.PlannedDate);
+        }
+
+        public bool IsProjectStageImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.ProjectStage);
+        }
+
+        public static bool CheckIfFieldIsImported(IEnumerable<Program> programsToCheck, FieldDefinition fieldDefinition)
+        {
+            foreach (var program in programsToCheck)
+            {
+                if (program.GisUploadSourceOrganization.GisDefaultMappings.Any(x => x.FieldDefinitionID == fieldDefinition.FieldDefinitionID && !string.IsNullOrEmpty(x.GisDefaultMappingColumnName)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public decimal TotalPlannedFootprintAcres
         {
             get

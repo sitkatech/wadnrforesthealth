@@ -60,6 +60,11 @@ Source code is available upon request via <support@sitkatech.com>.
     .col-xs-5.organizationIdSelectGroup div.bootstrap-select.btn-group {
         width: 100%;
     }
+
+    .btn-default.disabled, .btn-default.disabled:hover, .btn-default.disabled:focus, #projectWizardContent .btn-default.disabled, #projectWizardContent .btn-default.disabled:hover, #projectWizardContent .btn-default.disabled:focus {
+        background-color: #eee;
+        color: #555
+    }
 </style>
 
 <div class="validationError">
@@ -91,13 +96,28 @@ Source code is available upon request via <support@sitkatech.com>.
                     @*Selectpicker*@
                     <div class="col-md-12">
                         <div class="input-group" style="width: 100%;">
-                            <select class="selectpicker form-control" id="todo{{AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID}}" ng-model="selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID]" ng-change="selectionChanged(selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID],AngularViewData.PrimaryContactRelationshipTypeSimple)" data-width="100%" data-live-search="true" data-size="8">
-                                <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactRelationshipTypeSimple)">Select one</option>
-                                <option ng-repeat="organization in getAvailableOrganizationsForRelationshipType(AngularViewData.PrimaryContactRelationshipTypeSimple)"
-                                        ng-bind="organization.OrganizationName"
-                                        ng-value="organization.OrganizationID"
-                                        ng-selected="isOptionSelected(organization,AngularViewData.PrimaryContactRelationshipTypeSimple)"></option>
-                            </select>
+                            @if (ViewDataTyped.IsLeadImplementerImported && !ViewDataTyped.IsCreateWorkflow)
+                            {
+                                <select class="selectpicker form-control" disabled="disabled" id="todo{{AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID}}" ng-model="selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID]" ng-change="selectionChanged(selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID],AngularViewData.PrimaryContactRelationshipTypeSimple)" data-width="100%" data-live-search="true" data-size="8">
+                                    <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactRelationshipTypeSimple)">Select one</option>
+                                    <option ng-repeat="organization in getAvailableOrganizationsForRelationshipType(AngularViewData.PrimaryContactRelationshipTypeSimple)"
+                                            ng-bind="organization.OrganizationName"
+                                            ng-value="organization.OrganizationID"
+                                            ng-selected="isOptionSelected(organization,AngularViewData.PrimaryContactRelationshipTypeSimple)"></option>
+                                </select>
+                                <p class="smallExplanationText">@Project.ImportedFieldWarningMessage</p>
+                            }
+                            else
+                            {
+                                <select class="selectpicker form-control" id="todo{{AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID}}" ng-model="selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID]" ng-change="selectionChanged(selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID],AngularViewData.PrimaryContactRelationshipTypeSimple)" data-width="100%" data-live-search="true" data-size="8">
+                                    <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactRelationshipTypeSimple)">Select one</option>
+                                    <option ng-repeat="organization in getAvailableOrganizationsForRelationshipType(AngularViewData.PrimaryContactRelationshipTypeSimple)"
+                                            ng-bind="organization.OrganizationName"
+                                            ng-value="organization.OrganizationID"
+                                            ng-selected="isOptionSelected(organization,AngularViewData.PrimaryContactRelationshipTypeSimple)"></option>
+                                </select>
+                            }
+
                         </div>
                     </div>
                 </div>

@@ -973,10 +973,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
       <End Role="PerformanceMeasureSubcategoryOptions" EntitySet="PerformanceMeasureSubcategoryOption" />
     </AssociationSet>
-    <AssociationSet Name="FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
-      <End Role="PeopleWhereYouAreTheCreateGisUploadAttempt" EntitySet="Person" />
-    </AssociationSet>
     <AssociationSet Name="FK_Person_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Person_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="People" EntitySet="Person" />
@@ -1356,10 +1352,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID">
       <End Role="RelationshipType" EntitySet="RelationshipType" />
       <End Role="ProjectOrganizationUpdates" EntitySet="ProjectOrganizationUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-      <End Role="CreateGisUploadAttempt" EntitySet="GisUploadAttempt" />
-      <End Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" EntitySet="ProjectPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -2746,7 +2738,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="VendorID" Type="int" />
     <Property Name="IsProgramManager" Type="bit" />
     <Property Name="CreatedAsPartOfBulkImport" Type="bit" />
-    <Property Name="CreateGisUploadAttemptID" Type="int" />
   </EntityType>
   <EntityType Name="PersonAllowedAuthenticator">
     <Key>
@@ -3291,7 +3282,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="ProjectPersonRelationshipTypeID" Type="int" Nullable="false" />
     <Property Name="CreatedAsPartOfBulkImport" Type="bit" />
-    <Property Name="CreateGisUploadAttemptID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectPersonUpdate">
     <Key>
@@ -5891,18 +5881,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Person_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
-    <End Role="PeopleWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreateGisUploadAttempt">
-        <PropertyRef Name="GisUploadAttemptID" />
-      </Principal>
-      <Dependent Role="PeopleWhereYouAreTheCreateGisUploadAttempt">
-        <PropertyRef Name="CreateGisUploadAttemptID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
@@ -7045,18 +7023,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectPerson_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID">
-    <End Role="CreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.GisUploadAttempt" Multiplicity="0..1" />
-    <End Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt" Type="ProjectFirma.Web.Models.Store.ProjectPerson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreateGisUploadAttempt">
-        <PropertyRef Name="GisUploadAttemptID" />
-      </Principal>
-      <Dependent Role="ProjectPeopleWhereYouAreTheCreateGisUploadAttempt">
-        <PropertyRef Name="CreateGisUploadAttemptID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectPerson_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="ProjectPeople" Type="ProjectFirma.Web.Models.Store.ProjectPerson" Multiplicity="*" />
@@ -7681,6 +7647,19 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fGetBoundingBoxForProjectIdList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProjectIDList" Type="varchar(max)" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="SWLatitude" Type="float" Nullable="false" />
+          <Property Name="SWLongitude" Type="float" Nullable="false" />
+          <Property Name="NELatitude" Type="float" Nullable="false" />
+          <Property Name="NELongitude" Type="float" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
   </Function>
@@ -7799,6 +7778,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
   </Function>
+  <Function Name="pHangFireClearJobQueue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pHangFireRescheduleJobs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pImportLoaTabularData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Mode="In" />
