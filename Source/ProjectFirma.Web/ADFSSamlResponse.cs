@@ -11,7 +11,7 @@ namespace ProjectFirma.Web
     public class ADFSSamlResponse
     {
         private string _originalDecodedResponse;
-        private const string BaseAttributeStatementXPath = "/samlp:Response/saml:EncryptedAssertion/saml:Assertion/saml:AttributeStatement";
+        private const string BaseAttributeStatementXPath = "/samlp:Response/saml:Assertion/saml:AttributeStatement";
         private XmlDocument _xmlDoc;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
 
