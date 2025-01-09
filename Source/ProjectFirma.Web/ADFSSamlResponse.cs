@@ -11,7 +11,8 @@ namespace ProjectFirma.Web
     public class ADFSSamlResponse
     {
         private string _originalDecodedResponse;
-        private const string BaseAttributeStatementXPath = "/samlp:Response/saml:Assertion/saml:AttributeStatement";
+        private const string BaseAttributeStatementXPath = "/samlp:Response/saml:EncryptedAssertion/saml:Assertion/saml:AttributeStatement";
+        private const string BaseAttributeStatementXPathAzure = "/samlp:Response/saml:Assertion/saml:AttributeStatement";
         private XmlDocument _xmlDoc;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
 
@@ -46,18 +47,34 @@ namespace ProjectFirma.Web
         public string GetFirstName()
         {
             var node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPath}/saml:Attribute[@Name=\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/firstname\']/saml:AttributeValue", _xmlNameSpaceManager);
+
+            if(node == null)
+            {
+                node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPathAzure}/saml:Attribute[@Name=\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/Firstname\']/saml:AttributeValue", _xmlNameSpaceManager);
+            }
+
             return node?.InnerText;
         }
 
         public string GetLastName()
         {
             var node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPath}/saml:Attribute[@Name='http://schemas.xmlsoap.org/ws/2005/05/identity/claims/lastname']/saml:AttributeValue", _xmlNameSpaceManager);
+
+            if (node == null)
+            {
+                node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPathAzure}/saml:Attribute[@Name='http://schemas.xmlsoap.org/ws/2005/05/identity/claims/Lastname']/saml:AttributeValue", _xmlNameSpaceManager);
+            }
+
             return node?.InnerText;
         }
 
         public string GetEmail()
         {
             var node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPath}/saml:Attribute[@Name='http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress']/saml:AttributeValue", _xmlNameSpaceManager);
+            if (node == null)
+            {
+                node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPathAzure}/saml:Attribute[@Name='http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress']/saml:AttributeValue", _xmlNameSpaceManager);
+            }
             return node?.InnerText;
         }
 
