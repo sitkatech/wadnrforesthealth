@@ -77,6 +77,205 @@ namespace ProjectFirma.Web
   </EncryptedAssertion>
 </samlp:Response>";
 
+
+        private const string AdfsSampleSamlBase64EncodedAzure =
+            "PHNhbWxwOlJlc3BvbnNlIElEPSJfOTk4YjMxOGQtZWFiOS00MzhkLWE5OGItMjczZTA3NTBlZmNmIiBWZXJzaW9uPSIyLjAiIElzc3VlSW5zdGFudD0iMjAyNS0wMS0wN1QxOToyOTo0NS4zNzFaIiBEZXN0aW5hdGlvbj0iaHR0cHM6Ly93YWRucmZvcmVzdGhlYWx0aC5xYS5wcm9qZWN0ZmlybWEuY29tL0FjY291bnQvQURGU1Bvc3QiIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiPjxJc3N1ZXIgeG1sbnM9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphc3NlcnRpb24iPmh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzExZDBlMjE3LTI2NGUtNDAwYS04YmEwLTU3ZGNjMTI3ZDcyZC88L0lzc3Vlcj48c2FtbHA6U3RhdHVzPjxzYW1scDpTdGF0dXNDb2RlIFZhbHVlPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6c3RhdHVzOlN1Y2Nlc3MiLz48L3NhbWxwOlN0YXR1cz48QXNzZXJ0aW9uIElEPSJfZTY0YTY0N2MtMjI4OS00ZDJjLTkyMWMtMjcyNmMwMTRhNTAxIiBJc3N1ZUluc3RhbnQ9IjIwMjUtMDEtMDdUMTk6Mjk6NDUuMzY3WiIgVmVyc2lvbj0iMi4wIiB4bWxucz0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmFzc2VydGlvbiI+PElzc3Vlcj5odHRwczovL3N0cy53aW5kb3dzLm5ldC8xMWQwZTIxNy0yNjRlLTQwMGEtOGJhMC01N2RjYzEyN2Q3MmQvPC9Jc3N1ZXI+PFNpZ25hdHVyZSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnIyI+PFNpZ25lZEluZm8+PENhbm9uaWNhbGl6YXRpb25NZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzEwL3htbC1leGMtYzE0biMiLz48U2lnbmF0dXJlTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxkc2lnLW1vcmUjcnNhLXNoYTI1NiIvPjxSZWZlcmVuY2UgVVJJPSIjX2U2NGE2NDdjLTIyODktNGQyYy05MjFjLTI3MjZjMDE0YTUwMSI+PFRyYW5zZm9ybXM+PFRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyNlbnZlbG9wZWQtc2lnbmF0dXJlIi8+PFRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPjwvVHJhbnNmb3Jtcz48RGlnZXN0TWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxlbmMjc2hhMjU2Ii8+PERpZ2VzdFZhbHVlPlF0THB0am1zdENaK1c5dW54b24ydjQxc0dUOVNzNVdoM1BMWXJCN1R4QVk9PC9EaWdlc3RWYWx1ZT48L1JlZmVyZW5jZT48L1NpZ25lZEluZm8+PFNpZ25hdHVyZVZhbHVlPm1zR1N5bHdkN0V5MG9va0dTZ01ObHYyU2c3NW1ld0xDUlA5REZ3NEhKOC8vT01xMGt5UTQ0UHNEWkdCa0t1alIxMjFwUVVERWJhNTgwV0F1SUFiYTExYjF2eWVsNFRrSUk2ZzRrUGxGL2NUb0ZuRFNkNm5LbVhtYmRSQjlZM2tEUkZFK0tZTG9Gb2FkbllnUEE3S1dWa3FPRFBGS0tnMEFoQ295cDE2TVkxWENnbHVTZ0lzclB1OTluV0dveUluQUgvclkxK0pGR0hsRktXVkRWaUs1SVpQelhLMGRJTE5ualFRa3JCZXpZTnBpOVBCV3k5NWFrS2lLWEZWWml6Q2I1U1FFaXFiZEhsTWpXR0tnZEwzcW9iZXBSdFhQWmFVMHB2UzZiQTdTbjZMZHZ5RFBxY3JZenY0SnNDSjhnWTF1azJIaTZaNEMvU0Y4aVJ4SzJDdEp1UT09PC9TaWduYXR1cmVWYWx1ZT48S2V5SW5mbz48WDUwOURhdGE+PFg1MDlDZXJ0aWZpY2F0ZT5NSUlDOERDQ0FkaWdBd0lCQWdJUUhSSjJxYzE4Mzd0QmJLb0tDaERvMGpBTkJna3Foa2lHOXcwQkFRc0ZBREEwTVRJd01BWURWUVFERXlsTmFXTnliM052Wm5RZ1FYcDFjbVVnUm1Wa1pYSmhkR1ZrSUZOVFR5QkRaWEowYVdacFkyRjBaVEFlRncweU5ERXdNVEF5TURNMk1UVmFGdzB5TnpFd01UQXlNRE0yTVRWYU1EUXhNakF3QmdOVkJBTVRLVTFwWTNKdmMyOW1kQ0JCZW5WeVpTQkdaV1JsY21GMFpXUWdVMU5QSUVObGNuUnBabWxqWVhSbE1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBeUdVWFozZEtXL1dlLzE3RWtRNkVuVUEvKzM5c0hkK2VaNVROMENlNHFkeXRFQkdVd1NTNndmeXNYSDBQdDR3U2hDNUNkSEhSTmR2TTcxYjVrbXFEeWc2Nzl0M2hzNjRLbzQwbzhzRkFSZnZYTzBObFRJQUt6OXpJaTBFclFaOEVNcDNLSlZKc3IxNWl0RnNRTGVtQStzRGFtdnV0NWwyeGx3SFR0NUR3OUFVUDlaWVRoSldCcTdxMllLUDRNbENSMUl2VjJKMFRUamZ3cG1LdmNuL1kyamRHTlRjQkUzb3g2V3JTWGw5dHZmM2EraWVMSmtwVG1WdGNtT0ZJVlNOTnY4eTN4b29PUVpuMmI0bi9hcjY2QVNlUUxMa0UrZGdwakYvMWQwb1NnRjlzY2oxVEVSdzVnbFp5Z0x5NVQ1TW9uZnh0dVgxMWZkL3YxOUEzK2RRWCtRSURBUUFCTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFEQVJnaWtoK1FrK1paVWxMejVmZ0dQdnZiazFHOG5ScDM1RVBleUpxV3gzRU9Hd29jamdLelZSclVSQnNvQWdsQ0EwMnN0dHNMRUIrSGY4MmFYZERIek5XbWp0TDMyMUpDcjcxOUd5Uks5ZndOV1BwR2ZIdDluNW82NGtqL3F6cWFwWFRaYTZTaW12QzdmWW9RUDRNc0M3N2J4TlRpVzMvMEhqZUM1VHlJeEhMa3FtSXhZTzhGZHpHT1AwZFJxSmxnNTNTVEFRYUtpd0FOY053N2h4K1BlMnJ5SFR5REFoVHVHZWRiTDQ4ZFBiRnFJY08xYkVKSDFaTmk4K1FVOG9oMEIyTDlmeVQvRHlHMFRXUk5ZUmVqSUNRSzc0d2wzTXg5dktYZ01jUEM0VW1GZ3lCSjB1MktveUxlZUVqLzdOYWl0dUl5QURqVnNtbkxneWFseUFkNUM8L1g1MDlDZXJ0aWZpY2F0ZT48L1g1MDlEYXRhPjwvS2V5SW5mbz48L1NpZ25hdHVyZT48U3ViamVjdD48TmFtZUlEIEZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6MS4xOm5hbWVpZC1mb3JtYXQ6ZW1haWxBZGRyZXNzIj5KYWNvYi5DYXNzaWR5QGRuci53YS5nb3Y8L05hbWVJRD48U3ViamVjdENvbmZpcm1hdGlvbiBNZXRob2Q9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpjbTpiZWFyZXIiPjxTdWJqZWN0Q29uZmlybWF0aW9uRGF0YSBOb3RPbk9yQWZ0ZXI9IjIwMjUtMDEtMDdUMjA6Mjk6NDUuMTYyWiIgUmVjaXBpZW50PSJodHRwczovL3dhZG5yZm9yZXN0aGVhbHRoLnFhLnByb2plY3RmaXJtYS5jb20vQWNjb3VudC9BREZTUG9zdCIvPjwvU3ViamVjdENvbmZpcm1hdGlvbj48L1N1YmplY3Q+PENvbmRpdGlvbnMgTm90QmVmb3JlPSIyMDI1LTAxLTA3VDE5OjI0OjQ1LjE2MloiIE5vdE9uT3JBZnRlcj0iMjAyNS0wMS0wN1QyMDoyOTo0NS4xNjJaIj48QXVkaWVuY2VSZXN0cmljdGlvbj48QXVkaWVuY2U+aHR0cHM6Ly93YWRucmZvcmVzdGhlYWx0aC5xYS5wcm9qZWN0ZmlybWEuY29tPC9BdWRpZW5jZT48L0F1ZGllbmNlUmVzdHJpY3Rpb24+PC9Db25kaXRpb25zPjxBdHRyaWJ1dGVTdGF0ZW1lbnQ+PEF0dHJpYnV0ZSBOYW1lPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2lkZW50aXR5L2NsYWltcy90ZW5hbnRpZCI+PEF0dHJpYnV0ZVZhbHVlPjExZDBlMjE3LTI2NGUtNDAwYS04YmEwLTU3ZGNjMTI3ZDcyZDwvQXR0cmlidXRlVmFsdWU+PC9BdHRyaWJ1dGU+PEF0dHJpYnV0ZSBOYW1lPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2lkZW50aXR5L2NsYWltcy9vYmplY3RpZGVudGlmaWVyIj48QXR0cmlidXRlVmFsdWU+YWQzZmUwODEtY2Q0ZC00Y2EyLWJiZTctM2NjZDhiYTZkYjg2PC9BdHRyaWJ1dGVWYWx1ZT48L0F0dHJpYnV0ZT48QXR0cmlidXRlIE5hbWU9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vaWRlbnRpdHkvY2xhaW1zL2Rpc3BsYXluYW1lIj48QXR0cmlidXRlVmFsdWU+Q2Fzc2lkeSwgSmFjb2IgKEROUik8L0F0dHJpYnV0ZVZhbHVlPjwvQXR0cmlidXRlPjxBdHRyaWJ1dGUgTmFtZT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9ncm91cHMiPjxBdHRyaWJ1dGVWYWx1ZT4zOGI2NGEwMy1jMjFlLTQ3MGUtOWZiMi1jM2Q4ZmIzODA3YjI8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5jNDhkZDUxYy0zNzMxLTRiMGQtYTQ1MC05MDM5MzYyOWI4NTE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kZTFhZTkxZi1iNTFjLTRjMWEtYjhlYi1hMmVlZmNiOTRhODc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41MjMwMmY2Ni1hZmY0LTRmMTgtYjAyMC1jMTQ3NTEzOGMwZmU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41YmY3ODU2OC01ZDVhLTQ2MTEtYmEyZS01OWE2M2QwZjhmOGM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yNDEzZGQ5Ny05OWM4LTRjOWEtOGY1My04NDgwZGYyMzYzZTk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4xZjlmMGVjOS1kMjgzLTQ1N2ItYmM0OC0zZjJlMGZiYzhlNWY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hMzFjNDgwMC00MWNhLTQ5Y2YtODIwYS1hNGU1NzllNzUxM2U8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5jZGYyMjIwMy1kZWY3LTQ0MTItYjYwOS01YTYxNmIwOTU3Njk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hZDVhMmMwNS1iYzNkLTRjYmItYWY1MC05ZGJmNDYxZDdlZjQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44NzE0ZjEwOC1hYWM2LTRhNzEtODU4Yy1kNDc0N2JiNTIxMDI8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kMzY0ZjgwOS0wN2FmLTRiZjUtODdlNy1lNThmMDZjYTQ2ZjI8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zMjgwMGUwZi0yNzM4LTRmNDMtOGVhMi01MDMwODc0YjIzYWY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5jNzkzMjExNi00NjdlLTQ1M2MtOTMxZi03NWM5OTU3NDg4Yzc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40Y2RkMTExNy1lMmM4LTQ3MjgtOTkyNy1jMjQxMDhjZDYzNjg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40ZmM1YzIxOS1jODJiLTRlNjctYjY4Yy1iOTE4MDFjOGUzN2M8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kMTNjMjUyOS1kMWFlLTRmMTgtYmQ3NC1lNjM0ZTliYjkwYzg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zYjUyYmMyYy1kNjJmLTRiYTYtYmI1Yy1jMTA4YmE5ODVjZDE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4xY2IxMTkzNC02MWZiLTQ2NDQtYjI4Zi04ZGVkZTJmNzkzOWQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zMTU5MGIzOS0wNjYxLTRkNTItYTk1YS05MTk2MDRiNTU4YTc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hZTc3OTkzYS1mNDk0LTRlYzEtYjhlMS04ODQ5MmY2M2VkOTk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44Yzc4NjkzYi1kY2U1LTRhZmEtYjIxNi02OTMzYzM1ZWFkYWY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yZjMwN2UzYy0xOTM5LTRmNDUtOWI0Ny04M2EyMDFjOTlhNGY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yZmUwY2YzYy0zYTQ3LTRkM2MtODBlOS1mOTFlYmFiMjUxOTA8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44ZWM3ZjgzYy0yZmNkLTRhYWEtYmYwMS05NzVlMjZjYWU4NDY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42YzBhMzczZC1mYjZmLTRlODAtOTFiNC1lNWQ4N2U4MTYzZTg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42NjY3NjU0MS00MjIzLTQ0OGYtOTg3Yi1iOTllZTE1NmY1ZTE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44NWI1ZTI0MS1hODI5LTRmYzUtODcyOC1kODFmYjU2OTAzNGY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT43YzVhMGQ0NS00MGI4LTRiNjktOGZkZi04ZTNiNGEzMTdkY2I8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4xMzY2NDk0Yy03ZTFmLTRiNmMtOTg2Mi01MjQ3ZDhkYjRjYTU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yMjdlY2E1Mi1jNjk3LTQwYmUtYmYwMS04MTI5Y2E0OGNjNWY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT45NDk4ZTc1Mi0yZmIyLTQyYWYtYmJiNy1hYWYyNTAyN2U0YmU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iNDA3ZDc1NC1lNWNmLTQyODEtYTk0YS02ZTQ0YWVhZDAwYmI8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4xMmViY2E1NS00YmIyLTQ1NjYtYTU0NC03ODg4YjQ0Mjg4OGM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44M2Q1OWI1Yi03YTkxLTQxNWItYjc3Ni1hZWUzNjAyNWVjMzk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iMmI5Mjg1ZC0zZTJlLTRmMGYtOTdkOC1lNjRlZTZmMmU1OTg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT43YTJlZmI1ZC1lY2YxLTQ0NTMtOTgxZS0yMmQ4N2JmNGY5YmM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT43MTgxMzM2Mi1jM2U4LTQ4ZDktYjRjNC1mZWNlNGU1NjQ1MmU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41MTdiOGQ2NC0wMzNjLTQ2YzItOTExNC02NWFhNzAxZDAwYTU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5mZjU3MTM2Ni04ZDBlLTQxMzYtOTc5YS1kMDgyZTA2ODcwNmQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41YTk3MjU2Ni0xMTlkLTQyMmMtOWY1Yy00Mjg2YjhhZDk4Yzk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44ZjI5ZDc2Ny04NTdjLTRkODctODNlOS04ZDc4OWI2ZTc0NGY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wMDdkODI3NS05ZWE1LTRlNzMtOThkYS04MjZkZjIyYmU3YjQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iODQ5NDM3Ni0wYWU3LTQzMzQtYjMxNC1hZDIyNmEwMmYzZmY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42ODE5OGQ3OC05YTM3LTQzZWEtOGE1Yy1hNjVhOTcxMzc3OWQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5jZDlkMmM3OS0xYzI0LTQ0ZjEtYWU1Yi00YjMyMmQ3ZDUxOGY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yMTNlNWQ3ZC0zMDk1LTRhZGUtODQzMC03YTYwZDkzZWZiYTU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40Y2I0NjQ3ZC1mMjYzLTQzNjAtYWYxYS1jMjJjYmQ1MTI1ZmQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yZmU4ZWY3ZS1jMDI2LTQ0ZWEtODYxOS1mMWMzOTlhZWY0NDc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iODRhMjA4MC0xNDlmLTQ4ZWItODc1ZS0zMTVmNmU4MmMzY2Y8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5lNTY4NTE4MS0xZWQxLTQ1NDgtYTFjMy1lNTA4ZTE4ZTZmOTg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wN2M1NmE4MS0wYjc3LTQwNjctODFhNy1lMDliYTI3MjkzZDY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hOWVjNzg4My1iMzMxLTRkYWItOTY5Mi01ZjU0NmNmY2IzOGQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kOGIxMDM4Ny01ZjZhLTRhM2ItYTAxMS03YzA0ZjViMTA2ZjI8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40OTI3NzA4OC1jYmEyLTQ3OTUtOGIyYS1hZTkxZTU1MWE4MmQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5lZjkxNDQ4YS0yZmIxLTQ5NzgtYTE0MC02YmQ3OTRlN2YxMTE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zOGQwMDU4Yy0zZDc3LTQyZWEtOGFiZC0zOWIxNmM4NzUwOGQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5mZTZmMmM4Yy00MjQ1LTRiNTEtYWFkNC01OTg2NjhmZjk3YjU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hNTgyYmU4Yy0yNjM1LTQyMmMtOGUxYi0wMzdmOTU4YmU3NzE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42YTllZTU4Yy00NWY5LTRlNzUtOGFjMC1mYTViOWFmODliZGE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT45NDlhMGU5MC0wMjdjLTQyMGEtYWNlZi1mZDRhMjJhZjA5NGU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41NWUwZGU5MS01ZTY5LTQyNzAtODk0Yy1mMzhiZTU0NTVjYjE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5jMDM2MGE5NC1jZWY2LTRmOTItOGFkZi0yZmUyN2ViOGJkMTE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zN2YyM2Y5Ni1iZDA3LTQwM2UtYjM1OS05MGM2NDQ5NDZhZTE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT43YWMxNjU5Ny1iN2Y0LTRlM2UtYTU4ZS0wMTZmNTc3YjdkYTg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wZTdiOTM5OC0wYjFhLTQ3YTUtOWExNi00MjMxMWRiY2RhM2U8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yYTBhOTM5YS04NmZhLTRhM2EtOGM2Yi03ZDM2ZDdiNzA4MDU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kMWI3OWM5Yi1jYmU0LTQwZGItOWIxOC0yMzA3ZjUxY2UwZTU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40ZDhjYTU5ZS03YWVkLTQ3NDQtODc3Zi1mZmFkNDg5ODg2YWE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42NDFiZDlhOS0yZDFlLTRmNjEtYjkwMC02YjY4NGYwZmI1NTg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wYWQ1ZDFiMy1kMzNiLTQ5NjktOGVmOS1kNWE4MmI1MmM0YmM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44ZGZiNTJiZS01NGIzLTQ5OGItYmFjNS04OGIxMzYzYzg3Yjk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41NTFjYjFiZS01NTQ1LTQyODEtODZiOS04YjRjYjcxY2I1NDg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iM2Q4NTliZi0zMjU5LTRiNzUtYjFkMi1hMjJkOTY4NDkxODQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hNmQ5ZWFjMC04MzU3LTQ5MWYtOWJlMC0xYWE3NjY3MzZhODE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42ODAwYjZjNC0xZmQyLTQwZDgtYjkwMC0wYjExZWY2ZDMyOWY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42MGJmNjdjZC1kNTU5LTQ3OTgtYjI0Zi02NDU3OWMwMmU2M2I8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hNmE1MzBjZS00YjgyLTRlYWYtODk1MS05ZjY4MWVlODI5OWM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kNDYzOGFjZi1iNmVhLTQ3N2ItOGE3MC1mOTBlOWMwN2M3MmM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kMjc5MDZkNC04OTE3LTQzNDItYTkxZS0wODlkOTM0MWI5MzE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT41Njk4MDNkNS03MGUzLTQ3NDYtYjE1Ni1hZDExOWFmODU1Yzg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wZTIyMzhkNS02OTM3LTQ0OGYtODk1MC0yZjE1ODA2OGIyNjc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40MjIxZmRkNS03M2Y0LTQ4NDktOGZmZS1iZjMzZDVmNzU0NTc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5hMTliMGFkNi0xODM0LTQ5MjgtYTg4OC0yMzY4ZjYxYjc1Njk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iZmVhMjJkNi0wOGQxLTQ5ZTgtOTM5MS0xNjc2YjBkNWIwZjg8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5iYjU5NjhkOS04MTM0LTQ4MjMtYWFmNy04MjFiM2RhMDQxOGM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yZTNhZjlkZC1hNzkxLTQ0NzMtYjRhOS0yYmYxZTQ5NDJmMmE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yNDI2MmNkZS1mNGEyLTQxMDEtOGJiYS1hZjZjYWExM2MyZDM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40NzZhMzFkZS02MWE3LTQ4YmEtOTVjNi01MGIyYzViMjFkMDA8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wMTkwYzRkZi1hNGE0LTQ4MmUtYmZlMy04ODcyZDc3MWUwZmM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT43YjdlZDFlMC04YjRmLTRkMzMtYjQ3Mi0zZmNlNTQxNDU5YjM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT40ZTZiMGVlMS1iZGJhLTRlYjItYWQ1Ny1iM2MyMWM2YTMzMjQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yMjIzNjhlNi02NDg1LTRmZjAtYjIyYi00MjYwMGE2Y2Y2MWE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4wYjJmYmFlYi1kOTY1LTQwZDMtODVmMS0yYzlmNDRhOTBiM2U8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44ZmMwMmZlYy1lM2Y5LTQ4ZmQtOGQ5Zi1jY2Y0ODVlYmE1OWY8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5jZTEwN2ZlYy0yNzhkLTQzYzgtOTM5Ni1mYTY1Y2E3Yzc5ZDU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yY2JmYjZlZi03MGMwLTRmZmMtOTlkNS0wODYwMzM1YTUzZDQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zZTRiNjJmMC05NDhmLTRmY2EtYWJkYS02ZjMyMGJiYzVlODU8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44NjMzZDFmMC01OTJmLTQ1MDgtOWVmNi05NDU2OTRlODA3YjM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT42ZDMzZGVmMC02N2VjLTQyMTMtYmFkNi1mNzEyYWVhNGVhNWI8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kZjdjNWZmMS1mOGUyLTQxZmUtOTZjOS02NDVkMWU5NDdjMmM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kOTljZGRmMS03ZGIwLTQxOTctODlhNy03NzI5YmJiNDQ4NGE8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4yOTcyZThmMS00NDVlLTQ3MWYtOGZhMy1mYzY5OWRlODViMzc8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zNjViMjdmMi03MTE4LTRmYjQtYWU1OC00Yzc0ZGU1ZmE0M2Q8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT44MjhlOGVmMy1mNzE0LTQ3YWYtODk1My0wZDdjNjUxY2Q5NDM8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5kM2Q3MmNmOC01NTA5LTQ3ODMtOTI0ZC1iMjYxNjBjZTVlZGQ8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT45OTgwNjFmYS0yZGRjLTQzMGMtYTA4Zi05YWUyN2EzYjU3Zjk8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT4zNjMyOTZmYi1hYWE4LTQzOGYtOGVlMC1jOWE0MWI5ZWYwYjk8L0F0dHJpYnV0ZVZhbHVlPjwvQXR0cmlidXRlPjxBdHRyaWJ1dGUgTmFtZT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9pZGVudGl0eS9jbGFpbXMvaWRlbnRpdHlwcm92aWRlciI+PEF0dHJpYnV0ZVZhbHVlPmh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzExZDBlMjE3LTI2NGUtNDAwYS04YmEwLTU3ZGNjMTI3ZDcyZC88L0F0dHJpYnV0ZVZhbHVlPjwvQXR0cmlidXRlPjxBdHRyaWJ1dGUgTmFtZT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9jbGFpbXMvYXV0aG5tZXRob2RzcmVmZXJlbmNlcyI+PEF0dHJpYnV0ZVZhbHVlPmh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9hdXRoZW50aWNhdGlvbm1ldGhvZC9wYXNzd29yZDwvQXR0cmlidXRlVmFsdWU+PEF0dHJpYnV0ZVZhbHVlPmh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9hdXRoZW50aWNhdGlvbm1ldGhvZC94NTA5PC9BdHRyaWJ1dGVWYWx1ZT48QXR0cmlidXRlVmFsdWU+aHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2F1dGhlbnRpY2F0aW9ubWV0aG9kL3dpbmRvd3M8L0F0dHJpYnV0ZVZhbHVlPjxBdHRyaWJ1dGVWYWx1ZT5odHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2NsYWltcy9tdWx0aXBsZWF1dGhuPC9BdHRyaWJ1dGVWYWx1ZT48L0F0dHJpYnV0ZT48QXR0cmlidXRlIE5hbWU9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI+PEF0dHJpYnV0ZVZhbHVlPkphY29iPC9BdHRyaWJ1dGVWYWx1ZT48L0F0dHJpYnV0ZT48QXR0cmlidXRlIE5hbWU9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL3N1cm5hbWUiPjxBdHRyaWJ1dGVWYWx1ZT5DYXNzaWR5PC9BdHRyaWJ1dGVWYWx1ZT48L0F0dHJpYnV0ZT48QXR0cmlidXRlIE5hbWU9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI+PEF0dHJpYnV0ZVZhbHVlPkphY29iLkNhc3NpZHlAZG5yLndhLmdvdjwvQXR0cmlidXRlVmFsdWU+PC9BdHRyaWJ1dGU+PEF0dHJpYnV0ZSBOYW1lPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIj48QXR0cmlidXRlVmFsdWU+SmFjb2IuQ2Fzc2lkeUBkbnIud2EuZ292PC9BdHRyaWJ1dGVWYWx1ZT48L0F0dHJpYnV0ZT48QXR0cmlidXRlIE5hbWU9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL0xhc3RuYW1lIj48QXR0cmlidXRlVmFsdWU+Q2Fzc2lkeTwvQXR0cmlidXRlVmFsdWU+PC9BdHRyaWJ1dGU+PEF0dHJpYnV0ZSBOYW1lPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9GaXJzdG5hbWUiPjxBdHRyaWJ1dGVWYWx1ZT5KYWNvYjwvQXR0cmlidXRlVmFsdWU+PC9BdHRyaWJ1dGU+PC9BdHRyaWJ1dGVTdGF0ZW1lbnQ+PEF1dGhuU3RhdGVtZW50IEF1dGhuSW5zdGFudD0iMjAyNS0wMS0wN1QxODoxODowNC4yODBaIiBTZXNzaW9uSW5kZXg9Il9lNjRhNjQ3Yy0yMjg5LTRkMmMtOTIxYy0yNzI2YzAxNGE1MDEiPjxBdXRobkNvbnRleHQ+PEF1dGhuQ29udGV4dENsYXNzUmVmPnVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlBhc3N3b3JkPC9BdXRobkNvbnRleHRDbGFzc1JlZj48L0F1dGhuQ29udGV4dD48L0F1dGhuU3RhdGVtZW50PjwvQXNzZXJ0aW9uPjwvc2FtbHA6UmVzcG9uc2U+";
+
+        private const string AdfsSampleSamlPrettyPrintedAzure =
+            @"<samlp:Response ID=""_998b318d-eab9-438d-a98b-273e0750efcf"" Version=""2.0"" IssueInstant=""2025-01-07T19:29:45.371Z"" Destination=""https://wadnrforesthealth.qa.projectfirma.com/Account/ADFSPost"" xmlns:samlp=""urn:oasis:names:tc:SAML:2.0:protocol"">
+  <Issuer xmlns=""urn:oasis:names:tc:SAML:2.0:assertion"">https://sts.windows.net/11d0e217-264e-400a-8ba0-57dcc127d72d/</Issuer>
+  <samlp:Status>
+    <samlp:StatusCode Value=""urn:oasis:names:tc:SAML:2.0:status:Success"" />
+  </samlp:Status>
+  <Assertion ID=""_e64a647c-2289-4d2c-921c-2726c014a501"" IssueInstant=""2025-01-07T19:29:45.367Z"" Version=""2.0"" xmlns=""urn:oasis:names:tc:SAML:2.0:assertion"">
+    <Issuer>https://sts.windows.net/11d0e217-264e-400a-8ba0-57dcc127d72d/</Issuer>
+    <Signature xmlns=""http://www.w3.org/2000/09/xmldsig#"">
+      <SignedInfo>
+        <CanonicalizationMethod Algorithm=""http://www.w3.org/2001/10/xml-exc-c14n#"" />
+        <SignatureMethod Algorithm=""http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"" />
+        <Reference URI=""#_e64a647c-2289-4d2c-921c-2726c014a501"">
+          <Transforms>
+            <Transform Algorithm=""http://www.w3.org/2000/09/xmldsig#enveloped-signature"" />
+            <Transform Algorithm=""http://www.w3.org/2001/10/xml-exc-c14n#"" />
+          </Transforms>
+          <DigestMethod Algorithm=""http://www.w3.org/2001/04/xmlenc#sha256"" />
+          <DigestValue>QtLptjmstCZ+W9unxon2v41sGT9Ss5Wh3PLYrB7TxAY=</DigestValue>
+        </Reference>
+      </SignedInfo>
+      <SignatureValue>msGSylwd7Ey0ookGSgMNlv2Sg75mewLCRP9DFw4HJ8//OMq0kyQ44PsDZGBkKujR121pQUDEba580WAuIAba11b1vyel4TkII6g4kPlF/cToFnDSd6nKmXmbdRB9Y3kDRFE+KYLoFoadnYgPA7KWVkqODPFKKg0AhCoyp16MY1XCgluSgIsrPu99nWGoyInAH/rY1+JFGHlFKWVDViK5IZPzXK0dILNnjQQkrBezYNpi9PBWy95akKiKXFVZizCb5SQEiqbdHlMjWGKgdL3qobepRtXPZaU0pvS6bA7Sn6LdvyDPqcrYzv4JsCJ8gY1uk2Hi6Z4C/SF8iRxK2CtJuQ==</SignatureValue>
+      <KeyInfo>
+        <X509Data>
+          <X509Certificate>MIIC8DCCAdigAwIBAgIQHRJ2qc1837tBbKoKChDo0jANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQDEylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0yNDEwMTAyMDM2MTVaFw0yNzEwMTAyMDM2MTVaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQgU1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGUXZ3dKW/We/17EkQ6EnUA/+39sHd+eZ5TN0Ce4qdytEBGUwSS6wfysXH0Pt4wShC5CdHHRNdvM71b5kmqDyg679t3hs64Ko40o8sFARfvXO0NlTIAKz9zIi0ErQZ8EMp3KJVJsr15itFsQLemA+sDamvut5l2xlwHTt5Dw9AUP9ZYThJWBq7q2YKP4MlCR1IvV2J0TTjfwpmKvcn/Y2jdGNTcBE3ox6WrSXl9tvf3a+ieLJkpTmVtcmOFIVSNNv8y3xooOQZn2b4n/ar66ASeQLLkE+dgpjF/1d0oSgF9scj1TERw5glZygLy5T5MonfxtuX11fd/v19A3+dQX+QIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQDARgikh+Qk+ZZUlLz5fgGPvvbk1G8nRp35EPeyJqWx3EOGwocjgKzVRrURBsoAglCA02sttsLEB+Hf82aXdDHzNWmjtL321JCr719GyRK9fwNWPpGfHt9n5o64kj/qzqapXTZa6SimvC7fYoQP4MsC77bxNTiW3/0HjeC5TyIxHLkqmIxYO8FdzGOP0dRqJlg53STAQaKiwANcNw7hx+Pe2ryHTyDAhTuGedbL48dPbFqIcO1bEJH1ZNi8+QU8oh0B2L9fyT/DyG0TWRNYRejICQK74wl3Mx9vKXgMcPC4UmFgyBJ0u2KoyLeeEj/7NaituIyADjVsmnLgyalyAd5C</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </Signature>
+    <Subject>
+      <NameID Format=""urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"">Jacob.Cassidy@dnr.wa.gov</NameID>
+      <SubjectConfirmation Method=""urn:oasis:names:tc:SAML:2.0:cm:bearer"">
+        <SubjectConfirmationData NotOnOrAfter=""2025-01-07T20:29:45.162Z"" Recipient=""https://wadnrforesthealth.qa.projectfirma.com/Account/ADFSPost"" />
+      </SubjectConfirmation>
+    </Subject>
+    <Conditions NotBefore=""2025-01-07T19:24:45.162Z"" NotOnOrAfter=""2025-01-07T20:29:45.162Z"">
+      <AudienceRestriction>
+        <Audience>https://wadnrforesthealth.qa.projectfirma.com</Audience>
+      </AudienceRestriction>
+    </Conditions>
+    <AttributeStatement>
+      <Attribute Name=""http://schemas.microsoft.com/identity/claims/tenantid"">
+        <AttributeValue>11d0e217-264e-400a-8ba0-57dcc127d72d</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.microsoft.com/identity/claims/objectidentifier"">
+        <AttributeValue>ad3fe081-cd4d-4ca2-bbe7-3ccd8ba6db86</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.microsoft.com/identity/claims/displayname"">
+        <AttributeValue>Cassidy, Jacob (DNR)</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"">
+        <AttributeValue>38b64a03-c21e-470e-9fb2-c3d8fb3807b2</AttributeValue>
+        <AttributeValue>c48dd51c-3731-4b0d-a450-90393629b851</AttributeValue>
+        <AttributeValue>de1ae91f-b51c-4c1a-b8eb-a2eefcb94a87</AttributeValue>
+        <AttributeValue>52302f66-aff4-4f18-b020-c1475138c0fe</AttributeValue>
+        <AttributeValue>5bf78568-5d5a-4611-ba2e-59a63d0f8f8c</AttributeValue>
+        <AttributeValue>2413dd97-99c8-4c9a-8f53-8480df2363e9</AttributeValue>
+        <AttributeValue>1f9f0ec9-d283-457b-bc48-3f2e0fbc8e5f</AttributeValue>
+        <AttributeValue>a31c4800-41ca-49cf-820a-a4e579e7513e</AttributeValue>
+        <AttributeValue>cdf22203-def7-4412-b609-5a616b095769</AttributeValue>
+        <AttributeValue>ad5a2c05-bc3d-4cbb-af50-9dbf461d7ef4</AttributeValue>
+        <AttributeValue>8714f108-aac6-4a71-858c-d4747bb52102</AttributeValue>
+        <AttributeValue>d364f809-07af-4bf5-87e7-e58f06ca46f2</AttributeValue>
+        <AttributeValue>32800e0f-2738-4f43-8ea2-5030874b23af</AttributeValue>
+        <AttributeValue>c7932116-467e-453c-931f-75c9957488c7</AttributeValue>
+        <AttributeValue>4cdd1117-e2c8-4728-9927-c24108cd6368</AttributeValue>
+        <AttributeValue>4fc5c219-c82b-4e67-b68c-b91801c8e37c</AttributeValue>
+        <AttributeValue>d13c2529-d1ae-4f18-bd74-e634e9bb90c8</AttributeValue>
+        <AttributeValue>3b52bc2c-d62f-4ba6-bb5c-c108ba985cd1</AttributeValue>
+        <AttributeValue>1cb11934-61fb-4644-b28f-8dede2f7939d</AttributeValue>
+        <AttributeValue>31590b39-0661-4d52-a95a-919604b558a7</AttributeValue>
+        <AttributeValue>ae77993a-f494-4ec1-b8e1-88492f63ed99</AttributeValue>
+        <AttributeValue>8c78693b-dce5-4afa-b216-6933c35eadaf</AttributeValue>
+        <AttributeValue>2f307e3c-1939-4f45-9b47-83a201c99a4f</AttributeValue>
+        <AttributeValue>2fe0cf3c-3a47-4d3c-80e9-f91ebab25190</AttributeValue>
+        <AttributeValue>8ec7f83c-2fcd-4aaa-bf01-975e26cae846</AttributeValue>
+        <AttributeValue>6c0a373d-fb6f-4e80-91b4-e5d87e8163e8</AttributeValue>
+        <AttributeValue>66676541-4223-448f-987b-b99ee156f5e1</AttributeValue>
+        <AttributeValue>85b5e241-a829-4fc5-8728-d81fb569034f</AttributeValue>
+        <AttributeValue>7c5a0d45-40b8-4b69-8fdf-8e3b4a317dcb</AttributeValue>
+        <AttributeValue>1366494c-7e1f-4b6c-9862-5247d8db4ca5</AttributeValue>
+        <AttributeValue>227eca52-c697-40be-bf01-8129ca48cc5f</AttributeValue>
+        <AttributeValue>9498e752-2fb2-42af-bbb7-aaf25027e4be</AttributeValue>
+        <AttributeValue>b407d754-e5cf-4281-a94a-6e44aead00bb</AttributeValue>
+        <AttributeValue>12ebca55-4bb2-4566-a544-7888b442888c</AttributeValue>
+        <AttributeValue>83d59b5b-7a91-415b-b776-aee36025ec39</AttributeValue>
+        <AttributeValue>b2b9285d-3e2e-4f0f-97d8-e64ee6f2e598</AttributeValue>
+        <AttributeValue>7a2efb5d-ecf1-4453-981e-22d87bf4f9bc</AttributeValue>
+        <AttributeValue>71813362-c3e8-48d9-b4c4-fece4e56452e</AttributeValue>
+        <AttributeValue>517b8d64-033c-46c2-9114-65aa701d00a5</AttributeValue>
+        <AttributeValue>ff571366-8d0e-4136-979a-d082e068706d</AttributeValue>
+        <AttributeValue>5a972566-119d-422c-9f5c-4286b8ad98c9</AttributeValue>
+        <AttributeValue>8f29d767-857c-4d87-83e9-8d789b6e744f</AttributeValue>
+        <AttributeValue>007d8275-9ea5-4e73-98da-826df22be7b4</AttributeValue>
+        <AttributeValue>b8494376-0ae7-4334-b314-ad226a02f3ff</AttributeValue>
+        <AttributeValue>68198d78-9a37-43ea-8a5c-a65a9713779d</AttributeValue>
+        <AttributeValue>cd9d2c79-1c24-44f1-ae5b-4b322d7d518f</AttributeValue>
+        <AttributeValue>213e5d7d-3095-4ade-8430-7a60d93efba5</AttributeValue>
+        <AttributeValue>4cb4647d-f263-4360-af1a-c22cbd5125fd</AttributeValue>
+        <AttributeValue>2fe8ef7e-c026-44ea-8619-f1c399aef447</AttributeValue>
+        <AttributeValue>b84a2080-149f-48eb-875e-315f6e82c3cf</AttributeValue>
+        <AttributeValue>e5685181-1ed1-4548-a1c3-e508e18e6f98</AttributeValue>
+        <AttributeValue>07c56a81-0b77-4067-81a7-e09ba27293d6</AttributeValue>
+        <AttributeValue>a9ec7883-b331-4dab-9692-5f546cfcb38d</AttributeValue>
+        <AttributeValue>d8b10387-5f6a-4a3b-a011-7c04f5b106f2</AttributeValue>
+        <AttributeValue>49277088-cba2-4795-8b2a-ae91e551a82d</AttributeValue>
+        <AttributeValue>ef91448a-2fb1-4978-a140-6bd794e7f111</AttributeValue>
+        <AttributeValue>38d0058c-3d77-42ea-8abd-39b16c87508d</AttributeValue>
+        <AttributeValue>fe6f2c8c-4245-4b51-aad4-598668ff97b5</AttributeValue>
+        <AttributeValue>a582be8c-2635-422c-8e1b-037f958be771</AttributeValue>
+        <AttributeValue>6a9ee58c-45f9-4e75-8ac0-fa5b9af89bda</AttributeValue>
+        <AttributeValue>949a0e90-027c-420a-acef-fd4a22af094e</AttributeValue>
+        <AttributeValue>55e0de91-5e69-4270-894c-f38be5455cb1</AttributeValue>
+        <AttributeValue>c0360a94-cef6-4f92-8adf-2fe27eb8bd11</AttributeValue>
+        <AttributeValue>37f23f96-bd07-403e-b359-90c644946ae1</AttributeValue>
+        <AttributeValue>7ac16597-b7f4-4e3e-a58e-016f577b7da8</AttributeValue>
+        <AttributeValue>0e7b9398-0b1a-47a5-9a16-42311dbcda3e</AttributeValue>
+        <AttributeValue>2a0a939a-86fa-4a3a-8c6b-7d36d7b70805</AttributeValue>
+        <AttributeValue>d1b79c9b-cbe4-40db-9b18-2307f51ce0e5</AttributeValue>
+        <AttributeValue>4d8ca59e-7aed-4744-877f-ffad489886aa</AttributeValue>
+        <AttributeValue>641bd9a9-2d1e-4f61-b900-6b684f0fb558</AttributeValue>
+        <AttributeValue>0ad5d1b3-d33b-4969-8ef9-d5a82b52c4bc</AttributeValue>
+        <AttributeValue>8dfb52be-54b3-498b-bac5-88b1363c87b9</AttributeValue>
+        <AttributeValue>551cb1be-5545-4281-86b9-8b4cb71cb548</AttributeValue>
+        <AttributeValue>b3d859bf-3259-4b75-b1d2-a22d96849184</AttributeValue>
+        <AttributeValue>a6d9eac0-8357-491f-9be0-1aa766736a81</AttributeValue>
+        <AttributeValue>6800b6c4-1fd2-40d8-b900-0b11ef6d329f</AttributeValue>
+        <AttributeValue>60bf67cd-d559-4798-b24f-64579c02e63b</AttributeValue>
+        <AttributeValue>a6a530ce-4b82-4eaf-8951-9f681ee8299c</AttributeValue>
+        <AttributeValue>d4638acf-b6ea-477b-8a70-f90e9c07c72c</AttributeValue>
+        <AttributeValue>d27906d4-8917-4342-a91e-089d9341b931</AttributeValue>
+        <AttributeValue>569803d5-70e3-4746-b156-ad119af855c8</AttributeValue>
+        <AttributeValue>0e2238d5-6937-448f-8950-2f158068b267</AttributeValue>
+        <AttributeValue>4221fdd5-73f4-4849-8ffe-bf33d5f75457</AttributeValue>
+        <AttributeValue>a19b0ad6-1834-4928-a888-2368f61b7569</AttributeValue>
+        <AttributeValue>bfea22d6-08d1-49e8-9391-1676b0d5b0f8</AttributeValue>
+        <AttributeValue>bb5968d9-8134-4823-aaf7-821b3da0418c</AttributeValue>
+        <AttributeValue>2e3af9dd-a791-4473-b4a9-2bf1e4942f2a</AttributeValue>
+        <AttributeValue>24262cde-f4a2-4101-8bba-af6caa13c2d3</AttributeValue>
+        <AttributeValue>476a31de-61a7-48ba-95c6-50b2c5b21d00</AttributeValue>
+        <AttributeValue>0190c4df-a4a4-482e-bfe3-8872d771e0fc</AttributeValue>
+        <AttributeValue>7b7ed1e0-8b4f-4d33-b472-3fce541459b3</AttributeValue>
+        <AttributeValue>4e6b0ee1-bdba-4eb2-ad57-b3c21c6a3324</AttributeValue>
+        <AttributeValue>222368e6-6485-4ff0-b22b-42600a6cf61a</AttributeValue>
+        <AttributeValue>0b2fbaeb-d965-40d3-85f1-2c9f44a90b3e</AttributeValue>
+        <AttributeValue>8fc02fec-e3f9-48fd-8d9f-ccf485eba59f</AttributeValue>
+        <AttributeValue>ce107fec-278d-43c8-9396-fa65ca7c79d5</AttributeValue>
+        <AttributeValue>2cbfb6ef-70c0-4ffc-99d5-0860335a53d4</AttributeValue>
+        <AttributeValue>3e4b62f0-948f-4fca-abda-6f320bbc5e85</AttributeValue>
+        <AttributeValue>8633d1f0-592f-4508-9ef6-945694e807b3</AttributeValue>
+        <AttributeValue>6d33def0-67ec-4213-bad6-f712aea4ea5b</AttributeValue>
+        <AttributeValue>df7c5ff1-f8e2-41fe-96c9-645d1e947c2c</AttributeValue>
+        <AttributeValue>d99cddf1-7db0-4197-89a7-7729bbb4484a</AttributeValue>
+        <AttributeValue>2972e8f1-445e-471f-8fa3-fc699de85b37</AttributeValue>
+        <AttributeValue>365b27f2-7118-4fb4-ae58-4c74de5fa43d</AttributeValue>
+        <AttributeValue>828e8ef3-f714-47af-8953-0d7c651cd943</AttributeValue>
+        <AttributeValue>d3d72cf8-5509-4783-924d-b26160ce5edd</AttributeValue>
+        <AttributeValue>998061fa-2ddc-430c-a08f-9ae27a3b57f9</AttributeValue>
+        <AttributeValue>363296fb-aaa8-438f-8ee0-c9a41b9ef0b9</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.microsoft.com/identity/claims/identityprovider"">
+        <AttributeValue>https://sts.windows.net/11d0e217-264e-400a-8ba0-57dcc127d72d/</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.microsoft.com/claims/authnmethodsreferences"">
+        <AttributeValue>http://schemas.microsoft.com/ws/2008/06/identity/authenticationmethod/password</AttributeValue>
+        <AttributeValue>http://schemas.microsoft.com/ws/2008/06/identity/authenticationmethod/x509</AttributeValue>
+        <AttributeValue>http://schemas.microsoft.com/ws/2008/06/identity/authenticationmethod/windows</AttributeValue>
+        <AttributeValue>http://schemas.microsoft.com/claims/multipleauthn</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"">
+        <AttributeValue>Jacob</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"">
+        <AttributeValue>Cassidy</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"">
+        <AttributeValue>Jacob.Cassidy@dnr.wa.gov</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"">
+        <AttributeValue>Jacob.Cassidy@dnr.wa.gov</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/Lastname"">
+        <AttributeValue>Cassidy</AttributeValue>
+      </Attribute>
+      <Attribute Name=""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/Firstname"">
+        <AttributeValue>Jacob</AttributeValue>
+      </Attribute>
+    </AttributeStatement>
+    <AuthnStatement AuthnInstant=""2025-01-07T18:18:04.280Z"" SessionIndex=""_e64a647c-2289-4d2c-921c-2726c014a501"">
+      <AuthnContext>
+        <AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</AuthnContextClassRef>
+      </AuthnContext>
+    </AuthnStatement>
+  </Assertion>
+</samlp:Response>";
+
         [Test]
         [Description("For this test we want the base64 and sample pretty printed to be the same so we can debug the tests more easily")]
         public void SampleBase64AndPrettyPrintAreTheSame()
@@ -98,6 +297,29 @@ namespace ProjectFirma.Web
             Assert.That(adfsSamlResponse.GetLastName(), Is.EqualTo("RAMSEY"));
             Assert.That(adfsSamlResponse.GetEmail(), Is.EqualTo("amy.ramsey@dnr.wa.gov"));
             Assert.That(adfsSamlResponse.GetRoleGroups(), Is.EquivalentTo(new List<string>{ "G-S-DNR_WF_ForestHealth_Review" }));
+        }
+
+        [Test]
+        [Description("For this test we want the base64 and sample pretty printed to be the same so we can debug the tests more easily")]
+        public void SampleBase64AndPrettyPrintAreTheSameAzure()
+        {
+            var adfsSamlResponse = new ADFSSamlResponse();
+            adfsSamlResponse.LoadXmlFromBase64(AdfsSampleSamlBase64EncodedAzure);
+            adfsSamlResponse.Decrypt();
+            Assert.That(adfsSamlResponse.GetSamlAsPrettyPrintXml(), Is.EqualTo(AdfsSampleSamlPrettyPrintedAzure));
+        }
+
+        [Test]
+        public void TestAdfsSamlResponseAzure()
+        {
+            var adfsSamlResponse = new ADFSSamlResponse();
+            adfsSamlResponse.LoadXmlFromBase64(AdfsSampleSamlBase64EncodedAzure);
+            adfsSamlResponse.Decrypt();
+
+            Assert.That(adfsSamlResponse.GetFirstName(), Is.EqualTo("Jacob"));
+            Assert.That(adfsSamlResponse.GetLastName(), Is.EqualTo("Cassidy"));
+            Assert.That(adfsSamlResponse.GetEmail(), Is.EqualTo("Jacob.Cassidy@dnr.wa.gov"));
+            //Assert.That(adfsSamlResponse.GetRoleGroups(), Is.EquivalentTo(new List<string> { "G-S-DNR_WF_ForestHealth_Review" }));
         }
     }
 }
