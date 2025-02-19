@@ -57,6 +57,8 @@ namespace ProjectFirma.Web.Views.Program
         public string EditDefaultMappingsUrl { get; }
         public string EditCrosswalkValuesUrl { get; }
 
+        public string DownloadProjectsAsGdbUrl { get; }
+
         public DetailViewData(Person currentPerson,
                               Models.Program program)
                               : base(currentPerson, program)
@@ -70,6 +72,7 @@ namespace ProjectFirma.Web.Views.Program
             EditImportBasicsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditImportBasics(program.GisUploadSourceOrganization));
             EditDefaultMappingsUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditDefaultMappings(program.GisUploadSourceOrganization));
             EditCrosswalkValuesUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.EditCrosswalkValues(program.GisUploadSourceOrganization));
+            DownloadProjectsAsGdbUrl = SitkaRoute<ProgramController>.BuildUrlFromExpression(pc => pc.DownloadProjectsAsGdb(program));
 
             NotificationsGridSpec = new ProgramNotificationGridSpec(currentPerson, program)
             {
