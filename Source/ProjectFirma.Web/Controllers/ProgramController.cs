@@ -743,6 +743,7 @@ namespace ProjectFirma.Web.Controllers
             var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
             var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
+            projects = projects.Where(x => x.ProjectLocationPoint != null).ToList();
             projectFeatureCollection.Features.AddRange(projects.Select(x =>
             {
                 var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict);
