@@ -714,7 +714,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [ProgramManageFeature]
+        [ProgramEditMappingsFeature]
         public ActionResult DownloadProjectsAsGdb(ProgramPrimaryKey programPrimaryKey)
         {
             var program = programPrimaryKey.EntityObject;
