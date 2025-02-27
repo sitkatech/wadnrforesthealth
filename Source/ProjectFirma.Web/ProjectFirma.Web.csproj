@@ -965,6 +965,7 @@
     <Compile Include="Security\CountyViewFeature.cs" />
     <Compile Include="Security\CountyManageFeature.cs" />
     <Compile Include="Security\ProgramEditMappingsFeature.cs" />
+    <Compile Include="Security\ProgramEditorFeature.cs" />
     <Compile Include="Security\UserAndContactIndexViewFeature.cs" />
     <Compile Include="Security\VendorViewFeature.cs" />
     <Compile Include="Security\FindYourForesterManageFeature.cs" />
