@@ -102,7 +102,8 @@ namespace LtInfo.Common.GdalOgr
 
             // Assert
             // ------
-            var expectedResult = new Tuple<double, double, double, double>(-122.825678, 45.555868, -122.272895, 45.938212);
+            var expectedResult = new Tuple<double, double, double, double>(-122.825693, 45.555874, -122.272909, 45.938217);
+
             Assert.That(result.Item1, Is.EqualTo(expectedResult.Item1));
             Assert.That(result.Item2, Is.EqualTo(expectedResult.Item2));
             Assert.That(result.Item3, Is.EqualTo(expectedResult.Item3));

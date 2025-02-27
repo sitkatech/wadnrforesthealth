@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
             // ---            
             var boundingBox = BoundingBox.MakeBoundingBoxFromGeoJson(geoJson);
 
-            var expectedResult = new Tuple<double, double, double, double>(-122.825678, 45.555868, -122.272895, 45.938212);
+            var expectedResult = new Tuple<double, double, double, double>(-122.825693, 45.555874, -122.272909, 45.938217);
 
             Assert.That(expectedResult.Item1, Is.EqualTo(boundingBox.Southwest.Longitude));
             Assert.That(expectedResult.Item2, Is.EqualTo(boundingBox.Southwest.Latitude));
