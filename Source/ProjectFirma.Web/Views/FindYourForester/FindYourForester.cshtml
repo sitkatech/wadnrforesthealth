@@ -46,15 +46,12 @@
     <div class="row">
         <div class="col-md-12">
             <fieldset style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;">
-                <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Map to Zip Code or Mailing Address with Zip Code</legend>
-                <label for="txtZoomAddress">Street address, City, and State</label>
-                <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA" />
-                <label for="txtZoomZip">Zip Code</label>
-                <input id="txtZoomZip" type="text" style="width: 80px;" placeholder="12345" />
+                <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Project Map to Mailing Address or Zip Code</legend>
+                <label for="txtZoomAddress">Mailing Address or Zip Code</label> 
+                <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA or 98501" />
                 <button id="btnZoomToAddress">
                     Zoom to Address
                 </button>
-                <span style="display:none; color: red;" id="errZoomNoZipCode">Please provide a zip code for zooming the Find Your Forester Map.</span>
             </fieldset>
         </div>
         <div id="outOfStateAddressError" class="col-md-12 alert alert-danger" style="display: none;">There was a problem finding your address. Either the request failed or you selected a location outside the State of Washington. Try hitting Find Your Forester again or update your selection to be inside the State of Washington</div>
@@ -120,7 +117,7 @@
 
     jQuery(function () {
 
-        
+
 
         var findYourForesterFirmaMap = null;
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
@@ -138,7 +135,7 @@
 
 
         function populateForesterInformationAndDropMarker(latlng, failRetry) {
-            
+
             if (geocodeMarker != undefined) {
                 geocodeMarker.remove();
             };
@@ -181,8 +178,8 @@
                                 foresterDefinitionList.find('[data-forester-initial]').hide();
                             }
 
-                        } 
-                            
+                        }
+
                     });
                 } else {
                     if (failRetry) {
@@ -204,7 +201,7 @@
                     jQuery('#findYourForesterContainer > div > span').slice(6).hide();
 
                 }
-                   
+
             });
 
         }
@@ -215,32 +212,26 @@
 
 
             var dataAddress = jQuery('#txtZoomAddress').val();
-            var dataZip = jQuery('#txtZoomZip').val();
 
-            if (dataZip.trim().length === 0) {
-                jQuery('#errZoomNoZipCode').show();
-            } else {
 
-                jQuery('#errZoomNoZipCode').hide();
-                $.ajax({
-                        method: "POST",
-                        url: "@ViewDataTyped.GeocodeAddressUrl",
-                        data: { address: dataAddress, zip: dataZip }
-                    })
-                    .done(function (msg) {
-                        if (!msg.ErrorStatus) {
+            $.ajax({
+                method: "GET",
+                url: "https://wamas.watech.wa.gov/resources/web/api/Wamas/v1/Singleline?address=" + dataAddress
+            })
+            .done(function (msg) {
+                if (!msg.GeocodedAddress.Error) {
+                    var lat = msg.GeocodedAddress.Location.GcYCoord;
+                    var long = msg.GeocodedAddress.Location.GcXCoord;
+                    findYourForesterFirmaMap.map.flyTo([lat, long], 12, {duration: 1});
+                    window.setTimeout(populateForesterInformationAndDropMarker({ lng: long, lat: lat }, true), 1250);
 
-                            findYourForesterFirmaMap.map.flyTo([msg.Lat, msg.Long], 12, {duration: 1});
-                            window.setTimeout(populateForesterInformationAndDropMarker({ lng: msg.Long, lat: msg.Lat }, true), 1250);
+                } else {
+                    console.log(msg.GeocodedAddress.Error);
+                    alert(msg.GeocodedAddress.Error);
+                }
 
-                        } else {
-                            console.log(msg.ErrorStatus);
-                            alert(msg.ErrorStatus);
-                        }
-
-                    });
-            }
-
+            });
+           
         });
     });
 </script>
