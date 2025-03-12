@@ -439,11 +439,10 @@
         jQuery('#btnZoomToAddress').on("click", function() {
 
             var dataAddress = jQuery('#txtZoomAddress').val();
-
-
             $.ajax({
-                method: "GET",
-                url: "https://wamas.watech.wa.gov/resources/web/api/Wamas/v1/Singleline?address=" + dataAddress
+                    method: "POST",
+                    url: "@ViewDataTyped.GeocodeAddressUrl",
+                    data: { address: dataAddress }
             })
             .done(function (msg) {
 

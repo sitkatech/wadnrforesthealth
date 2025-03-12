@@ -38,6 +38,9 @@ using LtInfo.Common;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Shared.SortOrder;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -257,5 +260,33 @@ namespace ProjectFirma.Web.Controllers
 
             projectTypeNodes.RemoveAll(x => !x.Children.Any());
         }
+
+
+        [HttpPost]
+        [ProjectLocationsViewFeature]
+        public JsonNetJObjectResult GeocodeAddress(string address)
+        {
+
+            var url = "https://wamas.watech.wa.gov/resources/web/api/Wamas/v1/Singleline?address=" + address;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                JObject joResponse = JObject.Parse(responseBody);
+
+                return new JsonNetJObjectResult(joResponse);
+            }
+            catch (Exception e)
+            {
+                Logger.Info("Error geocoding address on Project Map", e);
+                return new JsonNetJObjectResult(new { ErrorStatus = "There was an error geocoding the provided address." });
+            }
+        }
+
+
     }
 }

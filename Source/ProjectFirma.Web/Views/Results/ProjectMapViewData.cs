@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Views.Results
             ProjectLocationsUrl = projectLocationsUrl;
             FilteredProjectsWithLocationAreasUrl = filteredProjectsWithLocationAreasUrl;
             ProjectMapViewDataForAngular = new ProjectMapViewDataForAngular(projectLocationsMapInitJson, projectLocationsMapInitJson.ProjectLocationsLayerGeoJson, projectMapLocationJsons);
+            GeocodeAddressUrl = SitkaRoute<ResultsController>.BuildUrlFromExpression(t => t.GeocodeAddress(null));
         }
     }
     public class ProjectMapViewDataForAngular

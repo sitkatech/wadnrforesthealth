@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
         public readonly MapInitJson MapInitJson;
 
         public List<FindYourForesterQuestion> RootQuestions { get; }
+        public string GeocodeAddressUrl { get; set; }
 
         public FindYourForesterViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage,
             List<FindYourForesterQuestion> findYourForesterQuestions) : base(currentPerson, firmaPage)
@@ -39,6 +40,7 @@ namespace ProjectFirma.Web.Views.FindYourForester
             PageTitle = "Find Your Forester";
             MapInitJson = mapInitJson;
             RootQuestions = findYourForesterQuestions;
+            GeocodeAddressUrl = SitkaRoute<ResultsController>.BuildUrlFromExpression(t => t.GeocodeAddress(null));
         }
 
     }
