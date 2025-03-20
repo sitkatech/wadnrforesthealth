@@ -17,7 +17,7 @@ begin
 
 	SELECT @myBoundingBox = geometry::EnvelopeAggregate(ProjectLocationPoint).ToString()
 	FROM dbo.Project
-	where ProjectID in (select cast(value as int) from string_split(@ProjectIDList, ','));
+	where ProjectID in (select cast(value as int) from string_split(@ProjectIDList, ',')) and ProjectLocationPoint is not null;
 
 	declare @g geometry = geometry::STGeomFromText(@myBoundingBox, 0);
 	insert into @rtnTable
