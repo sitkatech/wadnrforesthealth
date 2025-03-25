@@ -38,6 +38,9 @@ using LtInfo.Common;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Shared.SortOrder;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -131,96 +134,6 @@ namespace ProjectFirma.Web.Controllers
                                                   projectMapLocationJsons);
             return RazorView<ProjectMap, ProjectMapViewData>(viewData);
         }
-
-        [HttpPost]
-        [ProjectLocationsViewFeature]
-        public JsonNetJObjectResult GeocodeAddress(string address, string zip)
-        {
-            //https://wamas.watech.wa.gov/geocoder/service.asmx/FindAddress?address=&Consumer=FHT&zip=97210&city=&zip4=null
-
-            //http://geography.wa.gov/GeospatialPortal/FindAddress
-            //
-
-            var _url = "https://wamas.watech.wa.gov/geocoder/service.asmx";
-            var _action = "http://geography.wa.gov/GeospatialPortal/FindAddress";
-
-            try
-            {
-
-                XmlDocument soapEnvelopeXml = CreateSoapEnvelope(address, zip);
-                HttpWebRequest webRequest = CreateWebRequest(_url, _action);
-                InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
-
-                IAsyncResult asyncResult = webRequest.BeginGetResponse(null, null);
-
-                asyncResult.AsyncWaitHandle.WaitOne();
-
-                string soapResult;
-                using (WebResponse webResponse = webRequest.EndGetResponse(asyncResult))
-                {
-                    using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
-                    {
-                        soapResult = rd.ReadToEnd();
-                    }
-                }
-
-                XDocument xml = XDocument.Parse(soapResult);
-                var soapResponse = xml.Descendants().Where(x => x.Name.LocalName == "FindAddressResult").Select(x => new
-                {
-                    Lat = (double) x.Element(x.Name.Namespace + "latitude"),
-                    Long = (double) x.Element(x.Name.Namespace + "longitude"),
-                    ErrorStatus = (string) x.Element(x.Name.Namespace + "error_status"),
-                }).FirstOrDefault();
-
-                return new JsonNetJObjectResult(soapResponse);
-            }
-            catch (Exception e)
-            {
-                Logger.Info("Error geocoding address on Project Map", e);
-                return new JsonNetJObjectResult(new { ErrorStatus = "There was an error geocoding the provided address." });
-            }
-        }
-
-
-        private static HttpWebRequest CreateWebRequest(string url, string action)
-        {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-            webRequest.Headers.Add("SOAPAction", action);
-            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-            webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
-            return webRequest;
-        }
-
-        private static XmlDocument CreateSoapEnvelope(string address, string zip)
-        {
-            XmlDocument soapEnvelopeDocument = new XmlDocument();
-            soapEnvelopeDocument.LoadXml(
-                @"<SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"" 
-               xmlns:xsi=""http://www.w3.org/1999/XMLSchema-instance"" 
-               xmlns:xsd=""http://www.w3.org/1999/XMLSchema"">
-        <SOAP-ENV:Body>
-            <FindAddress xmlns=""http://geography.wa.gov/GeospatialPortal/"" 
-                SOAP-ENV:encodingStyle=""http://schemas.xmlsoap.org/soap/encoding/"">
-                <address>" + address + @"</address>
-                <zip>" + zip + @"</zip>
-                <city></city>
-                <zip4></zip4>
-                <Consumer>FHT</Consumer>
-            </FindAddress>
-        </SOAP-ENV:Body>
-    </SOAP-ENV:Envelope>");
-            return soapEnvelopeDocument;
-        }
-
-        private static void InsertSoapEnvelopeIntoWebRequest(XmlDocument soapEnvelopeXml, HttpWebRequest webRequest)
-        {
-            using (Stream stream = webRequest.GetRequestStream())
-            {
-                soapEnvelopeXml.Save(stream);
-            }
-        }
-
 
         private static Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> CreateProjectLocationFilterTypesAndValuesDictionary(bool showProposals)
         {
@@ -347,5 +260,33 @@ namespace ProjectFirma.Web.Controllers
 
             projectTypeNodes.RemoveAll(x => !x.Children.Any());
         }
+
+
+        [HttpPost]
+        [ProjectLocationsViewFeature]
+        public JsonNetJObjectResult GeocodeAddress(string address)
+        {
+
+            var url = "https://wamas.watech.wa.gov/resources/web/api/Wamas/v1/Singleline?address=" + address;
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                JObject joResponse = JObject.Parse(responseBody);
+
+                return new JsonNetJObjectResult(joResponse);
+            }
+            catch (Exception e)
+            {
+                Logger.Info("Error geocoding address on Project Map", e);
+                return new JsonNetJObjectResult(new { ErrorStatus = "There was an error geocoding the provided address." });
+            }
+        }
+
+
     }
 }

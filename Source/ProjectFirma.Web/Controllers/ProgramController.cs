@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
+using DocumentFormat.OpenXml.VariantTypes;
+using DocumentFormat.OpenXml.Wordprocessing;
+using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
+using LtInfo.Common.GdalOgr;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
@@ -21,6 +28,7 @@ using EditViewData = ProjectFirma.Web.Views.Program.EditViewData;
 using EditViewModel = ProjectFirma.Web.Views.Program.EditViewModel;
 using Index = ProjectFirma.Web.Views.Program.Index;
 using IndexViewData = ProjectFirma.Web.Views.Program.IndexViewData;
+using RelationshipType = ProjectFirma.Web.Models.RelationshipType;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -703,5 +711,82 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectImportBlockLists.Add(blockListEntry);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
+
+
+        [HttpGet]
+        [ProgramEditorFeature]
+        public ActionResult DownloadProjectsAsGdb(ProgramPrimaryKey programPrimaryKey)
+        {
+            var program = programPrimaryKey.EntityObject;
+            
+
+            Check.Assert(program != null);
+
+            var gdbFileName = $"ProjectsInProgram-{program.DisplayName}-{DateTime.Now.ToStringDateYearMonthDay()}.gdb";
+            var pathForGdbFileSave = $"C:\\Sitka\\WADNRForestHealth\\ProgramShapeFiles\\{gdbFileName}";
+            var pathForZip = $"{pathForGdbFileSave}.zip";
+
+            if (System.IO.File.Exists(pathForZip))
+            {
+                return File(pathForZip, "application/zip", $"{gdbFileName}.zip");
+            }
+
+            var allProjectIDsUnderProgram = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Where(p => p.ProgramID == program.ProgramID);
+            var projects = HttpRequestStorage.DatabaseEntities.Projects
+                .Join(allProjectIDsUnderProgram,
+                    p => p.ProjectID,
+                    ap => ap.ProjectID,
+                    (p, ap) => p).ToList();
+            
+            var projectFeatureCollection = new FeatureCollection();
+
+            var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
+            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
+            projects = projects.Where(x => x.ProjectLocationPoint != null).ToList();
+            projectFeatureCollection.Features.AddRange(projects.Select(x =>
+            {
+                var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict);
+                feature.Properties["FeatureColor"] = "#99b3ff";
+                return feature;
+            }).ToList());
+
+
+            var disposableJsonTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".json");
+
+            using (StreamWriter writer = new StreamWriter(disposableJsonTempFile.FileInfo.FullName))
+            {
+                writer.Write(projectFeatureCollection.ToGeoJsonString());
+            }
+
+            var ogr2OgrCommandLineRunner = new Ogr2OgrCommandLineRunner(FirmaWebConfiguration.Ogr2OgrExecutable,
+                Ogr2OgrCommandLineRunner.DefaultCoordinateSystemId,
+                FirmaWebConfiguration.HttpRuntimeExecutionTimeout.TotalMilliseconds);
+
+            var args = Ogr2OgrCommandLineRunner.BuildCommandLineArgumentsForGeoJsonToFileGdb(disposableJsonTempFile.FileInfo.FullName,
+                4326, pathForGdbFileSave, "ProjectLocationSimple", false,
+                "POINT");
+
+            ProcessUtilityResult processUtilityResult = ogr2OgrCommandLineRunner.ExecuteOgr2OgrCommand(args);
+
+            
+            ZipFile.CreateFromDirectory(pathForGdbFileSave, pathForZip, CompressionLevel.Optimal, false);
+
+            //var geomType = Ogr2OgrGeomTypes.GetOgr2OgrGeomType(ogr2OgrGeomTypeID);
+            //var workStatementElementVersion = WorkStatementElementVersions.GetWorkStatementElementVersion(workStatementElementVersionID);
+            //new DownloadWorkStatementElementShapefilesFeature().DemandPermission(TaurusSession, workStatementElementVersion);
+            //var viewModel = new DownloadWorkStatementElementShapefilesViewModel(workStatementElementVersionID, TaurusSession.TaurusSessionGuid, true, workStatementElementVersion.WorkStatementElementID);
+            //var pathForZip = geomType == Ogr2OgrGeomType.Poly ? viewModel.PolyShapefilePathZip() :
+            //    geomType == Ogr2OgrGeomType.Line ? viewModel.LineShapefilePathZip() : viewModel.PointShapefilePathZip();
+            //var name = geomType == Ogr2OgrGeomType.Poly ? "wse_polygons.zip" : geomType == Ogr2OgrGeomType.Line ? "wse_lines.zip" : "wse_points.zip";
+            //return File(pathForZip, "application/zip", name);
+
+            return File(pathForZip, "application/zip", $"{gdbFileName}.zip");
+        }
+
+
+        
+
+
     }
 }

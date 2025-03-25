@@ -233,6 +233,14 @@
                     </h3>
                 </div>
                 <div class="panel-body">
+                    
+                    @if (ViewDataTyped.UserHasProgramEditMappingsPermissions)
+                    {
+                        <div class="text-right" style="margin-bottom:10px;">
+                            <a href="@ViewDataTyped.DownloadProjectsAsGdbUrl">Download GDB of projects</a>
+                        </div>
+                    }
+                    
                     <div>
                         @Html.AgGrid(ViewDataTyped.ProjectsGridSpec, ViewDataTyped.ProjectsGridName, ViewDataTyped.ProjectsGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
                     </div>

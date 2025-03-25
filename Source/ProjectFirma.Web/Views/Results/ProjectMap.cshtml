@@ -213,15 +213,12 @@
     <div class="row">
         <div class="col-md-12">
             <fieldset style="border-bottom: 1px solid #e5e5e5; padding-bottom: 5px;">
-                <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Project Map to Zip Code or Mailing Address with Zip Code</legend>
-                <label for="txtZoomAddress">Street address, City, and State</label> 
-                <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA" />
-                <label for="txtZoomZip">Zip Code</label>
-                <input id="txtZoomZip" type="text" style="width: 80px;" placeholder="12345" />
+                <legend style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Zoom Project Map to Mailing Address or Zip Code</legend>
+                <label for="txtZoomAddress">Mailing Address or Zip Code</label> 
+                <input id="txtZoomAddress" type="text" style="width: 320px; margin-right: 10px;" placeholder="123 Main St. SE, Olympia, WA or 98501" />
                 <button id="btnZoomToAddress">
                     Zoom to Address
                 </button>
-                <span style="display:none; color: red;" id="errZoomNoZipCode">Please provide a zip code for zooming the Project Map.</span>
             </fieldset>
         </div>
     </div>
@@ -441,37 +438,31 @@
         //zoom to address
         jQuery('#btnZoomToAddress').on("click", function() {
 
-
             var dataAddress = jQuery('#txtZoomAddress').val();
-            var dataZip = jQuery('#txtZoomZip').val();
+            $.ajax({
+                    method: "POST",
+                    url: "@ViewDataTyped.GeocodeAddressUrl",
+                    data: { address: dataAddress }
+            })
+            .done(function (msg) {
 
-            if (dataZip.trim().length === 0) {
-                jQuery('#errZoomNoZipCode').show();
-            } else {
+                if (!msg.GeocodedAddress.Error) {
+                    var lat = msg.GeocodedAddress.Location.GcYCoord;
+                    var long = msg.GeocodedAddress.Location.GcXCoord;
+                    if (geocodeMarker != undefined) {
+                        geocodeMarker.remove();
+                    };
 
-                jQuery('#errZoomNoZipCode').hide();
-                $.ajax({
-                        method: "POST",
-                        url: "@ViewDataTyped.GeocodeAddressUrl",
-                    data: { address: dataAddress, zip: dataZip }
-                })
-                .done(function (msg) {
-                    if (!msg.ErrorStatus) {
+                    //Add a marker to show where you clicked.
+                    geocodeMarker = L.marker([lat, long]).addTo(projectFirmaMap.map);
+                    projectFirmaMap.map.flyTo([lat, long], 12);
 
-                        if (geocodeMarker != undefined) {
-                            geocodeMarker.remove();
-                        };
+                } else {
+                    console.log(msg.GeocodedAddress.Error);
+                    alert(msg.GeocodedAddress.Error);
+                }
 
-                        //Add a marker to show where you clicked.
-                        geocodeMarker = L.marker([msg.Lat, msg.Long]).addTo(projectFirmaMap.map);
-                        projectFirmaMap.map.flyTo([msg.Lat, msg.Long], 12);
-                    } else {
-                        console.log(msg.ErrorStatus);
-                        alert(msg.ErrorStatus);
-                    }
-
-                });
-            }
+            });
 
         });
 
@@ -502,13 +493,18 @@
 <script type="text/javascript" src="@Url.Content("~/Views/Results/ProjectMapController.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
-        function() {
-            return {
-                "AngularModel": "",
-                "AngularViewData": @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectMapViewDataForAngular).ToString(Formatting.None))
-            };
-        });
-    angular.bootstrap(jQuery("[ng-controller=\"ProjectMapController\"]"), ["ProjectFirmaApp"]);
+    jQuery(function () {
+
+        angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+            function() {
+                return {
+                    "AngularModel": "",
+                    "AngularViewData": @Html.Raw(JObject.FromObject(ViewDataTyped.ProjectMapViewDataForAngular).ToString(Formatting.None))
+                };
+            });
+        angular.bootstrap(jQuery("[ng-controller=\"ProjectMapController\"]"), ["ProjectFirmaApp"]);
+
+    });
+
     // ]]>
 </script>

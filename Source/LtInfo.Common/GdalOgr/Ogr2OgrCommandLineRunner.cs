@@ -172,7 +172,7 @@ namespace LtInfo.Common.GdalOgr
             ExecuteOgr2OgrCommand(commandLineArguments);
         }
 
-        private ProcessUtilityResult ExecuteOgr2OgrCommand(List<string> commandLineArguments)
+        public ProcessUtilityResult ExecuteOgr2OgrCommand(List<string> commandLineArguments)
         {
 
             var argumentsAsStringCombined = String.Join(" ", commandLineArguments.Select(ProcessUtility.EncodeArgumentForCommandLine).ToList());
@@ -418,6 +418,35 @@ namespace LtInfo.Common.GdalOgr
         }
 
 
-     
+        public static List<string> BuildCommandLineArgumentsForGeoJsonToFileGdb(string pathToSourceGeoJsonFile, int coordinateSystemId, string outputPath, string outputLayerName, bool update, string geometryType)
+        {
+            var commandLineArguments = new List<string>
+            {
+                update ? "-update" : null,
+                "-s_srs",
+                GetMapProjection(coordinateSystemId),
+                "-a_srs",
+                GetMapProjection(coordinateSystemId),
+                "-f",
+                "OpenFileGDB",
+                outputPath,
+                pathToSourceGeoJsonFile,
+                "-nln",
+                SanitizeStringForGdb(outputLayerName),
+                "-nlt",
+                geometryType,
+                "-append",
+            };
+
+            return commandLineArguments.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+        }
+
+        public static string SanitizeStringForGdb(string str)
+        {
+            var arr = str.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray();
+            return new string(arr).Replace(" ", "_");
+        }
+
+
     }
 }
