@@ -39,6 +39,8 @@ namespace ProjectFirma.Web.Views.Grant
         public readonly string GrantAllocationNoDataGridName;
         public readonly string GrantAllocationNoDataGridDataUrl;
 
+        public readonly bool userIsLoggedIn;
+
         public GrantIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = $"Full Grant List";
@@ -54,6 +56,8 @@ namespace ProjectFirma.Web.Views.Grant
             GrantAllocationNoDataGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, null);
             GrantAllocationNoDataGridName = "grantAllocationsNoDataGridName";
             GrantAllocationNoDataGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridWithoutAnyJsonData());
+
+            userIsLoggedIn = !currentPerson.IsAnonymousUser;
         }
     }
 }

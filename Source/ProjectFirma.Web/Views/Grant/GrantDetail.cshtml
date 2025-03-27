@@ -139,6 +139,8 @@
                                 <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
                             </div>
                         </div>
+                        @if (ViewDataTyped.isUserLoggedIn)
+                        {
                         <div class="row">
                             <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
@@ -147,6 +149,8 @@
                                 <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
                             </div>
                         </div>
+                        }
+                        
                         <div class="row">
                             <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
@@ -179,6 +183,8 @@
         </div>
     </div>
 
+    @if (ViewDataTyped.isUserLoggedIn)
+    {
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
@@ -196,6 +202,11 @@
         </div>
     </div>
 
+    }
+    
+    
+    @if (ViewDataTyped.isUserLoggedIn)
+    {
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
@@ -212,7 +223,11 @@
             </div>
         </div>
     </div>
+    }
     
+    
+    @if (ViewDataTyped.isUserLoggedIn)
+    {
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
@@ -229,6 +244,7 @@
             </div>
         </div>
     </div>
+    }
     
     <div class="row">
         <div class="col-sm-12">

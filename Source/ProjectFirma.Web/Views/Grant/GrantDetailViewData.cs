@@ -58,6 +58,8 @@ namespace ProjectFirma.Web.Views.Grant
         public string ProjectGrantAllocationRequestsGridName { get; }
         public string ProjectGrantAllocationRequestsGridDataUrl { get; }
 
+        public bool isUserLoggedIn { get; }
+
         public GrantDetailViewData(Person currentPerson,
                                     Models.Grant grant,
                                     EntityNotesViewData grantNotesViewData,
@@ -101,6 +103,8 @@ namespace ProjectFirma.Web.Views.Grant
             };
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
             ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsByGrantGridJsonData(grant));
+
+            isUserLoggedIn = !currentPerson.IsAnonymousUser;
         }
     }
 }
