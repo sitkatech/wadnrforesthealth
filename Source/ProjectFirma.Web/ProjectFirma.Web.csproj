@@ -1277,6 +1277,7 @@
     <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
+    <Compile Include="Views\Grant\ProjectGrantAllocationRequestsByGrantGridSpec.cs" />
     <Compile Include="Views\GrantModification\DuplicateGrantModification.cs" />
     <Compile Include="Views\GrantModification\DuplicateGrantModificationViewData.cs" />
     <Compile Include="Views\GrantModification\DuplicateGrantModificationViewModel.cs" />

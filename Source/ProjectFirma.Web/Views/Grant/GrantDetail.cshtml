@@ -229,6 +229,19 @@
             </div>
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                </div>
+                <div class="panel-body">
+                    @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationRequestsByGrantGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="row">
