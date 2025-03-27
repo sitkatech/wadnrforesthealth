@@ -5,10 +5,7 @@ using ProjectFirma.Web.Security.Shared;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View Program")]
-    public class ProgramViewFeature : FirmaFeature
+    public class ProgramViewFeature : AnonymousUnclassifiedFeature
     {
-        public ProgramViewFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward, Role.CanEditProgram })
-        {
-        }
     }
 }
