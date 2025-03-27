@@ -53,6 +53,8 @@ namespace ProjectFirma.Web.Views.Grant
         public string GrantAgreementGridName { get; }
         public string GrantAgreementGridDataUrl { get; }
 
+        public bool isUserLoggedIn { get; }
+
         public GrantDetailViewData(Person currentPerson,
                                     Models.Grant grant,
                                     EntityNotesViewData grantNotesViewData,
@@ -87,6 +89,8 @@ namespace ProjectFirma.Web.Views.Grant
                 new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson),
                 Models.FieldDefinition.Grant
             );
+
+            isUserLoggedIn = !currentPerson.IsAnonymousUser;
         }
     }
 }

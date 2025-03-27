@@ -42,17 +42,20 @@
     <h3>@FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()</h3>
     @Html.AgGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, null, AgGridResizeType.VerticalResizableHorizontalAutoFit)
 
-    <br />
+    @if (ViewDataTyped.userIsLoggedIn)
+    {
 
-    @* Grant Allocation Grid *@
-    <h3>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</h3>
-    <div id="grantAllocationGridAlertBox" class="alert alert-info" role="alert" style="display: none;"></div>
-    <div id="grantAllocationGridWithData">
-        @Html.AgGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
-    </div>
+        <br />
+
+        @* Grant Allocation Grid *@
+        <h3>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</h3>
+        <div id="grantAllocationGridAlertBox" class="alert alert-info" role="alert" style="display: none;"></div>
+        <div id="grantAllocationGridWithData">
+            @Html.AgGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, AgGridResizeType.VerticalFillHorizontalAutoFit)
+        </div>
 
 
-    <script>
+        <script>
 
         document.addEventListener("DOMContentLoaded", () => {
 
@@ -85,6 +88,8 @@
             @(ViewDataTyped.GrantAllocationGridName)GridOptionsApi.onFilterChanged();
 
         }
-    </script>
+        </script>
+    }
+
 </div>
 
