@@ -21,10 +21,12 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using LtInfo.Common;
+using LtInfo.Common.AgGridWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -52,6 +54,11 @@ namespace ProjectFirma.Web.Views.Grant
         public GrantAgreementGridSpec GrantAgreementGridSpec { get; }
         public string GrantAgreementGridName { get; }
         public string GrantAgreementGridDataUrl { get; }
+        public ProjectGrantAllocationRequestsByGrantGridSpec ProjectGrantAllocationRequestsByGrantGridSpec { get; }
+        public string ProjectGrantAllocationRequestsGridName { get; }
+        public string ProjectGrantAllocationRequestsGridDataUrl { get; }
+
+        public bool isUserLoggedIn { get; }
 
         public GrantDetailViewData(Person currentPerson,
                                     Models.Grant grant,
@@ -87,6 +94,17 @@ namespace ProjectFirma.Web.Views.Grant
                 new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson),
                 Models.FieldDefinition.Grant
             );
+
+            ProjectGrantAllocationRequestsByGrantGridSpec = new ProjectGrantAllocationRequestsByGrantGridSpec()
+            {
+                ObjectNameSingular = "Project",
+                ObjectNamePlural = "Projects",
+                SaveFiltersInCookie = true
+            };
+            ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
+            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsByGrantGridJsonData(grant));
+
+            isUserLoggedIn = !currentPerson.IsAnonymousUser;
         }
     }
 }

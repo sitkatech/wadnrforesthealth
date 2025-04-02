@@ -171,6 +171,10 @@ namespace ProjectFirma.Web.Views
             var programInfoMenu = new LtInfoMenuItem("Program Info");
 
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FindYourForesterController>(c => c.Index()), currentPerson, "Find Your Forester", "Group1"));
+            if (new ProgramViewFeature().HasPermissionByPerson(currentPerson))
+            {
+                programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}", "Group1"));
+            }
 
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<PriorityLandscapeController>(c => c.Index()), currentPerson, "Priority Landscapes", "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<DNRUplandRegionController>(c => c.Index()), currentPerson, Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), "Group2"));
@@ -245,12 +249,6 @@ namespace ProjectFirma.Web.Views
 
             // Group 5 - Organizations
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationAndRelationshipTypeController>(c => c.Index()), currentPerson, Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabelPluralized(), "Group5"));
-
-            if (new ProgramViewFeature().HasPermissionByPerson(currentPerson))
-            {
-                manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Program.GetFieldDefinitionLabelPluralized()}", "Group5"));
-            }
-
 
             if (new FindYourForesterManageFeature().HasPermissionByPerson(currentPerson))
             {

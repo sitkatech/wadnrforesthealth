@@ -36,6 +36,7 @@ using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
+using ProjectFirma.Web.Views.GrantAllocation;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -709,6 +710,17 @@ namespace ProjectFirma.Web.Controllers
 
             var gridSpec = new GrantAgreementGridSpec();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantsViewFeature]
+        public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsByGrantGridJsonData(GrantPrimaryKey grantPrimaryKey)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations);
+            var projectGrantAllocationRequests = grantAllocations.SelectMany(x => x.ProjectGrantAllocationRequests).ToList();
+            var gridSpec = new ProjectGrantAllocationRequestsByGrantGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectGrantAllocationRequests, gridSpec);
             return gridJsonNetJObjectResult;
         }
     }
