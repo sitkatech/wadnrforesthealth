@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.Grant
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
         public DateTime? GrantEndDate { get; set; }
 
-        [DisplayName("Grant File Upload")] // TODO
+        [DisplayName("Grant File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public List<HttpPostedFileBase> GrantFileResourceDatas { get; set; }
 
