@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.Grant
             EntityName = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
             EditGrantUrl = grant.GetEditUrl();
             UserHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            BackToGrantsText = "Back to all Grants";
+            BackToGrantsText = $"Back to all {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
             GrantsListUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
         }
     }

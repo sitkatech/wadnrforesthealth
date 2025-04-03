@@ -257,7 +257,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewGrantAllocationFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData(FieldDefinition.GrantAllocation.FieldDefinitionDisplayName);
+            var viewData = new NewFileViewData(FieldDefinition.GrantAllocation.GetFieldDefinitionLabel());
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
@@ -352,7 +352,7 @@ namespace ProjectFirma.Web.Controllers
 
             var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).OrderBy(x => x.CostTypeDisplayName).ToList();
 
-            const string chartTitle = "Grant Allocation Expenditures";
+            string chartTitle = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Expenditures";
             var chartContainerID = chartTitle.Replace(" ", "");
 
             // If ProjectGrantAllocationExpenditures is empty, ToGoogleChart returns null...
