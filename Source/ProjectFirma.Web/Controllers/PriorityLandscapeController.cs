@@ -212,7 +212,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewPriorityLandscapeFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData(FieldDefinition.PriorityLandscape.FieldDefinitionDisplayName);
+            var viewData = new NewFileViewData(FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel());
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 

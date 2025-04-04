@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Controllers
             region.GrantAllocations.ForEach(x => grantAllocationExpenditures.AddRange(x.GrantAllocationExpenditures));
             var costTypes = CostType.GetLineItemCostTypes();
 
-            const string chartTitle = "Grant Allocation Expenditures By Cost Type";
+            string chartTitle = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Expenditures By Cost Type";
             var chartContainerID = chartTitle.Replace(" ", "");
             var googleChart = grantAllocationExpenditures.ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
                 costTypes.Select(ct => ct.CostTypeDisplayName).ToList(),

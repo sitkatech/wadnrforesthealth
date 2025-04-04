@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Views.Agreement
         [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementNotes)]
         public string AgreementNotes { get; set; }
 
-        [DisplayName("Agreement File Upload")]
+        [DisplayName("File Upload")]
         //[SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase AgreementFileResourceData { get; set; }
 

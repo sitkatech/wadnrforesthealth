@@ -56,7 +56,7 @@
 
 
 
-    <p>Enter the expected funding for your @FieldDefinition.Project.GetFieldDefinitionLabel(). You may enter multiple grant allocations. For each grant allocation, provide the amount of funding that has been secured, and the amount that is targeted but not yet secured. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.</p>
+    <p>Enter the expected funding for your @FieldDefinition.Project.GetFieldDefinitionLabel(). You may enter multiple @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized(). For each @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel(), provide the amount of funding that has been secured, and the amount that is targeted but not yet secured. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.</p>
     <p>The Unfunded Need is the difference between the @FieldDefinition.Project.GetFieldDefinitionLabel()'s Estimated Total Cost and the Secured Funding.</p>
 
 <hr />
@@ -104,7 +104,7 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                     <select ng-model="GrantAllocationToAdd"
                             data-live-search="true"
                             data-container="body"
-                            data-title="Select a Grant Allocation to Add"
+                            data-title="Select a @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Add"
                             data-width="100%" class="selectpicker"
                             data-ng-options="grantAllocation as grantAllocation.DisplayName for grantAllocation in filteredGrantAllocationSimples() track by grantAllocation.GrantAllocationID">
                         <option value="null" disabled selected>Select a @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Add</option>
@@ -116,7 +116,7 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                     </span>
                 </div>
                 <p style="font-size: 12px;">
-                    Grant Allocation not listed?
+                    @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() not listed?
                     @ModalDialogFormHelper.ModalDialogFormLink("Contact support", ViewDataTyped.RequestGrantAllocationUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null)
                 </p>
             </div>

@@ -962,7 +962,7 @@ namespace ProjectFirma.Web.Models
             if (noGrantAllocationIdentifiedAmount > 0)
             {
                 var sortOrder = requestAmountsDictionary.Any() ? requestAmountsDictionary.Max(x => x.SortOrder) + 1 : 0;
-                requestAmountsDictionary.Add(new GooglePieChartSlice("No Grant Allocation Identified",
+                requestAmountsDictionary.Add(new GooglePieChartSlice($"No {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Identified",
                     noGrantAllocationIdentifiedAmount, sortOrder, "#dbdbdb"));
             }
 

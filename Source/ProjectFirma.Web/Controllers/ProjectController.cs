@@ -445,7 +445,7 @@ namespace ProjectFirma.Web.Controllers
 
         public static GoogleChartDataTable GetProjectGrantAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditureGooglePieChartSlices)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn("Grant Allocation", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn( $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
             var chartRowCs = grantAllocationExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
             {
                 var sectorRowV = new GoogleChartRowV(x.Label);
