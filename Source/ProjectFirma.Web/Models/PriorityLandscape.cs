@@ -60,9 +60,12 @@ namespace ProjectFirma.Web.Models
 
         public static List<LayerGeoJson> GetPriorityLandscapeAndAssociatedProjectLayers(PriorityLandscape priorityLandscape, List<Project> projects)
         {
-            var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
-                Project.MappedPointsToGeoJsonFeatureCollection(projects, true, false),
-                "#ffff00", 1, LayerInitialVisibility.Show);
+            //var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
+            //    Project.MappedPointsToGeoJsonFeatureCollection(projects, true, false),
+            //    "#ffff00", 1, LayerInitialVisibility.Show);
+
+            var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectLocationsSimpleWmsLayerName(), "#ffff00", 1, LayerInitialVisibility.Show, $"ProjectID in ({string.Join(",", projects.Select(x => x.ProjectID).ToList())})", true);
             var priorityLandscapeLayerGeoJson = new LayerGeoJson(priorityLandscape.DisplayName,
                 new List<PriorityLandscape> { priorityLandscape }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
@@ -92,27 +95,27 @@ namespace ProjectFirma.Web.Models
 
 
 
-            if (priorityLandscape.HasDualBenefitPrioritizationLayerData())
-            {
+            //if (priorityLandscape.HasDualBenefitPrioritizationLayerData())
+            //{
 
-                var dualBenefitPrioritizationLayer = new LayerGeoJson("DNR Landscape Evaluation Dual Benefit Prioritization", FirmaWebConfiguration.WebMapServiceUrl,
-                    FirmaWebConfiguration.GetDualBenefitPrioritizationWmsLayerName(), "", 1,
-                    LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
+            //    var dualBenefitPrioritizationLayer = new LayerGeoJson("DNR Landscape Evaluation Dual Benefit Prioritization", FirmaWebConfiguration.WebMapServiceUrl,
+            //        FirmaWebConfiguration.GetDualBenefitPrioritizationWmsLayerName(), "", 1,
+            //        LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
 
-                layerGeoJsons.Add(dualBenefitPrioritizationLayer);
+            //    layerGeoJsons.Add(dualBenefitPrioritizationLayer);
 
-            }
+            //}
 
-            if (priorityLandscape.HasPriorityRankingLayerData())
-            {
+            //if (priorityLandscape.HasPriorityRankingLayerData())
+            //{
 
-                var priorityRankingLayer = new LayerGeoJson("DNR Landscape Evaluation Priority Ranking by POD and PCL", FirmaWebConfiguration.WebMapServiceUrl,
-                    FirmaWebConfiguration.GetPriorityRankingWmsLayerName(), "", 1,
-                    LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
+            //    var priorityRankingLayer = new LayerGeoJson("DNR Landscape Evaluation Priority Ranking by POD and PCL", FirmaWebConfiguration.WebMapServiceUrl,
+            //        FirmaWebConfiguration.GetPriorityRankingWmsLayerName(), "", 1,
+            //        LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
 
-                layerGeoJsons.Add(priorityRankingLayer);
+            //    layerGeoJsons.Add(priorityRankingLayer);
 
-            }
+            //}
 
 
             return layerGeoJsons;
