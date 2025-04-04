@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Views.GrantModification
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationEndDate)]
         public DateTime GrantModificationEndDate { get; set; }
 
-        [DisplayName("Grant Modification File Upload")] // TODO: These still show; can we extend the FieldDefinitionDisplay Attribute? 
+        [DisplayName("File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public List<HttpPostedFileBase> GrantModificationFileResourceData { get; set; }
 

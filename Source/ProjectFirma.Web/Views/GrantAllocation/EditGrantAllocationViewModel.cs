@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationSource)]
         public int? SourceID { get; set; }
 
-        [DisplayName("Grant Allocation File Upload")]
+        [DisplayName("File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public List<HttpPostedFileBase> GrantAllocationFileResourceDatas { get; set; }
 
