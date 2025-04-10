@@ -15,4 +15,7 @@ insert into dbo.ForesterWorkUnit (ForesterRoleID, PersonID, ForesterWorkUnitName
 select ForesterRoleID, p.PersonID, ucf.ForesterWorkUnitName, ucf.RegionName, ucf.ForesterWorkUnitLocation
 FROM dbo.[tmpForesterWorkUnitUpdatesCoordinator] as ucf join dbo.Person as p on ucf.cr_email = p.Email
 
-select * from dbo.tmpForesterWorkUnitUpdatesCoordinator
+--select * from dbo.tmpForesterWorkUnitUpdatesCoordinator
+
+drop table dbo.tmpForesterWorkUnitUpdatesCoordinator
+drop table dbo.tmpForesterWorkUnitUpdatesUrbanTech
