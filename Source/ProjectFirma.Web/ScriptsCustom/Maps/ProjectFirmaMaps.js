@@ -645,7 +645,7 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
         var linkText = "";
         var labelText = "";
         var linkHtml = "";
-        switch (firstFeature.geometry_name) {
+    switch (firstFeature.geometry_name) {
         case "DNRUplandRegionLocation":
             url = "/DNRUplandRegion/Detail/" + firstFeature.properties.DNRUplandRegionID;
             linkText = firstFeature.properties.DNRUplandRegionName;
@@ -666,7 +666,17 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 link: linkHtml
             });
             break;
-            case "ProjectLocationGeometry":
+        case "TreatmentFeature":
+            url = "/Project/Detail/" + firstFeature.properties.ProjectID;
+            linkText = firstFeature.properties.ProjectName;
+            linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
+            labelText = "Project";
+            deferred.resolve({
+                label: labelText,
+                link: linkHtml
+            });
+            break;
+        case "ProjectLocationGeometry":
             if (this.ProjectDetailedLocationSelectedLayerUrl) {
                 var projectLocationDetailedWfsParams = {
                     service: "WFS",
@@ -700,25 +710,34 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             }
             //break; //This is intentionally commented-out to fall through to ProjectLocationPoint to get the same popup
         case "ProjectLocationPoint":
-            queryUrl = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
+            // TK 4/9/25 - At some point we moved the simple location layer from geoserver back to geojson. and the large popup is created there. commenting this out for now and replacing with a simple popup for usage on other maps that now use geoserver
+            //queryUrl = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
+            //labelText = "Project";
+
+            //var mapPopupAjaxCall = [];
+            //mapPopupAjaxCall.push(jQuery.when(jQuery.ajax({ url: queryUrl }))
+            //    .then(function(response) { return response; }));
+
+            //this.carryOutPromises(mapPopupAjaxCall).then(
+            //    function(responses) {
+            //        linkHtml = deferred.resolve({
+            //            label: labelText,
+            //            link: responses[0]
+            //        });
+            //    },
+            //    function(responses) {
+            //        console.log("error getting project popup info: " + queryUrl);
+            //        deferred.resolve(null);
+            //    }
+            //);
+            url = "/Project/Detail/" + firstFeature.properties.ProjectID;
+            linkText = firstFeature.properties.ProjectName;
+            linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
             labelText = "Project";
-
-            var mapPopupAjaxCall = [];
-            mapPopupAjaxCall.push(jQuery.when(jQuery.ajax({ url: queryUrl }))
-                .then(function(response) { return response; }));
-
-            this.carryOutPromises(mapPopupAjaxCall).then(
-                function(responses) {
-                    linkHtml = deferred.resolve({
-                        label: labelText,
-                        link: responses[0]
-                    });
-                },
-                function(responses) {
-                    console.log("error getting project popup info: " + queryUrl);
-                    deferred.resolve(null);
-                }
-            );
+            deferred.resolve({
+                label: labelText,
+                link: linkHtml
+            });
             break;
         case "WashingtonCountyLocation":
             linkText = firstFeature.properties.WashingtonCountyFullName;

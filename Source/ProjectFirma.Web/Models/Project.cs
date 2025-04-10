@@ -644,7 +644,7 @@ namespace ProjectFirma.Web.Models
 
             var layerName = $"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail";
             var layerGeoJson = new LayerGeoJson(layerName, FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetAllProjectTreatmentAreasWmsLayerName(), "#ed5e0b", (decimal)0.3, LayerInitialVisibility.Hide, $"ProjectID in ({string.Join(",", projectIDs)})", true);
+                FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "#ed5e0b", (decimal)0.3, LayerInitialVisibility.Hide, $"ProjectID in ({string.Join(",", projectIDs)})", true);
 
 
             layerGeoJson.LayerIconImageLocation = "/Content/leaflet/images/washington_location_detailed.png";
