@@ -40,31 +40,6 @@
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
 }
 
-<script type="text/javascript">
-
-    jQuery(function() {
-        jQuery("#resultsTab").on("shown.bs.tab", function() {
-            _.forOwn(window.GoogleCharts.chartWrappers,
-                function (chartWrapper) {
-                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
-                        chartWrapper.getChart().clearChart();
-                        chartWrapper.draw();
-                    }
-                });
-        });
-        jQuery("#overviewTab").on("shown.bs.tab", function () {
-            var gridName = @(ViewDataTyped.BasicProjectInfoGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName].resizeGridWidths();
-            _.forOwn(window.GoogleCharts.chartWrappers,
-                function (chartWrapper) {
-                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
-                        chartWrapper.getChart().clearChart();
-                        chartWrapper.draw();
-                    }
-                });
-        });
-    });
-</script>
 
 <div>
     <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Priority Landscapes </a>
@@ -133,33 +108,13 @@
                 </div>
 
                 <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
-                <img id="priorityRankingLegend" src="~/Content/leaflet/images/priorityRanking-legend.png" alt="" />
+                @*<img id="priorityRankingLegend" src="~/Content/leaflet/images/priorityRanking-legend.png" alt="" />*@
 
-                <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabelPluralized(), but the simple project location marker is mapped in a single location. Therefore some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside of the @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel() boundary.</p>
+                <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabelPluralized(), but the simple project location marker is mapped in a single location. Therefore, some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside the @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel() boundary.</p>
             </div>
         </div>
     </div>
-    @* 5/15/2019 TK - commenting this out for now because we do not have Project level expenditures for WADNR. May be needed in phase 2 *@
-    @*<div class="col-lg-7">
-        <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h2>Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() and @FieldDefinition.OrganizationType.GetFieldDefinitionLabel()</h2>
-                </div>
-                <div class="panel-body">
-                    @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
-                    {
-                        <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
-                            @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
-                        </div>
-                        <p>Since some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() span multiple Priority Landscapes, the @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() above may be over-reported for this Priority Area.</p>
-                    }
-                    else
-                    {
-                        <p class="systemText">No @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel() data yet provided for this Priority Area.</p>
-                    }
-                </div>
-            </div>
-        </div>*@
+
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -189,57 +144,15 @@
 
 
 
-
-@*TODO Neutered Per WA DNR #1446. May decide to bring it back later
-        <div role="tabpanel" class="tab-pane" id="performanceMeasures">
-
-            @if (ViewDataTyped.PerformanceMeasureChartViewDatas.Any())
-            {
-                <p>
-                    The reported @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() results within this @ViewDataTyped.PriorityLandscapeCategoryName are charted here. Results are included for every @FieldDefinition.Project.GetFieldDefinitionLabel() that is assigned to this @ViewDataTyped.PriorityLandscapeCategoryName. To see the full results for a @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel(), click the @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() name in the chart title.
-                </p>
-                foreach (var batch in ViewDataTyped.PerformanceMeasureChartViewDatas.Batch(2))
-                {
-                    <div class="row">
-                        @foreach (var performanceMeasureChartViewData in batch)
-                        {
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                <div class="panel panelFirma">
-                                    <div class="panel-body">
-                                        <div style="width: 500px; margin: auto;">
-                                            @{ PerformanceMeasureChart.RenderPartialView(Html, performanceMeasureChartViewData); }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="row">
-                    <div class="col-xs-12">
-                        <p class="text-center">
-                            There are no @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized() to report for this @ViewDataTyped.PriorityLandscapeCategoryName.
-                        </p>
-                    </div>
-                </div>
-            }
-
-    </div>*@
-
 <script type="text/javascript">
     jQuery(function()
     {
         var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
         var map = new ProjectFirmaMaps.Map(mapInitJson);
 
-        jQuery("#overviewTab").on("shown.bs.tab", function() {
-            map.map.invalidateSize();
-        });
 
-        jQuery('#priorityRankingLegend').hide();
+
+        @*jQuery('#priorityRankingLegend').hide();
 
         map.map.on('layeradd', function (e) {
 
@@ -253,7 +166,7 @@
             if (typeof(e.layer.wmsParams) !== 'undefined' && e.layer.wmsParams.layers == '@FirmaWebConfiguration.GetPriorityRankingWmsLayerName()') {
                 jQuery('#priorityRankingLegend').hide();
             }
-        });
+        });*@
 
     });
 </script>

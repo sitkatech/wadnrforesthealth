@@ -61,26 +61,7 @@ namespace ProjectFirma.Web.Controllers
             var layers = PriorityLandscape.GetPriorityLandscapeAndAssociatedProjectLayers(priorityLandscape, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForPriorityLandscape(), new BoundingBox(priorityLandscape.PriorityLandscapeLocation));
 
-            var projectGrantAllocationExpenditures = associatedProjects.SelectMany(x => x.ProjectGrantAllocationExpenditures);
-            var organizationTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypes.ToList();
-
-            const string chartTitle = "Reported Expenditures By Organization Type";
-            var chartContainerID = chartTitle.Replace(" ", "");
-            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
-                organizationTypes.Select(x => x.OrganizationTypeName).ToList(),
-                x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
-                chartContainerID,
-                chartTitle);
-
-            var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 405, true);
-
-            var performanceMeasures = associatedProjects
-                .SelectMany(x => x.PerformanceMeasureActuals)
-                .Select(x => x.PerformanceMeasure).Distinct()
-                .OrderBy(x => x.PerformanceMeasureDisplayName)
-                .ToList();
-
-            var viewData = new DetailViewData(CurrentPerson, priorityLandscape, mapInitJson, viewGoogleChartViewData, performanceMeasures);
+            var viewData = new DetailViewData(CurrentPerson, priorityLandscape, mapInitJson);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
@@ -231,7 +212,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewPriorityLandscapeFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData(FieldDefinition.PriorityLandscape.FieldDefinitionDisplayName);
+            var viewData = new NewFileViewData(FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel());
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 

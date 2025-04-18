@@ -77,7 +77,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 <select ng-model="GrantAllocationToAdd"
                         data-live-search="true"
                         data-container="body"
-                        data-title="Select a Grant Allocation to Add"
+                        data-title="Select a @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Add"
                         data-width="100%" class="selectpicker"
                         data-ng-options="grantAllocation as grantAllocation.DisplayName for grantAllocation in filteredGrantAllocations() track by grantAllocation.GrantAllocationID">
                     <option value="null" disabled selected>Select a @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Add</option>
@@ -89,7 +89,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 </span>
             </div>
             <p style="font-size: 12px;">
-                Grant Allocation not listed?
+                @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() not listed?
                 @ModalDialogFormHelper.ModalDialogFormLink("Contact support", ViewDataTyped.RequestGrantAllocationUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null)
             </p>
         </div>

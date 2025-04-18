@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.GrantModification.Grant.GetGrantNumberAsUrl(), 140, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.FocusArea.ToGridHeaderString(), x => x.FocusArea.GetDisplayNameAsUrl(), 140, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, AgGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString($"Funding {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardAmount.ToGridHeaderString(), x => x.GrantAllocationAwardAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add("Spent Amount", x => x.SpentAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add("Remaining Amount", x => x.Balance, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);

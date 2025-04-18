@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.Grant
 
         public GrantIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = $"Full Grant List";
+            PageTitle = $"Full {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List";
 
             GrantGridSpec = new GrantGridSpec(currentPerson);
             GrantGridName = "grantsGridName";

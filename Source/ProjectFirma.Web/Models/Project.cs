@@ -631,16 +631,22 @@ namespace ProjectFirma.Web.Models
 
             var projectIDs = projects.Select(x => x.ProjectID).ToList();
 
-            var projectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations
-                .Where(x => projectIDs.Contains(x.ProjectID)).ToList();
+            //var projectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations
+            //    .Where(x => projectIDs.Contains(x.ProjectID)).ToList();
 
 
-            var detailedLocationsByTypeGeoJsonFeatureCollection = projectLocations.ToGeoJsonFeatureCollectionWithPopupUrl();
+            //var detailedLocationsByTypeGeoJsonFeatureCollection = projectLocations.ToGeoJsonFeatureCollectionWithPopupUrl();
 
-            var layerGeoJson =
-                new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail",
-                    detailedLocationsByTypeGeoJsonFeatureCollection, "#ed5e0b", (decimal) 0.3,
-                    LayerInitialVisibility.Hide);
+            //var layerGeoJson =
+            //    new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail",
+            //        detailedLocationsByTypeGeoJsonFeatureCollection, "#ed5e0b", (decimal) 0.3,
+            //        LayerInitialVisibility.Hide);
+
+            var layerName = $"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail";
+            var layerGeoJson = new LayerGeoJson(layerName, FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "#ed5e0b", (decimal)0.3, LayerInitialVisibility.Hide, $"ProjectID in ({string.Join(",", projectIDs)})", true);
+
+
             layerGeoJson.LayerIconImageLocation = "/Content/leaflet/images/washington_location_detailed.png";
 
 
@@ -654,23 +660,28 @@ namespace ProjectFirma.Web.Models
             var projectIDs = projects.Select(x => x.ProjectID).ToList();
 
 
-            var projectTreatments = HttpRequestStorage.DatabaseEntities.Treatments
-                .Where(x => projectIDs.Contains(x.ProjectID))
-                .Include(x => x.ProjectLocation)
-                .ToList();
+            //var projectTreatments = HttpRequestStorage.DatabaseEntities.Treatments
+            //    .Where(x => projectIDs.Contains(x.ProjectID))
+            //    .Include(x => x.ProjectLocation)
+            //    .ToList();
 
-            if (!projectTreatments.Any())
-            {
-                return null;
-            }
+            //if (!projectTreatments.Any())
+            //{
+            //    return null;
+            //}
 
 
-            var detailedLocationsByTypeGeoJsonFeatureCollection = projectTreatments.ToGeoJsonFeatureCollectionWithPopupUrl();
+            //var detailedLocationsByTypeGeoJsonFeatureCollection = projectTreatments.ToGeoJsonFeatureCollectionWithPopupUrl();
             var layerName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Treatment Areas";
-            var layerGeoJson =
-                new LayerGeoJson(layerName,
-                    detailedLocationsByTypeGeoJsonFeatureCollection, "#355e3b", (decimal)0.3,
-                    LayerInitialVisibility.Hide);
+            //var layerGeoJson =
+            //    new LayerGeoJson(layerName,
+            //        detailedLocationsByTypeGeoJsonFeatureCollection, "#355e3b", (decimal)0.3,
+            //        LayerInitialVisibility.Hide);
+            //layerGeoJson.LayerIconImageLocation = "/Content/leaflet/images/washington_project_treatment.png";
+
+            var layerGeoJson = new LayerGeoJson(layerName, FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectTreatmentAreasWmsLayerName(), "#355e3b", (decimal)0.3, LayerInitialVisibility.Hide, $"ProjectID in ({string.Join(",", projectIDs)})", true);
+
             layerGeoJson.LayerIconImageLocation = "/Content/leaflet/images/washington_project_treatment.png";
 
 
@@ -951,7 +962,7 @@ namespace ProjectFirma.Web.Models
             if (noGrantAllocationIdentifiedAmount > 0)
             {
                 var sortOrder = requestAmountsDictionary.Any() ? requestAmountsDictionary.Max(x => x.SortOrder) + 1 : 0;
-                requestAmountsDictionary.Add(new GooglePieChartSlice("No Grant Allocation Identified",
+                requestAmountsDictionary.Add(new GooglePieChartSlice($"No {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Identified",
                     noGrantAllocationIdentifiedAmount, sortOrder, "#dbdbdb"));
             }
 

@@ -10,8 +10,8 @@ select
 	pa.ProjectID,
 	p.ProjectName,
     p.FhtProjectNumber,
-	pl.ProjectLocationGeometry as Ogr_Geometry,
-    pl.ProjectLocationGeometry as TreatmentFeature
+    pl.ProjectLocationGeometry as TreatmentFeature,
+	pl.ProjectLocationGeometry as Ogr_Geometry
 	
 from
 	dbo.Treatment as pa

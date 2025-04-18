@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Views.Grant
             if (userHasCreatePermissions && createButtonType == GrantAllocationGridCreateButtonType.Shown)
             {
                 var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New(optionalRelevantGrant));
-                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, "Create a new Grant Allocation");
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}");
             }
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (userHasCreatePermissions)
             {
-                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, "Duplicate Grant Allocation"), 30, AgGridColumnFilterType.None);
+                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantModification.Grant.GrantNumber, GrantNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);

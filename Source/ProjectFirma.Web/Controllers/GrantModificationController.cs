@@ -237,7 +237,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNewGrantModificationFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData(FieldDefinition.GrantModification.FieldDefinitionDisplayName);
+            var viewData = new NewFileViewData(FieldDefinition.GrantModification.GetFieldDefinitionLabel());
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
