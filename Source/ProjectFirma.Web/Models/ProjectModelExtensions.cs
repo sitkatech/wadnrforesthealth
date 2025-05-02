@@ -52,12 +52,6 @@ namespace ProjectFirma.Web.Models
             return project.IsProposal() ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(t => t.EditBasics(project.ProjectID)) : EditUrlTemplate.ParameterReplace(project.ProjectID);
         }
 
-        public static readonly UrlTemplate<int> EditProjectAttributesUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.EditProjectAttributes(UrlTemplate.Parameter1Int)));
-        public static string GetEditProjectAttributesUrl(this Project project)
-        {
-            return project.IsProposal() ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(t => t.EditBasics(project.ProjectID)) : EditProjectAttributesUrlTemplate.ParameterReplace(project.ProjectID);
-        }
-
         public static readonly UrlTemplate<int> ProjectCreateUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(t => t.EditBasics(UrlTemplate.Parameter1Int)));
         public static string GetProjectCreateUrl(this Project project)
         {

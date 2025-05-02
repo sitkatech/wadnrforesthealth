@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     public class ProposalSectionsStatus
     {
         public bool IsBasicsSectionComplete { get; set; }
-        public bool IsCustomAttributesSectionComplete { get; set; }
         public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
@@ -53,9 +52,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             var basicsResults = new BasicsViewModel(project).GetValidationResults();
             IsBasicsSectionComplete = !basicsResults.Any();
-
-            var customAttributeResults = new CustomAttributesViewModel(project).GetValidationResults();
-            IsCustomAttributesSectionComplete = !customAttributeResults.Any();
 
             var locationSimpleValidationResults = new LocationSimpleViewModel(project).GetValidationResults();
             IsProjectLocationSimpleSectionComplete = !locationSimpleValidationResults.Any();

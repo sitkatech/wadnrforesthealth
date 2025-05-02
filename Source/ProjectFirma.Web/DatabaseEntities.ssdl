@@ -121,11 +121,6 @@
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.Store.ProjectCounty" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCountyUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdateValue" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeValue" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.Store.ProjectDocument" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocumentType" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentUpdate" store:Type="Tables" Schema="dbo" />
@@ -161,7 +156,6 @@
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.Store.ProjectTag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectType" EntityType="ProjectFirma.Web.Models.Store.ProjectType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectTypePerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ProjectTypePerformanceMeasure" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectTypeProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectTypeProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateConfiguration" store:Type="Tables" Schema="dbo" />
@@ -1129,30 +1123,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttribute_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
-      <End Role="ProjectCustomAttributeUpdate" EntitySet="ProjectCustomAttributeUpdate" />
-      <End Role="ProjectCustomAttributeUpdateValues" EntitySet="ProjectCustomAttributeUpdateValue" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID">
-      <End Role="ProjectCustomAttribute" EntitySet="ProjectCustomAttribute" />
-      <End Role="ProjectCustomAttributeValues" EntitySet="ProjectCustomAttributeValue" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectDocument_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectDocument_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
@@ -1428,14 +1398,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="ProjectTypePerformanceMeasures" EntitySet="ProjectTypePerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID">
-      <End Role="ProjectType" EntitySet="ProjectType" />
-      <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
@@ -2952,51 +2914,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="CountyID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ProjectCustomAttribute">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeType">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeTypeID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomAttributeTypeName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="ProjectCustomAttributeDataTypeID" Type="int" Nullable="false" />
-    <Property Name="MeasurementUnitTypeID" Type="int" />
-    <Property Name="IsRequired" Type="bit" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeDescription" Type="varchar" MaxLength="200" />
-    <Property Name="ProjectCustomAttributeTypeOptionsSchema" Type="varchar(max)" />
-    <Property Name="ApplyToAllProjectTypes" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeUpdate">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeUpdateValue">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeUpdateValueID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeUpdateValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomAttributeUpdateID" Type="int" Nullable="false" />
-    <Property Name="AttributeValue" Type="varchar" Nullable="false" MaxLength="1000" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeValue">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeValueID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomAttributeID" Type="int" Nullable="false" />
-    <Property Name="AttributeValue" Type="varchar" Nullable="false" MaxLength="1000" />
-  </EntityType>
   <EntityType Name="ProjectDocument">
     <Key>
       <PropertyRef Name="ProjectDocumentID" />
@@ -3361,14 +3278,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectTypeID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="IsPrimaryProjectType" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectTypeProjectCustomAttributeType">
-    <Key>
-      <PropertyRef Name="ProjectTypeProjectCustomAttributeTypeID" />
-    </Key>
-    <Property Name="ProjectTypeProjectCustomAttributeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectTypeID" Type="int" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectUpdate">
     <Key>
@@ -6351,78 +6260,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectCustomAttribute_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectCustomAttributes" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributes">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" Multiplicity="1" />
-    <End Role="ProjectCustomAttributes" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributes">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeUpdates" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeUpdates">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeUpdates" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
-    <End Role="ProjectCustomAttributeUpdate" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeUpdateValues" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdateValue" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeUpdate">
-        <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeUpdateValues">
-        <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID">
-    <End Role="ProjectCustomAttribute" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeValues" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeValue" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttribute">
-        <PropertyRef Name="ProjectCustomAttributeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeValues">
-        <PropertyRef Name="ProjectCustomAttributeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectDocument_FileResource_FileResourceID">
     <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
     <End Role="ProjectDocuments" Type="ProjectFirma.Web.Models.Store.ProjectDocument" Multiplicity="*" />
@@ -7247,30 +7084,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
         <PropertyRef Name="ProjectTypeID" />
       </Principal>
       <Dependent Role="ProjectTypePerformanceMeasures">
-        <PropertyRef Name="ProjectTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" Multiplicity="1" />
-    <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.Store.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectTypeProjectCustomAttributeTypes">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID">
-    <End Role="ProjectType" Type="ProjectFirma.Web.Models.Store.ProjectType" Multiplicity="1" />
-    <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.Store.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectType">
-        <PropertyRef Name="ProjectTypeID" />
-      </Principal>
-      <Dependent Role="ProjectTypeProjectCustomAttributeTypes">
         <PropertyRef Name="ProjectTypeID" />
       </Dependent>
     </ReferentialConstraint>

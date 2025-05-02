@@ -156,9 +156,6 @@ namespace ProjectFirma.Web.Models
             // Documents
             ProjectDocumentUpdate.CreateFromProject(projectUpdateBatch);
 
-            // Custom attributes
-            ProjectCustomAttributeUpdate.CreateFromProject(projectUpdateBatch);
-
             return projectUpdateBatch;
         }
 
@@ -306,14 +303,6 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectUpdatePrograms);
         }
 
-        public void DeleteProjectAttributeUpdates()
-        {
-            var values = ProjectCustomAttributeUpdates.SelectMany(x => x.ProjectCustomAttributeUpdateValues).ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.DeleteProjectCustomAttributeUpdateValue(values);
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.DeleteProjectCustomAttributeUpdate(ProjectCustomAttributeUpdates);
-            RefreshFromDatabase(ProjectCustomAttributeUpdates);
-        }
-
         public void DeleteProjectContactUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.DeleteProjectPersonUpdate(ProjectPersonUpdates);
@@ -350,24 +339,6 @@ namespace ProjectFirma.Web.Models
             private set => _areProjectBasicsValid = value;
         }
 
-        public ProjectAttributeValidationResult ValidateProjectAttributes()
-        {
-            return new ProjectAttributeValidationResult(ProjectUpdate);
-        }
-
-        private bool? _areProjectAttributesValid;
-        public bool AreProjectAttributesValid
-        {
-            get
-            {
-                if (!_areProjectAttributesValid.HasValue)
-                {
-                    _areProjectAttributesValid = ValidateProjectAttributes().IsValid;
-                }
-                return _areProjectAttributesValid.Value;
-            }
-            private set => _areProjectAttributesValid = value;
-        }
 
         public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;
 
@@ -586,8 +557,6 @@ namespace ProjectFirma.Web.Models
             IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
-            IList<ProjectCustomAttribute> allProjectCustomAttributes,
-            IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
             IList<ProjectPerson> allProjectPersons,
             IList<ProjectProgram> allProjectPrograms,
             IList<Treatment> allTreatments)
@@ -610,8 +579,6 @@ namespace ProjectFirma.Web.Models
                 projectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
-                allProjectCustomAttributes,
-                allProjectCustomAttributeValues,
                 allProjectPersons,
                 allProjectPrograms,
                 allTreatments);
@@ -649,8 +616,6 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
-                IList<ProjectCustomAttribute> allProjectCustomAttributes,
-                IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
                 IList<ProjectPerson> allProjectPeople,
                 IList<ProjectProgram> allProjectPrograms,
                 IList<Treatment> allTreatments)
@@ -722,9 +687,6 @@ namespace ProjectFirma.Web.Models
 
             // Documents
             ProjectDocumentUpdate.CommitChangesToProject(this, allProjectDocuments);
-
-            // Project Custom Attributes
-            ProjectCustomAttributeUpdate.CommitChangesToProject(this, allProjectCustomAttributes, allProjectCustomAttributeValues);
 
             // Treatments
             TreatmentUpdate.CommitChangesToProject(this, allTreatments);

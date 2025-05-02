@@ -44,8 +44,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypePendingProjects PendingProjects = FirmaPageTypePendingProjects.Instance;
         public static readonly FirmaPageTypeTraining Training = FirmaPageTypeTraining.Instance;
         public static readonly FirmaPageTypeCustomFooter CustomFooter = FirmaPageTypeCustomFooter.Instance;
-        public static readonly FirmaPageTypeManageProjectCustomAttributeTypeInstructions ManageProjectCustomAttributeTypeInstructions = FirmaPageTypeManageProjectCustomAttributeTypeInstructions.Instance;
-        public static readonly FirmaPageTypeManageProjectCustomAttributeTypesList ManageProjectCustomAttributeTypesList = FirmaPageTypeManageProjectCustomAttributeTypesList.Instance;
         public static readonly FirmaPageTypeFactSheetCustomText FactSheetCustomText = FirmaPageTypeFactSheetCustomText.Instance;
         public static readonly FirmaPageTypeFocusAreasList FocusAreasList = FirmaPageTypeFocusAreasList.Instance;
         public static readonly FirmaPageTypeFullGrantList FullGrantList = FirmaPageTypeFullGrantList.Instance;
@@ -75,7 +73,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -191,10 +189,6 @@ namespace ProjectFirma.Web.Models
                     return InternalSetupNotes;
                 case FirmaPageTypeEnum.ManageFindYourForester:
                     return ManageFindYourForester;
-                case FirmaPageTypeEnum.ManageProjectCustomAttributeTypeInstructions:
-                    return ManageProjectCustomAttributeTypeInstructions;
-                case FirmaPageTypeEnum.ManageProjectCustomAttributeTypesList:
-                    return ManageProjectCustomAttributeTypesList;
                 case FirmaPageTypeEnum.ManageUpdateNotifications:
                     return ManageUpdateNotifications;
                 case FirmaPageTypeEnum.MyProjects:
@@ -274,8 +268,6 @@ namespace ProjectFirma.Web.Models
         PendingProjects = 48,
         Training = 49,
         CustomFooter = 51,
-        ManageProjectCustomAttributeTypeInstructions = 52,
-        ManageProjectCustomAttributeTypesList = 53,
         FactSheetCustomText = 54,
         FocusAreasList = 55,
         FullGrantList = 56,
@@ -446,18 +438,6 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeCustomFooter(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeCustomFooter Instance = new FirmaPageTypeCustomFooter(51, @"CustomFooter", @"Custom Footer", 1);
-    }
-
-    public partial class FirmaPageTypeManageProjectCustomAttributeTypeInstructions : FirmaPageType
-    {
-        private FirmaPageTypeManageProjectCustomAttributeTypeInstructions(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeManageProjectCustomAttributeTypeInstructions Instance = new FirmaPageTypeManageProjectCustomAttributeTypeInstructions(52, @"ManageProjectCustomAttributeTypeInstructions", @"Manage Project Custom Attribute Type Instructions", 2);
-    }
-
-    public partial class FirmaPageTypeManageProjectCustomAttributeTypesList : FirmaPageType
-    {
-        private FirmaPageTypeManageProjectCustomAttributeTypesList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeManageProjectCustomAttributeTypesList Instance = new FirmaPageTypeManageProjectCustomAttributeTypesList(53, @"ManageProjectCustomAttributeTypesList", @"Manage Project Custom Attribute Types List", 2);
     }
 
     public partial class FirmaPageTypeFactSheetCustomText : FirmaPageType

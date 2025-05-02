@@ -35,7 +35,6 @@ namespace ProjectFirma.Web.Models
             this.ProgramNotificationSentProjects = new HashSet<ProgramNotificationSentProject>();
             this.ProjectClassifications = new HashSet<ProjectClassification>();
             this.ProjectCounties = new HashSet<ProjectCounty>();
-            this.ProjectCustomAttributes = new HashSet<ProjectCustomAttribute>();
             this.ProjectDocuments = new HashSet<ProjectDocument>();
             this.ProjectExemptReportingYears = new HashSet<ProjectExemptReportingYear>();
             this.ProjectExternalLinks = new HashSet<ProjectExternalLink>();
@@ -147,7 +146,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementProjects.Any() || GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || InvoicePaymentRequests.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProgramNotificationSentProjects.Any() || ProjectClassifications.Any() || ProjectCounties.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectImportBlockLists.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
+            return AgreementProjects.Any() || GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || InvoicePaymentRequests.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProgramNotificationSentProjects.Any() || ProjectClassifications.Any() || ProjectCounties.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectImportBlockLists.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -205,11 +204,6 @@ namespace ProjectFirma.Web.Models
             if(ProjectCounties.Any())
             {
                 dependentObjects.Add(typeof(ProjectCounty).Name);
-            }
-
-            if(ProjectCustomAttributes.Any())
-            {
-                dependentObjects.Add(typeof(ProjectCustomAttribute).Name);
             }
 
             if(ProjectDocuments.Any())
@@ -317,7 +311,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(AgreementProject).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(InvoicePaymentRequest).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProgramNotificationSentProject).Name, typeof(ProjectClassification).Name, typeof(ProjectCounty).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(AgreementProject).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(InvoicePaymentRequest).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProgramNotificationSentProject).Name, typeof(ProjectClassification).Name, typeof(ProjectCounty).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -388,11 +382,6 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in ProjectCounties.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectCustomAttributes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -545,7 +534,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProgramNotificationSentProject> ProgramNotificationSentProjects { get; set; }
         public virtual ICollection<ProjectClassification> ProjectClassifications { get; set; }
         public virtual ICollection<ProjectCounty> ProjectCounties { get; set; }
-        public virtual ICollection<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
         public virtual ICollection<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
         public virtual ICollection<ProjectExternalLink> ProjectExternalLinks { get; set; }

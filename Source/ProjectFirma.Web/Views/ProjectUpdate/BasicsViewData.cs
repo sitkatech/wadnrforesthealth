@@ -45,7 +45,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public Models.ProjectUpdate ProjectUpdate { get; }
         public SectionCommentsViewData SectionCommentsViewData { get; }
 
-        public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; private set; }
 
         public string ImportedFieldWarningMessage { get; set; }
 
@@ -54,7 +53,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             IEnumerable<ProjectStage> projectStages, 
             UpdateStatus updateStatus,
             BasicsValidationResult basicsValidationResult,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, 
             List<Models.FocusArea> focusAreas, 
             List<Models.Program> allPrograms,
             string importedFieldWarningMessage)
@@ -71,8 +69,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshBasics(Project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffBasics(Project));
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdate.ProjectUpdateBatch.BasicsComment, projectUpdate.ProjectUpdateBatch.IsReturned);            
-                        
-            ProjectCustomAttributeTypes = projectCustomAttributeTypes;
+            
             BasicsViewDataForAngular = new BasicsViewDataForAngular(allPrograms.Select(x=>new ProgramSimple(x)).ToList(), projectUpdate.ProjectUpdateBatchID);
             ImportedFieldWarningMessage = importedFieldWarningMessage;
         }

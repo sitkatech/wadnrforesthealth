@@ -272,10 +272,9 @@ namespace ProjectFirma.Web.Controllers
             var updateStatus = GetUpdateStatus(projectUpdate.ProjectUpdateBatch); // note, the way the diff for the basics section is built, it will actually "commit" the updated values to the project, so it needs to be done last, or we need to change the current approach
 
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, projectCustomAttributeTypes, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -318,63 +317,6 @@ namespace ProjectFirma.Web.Controllers
                 new ConfirmDialogFormViewData(
                     $"Are you sure you want to refresh the {FieldDefinition.Project.GetFieldDefinitionLabel()} basics data? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and any updates made in this section will be lost.");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-
-
-
-        [HttpGet]
-        [ProjectUpdateCreateEditSubmitFeature]
-        public ActionResult ProjectAttributes(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            if (projectUpdateBatch == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
-            }
-            var projectUpdate = projectUpdateBatch.ProjectUpdate;
-            var viewModel = new CustomAttributesViewModel(projectUpdate);
-            return ViewProjectAttributes(projectUpdate, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectUpdateCreateEditSubmitFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult ProjectAttributes(ProjectPrimaryKey projectPrimaryKey, CustomAttributesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            if (projectUpdateBatch == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
-            }
-            var projectUpdate = projectUpdateBatch.ProjectUpdate;
-            if (!ModelState.IsValid)
-            {
-                return ViewProjectAttributes(projectUpdate, viewModel);
-            }
-
-            if (projectUpdateBatch.IsSubmitted)
-            {
-                projectUpdateBatch.ProjectAttributesComment = viewModel.Comments;
-            }
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabelPluralized()} successfully saved.");
-
-            viewModel.UpdateModel(projectUpdate, CurrentPerson);
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
-                "ProjectAttributes");// 10/20/2023 AM & TK : previous code called this, removed from lookup to skip section temporarily ProjectUpdateSection.ProjectAttributes.ProjectUpdateSectionDisplayName
-
-        }
-
-        private ViewResult ViewProjectAttributes(ProjectUpdate projectUpdate, CustomAttributesViewModel viewModel)
-        {
-            var basicsValidationResult = projectUpdate.ProjectUpdateBatch.ValidateProjectAttributes();
-            var updateStatus = GetUpdateStatus(projectUpdate.ProjectUpdateBatch); // note, the way the diff for the basics section is built, it will actually "commit" the updated values to the project, so it needs to be done last, or we need to change the current approach
-            var projectCustomAttributeTypes = projectUpdate.ProjectUpdateBatch.Project.ProjectType
-                .GetProjectCustomAttributeTypesForThisProjectType();
-            var viewData = new CustomAttributesViewData(CurrentPerson, projectUpdate, updateStatus, basicsValidationResult, projectCustomAttributeTypes);
-            return RazorView<CustomAttributes, CustomAttributesViewData, CustomAttributesViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
@@ -1801,10 +1743,6 @@ namespace ProjectFirma.Web.Controllers
             var allProjectPeople = HttpRequestStorage.DatabaseEntities.ProjectPeople.Local;
             HttpRequestStorage.DatabaseEntities.ProjectDocuments.Load();
             var allProjectDocuments = HttpRequestStorage.DatabaseEntities.ProjectDocuments.Local;
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.Load();
-            var allProjectCustomAttributes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.Local;
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.Load();
-            var allProjectCustomAttributeValues = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.Local;
             HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
             var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
             HttpRequestStorage.DatabaseEntities.Treatments.Load();
@@ -1829,8 +1767,6 @@ namespace ProjectFirma.Web.Controllers
                 allprojectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
-                allProjectCustomAttributes,
-                allProjectCustomAttributeValues,
                 allProjectPeople,
                 allProjectPrograms,
                 allTreatments);
@@ -2204,31 +2140,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        [HttpGet]
-        [ProjectUpdateCreateEditSubmitFeature]
-        public PartialViewResult DiffProjectAttributes(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var htmlDiffContainer = DiffProjectAttributesImpl(projectPrimaryKey);
-            var htmlDiff = new HtmlDiff.HtmlDiff(htmlDiffContainer.OriginalHtml, htmlDiffContainer.UpdatedHtml);
-            return ViewHtmlDiff(htmlDiff.Build(), string.Empty);
-        }
 
-        private HtmlDiffContainer DiffProjectAttributesImpl(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {FieldDefinition.Project.GetFieldDefinitionLabel()} Update for {FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
-            var projectCustomAttributesOriginal = new ProjectCustomAttributes(project);
-            var projectUpdate = projectUpdateBatch.ProjectUpdate;
-            var projectCustomAttributesUpdated = new ProjectCustomAttributes(projectUpdate);
-
-            var originalProjectAttributesHtml = GeneratePartialViewForOriginalProjectCustomAttributes(projectCustomAttributesOriginal, projectCustomAttributesUpdated);
-            var updatedProjectAttributesHtml = GeneratePartialViewForUpdatedProjectCustomAttributes(projectCustomAttributesOriginal, projectCustomAttributesUpdated);
-
-            var originalHtml = originalProjectAttributesHtml;
-            var updatedHtml = updatedProjectAttributesHtml;
-
-            return new HtmlDiffContainer(originalHtml, updatedHtml);
-        }
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
@@ -2865,41 +2777,6 @@ namespace ProjectFirma.Web.Controllers
             return GeneratePartialViewForNotes(externalLinksOriginal);
         }
 
-        private string GeneratePartialViewForOriginalProjectCustomAttributes(ProjectCustomAttributes projectCustomAttributesOriginal, ProjectCustomAttributes projectCustomAttributesUpdated)
-        {
-            //var urlsInOriginal = customAttributesOriginal.Select(x => x.Note).Distinct().ToList();
-            //var urlsInModified = entityNotesUpdated.Select(x => x.Note).Distinct().ToList();
-            //var urlsOnlyInOriginal = urlsInOriginal.Where(x => !urlsInModified.Contains(x)).ToList();
-
-            //var externalLinksOriginal = EntityNote.CreateFromEntityNote(entityNotesOriginal);
-            //var externalLinksUpdated = EntityNote.CreateFromEntityNote(entityNotesUpdated);
-            //// find the ones that are only in the modified set and add them and mark them as "added"
-            //externalLinksOriginal.AddRange(
-            //    externalLinksUpdated.Where(x => !urlsInOriginal.Contains(x.Note))
-            //        .Select(x => new EntityNote(x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, HtmlDiffContainer.DisplayCssClassAddedElement))
-            //        .ToList());
-            //// find the ones only in original and mark them as "deleted"
-            //externalLinksOriginal.Where(x => urlsOnlyInOriginal.Contains(x.Note)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
-            return GeneratePartialViewForProjectAttributes(projectCustomAttributesOriginal);
-        }
-
-        private string GeneratePartialViewForUpdatedProjectCustomAttributes(ProjectCustomAttributes projectCustomAttributesOriginal, ProjectCustomAttributes projectCustomAttributesUpdated)
-        {
-            //var urlsInOriginal = customAttributesOriginal.Select(x => x.Note).Distinct().ToList();
-            //var urlsInModified = entityNotesUpdated.Select(x => x.Note).Distinct().ToList();
-            //var urlsOnlyInOriginal = urlsInOriginal.Where(x => !urlsInModified.Contains(x)).ToList();
-
-            //var externalLinksOriginal = EntityNote.CreateFromEntityNote(entityNotesOriginal);
-            //var externalLinksUpdated = EntityNote.CreateFromEntityNote(entityNotesUpdated);
-            //// find the ones that are only in the modified set and add them and mark them as "added"
-            //externalLinksOriginal.AddRange(
-            //    externalLinksUpdated.Where(x => !urlsInOriginal.Contains(x.Note))
-            //        .Select(x => new EntityNote(x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, HtmlDiffContainer.DisplayCssClassAddedElement))
-            //        .ToList());
-            //// find the ones only in original and mark them as "deleted"
-            //externalLinksOriginal.Where(x => urlsOnlyInOriginal.Contains(x.Note)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
-            return GeneratePartialViewForProjectAttributes(projectCustomAttributesUpdated);
-        }
 
         private string GeneratePartialViewForModifiedNotes(List<IEntityNote> entityNotesOriginal, List<IEntityNote> entityNotesUpdated)
         {
@@ -2925,15 +2802,6 @@ namespace ProjectFirma.Web.Controllers
             return partialViewToString;
         }
 
-        private string GeneratePartialViewForProjectAttributes(ProjectCustomAttributes projectCustomAttributes)
-        {
-            var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.Single(x =>
-                x.ProjectTypeID == projectCustomAttributes.ProjectTypeIDForCustomAttributes);
-            var viewData = new ProjectAttributesViewData(projectType.GetProjectCustomAttributeTypesForThisProjectType(),
-                projectCustomAttributes.Attributes, true);
-            var partialViewToString = RenderPartialViewToString(ProjectAttributesPartialViewPath, viewData);
-            return partialViewToString;
-        }
 
         // TODO: Commented out until such time as it is appropriate to take this feature live
         //private string GeneratePartialViewForOriginalDocuments(List<IEntityDocument> entityDocumentsOriginal, List<IEntityDocument> entityDocumentsUpdated)
@@ -3127,7 +2995,6 @@ namespace ProjectFirma.Web.Controllers
             var isPriorityLandscapesUpdated = IsPriorityLandscapeUpdated(projectUpdateBatch);
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
-            var isProjectAttributesUpdated = DiffProjectAttributesImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isTreatmentsUpdated = false;  // MCS the ability to diff treatments will be added in a different story
             //Must be called last, since basics actually changes the Project object which can break the other Diff functions
             var isBasicsUpdated = DiffBasicsImpl(projectUpdateBatch.ProjectID).HasChanged;
@@ -3145,7 +3012,6 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.IsPhotosUpdated,
                 isLocationSimpleUpdated,
                 isLocationDetailUpdated,
-                isProjectAttributesUpdated,
                 isPriorityLandscapesUpdated,
                 isRegionsUpdated,
                 isCountiesUpdated,
@@ -3274,38 +3140,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
-
-        [HttpGet]
-        [ProjectUpdateCreateEditSubmitFeature]
-        public ActionResult RefreshProjectAttributes(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            var viewModel = new ConfirmDialogFormViewModel(projectUpdateBatch.ProjectUpdateBatchID);
-            return ViewRefreshRefreshProjectAttributes(viewModel);
-        }
-
-        [HttpPost]
-        [ProjectUpdateCreateEditSubmitFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult RefreshProjectAttributes(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            projectUpdateBatch.DeleteProjectAttributeUpdates();
-            // refresh data
-            ProjectCustomAttributeUpdate.CreateFromProject(projectUpdateBatch);
-            projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewRefreshRefreshProjectAttributes(ConfirmDialogFormViewModel viewModel)
-        {
-            var viewData =
-                new ConfirmDialogFormViewData(
-                    $"Are you sure you want to refresh the {FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabelPluralized()} for this {FieldDefinition.Project.GetFieldDefinitionLabel()}? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()}. Any updates made in this section will be lost.");
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]

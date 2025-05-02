@@ -39,7 +39,6 @@ namespace ProjectFirma.Web.Models
         int? GetCompletionYear();
         ProjectStage ProjectStage { get; }
         decimal? EstimatedTotalCost { get; }
-        IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         IEnumerable<IProjectLocation> GetProjectLocationDetails();
         DbGeometry GetDefaultBoundingBox();
         IEnumerable<DNRUplandRegion> GetProjectRegions();

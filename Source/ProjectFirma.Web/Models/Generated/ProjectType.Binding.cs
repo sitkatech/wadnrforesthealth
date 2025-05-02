@@ -27,7 +27,6 @@ namespace ProjectFirma.Web.Models
         {
             this.Projects = new HashSet<Project>();
             this.ProjectTypePerformanceMeasures = new HashSet<ProjectTypePerformanceMeasure>();
-            this.ProjectTypeProjectCustomAttributeTypes = new HashSet<ProjectTypeProjectCustomAttributeType>();
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Projects.Any() || ProjectTypePerformanceMeasures.Any() || ProjectTypeProjectCustomAttributeTypes.Any();
+            return Projects.Any() || ProjectTypePerformanceMeasures.Any();
         }
 
         /// <summary>
@@ -105,18 +104,13 @@ namespace ProjectFirma.Web.Models
             {
                 dependentObjects.Add(typeof(ProjectTypePerformanceMeasure).Name);
             }
-
-            if(ProjectTypeProjectCustomAttributeTypes.Any())
-            {
-                dependentObjects.Add(typeof(ProjectTypeProjectCustomAttributeType).Name);
-            }
             return dependentObjects.Distinct().ToList();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectType).Name, typeof(Project).Name, typeof(ProjectTypePerformanceMeasure).Name, typeof(ProjectTypeProjectCustomAttributeType).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectType).Name, typeof(Project).Name, typeof(ProjectTypePerformanceMeasure).Name};
 
 
         /// <summary>
@@ -150,11 +144,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in ProjectTypeProjectCustomAttributeTypes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -177,7 +166,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
-        public virtual ICollection<ProjectTypeProjectCustomAttributeType> ProjectTypeProjectCustomAttributeTypes { get; set; }
         public virtual TaxonomyBranch TaxonomyBranch { get; set; }
 
         public static class FieldLengths
