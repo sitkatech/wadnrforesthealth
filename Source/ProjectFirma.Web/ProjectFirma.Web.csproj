@@ -1048,7 +1048,6 @@
     <Compile Include="Models\GrantNote.cs" />
     <Compile Include="Models\ProjectRegionUpdate.cs" />
     <Compile Include="Models\ProjectTypeJson.cs" />
-    <Compile Include="Models\ProjectTypeProjectCustomAttributeType.cs" />
     <Compile Include="Models\RegionModelExtensions.cs" />
     <Compile Include="Models\DNRUplandRegion.cs" />
     <Compile Include="Models\Grant.cs" />

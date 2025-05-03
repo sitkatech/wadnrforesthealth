@@ -79,8 +79,9 @@ VALUES
 (256, N'ProjectTypeDescription', N'Project Type Description', N'<p>The long-form description of the entries in the project taxonomy system.</p>'),
 (257, N'ShowApplicationsToThePublic', N'Show Applications To The Public', N'<p>When this option is set, projects in the Pending Approval state will be shown on project maps and on the Application page. When not set, no proposals will be visible to anonymous users. All proposals should be shown on the proposals page for Normal+ users.</p>'),
 (258, N'ShowLeadImplementerLogoOnFactSheet', N'Show Lead Implementer Logo on Project Fact Sheet?', N'<p>When this option is set, project fact sheets will include the lead implementer''s logo under the website logo. When not set, only the website logo will be shown on fact sheets.'),
-(259, N'ProjectCustomAttribute', N'Custom Attribute', N''),
-(260, N'ProjectCustomAttributeDataType', N'Data Type', N''),
+--5-2-2025 TK - removing custom attributes, could reuse these IDs at some point
+--(259, N'ProjectCustomAttribute', N'Custom Attribute', N''),
+--(260, N'ProjectCustomAttributeDataType', N'Data Type', N''),
 (261, N'ProjectUpdateKickOffDate', N'Kick-off Date', N'The date to send the initial notification about Project Updates to Primary Contacts'),
 (262, N'ProjectUpdateReminderInterval', N'Reminder Interval (days)', N'The number of days between repeated Project Update Reminders'),
 (263, N'ProjectUpdateCloseOutDate', N'Close-out Date', N'The date on which to send the final Project Update Reminder'),

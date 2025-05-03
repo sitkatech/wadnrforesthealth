@@ -18,4 +18,4 @@ drop table dbo.ProjectCustomAttributeDataType;
 
 delete from dbo.FirmaPage where FirmaPageTypeID in (52,53)
 
-
+delete from dbo.FieldDefinitionData where FieldDefinitionID in (259,260)
