@@ -114,8 +114,6 @@ namespace ProjectFirma.Web.Models
                             new List<ProjectGrantAllocationRequest>(),
                             new List<ProjectOrganization>(),
                             new List<ProjectDocument>(),
-                            new List<ProjectCustomAttribute>(),
-                            new List<ProjectCustomAttributeValue>(),
                             new List<ProjectPerson>(),
                             new List<ProjectProgram>(),
                             new List<Treatment>()),
@@ -147,8 +145,6 @@ namespace ProjectFirma.Web.Models
                 new List<ProjectGrantAllocationRequest>(),
                 new List<ProjectOrganization>(),
                 new List<ProjectDocument>(),
-                new List<ProjectCustomAttribute>(),
-                new List<ProjectCustomAttributeValue>(),
                 new List<ProjectPerson>(),
                 new List<ProjectProgram>(),
                 new List<Treatment>());

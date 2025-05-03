@@ -1496,56 +1496,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCustomAttribute">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttribute">
-        <MappingFragment StoreEntitySet="ProjectCustomAttribute">
-          <ScalarProperty Name="ProjectCustomAttributeID" ColumnName="ProjectCustomAttributeID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="ProjectCustomAttributeTypeID" ColumnName="ProjectCustomAttributeTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCustomAttributeType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttributeType">
-        <MappingFragment StoreEntitySet="ProjectCustomAttributeType">
-          <ScalarProperty Name="ProjectCustomAttributeTypeID" ColumnName="ProjectCustomAttributeTypeID" />
-          <ScalarProperty Name="ProjectCustomAttributeTypeName" ColumnName="ProjectCustomAttributeTypeName" />
-          <ScalarProperty Name="ProjectCustomAttributeDataTypeID" ColumnName="ProjectCustomAttributeDataTypeID" />
-          <ScalarProperty Name="MeasurementUnitTypeID" ColumnName="MeasurementUnitTypeID" />
-          <ScalarProperty Name="IsRequired" ColumnName="IsRequired" />
-          <ScalarProperty Name="ProjectCustomAttributeTypeDescription" ColumnName="ProjectCustomAttributeTypeDescription" />
-          <ScalarProperty Name="ProjectCustomAttributeTypeOptionsSchema" ColumnName="ProjectCustomAttributeTypeOptionsSchema" />
-          <ScalarProperty Name="ApplyToAllProjectTypes" ColumnName="ApplyToAllProjectTypes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCustomAttributeUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate">
-        <MappingFragment StoreEntitySet="ProjectCustomAttributeUpdate">
-          <ScalarProperty Name="ProjectCustomAttributeUpdateID" ColumnName="ProjectCustomAttributeUpdateID" />
-          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="ProjectCustomAttributeTypeID" ColumnName="ProjectCustomAttributeTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCustomAttributeUpdateValue">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttributeUpdateValue">
-        <MappingFragment StoreEntitySet="ProjectCustomAttributeUpdateValue">
-          <ScalarProperty Name="ProjectCustomAttributeUpdateValueID" ColumnName="ProjectCustomAttributeUpdateValueID" />
-          <ScalarProperty Name="ProjectCustomAttributeUpdateID" ColumnName="ProjectCustomAttributeUpdateID" />
-          <ScalarProperty Name="AttributeValue" ColumnName="AttributeValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCustomAttributeValue">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttributeValue">
-        <MappingFragment StoreEntitySet="ProjectCustomAttributeValue">
-          <ScalarProperty Name="ProjectCustomAttributeValueID" ColumnName="ProjectCustomAttributeValueID" />
-          <ScalarProperty Name="ProjectCustomAttributeID" ColumnName="ProjectCustomAttributeID" />
-          <ScalarProperty Name="AttributeValue" ColumnName="AttributeValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectDocument">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectDocument">
         <MappingFragment StoreEntitySet="ProjectDocument">
@@ -1943,15 +1893,6 @@
           <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
           <ScalarProperty Name="PerformanceMeasureID" ColumnName="PerformanceMeasureID" />
           <ScalarProperty Name="IsPrimaryProjectType" ColumnName="IsPrimaryProjectType" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectTypeProjectCustomAttributeType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType">
-        <MappingFragment StoreEntitySet="ProjectTypeProjectCustomAttributeType">
-          <ScalarProperty Name="ProjectTypeProjectCustomAttributeTypeID" ColumnName="ProjectTypeProjectCustomAttributeTypeID" />
-          <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
-          <ScalarProperty Name="ProjectCustomAttributeTypeID" ColumnName="ProjectCustomAttributeTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

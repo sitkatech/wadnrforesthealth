@@ -31,14 +31,6 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectType : IAuditableEntity, ITaxonomyTier, IHaveASortOrder
     {
 
-        public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProjectType()
-        {
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
-                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
-                                .Select(y => y.ProjectTypeID).Contains(this.ProjectTypeID)).ToList();
-            return projectCustomAttributeTypesForThisProject;
-        }
 
         public int? SortOrder
         {

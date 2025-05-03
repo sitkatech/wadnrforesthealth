@@ -36,7 +36,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool HasCanStewardProjectsOrganizationRelationship { get; private set; }
         public bool HasThreeTierTaxonomy { get; private set; }
         public bool ShowProjectStageDropDown { get; }
-        public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; private set; }
         private string ProjectDisplayName { get; }
         public bool IsEditable = true;
         public bool ProjectTypeHasBeenSet { get; set; }

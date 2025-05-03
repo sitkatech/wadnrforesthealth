@@ -111,19 +111,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.FocusAreaID = FocusAreaID;
             project.PercentageMatch = PercentageMatch;
 
-            var nonAllTypeAttributes = project.ProjectCustomAttributes.Where(x => !x.ProjectCustomAttributeType.ApplyToAllProjectTypes).ToList();
-            if (nonAllTypeAttributes.Any())
-            {
-                foreach (var projectCustomAttribute in nonAllTypeAttributes)
-                {
-                    var projectTypeList = projectCustomAttribute.ProjectCustomAttributeType
-                        .ProjectTypeProjectCustomAttributeTypes.Select(x => x.ProjectTypeID).ToList();
-                    if (!projectTypeList.Contains(project.ProjectTypeID))
-                    {
-                        projectCustomAttribute.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                    }
-                }
-            }
             if (ProjectProgramSimples == null)
             {
                 ProjectProgramSimples = new List<ProjectProgramSimple>();

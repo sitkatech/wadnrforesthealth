@@ -886,11 +886,6 @@ namespace ProjectFirma.Web.Models
 
         public int FancyTreeNodeKey => ProjectID;
 
-        IEnumerable<IProjectCustomAttribute> IProject.ProjectCustomAttributes
-        {
-            get => ProjectCustomAttributes;
-            set => ProjectCustomAttributes = (ICollection<ProjectCustomAttribute>) value;
-        }
 
         public List<GooglePieChartSlice> GetExpenditureGooglePieChartSlices()
         {
@@ -1026,11 +1021,6 @@ namespace ProjectFirma.Web.Models
         {
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus))
                 .OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
-        }
-
-        public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProject()
-        {
-            return ProjectType.GetProjectCustomAttributeTypesForThisProjectType();
         }
 
         public string GetPlannedDate()

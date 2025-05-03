@@ -128,7 +128,6 @@ namespace ProjectFirma.Web.Views.Project
         public List<Models.ClassificationSystem> ClassificationSystems { get; }
         public ProjectCostShareViewData ProjectCostShareViewData { get; }
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
-        public ProjectAttributesViewData ProjectAttributesViewData { get; }
         public string EditProjectPeopleUrl { get; }
         
         public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
@@ -142,7 +141,7 @@ namespace ProjectFirma.Web.Views.Project
 
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
-            ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
+            ProjectBasicsViewData projectBasicsViewData,
             ProjectLocationSummaryViewData projectLocationSummaryViewData,
             ProjectFundingDetailViewData projectFundingDetailViewData,
             ProjectInvoiceDetailViewData projectInvoiceDetailViewData,
@@ -180,8 +179,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectStages = projectStages;
 
             EditProjectUrl = project.GetEditUrl();
-
-            EditProjectAttributesUrl = project.GetEditProjectAttributesUrl();
 
             HasPrograms = project.ProjectPrograms.Any();
             ExistsInImportBlockList = project.ProjectImportBlockLists.Any();
@@ -328,7 +325,6 @@ namespace ProjectFirma.Web.Views.Project
 
             EditProjectBoundingBoxUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectBoundingBox(project));
             EditProjectBoundingBoxFormID = editProjectBoundingBoxFormID;
-            ProjectAttributesViewData = projectAttributesViewData;
 
             EditProjectOrganizationsUrl = editProjectOrganizationsUrl;
 

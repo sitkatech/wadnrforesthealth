@@ -121,40 +121,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
         }
 
-        [HttpGet]
-        [ProjectEditAsAdminFeature]
-        public PartialViewResult EditProjectAttributes(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var latestNotApprovedUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            var viewModel = new EditProjectAttributesViewModel(project, latestNotApprovedUpdateBatch != null);
-            return ViewEditProjectAttributes(viewModel, project,EditProjectAttributesType.ExistingProject, project.ProjectType.DisplayName);
-        }
-
-        [HttpPost]
-        [ProjectEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectAttributes(ProjectPrimaryKey projectPrimaryKey, EditProjectAttributesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditProjectAttributes(viewModel, project,EditProjectAttributesType.ExistingProject, project.ProjectType.DisplayName);
-            }
-            viewModel.UpdateModel(project, CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditProjectAttributes(EditProjectAttributesViewModel viewModel, Project project, EditProjectAttributesType editProjectAttributesType, string projectTypeDisplayName)
-        {
-            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
-            var viewData = new EditProjectAttributesViewData(editProjectAttributesType,
-                projectTypeDisplayName,
-                projectCustomAttributeTypes
-            );
-            return RazorPartialView<EditProjectAttributes, EditProjectAttributesViewData, EditProjectAttributesViewModel>(viewData, viewModel);
-        }
-
         [CrossAreaRoute]
         [ProjectViewFeature]
         public PartialViewResult ProjectMapPopup(ProjectPrimaryKey primaryKeyProject)
@@ -237,8 +203,6 @@ namespace ProjectFirma.Web.Controllers
 
             var classificationSystems = HttpRequestStorage.DatabaseEntities.ClassificationSystems.ToList();
 
-            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
-
             var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson, project);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson, project);
             var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
@@ -250,13 +214,11 @@ namespace ProjectFirma.Web.Controllers
                     pc.ProjectInteractionEventsGridJsonData(project.PrimaryKey));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
-            var projectCustomAttributeSimples = new ProjectCustomAttributes(project).Attributes.ToList();
-            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, projectCustomAttributeSimples, false);
+
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,
                 projectBasicsViewData,
-                projectAttributesViewData,
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
                 projectInvoiceDetailViewData,

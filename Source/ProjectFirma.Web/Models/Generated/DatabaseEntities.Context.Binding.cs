@@ -148,11 +148,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
         public virtual DbSet<ProjectCounty> ProjectCounties { get; set; }
         public virtual DbSet<ProjectCountyUpdate> ProjectCountyUpdates { get; set; }
-        public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
-        public virtual DbSet<ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; set; }
-        public virtual DbSet<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
-        public virtual DbSet<ProjectCustomAttributeUpdateValue> ProjectCustomAttributeUpdateValues { get; set; }
-        public virtual DbSet<ProjectCustomAttributeValue> ProjectCustomAttributeValues { get; set; }
         public virtual DbSet<ProjectDocument> ProjectDocuments { get; set; }
         public virtual DbSet<ProjectDocumentType> ProjectDocumentTypes { get; set; }
         public virtual DbSet<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
@@ -188,7 +183,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTag> ProjectTags { get; set; }
         public virtual DbSet<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
-        public virtual DbSet<ProjectTypeProjectCustomAttributeType> ProjectTypeProjectCustomAttributeTypes { get; set; }
         public virtual DbSet<ProjectType> ProjectTypes { get; set; }
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
@@ -899,26 +893,6 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(projectCreateSection, "ProjectCreateSection", primaryKey);
                     return projectCreateSection;
 
-                case "ProjectCustomAttributeDataType":
-                    var projectCustomAttributeDataType = ProjectCustomAttributeDataType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(projectCustomAttributeDataType, "ProjectCustomAttributeDataType", primaryKey);
-                    return projectCustomAttributeDataType;
-
-                case "ProjectCustomAttribute":
-                    return ProjectCustomAttributes.GetProjectCustomAttribute(primaryKey);
-
-                case "ProjectCustomAttributeType":
-                    return ProjectCustomAttributeTypes.GetProjectCustomAttributeType(primaryKey);
-
-                case "ProjectCustomAttributeUpdate":
-                    return ProjectCustomAttributeUpdates.GetProjectCustomAttributeUpdate(primaryKey);
-
-                case "ProjectCustomAttributeUpdateValue":
-                    return ProjectCustomAttributeUpdateValues.GetProjectCustomAttributeUpdateValue(primaryKey);
-
-                case "ProjectCustomAttributeValue":
-                    return ProjectCustomAttributeValues.GetProjectCustomAttributeValue(primaryKey);
-
                 case "ProjectDocument":
                     return ProjectDocuments.GetProjectDocument(primaryKey);
 
@@ -1063,9 +1037,6 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectTypePerformanceMeasure":
                     return ProjectTypePerformanceMeasures.GetProjectTypePerformanceMeasure(primaryKey);
-
-                case "ProjectTypeProjectCustomAttributeType":
-                    return ProjectTypeProjectCustomAttributeTypes.GetProjectTypeProjectCustomAttributeType(primaryKey);
 
                 case "ProjectType":
                     return ProjectTypes.GetProjectType(primaryKey);

@@ -68,7 +68,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
         public int? PercentageMatch { get; set; }
 
-        public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
         public List<ProjectUpdateProgramSimple> ProjectUpdateProgramSimples { get; set; }
 
         /// <summary>

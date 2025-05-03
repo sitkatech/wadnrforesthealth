@@ -210,39 +210,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
-        [HttpGet]
-        [ProjectCreateFeature]
-        public ViewResult EditProjectCustomAttributes(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var viewModel = new CustomAttributesViewModel(project);
-            return ViewEditProjectCustomAttributes(project, viewModel);
-        }
-
-        private ViewResult ViewEditProjectCustomAttributes(Project project, CustomAttributesViewModel viewModel)
-        {
-            var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            proposalSectionsStatus.IsCustomAttributesSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsCustomAttributesSectionComplete;
-            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
-            var viewData = new CustomAttributesViewData(CurrentPerson, project, proposalSectionsStatus, projectCustomAttributeTypes);
-
-            return RazorView<CustomAttributes, CustomAttributesViewData, CustomAttributesViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectCustomAttributes(ProjectPrimaryKey projectPrimaryKey, CustomAttributesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditProjectCustomAttributes(project, viewModel);
-            }
-            viewModel.UpdateModel(project, CurrentPerson);
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabelPluralized()} successfully saved.");
-            return GoToNextSection(viewModel, project, "ProjectAttributes");// 10/20/2023 AM & TK : previous code called this, removed from lookup to skip section temporarily ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName
-        }
 
         [HttpGet]
         [ProjectCreateFeature]
