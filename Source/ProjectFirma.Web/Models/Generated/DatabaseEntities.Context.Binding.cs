@@ -37,7 +37,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
         public virtual DbSet<ArcOnlineFinanceApiRawJsonImport> ArcOnlineFinanceApiRawJsonImports { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
-        public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
         public virtual DbSet<CostTypeDatamartMapping> CostTypeDatamartMappings { get; set; }
@@ -120,16 +119,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PclVectorRanked> PclVectorRankeds { get; set; }
         public virtual DbSet<PclWildfireResponseBenefit> PclWildfireResponseBenefits { get; set; }
         public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<PerformanceMeasureActual> PerformanceMeasureActuals { get; set; }
-        public virtual DbSet<PerformanceMeasureActualSubcategoryOption> PerformanceMeasureActualSubcategoryOptions { get; set; }
-        public virtual DbSet<PerformanceMeasureActualSubcategoryOptionUpdate> PerformanceMeasureActualSubcategoryOptionUpdates { get; set; }
-        public virtual DbSet<PerformanceMeasureActualUpdate> PerformanceMeasureActualUpdates { get; set; }
-        public virtual DbSet<PerformanceMeasureExpected> PerformanceMeasureExpecteds { get; set; }
-        public virtual DbSet<PerformanceMeasureExpectedSubcategoryOption> PerformanceMeasureExpectedSubcategoryOptions { get; set; }
-        public virtual DbSet<PerformanceMeasureNote> PerformanceMeasureNotes { get; set; }
-        public virtual DbSet<PerformanceMeasure> PerformanceMeasures { get; set; }
-        public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
-        public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
         public virtual DbSet<PersonAllowedAuthenticator> PersonAllowedAuthenticators { get; set; }
         public virtual DbSet<PersonRole> PersonRoles { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
@@ -182,7 +171,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTag> ProjectTags { get; set; }
-        public virtual DbSet<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
         public virtual DbSet<ProjectType> ProjectTypes { get; set; }
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
@@ -389,9 +377,6 @@ namespace ProjectFirma.Web.Models
                     var authenticator = Authenticator.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(authenticator, "Authenticator", primaryKey);
                     return authenticator;
-
-                case "ClassificationPerformanceMeasure":
-                    return ClassificationPerformanceMeasures.GetClassificationPerformanceMeasure(primaryKey);
 
                 case "Classification":
                     return Classifications.GetClassification(primaryKey);
@@ -718,11 +703,6 @@ namespace ProjectFirma.Web.Models
                 case "LoaStage":
                     return LoaStages.GetLoaStage(primaryKey);
 
-                case "MeasurementUnitType":
-                    var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(measurementUnitType, "MeasurementUnitType", primaryKey);
-                    return measurementUnitType;
-
                 case "NotificationProject":
                     return NotificationProjects.GetNotificationProject(primaryKey);
 
@@ -763,51 +743,6 @@ namespace ProjectFirma.Web.Models
 
                 case "Person":
                     return People.GetPerson(primaryKey);
-
-                case "PerformanceMeasureActual":
-                    return PerformanceMeasureActuals.GetPerformanceMeasureActual(primaryKey);
-
-                case "PerformanceMeasureActualSubcategoryOption":
-                    return PerformanceMeasureActualSubcategoryOptions.GetPerformanceMeasureActualSubcategoryOption(primaryKey);
-
-                case "PerformanceMeasureActualSubcategoryOptionUpdate":
-                    return PerformanceMeasureActualSubcategoryOptionUpdates.GetPerformanceMeasureActualSubcategoryOptionUpdate(primaryKey);
-
-                case "PerformanceMeasureActualUpdate":
-                    return PerformanceMeasureActualUpdates.GetPerformanceMeasureActualUpdate(primaryKey);
-
-                case "PerformanceMeasureDataSourceType":
-                    var performanceMeasureDataSourceType = PerformanceMeasureDataSourceType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(performanceMeasureDataSourceType, "PerformanceMeasureDataSourceType", primaryKey);
-                    return performanceMeasureDataSourceType;
-
-                case "PerformanceMeasureExpected":
-                    return PerformanceMeasureExpecteds.GetPerformanceMeasureExpected(primaryKey);
-
-                case "PerformanceMeasureExpectedSubcategoryOption":
-                    return PerformanceMeasureExpectedSubcategoryOptions.GetPerformanceMeasureExpectedSubcategoryOption(primaryKey);
-
-                case "PerformanceMeasureNote":
-                    return PerformanceMeasureNotes.GetPerformanceMeasureNote(primaryKey);
-
-                case "PerformanceMeasure":
-                    return PerformanceMeasures.GetPerformanceMeasure(primaryKey);
-
-                case "PerformanceMeasureSubcategory":
-                    return PerformanceMeasureSubcategories.GetPerformanceMeasureSubcategory(primaryKey);
-
-                case "PerformanceMeasureSubcategoryOption":
-                    return PerformanceMeasureSubcategoryOptions.GetPerformanceMeasureSubcategoryOption(primaryKey);
-
-                case "PerformanceMeasureTargetValueType":
-                    var performanceMeasureTargetValueType = PerformanceMeasureTargetValueType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(performanceMeasureTargetValueType, "PerformanceMeasureTargetValueType", primaryKey);
-                    return performanceMeasureTargetValueType;
-
-                case "PerformanceMeasureType":
-                    var performanceMeasureType = PerformanceMeasureType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(performanceMeasureType, "PerformanceMeasureType", primaryKey);
-                    return performanceMeasureType;
 
                 case "PersonAllowedAuthenticator":
                     return PersonAllowedAuthenticators.GetPersonAllowedAuthenticator(primaryKey);
@@ -1034,9 +969,6 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectTag":
                     return ProjectTags.GetProjectTag(primaryKey);
-
-                case "ProjectTypePerformanceMeasure":
-                    return ProjectTypePerformanceMeasures.GetProjectTypePerformanceMeasure(primaryKey);
 
                 case "ProjectType":
                     return ProjectTypes.GetProjectType(primaryKey);
