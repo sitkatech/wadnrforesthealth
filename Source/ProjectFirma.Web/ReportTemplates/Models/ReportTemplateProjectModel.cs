@@ -23,7 +23,6 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string ProjectUrl { get; set; }
         public ReportTemplateOrganizationModel PrimaryContactOrganization { get; set; }
         public string ProjectStage { get; set; }
-        public int NumberOfReportedPerformanceMeasures { get; set; }
         public ReportTemplatePersonModel ProjectPrimaryContact { get; set; }
         public string PlanningDesignStartYear { get; set; }
         public string ImplementationStartYear { get; set; }
@@ -65,7 +64,6 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             ProjectUrl = Project.GetDetailUrlAbsolute();
             PrimaryContactOrganization = Project.GetPrimaryContactOrganization() != null ? new ReportTemplateOrganizationModel(Project.GetPrimaryContactOrganization()) : null;
             ProjectStage = Project.ProjectStage.ProjectStageDisplayName;
-            NumberOfReportedPerformanceMeasures = Project.PerformanceMeasureActuals.Count;
             ProjectPrimaryContact = Project.GetPrimaryContact() != null ? new ReportTemplatePersonModel(Project.GetPrimaryContact()) : null;
             PlanningDesignStartYear = Project.PlannedDate.HasValue ? Project.PlannedDate.Value.Year.ToString() : string.Empty;
             ImplementationStartYear = Project.GetImplementationStartYear().HasValue ? Project.GetImplementationStartYear().ToString() : string.Empty;
@@ -155,25 +153,6 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         {
             var projectKeyPhoto = ProjectImages.FirstOrDefault(x => x.IsKeyPhoto == true);
             return projectKeyPhoto != null ? new ReportTemplateProjectImageModel(projectKeyPhoto) : null;
-        }
-
-        public List<ReportTemplateProjectReportedPerformanceMeasureModel> GetProjectReportedPerformanceMeasures()
-        {
-            return Project.PerformanceMeasureActuals.Select(x => new ReportTemplateProjectReportedPerformanceMeasureModel(x))
-                .OrderBy(x => x.PerformanceMeasureName)
-                .ThenBy(x => x.PerformanceMeasureSubcategoryName)
-                .ThenBy(x => x.PerformanceMeasureSubcategoryOptionName)
-                .ThenByDescending(x => x.Year)
-                .ToList();
-        }
-
-        public List<ReportTemplateProjectExpectedPerformanceMeasureModel> GetProjectExpectedPerformanceMeasures()
-        {
-            return Project.PerformanceMeasureExpecteds.Select(x => new ReportTemplateProjectExpectedPerformanceMeasureModel(x))
-                .OrderBy(x => x.PerformanceMeasureName)
-                .ThenBy(x => x.PerformanceMeasureSubcategoryName)
-                .ThenBy(x => x.PerformanceMeasureSubcategoryOptionName)
-                .ToList();
         }
 
         private DateTime GetStartOfWeek(DateTime dt, DayOfWeek startOfWeek)

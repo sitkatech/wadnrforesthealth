@@ -110,14 +110,6 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [AnonymousUnclassifiedFeature]
-        public ActionResult GetProjectAccomplishments(WebServiceReturnTypeEnum webServiceReturnTypeEnum, WebServiceToken webServiceToken, ProjectPrimaryKey projectPK)
-        {
-            var projects = WebServiceProjectAccomplishments.GetProjectAccomplishments(projectPK.PrimaryKeyValue);
-            var gridSpec = new WebServiceProjectAccomplishmentsGridSpec();
-            return GetResultsAsCsvDowloadOrJsonResult(webServiceReturnTypeEnum, projects, gridSpec, "ProjectAccomplishments");
-        }
-
-        [AnonymousUnclassifiedFeature]
         public ActionResult GetProjectDescription(WebServiceReturnTypeEnum webServiceReturnTypeEnum, WebServiceToken webServiceToken, ProjectPrimaryKey projectPK)
         {
             var projects = WebServiceProjectDescription.GetProjectDescription(projectPK.PrimaryKeyValue);
@@ -131,14 +123,6 @@ namespace ProjectFirma.Web.Controllers
             var projects = WebServiceProjectKeyPhoto.GetProjectKeyPhoto(projectPK.PrimaryKeyValue);
             var gridSpec = new WebServiceProjectKeyPhotoGridSpec();
             return GetResultsAsCsvDowloadOrJsonResult(webServiceReturnTypeEnum, projects, gridSpec, "ProjectKeyPhoto");
-        }
-
-        [AnonymousUnclassifiedFeature]
-        public ActionResult GetPerformanceMeasures(WebServiceReturnTypeEnum webServiceReturnTypeEnum, WebServiceToken webServiceToken)
-        {
-            var performanceMeasures = WebServicePerformanceMeasure.GetPerformanceMeasures();
-            var gridSpec = new WebServicePerformanceMeasureGridSpec();
-            return GetResultsAsCsvDowloadOrJsonResult(webServiceReturnTypeEnum, performanceMeasures, gridSpec, "PerformanceMeasures");
         }
 
         [AnonymousUnclassifiedFeature]

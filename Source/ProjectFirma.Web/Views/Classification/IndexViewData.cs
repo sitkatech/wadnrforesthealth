@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Classification
         {
             PageTitle = classificationSystem.ClassificationSystemNamePluralized;
 
-            HasClassificationManagePermissions = new PerformanceMeasureManageFeature().HasPermissionByPerson(CurrentPerson);
+            HasClassificationManagePermissions = new ClassificationManageFeature().HasPermissionByPerson(CurrentPerson);
             GridSpec = new IndexGridSpec(HasClassificationManagePermissions, classificationSystem)
             {
                 ObjectNameSingular = classificationSystem.ClassificationSystemName,

@@ -40,22 +40,5 @@ namespace ProjectFirma.Web.Views.Shared.TextControls
             RtfContent = rtfContent;
         }
 
-        /// <summary>
-        /// Used by PerformanceMeasure Guidance
-        /// </summary>
-        public void UpdateModel(Models.PerformanceMeasure performanceMeasure, EditRtfContent.PerformanceMeasureRichTextType performanceMeasureRichTextType)
-        {
-            switch (performanceMeasureRichTextType)
-            {
-                case EditRtfContent.PerformanceMeasureRichTextType.CriticalDefinitions:
-                    performanceMeasure.CriticalDefinitionsHtmlString = RtfContent;
-                    break;
-                case EditRtfContent.PerformanceMeasureRichTextType.ProjectReporting:
-                    performanceMeasure.ProjectReportingHtmlString = RtfContent;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(string.Format("Invalid GuidanceType {0}", performanceMeasureRichTextType));
-            }
-        }
     }
 }

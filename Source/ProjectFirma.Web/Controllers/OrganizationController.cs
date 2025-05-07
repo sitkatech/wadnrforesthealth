@@ -143,13 +143,8 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = GetMapInitJson(organization, out var hasSpatialData, CurrentPerson);
 
-            var performanceMeasures = organization.GetAllActiveProjectsAndProposals(CurrentPerson)
-                .SelectMany(x => x.PerformanceMeasureActuals)
-                .Select(x => x.PerformanceMeasure).Distinct()
-                .OrderBy(x => x.PerformanceMeasureDisplayName)
-                .ToList();
             var agreements = GetAgreementsByOrgPeople(organization);
-            var viewData = new DetailViewData(CurrentPerson, organization, mapInitJson, hasSpatialData, performanceMeasures, expendituresDirectlyFromOrganizationViewGoogleChartViewData, expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData, agreements.Any(x => x.AgreementFileResourceID.HasValue));
+            var viewData = new DetailViewData(CurrentPerson, organization, mapInitJson, hasSpatialData, expendituresDirectlyFromOrganizationViewGoogleChartViewData, expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

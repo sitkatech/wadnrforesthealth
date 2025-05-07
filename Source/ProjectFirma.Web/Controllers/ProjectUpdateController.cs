@@ -49,7 +49,6 @@ using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
-using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
@@ -69,9 +68,6 @@ using LocationDetailedViewModel = ProjectFirma.Web.Views.ProjectUpdate.LocationD
 using LocationSimple = ProjectFirma.Web.Views.ProjectUpdate.LocationSimple;
 using LocationSimpleViewData = ProjectFirma.Web.Views.ProjectUpdate.LocationSimpleViewData;
 using LocationSimpleViewModel = ProjectFirma.Web.Views.ProjectUpdate.LocationSimpleViewModel;
-using PerformanceMeasures = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeasures;
-using PerformanceMeasuresViewData = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeasuresViewData;
-using PerformanceMeasuresViewModel = ProjectFirma.Web.Views.ProjectUpdate.PerformanceMeasuresViewModel;
 using Photos = ProjectFirma.Web.Views.ProjectUpdate.Photos;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.ProjectCounty;
@@ -303,11 +299,6 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdate.LoadProgramsFromProject(project);
                 projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             }
-            if (!projectUpdateBatch.AreAccomplishmentsRelevant())
-            {
-                projectUpdateBatch.DeletePerformanceMeasuresProjectExemptReportingYearUpdates();
-                projectUpdateBatch.DeletePerformanceMeasureActualUpdates();
-            }
             return new ModalDialogFormJsonResult();
         }
 
@@ -317,106 +308,6 @@ namespace ProjectFirma.Web.Controllers
                 new ConfirmDialogFormViewData(
                     $"Are you sure you want to refresh the {FieldDefinition.Project.GetFieldDefinitionLabel()} basics data? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and any updates made in this section will be lost.");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [ProjectUpdateCreateEditSubmitFeature]
-        public ActionResult PerformanceMeasures(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            if (projectUpdateBatch == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
-            }
-            var performanceMeasureActualUpdateSimples =
-                projectUpdateBatch.PerformanceMeasureActualUpdates.OrderBy(pam => pam.PerformanceMeasure.PerformanceMeasureSortOrder).ThenBy(pam=>pam.PerformanceMeasure.DisplayName)
-                    .ThenByDescending(x => x.CalendarYear)
-                    .Select(x => new PerformanceMeasureActualUpdateSimple(x))
-                    .ToList();
-            var projectExemptReportingYearUpdates = projectUpdateBatch.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearUpdateSimple(x)).ToList();
-            var currentExemptedYears = projectExemptReportingYearUpdates.Select(x => x.CalendarYear).ToList();
-            var possibleYearsToExempt = projectUpdateBatch.ProjectUpdate.GetProjectUpdateImplementationStartToCompletionDateRange();
-            projectExemptReportingYearUpdates.AddRange(
-                possibleYearsToExempt.Where(x => !currentExemptedYears.Contains(x))
-                    .Select((x, index) => new ProjectExemptReportingYearUpdateSimple(-(index + 1), projectUpdateBatch.ProjectUpdateBatchID, x)));
-
-            var viewModel = new PerformanceMeasuresViewModel(performanceMeasureActualUpdateSimples,
-                projectUpdateBatch.PerformanceMeasureActualYearsExemptionExplanation,
-                projectExemptReportingYearUpdates.OrderBy(x => x.CalendarYear).ToList(),
-                projectUpdateBatch.PerformanceMeasuresComment);
-            return ViewPerformanceMeasures(projectUpdateBatch, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectUpdateCreateEditSubmitFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult PerformanceMeasures(ProjectPrimaryKey projectPrimaryKey, PerformanceMeasuresViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            if (projectUpdateBatch == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
-            }
-            if (!ModelState.IsValid)
-            {
-                return ViewPerformanceMeasures(projectUpdateBatch, viewModel);
-            }
-            var currentPerformanceMeasureActualUpdates = projectUpdateBatch.PerformanceMeasureActualUpdates.ToList();
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.Load();
-            var allPerformanceMeasureActualUpdates = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.Local;
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.Load();
-            var allPerformanceMeasureActualSubcategoryOptionUpdates = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.Local;
-            viewModel.UpdateModel(currentPerformanceMeasureActualUpdates, allPerformanceMeasureActualUpdates, allPerformanceMeasureActualSubcategoryOptionUpdates, projectUpdateBatch);
-            if (projectUpdateBatch.IsSubmitted)
-            {
-                projectUpdateBatch.PerformanceMeasuresComment = viewModel.Comments;
-            }
-
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
-                ProjectUpdateSection.PerformanceMeasures.ProjectUpdateSectionDisplayName);
-        }
-
-        private ViewResult ViewPerformanceMeasures(ProjectUpdateBatch projectUpdateBatch, PerformanceMeasuresViewModel viewModel)
-        {
-            var performanceMeasures =
-                HttpRequestStorage.DatabaseEntities.PerformanceMeasures.ToList().SortByOrderThenName().ToList();
-            var showExemptYears = projectUpdateBatch.GetPerformanceMeasuresExemptReportingYears().Any() ||
-                                  ModelState.Values.SelectMany(x => x.Errors)
-                                      .Any(
-                                          x =>
-                                              x.ErrorMessage == FirmaValidationMessages.ExplanationNotNecessaryForProjectExemptYears ||
-                                              x.ErrorMessage == FirmaValidationMessages.ExplanationNecessaryForProjectExemptYears);
-
-            var performanceMeasureSubcategories = performanceMeasures.SelectMany(x => x.PerformanceMeasureSubcategories).Distinct(new HavePrimaryKeyComparer<PerformanceMeasureSubcategory>()).ToList();
-            var performanceMeasureSimples = performanceMeasures.Select(x => new PerformanceMeasureSimple(x)).ToList();
-            var performanceMeasureSubcategorySimples = performanceMeasureSubcategories.Select(y => new PerformanceMeasureSubcategorySimple(y)).ToList();
-
-            var performanceMeasureSubcategoryOptionSimples = performanceMeasureSubcategories.SelectMany(y => y.PerformanceMeasureSubcategoryOptions.Select(z => new PerformanceMeasureSubcategoryOptionSimple(z))).ToList();
-            
-            var calendarYearStrings = FirmaDateUtilities.ReportingYearsForUserInput().OrderByDescending(x => x.CalendarYear).ToList();
-            var performanceMeasuresValidationResult = projectUpdateBatch.ValidatePerformanceMeasures();
-
-            var viewDataForAngularEditor = new PerformanceMeasuresViewData.ViewDataForAngularEditor(projectUpdateBatch.ProjectUpdateBatchID,
-                performanceMeasureSimples,
-                performanceMeasureSubcategorySimples,
-                performanceMeasureSubcategoryOptionSimples,
-                calendarYearStrings,
-                showExemptYears);
-            var updateStatus = GetUpdateStatus(projectUpdateBatch);
-            var viewData = new PerformanceMeasuresViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, updateStatus, performanceMeasuresValidationResult);
-            return RazorView<PerformanceMeasures, PerformanceMeasuresViewData, PerformanceMeasuresViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [ProjectUpdateCreateEditSubmitFeature]
-        public PartialViewResult RefreshPerformanceMeasures(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            var viewModel = new ConfirmDialogFormViewModel(projectUpdateBatch.ProjectUpdateBatchID);
-            return ViewRefreshPerformanceMeasures(viewModel);
         }
 
         private static ProjectUpdateBatch GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(Project project)
@@ -432,31 +323,6 @@ namespace ProjectFirma.Web.Controllers
             return projectUpdateBatch;
         }
 
-        [HttpPost]
-        [ProjectUpdateCreateEditSubmitFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult RefreshPerformanceMeasures(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            projectUpdateBatch.DeletePerformanceMeasuresProjectExemptReportingYearUpdates();
-            projectUpdateBatch.DeletePerformanceMeasureActualUpdates();
-
-            // refresh the data
-            projectUpdateBatch.SyncPerformanceMeasureActualYearsExemptionExplanation();
-            ProjectExemptReportingYearUpdate.CreatePerformanceMeasuresExemptReportingYearsFromProject(projectUpdateBatch);
-            PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
-            projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewRefreshPerformanceMeasures(ConfirmDialogFormViewModel viewModel)
-        {
-            var viewData =
-                new ConfirmDialogFormViewData(
-                    $"Are you sure you want to refresh the {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()} for this {FieldDefinition.Project.GetFieldDefinitionLabel()}? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and use the updated start and completion years from the Basics section. Any changes made in this section will be lost.");
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
@@ -1719,10 +1585,6 @@ namespace ProjectFirma.Web.Controllers
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //HttpRequestStorage.DatabaseEntities.ProjectBudgets.Load();
             //var allProjectBudgets = HttpRequestStorage.DatabaseEntities.ProjectBudgets.Local;
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Load();
-            var allPerformanceMeasureActuals = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Local;
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Load();
-            var allPerformanceMeasureActualSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Local;
             HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Load();
             var allProjectExternalLinks = HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Local;
             HttpRequestStorage.DatabaseEntities.ProjectNotes.Load();
@@ -1755,8 +1617,6 @@ namespace ProjectFirma.Web.Controllers
                 allprojectFundingSources,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
                 //                allProjectBudgets,
-                allPerformanceMeasureActuals,
-                allPerformanceMeasureActualSubcategoryOptions,
                 allProjectExternalLinks,
                 allProjectNotes,
                 allProjectImages,
@@ -1795,13 +1655,6 @@ namespace ProjectFirma.Web.Controllers
                 var basicsDiffHelper = new HtmlDiff.HtmlDiff(basicsDiffContainer.OriginalHtml, basicsDiffContainer.UpdatedHtml);                
                 projectUpdateBatch.BasicsDiffLogHtmlString = new HtmlString(basicsDiffHelper.Build());
             }            
-
-            var performanceMeasureDiffContainer = DiffPerformanceMeasuresImpl(projectPrimaryKey);
-            if (performanceMeasureDiffContainer.HasChanged)
-            {
-                var performanceMeasureDiffHelper = new HtmlDiff.HtmlDiff(performanceMeasureDiffContainer.OriginalHtml, performanceMeasureDiffContainer.UpdatedHtml);
-                projectUpdateBatch.PerformanceMeasureDiffLogHtmlString = new HtmlString(performanceMeasureDiffHelper.Build());
-            }
 
             var expendituresDiffContainer = DiffExpendituresImpl(projectPrimaryKey);
             if (expendituresDiffContainer.HasChanged)
@@ -2139,129 +1992,6 @@ namespace ProjectFirma.Web.Controllers
             return partialViewAsString;
         }
 
-
-
-
-        [HttpGet]
-        [ProjectUpdateCreateEditSubmitFeature]
-        public PartialViewResult DiffPerformanceMeasures(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var htmlDiffContainer = DiffPerformanceMeasuresImpl(projectPrimaryKey);
-            var htmlDiff = new HtmlDiff.HtmlDiff(htmlDiffContainer.OriginalHtml, htmlDiffContainer.UpdatedHtml);
-            return ViewHtmlDiff(htmlDiff.Build(), string.Empty);
-        }
-
-        private HtmlDiffContainer DiffPerformanceMeasuresImpl(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {FieldDefinition.Project.GetFieldDefinitionLabel()} Update for {FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
-            var performanceMeasureReportedValuesOriginal = new List<IPerformanceMeasureReportedValue>(project.GetReportedPerformanceMeasures());
-            var performanceMeasureReportedValuesUpdated = new List<IPerformanceMeasureReportedValue>(projectUpdateBatch.PerformanceMeasureActualUpdates);
-            var calendarYearsForPerformanceMeasuresOriginal = performanceMeasureReportedValuesOriginal.Select(x => x.CalendarYear).Distinct().ToList();
-            var calendarYearsForPerformanceMeasuresUpdated = performanceMeasureReportedValuesUpdated.Select(x => x.CalendarYear).Distinct().ToList();
-
-            var originalHtml = GeneratePartialViewForOriginalPerformanceMeasures(
-                performanceMeasureReportedValuesOriginal,
-                performanceMeasureReportedValuesUpdated,
-                calendarYearsForPerformanceMeasuresOriginal,
-                calendarYearsForPerformanceMeasuresUpdated,
-                project.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList(),
-                project.PerformanceMeasureActualYearsExemptionExplanation);
-
-            var updatedHtml = GeneratePartialViewForModifiedPerformanceMeasures(
-                performanceMeasureReportedValuesOriginal,
-                performanceMeasureReportedValuesUpdated,
-                calendarYearsForPerformanceMeasuresOriginal,
-                calendarYearsForPerformanceMeasuresUpdated,
-                projectUpdateBatch.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList(),
-                projectUpdateBatch.PerformanceMeasureActualYearsExemptionExplanation);
-
-            return new HtmlDiffContainer(originalHtml, updatedHtml);
-        }
-
-        private string GeneratePartialViewForOriginalPerformanceMeasures(List<IPerformanceMeasureReportedValue> performanceMeasureReportedValuesOriginal,
-            List<IPerformanceMeasureReportedValue> performanceMeasureReportedValuesUpdated,
-            List<int> calendarYearsOriginal,
-            List<int> calendarYearsUpdated,
-            List<int> exemptReportingYears,
-            string exemptionExplanation)
-        {
-            var performanceMeasuresInOriginal = performanceMeasureReportedValuesOriginal.Select(x => x.PerformanceMeasureID).Distinct().ToList();
-            var performanceMeasuresInUpdated = performanceMeasureReportedValuesUpdated.Select(x => x.PerformanceMeasureID).Distinct().ToList();
-            var performanceMeasuresOnlyInOriginal = performanceMeasuresInOriginal.Where(x => !performanceMeasuresInUpdated.Contains(x)).ToList();
-
-            var performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal =
-                PerformanceMeasureSubcategoriesCalendarYearReportedValue.CreateFromPerformanceMeasuresAndCalendarYears(performanceMeasureReportedValuesOriginal);
-            // we need to zero out calendar year values only in original
-            foreach (var performanceMeasureSubcategoriesCalendarYearReportedValue in performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal)
-            {
-                ZeroOutReportedValue(performanceMeasureSubcategoriesCalendarYearReportedValue, calendarYearsOriginal.Except(calendarYearsUpdated).ToList());
-            }
-            var performanceMeasureSubcategoriesCalendarYearReportedValuesUpdated =
-                PerformanceMeasureSubcategoriesCalendarYearReportedValue.CreateFromPerformanceMeasuresAndCalendarYears(performanceMeasureReportedValuesUpdated);
-
-            // find the ones that are only in the modified set and add them and mark them as "added"
-            performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal.AddRange(
-                performanceMeasureSubcategoriesCalendarYearReportedValuesUpdated.Where(x => !performanceMeasuresInOriginal.Contains(x.PerformanceMeasureID))
-                    .Select(x => PerformanceMeasureSubcategoriesCalendarYearReportedValue.Clone(x, HtmlDiffContainer.DisplayCssClassAddedElement))
-                    .ToList());
-            // find the ones only in original and mark them as "deleted"
-            performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal.Where(x => performanceMeasuresOnlyInOriginal.Contains(x.PerformanceMeasureID))
-                .ForEach(x =>
-                {
-                    ZeroOutReportedValue(x, calendarYearsOriginal);
-                    x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement;
-                });
-            var calendarYearStrings = GetCalendarYearStringsForDiffForOriginal(calendarYearsOriginal, calendarYearsUpdated);
-            return GeneratePartialViewForPerformanceMeasures(performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal, calendarYearStrings, exemptReportingYears, exemptionExplanation);
-        }
-
-        private static void ZeroOutReportedValue(PerformanceMeasureSubcategoriesCalendarYearReportedValue performanceMeasureSubcategoriesCalendarYearReportedValue, List<int> calendarYearsToZeroOut)
-        {
-            foreach (var subcategoriesReportedValue in performanceMeasureSubcategoriesCalendarYearReportedValue.SubcategoriesReportedValues)
-            {
-                foreach (var calendarYear in calendarYearsToZeroOut)
-                {
-                    subcategoriesReportedValue.CalendarYearReportedValue[calendarYear] = 0;
-                }
-            }
-        }
-
-        private string GeneratePartialViewForModifiedPerformanceMeasures(List<IPerformanceMeasureReportedValue> performanceMeasureReportedValuesOriginal,
-            List<IPerformanceMeasureReportedValue> performanceMeasureReportedValuesUpdated,
-            List<int> calendarYearsOriginal,
-            List<int> calendarYearsUpdated,
-            List<int> exemptReportingYears,
-            string exemptionExplanation)
-        {
-            var performanceMeasuresInOriginal = performanceMeasureReportedValuesOriginal.Select(x => x.PerformanceMeasureID).Distinct().ToList();
-            var performanceMeasuresInUpdated = performanceMeasureReportedValuesUpdated.Select(x => x.PerformanceMeasureID).Distinct().ToList();
-            var performanceMeasuresOnlyInUpdated = performanceMeasuresInUpdated.Where(x => !performanceMeasuresInOriginal.Contains(x)).ToList();
-
-            var performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal =
-                PerformanceMeasureSubcategoriesCalendarYearReportedValue.CreateFromPerformanceMeasuresAndCalendarYears(performanceMeasureReportedValuesOriginal);
-            var performanceMeasureSubcategoriesCalendarYearReportedValuesUpdated =
-                PerformanceMeasureSubcategoriesCalendarYearReportedValue.CreateFromPerformanceMeasuresAndCalendarYears(performanceMeasureReportedValuesUpdated);
-
-            // find the ones that are only in the original set and add them and mark them as "deleted"
-            performanceMeasureSubcategoriesCalendarYearReportedValuesUpdated.AddRange(
-                performanceMeasureSubcategoriesCalendarYearReportedValuesOriginal.Where(x => !performanceMeasuresInUpdated.Contains(x.PerformanceMeasureID))
-                    .Select(x => PerformanceMeasureSubcategoriesCalendarYearReportedValue.Clone(x, HtmlDiffContainer.DisplayCssClassDeletedElement))
-                    .ToList());
-            // find the ones only in modified and mark them as "added"
-            performanceMeasureSubcategoriesCalendarYearReportedValuesUpdated.Where(x => performanceMeasuresOnlyInUpdated.Contains(x.PerformanceMeasureID))
-                .ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
-
-            var calendarYearStrings = GetCalendarYearStringsForDiffForUpdated(calendarYearsOriginal, calendarYearsUpdated);
-            return GeneratePartialViewForPerformanceMeasures(performanceMeasureSubcategoriesCalendarYearReportedValuesUpdated, calendarYearStrings, exemptReportingYears, exemptionExplanation);
-        }
-
-        private string GeneratePartialViewForPerformanceMeasures(List<PerformanceMeasureSubcategoriesCalendarYearReportedValue> performanceMeasureSubcategoriesCalendarYearReportedValues, List<CalendarYearString> calendarYearStrings, List<int> exemptReportingYears, string exemptionExplanation)
-        {
-            var viewData = new PerformanceMeasureReportedValuesSummaryViewData(performanceMeasureSubcategoriesCalendarYearReportedValues, exemptReportingYears, exemptionExplanation, calendarYearStrings);
-            var partialViewToString = RenderPartialViewToString(PerformanceMeasureReportedValuesPartialViewPath, viewData);
-            return partialViewToString;
-        }
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
@@ -2982,7 +2712,6 @@ namespace ProjectFirma.Web.Controllers
 
         private UpdateStatus GetUpdateStatus(ProjectUpdateBatch projectUpdateBatch)
         {
-            var isPerformanceMeasuresUpdated = DiffPerformanceMeasuresImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isExpendituresUpdated = DiffExpendituresImpl(projectUpdateBatch.ProjectID).HasChanged;
 //            var isBudgetsUpdated = DiffBudgetsImpl(projectUpdateBatch.ProjectID).HasChanged;
             // ReSharper disable once ConvertToConstant.Local
@@ -3005,7 +2734,6 @@ namespace ProjectFirma.Web.Controllers
             var isContactsUpdated = DiffContactsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             return new UpdateStatus(isBasicsUpdated,
-                isPerformanceMeasuresUpdated,
                 isExpendituresUpdated,
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 isBudgetsUpdated,

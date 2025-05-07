@@ -52,7 +52,6 @@ using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectInvoice;
-using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectImportBlockList;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
@@ -147,7 +146,6 @@ namespace ProjectFirma.Web.Controllers
             bool userHasEditProjectPermissions = new ProjectEditAsAdminFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userHasProjectUpdatePermissions = new ProjectUpdateCreateEditSubmitFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userCanEditProposal = new ProjectCreateFeature().HasPermission(CurrentPerson, project).HasPermission;
-            bool userHasPerformanceMeasureActualManagePermissions = new PerformanceMeasureActualFromProjectManageFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userCanViewProjectDocuments = (!CurrentPerson.IsAnonymousOrUnassigned);
 
             var editSimpleProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project));
@@ -157,8 +155,6 @@ namespace ProjectFirma.Web.Controllers
                 SitkaRoute<ProjectCountyController>.BuildUrlFromExpression(c => c.EditProjectCounties(project));
             var editProjectPriorityLandscapeUrl = SitkaRoute<ProjectPriorityLandscapeController>.BuildUrlFromExpression(c => c.EditProjectPriorityLandscapes(project));
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
-            var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
-            var editPerformanceMeasureActualsUrl = SitkaRoute<PerformanceMeasureActualController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureActualsForProject(project));
             var editReportedExpendituresUrl = SitkaRoute<ProjectGrantAllocationExpenditureController>.BuildUrlFromExpression(c => c.EditProjectGrantAllocationExpendituresForProject(project));
             var editExternalLinksUrl = SitkaRoute<ProjectExternalLinkController>.BuildUrlFromExpression(c => c.EditProjectExternalLinks(project));
 
@@ -172,8 +168,7 @@ namespace ProjectFirma.Web.Controllers
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
             var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()));
-            var performanceMeasureExpectedsSummaryViewData = new PerformanceMeasureExpectedSummaryViewData(new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.OrderBy(x=>x.PerformanceMeasure.PerformanceMeasureSortOrder)));
-            var performanceMeasureReportedValuesGroupedViewData = BuildPerformanceMeasureReportedValuesGroupedViewData(project);
+
             var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
@@ -222,8 +217,6 @@ namespace ProjectFirma.Web.Controllers
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
                 projectInvoiceDetailViewData,
-                performanceMeasureExpectedsSummaryViewData,
-                performanceMeasureReportedValuesGroupedViewData,
                 projectExpendituresSummaryViewData,
                 imageGalleryViewData,
                 projectNotesViewData,
@@ -233,13 +226,10 @@ namespace ProjectFirma.Web.Controllers
                 userHasProjectAdminPermissions,
                 userHasEditProjectPermissions,
                 userHasProjectUpdatePermissions,
-                userHasPerformanceMeasureActualManagePermissions,
                 mapFormID,
                 editSimpleProjectLocationUrl,
                 editDetailedProjectLocationUrl,
                 editOrganizationsUrl,
-                editPerformanceMeasureExpectedsUrl,
-                editPerformanceMeasureActualsUrl,
                 editReportedExpendituresUrl,
                 auditLogsGridSpec,
                 auditLogsGridDataUrl,
@@ -286,19 +276,6 @@ namespace ProjectFirma.Web.Controllers
                 FirmaHelpers.CalculateYearRanges(project.GetExpendituresExemptReportingYears().Select(x => x.CalendarYear)),
                 project.NoExpendituresToReportExplanation);
             return projectExpendituresDetailViewData;
-        }
-
-        private static PerformanceMeasureReportedValuesGroupedViewData BuildPerformanceMeasureReportedValuesGroupedViewData(Project project)
-        {
-            var performanceMeasureReportedValues = project.GetReportedPerformanceMeasures();
-            var performanceMeasureSubcategoriesCalendarYearReportedValues =
-                PerformanceMeasureSubcategoriesCalendarYearReportedValue.CreateFromPerformanceMeasuresAndCalendarYears(new List<IPerformanceMeasureReportedValue>(performanceMeasureReportedValues.OrderBy(x=>x.PerformanceMeasure.SortOrder).ThenBy(x=>x.PerformanceMeasure.DisplayName)));
-            var performanceMeasureReportedValuesGroupedViewData = new PerformanceMeasureReportedValuesGroupedViewData(performanceMeasureSubcategoriesCalendarYearReportedValues,
-                FirmaHelpers.CalculateYearRanges(project.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear)),
-                project.PerformanceMeasureActualYearsExemptionExplanation,
-                performanceMeasureReportedValues.Select(x => x.CalendarYear).Distinct().Select(x => new CalendarYearString(x)).ToList(),
-                false);
-            return performanceMeasureReportedValuesGroupedViewData;
         }
 
         private static ImageGalleryViewData BuildImageGalleryViewData(Project project, Person currentPerson)
@@ -443,7 +420,6 @@ namespace ProjectFirma.Web.Controllers
         public List<Project> GetListOfActiveProjectsVisibleToUser(Person currentPerson)
         {
             var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
-                .Include(x => x.PerformanceMeasureActuals)
                 .Include(x => x.ProjectPrograms)
                 .Include(x => x.ProjectCounties)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
@@ -575,20 +551,6 @@ namespace ProjectFirma.Web.Controllers
             var projectNotes = (projects.SelectMany(p => p.ProjectNotes)).ToList();
             var wsProjectNotes = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ProjectNote.GetFieldDefinitionLabelPluralized()}", projectNoteSpec, projectNotes);
             workSheets.Add(wsProjectNotes);
-
-            var performanceMeasureExpectedExcelSpec = new PerformanceMeasureExpectedExcelSpec();
-            var performanceMeasureExpecteds = (projects.SelectMany(p => p.PerformanceMeasureExpecteds)).ToList();
-            var wsPerformanceMeasureExpecteds = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet(
-                $"Expected {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}s",
-                performanceMeasureExpectedExcelSpec,
-                performanceMeasureExpecteds);
-            workSheets.Add(wsPerformanceMeasureExpecteds);
-
-            var performanceMeasureActualExcelSpec = new PerformanceMeasureActualExcelSpec();
-            var performanceMeasureActuals = (projects.SelectMany(p => p.GetReportedPerformanceMeasures())).ToList();
-            var wsPerformanceMeasureActuals = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet(
-                $"Reported {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}", performanceMeasureActualExcelSpec, performanceMeasureActuals);
-            workSheets.Add(wsPerformanceMeasureActuals);
 
             var projectGrantAllocationExpenditureExcelSpec = new ProjectGrantAllocationExpenditureExcelSpec();
             var projectGrantAllocationExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();

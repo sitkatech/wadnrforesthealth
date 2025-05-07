@@ -110,11 +110,6 @@ namespace ProjectFirma.Web.Models
             feature.Properties.Add(OrganizationType.OrganizationTypeName, OrganizationName);
             return new FeatureCollection(new List<Feature> { feature });
         }
-        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
-        {
-            var projects = this.GetAllActiveProjectsAndProposals(currentPerson).ToList();
-            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
-        }
 
         public bool CanBeAnApprovingOrganization()
         {

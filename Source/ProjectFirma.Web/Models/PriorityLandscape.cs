@@ -121,11 +121,6 @@ namespace ProjectFirma.Web.Models
             return layerGeoJsons;
         }
 
-        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
-        {
-            var projects = GetAssociatedProjectsVisibleToUser(currentPerson);
-            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
-        }
 
         public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {

@@ -44,7 +44,6 @@ using ProjectFirma.Web.Views.ProjectCounty;
 using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
-using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
@@ -67,9 +66,6 @@ using LocationSimpleViewModel = ProjectFirma.Web.Views.ProjectCreate.LocationSim
 using Organizations = ProjectFirma.Web.Views.ProjectCreate.Organizations;
 using OrganizationsViewData = ProjectFirma.Web.Views.ProjectCreate.OrganizationsViewData;
 using OrganizationsViewModel = ProjectFirma.Web.Views.ProjectCreate.OrganizationsViewModel;
-using PerformanceMeasures = ProjectFirma.Web.Views.ProjectCreate.PerformanceMeasures;
-using PerformanceMeasuresViewData = ProjectFirma.Web.Views.ProjectCreate.PerformanceMeasuresViewData;
-using PerformanceMeasuresViewModel = ProjectFirma.Web.Views.ProjectCreate.PerformanceMeasuresViewModel;
 using Photos = ProjectFirma.Web.Views.ProjectCreate.Photos;
 
 namespace ProjectFirma.Web.Controllers
@@ -257,7 +253,6 @@ namespace ProjectFirma.Web.Controllers
 
             if (project.ProjectStage == ProjectStage.Proposed)
             {
-                DeletePerformanceMeasureActuals(project);
                 foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears)
                 {
                     projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
@@ -270,7 +265,6 @@ namespace ProjectFirma.Web.Controllers
 
             if (project.ProjectStage == ProjectStage.Planned)
             {
-                DeletePerformanceMeasureActuals(project);
                 foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears.Where(x => x.ProjectExemptReportingType == ProjectExemptReportingType.PerformanceMeasures))
                 {
                     projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
@@ -296,134 +290,7 @@ namespace ProjectFirma.Web.Controllers
             return GoToNextSection(viewModel, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName);
         }
 
-        [HttpGet]
-        [PerformanceMeasureExpectedProposedFeature]
-        public ViewResult EditExpectedPerformanceMeasureValues(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ExpectedPerformanceMeasureValuesViewModel(project);
-            return ViewEditExpectedPerformanceMeasureValues(project, viewModel);
-        }
 
-        private ViewResult ViewEditExpectedPerformanceMeasureValues(Project project, ExpectedPerformanceMeasureValuesViewModel viewModel)
-        {
-            var performanceMeasures = HttpRequestStorage.DatabaseEntities.PerformanceMeasures.ToList().SortByOrderThenName().ToList();
-            var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            proposalSectionsStatus.IsPerformanceMeasureSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPerformanceMeasureSectionComplete;
-
-            var editPerformanceMeasureExpectedsViewData = new EditPerformanceMeasureExpectedViewData(
-                new List<ProjectSimple> {new ProjectSimple(project)}, performanceMeasures, project.ProjectID, false);
-            var viewData = new ExpectedPerformanceMeasureValuesViewData(CurrentPerson, project, proposalSectionsStatus, editPerformanceMeasureExpectedsViewData);
-            return RazorView<ExpectedPerformanceMeasureValues, ExpectedPerformanceMeasureValuesViewData, ExpectedPerformanceMeasureValuesViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [PerformanceMeasureExpectedProposedFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditExpectedPerformanceMeasureValues(ProjectPrimaryKey projectPrimaryKey, ExpectedPerformanceMeasureValuesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditExpectedPerformanceMeasureValues(project, viewModel);
-            }
-            var performanceMeasureExpecteds = project.PerformanceMeasureExpecteds.ToList();
-
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Load();
-            var allPerformanceMeasureExpecteds = HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Local;
-
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Load();
-            var allPerformanceMeasureExpectedSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Local;
-
-            viewModel.UpdateModel(performanceMeasureExpecteds, allPerformanceMeasureExpecteds, allPerformanceMeasureExpectedSubcategoryOptions, project);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()} successfully saved.");
-            return GoToNextSection(viewModel, project,ProjectCreateSection.ExpectedPerformanceMeasures.ProjectCreateSectionDisplayName);
-        }
-
-        [HttpGet]
-        [ProjectCreateFeature]
-        public ActionResult PerformanceMeasures(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (project == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectCreateController>(x => x.InstructionsProposal(project.ProjectID)));
-            }
-            var performanceMeasureActualSimples =
-                project.PerformanceMeasureActuals.OrderBy(pam => pam.PerformanceMeasure.PerformanceMeasureSortOrder).ThenBy(x=>x.PerformanceMeasure.DisplayName)
-                    .ThenByDescending(x => x.CalendarYear)
-                    .Select(x => new PerformanceMeasureActualSimple(x))
-                    .ToList();
-            var projectExemptReportingYears = project.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
-            var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
-            var possibleYearsToExempt = project.GetProjectUpdateImplementationStartToCompletionDateRange();
-            projectExemptReportingYears.AddRange(
-                possibleYearsToExempt.Where(x => !currentExemptedYears.Contains(x))
-                    .Select((x, index) => new ProjectExemptReportingYearSimple(-(index + 1), project.ProjectID, x)));
-
-            var viewModel = new PerformanceMeasuresViewModel(performanceMeasureActualSimples,
-                project.PerformanceMeasureActualYearsExemptionExplanation,
-                projectExemptReportingYears.OrderBy(x => x.CalendarYear).ToList())
-            {ProjectID = projectPrimaryKey.PrimaryKeyValue};
-            return ViewPerformanceMeasures(project, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult PerformanceMeasures(ProjectPrimaryKey projectPrimaryKey, PerformanceMeasuresViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (project == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectCreateController>(x => x.InstructionsProposal(project.ProjectID)));
-            }
-            if (!ModelState.IsValid)
-            {
-                return ViewPerformanceMeasures(project, viewModel);
-            }
-            var performanceMeasureActuals = project.PerformanceMeasureActuals.ToList();
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Load();
-            var allPerformanceMeasureActuals = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Local;
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Load();
-            var performanceMeasureActualSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Local;
-            viewModel.UpdateModel(performanceMeasureActuals, allPerformanceMeasureActuals, performanceMeasureActualSubcategoryOptions, project);
-
-            return GoToNextSection(viewModel, project, ProjectCreateSection.ReportedPerformanceMeasures.ProjectCreateSectionDisplayName);
-        }
-
-        private ViewResult ViewPerformanceMeasures(Project project, PerformanceMeasuresViewModel viewModel)
-        {
-            var performanceMeasures =
-                HttpRequestStorage.DatabaseEntities.PerformanceMeasures.ToList().SortByOrderThenName().ToList();
-            var showExemptYears = project.GetPerformanceMeasuresExemptReportingYears().Any() ||
-                                  ModelState.Values.SelectMany(x => x.Errors)
-                                      .Any(
-                                          x =>
-                                              x.ErrorMessage == FirmaValidationMessages.ExplanationNotNecessaryForProjectExemptYears ||
-                                              x.ErrorMessage == FirmaValidationMessages.ExplanationNecessaryForProjectExemptYears);
-
-            var performanceMeasureSubcategories = performanceMeasures.SelectMany(x => x.PerformanceMeasureSubcategories).Distinct(new HavePrimaryKeyComparer<PerformanceMeasureSubcategory>()).ToList();
-            var performanceMeasureSimples = performanceMeasures.Select(x => new PerformanceMeasureSimple(x)).ToList();
-            var performanceMeasureSubcategorySimples = performanceMeasureSubcategories.Select(y => new PerformanceMeasureSubcategorySimple(y)).ToList();
-
-            var performanceMeasureSubcategoryOptionSimples = performanceMeasureSubcategories.SelectMany(y => y.PerformanceMeasureSubcategoryOptions.Select(z => new PerformanceMeasureSubcategoryOptionSimple(z))).ToList();
-
-            var calendarYearStrings = FirmaDateUtilities.ReportingYearsForUserInput().OrderByDescending(x => x.CalendarYear).ToList();
-
-            var viewDataForAngularEditor = new PerformanceMeasuresViewData.ViewDataForAngularEditor(project.ProjectID,
-                performanceMeasureSimples,
-                performanceMeasureSubcategorySimples,
-                performanceMeasureSubcategoryOptionSimples,
-                calendarYearStrings,
-                showExemptYears);
-            var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            var viewData =
-                new PerformanceMeasuresViewData(CurrentPerson, project, viewDataForAngularEditor, proposalSectionsStatus);
-            return RazorView<PerformanceMeasures, PerformanceMeasuresViewData, PerformanceMeasuresViewModel>(viewData, viewModel);
-        }
 
         [HttpGet]
         [ProjectCreateFeature]
@@ -441,7 +308,7 @@ namespace ProjectFirma.Web.Controllers
             var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allGrantAllocations, estimatedTotalCost);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            proposalSectionsStatus.IsExpectedFundingSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPerformanceMeasureSectionComplete;
+            proposalSectionsStatus.IsExpectedFundingSectionComplete = ModelState.IsValid;
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, project, proposalSectionsStatus, viewDataForAngularEditor);
             return RazorView<ExpectedFunding, ExpectedFundingViewData, ExpectedFundingViewModel>(viewData, viewModel);
@@ -1368,15 +1235,6 @@ namespace ProjectFirma.Web.Controllers
             var nextProjectUpdateSection = applicableWizardSections.Where(x => x.SortOrder > currentSection.SortOrder).OrderBy(x => x.SortOrder).FirstOrDefault();
             var nextSection = viewModel.AutoAdvance && nextProjectUpdateSection != null ? nextProjectUpdateSection.SectionUrl : currentSection.SectionUrl;
             return Redirect(nextSection);
-        }
-
-        private void DeletePerformanceMeasureActuals(Project project)
-        {
-            foreach (var performanceMeasureActual in project.PerformanceMeasureActuals)
-            {
-                performanceMeasureActual.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            }
-            project.PerformanceMeasureActualYearsExemptionExplanation = null;
         }
 
         [HttpGet]

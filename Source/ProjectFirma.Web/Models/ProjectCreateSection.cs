@@ -92,52 +92,6 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectCreateSectionExpectedPerformanceMeasures
-    {
-        public override bool IsComplete(Project project)
-        {
-            return true;
-            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
-            //if (project == null)
-            //{
-            //    return false;
-            //}
-            //var pmValidationResults = new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
-            //return !pmValidationResults.Any();
-        }
-
-        public override string GetSectionUrl(Project project)
-        {
-            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditExpectedPerformanceMeasureValues(project.ProjectID)) : null;
-        }
-    }
-
-    public partial class ProjectCreateSectionReportedPerformanceMeasures
-    {
-        public override bool IsComplete(Project project)
-        {
-            return true;
-            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
-            //if (project == null)
-            //{
-            //    return false;
-            //}
-            //var pmValidationResults = new PerformanceMeasuresViewModel(
-            //    project.PerformanceMeasureActuals.Select(x => new PerformanceMeasureActualSimple(x)).ToList(),
-            //    project.PerformanceMeasureActualYearsExemptionExplanation,
-            //    project.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList())
-            //    {
-            //        ProjectID = project.ProjectID
-            //    }.GetValidationResults();
-            //return !pmValidationResults.Any();
-        }
-
-        public override string GetSectionUrl(Project project)
-        {
-            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.PerformanceMeasures(project.ProjectID)) : null;
-        }
-    }
-
     public partial class ProjectCreateSectionClassifications
     {
         public override bool IsComplete(Project project)

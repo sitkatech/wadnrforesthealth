@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Controllers
     public class ClassificationSystemController : FirmaBaseController
     {
         [HttpGet]
-        [PerformanceMeasureManageFeature]
+        [ClassificationManageFeature]
         public PartialViewResult EditInDialog(ClassificationSystemPrimaryKey classificationSystemPrimaryKey)
         {
             var classificationSystem = classificationSystemPrimaryKey.EntityObject;
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [PerformanceMeasureManageFeature]
+        [ClassificationManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditInDialog(ClassificationSystemPrimaryKey classificationSystemPrimaryKey, EditPageContentViewModel viewModel)
         {

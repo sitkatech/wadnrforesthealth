@@ -219,44 +219,6 @@ else
         </div>
     </div>
 </div>
-@*TODO Neutered Per WA DNR #1446. May decide to bring it back later
-        <div role="tabpanel" class="tab-pane" id="performanceMeasures">
-
-            @if (ViewDataTyped.PerformanceMeasureChartViewDatas.Any())
-            {
-                <p>
-                    The reported @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() results within this @ViewDataTyped.RegionTypeName are charted here. Results are included for every @FieldDefinition.Project.GetFieldDefinitionLabel() that is assigned to this @ViewDataTyped.RegionTypeName. To see the full results for a @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel(), click the @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel() name in the chart title.
-                </p>
-                foreach (var batch in ViewDataTyped.PerformanceMeasureChartViewDatas.Batch(2))
-                {
-                    <div class="row">
-                        @foreach (var performanceMeasureChartViewData in batch)
-                        {
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                <div class="panel panelFirma">
-                                    <div class="panel-body">
-                                        <div style="width: 500px; margin: auto;">
-                                            @{ PerformanceMeasureChart.RenderPartialView(Html, performanceMeasureChartViewData); }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="row">
-                    <div class="col-xs-12">
-                        <p class="text-center">
-                            There are no @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized() to report for this @ViewDataTyped.RegionTypeName.
-                        </p>
-                    </div>
-                </div>
-            }
-
-    </div>*@
 
 <script type="text/javascript">
     jQuery(function()

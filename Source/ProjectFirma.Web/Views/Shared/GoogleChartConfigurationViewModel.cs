@@ -35,15 +35,6 @@ namespace ProjectFirma.Web.Views.Shared
         [JsonProperty(PropertyName = "chartType")]
         public string ChartType { get; set; }
 
-        public void UpdateModel(Models.PerformanceMeasure performanceMeasure, int performanceMeasureSubcategoryID)
-        {            
-            //Remove certain properties that we don't want saved to the DB
-            var chartConfigurationString = CleanAndSerializeChartJsonString(ChartConfigurationJson);
-            var performanceMeasureSubcategory = performanceMeasure.PerformanceMeasureSubcategories.Single(x => x.PerformanceMeasureSubcategoryID == performanceMeasureSubcategoryID);
-            var googleChartType = ConverChartTypeStringToGoogleChartType();
-            performanceMeasureSubcategory.GoogleChartTypeID = googleChartType != null ? googleChartType.GoogleChartTypeID : (int?)null;
-            performanceMeasureSubcategory.ChartConfigurationJson = chartConfigurationString;
-        }
 
         public string CleanAndSerializeChartJsonString(string json)
         {

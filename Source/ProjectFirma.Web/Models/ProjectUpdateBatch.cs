@@ -113,16 +113,6 @@ namespace ProjectFirma.Web.Models
             // Expected Funding
             ProjectGrantAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
 
-            // performance measures
-            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
-            //PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
-
-            // project performance measures exempt reporting years
-            ProjectExemptReportingYearUpdate.CreatePerformanceMeasuresExemptReportingYearsFromProject(projectUpdateBatch);
-
-            // project exempt reporting years reason
-            projectUpdateBatch.SyncPerformanceMeasureActualYearsExemptionExplanation();
-
             // project locations - detailed
             ProjectLocationUpdate.CreateFromProject(projectUpdateBatch);
 
@@ -260,13 +250,6 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectGrantAllocationRequestUpdates);
         }
 
-        public void DeletePerformanceMeasureActualUpdates()
-        {
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.DeletePerformanceMeasureActualSubcategoryOptionUpdate(PerformanceMeasureActualUpdates.SelectMany(x => x.PerformanceMeasureActualSubcategoryOptionUpdates.Select(y => y.PerformanceMeasureActualSubcategoryOptionUpdateID)).ToList());
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.DeletePerformanceMeasureActualUpdate(PerformanceMeasureActualUpdates);
-            RefreshFromDatabase(PerformanceMeasureActualUpdates);
-        }
-
         public void DeleteProjectLocationUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(ProjectLocationUpdates);
@@ -341,79 +324,7 @@ namespace ProjectFirma.Web.Models
 
 
         public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;
-
-        public PerformanceMeasuresValidationResult ValidatePerformanceMeasures()
-        {
-            if (!AreProjectBasicsValid)
-            {
-                return new PerformanceMeasuresValidationResult(FirmaValidationMessages.UpdateSectionIsDependentUponBasicsSection);
-            }
-            
-            // validation 1: ensure that we have PM values from ProjectUpdate start year to min(endyear, currentyear); if the ProjectUpdate record has a stage of Planning/Design, we do not do this validation
-            var missingYears = new HashSet<int>();
-            if (ProjectUpdate.ProjectStage.RequiresPerformanceMeasureActuals() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
-            {
-                var exemptYears = this.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList();
-                var yearsExpected = ProjectUpdate.GetProjectUpdateImplementationStartToCompletionDateRange().Where(x => !exemptYears.Contains(x)).ToList();
-                var yearsEntered = PerformanceMeasureActualUpdates.Select(x => x.CalendarYear).Distinct();
-                missingYears = yearsExpected.GetMissingYears(yearsEntered);
-            }
-            // validation 2: incomplete PM row (missing performanceMeasureSubcategory option id)
-            var performanceMeasureActualUpdatesWithIncompleteWarnings = ValidateNoIncompletePerformanceMeasureActualUpdateRow();
-
-            //validation 3: duplicate PM row
-            var performanceMeasureActualUpdatesWithDuplicateWarnings = ValidateNoDuplicatePerformanceMeasureActualUpdateRow();
-
-            //validation4: data entered for exempt years
-            var performanceMeasureActualUpdatesWithExemptYear = ValidateNoExemptYearsWithReportedPerformanceMeasureRow();
-
-            var performanceMeasuresValidationResult = new PerformanceMeasuresValidationResult(missingYears, performanceMeasureActualUpdatesWithIncompleteWarnings, performanceMeasureActualUpdatesWithDuplicateWarnings, performanceMeasureActualUpdatesWithExemptYear);
-            return performanceMeasuresValidationResult;
-        }
-
-        private HashSet<int> ValidateNoIncompletePerformanceMeasureActualUpdateRow()
-        {
-            var performanceMeasureActualUpdatesWithMissingSubcategoryOptions =
-                PerformanceMeasureActualUpdates.Where(
-                    x => !x.ActualValue.HasValue || x.PerformanceMeasure.PerformanceMeasureSubcategories.Count != x.PerformanceMeasureActualSubcategoryOptionUpdates.Count).ToList();
-            return new HashSet<int>(performanceMeasureActualUpdatesWithMissingSubcategoryOptions.Select(x => x.PerformanceMeasureActualUpdateID));
-        }
-
-        private HashSet<int> ValidateNoDuplicatePerformanceMeasureActualUpdateRow()
-        {
-            if (PerformanceMeasureActualUpdates == null)
-            {
-                return new HashSet<int>();
-            }
-            var duplicates =  PerformanceMeasureActualUpdates
-                .GroupBy(x => new { x.PerformanceMeasureID, x.CalendarYear })
-                .Select(x => x.ToList())
-                .ToList()
-                .Select(x => x)
-                .Where(x => x.Select(m => m.PerformanceMeasureActualSubcategoryOptionUpdates).ToList().Select(z => String.Join("_", z.Select(s => s.PerformanceMeasureSubcategoryOptionID).ToList())).ToList().HasDuplicates()).ToList();
-
-            return new HashSet<int>(duplicates.SelectMany(x => x).ToList().Select(x => x.PerformanceMeasureActualUpdateID));
-        }
-
-        private HashSet<int> ValidateNoExemptYearsWithReportedPerformanceMeasureRow()
-        {
-            if (PerformanceMeasureActualUpdates == null)
-            {
-                return new HashSet<int>();
-            }
-            var exemptYears = this.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList();
-
-            var performanceMeasureActualUpdatesWithExemptYear =
-                PerformanceMeasureActualUpdates.Where(x => exemptYears.Contains(x.CalendarYear)).ToList();            
-
-            return new HashSet<int>(performanceMeasureActualUpdatesWithExemptYear.Select(x => x.PerformanceMeasureActualUpdateID));
-        }
-
-        public bool ArePerformanceMeasuresValid()
-        {
-            return NewStageIsPlanningDesign || ValidatePerformanceMeasures().IsValid;
-        }
-
+        
         public List<string> ValidateExpendituresAndForceValidation()
         {
             AreProjectBasicsValid = ValidateProjectBasics().IsValid;
@@ -547,8 +458,6 @@ namespace ProjectFirma.Web.Models
             IList<ProjectExemptReportingYear> projectExemptReportingYears,
             IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
             IList<ProjectFundingSource> projectFundingSources,
-            IList<PerformanceMeasureActual> performanceMeasureActuals,
-            IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
             IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
             IList<ProjectPriorityLandscape> projectPriorityLandscapes, 
@@ -567,8 +476,6 @@ namespace ProjectFirma.Web.Models
                 projectFundingSources,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
                 //                projectBudgets,
-                performanceMeasureActuals,
-                performanceMeasureActualSubcategoryOptions,
                 projectExternalLinks,
                 projectNotes,
                 projectImages,
@@ -606,8 +513,6 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectExemptReportingYear> projectExemptReportingYears,
                 IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
                 IList<ProjectFundingSource> projectFundingSources,
-                IList<PerformanceMeasureActual> performanceMeasureActuals,
-                IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
                 IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
                 IList<ProjectPriorityLandscape> projectPriorityLandscapes,
@@ -641,17 +546,8 @@ namespace ProjectFirma.Web.Models
             // only relevant for stages past planning/design
             if (!NewStageIsPlanningDesign)
             {
-                //// performance measures
-                // TODO Neutered Per WA DNR #1446. May decide to bring it back later 
-                //PerformanceMeasureActualUpdate.CommitChangesToProject(this, performanceMeasureActuals,
-                //    performanceMeasureActualSubcategoryOptions);
-
                 // project exempt reporting years
                 ProjectExemptReportingYearUpdate.CommitChangesToProject(this, projectExemptReportingYears);
-
-                // project exempt reporting years reason
-                Project.PerformanceMeasureActualYearsExemptionExplanation =
-                    PerformanceMeasureActualYearsExemptionExplanation;
             }
 
             // project location simple

@@ -703,6 +703,11 @@ namespace ProjectFirma.Web.Models
                 case "LoaStage":
                     return LoaStages.GetLoaStage(primaryKey);
 
+                case "MeasurementUnitType":
+                    var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(measurementUnitType, "MeasurementUnitType", primaryKey);
+                    return measurementUnitType;
+
                 case "NotificationProject":
                     return NotificationProjects.GetNotificationProject(primaryKey);
 

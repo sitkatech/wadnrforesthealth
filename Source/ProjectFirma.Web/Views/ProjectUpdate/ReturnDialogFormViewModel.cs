@@ -42,9 +42,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     //case Models.ProjectUpdateSectionEnum.Expenditures:
                     //    projectUpdateBatch.ExpendituresComment = SectionComments;
                     //    break;
-                    case Models.ProjectUpdateSectionEnum.PerformanceMeasures:
-                        projectUpdateBatch.PerformanceMeasuresComment = SectionComments;
-                        break;
                     case Models.ProjectUpdateSectionEnum.LocationSimple:
                         projectUpdateBatch.LocationSimpleComment = SectionComments;
                         break;

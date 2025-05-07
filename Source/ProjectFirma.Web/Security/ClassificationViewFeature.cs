@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="ClassificationViewFeature.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -18,20 +18,15 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Web.Mvc;
 
-namespace ProjectFirma.Web.Views.PerformanceMeasure
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security.Shared;
+
+namespace ProjectFirma.Web.Security
 {
-    public class EditViewData : FirmaUserControlViewData
+    [SecurityFeatureDescription("View {0}", FieldDefinitionEnum.Classification)]
+    public class ClassificationViewFeature : AnonymousUnclassifiedFeature
     {
-        public readonly IEnumerable<SelectListItem> MeasurementUnitTypes;
-        public readonly IEnumerable<SelectListItem> PerformanceMeasureTypes;
 
-        public EditViewData(IEnumerable<SelectListItem> measurementUnitTypes, IEnumerable<SelectListItem> performanceMeasureTypes)
-        {
-            MeasurementUnitTypes = measurementUnitTypes;
-            PerformanceMeasureTypes = performanceMeasureTypes;
-        }
     }
 }
