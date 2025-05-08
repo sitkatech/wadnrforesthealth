@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, string noCountiesExplanation, int? percentageMatch) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, string noCountiesExplanation, int? percentageMatch) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -68,7 +68,6 @@ namespace ProjectFirma.Web.Models
             this.CompletionDate = completionDate;
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
-            this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
             this.IsFeatured = isFeatured;
             this.ProjectLocationNotes = projectLocationNotes;
             this.PlannedDate = plannedDate;
@@ -76,7 +75,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectApprovalStatusID = projectApprovalStatusID;
             this.ProposingPersonID = proposingPersonID;
             this.ProposingDate = proposingDate;
-            this.PerformanceMeasureNotes = performanceMeasureNotes;
             this.SubmissionDate = submissionDate;
             this.ApprovalDate = approvalDate;
             this.ReviewedByPersonID = reviewedByPersonID;
@@ -474,7 +472,6 @@ namespace ProjectFirma.Web.Models
         public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
-        public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public bool IsFeatured { get; set; }
         public string ProjectLocationNotes { get; set; }
         public DateTime? PlannedDate { get; set; }
@@ -482,7 +479,6 @@ namespace ProjectFirma.Web.Models
         public int ProjectApprovalStatusID { get; set; }
         public int? ProposingPersonID { get; set; }
         public DateTime? ProposingDate { get; set; }
-        public string PerformanceMeasureNotes { get; set; }
         public DateTime? SubmissionDate { get; set; }
         public DateTime? ApprovalDate { get; set; }
         public int? ReviewedByPersonID { get; set; }
@@ -544,9 +540,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProjectName = 140;
             public const int ProjectDescription = 4000;
-            public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int ProjectLocationNotes = 4000;
-            public const int PerformanceMeasureNotes = 500;
             public const int NoRegionsExplanation = 4000;
             public const int FhtProjectNumber = 20;
             public const int NoPriorityLandscapesExplanation = 4000;

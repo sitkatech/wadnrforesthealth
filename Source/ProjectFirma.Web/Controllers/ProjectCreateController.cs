@@ -265,7 +265,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (project.ProjectStage == ProjectStage.Planned)
             {
-                foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears.Where(x => x.ProjectExemptReportingType == ProjectExemptReportingType.PerformanceMeasures))
+                foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears)
                 {
                     projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
                 }

@@ -2597,7 +2597,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="CompletionDate" Type="datetime" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
-    <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="IsFeatured" Type="bit" Nullable="false" />
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
     <Property Name="PlannedDate" Type="datetime" />
@@ -2605,7 +2604,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="ProposingPersonID" Type="int" />
     <Property Name="ProposingDate" Type="datetime" />
-    <Property Name="PerformanceMeasureNotes" Type="varchar" MaxLength="500" />
     <Property Name="SubmissionDate" Type="datetime" />
     <Property Name="ApprovalDate" Type="datetime" />
     <Property Name="ReviewedByPersonID" Type="int" />
@@ -3041,18 +3039,15 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="LastUpdateDate" Type="datetime" Nullable="false" />
-    <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="LastUpdatePersonID" Type="int" Nullable="false" />
     <Property Name="BasicsComment" Type="varchar" MaxLength="1000" />
     <Property Name="ExpendituresComment" Type="varchar" MaxLength="1000" />
-    <Property Name="PerformanceMeasuresComment" Type="varchar" MaxLength="1000" />
     <Property Name="LocationSimpleComment" Type="varchar" MaxLength="1000" />
     <Property Name="LocationDetailedComment" Type="varchar" MaxLength="1000" />
     <Property Name="BudgetsComment" Type="varchar" MaxLength="1000" />
     <Property Name="ProjectUpdateStateID" Type="int" Nullable="false" />
     <Property Name="IsPhotosUpdated" Type="bit" Nullable="false" />
     <Property Name="BasicsDiffLog" Type="varchar(max)" />
-    <Property Name="PerformanceMeasureDiffLog" Type="varchar(max)" />
     <Property Name="ExpendituresDiffLog" Type="varchar(max)" />
     <Property Name="BudgetsDiffLog" Type="varchar(max)" />
     <Property Name="ExternalLinksDiffLog" Type="varchar(max)" />

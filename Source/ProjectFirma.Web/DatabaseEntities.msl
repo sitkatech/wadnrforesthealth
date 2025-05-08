@@ -1297,7 +1297,6 @@
           <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
-          <ScalarProperty Name="PerformanceMeasureActualYearsExemptionExplanation" ColumnName="PerformanceMeasureActualYearsExemptionExplanation" />
           <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
@@ -1305,7 +1304,6 @@
           <ScalarProperty Name="ProjectApprovalStatusID" ColumnName="ProjectApprovalStatusID" />
           <ScalarProperty Name="ProposingPersonID" ColumnName="ProposingPersonID" />
           <ScalarProperty Name="ProposingDate" ColumnName="ProposingDate" />
-          <ScalarProperty Name="PerformanceMeasureNotes" ColumnName="PerformanceMeasureNotes" />
           <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
           <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
           <ScalarProperty Name="ReviewedByPersonID" ColumnName="ReviewedByPersonID" />
@@ -1781,18 +1779,15 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-          <ScalarProperty Name="PerformanceMeasureActualYearsExemptionExplanation" ColumnName="PerformanceMeasureActualYearsExemptionExplanation" />
           <ScalarProperty Name="LastUpdatePersonID" ColumnName="LastUpdatePersonID" />
           <ScalarProperty Name="BasicsComment" ColumnName="BasicsComment" />
           <ScalarProperty Name="ExpendituresComment" ColumnName="ExpendituresComment" />
-          <ScalarProperty Name="PerformanceMeasuresComment" ColumnName="PerformanceMeasuresComment" />
           <ScalarProperty Name="LocationSimpleComment" ColumnName="LocationSimpleComment" />
           <ScalarProperty Name="LocationDetailedComment" ColumnName="LocationDetailedComment" />
           <ScalarProperty Name="BudgetsComment" ColumnName="BudgetsComment" />
           <ScalarProperty Name="ProjectUpdateStateID" ColumnName="ProjectUpdateStateID" />
           <ScalarProperty Name="IsPhotosUpdated" ColumnName="IsPhotosUpdated" />
           <ScalarProperty Name="BasicsDiffLog" ColumnName="BasicsDiffLog" />
-          <ScalarProperty Name="PerformanceMeasureDiffLog" ColumnName="PerformanceMeasureDiffLog" />
           <ScalarProperty Name="ExpendituresDiffLog" ColumnName="ExpendituresDiffLog" />
           <ScalarProperty Name="BudgetsDiffLog" ColumnName="BudgetsDiffLog" />
           <ScalarProperty Name="ExternalLinksDiffLog" ColumnName="ExternalLinksDiffLog" />

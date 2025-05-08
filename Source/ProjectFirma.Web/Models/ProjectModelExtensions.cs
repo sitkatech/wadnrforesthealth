@@ -112,12 +112,6 @@ namespace ProjectFirma.Web.Models
             return GetYearRangesImpl(projectUpdate, startYear);
         }
 
-        public static List<ProjectExemptReportingYear> GetPerformanceMeasuresExemptReportingYears(this Project project)
-        {
-            return project.ProjectExemptReportingYears
-                .Where(x => x.ProjectExemptReportingType == ProjectExemptReportingType.PerformanceMeasures)
-                .OrderBy(x => x.CalendarYear).ToList();
-        }
         public static List<ProjectExemptReportingYear> GetExpendituresExemptReportingYears(this Project project)
         {
             return project.ProjectExemptReportingYears

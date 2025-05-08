@@ -49,23 +49,20 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation, string projectAttributesComment, string projectAttributesDiffLog, string noPriorityLandscapesExplanation, string noCountiesExplanation) : this()
+        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, int lastUpdatePersonID, string basicsComment, string expendituresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation, string projectAttributesComment, string projectAttributesDiffLog, string noPriorityLandscapesExplanation, string noCountiesExplanation) : this()
         {
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectID = projectID;
             this.LastUpdateDate = lastUpdateDate;
-            this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
             this.LastUpdatePersonID = lastUpdatePersonID;
             this.BasicsComment = basicsComment;
             this.ExpendituresComment = expendituresComment;
-            this.PerformanceMeasuresComment = performanceMeasuresComment;
             this.LocationSimpleComment = locationSimpleComment;
             this.LocationDetailedComment = locationDetailedComment;
             this.BudgetsComment = budgetsComment;
             this.ProjectUpdateStateID = projectUpdateStateID;
             this.IsPhotosUpdated = isPhotosUpdated;
             this.BasicsDiffLog = basicsDiffLog;
-            this.PerformanceMeasureDiffLog = performanceMeasureDiffLog;
             this.ExpendituresDiffLog = expendituresDiffLog;
             this.BudgetsDiffLog = budgetsDiffLog;
             this.ExternalLinksDiffLog = externalLinksDiffLog;
@@ -366,11 +363,9 @@ namespace ProjectFirma.Web.Models
         public int ProjectUpdateBatchID { get; set; }
         public int ProjectID { get; set; }
         public DateTime LastUpdateDate { get; set; }
-        public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public int LastUpdatePersonID { get; set; }
         public string BasicsComment { get; set; }
         public string ExpendituresComment { get; set; }
-        public string PerformanceMeasuresComment { get; set; }
         public string LocationSimpleComment { get; set; }
         public string LocationDetailedComment { get; set; }
         public string BudgetsComment { get; set; }
@@ -382,13 +377,6 @@ namespace ProjectFirma.Web.Models
         { 
             get { return BasicsDiffLog == null ? null : new HtmlString(BasicsDiffLog); }
             set { BasicsDiffLog = value?.ToString(); }
-        }
-        public string PerformanceMeasureDiffLog { get; set; }
-        [NotMapped]
-        public HtmlString PerformanceMeasureDiffLogHtmlString
-        { 
-            get { return PerformanceMeasureDiffLog == null ? null : new HtmlString(PerformanceMeasureDiffLog); }
-            set { PerformanceMeasureDiffLog = value?.ToString(); }
         }
         public string ExpendituresDiffLog { get; set; }
         [NotMapped]
@@ -466,10 +454,8 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-            public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int BasicsComment = 1000;
             public const int ExpendituresComment = 1000;
-            public const int PerformanceMeasuresComment = 1000;
             public const int LocationSimpleComment = 1000;
             public const int LocationDetailedComment = 1000;
             public const int BudgetsComment = 1000;

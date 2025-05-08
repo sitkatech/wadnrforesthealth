@@ -19,7 +19,6 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class ProjectExemptReportingType : IHavePrimaryKey
     {
-        public static readonly ProjectExemptReportingTypePerformanceMeasures PerformanceMeasures = ProjectExemptReportingTypePerformanceMeasures.Instance;
         public static readonly ProjectExemptReportingTypeExpenditures Expenditures = ProjectExemptReportingTypeExpenditures.Instance;
 
         public static readonly List<ProjectExemptReportingType> All;
@@ -30,7 +29,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectExemptReportingType()
         {
-            All = new List<ProjectExemptReportingType> { PerformanceMeasures, Expenditures };
+            All = new List<ProjectExemptReportingType> { Expenditures };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectExemptReportingType>(All.ToDictionary(x => x.ProjectExemptReportingTypeID));
         }
 
@@ -102,8 +101,6 @@ namespace ProjectFirma.Web.Models
             {
                 case ProjectExemptReportingTypeEnum.Expenditures:
                     return Expenditures;
-                case ProjectExemptReportingTypeEnum.PerformanceMeasures:
-                    return PerformanceMeasures;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -112,14 +109,7 @@ namespace ProjectFirma.Web.Models
 
     public enum ProjectExemptReportingTypeEnum
     {
-        PerformanceMeasures = 1,
         Expenditures = 2
-    }
-
-    public partial class ProjectExemptReportingTypePerformanceMeasures : ProjectExemptReportingType
-    {
-        private ProjectExemptReportingTypePerformanceMeasures(int projectExemptReportingTypeID, string projectExemptReportingTypeName, string projectExemptReportingTypeDisplayName) : base(projectExemptReportingTypeID, projectExemptReportingTypeName, projectExemptReportingTypeDisplayName) {}
-        public static readonly ProjectExemptReportingTypePerformanceMeasures Instance = new ProjectExemptReportingTypePerformanceMeasures(1, @"PerformanceMeasures", @"Performance Measures");
     }
 
     public partial class ProjectExemptReportingTypeExpenditures : ProjectExemptReportingType

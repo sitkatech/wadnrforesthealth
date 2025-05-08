@@ -3335,10 +3335,7 @@
     <Compile Include="Models\MapInitJson.cs" />
     <Compile Include="Views\Organization\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Shared\TextControls\EntityNotes.cs" />
-    <Compile Include="Views\Shared\TextControls\EditRtfContent.cs" />
     <Compile Include="Views\Shared\TextControls\EntityNotesViewData.cs" />
-    <Compile Include="Views\Shared\TextControls\EditRtfContentViewModel.cs" />
-    <Compile Include="Views\Shared\TextControls\EditRtfContentViewData.cs" />
     <Compile Include="Views\PersonOrganization\EditPersonOrganizations.cs" />
     <Compile Include="Views\PersonOrganization\EditPersonOrganizationsViewData.cs" />
     <Compile Include="Views\PersonOrganization\EditPersonOrganizationsViewModel.cs" />
@@ -4005,7 +4002,6 @@
     <Content Include="Views\Shared\TextControls\EditNote.cshtml" />
     <Content Include="Views\PersonOrganization\EditPersonOrganizations.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Money.cshtml" />
-    <Content Include="Views\Shared\TextControls\EditRtfContent.cshtml" />
     <Content Include="Views\FieldDefinition\Index.cshtml" />
     <Content Include="Views\Shared\FieldDefinitionDetails.cshtml" />
     <Content Include="Views\FieldDefinition\Edit.cshtml" />

@@ -2858,7 +2858,6 @@
     <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
-    <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
@@ -2866,7 +2865,6 @@
     <Property Name="ProjectApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="ProposingPersonID" Type="Int32" />
     <Property Name="ProposingDate" Type="DateTime" />
-    <Property Name="PerformanceMeasureNotes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="SubmissionDate" Type="DateTime" />
     <Property Name="ApprovalDate" Type="DateTime" />
     <Property Name="ReviewedByPersonID" Type="Int32" />
@@ -3420,18 +3418,15 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="LastUpdateDate" Type="DateTime" Nullable="false" />
-    <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="LastUpdatePersonID" Type="Int32" Nullable="false" />
     <Property Name="BasicsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ExpendituresComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
-    <Property Name="PerformanceMeasuresComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="LocationSimpleComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="LocationDetailedComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="BudgetsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ProjectUpdateStateID" Type="Int32" Nullable="false" />
     <Property Name="IsPhotosUpdated" Type="Boolean" Nullable="false" />
     <Property Name="BasicsDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="PerformanceMeasureDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ExpendituresDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="BudgetsDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ExternalLinksDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />

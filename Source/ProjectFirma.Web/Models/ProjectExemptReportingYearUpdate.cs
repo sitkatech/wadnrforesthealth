@@ -27,17 +27,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectExemptReportingYearUpdate
     {
-        public static void CreatePerformanceMeasuresExemptReportingYearsFromProject(ProjectUpdateBatch projectUpdateBatch)
-        {
-            var project = projectUpdateBatch.Project;
-            foreach (var projectExemptReportingYearUpdate in project.GetPerformanceMeasuresExemptReportingYears()
-                .Select(projectExemptReportingYear => new ProjectExemptReportingYearUpdate(projectUpdateBatch,
-                    projectExemptReportingYear.CalendarYear, projectExemptReportingYear.ProjectExemptReportingType))
-                .ToList())
-            {
-                projectUpdateBatch.ProjectExemptReportingYearUpdates.Add(projectExemptReportingYearUpdate);
-            }
-        }
 
         public static void CreateExpendituresExemptReportingYearsFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
