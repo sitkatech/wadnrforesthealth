@@ -35,7 +35,7 @@ drop table dbo.PerformanceMeasureDataSourceType
 
 delete from dbo.FirmaPage where FirmaPageTypeID in (9)
 
-delete from dbo.FieldDefinitionData where FieldDefinitionID in (18,19,49,50,52,97,228,264)
+delete from dbo.FieldDefinitionData where FieldDefinitionID in (4,18,19,49,50,52,85,97,228,264)
 
 alter table dbo.Project drop column PerformanceMeasureActualYearsExemptionExplanation;
 
