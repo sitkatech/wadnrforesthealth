@@ -122,11 +122,6 @@ namespace ProjectFirma.Web.Common
             return GetSystemAttribute().TaxonomyLevel;
         }
 
-        public static TaxonomyLevel GetAssociatePerformanceMeasureTaxonomyLevel()
-        {
-            return GetSystemAttribute().AssociatePerfomanceMeasureTaxonomyLevel;
-        }
-
         public static bool IsTaxonomyLevelTrunk()
         {
             return GetTaxonomyLevel() == TaxonomyLevel.Trunk;

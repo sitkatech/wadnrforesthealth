@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Models
         public abstract bool IsDeletable();
 
         public abstract bool RequiresReportedExpenditures();
-        public abstract bool RequiresPerformanceMeasureActuals();
         public abstract bool IsStagedIncludedInTransporationCostCalculations();
         public abstract bool ShouldShowOnMap();
 
@@ -65,10 +64,6 @@ namespace ProjectFirma.Web.Models
             return false;
         }
 
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return false;
-        }
 
         public override bool IsStagedIncludedInTransporationCostCalculations()
         {
@@ -101,11 +96,6 @@ namespace ProjectFirma.Web.Models
         public override bool RequiresReportedExpenditures()
         {
             return true;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return false;
         }
 
         public override bool IsStagedIncludedInTransporationCostCalculations()
@@ -144,11 +134,6 @@ namespace ProjectFirma.Web.Models
             return true;
         }
 
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return true;
-        }
-
         public override bool IsStagedIncludedInTransporationCostCalculations()
         {
             return true;
@@ -178,11 +163,6 @@ namespace ProjectFirma.Web.Models
         }
 
         public override bool RequiresReportedExpenditures()
-        {
-            return false;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
         {
             return false;
         }
@@ -217,11 +197,6 @@ namespace ProjectFirma.Web.Models
         }
 
         public override bool RequiresReportedExpenditures()
-        {
-            return false;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
         {
             return false;
         }

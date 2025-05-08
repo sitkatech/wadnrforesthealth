@@ -60,7 +60,6 @@ namespace ProjectFirma.Web.Models
         private bool IsPassingAllValidationRules()
         {
             return AreProjectBasicsValid && AreExpendituresValid() &&
-                  // ArePerformanceMeasuresValid() &&
                    IsProjectLocationSimpleValid() &&
                    IsProjectPriorityLandscapeValid() &&
                    IsProjectRegionValid();
@@ -166,11 +165,6 @@ namespace ProjectFirma.Web.Models
             return projectUpdateBatch;
         }
 
-        public void SyncPerformanceMeasureActualYearsExemptionExplanation()
-        {
-            PerformanceMeasureActualYearsExemptionExplanation = Project.PerformanceMeasureActualYearsExemptionExplanation;
-        }
-
         public void SyncExpendituresYearsExemptionExplanation()
         {
             NoExpendituresToReportExplanation = Project.NoExpendituresToReportExplanation;
@@ -223,13 +217,6 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectDocumentUpdates);
         }
 
-        public void DeletePerformanceMeasuresProjectExemptReportingYearUpdates()
-        {
-            var performanceMeasuresExemptReportingYears = this.GetPerformanceMeasuresExemptReportingYears();
-            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(performanceMeasuresExemptReportingYears);
-            PerformanceMeasureActualYearsExemptionExplanation = null;
-            RefreshFromDatabase(performanceMeasuresExemptReportingYears);
-        }
         public void DeleteExpendituresProjectExemptReportingYearUpdates()
         {
             var performanceMeasuresExemptReportingYears = this.GetExpendituresExemptReportingYears();

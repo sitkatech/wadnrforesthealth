@@ -19,24 +19,6 @@
         };
     }]);
 
-    angular.module("ProjectFirmaApp").directive("pmqtip",
-        function($compile, $templateCache) {
-            function link(scope, el, attr) {
-                var performanceMeasure = scope.text;
-                ProjectFirma.Views.Methods.addHelpTooltipPopup(el,
-                    performanceMeasure.DisplayName,
-                    performanceMeasure.DefinitionAndGuidanceUrl,
-                    800);
-            }
-
-            return {
-                link: link,
-                scope: {
-                    text: "=pmqtip"
-                }
-            };
-        });
-
 
     // The following code is modified from an answer on stackoverflow (https://stackoverflow.com/a/31644349) for creating 
     // a multi - file input angularjs directive. Used initially for [WADNR-1626]

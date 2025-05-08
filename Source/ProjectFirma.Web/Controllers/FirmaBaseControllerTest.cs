@@ -51,7 +51,6 @@ namespace ProjectFirma.Web.Controllers
                 "FirmaPageController.FirmaPageDetails",
                 "ResultsController.SpendingByOrganizationTypeByOrganization",
                 "ResultsController.SpendingByOrganizationTypeByOrganizationExcelDownload",
-                "PerformanceMeasureController.SaveChartConfiguration",
                 "RoleController.Detail",
                 "RoleController.PersonWithRoleGridJsonData",
                 "GrantAllocationAwardController.GetGrantAllocationDates"

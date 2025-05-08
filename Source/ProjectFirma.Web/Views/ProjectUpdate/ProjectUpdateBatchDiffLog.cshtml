@@ -46,20 +46,6 @@ Source code is available upon request via <support@sitkatech.com>.
 
     <div class="panel panelFirma">
         <div class="panel-heading panelTitle">
-            <h2>@MultiTenantHelpers.GetPerformanceMeasureNamePluralized()</h2>
-        </div>
-        @if (ViewDataTyped.ProjectUpdateBatch.PerformanceMeasureDiffLogHtmlString != null)
-        {
-            @Html.Raw(ViewDataTyped.ProjectUpdateBatch.PerformanceMeasureDiffLogHtmlString)
-        }
-        else
-        {
-            <div class="panel-body">No changes to @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() section</div>
-        }
-    </div>
-
-    <div class="panel panelFirma">
-        <div class="panel-heading panelTitle">
             <h2>Expenditures</h2>
         </div>
         @if (ViewDataTyped.ProjectUpdateBatch.ExpendituresDiffLogHtmlString != null)

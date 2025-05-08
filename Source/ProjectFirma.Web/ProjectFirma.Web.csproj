@@ -2274,7 +2274,6 @@
     <Compile Include="Controllers\TaxonomyBranchController.cs" />
     <Compile Include="Controllers\ProjectTypeController.cs" />
     <Compile Include="Models\ProjectColorByType.cs" />
-    <Compile Include="Models\TaxonomyTierPerformanceMeasureSimple.cs" />
     <Compile Include="Models\TaxonomyTrunk.cs" />
     <Compile Include="Models\TaxonomyTrunkForReporting.cs" />
     <Compile Include="Models\TaxonomyTrunkSimple.cs" />
