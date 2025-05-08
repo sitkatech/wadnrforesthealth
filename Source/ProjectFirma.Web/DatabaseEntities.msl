@@ -1069,45 +1069,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PclBoundaryLine">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclBoundaryLine">
-        <MappingFragment StoreEntitySet="PclBoundaryLine">
-          <ScalarProperty Name="PclBoundaryLineID" ColumnName="PclBoundaryLineID" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PclLandscapeTreatmentPriority">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclLandscapeTreatmentPriority">
-        <MappingFragment StoreEntitySet="PclLandscapeTreatmentPriority">
-          <ScalarProperty Name="PclLandscapeTreatmentPriorityID" ColumnName="PclLandscapeTreatmentPriorityID" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PclVectorRanked">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclVectorRanked">
-        <MappingFragment StoreEntitySet="PclVectorRanked">
-          <ScalarProperty Name="PclVectorRankedID" ColumnName="PclVectorRankedID" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PclWildfireResponseBenefit">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PclWildfireResponseBenefit">
-        <MappingFragment StoreEntitySet="PclWildfireResponseBenefit">
-          <ScalarProperty Name="PclWildfireResponseBenefitID" ColumnName="PclWildfireResponseBenefitID" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Person">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Person">
         <MappingFragment StoreEntitySet="Person">
@@ -1175,16 +1136,6 @@
           <ScalarProperty Name="PersonStewardTaxonomyBranchID" ColumnName="PersonStewardTaxonomyBranchID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="TaxonomyBranchID" ColumnName="TaxonomyBranchID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PodVectorRanked">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PodVectorRanked">
-        <MappingFragment StoreEntitySet="PodVectorRanked">
-          <ScalarProperty Name="PodVectorRankedID" ColumnName="PodVectorRankedID" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2152,65 +2103,6 @@
           <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
           <ScalarProperty Name="CountyName" ColumnName="CountyName" />
           <ScalarProperty Name="CountyFeature" ColumnName="CountyFeature" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPclBoundaryLine">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPclBoundaryLine">
-        <MappingFragment StoreEntitySet="vGeoServerPclBoundaryLine">
-          <ScalarProperty Name="PclBoundaryLineID" ColumnName="PclBoundaryLineID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPclLandscapeTreatmentPriority">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPclLandscapeTreatmentPriority">
-        <MappingFragment StoreEntitySet="vGeoServerPclLandscapeTreatmentPriority">
-          <ScalarProperty Name="PclLandscapeTreatmentPriorityID" ColumnName="PclLandscapeTreatmentPriorityID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPclVectorRanked">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPclVectorRanked">
-        <MappingFragment StoreEntitySet="vGeoServerPclVectorRanked">
-          <ScalarProperty Name="PclVectorRankedID" ColumnName="PclVectorRankedID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPclWildfireResponseBenefit">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPclWildfireResponseBenefit">
-        <MappingFragment StoreEntitySet="vGeoServerPclWildfireResponseBenefit">
-          <ScalarProperty Name="PclWildfireResponseBenefitID" ColumnName="PclWildfireResponseBenefitID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPodVectorRanked">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPodVectorRanked">
-        <MappingFragment StoreEntitySet="vGeoServerPodVectorRanked">
-          <ScalarProperty Name="PodVectorRankedID" ColumnName="PodVectorRankedID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -86,17 +86,12 @@
     <EntitySet Name="OrganizationCode" EntityType="ProjectFirma.Web.Models.Store.OrganizationCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationType" EntityType="ProjectFirma.Web.Models.Store.OrganizationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationTypeRelationshipType" EntityType="ProjectFirma.Web.Models.Store.OrganizationTypeRelationshipType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.PclBoundaryLine" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.Store.PclLandscapeTreatmentPriority" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PclVectorRanked" EntityType="ProjectFirma.Web.Models.Store.PclVectorRanked" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.Store.PclWildfireResponseBenefit" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Store.Person" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonAllowedAuthenticator" EntityType="ProjectFirma.Web.Models.Store.PersonAllowedAuthenticator" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonRole" EntityType="ProjectFirma.Web.Models.Store.PersonRole" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.Store.PodVectorRanked" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscapeFileResource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Store.Program" store:Type="Tables" Schema="dbo" />
@@ -190,55 +185,6 @@ FROM [dbo].[vArcOnlineRawJsonImportIndex] AS [vArcOnlineRawJsonImportIndex]</Def
 [vGeoServerCounty].[CountyFeature] AS [CountyFeature], 
 [vGeoServerCounty].[Ogr_Geometry] AS [Ogr_Geometry]
 FROM [dbo].[vGeoServerCounty] AS [vGeoServerCounty]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclBoundaryLine" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclBoundaryLine">
-      <DefiningQuery>SELECT 
-[vGeoServerPclBoundaryLine].[PclBoundaryLineID] AS [PclBoundaryLineID], 
-[vGeoServerPclBoundaryLine].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPclBoundaryLine].[PriorityLandscapeID] AS [PriorityLandscapeID], 
-[vGeoServerPclBoundaryLine].[Feature] AS [Feature], 
-[vGeoServerPclBoundaryLine].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPclBoundaryLine] AS [vGeoServerPclBoundaryLine]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclLandscapeTreatmentPriority" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclLandscapeTreatmentPriority">
-      <DefiningQuery>SELECT 
-[vGeoServerPclLandscapeTreatmentPriority].[PclLandscapeTreatmentPriorityID] AS [PclLandscapeTreatmentPriorityID], 
-[vGeoServerPclLandscapeTreatmentPriority].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPclLandscapeTreatmentPriority].[PriorityLandscapeID] AS [PriorityLandscapeID], 
-[vGeoServerPclLandscapeTreatmentPriority].[Color] AS [Color], 
-[vGeoServerPclLandscapeTreatmentPriority].[Feature] AS [Feature], 
-[vGeoServerPclLandscapeTreatmentPriority].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPclLandscapeTreatmentPriority] AS [vGeoServerPclLandscapeTreatmentPriority]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerPclVectorRanked" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclVectorRanked" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclVectorRanked">
-      <DefiningQuery>SELECT 
-[vGeoServerPclVectorRanked].[PclVectorRankedID] AS [PclVectorRankedID], 
-[vGeoServerPclVectorRanked].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPclVectorRanked].[PriorityLandscapeID] AS [PriorityLandscapeID], 
-[vGeoServerPclVectorRanked].[Color] AS [Color], 
-[vGeoServerPclVectorRanked].[Feature] AS [Feature], 
-[vGeoServerPclVectorRanked].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPclVectorRanked] AS [vGeoServerPclVectorRanked]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerPclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPclWildfireResponseBenefit" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPclWildfireResponseBenefit">
-      <DefiningQuery>SELECT 
-[vGeoServerPclWildfireResponseBenefit].[PclWildfireResponseBenefitID] AS [PclWildfireResponseBenefitID], 
-[vGeoServerPclWildfireResponseBenefit].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPclWildfireResponseBenefit].[PriorityLandscapeID] AS [PriorityLandscapeID], 
-[vGeoServerPclWildfireResponseBenefit].[Color] AS [Color], 
-[vGeoServerPclWildfireResponseBenefit].[Feature] AS [Feature], 
-[vGeoServerPclWildfireResponseBenefit].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPclWildfireResponseBenefit] AS [vGeoServerPclWildfireResponseBenefit]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerPodVectorRanked" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPodVectorRanked" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPodVectorRanked">
-      <DefiningQuery>SELECT 
-[vGeoServerPodVectorRanked].[PodVectorRankedID] AS [PodVectorRankedID], 
-[vGeoServerPodVectorRanked].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPodVectorRanked].[PriorityLandscapeID] AS [PriorityLandscapeID], 
-[vGeoServerPodVectorRanked].[Color] AS [Color], 
-[vGeoServerPodVectorRanked].[Feature] AS [Feature], 
-[vGeoServerPodVectorRanked].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPodVectorRanked] AS [vGeoServerPodVectorRanked]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityLandscape" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityLandscape">
       <DefiningQuery>SELECT 
@@ -839,22 +785,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="RelationshipType" EntitySet="RelationshipType" />
       <End Role="OrganizationTypeRelationshipTypes" EntitySet="OrganizationTypeRelationshipType" />
     </AssociationSet>
-    <AssociationSet Name="FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclBoundaryLines" EntitySet="PclBoundaryLine" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclLandscapeTreatmentPriorities" EntitySet="PclLandscapeTreatmentPriority" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclVectorRankeds" EntitySet="PclVectorRanked" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclWildfireResponseBenefits" EntitySet="PclWildfireResponseBenefit" />
-    </AssociationSet>
     <AssociationSet Name="FK_Person_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Person_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="People" EntitySet="Person" />
@@ -898,10 +828,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
     </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_PriorityLandscapeFileResource_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
@@ -2387,41 +2313,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
     <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="PclBoundaryLine">
-    <Key>
-      <PropertyRef Name="PclBoundaryLineID" />
-    </Key>
-    <Property Name="PclBoundaryLineID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Feature" Type="geometry" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PclLandscapeTreatmentPriority">
-    <Key>
-      <PropertyRef Name="PclLandscapeTreatmentPriorityID" />
-    </Key>
-    <Property Name="PclLandscapeTreatmentPriorityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Feature" Type="geometry" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-  </EntityType>
-  <EntityType Name="PclVectorRanked">
-    <Key>
-      <PropertyRef Name="PclVectorRankedID" />
-    </Key>
-    <Property Name="PclVectorRankedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Feature" Type="geometry" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-  </EntityType>
-  <EntityType Name="PclWildfireResponseBenefit">
-    <Key>
-      <PropertyRef Name="PclWildfireResponseBenefitID" />
-    </Key>
-    <Property Name="PclWildfireResponseBenefitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Feature" Type="geometry" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-  </EntityType>
   <EntityType Name="Person">
     <Key>
       <PropertyRef Name="PersonID" />
@@ -2485,15 +2376,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="PersonStewardTaxonomyBranchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PodVectorRanked">
-    <Key>
-      <PropertyRef Name="PodVectorRankedID" />
-    </Key>
-    <Property Name="PodVectorRankedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Feature" Type="geometry" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <EntityType Name="PriorityLandscape">
     <Key>
@@ -3409,89 +3291,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion'
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerFindYourForester' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclBoundaryLine' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <EntityType Name="vGeoServerPclBoundaryLine">
-    <Key>
-      <PropertyRef Name="PclBoundaryLineID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-    </Key>
-    <Property Name="PclBoundaryLineID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Feature" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclLandscapeTreatmentPriority' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <EntityType Name="vGeoServerPclLandscapeTreatmentPriority">
-    <Key>
-      <PropertyRef Name="PclLandscapeTreatmentPriorityID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PclLandscapeTreatmentPriorityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Feature" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclVectorRanked' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <EntityType Name="vGeoServerPclVectorRanked">
-    <Key>
-      <PropertyRef Name="PclVectorRankedID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PclVectorRankedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Feature" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPclWildfireResponseBenefit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <EntityType Name="vGeoServerPclWildfireResponseBenefit">
-    <Key>
-      <PropertyRef Name="PclWildfireResponseBenefitID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PclWildfireResponseBenefitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Feature" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPodVectorRanked' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <EntityType Name="vGeoServerPodVectorRanked">
-    <Key>
-      <PropertyRef Name="PodVectorRankedID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PodVectorRankedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
-    <Property Name="Color" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Feature" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscape' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -5173,54 +4972,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclBoundaryLines" Type="ProjectFirma.Web.Models.Store.PclBoundaryLine" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclBoundaryLines">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclLandscapeTreatmentPriorities" Type="ProjectFirma.Web.Models.Store.PclLandscapeTreatmentPriority" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclLandscapeTreatmentPriorities">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclVectorRankeds" Type="ProjectFirma.Web.Models.Store.PclVectorRanked" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclVectorRankeds">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclWildfireResponseBenefits" Type="ProjectFirma.Web.Models.Store.PclWildfireResponseBenefit" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclWildfireResponseBenefits">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
@@ -5350,18 +5101,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="PersonStewardTaxonomyBranches">
         <PropertyRef Name="TaxonomyBranchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
-    <End Role="PodVectorRankeds" Type="ProjectFirma.Web.Models.Store.PodVectorRanked" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PodVectorRankeds">
-        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

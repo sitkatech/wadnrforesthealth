@@ -19,17 +19,13 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
-using System.Linq;
-using ProjectFirma.Web.Views.Project;
-using ProjectFirma.Web.Views.Results;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using LtInfo.Common;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
+using System.Collections.Generic;
 
 namespace ProjectFirma.Web.Views.PriorityLandscape
 {
