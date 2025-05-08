@@ -1,4 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
+/*-----------------------------------------------------------------------
 <copyright file="Project.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
@@ -987,11 +988,6 @@ namespace ProjectFirma.Web.Models
         {
             // todo: Always relevant for pending projects, otherwise relevant for every stage except terminated/completed
             return true;
-        }
-
-        public bool AreReportedPerformanceMeasuresRelevant()
-        {
-            return ProjectStage != ProjectStage.Proposed && ProjectStage != ProjectStage.Planned;
         }
 
         public bool AreReportedExpendituresRelevant()

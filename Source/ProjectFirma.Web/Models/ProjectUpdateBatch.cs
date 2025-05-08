@@ -219,10 +219,10 @@ namespace ProjectFirma.Web.Models
 
         public void DeleteExpendituresProjectExemptReportingYearUpdates()
         {
-            var performanceMeasuresExemptReportingYears = this.GetExpendituresExemptReportingYears();
-            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(performanceMeasuresExemptReportingYears);
+            var expendituresExemptReportingYears = this.GetExpendituresExemptReportingYears();
+            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(expendituresExemptReportingYears);
             NoExpendituresToReportExplanation = null;
-            RefreshFromDatabase(performanceMeasuresExemptReportingYears);
+            RefreshFromDatabase(expendituresExemptReportingYears);
         }
 
         public void DeleteProjectGrantAllocationExpenditureUpdates()
