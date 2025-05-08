@@ -26,7 +26,6 @@ using ProjectFirma.Web.Views.Map;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Shared;
 

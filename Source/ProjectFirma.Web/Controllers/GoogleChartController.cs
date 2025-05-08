@@ -6,7 +6,6 @@ using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers

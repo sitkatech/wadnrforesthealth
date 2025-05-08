@@ -27,7 +27,6 @@ using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 
 namespace ProjectFirma.Web.Models
 {

@@ -33,7 +33,6 @@ using ProjectFirma.Web.Views.Shared;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared.SortOrder;
 using DetailViewData = ProjectFirma.Web.Views.ProjectType.DetailViewData;
 using Edit = ProjectFirma.Web.Views.ProjectType.Edit;

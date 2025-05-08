@@ -31,7 +31,6 @@ using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Shared;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared.SortOrder;
 using DetailViewData = ProjectFirma.Web.Views.TaxonomyBranch.DetailViewData;
 using Edit = ProjectFirma.Web.Views.TaxonomyBranch.Edit;

@@ -7,7 +7,6 @@ using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models

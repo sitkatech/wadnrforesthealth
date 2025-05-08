@@ -1283,8 +1283,6 @@
     <Compile Include="Views\MapLayer\ExternalMapLayerGridSpec.cs" />
     <Compile Include="Views\MapLayer\Index.cs" />
     <Compile Include="Views\MapLayer\IndexViewData.cs" />
-    <Compile Include="Views\PerformanceMeasure\DownloadChartDataViewModel.cs" />
-    <Compile Include="Views\PerformanceMeasure\GoogleChartExcelSpec.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapText.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewData.cs" />
     <Compile Include="Views\PriorityLandscape\EditPriorityLandscapeAboveMapTextViewModel.cs" />
@@ -1323,6 +1321,8 @@
     <Compile Include="Views\ProjectUpdate\CountiesViewModel.cs" />
     <Compile Include="Views\ProjectUpdate\CountiesViewData.cs" />
     <Compile Include="Views\ProjectUpdate\Counties.cs" />
+    <Compile Include="Views\Shared\DownloadChartDataViewModel.cs" />
+    <Compile Include="Views\Shared\GoogleChartExcelSpec.cs" />
     <Compile Include="Views\Shared\ProjectControls\BulkDeleteProjects.cs" />
     <Compile Include="Views\Shared\ProjectControls\BulkDeleteProjectsViewData.cs" />
     <Compile Include="Views\Shared\ProjectControls\BulkDeleteProjectsViewModel.cs" />

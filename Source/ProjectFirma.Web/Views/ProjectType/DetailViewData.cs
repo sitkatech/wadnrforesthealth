@@ -28,7 +28,6 @@ using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Views.ProjectType

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using LtInfo.Common.ExcelWorkbookUtilities;
-using ProjectFirma.Web.Views.Shared;
 
-namespace ProjectFirma.Web.Views.PerformanceMeasure
+namespace ProjectFirma.Web.Views.Shared
 {
     public class GoogleChartExcelSpec : ExcelWorksheetSpec<GoogleChartDataSimple>
     {

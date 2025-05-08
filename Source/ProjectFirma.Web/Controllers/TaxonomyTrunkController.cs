@@ -29,7 +29,6 @@ using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Shared;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared.SortOrder;
 using Detail = ProjectFirma.Web.Views.TaxonomyTrunk.Detail;
 using DetailViewData = ProjectFirma.Web.Views.TaxonomyTrunk.DetailViewData;

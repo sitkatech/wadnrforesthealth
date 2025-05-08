@@ -6,9 +6,8 @@ using ClosedXML.Excel;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.Models;
 using Newtonsoft.Json;
-using ProjectFirma.Web.Views.Shared;
 
-namespace ProjectFirma.Web.Views.PerformanceMeasure
+namespace ProjectFirma.Web.Views.Shared
 {
     public class DownloadChartDataViewModel : FormViewModel
     {

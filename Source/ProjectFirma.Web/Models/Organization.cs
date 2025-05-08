@@ -27,7 +27,6 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GeoJson;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 
 namespace ProjectFirma.Web.Models
 {
