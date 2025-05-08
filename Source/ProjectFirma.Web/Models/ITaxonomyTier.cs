@@ -9,7 +9,6 @@ namespace ProjectFirma.Web.Models
         int TaxonomyTierID { get; }
         string ThemeColor { get; }
         HtmlString GetDisplayNameAsUrl();
-        List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures();
         string SummaryUrl { get; }
         FancyTreeNode ToFancyTreeNode(Person currentPerson);
     }

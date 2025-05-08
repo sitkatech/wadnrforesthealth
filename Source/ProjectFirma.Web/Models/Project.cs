@@ -452,22 +452,6 @@ namespace ProjectFirma.Web.Models
             return IsMyProject(person) || new ProjectApproveFeature().HasPermission(person, this).HasPermission;
         }
 
-        public List<PerformanceMeasureReportedValue> GetReportedPerformanceMeasures()
-        {
-            var reportedPerformanceMeasures = GetNonVirtualPerformanceMeasureReportedValues();
-            return reportedPerformanceMeasures.OrderByDescending(pma => pma.CalendarYear)
-                .ThenBy(pma => pma.PerformanceMeasureID).ToList();
-        }
-
-        public List<PerformanceMeasureReportedValue> GetNonVirtualPerformanceMeasureReportedValues()
-        {
-            var performanceMeasureReportedValues = PerformanceMeasureActuals.Select(x => x.PerformanceMeasure)
-                .Distinct(new HavePrimaryKeyComparer<PerformanceMeasure>())
-                .SelectMany(x => x.GetReportedPerformanceMeasureValues(this)).ToList();
-            return performanceMeasureReportedValues.OrderByDescending(pma => pma.CalendarYear)
-                .ThenBy(pma => pma.PerformanceMeasureID).ToList();
-        }
-
         public FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties)
         {
             var featureCollection = new FeatureCollection();

@@ -46,11 +46,11 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public readonly string AssociatedGrantAllocationsGridDataUrl;
         public readonly MapInitJson MapInitJson;
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
-        public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
+
         public string EditContactUrl { get; }
         public string EditPageContentUrl { get; }
 
-        public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
+        public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData) : base(currentPerson)
         {
             DNRUplandRegion = dnrUplandRegion;
             MapInitJson = mapInitJson;
@@ -78,7 +78,6 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             };
             AssociatedGrantAllocationsGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.GrantAllocationsGridJsonData(dnrUplandRegion));
 
-            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>dnrUplandRegion.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
             EditContactUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditContact(dnrUplandRegion));
             EditPageContentUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditPageContent(dnrUplandRegion));
 

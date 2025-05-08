@@ -38,7 +38,6 @@ namespace ProjectFirma.Web.Views.Project
         public string TotalFunding { get; }
         public string UnsecuredFunding { get; }
         public ImageGalleryViewData ImageGalleryViewData { get; }
-        public List<IGrouping<Models.PerformanceMeasure, PerformanceMeasureReportedValue>> PerformanceMeasureReportedValues { get; }
         public List<GooglePieChartSlice> ExpenditureGooglePieChartSlices { get; }
         public string ChartID { get; }
         public Models.ProjectImage KeyPhoto { get; }
@@ -85,9 +84,6 @@ namespace ProjectFirma.Web.Views.Project
                 true,
                 x => x.CaptionOnFullView,
                 "Photo");
-
-            PerformanceMeasureReportedValues =
-                project.GetReportedPerformanceMeasures().GroupBy(x => x.PerformanceMeasure).OrderBy(x => x.Key.PerformanceMeasureSortOrder).ThenBy(x => x.Key.PerformanceMeasureDisplayName).ToList();
 
             ChartID = $"fundingChartForProject{project.ProjectID}";
             KeyPhoto = project.KeyPhoto;

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="PerformanceMeasureExpectedProposedFeature.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="ClassificationManageFeature.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -18,13 +18,14 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
+using System.Collections.Generic;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Edit {0}'s {1} {2}s", FieldDefinitionEnum.Application,  FieldDefinitionEnum.PerformanceMeasure, FieldDefinitionEnum.ExpectedValue)]
-    public class PerformanceMeasureExpectedProposedFeature : ProjectCreateFeature
+    [SecurityFeatureDescription("Manage Classifications")]
+    public class ClassificationManageFeature : FirmaFeature
     {
+        public ClassificationManageFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin }) { }
     }
 }

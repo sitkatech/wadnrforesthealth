@@ -22,7 +22,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionBasics Basics = ProjectUpdateSectionBasics.Instance;
         public static readonly ProjectUpdateSectionLocationSimple LocationSimple = ProjectUpdateSectionLocationSimple.Instance;
         public static readonly ProjectUpdateSectionLocationDetailed LocationDetailed = ProjectUpdateSectionLocationDetailed.Instance;
-        public static readonly ProjectUpdateSectionPerformanceMeasures PerformanceMeasures = ProjectUpdateSectionPerformanceMeasures.Instance;
         public static readonly ProjectUpdateSectionExpectedFunding ExpectedFunding = ProjectUpdateSectionExpectedFunding.Instance;
         public static readonly ProjectUpdateSectionPhotos Photos = ProjectUpdateSectionPhotos.Instance;
         public static readonly ProjectUpdateSectionExternalLinks ExternalLinks = ProjectUpdateSectionExternalLinks.Instance;
@@ -42,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -138,8 +137,6 @@ namespace ProjectFirma.Web.Models
                     return NotesAndDocuments;
                 case ProjectUpdateSectionEnum.Organizations:
                     return Organizations;
-                case ProjectUpdateSectionEnum.PerformanceMeasures:
-                    return PerformanceMeasures;
                 case ProjectUpdateSectionEnum.Photos:
                     return Photos;
                 case ProjectUpdateSectionEnum.PriorityLandscapes:
@@ -157,7 +154,6 @@ namespace ProjectFirma.Web.Models
         Basics = 2,
         LocationSimple = 3,
         LocationDetailed = 4,
-        PerformanceMeasures = 6,
         ExpectedFunding = 7,
         Photos = 9,
         ExternalLinks = 10,
@@ -186,12 +182,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectUpdateSectionLocationDetailed(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectUpdateSectionLocationDetailed Instance = new ProjectUpdateSectionLocationDetailed(4, @"LocationDetailed", @"Location - Detailed", 40, false, 2);
-    }
-
-    public partial class ProjectUpdateSectionPerformanceMeasures : ProjectUpdateSection
-    {
-        private ProjectUpdateSectionPerformanceMeasures(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionPerformanceMeasures Instance = new ProjectUpdateSectionPerformanceMeasures(6, @"PerformanceMeasures", @"Performance Measures", 60, true, 3);
     }
 
     public partial class ProjectUpdateSectionExpectedFunding : ProjectUpdateSection

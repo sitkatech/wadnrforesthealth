@@ -83,10 +83,5 @@ namespace ProjectFirma.Web.Models
         {
             return Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
         }
-
-        public List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
-        {
-            return ProjectTypePerformanceMeasures.GroupBy(x => x.PerformanceMeasure).ToList();
-        }
     }
 }

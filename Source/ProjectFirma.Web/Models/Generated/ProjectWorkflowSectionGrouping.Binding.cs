@@ -21,7 +21,6 @@ namespace ProjectFirma.Web.Models
     {
         public static readonly ProjectWorkflowSectionGroupingOverview Overview = ProjectWorkflowSectionGroupingOverview.Instance;
         public static readonly ProjectWorkflowSectionGroupingLocation Location = ProjectWorkflowSectionGroupingLocation.Instance;
-        public static readonly ProjectWorkflowSectionGroupingPerformanceMeasures PerformanceMeasures = ProjectWorkflowSectionGroupingPerformanceMeasures.Instance;
         public static readonly ProjectWorkflowSectionGroupingExpenditures Expenditures = ProjectWorkflowSectionGroupingExpenditures.Instance;
         public static readonly ProjectWorkflowSectionGroupingAdditionalData AdditionalData = ProjectWorkflowSectionGroupingAdditionalData.Instance;
 
@@ -33,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectWorkflowSectionGrouping()
         {
-            All = new List<ProjectWorkflowSectionGrouping> { Overview, Location, PerformanceMeasures, Expenditures, AdditionalData };
+            All = new List<ProjectWorkflowSectionGrouping> { Overview, Location, Expenditures, AdditionalData };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectWorkflowSectionGrouping>(All.ToDictionary(x => x.ProjectWorkflowSectionGroupingID));
         }
 
@@ -114,8 +113,6 @@ namespace ProjectFirma.Web.Models
                     return Location;
                 case ProjectWorkflowSectionGroupingEnum.Overview:
                     return Overview;
-                case ProjectWorkflowSectionGroupingEnum.PerformanceMeasures:
-                    return PerformanceMeasures;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -126,7 +123,6 @@ namespace ProjectFirma.Web.Models
     {
         Overview = 1,
         Location = 2,
-        PerformanceMeasures = 3,
         Expenditures = 4,
         AdditionalData = 5
     }
@@ -141,12 +137,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectWorkflowSectionGroupingLocation(int projectWorkflowSectionGroupingID, string projectWorkflowSectionGroupingName, string projectWorkflowSectionGroupingDisplayName, int sortOrder) : base(projectWorkflowSectionGroupingID, projectWorkflowSectionGroupingName, projectWorkflowSectionGroupingDisplayName, sortOrder) {}
         public static readonly ProjectWorkflowSectionGroupingLocation Instance = new ProjectWorkflowSectionGroupingLocation(2, @"Location", @"Location", 20);
-    }
-
-    public partial class ProjectWorkflowSectionGroupingPerformanceMeasures : ProjectWorkflowSectionGrouping
-    {
-        private ProjectWorkflowSectionGroupingPerformanceMeasures(int projectWorkflowSectionGroupingID, string projectWorkflowSectionGroupingName, string projectWorkflowSectionGroupingDisplayName, int sortOrder) : base(projectWorkflowSectionGroupingID, projectWorkflowSectionGroupingName, projectWorkflowSectionGroupingDisplayName, sortOrder) {}
-        public static readonly ProjectWorkflowSectionGroupingPerformanceMeasures Instance = new ProjectWorkflowSectionGroupingPerformanceMeasures(3, @"PerformanceMeasures", @"Performance Measures", 30);
     }
 
     public partial class ProjectWorkflowSectionGroupingExpenditures : ProjectWorkflowSectionGrouping

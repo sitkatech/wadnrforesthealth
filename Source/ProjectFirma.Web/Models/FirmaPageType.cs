@@ -60,11 +60,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Index());
     }
 
-    public partial class FirmaPageTypePerformanceMeasuresList
-    {
-        public override string GetViewUrl() => SitkaRoute<PerformanceMeasureController>.BuildUrlFromExpression(x => x.Index());
-    }
-
     public partial class FirmaPageTypeProjectTypeList
     {
         public override string GetViewUrl() => SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(x => x.Index());

@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     public class ProposalSectionsStatus
     {
         public bool IsBasicsSectionComplete { get; set; }
-        public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
         public bool IsClassificationsComplete { get; set; }
@@ -81,10 +80,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             IsPriorityLandscapeSectionComplete = !editProjectPriorityLandscapesValidationResults.Any();
 
-            var performanceMeasureValidationResults =
-                new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
-            IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
-
             var efValidationResults = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(),
                                                                    project.EstimatedTotalCost,
                                                                    project.ProjectFundingSourceNotes,
@@ -103,7 +98,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public ProposalSectionsStatus()
         {
             IsBasicsSectionComplete = false;
-            IsPerformanceMeasureSectionComplete = false;
             IsClassificationsComplete = false;
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;

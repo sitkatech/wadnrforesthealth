@@ -26,7 +26,6 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Agreement;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Program;
 using ProjectFirma.Web.Views.Shared;
 
@@ -72,8 +71,6 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly MapInitJson MapInitJson;
         public readonly bool HasSpatialData;
 
-        public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
-
         public readonly string ProjectStewardOrLeadImplementorFieldDefinitionName;
 
         public readonly bool ShowProposals;
@@ -91,7 +88,6 @@ namespace ProjectFirma.Web.Views.Organization
                             Models.Organization organization,
                             MapInitJson mapInitJson,
                             bool hasSpatialData,
-                            List<Models.PerformanceMeasure> performanceMeasures, 
                             ViewGoogleChartViewData expendituresDirectlyFromOrganizationViewGoogleChartViewData,
                             ViewGoogleChartViewData expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData,
                             bool atLeastOneAgreementHasFile) : base(currentPerson)
@@ -145,8 +141,6 @@ namespace ProjectFirma.Web.Views.Organization
             HasSpatialData = hasSpatialData;
             ExpendituresDirectlyFromOrganizationViewGoogleChartViewData = expendituresDirectlyFromOrganizationViewGoogleChartViewData;
             ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData = expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData;
-
-            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x => organization.GetPerformanceMeasureChartViewData(x, currentPerson)).ToList();
 
             ShowProposals = currentPerson.CanViewProposals;
             ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()

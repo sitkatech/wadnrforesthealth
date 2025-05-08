@@ -51,16 +51,12 @@ namespace ProjectFirma.Web.Views.ProjectType
         public string ProjectTypeDisplayName { get; }
         public string ProjectTypeDisplayNamePluralized { get; }
 
-        public bool CanHaveAssociatedPerformanceMeasures { get; }
-        public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
-        public RelatedPerformanceMeasuresViewData RelatedPerformanceMeasuresViewData { get; }
 
         public DetailViewData(Person currentPerson,
             Models.ProjectType projectType,
             ProjectLocationsMapInitJson projectLocationsMapInitJson,
-            ProjectLocationsMapViewData projectLocationsMapViewData, bool canHaveAssociatedPerformanceMeasures,
-            RelatedPerformanceMeasuresViewData relatedPerformanceMeasuresViewData,
-            List<PerformanceMeasureChartViewData> performanceMeasureChartViewDatas, TaxonomyLevel taxonomyLevel) : base(currentPerson)
+            ProjectLocationsMapViewData projectLocationsMapViewData,
+            TaxonomyLevel taxonomyLevel) : base(currentPerson)
         {
             ProjectType = projectType;
             PageTitle = projectType.DisplayName;
@@ -90,9 +86,6 @@ namespace ProjectFirma.Web.Views.ProjectType
             ProjectTypeDisplayName = projectTypeDisplayName;
             ProjectTypeDisplayNamePluralized = fieldDefinitionProjectType.GetFieldDefinitionLabelPluralized();
 
-            CanHaveAssociatedPerformanceMeasures = canHaveAssociatedPerformanceMeasures;
-            PerformanceMeasureChartViewDatas = performanceMeasureChartViewDatas;
-            RelatedPerformanceMeasuresViewData = relatedPerformanceMeasuresViewData;
         }
     }
 }

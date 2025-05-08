@@ -98,24 +98,9 @@ namespace ProjectFirma.Web.Controllers
                                                                               MultiTenantHelpers.GetTopLevelTaxonomyTiers(),
                                                                               CurrentPerson.CanViewProposals);
 
-            var associatePerformanceMeasureTaxonomyLevel =
-                MultiTenantHelpers.GetAssociatePerformanceMeasureTaxonomyLevel();
-            var canHaveAssociatedPerformanceMeasures = associatePerformanceMeasureTaxonomyLevel == TaxonomyLevel.Leaf;
-            var taxonomyTierPerformanceMeasures = projectType.GetTaxonomyTierPerformanceMeasures();
-            var relatedPerformanceMeasuresViewData = new RelatedPerformanceMeasuresViewData(
-                associatePerformanceMeasureTaxonomyLevel, true, taxonomyTierPerformanceMeasures,
-                canHaveAssociatedPerformanceMeasures);
-            List<PerformanceMeasureChartViewData> performanceMeasureChartViewDatas = null;
-            if (canHaveAssociatedPerformanceMeasures)
-            {
-                performanceMeasureChartViewDatas = taxonomyTierPerformanceMeasures.Select(x =>
-                    new PerformanceMeasureChartViewData(x.Key, CurrentPerson, false, new List<Project>())).ToList();
-            }
-
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var viewData = new DetailViewData(CurrentPerson, projectType, projectLocationsMapInitJson,
-                projectLocationsMapViewData, canHaveAssociatedPerformanceMeasures, relatedPerformanceMeasuresViewData,
-                performanceMeasureChartViewDatas, taxonomyLevel);
+                projectLocationsMapViewData, taxonomyLevel);
 
             return RazorView<Summary, DetailViewData>(viewData);
         }
@@ -144,27 +129,6 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            // we need to add this new leaf as a ProjectTypePerformanceMeasure record if it's branch or trunk are currently associated to a PM
-            var associatePerformanceMeasureTaxonomyLevel = MultiTenantHelpers.GetAssociatePerformanceMeasureTaxonomyLevel();
-            if (associatePerformanceMeasureTaxonomyLevel == TaxonomyLevel.Branch)
-            {
-                var leaves =
-                    HttpRequestStorage.DatabaseEntities.ProjectTypes.Where(x =>
-                        x.TaxonomyBranchID == projectType.TaxonomyBranchID).Select(x => x.ProjectTypeID).ToList();
-                var projectTypePerformanceMeasuresGroupedByPerformanceMeasure = HttpRequestStorage.DatabaseEntities.ProjectTypePerformanceMeasures
-                    .Where(x => leaves.Contains(x.ProjectTypeID)).ToList().GroupBy(x => x.PerformanceMeasure, new HavePrimaryKeyComparer<PerformanceMeasure>());
-                var projectTypePerformanceMeasures = projectTypePerformanceMeasuresGroupedByPerformanceMeasure.Select(x =>
-                    new ProjectTypePerformanceMeasure(projectType, x.Key, x.First().IsPrimaryProjectType));
-            }
-            else if (associatePerformanceMeasureTaxonomyLevel == TaxonomyLevel.Trunk)
-            {
-                var taxonomyBranch = HttpRequestStorage.DatabaseEntities.TaxonomyBranches.GetTaxonomyBranch(projectType.TaxonomyBranchID);
-                var leaves = taxonomyBranch.TaxonomyTrunk.TaxonomyBranches.SelectMany(x => x.ProjectTypes.Select(y => y.ProjectTypeID)).ToList();
-                var projectTypePerformanceMeasuresGroupedByPerformanceMeasure = HttpRequestStorage.DatabaseEntities.ProjectTypePerformanceMeasures
-                    .Where(x => leaves.Contains(x.ProjectTypeID)).ToList().GroupBy(x => x.PerformanceMeasure, new HavePrimaryKeyComparer<PerformanceMeasure>());
-                var projectTypePerformanceMeasures = projectTypePerformanceMeasuresGroupedByPerformanceMeasure.Select(x =>
-                    new ProjectTypePerformanceMeasure(projectType, x.Key, x.First().IsPrimaryProjectType));
-            }
             SetMessageForDisplay($"New {FieldDefinition.ProjectType.GetFieldDefinitionLabel()} {projectType.GetDisplayNameAsUrl()} successfully created!");
             return new ModalDialogFormJsonResult();
         }

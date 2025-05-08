@@ -42,16 +42,6 @@ namespace ProjectFirma.Web.Common
             return FieldDefinition.ProjectTypeDisplayNameForProject.GetFieldDefinitionLabel();
         }
 
-        public static string GetPerformanceMeasureName()
-        {
-            return FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel();
-        }
-
-        public static string GetPerformanceMeasureNamePluralized()
-        {
-            return PluralizationService.Pluralize(GetPerformanceMeasureName());
-        }
-
         public static string GetTenantDisplayName()
         {
             return "Washington Dept. of Natural Resources";

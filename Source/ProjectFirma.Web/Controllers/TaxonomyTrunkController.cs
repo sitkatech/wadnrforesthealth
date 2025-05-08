@@ -91,24 +91,9 @@ namespace ProjectFirma.Web.Controllers
                 ProjectColorByType.ProjectStage.DisplayName, MultiTenantHelpers.GetTopLevelTaxonomyTiers(),
                 CurrentPerson.CanViewProposals);
 
-            var associatePerformanceMeasureTaxonomyLevel =
-                MultiTenantHelpers.GetAssociatePerformanceMeasureTaxonomyLevel();
-            var canHaveAssociatedPerformanceMeasures = associatePerformanceMeasureTaxonomyLevel == TaxonomyLevel.Trunk;
-            var taxonomyTierPerformanceMeasures = taxonomyTrunk.GetTaxonomyTierPerformanceMeasures();
-            var relatedPerformanceMeasuresViewData = new RelatedPerformanceMeasuresViewData(
-                associatePerformanceMeasureTaxonomyLevel, true, taxonomyTierPerformanceMeasures,
-                canHaveAssociatedPerformanceMeasures);
-            List<PerformanceMeasureChartViewData> performanceMeasureChartViewDatas = null;
-            if (canHaveAssociatedPerformanceMeasures)
-            {
-                performanceMeasureChartViewDatas = taxonomyTierPerformanceMeasures.Select(x =>
-                    new PerformanceMeasureChartViewData(x.Key, CurrentPerson, false, new List<Project>())).ToList();
-            }
-
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var viewData = new DetailViewData(CurrentPerson, taxonomyTrunk, projectLocationsMapInitJson,
-                projectLocationsMapViewData, canHaveAssociatedPerformanceMeasures, relatedPerformanceMeasuresViewData,
-                performanceMeasureChartViewDatas, taxonomyLevel);
+                projectLocationsMapViewData, taxonomyLevel);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

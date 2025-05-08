@@ -22,8 +22,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionBasics Basics = ProjectCreateSectionBasics.Instance;
         public static readonly ProjectCreateSectionLocationSimple LocationSimple = ProjectCreateSectionLocationSimple.Instance;
         public static readonly ProjectCreateSectionLocationDetailed LocationDetailed = ProjectCreateSectionLocationDetailed.Instance;
-        public static readonly ProjectCreateSectionExpectedPerformanceMeasures ExpectedPerformanceMeasures = ProjectCreateSectionExpectedPerformanceMeasures.Instance;
-        public static readonly ProjectCreateSectionReportedPerformanceMeasures ReportedPerformanceMeasures = ProjectCreateSectionReportedPerformanceMeasures.Instance;
         public static readonly ProjectCreateSectionExpectedFunding ExpectedFunding = ProjectCreateSectionExpectedFunding.Instance;
         public static readonly ProjectCreateSectionClassifications Classifications = ProjectCreateSectionClassifications.Instance;
         public static readonly ProjectCreateSectionPhotos Photos = ProjectCreateSectionPhotos.Instance;
@@ -43,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -131,8 +129,6 @@ namespace ProjectFirma.Web.Models
                     return DNRUplandRegions;
                 case ProjectCreateSectionEnum.ExpectedFunding:
                     return ExpectedFunding;
-                case ProjectCreateSectionEnum.ExpectedPerformanceMeasures:
-                    return ExpectedPerformanceMeasures;
                 case ProjectCreateSectionEnum.LocationDetailed:
                     return LocationDetailed;
                 case ProjectCreateSectionEnum.LocationSimple:
@@ -145,8 +141,6 @@ namespace ProjectFirma.Web.Models
                     return Photos;
                 case ProjectCreateSectionEnum.PriorityLandscapes:
                     return PriorityLandscapes;
-                case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
-                    return ReportedPerformanceMeasures;
                 case ProjectCreateSectionEnum.Treatments:
                     return Treatments;
                 default:
@@ -160,8 +154,6 @@ namespace ProjectFirma.Web.Models
         Basics = 2,
         LocationSimple = 3,
         LocationDetailed = 4,
-        ExpectedPerformanceMeasures = 6,
-        ReportedPerformanceMeasures = 7,
         ExpectedFunding = 8,
         Classifications = 11,
         Photos = 13,
@@ -190,18 +182,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionLocationDetailed(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionLocationDetailed Instance = new ProjectCreateSectionLocationDetailed(4, @"LocationDetailed", @"Location - Detailed", 40, false, 2);
-    }
-
-    public partial class ProjectCreateSectionExpectedPerformanceMeasures : ProjectCreateSection
-    {
-        private ProjectCreateSectionExpectedPerformanceMeasures(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionExpectedPerformanceMeasures Instance = new ProjectCreateSectionExpectedPerformanceMeasures(6, @"ExpectedPerformanceMeasures", @"Expected Performance Measures", 60, true, 3);
-    }
-
-    public partial class ProjectCreateSectionReportedPerformanceMeasures : ProjectCreateSection
-    {
-        private ProjectCreateSectionReportedPerformanceMeasures(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionReportedPerformanceMeasures Instance = new ProjectCreateSectionReportedPerformanceMeasures(7, @"ReportedPerformanceMeasures", @"Reported Performance Measures", 70, true, 3);
     }
 
     public partial class ProjectCreateSectionExpectedFunding : ProjectCreateSection
