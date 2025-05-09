@@ -144,10 +144,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, int?>($"{MultiTenantHelpers.GetProjectTypeDisplayNameForProject()} is required.", m => m.ProjectTypeID);
             }
 
-            if (!Models.Project.IsProjectNameUnique(projects, ProjectName, ProjectID))
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, string>(FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
-            }
+            //if (!Models.Project.IsProjectNameUnique(projects, ProjectName, ProjectID))
+            //{
+            //    yield return new SitkaValidationResult<BasicsViewModel, string>(FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
+            //}
 
             if (CompletionDate < PlannedDate)
             {

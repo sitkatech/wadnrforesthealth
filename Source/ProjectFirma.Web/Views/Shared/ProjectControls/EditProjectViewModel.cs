@@ -165,12 +165,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList();
-            if (!Models.Project.IsProjectNameUnique(projects, ProjectName, ProjectID))
-            {
-                yield return new SitkaValidationResult<EditProjectViewModel, string>(
-                    FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
-            }
+            //var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList();
+            //if (!Models.Project.IsProjectNameUnique(projects, ProjectName, ProjectID))
+            //{
+            //    yield return new SitkaValidationResult<EditProjectViewModel, string>(
+            //        FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
+            //}
 
             if (CompletionDate < ProjectInitiationDate)
             {
