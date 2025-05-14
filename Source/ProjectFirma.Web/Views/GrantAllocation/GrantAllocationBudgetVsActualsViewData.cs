@@ -47,24 +47,23 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public CostType CostType { get; set; }
         public Money Budget { get; set; }
         public Money ExpendituresFromDatamart { get; set; }
-        public Money InvoicedToDate { get; set; }
+
 
         public Money BudgetMinusExpendituresFromDatamart => Budget - ExpendituresFromDatamart;
-        public Money BudgetMinusInvoicedToDate => Budget - InvoicedToDate;
 
-        public BudgetVsActualLineItem(CostType costType, Money budget, Money expendituresFromDatamart, Money invoicedToDate)
+        public BudgetVsActualLineItem(CostType costType, Money budget, Money expendituresFromDatamart)
         {
             CostType = costType;
             Budget = budget;
             ExpendituresFromDatamart = expendituresFromDatamart;
-            InvoicedToDate = invoicedToDate;
+
         }
 
-        public BudgetVsActualLineItem(Money budget, Money expendituresFromDatamart, Money invoicedToDate)
+        public BudgetVsActualLineItem(Money budget, Money expendituresFromDatamart)
         {
             Budget = budget;
             ExpendituresFromDatamart = expendituresFromDatamart;
-            InvoicedToDate = invoicedToDate;
+
         }
     }
 }

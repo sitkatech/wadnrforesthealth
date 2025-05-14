@@ -1,19 +1,17 @@
 ﻿using System.Web;
 using LtInfo.Common;
 using LtInfo.Common.AgGridWrappers;
-using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
-using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.GrantAllocationAward
+namespace ProjectFirma.Web.Views.ProjectUpdate
 {
-    public class TreatmentGridSpec : GridSpec<Models.Treatment>
+    public class TreatmentUpdateGridSpec : GridSpec<Models.TreatmentUpdate>
     {
-        public TreatmentGridSpec(Person currentPerson, Models.Project projectForCreatingNewTreatments)
+        public TreatmentUpdateGridSpec(Person currentPerson, Models.ProjectUpdateBatch projectUpdateBatchForCreatingNewTreatments)
         {
             this.ObjectNameSingular = "Treatment";
             this.ObjectNamePlural = "Treatments";
@@ -22,14 +20,14 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             if (userHasEditPermissions)
             {
-                var createUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(x => x.NewTreatmentFromProject(projectForCreatingNewTreatments));
-                this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNameSingular} for {projectForCreatingNewTreatments.DisplayName}");
+                var createUrl = SitkaRoute<TreatmentUpdateController>.BuildUrlFromExpression(x => x.NewTreatmentUpdateFromProjectUpdateBatch(projectUpdateBatchForCreatingNewTreatments));
+                this.CreateEntityModalDialogForm = new ModalDialogForm(createUrl, 950, $"Create new {ObjectNameSingular} for {projectUpdateBatchForCreatingNewTreatments.Project.DisplayName}");
             }
 
-            Add("Edit", x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUrl(), $"Edit Treatment"), userHasEditPermissions), buttonGridWidth, AgGridColumnFilterType.None);
+            Add("Edit", x => x.ImportedFromGis.HasValue && x.ImportedFromGis.Value ? new HtmlString(string.Empty) : AgGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentUpdateUrl(), $"Edit Treatment Update"), userHasEditPermissions), buttonGridWidth, AgGridColumnFilterType.None);
 
-            Add("Treatment Area Name", a => a.ProjectLocation?.ProjectLocationName ?? "", 200, AgGridColumnFilterType.SelectFilterStrict);
-            Add("Treatment ID", a => a.TreatmentID.ToString(), 75, AgGridColumnFilterType.Text);
+            Add("Treatment Area Name", a => a.ProjectLocationUpdate.ProjectLocationUpdateName, 200, AgGridColumnFilterType.SelectFilterStrict);
+            Add("Treatment Update ID", a => a.TreatmentUpdateID.ToString(), 75, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.TreatmentType.GetFieldDefinitionLabel(), a => a.TreatmentType.TreatmentTypeDisplayName, 120, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.TreatmentCode.GetFieldDefinitionLabel(), a => a.TreatmentCode?.TreatmentCodeDisplayName, 120, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.TreatmentDetailedActivityType.GetFieldDefinitionLabel(), a => a.TreatmentDetailedActivityType.TreatmentDetailedActivityTypeDisplayName, 120, AgGridColumnFilterType.SelectFilterStrict);
@@ -42,5 +40,5 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             Add("Treatment Notes", a => a.TreatmentNotes, 200, AgGridColumnFilterType.Text);
             Add("Imported From GIS", a => a.ImportedFromGis.ToYesNo("No"), 50, AgGridColumnFilterType.SelectFilterStrict );
         }
-    }    
+    }
 }

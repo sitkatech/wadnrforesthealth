@@ -375,9 +375,8 @@ namespace ProjectFirma.Web.Controllers
             };
 
             var grantAllocationExpendituresGridSpec = new GrantAllocationExpendituresGridSpec();
-            var grantAllocationAwardsGridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, grantAllocation);
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec, grantAllocationAwardsGridSpec);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
@@ -417,8 +416,6 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
         #endregion
-
-
         #region "Grant Allocation Budget Line Item"
         [HttpGet]
         [GrantAllocationBudgetLineItemEditAsAdminFeature]
@@ -652,15 +649,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [GrantAllocationsViewFeature]
-        public GridJsonNetJObjectResult<GrantAllocationAward> GrantAllocationAwardsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
-        {
-            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var grantAllocationAwards = grantAllocation.GrantAllocationAwards.ToList();
-            var gridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, grantAllocation);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAward>(grantAllocationAwards, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
+
 
         #region Grant Allocation JSON API
 

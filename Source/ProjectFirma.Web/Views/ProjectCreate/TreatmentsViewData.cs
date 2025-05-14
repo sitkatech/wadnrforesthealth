@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.GrantAllocationAward;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
 
 namespace ProjectFirma.Web.Views.ProjectCreate

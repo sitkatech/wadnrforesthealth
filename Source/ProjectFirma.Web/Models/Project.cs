@@ -132,23 +132,6 @@ namespace ProjectFirma.Web.Models
             return false;
         }
 
-        public decimal TotalPlannedFootprintAcres
-        {
-            get
-            {
-                return Math.Round(GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned)
-                    .Select(x => x.Treatment?.TreatmentFootprintAcres ?? 0).Sum(), 2);
-            }
-        }
-
-        public decimal TotalCompletedFootprintAcres
-        {
-            get
-            {
-                return Math.Round(GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Completed)
-                    .Select(x => x.Treatment?.TreatmentFootprintAcres ?? 0).Sum(), 2);
-            }
-        }
 
         public decimal TotalTreatedAcres
         {

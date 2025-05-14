@@ -134,19 +134,6 @@
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized()
-                </div>
-                <div class="panel-body">
-                    @Html.AgGrid(ViewDataTyped.GrantAllocationAwardGridSpec, ViewDataTyped.GrantAllocationAwardGridName, ViewDataTyped.GrantAllocationAwardGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
                     @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">

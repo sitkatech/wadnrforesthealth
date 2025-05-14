@@ -21,8 +21,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             Add("Budget", x => x.Budget, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add("Expenditures From Datamart", x => x.ExpendituresFromDatamart, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add("Budget Minus Expenditures", x => x.BudgetMinusExpendituresFromDatamart, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            Add("Invoiced To Date", x => x.InvoicedToDate, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            Add("Budget Minus Invoiced", x => x.BudgetMinusInvoicedToDate, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
         }
     }
