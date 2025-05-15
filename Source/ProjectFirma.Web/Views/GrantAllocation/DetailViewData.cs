@@ -60,9 +60,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string GrantAllocationExpendituresGridName { get; }
         public string GrantAllocationExpendituresGridDataUrl { get; }
 
-        public GrantAllocationAwardGridSpec GrantAllocationAwardGridSpec { get; }
-        public string GrantAllocationAwardGridName { get; }
-        public string GrantAllocationAwardGridDataUrl { get; }
         public FileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
 
@@ -72,8 +69,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             , EntityNotesViewData grantAllocationNoteInternalsViewData
             , ViewGoogleChartViewData viewGoogleChartViewData
             , GridSpec<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequestsGridSpec
-            , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec
-            , GrantAllocationAwardGridSpec grantAllocationAwardGridSpec)
+            , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
@@ -107,11 +103,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationExpendituresGridSpec = grantAllocationExpendituresGridSpec;
             GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
             GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(grantAllocation));
-
-
-            GrantAllocationAwardGridSpec = grantAllocationAwardGridSpec;
-            GrantAllocationAwardGridName = "grantAllocationAwardsGrid";
-            GrantAllocationAwardGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationAwardsGridJsonData(grantAllocation));
 
             GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation, grantAllocation.GrantAllocationBudgetLineItems.ToList());
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);

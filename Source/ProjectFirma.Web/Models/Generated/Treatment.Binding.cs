@@ -31,11 +31,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Treatment(int treatmentID, int projectID, int? grantAllocationAwardLandownerCostShareLineItemID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis, int? projectLocationID, int? treatmentCodeID, decimal? costPerAcre) : this()
+        public Treatment(int treatmentID, int projectID, DateTime? treatmentStartDate, DateTime? treatmentEndDate, decimal treatmentFootprintAcres, string treatmentNotes, int treatmentTypeID, decimal? treatmentTreatedAcres, string treatmentTypeImportedText, int? createGisUploadAttemptID, int? updateGisUploadAttemptID, int treatmentDetailedActivityTypeID, string treatmentDetailedActivityTypeImportedText, int? programID, bool? importedFromGis, int? projectLocationID, int? treatmentCodeID, decimal? costPerAcre) : this()
         {
             this.TreatmentID = treatmentID;
             this.ProjectID = projectID;
-            this.GrantAllocationAwardLandownerCostShareLineItemID = grantAllocationAwardLandownerCostShareLineItemID;
             this.TreatmentStartDate = treatmentStartDate;
             this.TreatmentEndDate = treatmentEndDate;
             this.TreatmentFootprintAcres = treatmentFootprintAcres;
@@ -136,7 +135,6 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int TreatmentID { get; set; }
         public int ProjectID { get; set; }
-        public int? GrantAllocationAwardLandownerCostShareLineItemID { get; set; }
         public DateTime? TreatmentStartDate { get; set; }
         public DateTime? TreatmentEndDate { get; set; }
         public decimal TreatmentFootprintAcres { get; set; }
@@ -157,7 +155,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return TreatmentID; } set { TreatmentID = value; } }
 
         public virtual Project Project { get; set; }
-        public virtual GrantAllocationAwardLandownerCostShareLineItem GrantAllocationAwardLandownerCostShareLineItem { get; set; }
         public TreatmentType TreatmentType { get { return TreatmentType.AllLookupDictionary[TreatmentTypeID]; } }
         public virtual GisUploadAttempt CreateGisUploadAttempt { get; set; }
         public virtual GisUploadAttempt UpdateGisUploadAttempt { get; set; }

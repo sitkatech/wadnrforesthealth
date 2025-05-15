@@ -57,7 +57,6 @@ if object_id('tempdb.dbo.#tempTreatments') is not null drop table #tempTreatment
 CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
     ProjectLocationGeometry [geometry] NOT NULL,
-	[GrantAllocationAwardLandownerCostShareLineItemID] [int] NULL,
 	[TreatmentStartDate] [datetime] NULL,
 	[TreatmentEndDate] [datetime] NULL,
 	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
@@ -85,7 +84,6 @@ CREATE TABLE #tempTreatments(TemporaryTreatmentCacheID [int] IDENTITY(1,1) NOT N
 INSERT INTO #tempTreatments
            ([ProjectID]
            ,ProjectLocationGeometry
-           ,[GrantAllocationAwardLandownerCostShareLineItemID]
            ,[TreatmentStartDate]
            ,[TreatmentEndDate]
            ,[TreatmentFootprintAcres]
@@ -112,7 +110,6 @@ INSERT INTO #tempTreatments
 
 select p.ProjectID
 , x.GisFeatureGeometry.MakeValid()
-, null --GrantAllocationAwardLandownerCostShareLineItemID
 , case when guso.ApplyStartDateToTreatments = 1 then isnull(TRY_PARSE(x.StartDate AS DATETIME), null) else null end as TreatmentStartDate
 , case when guso.ApplyEndDateToTreatments = 1 then isnull(TRY_PARSE(x.EndDate AS DATETIME), null) else null end as TreatmentEndDate
 , case  when @footprintAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
@@ -209,7 +206,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -227,7 +223,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -251,7 +246,6 @@ begin
      insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -269,7 +263,6 @@ begin
                  x.ProjectID
                , @programID
                , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -290,7 +283,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -308,7 +300,6 @@ begin
                  x.ProjectID
                 , @programID
                 , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -330,7 +321,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
       , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -348,7 +338,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -369,7 +358,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -387,7 +375,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -407,7 +394,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -425,7 +411,6 @@ begin
                  x.ProjectID
                , @programID
                , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -446,7 +431,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -464,7 +448,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -484,7 +467,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -502,7 +484,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -522,7 +503,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -540,7 +520,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -561,7 +540,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -579,7 +557,6 @@ begin
                  x.ProjectID
                  ,@programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -600,7 +577,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -618,7 +594,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -639,7 +614,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -657,7 +631,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres
@@ -678,7 +651,6 @@ begin
     insert into dbo.Treatment ([ProjectID]
                , [ProgramID]
                , ImportedFromGis
-               ,[GrantAllocationAwardLandownerCostShareLineItemID]
                ,[TreatmentStartDate]
                ,[TreatmentEndDate]
                ,[TreatmentFootprintAcres]
@@ -696,7 +668,6 @@ begin
                  x.ProjectID
                  , @programID
                  , 1
-               , x.GrantAllocationAwardLandownerCostShareLineItemID
                , x.TreatmentStartDate
                , x.TreatmentEndDate
                , x.TreatmentFootprintAcres

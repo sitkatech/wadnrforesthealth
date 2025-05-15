@@ -14,11 +14,6 @@ namespace ProjectFirma.Web.Models
             set;
         }
 
-        public GrantAllocationAwardLandownerCostShareLineItem GrantAllocationAwardLandownerCostShareLineItem
-        {
-            get;
-            set;
-        }
 
         public TreatmentGroup(ProjectLocation projectLocation)
         {
@@ -27,10 +22,5 @@ namespace ProjectFirma.Web.Models
             ProjectLocation = projectLocation;
         }
 
-        public TreatmentGroup(GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem)
-        {
-            Treatments = grantAllocationAwardLandownerCostShareLineItem.Treatments.ToList();
-            GrantAllocationAwardLandownerCostShareLineItem = grantAllocationAwardLandownerCostShareLineItem;
-        }
     }
 }

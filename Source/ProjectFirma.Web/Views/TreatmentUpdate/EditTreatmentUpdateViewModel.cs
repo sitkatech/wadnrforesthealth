@@ -52,18 +52,18 @@ namespace ProjectFirma.Web.Views.TreatmentUpdate
         [DisplayName("Project Location - Treatment Area")]
         public int ProjectLocationUpdateID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareStartDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentStartDate)]
         [Required]
         public DateTime StartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareEndDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentEndDate)]
         [Required]
         public DateTime EndDate { get; set; }
 
         [StringLength(Models.Treatment.FieldLengths.TreatmentNotes)]
         public string Notes { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFootprintAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FootprintAcres)]
         public decimal FootprintAcres { get; set; }
 
         [DisplayName("Treated Acres")]

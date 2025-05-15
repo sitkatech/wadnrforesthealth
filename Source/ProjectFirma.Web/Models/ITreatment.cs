@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
 {
     public interface ITreatment
     {
-        int? GrantAllocationAwardLandownerCostShareLineItemID { get; set; }
         DateTime? TreatmentStartDate { get; set; }
         DateTime? TreatmentEndDate { get; set; }
         decimal TreatmentFootprintAcres { get; set; }

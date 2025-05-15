@@ -512,101 +512,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAward">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAward">
-        <MappingFragment StoreEntitySet="GrantAllocationAward">
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
-          <ScalarProperty Name="GrantAllocationAwardName" ColumnName="GrantAllocationAwardName" />
-          <ScalarProperty Name="GrantAllocationAwardExpirationDate" ColumnName="GrantAllocationAwardExpirationDate" />
-          <ScalarProperty Name="ContractorInvoiceContractor" ColumnName="ContractorInvoiceContractor" />
-          <ScalarProperty Name="GrantAllocationAwardCalendarStartYear" ColumnName="GrantAllocationAwardCalendarStartYear" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardContractorInvoice">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardContractorInvoice">
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceID" ColumnName="GrantAllocationAwardContractorInvoiceID" />
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceDescription" ColumnName="GrantAllocationAwardContractorInvoiceDescription" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceNumber" ColumnName="GrantAllocationAwardContractorInvoiceNumber" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceDate" ColumnName="GrantAllocationAwardContractorInvoiceDate" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceTypeID" ColumnName="GrantAllocationAwardContractorInvoiceTypeID" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceForemanHours" ColumnName="GrantAllocationAwardContractorInvoiceForemanHours" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceForemanRate" ColumnName="GrantAllocationAwardContractorInvoiceForemanRate" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceLaborHours" ColumnName="GrantAllocationAwardContractorInvoiceLaborHours" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceLaborRate" ColumnName="GrantAllocationAwardContractorInvoiceLaborRate" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceGrappleHours" ColumnName="GrantAllocationAwardContractorInvoiceGrappleHours" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceGrappleRate" ColumnName="GrantAllocationAwardContractorInvoiceGrappleRate" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceMasticationHours" ColumnName="GrantAllocationAwardContractorInvoiceMasticationHours" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceMasticationRate" ColumnName="GrantAllocationAwardContractorInvoiceMasticationRate" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceTotal" ColumnName="GrantAllocationAwardContractorInvoiceTotal" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceTaxRate" ColumnName="GrantAllocationAwardContractorInvoiceTaxRate" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceAcresReported" ColumnName="GrantAllocationAwardContractorInvoiceAcresReported" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceNotes" ColumnName="GrantAllocationAwardContractorInvoiceNotes" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceFileResourceID" ColumnName="GrantAllocationAwardContractorInvoiceFileResourceID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardLandownerCostShareLineItem">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardLandownerCostShareLineItem">
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemID" ColumnName="GrantAllocationAwardLandownerCostShareLineItemID" />
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="LandownerCostShareLineItemStatusID" ColumnName="LandownerCostShareLineItemStatusID" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemNotes" ColumnName="GrantAllocationAwardLandownerCostShareLineItemNotes" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" ColumnName="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" ColumnName="GrantAllocationAwardLandownerCostShareLineItemTotalCost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardPersonnelAndBenefitsLineItem">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardPersonnelAndBenefitsLineItem">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem">
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemID" />
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" />
-          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardSuppliesLineItem">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardSuppliesLineItem">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardSuppliesLineItem">
-          <ScalarProperty Name="GrantAllocationAwardSuppliesLineItemID" ColumnName="GrantAllocationAwardSuppliesLineItemID" />
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationAwardSuppliesLineItemDescription" ColumnName="GrantAllocationAwardSuppliesLineItemDescription" />
-          <ScalarProperty Name="GrantAllocationAwardSuppliesLineItemTarOrMonth" ColumnName="GrantAllocationAwardSuppliesLineItemTarOrMonth" />
-          <ScalarProperty Name="GrantAllocationAwardSuppliesLineItemDate" ColumnName="GrantAllocationAwardSuppliesLineItemDate" />
-          <ScalarProperty Name="GrantAllocationAwardSuppliesLineItemAmount" ColumnName="GrantAllocationAwardSuppliesLineItemAmount" />
-          <ScalarProperty Name="GrantAllocationAwardSuppliesLineItemNotes" ColumnName="GrantAllocationAwardSuppliesLineItemNotes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardTravelLineItem">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardTravelLineItem">
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemID" ColumnName="GrantAllocationAwardTravelLineItemID" />
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemTarOrMonth" ColumnName="GrantAllocationAwardTravelLineItemTarOrMonth" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemDate" ColumnName="GrantAllocationAwardTravelLineItemDate" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemTypeID" ColumnName="GrantAllocationAwardTravelLineItemTypeID" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemMiles" ColumnName="GrantAllocationAwardTravelLineItemMiles" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemMileageRate" ColumnName="GrantAllocationAwardTravelLineItemMileageRate" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemAmount" ColumnName="GrantAllocationAwardTravelLineItemAmount" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemNotes" ColumnName="GrantAllocationAwardTravelLineItemNotes" />
-          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationBudgetLineItem">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem">
         <MappingFragment StoreEntitySet="GrantAllocationBudgetLineItem">
@@ -1981,7 +1886,6 @@
         <MappingFragment StoreEntitySet="Treatment">
           <ScalarProperty Name="TreatmentID" ColumnName="TreatmentID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemID" ColumnName="GrantAllocationAwardLandownerCostShareLineItemID" />
           <ScalarProperty Name="TreatmentStartDate" ColumnName="TreatmentStartDate" />
           <ScalarProperty Name="TreatmentEndDate" ColumnName="TreatmentEndDate" />
           <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
@@ -2024,7 +1928,6 @@
         <MappingFragment StoreEntitySet="TreatmentUpdate">
           <ScalarProperty Name="TreatmentUpdateID" ColumnName="TreatmentUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemID" ColumnName="GrantAllocationAwardLandownerCostShareLineItemID" />
           <ScalarProperty Name="TreatmentStartDate" ColumnName="TreatmentStartDate" />
           <ScalarProperty Name="TreatmentEndDate" ColumnName="TreatmentEndDate" />
           <ScalarProperty Name="TreatmentFootprintAcres" ColumnName="TreatmentFootprintAcres" />
@@ -2127,20 +2030,6 @@
           <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
-          <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
-          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
-          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vLoaStageGrantAllocationAward">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vLoaStageGrantAllocationAward">
-        <MappingFragment StoreEntitySet="vLoaStageGrantAllocationAward">
-          <ScalarProperty Name="LoaStageID" ColumnName="LoaStageID" />
-          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="IsNortheast" ColumnName="IsNortheast" />
           <ScalarProperty Name="IsSoutheast" ColumnName="IsSoutheast" />
           <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />

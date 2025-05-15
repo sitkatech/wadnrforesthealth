@@ -124,18 +124,18 @@ namespace ProjectFirma.Web.Views.Program
                 gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentType.FieldDefinitionID, null);
                 gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID, null);
                 gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatedAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID, null);
-                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.PruningAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ThinningAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ChippingAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.MasticationAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrazingAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.LopAndScatterAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.BiomassRemovalAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.HandPileAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.HandPileBurnAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.MachinePileBurnAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.BroadcastBurnAcres.FieldDefinitionID, null);
+                gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.OtherTreatmentAcres.FieldDefinitionID, null);
                 var crossWalkDefaultsToRemove = gisUploadSourceOrganization.GisCrossWalkDefaults.Where(x =>
                     x.FieldDefinitionID == Models.FieldDefinition.TreatmentType.FieldDefinitionID ||
                     x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID);

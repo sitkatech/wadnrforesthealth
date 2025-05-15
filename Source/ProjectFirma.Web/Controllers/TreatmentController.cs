@@ -6,8 +6,8 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.GrantAllocationAward;
-using ProjectFirma.Web.Views.GrantAllocationAwardLandownerCostShareLineItem;
+using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Views.Treatment;
 
 namespace ProjectFirma.Web.Controllers
@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Controllers
     {
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult NewTreatmentsForAProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewTreatmentsForAProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentsForAProjectViewModel viewModel)
         {
@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult EditTreatmentsForProjectTreatmentArea(ProjectLocationPrimaryKey projectLocationPrimaryKey)
         {
             var projectLocation = projectLocationPrimaryKey.EntityObject;
@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditTreatmentsForProjectTreatmentArea(ProjectLocationPrimaryKey projectLocationPrimaryKey, EditTreatmentsForAProjectViewModel viewModel)
         {
@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey)
         {
             var treatment = treatmentPrimaryKey.EntityObject;
@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey, EditTreatmentViewModel viewModel)
         {
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentViewModel viewModel)
         {
@@ -144,40 +144,38 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+        [ProjectActivitiesSectionViewFeature]
+        public GridJsonNetJObjectResult<TreatmentGroup> TreatmentAreaProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var treatmentAreas = project.Treatments.Where(x => x.ProjectLocationID.HasValue).Select(x => x.ProjectLocation).GroupBy(x => x.ProjectLocationID).Select(x => x.ToList().First()).ToList();
+            var treatmentGroups = new List<TreatmentGroup>();
+            var treatmentAreaToTreatmentGroups = treatmentAreas.Select(x => new TreatmentGroup(x)).ToList();
+            treatmentGroups.AddRange(treatmentAreaToTreatmentGroups);
+            var gridSpec = new TreatmentGroupGridSpec(CurrentPerson, project);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentGroup>(treatmentGroups, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
 
+        [ProjectActivitiesSectionViewFeature]
+        public GridJsonNetJObjectResult<Treatment> TreatmentProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var treatments = project.Treatments.ToList();
+            var gridSpec = new TreatmentGridSpec(CurrentPerson, project);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Treatment>(treatments, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
 
-        //[HttpGet]
-        //[GrantAllocationAwardLandownerCostShareLineItemDeleteFeature]
-        //public PartialViewResult DeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItemPrimaryKey grantAllocationAwardLandownerCostShareLineItemPrimaryKey)
-        //{
-        //    var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardLandownerCostShareLineItemPrimaryKey.PrimaryKeyValue);
-        //    return ViewDeleteLandownerCostShareLineItem(grantAllocationAwardLandownerCostShareLineItemPrimaryKey.EntityObject, viewModel);
-        //}
-
-        //private PartialViewResult ViewDeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem, ConfirmDialogFormViewModel viewModel)
-        //{
-        //    var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()}?";
-        //    var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-        //    return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        //}
-
-        //[HttpPost]
-        //[GrantAllocationAwardLandownerCostShareLineItemDeleteFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult DeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItemPrimaryKey grantAllocationAwardLandownerCostShareLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        //{
-        //    var landownerCostShareLineItem = grantAllocationAwardLandownerCostShareLineItemPrimaryKey.EntityObject;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewDeleteLandownerCostShareLineItem(landownerCostShareLineItem, viewModel);
-        //    }
-
-        //    var message = $"{FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()} successfully deleted.";
-        //    landownerCostShareLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
-        //    SetMessageForDisplay(message);
-        //    return new ModalDialogFormJsonResult();
-        //}
-
+        [ProjectActivitiesSectionViewFeature]
+        public GridJsonNetJObjectResult<TreatmentUpdate> TreatmentUpdateProjectDetailGridJsonData(ProjectUpdateBatchPrimaryKey projectUpdateBatchPrimaryKey)
+        {
+            var projectUpdateBatch = projectUpdateBatchPrimaryKey.EntityObject;
+            var treatmentUpdates = projectUpdateBatch.TreatmentUpdates.ToList();
+            var gridSpec = new TreatmentUpdateGridSpec(CurrentPerson, projectUpdateBatch);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentUpdate>(treatmentUpdates, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
 
 
     }

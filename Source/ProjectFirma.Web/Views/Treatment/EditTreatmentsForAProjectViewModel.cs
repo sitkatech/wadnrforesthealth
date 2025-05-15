@@ -37,11 +37,11 @@ namespace ProjectFirma.Web.Views.Treatment
         [Required]
         public int ProjectID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareStartDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentStartDate)]
         [Required]
         public DateTime StartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareEndDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TreatmentEndDate)]
         [Required]
         public DateTime EndDate { get; set; }
 
@@ -57,50 +57,50 @@ namespace ProjectFirma.Web.Views.Treatment
         public int ProjectLocationID { get; set; }
 
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFootprintAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FootprintAcres)]
         public decimal FootprintAcres { get; set; }
 
 
 
 
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareChippingAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ChippingAcres)]
         public decimal ChippingAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostSharePruningAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PruningAcres)]
         public decimal PruningAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareThinningAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ThinningAcres)]
         public decimal ThinningAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareMasticationAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.MasticationAcres)]
         public decimal MasticationAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareGrazingAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrazingAcres)]
         public decimal GrazingAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareLopAndScatterAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.LopAndScatterAcres)]
         public decimal LopAndScatterAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.BiomassRemovalAcres)]
         public decimal BiomassRemovalAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareHandPileAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.HandPileAcres)]
         public decimal HandPileAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.BroadcastBurnAcres)]
         public decimal BroadcastBurnAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareHandPileBurnAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.HandPileBurnAcres)]
         public decimal HandPileBurnAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.MachinePileBurnAcres)]
         public decimal MachinePileBurnAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.OtherTreatmentAcres)]
         public decimal OtherTreatmentAcres { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareSlashAcres)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.SlashAcres)]
         public decimal SlashAcres { get; set; }
 
 

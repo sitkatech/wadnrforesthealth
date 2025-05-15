@@ -38,7 +38,6 @@ using LtInfo.Common.DbSpatial;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.ProjectCounty;
 using ProjectFirma.Web.Views.ProjectPriorityLandscape;
@@ -1351,7 +1350,7 @@ namespace ProjectFirma.Web.Controllers
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectTreatmentsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectTreatmentsSectionComplete;
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson, project);
-            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
+            var treatmentGridDataUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
             var viewData = new TreatmentsViewData(CurrentPerson, project, proposalSectionsStatus, treatmentGridSpec, treatmentGridDataUrl);
 
             return RazorView<Treatments, TreatmentsViewData, TreatmentsViewModel>(viewData, viewModel);

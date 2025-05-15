@@ -184,15 +184,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                 yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
-            {
-                var landownerCostShareLineItemsOnProject = HttpRequestStorage.DatabaseEntities.GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.ProjectID == ProjectID).ToList();
-                if (landownerCostShareLineItemsOnProject.Any(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned))
-                {
-                    yield return new SitkaValidationResult<EditProjectViewModel, int>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()} Treatments must be Completed or Cancelled.", m => m.ProjectStageID);
-                }
-            }
-
             var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;
             if (isCompleted && (CompletionDate > DateTime.Now || CompletionDate == null))
             {

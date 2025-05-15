@@ -138,13 +138,9 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Detail(FocusAreaPrimaryKey focusAreaPrimaryKey)
         {
             var focusArea = focusAreaPrimaryKey.EntityObject;
-
             var mapInitJson = GetMapInitJsonWithProjects(focusArea, out var hasSpatialData, CurrentPerson);
 
-            var grantAllocationAwardGridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, focusArea);
-
-
-            var viewData = new DetailViewData(CurrentPerson, focusArea, mapInitJson, hasSpatialData, grantAllocationAwardGridSpec);
+            var viewData = new DetailViewData(CurrentPerson, focusArea, mapInitJson, hasSpatialData);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

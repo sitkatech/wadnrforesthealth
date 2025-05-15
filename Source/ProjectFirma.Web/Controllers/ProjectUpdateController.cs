@@ -69,7 +69,6 @@ using LocationSimple = ProjectFirma.Web.Views.ProjectUpdate.LocationSimple;
 using LocationSimpleViewData = ProjectFirma.Web.Views.ProjectUpdate.LocationSimpleViewData;
 using LocationSimpleViewModel = ProjectFirma.Web.Views.ProjectUpdate.LocationSimpleViewModel;
 using Photos = ProjectFirma.Web.Views.ProjectUpdate.Photos;
-using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.ProjectCounty;
 
 namespace ProjectFirma.Web.Controllers
@@ -3114,7 +3113,7 @@ namespace ProjectFirma.Web.Controllers
         private ActionResult ViewTreatmentUpdates(ProjectUpdateBatch projectUpdateBatch, UpdateStatus updateStatus)
         {
             var treatmentUpdateGridSpec = new TreatmentUpdateGridSpec(CurrentPerson, projectUpdateBatch);
-            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentUpdateProjectDetailGridJsonData(projectUpdateBatch));
+            var treatmentGridDataUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.TreatmentUpdateProjectDetailGridJsonData(projectUpdateBatch));
             var viewData = new TreatmentsViewData(CurrentPerson, projectUpdateBatch, treatmentUpdateGridSpec, treatmentGridDataUrl, updateStatus);
 
             return RazorView<Treatments, TreatmentsViewData>(viewData);

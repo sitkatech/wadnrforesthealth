@@ -13,16 +13,6 @@ join dbo.vSingularGrantAllocation x on x.GrantID = g.GrantID
 join dbo.LoaStage y on y.GrantNumber =   RIGHT(g.GrantNumber, LEN(g.GrantNumber)-2) or y.GrantNumber = g.GrantNumber
 where isnull(ltrim(rtrim(y.ProgramIndex)), '') != '99C'
 
-union
-
-select x.LoaStageID, x.GrantID,x.GrantAllocationID, x.IsNortheast, x.IsSoutheast, x.ProgramIndex, x.ProjectCode from dbo.vLoaStageGrantAllocationAward x
-join (
-select x.LoaStageID, x.ProgramIndex, x.ProjectCode
-from dbo.vLoaStageGrantAllocationAward x
-where isnull(ltrim(rtrim(x.ProgramIndex)), '') != '99C'
-group by x.LoaStageID, x.ProgramIndex, x.ProjectCode having count(*) = 1)
-y on x.LoaStageID = y.LoaStageID
-
 
 union
 

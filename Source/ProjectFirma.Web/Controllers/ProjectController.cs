@@ -48,7 +48,6 @@ using LtInfo.Common.MvcResults;
 using MoreLinq;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.ScheduledJobs;
-using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectInvoice;
@@ -200,8 +199,8 @@ namespace ProjectFirma.Web.Controllers
 
             var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson, project);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson, project);
-            var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
-            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
+            var treatmentAreaGridDataUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
+            var treatmentGridDataUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
 
             var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, project);
             var projectInteractionEventsGridDataUrl =

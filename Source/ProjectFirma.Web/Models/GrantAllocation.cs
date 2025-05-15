@@ -136,7 +136,6 @@ namespace ProjectFirma.Web.Models
             return allocationCurrentBalance - indirect;
         }
 
-
         public string ToLikelyToUsePeopleListDisplayForAgGrid()
         {
             var listOfHtmlLinkObjects = new List<HtmlLinkObject>();

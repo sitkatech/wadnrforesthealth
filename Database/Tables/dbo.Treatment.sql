@@ -5,7 +5,6 @@ GO
 CREATE TABLE [dbo].[Treatment](
 	[TreatmentID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[GrantAllocationAwardLandownerCostShareLineItemID] [int] NULL,
 	[TreatmentStartDate] [datetime] NULL,
 	[TreatmentEndDate] [datetime] NULL,
 	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
@@ -38,11 +37,6 @@ ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_GisUploa
 REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
 GO
 ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID]
-GO
-ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID] FOREIGN KEY([GrantAllocationAwardLandownerCostShareLineItemID])
-REFERENCES [dbo].[GrantAllocationAwardLandownerCostShareLineItem] ([GrantAllocationAwardLandownerCostShareLineItemID])
-GO
-ALTER TABLE [dbo].[Treatment] CHECK CONSTRAINT [FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID]
 GO
 ALTER TABLE [dbo].[Treatment]  WITH CHECK ADD  CONSTRAINT [FK_Treatment_Program_ProgramID] FOREIGN KEY([ProgramID])
 REFERENCES [dbo].[Program] ([ProgramID])
