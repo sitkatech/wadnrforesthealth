@@ -77,5 +77,19 @@ namespace ProjectFirma.Web.Models
 
             return total;
         }
+
+        public static Money GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(this Grant grant)
+        {
+            var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
+            var allBudgetLineItemVsActualItems = grantAllocations.Select(ga => ga.GetTotalBudgetVsActualLineItem());
+            var currentBalanceOfAllGrantAllocations = allBudgetLineItemVsActualItems.Select(blai => blai.BudgetMinusExpendituresFromDatamart).ToList();
+            Money total = 0;
+            foreach (var grantAllocationTotal in currentBalanceOfAllGrantAllocations)
+            {
+                total += grantAllocationTotal;
+            }
+
+            return total;
+        }
     }
 }
