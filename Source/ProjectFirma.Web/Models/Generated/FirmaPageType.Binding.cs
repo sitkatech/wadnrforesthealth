@@ -52,7 +52,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFullAgreementList FullAgreementList = FirmaPageTypeFullAgreementList.Instance;
         public static readonly FirmaPageTypeInteractionEventList InteractionEventList = FirmaPageTypeInteractionEventList.Instance;
         public static readonly FirmaPageTypeGisUploadAttemptInstructions GisUploadAttemptInstructions = FirmaPageTypeGisUploadAttemptInstructions.Instance;
-        public static readonly FirmaPageTypeDNRCostShareTreatments DNRCostShareTreatments = FirmaPageTypeDNRCostShareTreatments.Instance;
         public static readonly FirmaPageTypeProgramsList ProgramsList = FirmaPageTypeProgramsList.Instance;
         public static readonly FirmaPageTypeUploadLoaTabularDataExcel UploadLoaTabularDataExcel = FirmaPageTypeUploadLoaTabularDataExcel.Instance;
         public static readonly FirmaPageTypeManageFindYourForester ManageFindYourForester = FirmaPageTypeManageFindYourForester.Instance;
@@ -72,7 +71,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, DNRCostShareTreatments, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -150,8 +149,6 @@ namespace ProjectFirma.Web.Models
                     return CustomFooter;
                 case FirmaPageTypeEnum.DemoScript:
                     return DemoScript;
-                case FirmaPageTypeEnum.DNRCostShareTreatments:
-                    return DNRCostShareTreatments;
                 case FirmaPageTypeEnum.EnterHistoricProjectInstructions:
                     return EnterHistoricProjectInstructions;
                 case FirmaPageTypeEnum.ExternalMapLayers:
@@ -273,7 +270,6 @@ namespace ProjectFirma.Web.Models
         FullAgreementList = 60,
         InteractionEventList = 62,
         GisUploadAttemptInstructions = 63,
-        DNRCostShareTreatments = 64,
         ProgramsList = 65,
         UploadLoaTabularDataExcel = 66,
         ManageFindYourForester = 67,
@@ -482,12 +478,6 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeGisUploadAttemptInstructions(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeGisUploadAttemptInstructions Instance = new FirmaPageTypeGisUploadAttemptInstructions(63, @"GisUploadAttemptInstructions", @"GIS Upload Attempt Instructions", 1);
-    }
-
-    public partial class FirmaPageTypeDNRCostShareTreatments : FirmaPageType
-    {
-        private FirmaPageTypeDNRCostShareTreatments(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeDNRCostShareTreatments Instance = new FirmaPageTypeDNRCostShareTreatments(64, @"DNRCostShareTreatments", @"DNR Cost Share Treatments", 1);
     }
 
     public partial class FirmaPageTypeProgramsList : FirmaPageType

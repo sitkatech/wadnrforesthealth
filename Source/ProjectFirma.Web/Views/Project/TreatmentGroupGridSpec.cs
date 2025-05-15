@@ -16,8 +16,7 @@ namespace ProjectFirma.Web.Views.Project
             this.ObjectNameSingular = "Treatment";
             this.ObjectNamePlural = "Treatments";
 
-            bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            bool hasCreatePermission = new GrantAllocationAwardLandownerCostShareLineItemCreateFeature().HasPermissionByPerson(currentPerson);
+            bool hasCreatePermission = new TreatmentEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (hasCreatePermission)
             {
                 var newTreatmentsUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.NewTreatmentFromProject(projectToCreateNewTreatments));

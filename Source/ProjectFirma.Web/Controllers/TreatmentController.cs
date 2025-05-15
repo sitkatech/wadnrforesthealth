@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Controllers
     {
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult NewTreatmentsForAProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewTreatmentsForAProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentsForAProjectViewModel viewModel)
         {
@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult EditTreatmentsForProjectTreatmentArea(ProjectLocationPrimaryKey projectLocationPrimaryKey)
         {
             var projectLocation = projectLocationPrimaryKey.EntityObject;
@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditTreatmentsForProjectTreatmentArea(ProjectLocationPrimaryKey projectLocationPrimaryKey, EditTreatmentsForAProjectViewModel viewModel)
         {
@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey)
         {
             var treatment = treatmentPrimaryKey.EntityObject;
@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditTreatment(TreatmentPrimaryKey treatmentPrimaryKey, EditTreatmentViewModel viewModel)
         {
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewTreatmentFromProject(ProjectPrimaryKey projectPrimaryKey, EditTreatmentViewModel viewModel)
         {

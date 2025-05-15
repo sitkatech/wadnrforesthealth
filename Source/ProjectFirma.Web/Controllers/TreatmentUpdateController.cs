@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.Controllers
     public class TreatmentUpdateController : FirmaBaseController
     {
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult EditTreatmentUpdate(TreatmentUpdatePrimaryKey treatmentUpdatePrimaryKey)
         {
             var treatmentUpdate = treatmentUpdatePrimaryKey.EntityObject;
@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditTreatmentUpdate(TreatmentUpdatePrimaryKey treatmentUpdatePrimaryKey, EditTreatmentUpdateViewModel viewModel)
         {
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         public PartialViewResult NewTreatmentUpdateFromProjectUpdateBatch(ProjectUpdateBatchPrimaryKey projectUpdateBatchPrimaryKey)
         {
             var projectUpdateBatch = projectUpdateBatchPrimaryKey.EntityObject;
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [TreatmentEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewTreatmentUpdateFromProjectUpdateBatch(ProjectUpdateBatchPrimaryKey projectUpdateBatchPrimaryKey, EditTreatmentUpdateViewModel viewModel)
         {

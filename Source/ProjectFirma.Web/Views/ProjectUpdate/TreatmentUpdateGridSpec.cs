@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             this.ObjectNameSingular = "Treatment";
             this.ObjectNamePlural = "Treatments";
-            bool userHasEditPermissions = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            bool userHasEditPermissions = new TreatmentEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             int buttonGridWidth = 30;
 
             if (userHasEditPermissions)
