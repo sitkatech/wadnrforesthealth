@@ -184,22 +184,21 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionGrantCurrentBalance GrantCurrentBalance = FieldDefinitionGrantCurrentBalance.Instance;
         public static readonly FieldDefinitionGrantAllocationCurrentBalance GrantAllocationCurrentBalance = FieldDefinitionGrantAllocationCurrentBalance.Instance;
         public static readonly FieldDefinitionGrantAllocationChangeLogNote GrantAllocationChangeLogNote = FieldDefinitionGrantAllocationChangeLogNote.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareStartDate GrantAllocationAwardLandownerCostShareStartDate = FieldDefinitionGrantAllocationAwardLandownerCostShareStartDate.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareEndDate GrantAllocationAwardLandownerCostShareEndDate = FieldDefinitionGrantAllocationAwardLandownerCostShareEndDate.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareFootprintAcres GrantAllocationAwardLandownerCostShareFootprintAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareFootprintAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareChippingAcres GrantAllocationAwardLandownerCostShareChippingAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareChippingAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostSharePruningAcres GrantAllocationAwardLandownerCostSharePruningAcres = FieldDefinitionGrantAllocationAwardLandownerCostSharePruningAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareThinningAcres GrantAllocationAwardLandownerCostShareThinningAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareThinningAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareMasticationAcres GrantAllocationAwardLandownerCostShareMasticationAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareMasticationAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareGrazingAcres GrantAllocationAwardLandownerCostShareGrazingAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareGrazingAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareLopAndScatterAcres GrantAllocationAwardLandownerCostShareLopAndScatterAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareLopAndScatterAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareBiomassRemovalAcres GrantAllocationAwardLandownerCostShareBiomassRemovalAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareBiomassRemovalAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileAcres GrantAllocationAwardLandownerCostShareHandPileAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareBroadcastBurnAcres GrantAllocationAwardLandownerCostShareBroadcastBurnAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareBroadcastBurnAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileBurnAcres GrantAllocationAwardLandownerCostShareHandPileBurnAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileBurnAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareMachinePileBurnAcres GrantAllocationAwardLandownerCostShareMachinePileBurnAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareMachinePileBurnAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareOtherTreatmentAcres GrantAllocationAwardLandownerCostShareOtherTreatmentAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareOtherTreatmentAcres.Instance;
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareSlashAcres GrantAllocationAwardLandownerCostShareSlashAcres = FieldDefinitionGrantAllocationAwardLandownerCostShareSlashAcres.Instance;
+        public static readonly FieldDefinitionTreatmentStartDate TreatmentStartDate = FieldDefinitionTreatmentStartDate.Instance;
+        public static readonly FieldDefinitionTreatmentEndDate TreatmentEndDate = FieldDefinitionTreatmentEndDate.Instance;
+        public static readonly FieldDefinitionChippingAcres ChippingAcres = FieldDefinitionChippingAcres.Instance;
+        public static readonly FieldDefinitionPruningAcres PruningAcres = FieldDefinitionPruningAcres.Instance;
+        public static readonly FieldDefinitionThinningAcres ThinningAcres = FieldDefinitionThinningAcres.Instance;
+        public static readonly FieldDefinitionMasticationAcres MasticationAcres = FieldDefinitionMasticationAcres.Instance;
+        public static readonly FieldDefinitionGrazingAcres GrazingAcres = FieldDefinitionGrazingAcres.Instance;
+        public static readonly FieldDefinitionLopAndScatterAcres LopAndScatterAcres = FieldDefinitionLopAndScatterAcres.Instance;
+        public static readonly FieldDefinitionBiomassRemovalAcres BiomassRemovalAcres = FieldDefinitionBiomassRemovalAcres.Instance;
+        public static readonly FieldDefinitionHandPileAcres HandPileAcres = FieldDefinitionHandPileAcres.Instance;
+        public static readonly FieldDefinitionBroadcastBurnAcres BroadcastBurnAcres = FieldDefinitionBroadcastBurnAcres.Instance;
+        public static readonly FieldDefinitionHandPileBurnAcres HandPileBurnAcres = FieldDefinitionHandPileBurnAcres.Instance;
+        public static readonly FieldDefinitionMachinePileBurnAcres MachinePileBurnAcres = FieldDefinitionMachinePileBurnAcres.Instance;
+        public static readonly FieldDefinitionOtherTreatmentAcres OtherTreatmentAcres = FieldDefinitionOtherTreatmentAcres.Instance;
+        public static readonly FieldDefinitionSlashAcres SlashAcres = FieldDefinitionSlashAcres.Instance;
         public static readonly FieldDefinitionProjectIdentifier ProjectIdentifier = FieldDefinitionProjectIdentifier.Instance;
         public static readonly FieldDefinitionPlannedDate PlannedDate = FieldDefinitionPlannedDate.Instance;
         public static readonly FieldDefinitionTreatedAcres TreatedAcres = FieldDefinitionTreatedAcres.Instance;
@@ -280,7 +279,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, RoleName, DNRUplandRegion, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, PaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipFishAndWildlifeBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityResilienceCoordinator, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist, ExternalMapLayer, ExternalMapLayerDisplayName, ExternalMapLayerUrl, ExternalMapLayerDescription, ExternalMapLayerFeatureNameField, ExternalMapLayerDisplayOnPriorityLandscape, ExternalMapLayerDisplayOnProjectMap, ExternalMapLayerDisplayOnAllOthers, ExternalMapLayerIsATiledMapService, ExternalMapLayerIsActive, UpdatesFromImport, TreatmentCode, TreatmentCostPerAcre, TreatmentTotalCost, ServiceForestryRegionalCoordinator, County, PercentageMatch, ReportTitle, ReportDescription, ReportFile, ReportModel, SelectedReportTemplate, InvoicePaymentRequest, DUNS, OrganizationCode, InvoiceNumber, Fund, Appn, SubObject, ServiceForestryProgramManager, ForestRegulationFishAndWildlifeBiologist, GrantAllocationFundFSPs, GrantAllocationSource, GrantAllocationAllocation, GrantAllocationTotalGrantFunds, GrantAllocationOverallBalance, GrantAllocationContractualBalance, GrantAllocationTravelBalance, GrantAllocationStaffBalance, GrantAllocationLikelyToUse, GrantAllocationCompleted, GrantAllocationPriority, LeadImplementerOrganization };
+            All = new List<FieldDefinition> { ProjectType, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, RoleName, DNRUplandRegion, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, PaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, TreatmentStartDate, TreatmentEndDate, ChippingAcres, PruningAcres, ThinningAcres, MasticationAcres, GrazingAcres, LopAndScatterAcres, BiomassRemovalAcres, HandPileAcres, BroadcastBurnAcres, HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipFishAndWildlifeBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityResilienceCoordinator, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist, ExternalMapLayer, ExternalMapLayerDisplayName, ExternalMapLayerUrl, ExternalMapLayerDescription, ExternalMapLayerFeatureNameField, ExternalMapLayerDisplayOnPriorityLandscape, ExternalMapLayerDisplayOnProjectMap, ExternalMapLayerDisplayOnAllOthers, ExternalMapLayerIsATiledMapService, ExternalMapLayerIsActive, UpdatesFromImport, TreatmentCode, TreatmentCostPerAcre, TreatmentTotalCost, ServiceForestryRegionalCoordinator, County, PercentageMatch, ReportTitle, ReportDescription, ReportFile, ReportModel, SelectedReportTemplate, InvoicePaymentRequest, DUNS, OrganizationCode, InvoiceNumber, Fund, Appn, SubObject, ServiceForestryProgramManager, ForestRegulationFishAndWildlifeBiologist, GrantAllocationFundFSPs, GrantAllocationSource, GrantAllocationAllocation, GrantAllocationTotalGrantFunds, GrantAllocationOverallBalance, GrantAllocationContractualBalance, GrantAllocationTravelBalance, GrantAllocationStaffBalance, GrantAllocationLikelyToUse, GrantAllocationCompleted, GrantAllocationPriority, LeadImplementerOrganization };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -384,10 +383,16 @@ namespace ProjectFirma.Web.Models
                     return Appn;
                 case FieldDefinitionEnum.AssociatedTaxonomyBranches:
                     return AssociatedTaxonomyBranches;
+                case FieldDefinitionEnum.BiomassRemovalAcres:
+                    return BiomassRemovalAcres;
+                case FieldDefinitionEnum.BroadcastBurnAcres:
+                    return BroadcastBurnAcres;
                 case FieldDefinitionEnum.CFDA:
                     return CFDA;
                 case FieldDefinitionEnum.ChartLastUpdatedDate:
                     return ChartLastUpdatedDate;
+                case FieldDefinitionEnum.ChippingAcres:
+                    return ChippingAcres;
                 case FieldDefinitionEnum.Classification:
                     return Classification;
                 case FieldDefinitionEnum.ClassificationDescription:
@@ -510,38 +515,6 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAllocation;
                 case FieldDefinitionEnum.GrantAllocationAmount:
                     return GrantAllocationAmount;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres:
-                    return GrantAllocationAwardLandownerCostShareBiomassRemovalAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres:
-                    return GrantAllocationAwardLandownerCostShareBroadcastBurnAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareChippingAcres:
-                    return GrantAllocationAwardLandownerCostShareChippingAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareEndDate:
-                    return GrantAllocationAwardLandownerCostShareEndDate;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFootprintAcres:
-                    return GrantAllocationAwardLandownerCostShareFootprintAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareGrazingAcres:
-                    return GrantAllocationAwardLandownerCostShareGrazingAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareHandPileAcres:
-                    return GrantAllocationAwardLandownerCostShareHandPileAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareHandPileBurnAcres:
-                    return GrantAllocationAwardLandownerCostShareHandPileBurnAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareLopAndScatterAcres:
-                    return GrantAllocationAwardLandownerCostShareLopAndScatterAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres:
-                    return GrantAllocationAwardLandownerCostShareMachinePileBurnAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareMasticationAcres:
-                    return GrantAllocationAwardLandownerCostShareMasticationAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres:
-                    return GrantAllocationAwardLandownerCostShareOtherTreatmentAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostSharePruningAcres:
-                    return GrantAllocationAwardLandownerCostSharePruningAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareSlashAcres:
-                    return GrantAllocationAwardLandownerCostShareSlashAcres;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareStartDate:
-                    return GrantAllocationAwardLandownerCostShareStartDate;
-                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareThinningAcres:
-                    return GrantAllocationAwardLandownerCostShareThinningAcres;
                 case FieldDefinitionEnum.GrantAllocationBudgetLineItem:
                     return GrantAllocationBudgetLineItem;
                 case FieldDefinitionEnum.GrantAllocationChangeLogNote:
@@ -616,6 +589,12 @@ namespace ProjectFirma.Web.Models
                     return GrantStatus;
                 case FieldDefinitionEnum.GrantType:
                     return GrantType;
+                case FieldDefinitionEnum.GrazingAcres:
+                    return GrazingAcres;
+                case FieldDefinitionEnum.HandPileAcres:
+                    return HandPileAcres;
+                case FieldDefinitionEnum.HandPileBurnAcres:
+                    return HandPileBurnAcres;
                 case FieldDefinitionEnum.InteractionEvent:
                     return InteractionEvent;
                 case FieldDefinitionEnum.InteractionEventContact:
@@ -658,6 +637,12 @@ namespace ProjectFirma.Web.Models
                     return LifecycleOperatingCost;
                 case FieldDefinitionEnum.LimitVisibilityToAdmin:
                     return LimitVisibilityToAdmin;
+                case FieldDefinitionEnum.LopAndScatterAcres:
+                    return LopAndScatterAcres;
+                case FieldDefinitionEnum.MachinePileBurnAcres:
+                    return MachinePileBurnAcres;
+                case FieldDefinitionEnum.MasticationAcres:
+                    return MasticationAcres;
                 case FieldDefinitionEnum.MatchAmount:
                     return MatchAmount;
                 case FieldDefinitionEnum.MeasurementUnit:
@@ -680,6 +665,8 @@ namespace ProjectFirma.Web.Models
                     return OrganizationPrimaryContact;
                 case FieldDefinitionEnum.OrganizationType:
                     return OrganizationType;
+                case FieldDefinitionEnum.OtherTreatmentAcres:
+                    return OtherTreatmentAcres;
                 case FieldDefinitionEnum.Partner:
                     return Partner;
                 case FieldDefinitionEnum.Password:
@@ -772,6 +759,8 @@ namespace ProjectFirma.Web.Models
                     return ProjectUpdateKickOffDate;
                 case FieldDefinitionEnum.ProjectUpdateReminderInterval:
                     return ProjectUpdateReminderInterval;
+                case FieldDefinitionEnum.PruningAcres:
+                    return PruningAcres;
                 case FieldDefinitionEnum.PurchaseAuthority:
                     return PurchaseAuthority;
                 case FieldDefinitionEnum.RegulationAssistanceForester:
@@ -810,6 +799,8 @@ namespace ProjectFirma.Web.Models
                     return ShowApplicationsToThePublic;
                 case FieldDefinitionEnum.ShowLeadImplementerLogoOnFactSheet:
                     return ShowLeadImplementerLogoOnFactSheet;
+                case FieldDefinitionEnum.SlashAcres:
+                    return SlashAcres;
                 case FieldDefinitionEnum.SmallForestLandownerOfficeProgramManager:
                     return SmallForestLandownerOfficeProgramManager;
                 case FieldDefinitionEnum.SmallForestLandownerProgramManager:
@@ -834,6 +825,8 @@ namespace ProjectFirma.Web.Models
                     return TaxonomyTrunk;
                 case FieldDefinitionEnum.TaxonomyTrunkDescription:
                     return TaxonomyTrunkDescription;
+                case FieldDefinitionEnum.ThinningAcres:
+                    return ThinningAcres;
                 case FieldDefinitionEnum.TotalAwardAmount:
                     return TotalAwardAmount;
                 case FieldDefinitionEnum.TreatedAcres:
@@ -844,6 +837,10 @@ namespace ProjectFirma.Web.Models
                     return TreatmentCostPerAcre;
                 case FieldDefinitionEnum.TreatmentDetailedActivityType:
                     return TreatmentDetailedActivityType;
+                case FieldDefinitionEnum.TreatmentEndDate:
+                    return TreatmentEndDate;
+                case FieldDefinitionEnum.TreatmentStartDate:
+                    return TreatmentStartDate;
                 case FieldDefinitionEnum.TreatmentTotalCost:
                     return TreatmentTotalCost;
                 case FieldDefinitionEnum.TreatmentType:
@@ -1035,22 +1032,21 @@ namespace ProjectFirma.Web.Models
         GrantCurrentBalance = 358,
         GrantAllocationCurrentBalance = 359,
         GrantAllocationChangeLogNote = 360,
-        GrantAllocationAwardLandownerCostShareStartDate = 416,
-        GrantAllocationAwardLandownerCostShareEndDate = 417,
-        GrantAllocationAwardLandownerCostShareFootprintAcres = 418,
-        GrantAllocationAwardLandownerCostShareChippingAcres = 419,
-        GrantAllocationAwardLandownerCostSharePruningAcres = 420,
-        GrantAllocationAwardLandownerCostShareThinningAcres = 421,
-        GrantAllocationAwardLandownerCostShareMasticationAcres = 422,
-        GrantAllocationAwardLandownerCostShareGrazingAcres = 423,
-        GrantAllocationAwardLandownerCostShareLopAndScatterAcres = 424,
-        GrantAllocationAwardLandownerCostShareBiomassRemovalAcres = 425,
-        GrantAllocationAwardLandownerCostShareHandPileAcres = 426,
-        GrantAllocationAwardLandownerCostShareBroadcastBurnAcres = 427,
-        GrantAllocationAwardLandownerCostShareHandPileBurnAcres = 428,
-        GrantAllocationAwardLandownerCostShareMachinePileBurnAcres = 429,
-        GrantAllocationAwardLandownerCostShareOtherTreatmentAcres = 430,
-        GrantAllocationAwardLandownerCostShareSlashAcres = 431,
+        TreatmentStartDate = 416,
+        TreatmentEndDate = 417,
+        ChippingAcres = 419,
+        PruningAcres = 420,
+        ThinningAcres = 421,
+        MasticationAcres = 422,
+        GrazingAcres = 423,
+        LopAndScatterAcres = 424,
+        BiomassRemovalAcres = 425,
+        HandPileAcres = 426,
+        BroadcastBurnAcres = 427,
+        HandPileBurnAcres = 428,
+        MachinePileBurnAcres = 429,
+        OtherTreatmentAcres = 430,
+        SlashAcres = 431,
         ProjectIdentifier = 465,
         PlannedDate = 466,
         TreatedAcres = 467,
@@ -2114,100 +2110,94 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionGrantAllocationChangeLogNote Instance = new FieldDefinitionGrantAllocationChangeLogNote(360, @"GrantAllocationChangeLogNote", @"Allocation Amount Change Log Note", @"<p>Placeholder definition for Allocation Amount Change Log Note description.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareStartDate : FieldDefinition
+    public partial class FieldDefinitionTreatmentStartDate : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareStartDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareStartDate Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareStartDate(416, @"GrantAllocationAwardLandownerCostShareStartDate", @"Grant Allocation Award Landowner Cost Share Start Date", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Start Date.</p>");
+        private FieldDefinitionTreatmentStartDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionTreatmentStartDate Instance = new FieldDefinitionTreatmentStartDate(416, @"TreatmentStartDate", @"Treatment Start Date", @"<p>Placeholder definition for Treatment Start Date.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareEndDate : FieldDefinition
+    public partial class FieldDefinitionTreatmentEndDate : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareEndDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareEndDate Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareEndDate(417, @"GrantAllocationAwardLandownerCostShareEndDate", @"Grant Allocation Award Landowner Cost Share End Date", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share End Date.</p>");
+        private FieldDefinitionTreatmentEndDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionTreatmentEndDate Instance = new FieldDefinitionTreatmentEndDate(417, @"TreatmentEndDate", @"Treatment End Date", @"<p>Placeholder definition for Treatment End Date.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareFootprintAcres : FieldDefinition
+    public partial class FieldDefinitionChippingAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareFootprintAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareFootprintAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareFootprintAcres(418, @"GrantAllocationAwardLandownerCostShareFootprintAcres", @"Grant Allocation Award Landowner Cost Share Footprint Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Footprint Acres.</p>");
+        private FieldDefinitionChippingAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionChippingAcres Instance = new FieldDefinitionChippingAcres(419, @"ChippingAcres", @"Chipping Acres", @"<p>Placeholder definition for Chipping Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareChippingAcres : FieldDefinition
+    public partial class FieldDefinitionPruningAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareChippingAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareChippingAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareChippingAcres(419, @"GrantAllocationAwardLandownerCostShareChippingAcres", @"Grant Allocation Award Landowner Cost Share Chipping Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Chipping Acres.</p>");
+        private FieldDefinitionPruningAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionPruningAcres Instance = new FieldDefinitionPruningAcres(420, @"PruningAcres", @"Pruning Acres", @"<p>Placeholder definition for Pruning Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostSharePruningAcres : FieldDefinition
+    public partial class FieldDefinitionThinningAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostSharePruningAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostSharePruningAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostSharePruningAcres(420, @"GrantAllocationAwardLandownerCostSharePruningAcres", @"Grant Allocation Award Landowner Cost Share Pruning Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Pruning Acres.</p>");
+        private FieldDefinitionThinningAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionThinningAcres Instance = new FieldDefinitionThinningAcres(421, @"ThinningAcres", @"Thinning Acres", @"<p>Placeholder definition for Thinning Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareThinningAcres : FieldDefinition
+    public partial class FieldDefinitionMasticationAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareThinningAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareThinningAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareThinningAcres(421, @"GrantAllocationAwardLandownerCostShareThinningAcres", @"Grant Allocation Award Landowner Cost Share Thinning Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Thinning Acres.</p>");
+        private FieldDefinitionMasticationAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionMasticationAcres Instance = new FieldDefinitionMasticationAcres(422, @"MasticationAcres", @"Mastication Acres", @"<p>Placeholder definition for Mastication Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareMasticationAcres : FieldDefinition
+    public partial class FieldDefinitionGrazingAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareMasticationAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareMasticationAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareMasticationAcres(422, @"GrantAllocationAwardLandownerCostShareMasticationAcres", @"Grant Allocation Award Landowner Cost Share Mastication Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Mastication Acres.</p>");
+        private FieldDefinitionGrazingAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrazingAcres Instance = new FieldDefinitionGrazingAcres(423, @"GrazingAcres", @"Grazing Acres", @"<p>Placeholder definition for Grazing Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareGrazingAcres : FieldDefinition
+    public partial class FieldDefinitionLopAndScatterAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareGrazingAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareGrazingAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareGrazingAcres(423, @"GrantAllocationAwardLandownerCostShareGrazingAcres", @"Grant Allocation Award Landowner Cost Share Grazing Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Grazing Acres.</p>");
+        private FieldDefinitionLopAndScatterAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionLopAndScatterAcres Instance = new FieldDefinitionLopAndScatterAcres(424, @"LopAndScatterAcres", @"Lop And Scatter Acres", @"<p>Placeholder definition for Lop and Scatter Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareLopAndScatterAcres : FieldDefinition
+    public partial class FieldDefinitionBiomassRemovalAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareLopAndScatterAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareLopAndScatterAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareLopAndScatterAcres(424, @"GrantAllocationAwardLandownerCostShareLopAndScatterAcres", @"Grant Allocation Award Landowner Cost Share Lop And Scatter Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Lop and Scatter Acres.</p>");
+        private FieldDefinitionBiomassRemovalAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionBiomassRemovalAcres Instance = new FieldDefinitionBiomassRemovalAcres(425, @"BiomassRemovalAcres", @"Biomass Removal Acres", @"<p>Placeholder definition for Biomass Removal Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareBiomassRemovalAcres : FieldDefinition
+    public partial class FieldDefinitionHandPileAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareBiomassRemovalAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareBiomassRemovalAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareBiomassRemovalAcres(425, @"GrantAllocationAwardLandownerCostShareBiomassRemovalAcres", @"Grant Allocation Award Landowner Cost Share Biomass Removal Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Biomass Removal Acres.</p>");
+        private FieldDefinitionHandPileAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionHandPileAcres Instance = new FieldDefinitionHandPileAcres(426, @"HandPileAcres", @"Hand Pile Acres", @"<p>Placeholder definition for Hand Pile Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileAcres : FieldDefinition
+    public partial class FieldDefinitionBroadcastBurnAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileAcres(426, @"GrantAllocationAwardLandownerCostShareHandPileAcres", @"Grant Allocation Award Landowner Cost Share Hand Pile Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Hand Pile Acres.</p>");
+        private FieldDefinitionBroadcastBurnAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionBroadcastBurnAcres Instance = new FieldDefinitionBroadcastBurnAcres(427, @"BroadcastBurnAcres", @"Broadcast Burn Acres", @"<p>Placeholder definition for Broadcast Burn Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareBroadcastBurnAcres : FieldDefinition
+    public partial class FieldDefinitionHandPileBurnAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareBroadcastBurnAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareBroadcastBurnAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareBroadcastBurnAcres(427, @"GrantAllocationAwardLandownerCostShareBroadcastBurnAcres", @"Grant Allocation Award Landowner Cost Share Broadcast Burn Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Broadcast Burn Acres.</p>");
+        private FieldDefinitionHandPileBurnAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionHandPileBurnAcres Instance = new FieldDefinitionHandPileBurnAcres(428, @"HandPileBurnAcres", @"Hand Pile Burn Acres", @"<p>Placeholder definition for Hand Pile Burn Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileBurnAcres : FieldDefinition
+    public partial class FieldDefinitionMachinePileBurnAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileBurnAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileBurnAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareHandPileBurnAcres(428, @"GrantAllocationAwardLandownerCostShareHandPileBurnAcres", @"Grant Allocation Award Landowner Cost Share Hand Pile Burn Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Hand Pile Burn Acres.</p>");
+        private FieldDefinitionMachinePileBurnAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionMachinePileBurnAcres Instance = new FieldDefinitionMachinePileBurnAcres(429, @"MachinePileBurnAcres", @"Machine Pile Burn Acres", @"<p>Placeholder definition for Machine Pile Burn Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareMachinePileBurnAcres : FieldDefinition
+    public partial class FieldDefinitionOtherTreatmentAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareMachinePileBurnAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareMachinePileBurnAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareMachinePileBurnAcres(429, @"GrantAllocationAwardLandownerCostShareMachinePileBurnAcres", @"Grant Allocation Award Landowner Cost Share Machine Pile Burn Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Machine Pile Burn Acres.</p>");
+        private FieldDefinitionOtherTreatmentAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionOtherTreatmentAcres Instance = new FieldDefinitionOtherTreatmentAcres(430, @"OtherTreatmentAcres", @"Other Treatment Acres", @"<p>Placeholder definition for Other Treatment Acres.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareOtherTreatmentAcres : FieldDefinition
+    public partial class FieldDefinitionSlashAcres : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareOtherTreatmentAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareOtherTreatmentAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareOtherTreatmentAcres(430, @"GrantAllocationAwardLandownerCostShareOtherTreatmentAcres", @"Grant Allocation Award Landowner Cost Share Other Treatment Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Other Treatment Acres.</p>");
-    }
-
-    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareSlashAcres : FieldDefinition
-    {
-        private FieldDefinitionGrantAllocationAwardLandownerCostShareSlashAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareSlashAcres Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareSlashAcres(431, @"GrantAllocationAwardLandownerCostShareSlashAcres", @"Grant Allocation Award Landowner Cost Share Slash Acres", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Slash Acres.</p>");
+        private FieldDefinitionSlashAcres(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionSlashAcres Instance = new FieldDefinitionSlashAcres(431, @"SlashAcres", @"Slash Acres", @"<p>Placeholder definition for Slash Acres.</p>");
     }
 
     public partial class FieldDefinitionProjectIdentifier : FieldDefinition

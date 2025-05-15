@@ -159,18 +159,18 @@ namespace ProjectFirma.Web.Views.Program
             TreatmentDetailedActivityTypeColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatmentDetailedActivityType.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
             TreatedAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.TreatedAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
 
-            PruningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            ThinningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            ChippingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            MasticationAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            GrazingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            LopAndScatterAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            BiomassRemovalAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            HandPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            HandBurnPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            MachineBurnPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            BroadcastBurnAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
-            OtherAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            PruningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.PruningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            ThinningAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.ThinningAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            ChippingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.ChippingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            MasticationAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.MasticationAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            GrazingAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.GrazingAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            LopAndScatterAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.LopAndScatterAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            BiomassRemovalAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.BiomassRemovalAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            HandPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.HandPileAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            HandBurnPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.HandPileBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            MachineBurnPileAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.MachinePileBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            BroadcastBurnAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.BroadcastBurnAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
+            OtherAcresColumn = gisUploadSourceOrganization.GisDefaultMappings.SingleOrDefault(x => x.FieldDefinitionID == Models.FieldDefinition.OtherTreatmentAcres.FieldDefinitionID)?.GisDefaultMappingColumnName ?? string.Empty;
 
 
 
@@ -193,18 +193,18 @@ namespace ProjectFirma.Web.Views.Program
             gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.TreatedAcres.FieldDefinitionID, TreatedAcresColumn);
 
 
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.FieldDefinitionID, PruningAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.FieldDefinitionID, ThinningAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.FieldDefinitionID, ChippingAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.FieldDefinitionID, MasticationAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.FieldDefinitionID, GrazingAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.FieldDefinitionID, LopAndScatterAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.FieldDefinitionID, BiomassRemovalAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.FieldDefinitionID, HandPileAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.FieldDefinitionID, HandBurnPileAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.FieldDefinitionID, MachineBurnPileAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.FieldDefinitionID, BroadcastBurnAcresColumn);
-            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.FieldDefinitionID, OtherAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.PruningAcres.FieldDefinitionID, PruningAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ThinningAcres.FieldDefinitionID, ThinningAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.ChippingAcres.FieldDefinitionID, ChippingAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.MasticationAcres.FieldDefinitionID, MasticationAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.GrazingAcres.FieldDefinitionID, GrazingAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.LopAndScatterAcres.FieldDefinitionID, LopAndScatterAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.BiomassRemovalAcres.FieldDefinitionID, BiomassRemovalAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.HandPileAcres.FieldDefinitionID, HandPileAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.HandPileBurnAcres.FieldDefinitionID, HandBurnPileAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.MachinePileBurnAcres.FieldDefinitionID, MachineBurnPileAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.BroadcastBurnAcres.FieldDefinitionID, BroadcastBurnAcresColumn);
+            gisUploadSourceOrganization.UpdateMappingColumnValue(Models.FieldDefinition.OtherTreatmentAcres.FieldDefinitionID, OtherAcresColumn);
 
         }
 
