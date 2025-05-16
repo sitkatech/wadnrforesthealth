@@ -53,18 +53,22 @@
     </style>
 
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
+    
+    @if (ViewDataTyped.ExpenditureGooglePieChartSlices.Any())
+    {
 
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-            var chartJson = @Html.Raw(JObject.FromObject(ViewDataTyped.GoogleChartJson).ToString());
-            var chartWrapper = new google.visualization.ChartWrapper(chartJson);
-            chartWrapper.draw();
-        }
-    </script>
+            function drawChart() {
+                var chartJson = @Html.Raw(JObject.FromObject(ViewDataTyped.GoogleChartJson).ToString());
+                var chartWrapper = new google.visualization.ChartWrapper(chartJson);
+                chartWrapper.draw();
+            }
+        </script>
+    }
 }
 
 <div class="container noPrint">
