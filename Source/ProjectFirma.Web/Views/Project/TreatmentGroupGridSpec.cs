@@ -22,7 +22,8 @@ namespace ProjectFirma.Web.Views.Project
                 var newTreatmentsUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.NewTreatmentFromProject(projectToCreateNewTreatments));
                 CreateEntityModalDialogForm = new ModalDialogForm(newTreatmentsUrl, 950, $"Create new Treatments for {projectToCreateNewTreatments.DisplayName}");                
             }
-;
+
+            Add("Treatment Area Name", a => a.ProjectLocation?.ProjectLocationName ?? "", 200, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.TreatmentStartDate.GetFieldDefinitionLabel(), a => a.Treatments.First().TreatmentStartDate, 125, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.TreatmentEndDate.GetFieldDefinitionLabel(), a => a.Treatments.First().TreatmentEndDate, 125, AgGridColumnFormatType.Date);
 
