@@ -28,7 +28,6 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public string ImplementationStartYear { get; set; }
         public string CompletionYear { get; set; }
         public string PrimaryTaxonomyLeaf { get; set; }
-        public int NumberOfReportedExpenditures { get; set; }
         public string FundingType { get; set; }
         public string EstimatedTotalCost { get; set; }
         public int? PercentageMatch { get; set; }
@@ -69,7 +68,6 @@ namespace ProjectFirma.Web.ReportTemplates.Models
             ImplementationStartYear = Project.GetImplementationStartYear().HasValue ? Project.GetImplementationStartYear().ToString() : string.Empty;
             CompletionYear = Project.CompletionDate.HasValue ? Project.CompletionDate.Value.Year.ToString() : string.Empty;
             PrimaryTaxonomyLeaf = Project.GetCanStewardProjectsTaxonomyBranch()?.DisplayName;
-            NumberOfReportedExpenditures = Project.ProjectGrantAllocationExpenditures.Count();
             FundingType = string.Join(", ", Project.ProjectFundingSources.Select(x => x.FundingSource.FundingSourceDisplayName));
             EstimatedTotalCost = Project.EstimatedTotalCost?.ToStringCurrency();
             PercentageMatch = Project.PercentageMatch;

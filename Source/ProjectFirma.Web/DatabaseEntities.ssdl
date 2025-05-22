@@ -102,14 +102,10 @@
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.Store.ProjectDocument" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocumentType" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectDocumentUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.Store.ProjectExemptReportingYear" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExemptReportingYearUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExternalLink" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLink" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLinkUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectFundingSource" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectFundingSourceUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSourceUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.Store.ProjectImage" store:Type="Tables" Schema="dbo" />
@@ -899,14 +895,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectDocumentUpdates" EntitySet="ProjectDocumentUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectExemptReportingYear_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectExemptReportingYear_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectExemptReportingYears" EntitySet="ProjectExemptReportingYear" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectExemptReportingYearUpdates" EntitySet="ProjectExemptReportingYearUpdate" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectExternalLink_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectExternalLink_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectExternalLinks" EntitySet="ProjectExternalLink" />
@@ -922,22 +910,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectFundingSourceUpdates" EntitySet="ProjectFundingSourceUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -2410,24 +2382,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="Description" Type="varchar" MaxLength="1000" />
     <Property Name="ProjectDocumentTypeID" Type="int" />
   </EntityType>
-  <EntityType Name="ProjectExemptReportingYear">
-    <Key>
-      <PropertyRef Name="ProjectExemptReportingYearID" />
-    </Key>
-    <Property Name="ProjectExemptReportingYearID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="ProjectExemptReportingTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectExemptReportingYearUpdate">
-    <Key>
-      <PropertyRef Name="ProjectExemptReportingYearUpdateID" />
-    </Key>
-    <Property Name="ProjectExemptReportingYearUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="ProjectExemptReportingTypeID" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="ProjectExternalLink">
     <Key>
       <PropertyRef Name="ProjectExternalLinkID" />
@@ -2461,26 +2415,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectFundingSourceUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectGrantAllocationExpenditure">
-    <Key>
-      <PropertyRef Name="ProjectGrantAllocationExpenditureID" />
-    </Key>
-    <Property Name="ProjectGrantAllocationExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectGrantAllocationExpenditureUpdate">
-    <Key>
-      <PropertyRef Name="ProjectGrantAllocationExpenditureUpdateID" />
-    </Key>
-    <Property Name="ProjectGrantAllocationExpenditureUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationRequest">
     <Key>
@@ -5189,30 +5123,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectExemptReportingYear_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectExemptReportingYears" Type="ProjectFirma.Web.Models.Store.ProjectExemptReportingYear" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectExemptReportingYears">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectExemptReportingYearUpdates" Type="ProjectFirma.Web.Models.Store.ProjectExemptReportingYearUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectExemptReportingYearUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectExternalLink_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
     <End Role="ProjectExternalLinks" Type="ProjectFirma.Web.Models.Store.ProjectExternalLink" Multiplicity="*" />
@@ -5257,54 +5167,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
       <Dependent Role="ProjectFundingSourceUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditures">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditures">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>

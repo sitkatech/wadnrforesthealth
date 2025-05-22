@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
     {
         public bool IsBasicsUpdated { get; }
         public bool IsExpectedFundingUpdated { get; }
-        public bool IsExpendituresUpdated { get; }
         public bool IsBudgetsUpdated { get; }
         public bool IsPhotosUpdated { get; }
         public bool IsLocationSimpleUpdated { get; }
@@ -39,7 +38,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public bool IsTreatmentsUpdated { get; }
 
         public UpdateStatus(bool isBasicsUpdated,
-            bool isExpendituresUpdated,
             bool isBudgetsUpdated,
             bool isPhotosUpdated,
             bool isLocationSimpleUpdated,
@@ -56,7 +54,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             )
         {
             IsBasicsUpdated = isBasicsUpdated;
-            IsExpendituresUpdated = isExpendituresUpdated;
             IsBudgetsUpdated = isBudgetsUpdated;
             IsPhotosUpdated = isPhotosUpdated;
             IsLocationSimpleUpdated = isLocationSimpleUpdated;

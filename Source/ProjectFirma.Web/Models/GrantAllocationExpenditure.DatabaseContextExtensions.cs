@@ -59,6 +59,9 @@ namespace ProjectFirma.Web.Models
             return googleChart;
         }
 
+
+
+
         public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<GrantAllocationExpenditure> grantAllocationExpenditures,
                                                                                                  Func<GrantAllocationExpenditure, string> filterFunction,
                                                                                                  List<string> filterValues,
@@ -80,6 +83,33 @@ namespace ProjectFirma.Web.Models
                 });
             });
             return fullCategoryYearDictionary;
+        }
+
+        private static GoogleChartDataTable GetGoogleChartDataTable(Dictionary<string, Dictionary<int, decimal>> fullCategoryYearDictionary, List<int> rangeOfYears, GoogleChartType columnDisplayType)
+        {
+            var googleChartRowCs = new List<GoogleChartRowC>();
+            var sortedYearCategoryDictionary =
+                fullCategoryYearDictionary.OrderBy(x => x.Value.Sum(y => y.Value)).ThenBy(x => x.Key).ToList();
+
+            foreach (var year in rangeOfYears.OrderBy(x => x))
+            {
+                var googleChartRowVs = new List<GoogleChartRowV> { new GoogleChartRowV(year, year.ToString()) };
+                googleChartRowVs.AddRange(
+                    sortedYearCategoryDictionary
+                        .Select(x => x.Key)
+                        .Select(category => fullCategoryYearDictionary[category][year])
+                        .Select(value => new GoogleChartRowV(value, GoogleChartJson.GetFormattedValue((double)value, MeasurementUnitType.Dollars))));
+
+                googleChartRowCs.Add(new GoogleChartRowC(googleChartRowVs));
+            }
+
+            var columnLabel = FieldDefinition.ReportingYear.GetFieldDefinitionLabel();
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn(columnLabel, columnLabel, "string") };
+            googleChartColumns.AddRange(
+                sortedYearCategoryDictionary.Select(
+                    x => new GoogleChartColumn(x.Key, x.Key, "number", new GoogleChartSeries(columnDisplayType, GoogleChartAxisType.Primary), null, null)));
+
+            return new GoogleChartDataTable(googleChartColumns, googleChartRowCs);
         }
 
     }

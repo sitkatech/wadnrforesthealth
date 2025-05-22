@@ -277,13 +277,9 @@ namespace ProjectFirma.Web.Controllers
             var projectsAsSimpleLocations = allActiveProjectsAndProposals.Where(x => x.ProjectLocationSimpleType != ProjectLocationSimpleType.None).ToList();
             var projectSimpleLocationsFeatureCollection = new FeatureCollection();
 
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
             projectSimpleLocationsFeatureCollection.Features.AddRange(projectsAsSimpleLocations.Select(x =>
             {
-                var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict);
+                var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized());
                 feature.Properties["FeatureColor"] = "#99b3ff";
                 return feature;
             }).ToList());

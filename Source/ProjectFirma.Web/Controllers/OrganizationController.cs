@@ -138,13 +138,11 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Detail(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;
-            var expendituresDirectlyFromOrganizationViewGoogleChartViewData = GetCalendarYearExpendituresFromOrganizationGrantAllocationsLineChartViewData(organization);
-            var expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData = GetCalendarYearExpendituresFromProjectGrantAllocationsLineChartViewData(organization, CurrentPerson);
 
             var mapInitJson = GetMapInitJson(organization, out var hasSpatialData, CurrentPerson);
 
             var agreements = GetAgreementsByOrgPeople(organization);
-            var viewData = new DetailViewData(CurrentPerson, organization, mapInitJson, hasSpatialData, expendituresDirectlyFromOrganizationViewGoogleChartViewData, expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData, agreements.Any(x => x.AgreementFileResourceID.HasValue));
+            var viewData = new DetailViewData(CurrentPerson, organization, mapInitJson, hasSpatialData, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
@@ -175,13 +173,11 @@ namespace ProjectFirma.Web.Controllers
 
             var projectsAsSimpleLocations = allActiveProjectsAndProposals.Where(x => x.ProjectLocationSimpleType != ProjectLocationSimpleType.None).ToList();
             var projectSimpleLocationsFeatureCollection = new FeatureCollection();
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
+
 
             projectSimpleLocationsFeatureCollection.Features.AddRange(projectsAsSimpleLocations.Select(x =>
             {
-                var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict);
+                var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized());
                 feature.Properties["FeatureColor"] = "#99b3ff";
                 return feature;
             }).ToList());
@@ -213,48 +209,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private static ViewGoogleChartViewData GetCalendarYearExpendituresFromOrganizationGrantAllocationsLineChartViewData(Organization organization)
-        {
-            var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();
-            var projectGrantAllocationExpenditures = organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures);
 
-            var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
-            var chartContainerID = chartTitle.Replace(" ", "");
-            var filterValues = organization.GrantAllocations.Select(x => x.GrantAllocationName).Distinct().ToList();
-            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.GrantAllocationName,
-                filterValues,
-                x => x.GrantAllocation.GrantAllocationName,
-                yearRange,
-                chartContainerID,
-                chartTitle,
-                GoogleChartType.AreaChart,
-                true);
-
-            return new ViewGoogleChartViewData(googleChart, chartTitle, 400, true);
-        }
-
-        private static ViewGoogleChartViewData GetCalendarYearExpendituresFromProjectGrantAllocationsLineChartViewData(Organization organization, Person currentPerson)
-        {
-            var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();
-
-            var projects = organization.GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(currentPerson).ToList();
-            var projectGrantAllocationExpenditures = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.GrantAllocation.BottommostOrganization != organization);
-            
-            var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.OrganizationType.GetFieldDefinitionLabel()}";
-            var chartContainerID = chartTitle.Replace(" ", "");
-            var filterValues = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.GrantAllocation.BottommostOrganization != organization).Select(x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName).Distinct().ToList();
-
-            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
-                filterValues,
-                x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
-                yearRange,
-                chartContainerID,
-                chartTitle,
-                GoogleChartType.AreaChart,
-                true);
-
-            return new ViewGoogleChartViewData(googleChart, chartTitle, 400, true);
-        }
 
         [HttpGet]
         [OrganizationManageFeature]
@@ -267,8 +222,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteOrganization(Organization organization, ConfirmDialogFormViewModel viewModel)
         {
-            var projectGrantAllocationExpenditureTotal = organization.GrantAllocations.Sum(x => x.ProjectGrantAllocationExpenditures.Sum(y => y.ExpenditureAmount)).ToStringCurrency();
-            var confirmMessage = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.GrantAllocations.Count} {FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} that fund a total of {projectGrantAllocationExpenditureTotal} across various projects.<br /><br />Are you sure you want to delete this Organization?";
+            var confirmMessage = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.GrantAllocations.Count} {FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}.<br /><br />Are you sure you want to delete this Organization?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -341,23 +295,6 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [OrganizationViewFeature]
-        public GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpendituresForOrganizationGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
-        {
-            var givenOrganization = organizationPrimaryKey.EntityObject;
-            
-            // received
-            var projects = givenOrganization.GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(CurrentPerson).ToList();
-            var projectGrantAllocationExpenditures = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.GrantAllocation.BottommostOrganization != givenOrganization).ToList();
-
-            // provided
-            projectGrantAllocationExpenditures.AddRange(givenOrganization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures));
-
-            var projectGrantAllocationExpendituresToShow = projectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
-            var gridSpec = new ProjectGrantAllocationExpendituresForOrganizationGridSpec(givenOrganization);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure>(projectGrantAllocationExpendituresToShow, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
 
         [HttpGet]
         [OrganizationManageFeature]

@@ -34,7 +34,6 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Map;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.ProjectUpdate;
-using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Tag;
@@ -72,7 +71,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var latestNotApprovedUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             var viewModel = new EditProjectViewModel(project, latestNotApprovedUpdateBatch != null);
-            return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName, project.TotalExpenditures);
+            return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName);
         }
 
         [HttpPost]
@@ -83,13 +82,13 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName, project.TotalExpenditures);
+                return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName);
             }
             viewModel.UpdateModel(project, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditProjectViewModel viewModel, Project project, EditProjectType editProjectType, string projectTypeDisplayName, decimal? totalExpenditures)
+        private PartialViewResult ViewEdit(EditProjectViewModel viewModel, Project project, EditProjectType editProjectType, string projectTypeDisplayName)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().OrderBy(ap => ap.DisplayName).ToList();
@@ -103,7 +102,6 @@ namespace ProjectFirma.Web.Controllers
                 ProjectStage.All.Except(new[] {ProjectStage.Proposed}), organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
-                totalExpenditures,
                 projectTypes,
                 focusAreas,
                 projectTypeHasBeenSet,
@@ -154,7 +152,7 @@ namespace ProjectFirma.Web.Controllers
                 SitkaRoute<ProjectCountyController>.BuildUrlFromExpression(c => c.EditProjectCounties(project));
             var editProjectPriorityLandscapeUrl = SitkaRoute<ProjectPriorityLandscapeController>.BuildUrlFromExpression(c => c.EditProjectPriorityLandscapes(project));
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
-            var editReportedExpendituresUrl = SitkaRoute<ProjectGrantAllocationExpenditureController>.BuildUrlFromExpression(c => c.EditProjectGrantAllocationExpendituresForProject(project));
+
             var editExternalLinksUrl = SitkaRoute<ProjectExternalLinkController>.BuildUrlFromExpression(c => c.EditProjectExternalLinks(project));
 
             var priorityLandscapes = project.GetProjectPriorityLandscapes().ToList();
@@ -168,7 +166,6 @@ namespace ProjectFirma.Web.Controllers
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
             var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()));
 
-            var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
             var projectInvoiceDetailViewData = new ProjectInvoiceDetailViewData(CurrentPerson, project);
@@ -216,7 +213,6 @@ namespace ProjectFirma.Web.Controllers
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
                 projectInvoiceDetailViewData,
-                projectExpendituresSummaryViewData,
                 imageGalleryViewData,
                 projectNotesViewData,
                 internalNotesViewData,
@@ -229,7 +225,6 @@ namespace ProjectFirma.Web.Controllers
                 editSimpleProjectLocationUrl,
                 editDetailedProjectLocationUrl,
                 editOrganizationsUrl,
-                editReportedExpendituresUrl,
                 auditLogsGridSpec,
                 auditLogsGridDataUrl,
                 editExternalLinksUrl,
@@ -263,19 +258,6 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        private static ProjectExpendituresDetailViewData BuildProjectExpendituresDetailViewData(Project project)
-        {
-            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearsForGrantAllocationExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var fromGrantAllocationsAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
-                calendarYearsForGrantAllocationExpenditures);
-            var projectExpendituresDetailViewData = new ProjectExpendituresDetailViewData(
-                fromGrantAllocationsAndCalendarYears,
-                calendarYearsForGrantAllocationExpenditures.Select(x => new CalendarYearString(x)).ToList(),
-                FirmaHelpers.CalculateYearRanges(project.GetExpendituresExemptReportingYears().Select(x => x.CalendarYear)),
-                project.NoExpendituresToReportExplanation);
-            return projectExpendituresDetailViewData;
-        }
 
         private static ImageGalleryViewData BuildImageGalleryViewData(Project project, Person currentPerson)
         {
@@ -340,20 +322,10 @@ namespace ProjectFirma.Web.Controllers
             new ProjectViewFeature().DemandPermission(CurrentPerson, project);
             var mapDivID = $"project_{project.ProjectID}_Map";
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
-            var chartName = $"ProjectFactSheet{project.ProjectID}PieChart";
-            var expenditureGooglePieChartSlices = project.GetExpenditureGooglePieChartSlices();
-            var googleChartDataTable = GetProjectFactSheetGoogleChartDataTable(expenditureGooglePieChartSlices);
-            var googleChartTitle = $"Investment by Funding Sector for: {project.ProjectName}";
-            var googleChartType = GoogleChartType.PieChart;
-            var googleChartConfiguration = new GooglePieChartConfiguration(googleChartTitle,
-                MeasurementUnitTypeEnum.Dollars, expenditureGooglePieChartSlices, googleChartType,
-                googleChartDataTable);
-            var googleChartJson = new GoogleChartJson(string.Empty, chartName, googleChartConfiguration,
-                googleChartType, googleChartDataTable, null);
+
             var firmaPageTypeFactSheetCustomText = FirmaPageType.ToType(FirmaPageTypeEnum.FactSheetCustomText);
             var firmaPageFactSheetCustomText = FirmaPage.GetFirmaPageByPageType(firmaPageTypeFactSheetCustomText);
-            var viewData = new BackwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson,
-                googleChartJson, expenditureGooglePieChartSlices, FirmaHelpers.DefaultColorRange, firmaPageFactSheetCustomText);
+            var viewData = new BackwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson, firmaPageFactSheetCustomText);
             return RazorView<BackwardLookingFactSheet, BackwardLookingFactSheetViewData>(viewData);
         }
 
@@ -463,11 +435,6 @@ namespace ProjectFirma.Web.Controllers
             var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
             var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
 
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
-
             var elevatedRoles = new List<IRole> {Role.Admin, Role.EsaAdmin, Role.ProjectSteward};
             if (CurrentPerson.HasAnyOfTheseRoles(elevatedRoles))
             {
@@ -479,8 +446,7 @@ namespace ProjectFirma.Web.Controllers
                 filteredProposals = pendingProjects.Where(x =>
                     {
 
-                        return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
-                                organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(y => y.Organization)
+                        return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized).Select(y => y.Organization)
                             .Contains(CurrentPerson.Organization);
                     })
                     .ToList();
@@ -533,16 +499,8 @@ namespace ProjectFirma.Web.Controllers
             var organizationsSpec = new ProjectImplementingOrganizationOrProjectFundingOrganizationExcelSpec();
             var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
             var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
-            var projectOrganizations = projects.SelectMany(p =>
-            {
-                
-                return p.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
-                        organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict);
-            }).ToList();
+            var projectOrganizations = projects.SelectMany(p => p.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized)).ToList();
             var wsOrganizations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {organizationFieldDefinitionLabelPluralized}", organizationsSpec, projectOrganizations);
             workSheets.Add(wsOrganizations);
 
@@ -551,10 +509,6 @@ namespace ProjectFirma.Web.Controllers
             var wsProjectNotes = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ProjectNote.GetFieldDefinitionLabelPluralized()}", projectNoteSpec, projectNotes);
             workSheets.Add(wsProjectNotes);
 
-            var projectGrantAllocationExpenditureExcelSpec = new ProjectGrantAllocationExpenditureExcelSpec();
-            var projectGrantAllocationExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();
-            var wsProjectGrantAllocationExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectGrantAllocationExpenditureExcelSpec, projectGrantAllocationExpenditures);
-            workSheets.Add(wsProjectGrantAllocationExpenditures);
 
             MultiTenantHelpers.GetClassificationSystems().ForEach(c =>
             {

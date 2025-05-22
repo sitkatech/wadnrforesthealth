@@ -59,11 +59,6 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly string PendingProjectsGridName;
         public readonly string PendingProjectsGridDataUrl;
 
-        public readonly ViewGoogleChartViewData ExpendituresDirectlyFromOrganizationViewGoogleChartViewData;
-        public readonly ViewGoogleChartViewData ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData;
-        public readonly ProjectGrantAllocationExpendituresForOrganizationGridSpec ProjectGrantAllocationExpendituresForOrganizationGridSpec;
-        public readonly string ProjectGrantAllocationExpendituresForOrganizationGridName;
-        public readonly string ProjectGrantAllocationExpendituresForOrganizationGridDataUrl;
 
         public readonly string ManageGrantAllocationsUrl;
         public readonly string IndexUrl;
@@ -88,8 +83,6 @@ namespace ProjectFirma.Web.Views.Organization
                             Models.Organization organization,
                             MapInitJson mapInitJson,
                             bool hasSpatialData,
-                            ViewGoogleChartViewData expendituresDirectlyFromOrganizationViewGoogleChartViewData,
-                            ViewGoogleChartViewData expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData,
                             bool atLeastOneAgreementHasFile) : base(currentPerson)
         {
             Organization = organization;
@@ -122,25 +115,12 @@ namespace ProjectFirma.Web.Views.Organization
                 ? Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.GetFieldDefinitionLabel()
                 : "Lead Implementer";
 
-            ProjectGrantAllocationExpendituresForOrganizationGridSpec =
-                new ProjectGrantAllocationExpendituresForOrganizationGridSpec(organization)
-                {
-                    ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel()}",
-                    ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}",
-                    SaveFiltersInCookie = true
-                };
-
-            ProjectGrantAllocationExpendituresForOrganizationGridName = "projectCalendarYearExpendituresForOrganizationGrid";
-            ProjectGrantAllocationExpendituresForOrganizationGridDataUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationExpendituresForOrganizationGridJsonData(organization));
-
             // Might be too weak; do we want to make this more specific?
             ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;
             HasSpatialData = hasSpatialData;
-            ExpendituresDirectlyFromOrganizationViewGoogleChartViewData = expendituresDirectlyFromOrganizationViewGoogleChartViewData;
-            ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData = expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData;
 
             ShowProposals = currentPerson.CanViewProposals;
             ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()

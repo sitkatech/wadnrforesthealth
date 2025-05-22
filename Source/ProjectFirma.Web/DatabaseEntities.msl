@@ -1252,26 +1252,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectExemptReportingYear">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectExemptReportingYear">
-        <MappingFragment StoreEntitySet="ProjectExemptReportingYear">
-          <ScalarProperty Name="ProjectExemptReportingYearID" ColumnName="ProjectExemptReportingYearID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
-          <ScalarProperty Name="ProjectExemptReportingTypeID" ColumnName="ProjectExemptReportingTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectExemptReportingYearUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectExemptReportingYearUpdate">
-        <MappingFragment StoreEntitySet="ProjectExemptReportingYearUpdate">
-          <ScalarProperty Name="ProjectExemptReportingYearUpdateID" ColumnName="ProjectExemptReportingYearUpdateID" />
-          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
-          <ScalarProperty Name="ProjectExemptReportingTypeID" ColumnName="ProjectExemptReportingTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectExternalLink">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectExternalLink">
         <MappingFragment StoreEntitySet="ProjectExternalLink">
@@ -1307,28 +1287,6 @@
           <ScalarProperty Name="ProjectFundingSourceUpdateID" ColumnName="ProjectFundingSourceUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectGrantAllocationExpenditure">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure">
-        <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditure">
-          <ScalarProperty Name="ProjectGrantAllocationExpenditureID" ColumnName="ProjectGrantAllocationExpenditureID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
-          <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectGrantAllocationExpenditureUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate">
-        <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditureUpdate">
-          <ScalarProperty Name="ProjectGrantAllocationExpenditureUpdateID" ColumnName="ProjectGrantAllocationExpenditureUpdateID" />
-          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
-          <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
