@@ -42,10 +42,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public EntityNotesViewData GrantAllocationNotesViewData { get; set; }
         public EntityNotesViewData GrantAllocationNoteInternalsViewData { get; set; }
         public ViewGoogleChartViewData ViewGoogleChartViewData { get; }
-        public ProjectCalendarYearExpendituresGridSpec ProjectCalendarYearExpendituresGridSpec { get; }
-        public string ProjectCalendarYearExpendituresGridName { get; }
-        public string ProjectCalendarYearExpendituresGridDataUrl { get; }
-        public List<int> CalendarYearsForProjectExpenditures { get; }
 
         public GridSpec<Models.ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsGridSpec { get; }
         public string ProjectGrantAllocationRequestsGridName { get; }
@@ -82,19 +78,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationNoteInternalsViewData = grantAllocationNoteInternalsViewData;
 
             ViewGoogleChartViewData = viewGoogleChartViewData;
-
-            var projectGrantAllocationExpenditures = GrantAllocation.ProjectGrantAllocationExpenditures.ToList();
-            CalendarYearsForProjectExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
-
-            ProjectCalendarYearExpendituresGridSpec = new ProjectCalendarYearExpendituresGridSpec(CalendarYearsForProjectExpenditures)
-            {
-                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}",
-                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}",
-                SaveFiltersInCookie = true
-            };
-
-            ProjectCalendarYearExpendituresGridName = "projectsCalendarYearExpendituresFromGrantAllocationGrid";
-            ProjectCalendarYearExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectCalendarYearExpendituresGridJsonData(grantAllocation));
 
             ProjectGrantAllocationRequestsGridSpec = projectGrantAllocationRequestsGridSpec;
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";

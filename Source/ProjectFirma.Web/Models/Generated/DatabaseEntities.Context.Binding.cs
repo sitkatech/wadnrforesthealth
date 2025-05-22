@@ -129,14 +129,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectDocument> ProjectDocuments { get; set; }
         public virtual DbSet<ProjectDocumentType> ProjectDocumentTypes { get; set; }
         public virtual DbSet<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
-        public virtual DbSet<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
-        public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
         public virtual DbSet<ProjectFundingSource> ProjectFundingSources { get; set; }
         public virtual DbSet<ProjectFundingSourceUpdate> ProjectFundingSourceUpdates { get; set; }
-        public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
-        public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
@@ -777,17 +773,6 @@ namespace ProjectFirma.Web.Models
                 case "ProjectDocumentUpdate":
                     return ProjectDocumentUpdates.GetProjectDocumentUpdate(primaryKey);
 
-                case "ProjectExemptReportingType":
-                    var projectExemptReportingType = ProjectExemptReportingType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(projectExemptReportingType, "ProjectExemptReportingType", primaryKey);
-                    return projectExemptReportingType;
-
-                case "ProjectExemptReportingYear":
-                    return ProjectExemptReportingYears.GetProjectExemptReportingYear(primaryKey);
-
-                case "ProjectExemptReportingYearUpdate":
-                    return ProjectExemptReportingYearUpdates.GetProjectExemptReportingYearUpdate(primaryKey);
-
                 case "ProjectExternalLink":
                     return ProjectExternalLinks.GetProjectExternalLink(primaryKey);
 
@@ -799,12 +784,6 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectFundingSourceUpdate":
                     return ProjectFundingSourceUpdates.GetProjectFundingSourceUpdate(primaryKey);
-
-                case "ProjectGrantAllocationExpenditure":
-                    return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
-
-                case "ProjectGrantAllocationExpenditureUpdate":
-                    return ProjectGrantAllocationExpenditureUpdates.GetProjectGrantAllocationExpenditureUpdate(primaryKey);
 
                 case "ProjectGrantAllocationRequest":
                     return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);

@@ -33,21 +33,14 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class BackwardLookingFactSheetViewData : ProjectViewData
     {
-        public string EstimatedTotalCost { get; }
-        public string NoGrantAllocationIdentified { get; }
-        public string TotalFunding { get; }
-        public string UnsecuredFunding { get; }
-        public ImageGalleryViewData ImageGalleryViewData { get; }
-        public List<GooglePieChartSlice> ExpenditureGooglePieChartSlices { get; }
-        public string ChartID { get; }
+
         public Models.ProjectImage KeyPhoto { get; }
         public List<IGrouping<ProjectImageTiming, Models.ProjectImage>> ProjectImagesExceptKeyPhotoGroupedByTiming { get; }
         public int ProjectImagesPerTimingGroup { get; }
-        public List<string> ChartColorRange { get; }
+
         public List<Models.Classification> Classifications { get; }
         public ProjectLocationSummaryMapInitJson ProjectLocationSummaryMapInitJson { get; }
-        public GoogleChartJson GoogleChartJson { get; }
-        public int CalculatedChartHeight { get; }
+
         public string FactSheetPdfUrl { get; }
 
         public string TaxonomyColor { get; }
@@ -55,37 +48,16 @@ namespace ProjectFirma.Web.Views.Project
         public string TaxonomyBranchName { get; }
 
         public string ProjectTypeDisplayName { get; }
-        public Person PrimaryContactPerson { get; }
         public ViewPageContentViewData CustomFactSheetPageTextViewData { get; }
 
         public BackwardLookingFactSheetViewData(Person currentPerson, Models.Project project,
             ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson,
-            GoogleChartJson projectFactSheetGoogleChart,
-            List<GooglePieChartSlice> expenditureGooglePieChartSlices, List<string> chartColorRange,
             Models.FirmaPage firmaPageFactSheet) : base(currentPerson, project)
         {
             PageTitle = project.DisplayName;
             BreadCrumbTitle = "Fact Sheet";
 
-            EstimatedTotalCost = Project.EstimatedTotalCost.HasValue ? Project.EstimatedTotalCost.ToStringCurrency() : "";
-            NoGrantAllocationIdentified = project.GetNoGrantAllocationIdentifiedAmount() != null ? Project.GetNoGrantAllocationIdentifiedAmount().ToStringCurrency() : "";
-            TotalFunding = Project.GetTotalFunding() != null ? Project.GetTotalFunding().ToStringCurrency() : "";
 
-            const bool userCanAddPhotosToThisProject = false;
-            var newPhotoForProjectUrl = string.Empty;
-            var selectKeyImageUrl = string.Empty;
-            var galleryName = $"ProjectImage{project.ProjectID}";
-            ImageGalleryViewData = new ImageGalleryViewData(currentPerson,
-                galleryName,
-                project.ProjectImages,
-                userCanAddPhotosToThisProject,
-                newPhotoForProjectUrl,
-                selectKeyImageUrl,
-                true,
-                x => x.CaptionOnFullView,
-                "Photo");
-
-            ChartID = $"fundingChartForProject{project.ProjectID}";
             KeyPhoto = project.KeyPhoto;
             ProjectImagesExceptKeyPhotoGroupedByTiming =
                 project.ProjectImages.Where(x => !x.IsKeyPhoto && x.ProjectImageTiming != ProjectImageTiming.Unknown && !x.ExcludeFromFactSheet)
@@ -96,12 +68,7 @@ namespace ProjectFirma.Web.Views.Project
             Classifications = project.ProjectClassifications.Select(x => x.Classification).ToList().SortByOrderThenName().ToList();
 
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
-            GoogleChartJson = projectFactSheetGoogleChart;
 
-            ExpenditureGooglePieChartSlices = expenditureGooglePieChartSlices;
-            ChartColorRange = chartColorRange;
-            //Dynamically resize chart based on how much space the legend requires
-            CalculatedChartHeight = 350 - ExpenditureGooglePieChartSlices.Count * 19;
             FactSheetPdfUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.FactSheetPdf(project));
 
             if (project.ProjectType == null)
@@ -126,7 +93,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectTypeName = project.ProjectType == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.ProjectType.DisplayName;
             TaxonomyBranchName = project.ProjectType == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.ProjectType.TaxonomyBranch.DisplayName;
             ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
-            PrimaryContactPerson = project.GetPrimaryContact();
             CustomFactSheetPageTextViewData = new ViewPageContentViewData(firmaPageFactSheet, false);
         }
     }

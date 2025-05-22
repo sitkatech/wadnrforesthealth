@@ -40,9 +40,6 @@ namespace ProjectFirma.Web.Views.Project
             var organizationFieldDefinitionLabelSingle = Models.FieldDefinition.Organization.GetFieldDefinitionLabel();
             var organizationFieldDefinitionLabelPluralized = Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
 
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
             AddColumn($"Non-Lead Implementing {organizationFieldDefinitionLabelPluralized}",
                 x =>
@@ -50,7 +47,7 @@ namespace ProjectFirma.Web.Views.Project
                     
                     return string.Join(",",
                         x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
-                            organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict)
+                            organizationFieldDefinitionLabelPluralized)
                         .Select(pio => pio.Organization.DisplayName));
                 });
             AddColumn(Models.FieldDefinition.ProjectStage.GetFieldDefinitionLabel(), x => x.ProjectStage.ProjectStageDisplayName);
@@ -108,19 +105,6 @@ namespace ProjectFirma.Web.Views.Project
         }
     }
 
-    public class ProjectGrantAllocationExpenditureExcelSpec : ExcelWorksheetSpec<Models.ProjectGrantAllocationExpenditure>
-    {
-        public ProjectGrantAllocationExpenditureExcelSpec()
-        {
-            AddColumn($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} ID", x => x.Project.ProjectID);
-            AddColumn($"{Models.FieldDefinition.ProjectName.GetFieldDefinitionLabel()}", x => x.Project.ProjectName);
-            AddColumn($"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", x => x.GrantAllocation.GrantAllocationName);
-            AddColumn($"Funding {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", x => x.GrantAllocation.BottommostOrganization.OrganizationName);
-            AddColumn(Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabel(), x => x.GrantAllocation.BottommostOrganization.OrganizationType?.OrganizationTypeName);
-            AddColumn("Calendar Year", x => x.CalendarYear);
-            AddColumn("Expenditure Amount", x => x.ExpenditureAmount);
-        }
-    }
 
     public class ProjectClassificationExcelSpec : ExcelWorksheetSpec<ProjectClassification>
     {

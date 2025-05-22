@@ -18,44 +18,39 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using LtInfo.Common;
+using LtInfo.Common.DbSpatial;
+using LtInfo.Common.DesignByContract;
+using LtInfo.Common.Models;
+using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Map;
+using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.ProjectCounty;
+using ProjectFirma.Web.Views.ProjectCreate;
+using ProjectFirma.Web.Views.ProjectPriorityLandscape;
+using ProjectFirma.Web.Views.ProjectRegion;
+using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.ProjectControls;
+using ProjectFirma.Web.Views.Shared.ProjectDocument;
+using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
+using ProjectFirma.Web.Views.Shared.ProjectOrganization;
+using ProjectFirma.Web.Views.Shared.ProjectPerson;
+using ProjectFirma.Web.Views.Shared.TextControls;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web.Mvc;
-using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Map;
-using ProjectFirma.Web.Views.ProjectCreate;
-using ProjectFirma.Web.Views.Shared.ProjectControls;
-using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
-using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.TextControls;
-using LtInfo.Common;
-using LtInfo.Common.DbSpatial;
-using LtInfo.Common.DesignByContract;
-using LtInfo.Common.Models;
-using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.Project;
-using ProjectFirma.Web.Views.ProjectCounty;
-using ProjectFirma.Web.Views.ProjectPriorityLandscape;
-using ProjectFirma.Web.Views.ProjectRegion;
-using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
-using ProjectFirma.Web.Views.Shared.ProjectDocument;
-using ProjectFirma.Web.Views.Shared.ProjectOrganization;
-using ProjectFirma.Web.Views.Shared.ProjectPerson;
-using ProjectFirma.Web.Views.Shared.SortOrder;
 using Basics = ProjectFirma.Web.Views.ProjectCreate.Basics;
 using BasicsViewData = ProjectFirma.Web.Views.ProjectCreate.BasicsViewData;
 using BasicsViewModel = ProjectFirma.Web.Views.ProjectCreate.BasicsViewModel;
 using ExpectedFunding = ProjectFirma.Web.Views.ProjectCreate.ExpectedFunding;
 using ExpectedFundingViewData = ProjectFirma.Web.Views.ProjectCreate.ExpectedFundingViewData;
 using ExpectedFundingViewModel = ProjectFirma.Web.Views.ProjectCreate.ExpectedFundingViewModel;
-using Expenditures = ProjectFirma.Web.Views.ProjectCreate.Expenditures;
-using ExpendituresViewData = ProjectFirma.Web.Views.ProjectCreate.ExpendituresViewData;
-using ExpendituresViewModel = ProjectFirma.Web.Views.ProjectCreate.ExpendituresViewModel;
 using LocationDetailed = ProjectFirma.Web.Views.ProjectCreate.LocationDetailed;
 using LocationDetailedViewData = ProjectFirma.Web.Views.ProjectCreate.LocationDetailedViewData;
 using LocationDetailedViewModel = ProjectFirma.Web.Views.ProjectCreate.LocationDetailedViewModel;
@@ -250,26 +245,6 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(project, CurrentPerson);
 
-            if (project.ProjectStage == ProjectStage.Proposed)
-            {
-                foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears)
-                {
-                    projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                }
-                foreach (var projectGrantAllocationExpenditure in project.ProjectGrantAllocationExpenditures)
-                {
-                    projectGrantAllocationExpenditure.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                }
-            }
-
-            if (project.ProjectStage == ProjectStage.Planned)
-            {
-                foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears)
-                {
-                    projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                }
-            }
-
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             var auditLog = new AuditLog(CurrentPerson,
@@ -336,77 +311,6 @@ namespace ProjectFirma.Web.Controllers
             return GoToNextSection(viewModel, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName);
         }
 
-        [HttpGet]
-        [ProjectCreateFeature]
-        public ActionResult Expenditures(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            
-            if (project == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectCreateController>(x => x.InstructionsProposal(projectPrimaryKey.PrimaryKeyValue)));
-            }
-            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearRange = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-
-            var projectExemptReportingYears = project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
-            var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
-            projectExemptReportingYears.AddRange(
-                calendarYearRange.Where(x => !currentExemptedYears.Contains(x))
-                    .Select((x, index) => new ProjectExemptReportingYearSimple(-(index + 1), project.ProjectID, x)));
-
-            var viewModel = new ExpendituresViewModel(projectGrantAllocationExpenditures, calendarYearRange, project, projectExemptReportingYears) {ProjectID = project.ProjectID};
-            return ViewExpenditures(project, calendarYearRange, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Expenditures(ProjectPrimaryKey projectPrimaryKey, ExpendituresViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            
-            if (project == null)
-            {
-                return RedirectToAction(new SitkaRoute<ProjectCreateController>(x => x.InstructionsProposal(projectPrimaryKey.PrimaryKeyValue)));
-            }
-
-            viewModel.ProjectID = project.ProjectID;
-
-            var projectGrantAllocationExpenditureUpdates = project.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearRange = projectGrantAllocationExpenditureUpdates.CalculateCalendarYearRangeForExpenditures(project);
-            if (!ModelState.IsValid)
-            {
-                return ViewExpenditures(project, calendarYearRange, viewModel);
-            }
-            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditureUpdates.Load();
-            var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
-            viewModel.UpdateModel(project, projectGrantAllocationExpenditureUpdates, allProjectGrantAllocationExpenditures);            
-
-            // 5/15/2019 TK - Used to be "Reported Expenditures". Updated because WADNR does not currently need project reported expenditures
-            return GoToNextSection(viewModel, project, ProjectCreateSection.Classifications.ProjectCreateSectionDisplayName);
-        }
-
-        private ViewResult ViewExpenditures(Project project, List<int> calendarYearRange, ExpendituresViewModel viewModel)
-        {
-            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var expendituresExemptReportingYears = project.GetExpendituresExemptReportingYears();
-            var showNoExpendituresExplanation = expendituresExemptReportingYears.Any();
-            var viewDataForAngularEditor = new ExpendituresViewData.ViewDataForAngularClass(project,
-                allGrantAllocations,
-                calendarYearRange, showNoExpendituresExplanation);
-            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var fromGrantAllocationsAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(
-                new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
-                calendarYearRange);
-            var projectExpendituresSummaryViewData = new ProjectExpendituresDetailViewData(
-                fromGrantAllocationsAndCalendarYears, calendarYearRange.Select(x => new CalendarYearString(x)).ToList(),
-                FirmaHelpers.CalculateYearRanges(expendituresExemptReportingYears.Select(x => x.CalendarYear)),
-                project.NoExpendituresToReportExplanation);
-            var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            var viewData = new ExpendituresViewData(CurrentPerson, project, viewDataForAngularEditor, projectExpendituresSummaryViewData, proposalSectionsStatus);
-            return RazorView<Expenditures, ExpendituresViewData, ExpendituresViewModel>(viewData, viewModel);
-        }
 
         [HttpGet]
         [ProjectCreateFeature]

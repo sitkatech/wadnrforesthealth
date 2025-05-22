@@ -39,72 +39,16 @@
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script src="@Url.Content("~/Content/leaflet/leaflet.legend/leaflet-legend.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Content/leaflet/leaflet.legend/leaflet-legend.css")" rel="stylesheet" type="text/css" />
-    <script type="text/javascript">
 
-    jQuery(function () {
-        jQuery("#overviewTab").on("shown.bs.tab", function () {
-            var gridName1 = @(ViewDataTyped.ProjectOrganizationsGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName1].resizeGridWidths();
-            var gridName2 = @(ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName2].resizeGridWidths();
-            _.forOwn(window.GoogleCharts.chartWrappers,
-                function (chartWrapper) {
-                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
-                        chartWrapper.getChart().clearChart();
-                        chartWrapper.draw();
-                    }
-                });
-        });
-        jQuery("#accomplishmentsTab").on("shown.bs.tab", function () {
-            var gridName1 = @(ViewDataTyped.ProjectOrganizationsGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName1].resizeGridWidths();
-            var gridName2 = @(ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName2].resizeGridWidths();
-            _.forOwn(window.GoogleCharts.chartWrappers,
-                function (chartWrapper) {
-                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
-                        chartWrapper.getChart().clearChart();
-                        chartWrapper.draw();
-                    }
-                });
-        });
-        jQuery("#expendituresTab").on("shown.bs.tab", function() {
-            var gridName1 = @(ViewDataTyped.ProjectOrganizationsGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName1].resizeGridWidths();
-            var gridName2 = @(ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName2].resizeGridWidths();
-            _.forOwn(window.GoogleCharts.chartWrappers,
-                function (chartWrapper) {
-                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
-                        chartWrapper.getChart().clearChart();
-                        chartWrapper.draw();
-                    }
-                });
-        });
-    });
-    </script>
 }
 
 <div>
     <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()</a>
 </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <ul class="nav nav-tabs" id="organizationDetailsTabs" style="border-bottom: none;">
-            <li class="active">
-                <a href="#organizationOverview" aria-controls="organizationOverview" role="tab" data-toggle="tab" id="overviewTab">Overview</a>
-            </li>
-            <li>
-                <a href="#expenditures" aria-controls="fundingAndProjects" role="tab" data-toggle="tab" id="expendituresTab">Expenditures</a>
-            </li>
-        </ul>
-    </div>
-</div>
+
 <div class="panel panel-default">
     <div class="panel-body">
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="organizationOverview">
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panelFirma">
@@ -374,74 +318,4 @@
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="expenditures">
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-xs-12">
-                        <p>@FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() associated with this @FieldDefinition.Organization.GetFieldDefinitionLabel() are presented in several ways:</p>
-                        <ul>
-                            <li>The <strong>Expenditures Provided Directly by this @FieldDefinition.Organization.GetFieldDefinitionLabel()</strong> chart shows all @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() that originate with @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() owned by this @FieldDefinition.Organization.GetFieldDefinitionLabel()</li>
-                            <li>
-                                The <strong>Expenditures Received from other @FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()</strong> chart shows @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() received from other
-                                @FieldDefinition.Organization.GetFieldDefinitionLabelPluralized() for all @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() where this @FieldDefinition.Organization.GetFieldDefinitionLabel() is the
-                                @FieldDefinition.Project.GetFieldDefinitionLabel() @ViewDataTyped.ProjectStewardOrLeadImplementorFieldDefinitionName
-                            </li>
-                            <li>The <strong>@FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()</strong> table at the bottom of the page provides a list of all @FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() for which this @FieldDefinition.Organization.GetFieldDefinitionLabel() provided or received funding, and the annual expenditure amounts</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                Provided Directly by this @FieldDefinition.Organization.GetFieldDefinitionLabel()
-                            </div>
-                            <div class="panel-body">
-                                <div>
-                                    @if (ViewDataTyped.ExpendituresDirectlyFromOrganizationViewGoogleChartViewData.HasData)
-                                    {
-                                        ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ExpendituresDirectlyFromOrganizationViewGoogleChartViewData);
-                                    }
-                                    else
-                                    {
-                                        <p class="systemText">No expenditure data available</p>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                Received from Other @FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()
-                            </div>
-                            <div class="panel-body">
-                                <div>
-                                    @if (ViewDataTyped.ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData.HasData)
-                                    {
-                                        ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData);
-                                    }
-                                    else
-                                    {
-                                        <p class="systemText">No expenditure data available.</p>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                @FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
-                            </div>
-                            <div class="panel-body">
-                                @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridSpec, ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridName, ViewDataTyped.ProjectGrantAllocationExpendituresForOrganizationGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</div>

@@ -380,18 +380,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
-        [GrantAllocationsViewFeature]
-        public GridJsonNetJObjectResult<ProjectCalendarYearExpenditure> ProjectCalendarYearExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
-        {
-            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var projectGrantAllocationExpenditures = grantAllocation.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearRangeForExpenditures =
-                projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
-            var gridSpec = new ProjectCalendarYearExpendituresGridSpec(calendarYearRangeForExpenditures);
-            var projectGrantAllocations = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectGrantAllocationExpenditures, calendarYearRangeForExpenditures);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectCalendarYearExpenditure>(projectGrantAllocations, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
 
         [GrantAllocationsViewFeature]
         public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)

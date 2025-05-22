@@ -32,7 +32,6 @@ using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectInvoice;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectCostShare;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
@@ -57,13 +56,11 @@ namespace ProjectFirma.Web.Views.Project
         public string EditProjectCountyUrl { get; }
         public string EditProjectPriorityLandscapeUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
-        public string EditReportedExpendituresUrl { get; }
         public string EditExternalLinksUrl { get; }
         public string EditExpectedFundingUrl { get; }
 
         public ProjectBasicsViewData ProjectBasicsViewData { get; }
         public ProjectLocationSummaryViewData ProjectLocationSummaryViewData { get; }
-        public ProjectExpendituresDetailViewData ProjectExpendituresDetailViewData { get; }
         public ImageGalleryViewData ImageGalleryViewData { get; }
         public EntityNotesViewData ProjectNotesViewData { get; }
         public EntityNotesViewData InternalNotesViewData { get; }
@@ -137,7 +134,6 @@ namespace ProjectFirma.Web.Views.Project
             ProjectLocationSummaryViewData projectLocationSummaryViewData,
             ProjectFundingDetailViewData projectFundingDetailViewData,
             ProjectInvoiceDetailViewData projectInvoiceDetailViewData,
-            ProjectExpendituresDetailViewData projectExpendituresDetailViewData,
             ImageGalleryViewData imageGalleryViewData, EntityNotesViewData projectNotesViewData,
             EntityNotesViewData internalNotesViewData,
             EntityExternalLinksViewData entityExternalLinksViewData,
@@ -146,7 +142,6 @@ namespace ProjectFirma.Web.Views.Project
             string mapFormID,
             string editSimpleProjectLocationUrl, string editDetailedProjectLocationUrl,
             string editProjectOrganizationsUrl,
-            string editReportedExpendituresUrl,
             AuditLogsGridSpec auditLogsGridSpec, string auditLogsGridDataUrl,
             string editExternalLinksUrl, ProjectNotificationGridSpec projectNotificationGridSpec,
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
@@ -324,8 +319,6 @@ namespace ProjectFirma.Web.Views.Project
                 SitkaRoute<ProjectGrantAllocationRequestController>.BuildUrlFromExpression(c =>
                     c.EditProjectGrantAllocationRequestsForProject(project));
 
-            ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
-            EditReportedExpendituresUrl = editReportedExpendituresUrl;
             ProjectPeopleDetailViewData = projectPeopleDetailViewData;
             EditExternalLinksUrl = editExternalLinksUrl;
             ImageGalleryViewData = imageGalleryViewData;

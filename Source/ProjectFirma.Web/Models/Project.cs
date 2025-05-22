@@ -174,24 +174,6 @@ namespace ProjectFirma.Web.Models
             return ProjectRegions.Select(x => x.DNRUplandRegion).ToList();
         }
 
-        public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
-        {
-            if (MultiTenantHelpers.GetRelationshipTypeToReportInAccomplishmentsDashboard() == null)
-            {
-                // Default is Funding Organizations
-                var organizations = ProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
-                    .Union(ProjectGrantAllocationRequests
-                        .Select(x => x.GrantAllocation.BottommostOrganization))
-                    .Distinct(new HavePrimaryKeyComparer<Organization>());
-                return organizations;
-            }
-            else
-            {
-                return ProjectOrganizations.Where(x => x.RelationshipType.ReportInAccomplishmentsDashboard)
-                    .Select(x => x.Organization).ToList();
-            }
-        }
-
         public Person GetPrimaryContact()
         {
             var primaryContact = this.ProjectPeople.SingleOrDefault(pp => pp.ProjectPersonRelationshipTypeID == ProjectPersonRelationshipType.PrimaryContact.ProjectPersonRelationshipTypeID);
@@ -253,16 +235,6 @@ namespace ProjectFirma.Web.Models
             return null;
         }
 
-
-        public decimal? TotalExpenditures
-        {
-            get
-            {
-                return ProjectGrantAllocationExpenditures.Any()
-                    ? ProjectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount)
-                    : (decimal?) null;
-            }
-        }
 
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
         public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
@@ -439,14 +411,11 @@ namespace ProjectFirma.Web.Models
         public FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties)
         {
             var featureCollection = new FeatureCollection();
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
             if (ProjectLocationSimpleType == ProjectLocationSimpleType.PointOnMap && HasProjectLocationPoint)
             {
                 featureCollection.Features.Add(
-                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict));
+                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()));
             }
 
             return featureCollection;
@@ -578,18 +547,13 @@ namespace ProjectFirma.Web.Models
             var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
             var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
 
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
             featureCollection.Features.AddRange(filteredProjectList.Select(project =>
             {
                 
                 return project.MakePointFeatureWithRelevantProperties(project.ProjectLocationPoint,
                     addProjectProperties,
                     useDetailedCustomPopup, organizationFieldDefinitionLabelSingle,
-                    organizationFieldDefinitionLabelPluralized,
-                    projectGrantAllocationExpenditureDict);
+                    organizationFieldDefinitionLabelPluralized);
             }).ToList());
             return featureCollection;
         }
@@ -662,7 +626,7 @@ namespace ProjectFirma.Web.Models
             , bool useDetailedCustomPopup
             , string organizationFieldDefinitionLabelSingle
             , string organizationFieldDefinitionLabelPluralized
-            , Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
+            )
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(projectLocationPoint);
             feature.Properties.Add("TaxonomyTrunkID",
@@ -682,7 +646,7 @@ namespace ProjectFirma.Web.Models
                 feature.Properties.Add("ProjectTypeID", ProjectTypeID.ToString(CultureInfo.InvariantCulture));
                 feature.Properties.Add("ClassificationID",
                     string.Join(",", ProjectClassifications.Select(x => x.ClassificationID)));
-                var associatedOrganizations = this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict);
+                var associatedOrganizations = this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized);
                 foreach (var relationshipTypeGroup in associatedOrganizations.GroupBy(x => x.RelationshipType.RelationshipTypeName))
                 {
                     feature.Properties.Add($"{relationshipTypeGroup.First().RelationshipType.RelationshipTypeName}ID",
@@ -726,18 +690,9 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-
-                var allProjectGrantAllocationExpenditures =
-                    HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-                var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
-                // get the list of funders so we can exclude any that have other project associations
-                var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
-                var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
-                var fundingOrganizations = this.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(x => x.Organization.OrganizationID);
                 // Don't use GetAssociatedOrganizations because we don't care about funders for this list.
                 var associatedOrganizations = ProjectOrganizations.Where(x =>
-                    x.RelationshipType.ShowOnFactSheet && !fundingOrganizations.Contains(x.OrganizationID)).ToList();
+                    x.RelationshipType.ShowOnFactSheet).ToList();
                 associatedOrganizations.RemoveAll(x =>
                     x.OrganizationID == GetPrimaryContactOrganization()?.OrganizationID);
                 var organizationNames = associatedOrganizations
@@ -749,28 +704,10 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string FundingOrganizationNamesForFactSheet
+        public string AssociatedOrganizationNames(Organization organization, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized)
         {
-            get
-            {
-                var allProjectGrantAllocationExpenditures =
-                    HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-                var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
-                var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
-                var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
-                return string.Join(", ",
-                    this.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).OrderBy(x => x.Organization.OrganizationName)
-                        .Select(x => x.Organization.OrganizationName));
-            }
-        }
-
-        public string AssociatedOrganizationNames(Organization organization, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized, Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
-        {
-
-            
             var projectOrganizationAssociationNames = new List<string>();
-            this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Where(x => x.Organization == organization).ForEach(x =>
+            this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized).Where(x => x.Organization == organization).ForEach(x =>
                 projectOrganizationAssociationNames.Add(x.RelationshipType.RelationshipTypeName));
             return string.Join(", ", projectOrganizationAssociationNames);
         }
@@ -854,37 +791,6 @@ namespace ProjectFirma.Web.Models
 
         public int FancyTreeNodeKey => ProjectID;
 
-
-        public List<GooglePieChartSlice> GetExpenditureGooglePieChartSlices()
-        {
-            var sortOrder = 0;
-            var googlePieChartSlices = new List<GooglePieChartSlice>();
-            var expendituresDictionary = ProjectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0)
-                .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
-                .ToDictionary(x => x.Key, x => x.Sum(y => y.ExpenditureAmount));
-
-            var groupedGrantAllocations = expendituresDictionary.Keys.GroupBy(x => x.BottommostOrganization.OrganizationType,
-                new HavePrimaryKeyComparer<OrganizationType>());
-            foreach (var groupedGrantAllocation in groupedGrantAllocations)
-            {
-                var sectorColor = ColorTranslator.FromHtml(groupedGrantAllocation.Key.LegendColor);
-                var sectorColorHsl = new HslColor(sectorColor.R, sectorColor.G, sectorColor.B);
-
-                groupedGrantAllocation.OrderBy(x => x.GrantAllocationName)
-                    .ForEach((grantAllocation, index) =>
-                    {
-                        var luminosity = 100.0 * (groupedGrantAllocation.Count() - index - 1) /
-                                         groupedGrantAllocation.Count() + 120;
-                        var color = ColorTranslator.ToHtml(new HslColor(sectorColorHsl.Hue, sectorColorHsl.Saturation,
-                            luminosity));
-
-                        googlePieChartSlices.Add(new GooglePieChartSlice(grantAllocation.FixedLengthDisplayName,
-                            Convert.ToDouble(expendituresDictionary[grantAllocation]), sortOrder++, color));
-                    });
-            }
-
-            return googlePieChartSlices;
-        }
 
         public List<GooglePieChartSlice> GetGrantAllocationRequestGooglePieChartSlices()
         {

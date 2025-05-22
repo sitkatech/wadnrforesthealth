@@ -118,7 +118,6 @@ namespace ProjectFirma.Web.Models
         {
             var allAssociatedProjects = organization.GrantAllocations
                 .SelectMany(x => x.ProjectGrantAllocationRequests.Select(r => r.Project))
-                .Union(organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures.Select(e => e.Project)))
                 .Union(organization.ProjectOrganizations.Select(x => x.Project))
                 .ToList();
 
