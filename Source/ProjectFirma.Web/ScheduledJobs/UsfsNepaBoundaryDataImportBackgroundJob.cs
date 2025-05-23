@@ -57,9 +57,10 @@ namespace ProjectFirma.Web.ScheduledJobs
                 throw new ApplicationException($"GisUploadSourceOrganization(ID:{UsfsNepaBoundaryGisUploadSourceOrganizationID}) does not exist");
             }
 
-            
+            var mappedFieldNamesToQuery = uploadSourceOrganization.GisDefaultMappings.Select(x => x.GisDefaultMappingColumnName).ToList();
+            var outFields = string.Join(",", mappedFieldNamesToQuery);
 
-            var outFields = "ID,NAME,SHAPE,PROJECTTYPE,REV_DATE,NEPA_DOC_TYPE_CODE,NEPA_SIGNED_DATE";
+            //var outFields = "OBJECTID,CN,ID,NAME,PROJECTTYPE,REV_DATE,DATA_SOURCE,ACCURACY,NEPA_DOC_TYPE_CODE,NEPA_SIGNED_DATE,NEPA_HFRA,NEPA_HFI,HFRA_HFI_OTHER,ADMIN_REGION_CODE,ADMIN_REGION_NAME,ADMIN_FOREST_CODE,ADMIN_FOREST_NAME,ADMIN_DISTRICT_CODE,ADMIN_DISTRICT_NAME,GIS_ACRES,SHAPE";
             var whereClause = $"1=1";
             var waStateBoundary = UsfsDataImportBackgroundJobVariable.WaStateBorderJsonPolygon;
             var geometryType = "esriGeometryPolygon";
@@ -94,15 +95,10 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 var baseFormNameValueCollection = new[]
                 {
-                    //new KeyValuePair<string, string>("where", whereClause),
                     new KeyValuePair<string, string>("f", "json"),
                     new KeyValuePair<string, string>("outSR", "4326"),
-                    //new KeyValuePair<string, string>("geometry", waStateBoundary),
-                    //new KeyValuePair<string, string>("geometryType", geometryType),
-                    //new KeyValuePair<string, string>("inSR", "4326"),
-                    //new KeyValuePair<string, string>("spatialRel", spatialRel),
                     new KeyValuePair<string, string>("outFields", outFields),
-                    //new KeyValuePair<string, string>("returnIdsOnly", "true")
+                    new KeyValuePair<string, string>("returnGeometry", "true")
                 };
 
                 // loop until we get all the records, the max returned is 500
@@ -236,15 +232,28 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private class UsfsNepaBoundaryAttributesDto
         {
-            //DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES
+            public string OBJECTID { get; set; }
+            public string CN { get; set; }
             public string ID { get; set; }
             public string NAME { get; set; }
-
             public string PROJECTTYPE { get; set; }
             public string REV_DATE { get; set; }
-
+            public string DATA_SOURCE { get; set; }
+            public string ACCURACY { get; set; }
             public string NEPA_DOC_TYPE_CODE { get; set; }
             public string NEPA_SIGNED_DATE { get; set; }
+            public string NEPA_HFRA { get; set; }
+            public string NEPA_HFI { get; set; }
+            public string HFRA_HFI_OTHER { get; set; }
+            public string ADMIN_REGION_CODE { get; set; }
+            public string ADMIN_REGION_NAME { get; set; }
+            public string ADMIN_FOREST_CODE { get; set; }
+            public string ADMIN_FOREST_NAME { get; set; }
+            public string ADMIN_DISTRICT_CODE { get; set; }
+            public string ADMIN_DISTRICT_NAME { get; set; }
+            public string GIS_ACRES { get; set; }
+            public string SHAPE { get; set; }
+
 
 
 
