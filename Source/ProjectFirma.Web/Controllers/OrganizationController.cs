@@ -199,10 +199,15 @@ namespace ProjectFirma.Web.Controllers
 
             }
 
+            var boundingBox = new BoundingBox(MultiTenantHelpers.GetDefaultBoundingBox());
             var projectIDsForBoundingBox = projectsAsSimpleLocations.Select(x => x.ProjectID).ToList();
-            var boundingBoxPoints = HttpRequestStorage.DatabaseEntities.GetfGetBoundingBoxForProjectIdLists(string.Join(",", projectIDsForBoundingBox)).FirstOrDefault();
+            if (projectIDsForBoundingBox.Any())
+            {
+                var boundingBoxPoints = HttpRequestStorage.DatabaseEntities.GetfGetBoundingBoxForProjectIdLists(string.Join(",", projectIDsForBoundingBox)).FirstOrDefault();
 
-            var boundingBox = new BoundingBox(new Point(boundingBoxPoints.SWLongitude, boundingBoxPoints.SWLatitude), new Point(boundingBoxPoints.NELongitude, boundingBoxPoints.NELatitude));
+                boundingBox = new BoundingBox(new Point(boundingBoxPoints.SWLongitude, boundingBoxPoints.SWLatitude), new Point(boundingBoxPoints.NELongitude, boundingBoxPoints.NELatitude));
+            }
+            
             layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide));
 
             return new MapInitJson($"organization_{organization.OrganizationID}_Map", 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), boundingBox);
