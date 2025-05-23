@@ -98,15 +98,10 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                 var baseFormNameValueCollection = new[]
                 {
-                    //new KeyValuePair<string, string>("where", whereClause),
                     new KeyValuePair<string, string>("f", "json"),
                     new KeyValuePair<string, string>("outSR", "4326"),
-                    //new KeyValuePair<string, string>("geometry", waStateBoundary),
-                    //new KeyValuePair<string, string>("geometryType", geometryType),
-                    //new KeyValuePair<string, string>("inSR", "4326"),
-                    //new KeyValuePair<string, string>("spatialRel", spatialRel),
                     new KeyValuePair<string, string>("outFields", outFields),
-                    //new KeyValuePair<string, string>("returnIdsOnly", "true")
+                    new KeyValuePair<string, string>("returnGeometry", "true")
                 };
 
                 // loop until we get all the records, the max returned is 2000
@@ -130,23 +125,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
                     jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
                 }
-                //do
-                //{
-                //    Logger.Info($"resultOffset is currently set to {resultOffset}");
-                //    var currentRequestFormData = baseFormNameValueCollection.Append(new KeyValuePair<string, string>("resultOffset", resultOffset.ToString()));
-                //    var currentRequestEncodedItems = currentRequestFormData.Select(i => WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value));
-                //    var currentRequestEncodedContent = new StringContent(String.Join("&", currentRequestEncodedItems), null, "application/x-www-form-urlencoded");
-
-                //    var response = httpClient.PostAsync(arcOnlineUrl, currentRequestEncodedContent).Result;
-                //    response.EnsureSuccessStatusCode();
-                //    processedResponse = arcUtility.ProcessResponse<UsfsProjectGeometriesDto>(response);
-                //    featuresFromApi.AddRange(processedResponse.features);
-
-                //    resultOffset += processedResponse.features.Count;
-
-                //    jobCancellationToken.ThrowIfCancellationRequestedDoNothingIfNull();
-                //} while (processedResponse.features.Count > 0);// && featuresFromApi.Count < totalRecordCount);
-
 
                 //Check.Require(featuresFromApi.Count == totalRecordCount,
                 //    $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
