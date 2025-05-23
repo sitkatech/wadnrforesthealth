@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS #projectsToDelete 
-SELECT p.ProjectID INTO #projectsToDelete from dbo.Project as p join dbo.ProjectProgram as pp on p.ProjectID = pp.ProjectID where CompletionDate < '2017-01-01' and ProgramID = 1
+--SELECT p.ProjectID INTO #projectsToDelete from dbo.Project as p join dbo.ProjectProgram as pp on p.ProjectID = pp.ProjectID where CompletionDate < '2017-01-01' and ProgramID = 1
 
 --select * from #projectsToDelete
-
+select ProjectID INTO #projectsToDelete from dbo.Project where ProjectID in (23156,26205,57236,57270,22350)
 
 delete po from dbo.ProjectOrganization as po where po.ProjectID in (select * from #projectsToDelete)
 
@@ -40,5 +40,7 @@ delete from dbo.ProjectRegionUpdate where ProjectUpdateBatchID in (select Projec
 delete from dbo.ProjectUpdateProgram where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete))
 
 delete from dbo.ProjectUpdateBatch where ProjectID in (select * from #projectsToDelete)
+
+delete from dbo.ProjectPerson where ProjectID in (select * from #projectsToDelete)
 
 delete p from dbo.Project as p where p.ProjectID in (select * from #projectsToDelete)
