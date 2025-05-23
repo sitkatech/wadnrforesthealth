@@ -58,8 +58,12 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             var activitiesForWhereClause = uploadSourceOrganization.GisCrossWalkDefaults.Select(x => $"'{x.GisCrossWalkSourceValue}'").Distinct().ToList();
+            //GisDefaultMappingColumnName
+            var mappedFieldNamesToQuery = uploadSourceOrganization.GisDefaultMappings.Select(x => x.GisDefaultMappingColumnName).ToList();
+            var outFields = string.Join(",", mappedFieldNamesToQuery);
 
-            var outFields = "DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES";
+            //TK 5-22-25 - leaving this comment here that lists all the columns in the API endpoint as of this date. Feel free to use this if you want lots of data :shrug:
+            //var outFields = "OBJECTID,SU_SECURITY_ID,AU_ORG,SUID,FACTS_ID,SUBUNIT,NAME,FEATURE_TYPE,SITE_NBR_OF_UNITS,UOM,ACTIVITY_CODE,ACTIVITY,LOCAL_QUALIFIER,METHOD_CODE,METHOD,EQUIPMENT_CODE,EQUIPMENT,FUND_CODES,COST_PER_UNIT,WORKFORCE_CODE,FISCAL_YEAR_PLANNED,FISCAL_YEAR_AWARDED,DATE_AWARDED,FISCAL_YEAR_COMPLETED,DATE_COMPLETED,NBR_UNITS_PLANNED,NBR_UNITS_ACCOMPLISHED,EXCLUDE_ACCOMPLISHMENT,TREATMENT_NAME,FUELS_KEYPOINT_AREA,ISWUI,FIREREGIME,CWPP,BIOMASS_UTILIZATION,NFPORS_CATEGORY,NFPORS_TREATMENT,PURPOSE_CODE,SALE_NAME,SALE_NUMBER,SALE_CATEGORY,UNIT_ID,PURCHASER_NAME,CONTRACT_PLANNED_TERM,AWARD_DATE,SALE_CLOSURE_DATE,BASE_YEAR,KV_NBR_UNITS_FUNDED,PERCENT_FUNDED,CAUSAL_AGENT,REFORESTATION_STATUS,EXAM_NBR,NEEDS_ADJUSTMENT,EVENT_NAME,EVENT_YEAR,IMPLEMENTATION_PROJECT,IMPL_PROJECT_NBR,IMPL_PROJECT_TYPE,NEPA_DOC_NBR,NEPA_DOC_TYPE,NEPA_PROJECT_NAME,NEPA_HFI,NEPA_HFRA,NEPA_SIGNED_DATE,ADMIN_REGION,ADMIN_FOREST,ADMIN_DISTRICT,AU_REGION,AU_FOREST,AU_DISTRICT,PROC_FOREST,OWNERSHIP,STATE_ABBR,PRODUCTIVITY_CLASS,LAND_SUITABILITY_CODE,COUNTY_NAME,CONG_DIST_NAME,LATITUDE,LONGITUDE,LEGAL_LOCATION,ASPECT,SLOPE,ELEVATION,WATERSHED_CODE,MGT_AREA_CODE,MGT_PRESCRIPTION_CODE,ACTIVITY_SITE_REMARKS,ACTIVITY_REMARKS,SU_CREATED_DATE,SU_MODIFIED_DATE,ACT_CREATED_DATE,ACT_MODIFIED_DATE,ACTIVITY_UNIT_CN,LU_CN,SUID_CN,EVENT_CN,NEPA_PROJECT_CN,PALS_PROJECT_CN,SALE_CN,IMPLEMENTATION_PROJECT_CN,UKCN,FS_UNIT_ID,CRC_VALUE,SHAPE,NEEDS,TSI,AU_NAME,GIS_ACRES";
             var whereClause = $"DATE_COMPLETED>= DATE '2017-01-01' AND ACTIVITY IN ({string.Join(",", activitiesForWhereClause)})";
             var waStateBoundary = UsfsDataImportBackgroundJobVariable.WaStateBorderJsonPolygon;
             var geometryType = "esriGeometryPolygon";
@@ -255,16 +259,113 @@ namespace ProjectFirma.Web.ScheduledJobs
         private class UsfsProjectAttributesDto
         {
             //DATE_COMPLETED,ACTIVITY,NEPA_DOC_NBR,NEPA_PROJECT_NAME,DATE_AWARDED,GIS_ACRES
-            public string NEPA_DOC_NBR { get; set; }
-            public string NEPA_PROJECT_NAME { get; set; }
-
-            public string Date_Completed { get; set; }
-            public string Activity { get; set; }
-
+            public string OBJECTID { get; set; }
+            public string SU_SECURITY_ID { get; set; }
+            public string AU_ORG { get; set; }
+            public string SUID { get; set; }
+            public string FACTS_ID { get; set; }
+            public string SUBUNIT { get; set; }
+            public string NAME { get; set; }
+            public string FEATURE_TYPE { get; set; }
+            public string SITE_NBR_OF_UNITS { get; set; }
+            public string UOM { get; set; }
+            public string ACTIVITY_CODE { get; set; }
+            public string ACTIVITY { get; set; }
+            public string LOCAL_QUALIFIER { get; set; }
+            public string METHOD_CODE { get; set; }
+            public string METHOD { get; set; }
+            public string EQUIPMENT_CODE { get; set; }
+            public string EQUIPMENT { get; set; }
+            public string FUND_CODES { get; set; }
+            public string COST_PER_UNIT { get; set; }
+            public string WORKFORCE_CODE { get; set; }
+            public string FISCAL_YEAR_PLANNED { get; set; }
+            public string FISCAL_YEAR_AWARDED { get; set; }
             public string DATE_AWARDED { get; set; }
+            public string FISCAL_YEAR_COMPLETED { get; set; }
+            public string DATE_COMPLETED { get; set; }
+            public string NBR_UNITS_PLANNED { get; set; }
+            public string NBR_UNITS_ACCOMPLISHED { get; set; }
+            public string EXCLUDE_ACCOMPLISHMENT { get; set; }
+            public string TREATMENT_NAME { get; set; }
+            public string FUELS_KEYPOINT_AREA { get; set; }
+            public string ISWUI { get; set; }
+            public string FIREREGIME { get; set; }
+            public string CWPP { get; set; }
+            public string BIOMASS_UTILIZATION { get; set; }
+            public string NFPORS_CATEGORY { get; set; }
+            public string NFPORS_TREATMENT { get; set; }
+            public string PURPOSE_CODE { get; set; }
+            public string SALE_NAME { get; set; }
+            public string SALE_NUMBER { get; set; }
+            public string SALE_CATEGORY { get; set; }
+            public string UNIT_ID { get; set; }
+            public string PURCHASER_NAME { get; set; }
+            public string CONTRACT_PLANNED_TERM { get; set; }
+            public string AWARD_DATE { get; set; }
+            public string SALE_CLOSURE_DATE { get; set; }
+            public string BASE_YEAR { get; set; }
+            public string KV_NBR_UNITS_FUNDED { get; set; }
+            public string PERCENT_FUNDED { get; set; }
+            public string CAUSAL_AGENT { get; set; }
+            public string REFORESTATION_STATUS { get; set; }
+            public string EXAM_NBR { get; set; }
+            public string NEEDS_ADJUSTMENT { get; set; }
+            public string EVENT_NAME { get; set; }
+            public string EVENT_YEAR { get; set; }
+            public string IMPLEMENTATION_PROJECT { get; set; }
+            public string IMPL_PROJECT_NBR { get; set; }
+            public string IMPL_PROJECT_TYPE { get; set; }
+            public string NEPA_DOC_NBR { get; set; }
+            public string NEPA_DOC_TYPE { get; set; }
+            public string NEPA_PROJECT_NAME { get; set; }
+            public string NEPA_HFI { get; set; }
+            public string NEPA_HFRA { get; set; }
+            public string NEPA_SIGNED_DATE { get; set; }
+            public string ADMIN_REGION { get; set; }
+            public string ADMIN_FOREST { get; set; }
+            public string ADMIN_DISTRICT { get; set; }
+            public string AU_REGION { get; set; }
+            public string AU_FOREST { get; set; }
+            public string AU_DISTRICT { get; set; }
+            public string PROC_FOREST { get; set; }
+            public string OWNERSHIP { get; set; }
+            public string STATE_ABBR { get; set; }
+            public string PRODUCTIVITY_CLASS { get; set; }
+            public string LAND_SUITABILITY_CODE { get; set; }
+            public string COUNTY_NAME { get; set; }
+            public string CONG_DIST_NAME { get; set; }
+            public string LATITUDE { get; set; }
+            public string LONGITUDE { get; set; }
+            public string LEGAL_LOCATION { get; set; }
+            public string ASPECT { get; set; }
+            public string SLOPE { get; set; }
+            public string ELEVATION { get; set; }
+            public string WATERSHED_CODE { get; set; }
+            public string MGT_AREA_CODE { get; set; }
+            public string MGT_PRESCRIPTION_CODE { get; set; }
+            public string ACTIVITY_SITE_REMARKS { get; set; }
+            public string ACTIVITY_REMARKS { get; set; }
+            public string SU_CREATED_DATE { get; set; }
+            public string SU_MODIFIED_DATE { get; set; }
+            public string ACT_CREATED_DATE { get; set; }
+            public string ACT_MODIFIED_DATE { get; set; }
+            public string ACTIVITY_UNIT_CN { get; set; }
+            public string LU_CN { get; set; }
+            public string SUID_CN { get; set; }
+            public string EVENT_CN { get; set; }
+            public string NEPA_PROJECT_CN { get; set; }
+            public string PALS_PROJECT_CN { get; set; }
+            public string SALE_CN { get; set; }
+            public string IMPLEMENTATION_PROJECT_CN { get; set; }
+            public string UKCN { get; set; }
+            public string FS_UNIT_ID { get; set; }
+            public string CRC_VALUE { get; set; }
+            public string SHAPE { get; set; }
+            public string NEEDS { get; set; }
+            public string TSI { get; set; }
+            public string AU_NAME { get; set; }
             public string GIS_ACRES { get; set; }
-
-
 
         }
 

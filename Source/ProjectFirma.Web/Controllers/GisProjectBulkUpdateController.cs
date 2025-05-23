@@ -1188,8 +1188,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (existingProject != null)
             {
-                var otherTreatments =
-                    existingProject.Treatments.Where(x => x.ProgramID.HasValue && x.ProgramID.Value != programID).ToList();
+                var otherTreatments = existingProject.Treatments.Where(x => x.ProgramID.HasValue && x.ProgramID.Value != programID).ToList();
                 if (otherTreatments.Any())
                 {
                     var otherTreatmentEndDates = otherTreatments.Max(x => x.TreatmentEndDate);
