@@ -51,8 +51,15 @@ namespace ProjectFirma.Web.ScheduledJobs
                 return;
             }
 
+
+            var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
+
+
+            //outFields = approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner,email
+            var mappedFieldNamesToQuery = uploadSourceOrganization.GisDefaultMappings.Select(x => x.GisDefaultMappingColumnName).ToList();
+            var outFields = string.Join(",", mappedFieldNamesToQuery);
             var queryString = $"?f=json&outSr=4326&where=Approval_ID%20is%20not%20null";
-            queryString += "&outFields=approval_id,date_completed,project_status,gis_acres,prune_acres,thin_acres,chip_acres,mast_mow_acres,graze_acres,lopscat_acres,biomass_acres,handpile_acres,rxburn_acres,handburn_acres,machburn_acres,other_acres,landowner,email";
+            queryString += $"&outFields={outFields}";
             var arcOnlineUrlWithQueryString = arcOnlineUrl + queryString;
             try
             {
@@ -85,7 +92,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 Check.Require(featuresFromApi.Count == totalRecordCount, $"Expected {totalRecordCount} features but got actual {featuresFromApi.Count} features. Check for any errors in code logic.");
 
                 var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
-                var uploadSourceOrganization = HttpRequestStorage.DatabaseEntities.GisUploadSourceOrganizations.SingleOrDefault(x => x.GisUploadSourceOrganizationID == LoaGisUploadSourceOrganizationID);
+                
                 var gisAttempt = new GisUploadAttempt(uploadSourceOrganization, systemUser, DateTime.Now);
 
                 HttpRequestStorage.DatabaseEntities.GisUploadAttempts.Add(gisAttempt);
@@ -227,6 +234,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             public string Shape__Area { get; set; }
             public string Shape__Length { get; set; }
             public string email { get; set; }
+            public string Ref_Acres { get; set; }
+            public string Seeding_Acres { get; set; }
         }
 
         private class GeometryDto
