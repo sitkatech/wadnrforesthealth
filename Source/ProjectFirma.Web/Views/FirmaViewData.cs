@@ -283,7 +283,6 @@ namespace ProjectFirma.Web.Views
             {
                 projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramInfoController>(c => c.ClassificationSystem(x.ClassificationSystemID)), currentPerson, x.ClassificationSystemDefinition, "Group2"));
             });
-            projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Proposed()), currentPerson, $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()}", "Group3"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Pending()), currentPerson, $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", "Group3"));
 
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InteractionEventController>(iec => iec.Index()), currentPerson, $"Full {Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()} List", "Group5"));

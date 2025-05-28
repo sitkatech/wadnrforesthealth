@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Controllers
             var classificationFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Classification, string.Join(" & ", MultiTenantHelpers.GetClassificationSystems().Select(x => x.ClassificationSystemName).ToList()));
             projectLocationFilterTypesAndValues.Add(classificationFilterSimple, classificationsAsSelectList);
 
-            var projectStagesAsSelectListItems = ProjectMapCustomization.GetProjectStagesForMap(showProposals).ToSelectList(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), x => x.ProjectStageDisplayName);
+            var projectStagesAsSelectListItems = ProjectMapCustomization.GetProjectStagesForMap().ToSelectList(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), x => x.ProjectStageDisplayName);
             var projectStageFilterSimple = new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectStage);
             projectLocationFilterTypesAndValues.Add(projectStageFilterSimple, projectStagesAsSelectListItems);
 

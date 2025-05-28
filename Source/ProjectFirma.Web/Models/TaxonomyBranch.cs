@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public int TaxonomyTierID => TaxonomyBranchID;

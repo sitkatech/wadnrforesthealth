@@ -138,23 +138,6 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         [CrossAreaRoute]
         [HttpGet]
-        public PartialViewResult ProposalFeedback()
-        {
-            return ViewSupport(SupportRequestTypeEnum.ProvideFeedback, $"Here is some feedback on the {FieldDefinition.Application.GetFieldDefinitionLabel()} wizard: " + Environment.NewLine);
-        }
-
-        [AnonymousUnclassifiedFeature]
-        [CrossAreaRoute]
-        [HttpPost]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult ProposalFeedback(SupportFormViewModel viewModel)
-        {
-            return Support(viewModel);
-        }
-
-        [AnonymousUnclassifiedFeature]
-        [CrossAreaRoute]
-        [HttpGet]
         public PartialViewResult RequestOrganizationNameChange()
         {
             return ViewSupport(SupportRequestTypeEnum.RequestOrganizationNameChange, string.Empty);

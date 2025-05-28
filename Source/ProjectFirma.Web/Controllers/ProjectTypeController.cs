@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
             var projectType = projectTypePrimaryKey.EntityObject;
             var currentPersonCanViewProposals = CurrentPerson.CanViewProposals;
 
-            var projectTypeProjects = projectType.Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(CurrentPerson).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
+            var projectTypeProjects = projectType.Projects.ToList().GetActiveProjectsVisibleToUser(CurrentPerson).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
 
             var projectMapCustomization = new ProjectMapCustomization(ProjectLocationFilterType.ProjectType,
                 new List<int> {projectType.ProjectTypeID}, ProjectColorByType.ProjectStage);

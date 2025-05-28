@@ -127,17 +127,12 @@ namespace ProjectFirma.Web.Models
 
         public static  List<Project> GetAllActiveProjectsAndProposals(this Organization organization, Person currentPerson)
         {
-            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public static List<Project> GetAllActiveProjects(this Organization organization, Person currentPerson)
         {
             return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsVisibleToUser(currentPerson);
-        }
-
-        public static List<Project> GetProposalsVisibleToUser(this Organization organization, Person currentPerson)
-        {
-            return organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetProposalsVisibleToUser(currentPerson);
         }
 
         public static List<Project> GetAllPendingProjects(this Organization organization, Person currentPerson)
@@ -147,7 +142,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<Project> GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(this Organization organization, Person currentPerson)
         {
-            var allActiveProjectsAndProposals = organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            var allActiveProjectsAndProposals = organization.GetAllAssociatedProjectsForOrgVisibleToUser(currentPerson).GetActiveProjectsVisibleToUser(currentPerson);
 
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {

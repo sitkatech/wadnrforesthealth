@@ -18,10 +18,6 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Project contextModelObject)
         {
-            if (contextModelObject.IsProposal())
-            {
-                return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} cannot be updated through the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update process.");
-            }
 
             var forbidAdmin = !HasPermissionByPerson(person) ||
                                        person.HasRole(Role.ProjectSteward) &&

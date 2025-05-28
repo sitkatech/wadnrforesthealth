@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Controllers
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList().Select(x => new ProgramSimple(x)).ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 projectTypeDisplayName,
-                ProjectStage.All.Except(new[] {ProjectStage.Proposed}), organizations,
+                ProjectStage.All, organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
                 projectTypes,
@@ -281,7 +281,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static List<ProjectStage> GetActiveProjectStages(Project project)
         {
-            var activeProjectStages = new List<ProjectStage> {ProjectStage.Proposed, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
+            var activeProjectStages = new List<ProjectStage> {ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
 
             if (project.ProjectStage == ProjectStage.Cancelled)
             {
@@ -400,24 +400,6 @@ namespace ProjectFirma.Web.Controllers
             return allActiveProjectsWithIncludes;
         }
 
-        [ProjectsInProposalStageViewListFeature]
-        public ViewResult Proposed()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.Proposals);
-            var viewData = new ProposedViewData(CurrentPerson, firmaPage);
-            return RazorView<Proposed, ProposedViewData>(viewData);
-        }
-
-        [ProjectsInProposalStageViewListFeature]
-        public GridJsonNetJObjectResult<Project> ProposedGridJsonData()
-        {
-            var gridSpec = new ProposalsGridSpec(CurrentPerson);
-            var proposals = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetProposalsVisibleToUser(CurrentPerson);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(proposals, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
-
         [PendingProjectsViewListFeature]
         public ViewResult Pending()
         {
@@ -463,14 +445,6 @@ namespace ProjectFirma.Web.Controllers
             return FullDatabaseExcelDownloadImpl(activeProjectsVisibleToUser, FieldDefinition.Project.GetFieldDefinitionLabelPluralized());
         }
 
-        [ProjectsViewFullListFeature]
-        public ExcelResult ProposalsExcelDownload()
-        {
-            return FullDatabaseExcelDownloadImpl(
-                HttpRequestStorage.DatabaseEntities.Projects.ToList()
-                    .GetProposalsVisibleToUser(CurrentPerson),
-                FieldDefinition.Application.GetFieldDefinitionLabelPluralized());
-        }
 
         [ProjectsViewFullListFeature]
         public ExcelResult PendingExcelDownload()
@@ -589,7 +563,7 @@ namespace ProjectFirma.Web.Controllers
             var projectIDsFound = HttpRequestStorage.DatabaseEntities.Projects.GetProjectFindResultsForProjectNameAndDescriptionAndNumber(searchCriteria).Select(x => x.ProjectID);
             var projectsFound =
                 HttpRequestStorage.DatabaseEntities.Projects.Where(x => projectIDsFound.Contains(x.ProjectID))
-                    .ToList().GetActiveProjectsAndProposalsVisibleToUser(CurrentPerson);
+                    .ToList().GetActiveProjectsVisibleToUser(CurrentPerson);
             return projectsFound;
         }
 
@@ -790,20 +764,6 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(taxonomyBranches, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
-        [ProjectsInProposalStageViewListFeature]
-        public GridJsonNetJObjectResult<Project> MyOrganizationsProposalsGridJsonData()
-        {
-            var gridSpec = new ProposalsGridSpec(CurrentPerson);
-
-            var proposals = HttpRequestStorage.DatabaseEntities.Projects.ToList()
-                .GetProposalsVisibleToUser(CurrentPerson)
-                .Where(x => x.ProposingPerson.OrganizationID == CurrentPerson.OrganizationID)
-                .ToList();
-
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(proposals, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
         
         [ProjectsViewFullListFeature]
         public PartialViewResult DenyCreateProject()
@@ -844,7 +804,8 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var projectCreateUrl =
                 SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(projectPrimaryKey));
             var projectStewardLabel = FieldDefinition.ProjectSteward.GetFieldDefinitionLabel();
-            var proposalLabel = FieldDefinition.Application.GetFieldDefinitionLabel();
+            // TK&HK 5-28-2025 - TODO:Application Changed from Application to Project, unsure if this function is needed with removal of Application
+            var proposalLabel = FieldDefinition.Project.GetFieldDefinitionLabel();
 
             var confirmMessage = CurrentPerson.HasRole(Role.ProjectSteward)
                 ? $"Although you are a {projectStewardLabel}, you do not have permission to edit this {proposalLabel} through this page because it is pending approval. You can <a href='{projectCreateUrl}'>review, edit, or approve</a> the proposal."

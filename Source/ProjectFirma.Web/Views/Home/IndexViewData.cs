@@ -41,7 +41,6 @@ namespace ProjectFirma.Web.Views.Home
         public readonly ProjectLocationsMapInitJson ProjectLocationsMapInitJson;
         public readonly string FullMapUrl;
         public readonly List<Models.FirmaHomePageImage> FirmaHomePageCarouselImages;
-        public readonly string ProposeNewProjectUrl;
         public readonly string ProjectUpdatesUrl;
         public readonly bool DisplayActionButtons;
 
@@ -60,7 +59,6 @@ namespace ProjectFirma.Web.Views.Home
             ProjectLocationsMapViewData = projectLocationsMapViewData;
             ProjectLocationsMapInitJson = projectLocationsMapInitJson;
             FirmaHomePageCarouselImages = firmaHomePageImages;
-            ProposeNewProjectUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
             ProjectUpdatesUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate());
             DisplayActionButtons = !currentPerson.IsAnonymousOrUnassigned;
         }

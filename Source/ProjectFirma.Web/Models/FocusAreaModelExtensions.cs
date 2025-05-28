@@ -62,11 +62,6 @@ namespace ProjectFirma.Web.Models
             return focusArea.GetAllAssociatedProjects().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
-        public static List<Project> GetProposalsVisibleToUser(this FocusArea focusArea, Person person)
-        {
-            return focusArea.GetAllAssociatedProjects().GetProposalsVisibleToUser(person);
-        }
-
         public static string GetDeleteFocusAreaUrl(this FocusArea focusArea)
         {
             return SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Delete(focusArea.PrimaryKey));

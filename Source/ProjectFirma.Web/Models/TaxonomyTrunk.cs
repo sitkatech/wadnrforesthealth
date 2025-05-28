@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return TaxonomyBranches.SelectMany(x => x.ProjectTypes.SelectMany(y => y.Projects)).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return TaxonomyBranches.SelectMany(x => x.ProjectTypes.SelectMany(y => y.Projects)).ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public static bool IsTaxonomyTrunkNameUnique(IEnumerable<TaxonomyTrunk> taxonomyTrunks, string taxonomyTrunkName, int currentTaxonomyTrunkID)

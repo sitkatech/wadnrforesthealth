@@ -165,7 +165,7 @@
                                         @if (ViewDataTyped.HasSpatialData)
                                         {
                                             <p>
-                                                The map displays the @FieldDefinition.Organization.GetFieldDefinitionLabel() boundary, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() that have spatial data.
+                                                The map displays the @FieldDefinition.Organization.GetFieldDefinitionLabel() boundary, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() that have spatial data.
                                             </p>
                                         }
                                         else
@@ -249,22 +249,7 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewDataTyped.ShowProposals)
-                {
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="panel panelFirma">
-                                <div class="panel-heading panelTitle">
-                                    @ViewDataTyped.ProposalsPanelHeader
-                                </div>
-                                <div class="panel-body">
-                                    <p></p>
-                                    @Html.AgGrid(ViewDataTyped.ProposalsGridSpec, ViewDataTyped.ProposalsGridName, ViewDataTyped.ProposalsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+
                 @if (ViewDataTyped.ShowPendingProjects)
                 {
                     <div class="row">

@@ -20,10 +20,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
             DeleteProjectDocumentUrlTemplate = new UrlTemplate<int>(
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(c => c.Delete(UrlTemplate.Parameter1Int)));
 
-            UserHasProjectManagePermissions =
-                Project.IsProposal() ?
-                new ProjectCreateFeature().HasPermission(currentPerson, project).HasPermission
-                 : new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission;
+            UserHasProjectManagePermissions = new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission;
             ProjectDocumentEditAsAdminFeature = new ProjectDocumentEditAsAdminFeature();
         }
 

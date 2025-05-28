@@ -82,7 +82,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             MySubmittedProjectsUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(tc => tc.MySubmittedProjects());
             AllProjectsUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(tc => tc.AllProjects());
             SubmittedProjectsUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(tc => tc.SubmittedProjects());
-            ProposeNewProjectUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(tc => tc.InstructionsProposal(null));
 
             HasProjectUpdateAdminPermissions = new ProjectUpdateAdminFeature().HasPermissionByPerson(CurrentPerson);
             HasProposeProjectPermissions = new ProjectCreateFeature().HasPermissionByPerson(CurrentPerson);

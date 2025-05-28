@@ -182,8 +182,6 @@ namespace ProjectFirma.Web.Views.Project
             UserCanViewProjectDocuments = userCanViewProjectDocuments;
 
             var projectAlerts = new List<string>();
-            var proposedProjectListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Proposed());
-            var backToAllProposalsText = "Back to all Applications";
             var pendingProjectsListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Pending());
             var backToAllPendingProjectsText = $"Back to all Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}";
 
@@ -198,12 +196,7 @@ namespace ProjectFirma.Web.Views.Project
                 ProjectWizardUrl =
                     SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(project.ProjectID));
                 CanLaunchProjectOrProposalWizard = userCanEditProposal;
-                if (project.IsProposal())
-                {
-                    ProjectListUrl = proposedProjectListUrl;
-                    BackToProjectsText = backToAllProposalsText;
-                }
-                else if (project.IsPendingProject())
+                if (project.IsPendingProject())
                 {
                     ProjectListUrl = pendingProjectsListUrl;
                     BackToProjectsText = backToAllPendingProjectsText;
@@ -213,25 +206,6 @@ namespace ProjectFirma.Web.Views.Project
                 {
                     projectAlerts.Add(
                         $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} was rejected and can no longer be edited. It can be deleted, or preserved for archival purposes.");
-                }
-            }            
-            else if (project.IsProposal())
-            {
-                var projectApprovalStatus = project.ProjectApprovalStatus;
-                ProjectUpdateButtonText =
-                    projectApprovalStatus == ProjectApprovalStatus.Draft ||
-                    projectApprovalStatus == ProjectApprovalStatus.Returned
-                        ? "Edit Application"
-                        : "Review Application";
-                ProjectWizardUrl =
-                    SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(project.ProjectID));
-                CanLaunchProjectOrProposalWizard = userCanEditProposal;
-                ProjectListUrl = proposedProjectListUrl;
-                BackToProjectsText = backToAllProposalsText;
-                if (userHasProjectAdminPermissions || currentPerson.CanStewardProject(project))
-                {
-                    projectAlerts.Add(
-                        $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the {Models.FieldDefinition.Application.GetFieldDefinitionLabel()} stage. Any edits to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} must be made using the Add New {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} workflow.");
                 }
             }
             else if (project.IsPendingProject())

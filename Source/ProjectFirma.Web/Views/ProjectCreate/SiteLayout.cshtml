@@ -92,7 +92,8 @@
             <li>
                 @ModalDialogFormHelper.ModalDialogFormLink("<span class='glyphicon glyphicon-comment'></span> Provide Feedback", ViewDataTyped.ProvideFeedbackUrl, "Provide Feedback", 800, "Submit Request", "Cancel", new List<string>(), null, null)
             </li>
-            @if (ViewDataTyped.Project != null)
+            @*TK&HK 5-28-2025 - TODO:Application Changed from Application to Project, unsure if this function is needed with removal of Application*@
+            @*@if (ViewDataTyped.Project != null)
             {
                 <li>
                     <a href="@ViewDataTyped.ProposalDetailUrl"><span class="glyphicon glyphicon-chevron-left"></span>@FieldDefinition.Application.GetFieldDefinitionLabel() Details</a>
@@ -103,7 +104,7 @@
                 <li>
                     @ModalDialogFormHelper.ModalDialogFormLink(string.Format("Withdraw this {0}", FieldDefinition.Application.GetFieldDefinitionLabel()), ViewDataTyped.WithdrawUrl, string.Format("Withdraw {0}", FieldDefinition.Application.GetFieldDefinitionLabel()), 500, "Withdraw", "Cancel", new List<string>(), null, null)
                 </li>
-            }
+            }*@
         </ul>
     </div>
 }
