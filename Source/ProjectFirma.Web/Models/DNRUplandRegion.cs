@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
                 .Include(x => x.ProjectType)
                 .ToList();
 
-            return projects.GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return projects.GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public List<GrantAllocation> GetAssociatedGrantAllocations(Person currentPerson)

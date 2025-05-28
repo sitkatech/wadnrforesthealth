@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
     {
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectClassifications.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson).ToList();
+            return ProjectClassifications.Select(ptc => ptc.Project).ToList().GetActiveProjectsVisibleToUser(currentPerson).ToList();
         }
 
         public string KeyImageUrlLarge => KeyImageFileResource != null ? KeyImageFileResource.FileResourceUrlScaledForPrint : "http://placehold.it/280x210";

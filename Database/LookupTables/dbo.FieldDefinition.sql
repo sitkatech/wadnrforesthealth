@@ -45,7 +45,7 @@ VALUES
 (77, N'TagName', N'Tag Name', N'<p>A word or phrase for the tag. Keep it short, and if possible avoid spaces (use dashes or underscores) for cleaner URLs. Don&#39;t add tags for things already captured (e.g. the program under which the project lives).</p>'),
 (78, N'TagDescription', N'Tag Description', N'<p>A description of what this tag will be used for. Ideally the description should include the name of the user that created it, and an expected timeframe for use of this tag, if known.&nbsp;</p>'),
 (80, N'ReportedExpenditure', N'Reported Expenditure', N'<p>An expenditure, tied to a Grant Allocation, as reported by the project implementer.</p>'),
-(81, N'Application', N'Application', N'<p>A project suggested by an program partner that will be reviewed for inclusion in the program. The system administrators are responsible for reviewing, and if appropriate, approving proposals.</p>'),
+--(81, N'Application', N'Application', N'<p>A project suggested by an program partner that will be reviewed for inclusion in the program. The system administrators are responsible for reviewing, and if appropriate, approving proposals.</p>'),
 --(85, N'SpendingAssociatedWithPM', N'Spending Associated with PM', N'<p>The estimated spending allotted to the Performance Measure.</p>'),
 (86, N'ProjectInitiationDate', N'Project Initiation Date', N'<p>The date on which project began.  Contrast with &quot;Approval.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
 (87, N'AssociatedTaxonomyBranches', N'Associated Taxonomy Branches', N'<p>External&nbsp;programs that are related to the content you are reviewing. You may wish to look up these programs to learn more.</p>'),

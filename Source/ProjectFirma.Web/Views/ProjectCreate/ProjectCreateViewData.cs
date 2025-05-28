@@ -34,8 +34,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     {
         public Models.Project Project { get; }
         public string CurrentSectionDisplayName { get; }
-        public List<ProjectCreateSection> ProjectCreateSections { get; }
-        public string ProposalListUrl { get; }
+
         public string ProposalDetailUrl { get; }
         public string ProvideFeedbackUrl { get; }
         public string ProposalInstructionsUrl { get; }
@@ -84,14 +83,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             // ReSharper disable PossibleNullReferenceException
             ProjectStateIsValidInWizard = project.ProjectApprovalStatus == ProjectApprovalStatus.Draft || project.ProjectApprovalStatus == ProjectApprovalStatus.Returned || project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
 
-            InstructionsPageUrl = project.ProjectStage == ProjectStage.Proposed
-                ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
-                    x.InstructionsProposal(project.ProjectID))
-                : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
-                    x.InstructionsEnterHistoric(project.ProjectID));
+            InstructionsPageUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(project.ProjectID));
 
-            var pagetitle = project.ProjectStage == ProjectStage.Proposed ? $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}" : $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
-            PageTitle = $"{pagetitle}: {project.DisplayName}";
+            var pageTitle = $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+            PageTitle = $"{pageTitle}: {project.DisplayName}";
 
             ProposalDetailUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project));
             ProposalBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(project.ProjectID));
@@ -120,7 +115,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             InstructionsPageUrl = proposalInstructionsUrl;
             ProposalInstructionsUrl = proposalInstructionsUrl;
-            ProposalBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(true));
             HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));
 
             CurrentPersonCanWithdraw = false;
@@ -135,9 +129,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         private ProjectCreateViewData(Models.Project project, Person currentPerson, string currentSectionDisplayName) : base(currentPerson)
         {
-            EntityName = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}";
-            ProposalListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Proposed());
-            ProvideFeedbackUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.ProposalFeedback());
+            EntityName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+            ProvideFeedbackUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.PendingProjectFeedback());
             CurrentPersonIsSubmitter = new ProjectCreateFeature().HasPermissionByPerson(CurrentPerson);
             CurrentPersonIsApprover = project != null && new ProjectApproveFeature().HasPermission(currentPerson, project).HasPermission;
             ProjectWorkflowSectionGroupings = ProjectWorkflowSectionGrouping.All.OrderBy(x => x.SortOrder).ToList();

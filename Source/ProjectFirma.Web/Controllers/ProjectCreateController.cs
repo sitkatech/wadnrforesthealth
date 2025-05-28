@@ -66,60 +66,6 @@ namespace ProjectFirma.Web.Controllers
 {
     public class ProjectCreateController : FirmaBaseController
     {
-        [HttpGet]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public PartialViewResult ProjectTypeSelection()
-        {
-            var viewData = new ProjectTypeSelectionViewData();
-            var viewModel = new ProjectTypeSelectionViewModel();
-            return RazorPartialView<ProjectTypeSelection, ProjectTypeSelectionViewData, ProjectTypeSelectionViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult ProjectTypeSelection(ProjectTypeSelectionViewModel viewModel)
-        {
-            var viewData = new ProjectTypeSelectionViewData();
-
-            if (!ModelState.IsValid)
-            {
-                return RazorPartialView<ProjectTypeSelection, ProjectTypeSelectionViewData, ProjectTypeSelectionViewModel>(viewData, viewModel);
-            }
-
-            switch (viewModel.CreateType)
-            {
-                case ProjectTypeSelectionViewModel.ProjectCreateType.Application:
-                    return new ModalDialogFormJsonResult(
-                        SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null)));
-                case ProjectTypeSelectionViewModel.ProjectCreateType.Existing:
-                    return new ModalDialogFormJsonResult(
-                        SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null)));
-                default:
-                    throw new ArgumentException();
-            }
-        }
-
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ActionResult InstructionsProposal(int? projectID)
-        {
-            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProposeProjectInstructions);
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
-
-            if (projectID.HasValue)
-            {
-                var project = HttpRequestStorage.DatabaseEntities.Projects.GetProject(projectID.Value);
-                var proposalSectionsStatus = GetProposalSectionsStatus(project);
-                var viewData = new InstructionsProposalViewData(CurrentPerson, project, proposalSectionsStatus, firmaPage, false);
-
-                return RazorView<InstructionsProposal, InstructionsProposalViewData>(viewData);
-            }
-            else
-            {
-                var viewData = new InstructionsProposalViewData(CurrentPerson, firmaPage, true);
-                return RazorView<InstructionsProposal, InstructionsProposalViewData>(viewData);
-            }
-        }
 
         private static ProposalSectionsStatus GetProposalSectionsStatus(Project project)
         {
@@ -152,13 +98,7 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult CreateAndEditBasics(bool newProjectIsProposal)
         {
             var basicsViewModel = new BasicsViewModel();
-            if (newProjectIsProposal)
-            {
-                basicsViewModel.ProjectStageID = ProjectStage.Proposed.ProjectStageID;
-                basicsViewModel.ProjectProgramSimples = new List<ProjectProgramSimple>();
-            }
-            
-            return ViewCreateAndEditBasics(basicsViewModel, !newProjectIsProposal);
+            return ViewCreateAndEditBasics(basicsViewModel);
         }
 
         [HttpPost]
@@ -189,13 +129,11 @@ namespace ProjectFirma.Web.Controllers
             return SaveProjectAndCreateAuditEntry(project, viewModel);
         }
 
-        private ViewResult ViewCreateAndEditBasics(BasicsViewModel viewModel, bool newProjectIsHistoric)
+        private ViewResult ViewCreateAndEditBasics(BasicsViewModel viewModel)
         {
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var instructionsPageUrl = newProjectIsHistoric
-                ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))
-                : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
-            var viewData = new BasicsViewData(CurrentPerson, projectTypes, newProjectIsHistoric, instructionsPageUrl);
+            var instructionsPageUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null));
+            var viewData = new BasicsViewData(CurrentPerson, projectTypes, instructionsPageUrl);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -234,8 +172,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Proposed.ProjectStageID;
-                return ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey) ? ViewEditBasics(project, viewModel) : ViewCreateAndEditBasics(viewModel, showProjectStageDropDown);
+                return ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey) ? ViewEditBasics(project, viewModel) : ViewCreateAndEditBasics(viewModel);
             }
 
             if (!ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey))
@@ -1024,12 +961,6 @@ namespace ProjectFirma.Web.Controllers
             project.ApprovalDate = DateTime.Now;
             project.ReviewedByPerson = CurrentPerson;
 
-            // Business logic: An approved Proposal becomes an active project in the Planning and Design stage
-            if (project.ProjectStageID == ProjectStage.Proposed.ProjectStageID)
-            {
-                project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
-            }
-
             GenerateApprovalAuditLogEntries(project);
 
             NotificationProject.SendApprovalMessage(project);
@@ -1041,10 +972,11 @@ namespace ProjectFirma.Web.Controllers
 
         private void GenerateApprovalAuditLogEntries(Project project)
         {
+            // TK&HK 5-28-2025 - TODO:Application Changed from Application to Project, unsure if this function is needed with removal of Application
             var auditLog = new AuditLog(CurrentPerson, DateTime.Now, AuditLogEventType.Added, "Project", project.ProjectID, "ProjectID", project.ProjectID.ToString())
             {
                 ProjectID = project.ProjectID,
-                AuditDescription = $"{FieldDefinition.Application.GetFieldDefinitionLabel()} {project.DisplayName} approved."
+                AuditDescription = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName} approved."
             };
             HttpRequestStorage.DatabaseEntities.AuditLogs.Add(auditLog);
         }

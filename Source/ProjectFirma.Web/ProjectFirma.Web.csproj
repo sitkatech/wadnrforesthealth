@@ -1757,9 +1757,6 @@
     <Compile Include="Views\ProjectCreate\Organizations.cs" />
     <Compile Include="Views\ProjectCreate\OrganizationsViewData.cs" />
     <Compile Include="Views\ProjectCreate\OrganizationsViewModel.cs" />
-    <Compile Include="Views\ProjectCreate\ProjectTypeSelection.cs" />
-    <Compile Include="Views\ProjectCreate\ProjectTypeSelectionViewData.cs" />
-    <Compile Include="Views\ProjectCreate\ProjectTypeSelectionViewModel.cs" />
     <Compile Include="Views\ProjectCreate\ExpectedFunding.cs" />
     <Compile Include="Views\ProjectCreate\ExpectedFundingViewData.cs" />
     <Compile Include="Views\ProjectCreate\ExpectedFundingViewModel.cs" />
@@ -2189,7 +2186,6 @@
     <Compile Include="Security\ProjectViewFeature.cs" />
     <Compile Include="Security\ProjectCreateFeature.cs" />
     <Compile Include="Security\ProjectNoteManageFeature.cs" />
-    <Compile Include="Security\ProjectsInProposalStageViewListFeature.cs" />
     <Compile Include="Security\ResultsByTaxonomyBranchViewFeature.cs" />
     <Compile Include="Security\SpendingByOrganizationTypeByOrganizationViewFeature.cs" />
     <Compile Include="UnitTestCommon\TestTaxonomyTrunk.cs" />
@@ -2415,10 +2411,6 @@
     <Compile Include="Views\ProjectCreate\EditProposalClassifications.cs" />
     <Compile Include="Views\ProjectCreate\EditProposalClassificationsViewData.cs" />
     <Compile Include="Views\ProjectCreate\EditProposalClassificationsViewModel.cs" />
-    <Compile Include="Views\Project\Proposed.cs" />
-    <Compile Include="Views\Project\ProposedViewData.cs" />
-    <Compile Include="Views\ProjectCreate\InstructionsProposal.cs" />
-    <Compile Include="Views\ProjectCreate\InstructionsProposalViewData.cs" />
     <Compile Include="Views\ProjectCreate\LocationDetailed.cs" />
     <Compile Include="Views\ProjectCreate\LocationDetailedViewData.cs" />
     <Compile Include="Views\ProjectCreate\LocationDetailedViewModel.cs" />
@@ -2430,7 +2422,6 @@
     <Compile Include="Views\ProjectCreate\Photos.cs" />
     <Compile Include="Views\ProjectCreate\PhotoViewData.cs" />
     <Compile Include="Views\ProjectCreate\ProposalSectionsStatus.cs" />
-    <Compile Include="Views\Project\ProposalsGridSpec.cs" />
     <Compile Include="Views\ProjectCreate\ProjectCreateViewData.cs" />
     <Compile Include="Views\ProjectCreate\SiteLayout.cs" />
     <Compile Include="Views\Results\ProjectMap.cs" />
@@ -2555,7 +2546,6 @@
     <Content Include="Views\Project\ForwardLookingFactSheet.cshtml" />
     <Content Include="Views\ProjectStewardOrganization\Index.cshtml" />
     <Content Include="Views\Project\Pending.cshtml" />
-    <Content Include="Views\ProjectCreate\ProjectTypeSelection.cshtml" />
     <Content Include="Views\ProjectCreate\InstructionsEnterHistoric.cshtml" />
     <Content Include="Views\ProjectCreate\Organizations.cshtml" />
     <Content Include="Views\ProjectUpdate\Organizations.cshtml" />
@@ -3890,8 +3880,6 @@
     <Content Include="Views\ProjectUpdate\_ViewStart.cshtml" />
     <Content Include="Views\ProjectCreate\Basics.cshtml" />
     <Content Include="Views\ProjectCreate\EditProposalClassifications.cshtml" />
-    <Content Include="Views\Project\Proposed.cshtml" />
-    <Content Include="Views\ProjectCreate\InstructionsProposal.cshtml" />
     <Content Include="Views\ProjectCreate\LocationDetailed.cshtml" />
     <Content Include="Views\ProjectCreate\LocationSimple.cshtml" />
     <Content Include="Views\ProjectCreate\DocumentsAndNotes.cshtml" />

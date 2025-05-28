@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjectsVisibleToUser(Person currentPerson)
         {
-            var associatedProjectsVisibleToUser = ProjectPriorityLandscapes.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            var associatedProjectsVisibleToUser = ProjectPriorityLandscapes.Select(ptc => ptc.Project).ToList().GetActiveProjectsVisibleToUser(currentPerson);
             return associatedProjectsVisibleToUser;
         }
 

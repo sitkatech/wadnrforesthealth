@@ -283,15 +283,6 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [OrganizationViewFeature]
-        public GridJsonNetJObjectResult<Project> ProposalsGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
-        {
-            var organization = organizationPrimaryKey.EntityObject;
-            var gridSpec = new ProjectsIncludingLeadImplementingGridSpec(organization, CurrentPerson, true);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(organization.GetProposalsVisibleToUser(CurrentPerson), gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
-        [OrganizationViewFeature]
         public GridJsonNetJObjectResult<Project> PendingProjectsGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;

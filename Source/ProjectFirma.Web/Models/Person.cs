@@ -137,7 +137,7 @@ namespace ProjectFirma.Web.Models
                 
                 return projectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Cancelled).ToList();
             }
-            return projectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson).ToList();
+            return projectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsVisibleToUser(currentPerson).ToList();
         }
 
 

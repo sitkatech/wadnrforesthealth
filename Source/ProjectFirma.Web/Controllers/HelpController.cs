@@ -138,9 +138,9 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         [CrossAreaRoute]
         [HttpGet]
-        public PartialViewResult ProposalFeedback()
+        public PartialViewResult PendingProjectFeedback()
         {
-            return ViewSupport(SupportRequestTypeEnum.ProvideFeedback, $"Here is some feedback on the {FieldDefinition.Application.GetFieldDefinitionLabel()} wizard: " + Environment.NewLine);
+            return ViewSupport(SupportRequestTypeEnum.ProvideFeedback, $"Here is some feedback on the Pending {FieldDefinition.Project.GetFieldDefinitionLabel()} wizard: " + Environment.NewLine);
         }
 
         [AnonymousUnclassifiedFeature]

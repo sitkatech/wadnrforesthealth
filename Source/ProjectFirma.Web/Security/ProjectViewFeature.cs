@@ -49,20 +49,6 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to view {contextModelObject.DisplayName}");
             }
 
-            if (contextModelObject.IsProposal() && person.IsAnonymousUser)
-            {
-                // do not allow if user is anonymous and do not show proposals to public
-                if (!MultiTenantHelpers.ShowApplicationsToThePublic())
-                {
-                    return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
-                }
-                // do not allow if user is anonymous and show proposals to public and stage a stage other than pending 
-                if (MultiTenantHelpers.ShowApplicationsToThePublic() && contextModelObject.ProjectApprovalStatus != ProjectApprovalStatus.PendingApproval)
-                {
-                    return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
-                }
-            }
-
             // "should only be visible and accessible to the following roles: Project Steward, Program Editor, Admin, Sitka Admin."
             bool projectCanOnlyBeSeenByAdmins = contextModelObject.ProjectType.LimitVisibilityToAdmin;
             bool personHasLimitedVisibilityRole = person.HasRole(Role.Admin) || person.HasRole(Role.EsaAdmin) || person.HasRole(Role.ProjectSteward) || person.HasRole(Role.CanEditProgram);

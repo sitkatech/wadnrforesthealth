@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return Projects.ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
     }
 }

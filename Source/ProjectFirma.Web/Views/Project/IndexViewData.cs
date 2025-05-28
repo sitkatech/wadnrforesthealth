@@ -33,7 +33,6 @@ namespace ProjectFirma.Web.Views.Project
         public readonly ProjectIndexGridSpec GridSpec;
         public readonly string GridName;
         public readonly string GridDataUrl;
-        public readonly string ProposeNewProjectUrl;
         public readonly string ProjectUpdatesUrl;
         public readonly bool DisplayActionButtons;
 
@@ -56,7 +55,6 @@ namespace ProjectFirma.Web.Views.Project
             GridName = "projectsGrid";
             GridDataUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
 
-            ProposeNewProjectUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
             ProjectUpdatesUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate());
             DisplayActionButtons = !currentPerson.IsAnonymousOrUnassigned;
         }

@@ -3,7 +3,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Create an Invoice", FieldDefinitionEnum.Application)]
+    [SecurityFeatureDescription("Create an {0}", FieldDefinitionEnum.Invoice)]
     public class InvoiceCreateFeature : FirmaFeature
     {
         public InvoiceCreateFeature()

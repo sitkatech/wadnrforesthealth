@@ -75,7 +75,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectDisplayName = project.DisplayName;
             ProjectDetailUrl = project.GetDetailUrl();
             FactSheetUrl = project.GetFactSheetUrl();
-            DetailLinkDescriptor = project.IsProposal() ? $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is a proposal. For description and expected results, see the" : $"For {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} information & results, see the";
+            DetailLinkDescriptor = $"For {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} information & results, see the";
             InitializeDisplayNames();
             TaxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
 

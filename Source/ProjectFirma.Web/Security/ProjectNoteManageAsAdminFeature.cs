@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Security
             {
                 return new PermissionCheckResult(false, $"You don't have permission to Edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.Project.DisplayName}");
             }
-            if (contextModelObject.Project.IsProposal() || contextModelObject.Project.IsPendingProject())
+            if (contextModelObject.Project.IsPendingProject())
             {
                 return new ProjectCreateFeature().HasPermission(person, contextModelObject.Project);
             }

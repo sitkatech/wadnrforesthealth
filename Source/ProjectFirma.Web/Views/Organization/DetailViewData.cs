@@ -51,10 +51,6 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly string AgreementOrganizationsGridName;
         public readonly string AgreementOrganizationsGridDataUrl;
 
-        public readonly ProjectsIncludingLeadImplementingGridSpec ProposalsGridSpec;
-        public readonly string ProposalsGridName;
-        public readonly string ProposalsGridDataUrl;
-
         public readonly ProjectsIncludingLeadImplementingGridSpec PendingProjectsGridSpec;
         public readonly string PendingProjectsGridName;
         public readonly string PendingProjectsGridDataUrl;
@@ -67,9 +63,6 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly bool HasSpatialData;
 
         public readonly string ProjectStewardOrLeadImplementorFieldDefinitionName;
-
-        public readonly bool ShowProposals;
-        public readonly string ProposalsPanelHeader;
 
         public readonly bool ShowPendingProjects;
 
@@ -121,25 +114,6 @@ namespace ProjectFirma.Web.Views.Organization
 
             MapInitJson = mapInitJson;
             HasSpatialData = hasSpatialData;
-
-            ShowProposals = currentPerson.CanViewProposals;
-            ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()
-                ? Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()
-                : $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} (Not Visible to the Public)";
-
-            ProposalsGridSpec =
-                new ProjectsIncludingLeadImplementingGridSpec(organization, CurrentPerson, true)
-                {
-                    ObjectNameSingular = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}",
-                    ObjectNamePlural = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
-                    SaveFiltersInCookie = true
-                };
-
-            ProposalsGridName = "proposalsGrid";
-            ProposalsGridDataUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    tc => tc.ProposalsGridJsonData(organization));
-
 
             ProgramGridSpec =
                 new ProgramGridSpec(CurrentPerson, organization)

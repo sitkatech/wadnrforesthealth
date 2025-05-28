@@ -95,13 +95,13 @@
             @if (ViewDataTyped.Project != null)
             {
                 <li>
-                    <a href="@ViewDataTyped.ProposalDetailUrl"><span class="glyphicon glyphicon-chevron-left"></span>@FieldDefinition.Application.GetFieldDefinitionLabel() Details</a>
+                    <a href="@ViewDataTyped.ProposalDetailUrl"><span class="glyphicon glyphicon-chevron-left"></span>Pending @FieldDefinition.Project.GetFieldDefinitionLabel() Details</a>
                 </li>
             }
             @if (ViewDataTyped.CurrentPersonCanWithdraw && ViewDataTyped.Project != null && ViewDataTyped.Project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval)
             {
                 <li>
-                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("Withdraw this {0}", FieldDefinition.Application.GetFieldDefinitionLabel()), ViewDataTyped.WithdrawUrl, string.Format("Withdraw {0}", FieldDefinition.Application.GetFieldDefinitionLabel()), 500, "Withdraw", "Cancel", new List<string>(), null, null)
+                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("Withdraw this Pending {0}", FieldDefinition.Project.GetFieldDefinitionLabel()), ViewDataTyped.WithdrawUrl, string.Format("Withdraw {0}", FieldDefinition.Project.GetFieldDefinitionLabel()), 500, "Withdraw", "Cancel", new List<string>(), null, null)
                 </li>
             }
         </ul>

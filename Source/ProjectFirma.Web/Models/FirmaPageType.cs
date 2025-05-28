@@ -126,20 +126,12 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<TagController>.BuildUrlFromExpression(x => x.Index());
     }
 
-    public partial class FirmaPageTypeProposals
-    {
-        public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Proposed());
-    }
-
     public partial class FirmaPageTypePendingProjects
     {
         public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Pending());
     }
 
-    public partial class FirmaPageTypeProposeProjectInstructions
-    {
-        public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
-    }
+
     public partial class FirmaPageTypeEnterHistoricProjectInstructions
     {
         public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null));

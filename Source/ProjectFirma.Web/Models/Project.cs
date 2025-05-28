@@ -840,22 +840,12 @@ namespace ProjectFirma.Web.Models
 
         public bool IsActiveProject()
         {
-            return !IsProposal() && ProjectApprovalStatus == ProjectApprovalStatus.Approved;
-        }
-
-        public bool IsProposal()
-        {
-            return ProjectStage == ProjectStage.Proposed;
-        }
-
-        public bool IsActiveProposal()
-        {
-            return IsProposal() && ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
+            return ProjectApprovalStatus == ProjectApprovalStatus.Approved;
         }
 
         public bool IsPendingProject()
         {
-            return !IsProposal() && ProjectApprovalStatus != ProjectApprovalStatus.Approved;
+            return ProjectApprovalStatus != ProjectApprovalStatus.Approved;
         }
 
         public bool IsRejected()
@@ -877,11 +867,6 @@ namespace ProjectFirma.Web.Models
         {
             // todo: Always relevant for pending projects, otherwise relevant for every stage except terminated/completed
             return true;
-        }
-
-        public bool AreReportedExpendituresRelevant()
-        {
-            return ProjectStage != ProjectStage.Proposed;
         }
 
         public bool IsInLandownerAssistanceProgram => ProjectPrograms.Any(x => x.ProgramID == Program.LandownerAssistanceProgramID);

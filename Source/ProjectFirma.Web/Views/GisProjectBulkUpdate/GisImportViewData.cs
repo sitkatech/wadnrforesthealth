@@ -90,8 +90,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 
         private GisImportViewData(Models.GisUploadAttempt gisUploadAttempt, Person currentPerson, string currentSectionDisplayName) : base(currentPerson)
         {
-            EntityName = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}";
-            ProvideFeedbackUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.ProposalFeedback());
+            EntityName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
             CurrentPersonIsSubmitter = gisUploadAttempt.GisUploadAttemptCreatePersonID == currentPerson.PersonID;
             CurrentPersonIsApprover = gisUploadAttempt.GisUploadAttemptCreatePersonID == currentPerson.PersonID;
             GisUploadAttemptWorkflowSectionGroupings = GisUploadAttemptWorkflowSectionGrouping.All.OrderBy(x => x.SortOrder).ToList();

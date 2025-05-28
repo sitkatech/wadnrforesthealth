@@ -31,16 +31,13 @@ namespace ProjectFirma.Web.Views.Project
         public readonly PendingGridSpec GridSpec;
         public readonly string GridName;
         public readonly string GridDataUrl;
-        public readonly bool HasProposeProjectPermissions;
-        public readonly string ProposeNewProjectUrl;
+        public readonly bool HasCreateProjectPermissions;
 
         public PendingViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}";
 
-            HasProposeProjectPermissions = new ProjectCreateFeature().HasPermissionByPerson(CurrentPerson);
-            ProposeNewProjectUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
-
+            HasCreateProjectPermissions = new ProjectCreateFeature().HasPermissionByPerson(CurrentPerson);
 
             GridSpec = new PendingGridSpec(currentPerson) {ObjectNameSingular = $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 

@@ -30,11 +30,6 @@ namespace ProjectFirma.Web.Views.Project
         public readonly string ProjectsGridName;
         public readonly string ProjectsGridDataUrl;
 
-        public readonly ProposalsGridSpec ProposalsesGridSpec;
-        public readonly string ProposalsGridName;
-        public readonly string ProposalsGridDataUrl;
-        public readonly string ProposeNewProjectUrl;
-
 
         public MyOrganizationsProjectsViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
@@ -52,17 +47,6 @@ namespace ProjectFirma.Web.Views.Project
             };
             ProjectsGridDataUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.MyOrganizationsProjectsGridJsonData());
 
-            ProposalsGridName = "myOrganizationsProposalsGrid";
-            ProposalsesGridSpec = new ProposalsGridSpec(currentPerson)
-            {
-                ObjectNameSingular = $"{organizationNamePossessive} {Models.FieldDefinition.Application.GetFieldDefinitionLabel()}",
-                ObjectNamePlural = $"{organizationNamePossessive} {Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()}",
-                SaveFiltersInCookie = true 
-            
-            };
-            ProposalsGridDataUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.MyOrganizationsProposalsGridJsonData());
-
-            ProposeNewProjectUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(tc => tc.InstructionsProposal(null));
         }
     }
 }
