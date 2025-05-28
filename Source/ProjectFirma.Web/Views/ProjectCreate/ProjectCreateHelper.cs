@@ -39,9 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public static HtmlString AddProjectButton()
         {
-            return ModalDialogFormHelper.ModalDialogFormLink(GetAddNewProjectButtonText(), SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null)),
-                $"Add a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", 700, ProjectTypeSelectionContinueButtonText, "Cancel",
-                new List<string> {"btn", "btn-firma"}, null, null);
+            return new HtmlString($"<a class=\"btn-firma btn\" href=\"{SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))}\">{GetAddNewProjectButtonText()}</a>");
         }
 
     }

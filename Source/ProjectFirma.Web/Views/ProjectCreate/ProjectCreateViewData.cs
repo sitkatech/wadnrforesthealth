@@ -34,8 +34,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     {
         public Models.Project Project { get; }
         public string CurrentSectionDisplayName { get; }
-        public List<ProjectCreateSection> ProjectCreateSections { get; }
-        public string ProposalListUrl { get; }
+
         public string ProposalDetailUrl { get; }
         public string ProvideFeedbackUrl { get; }
         public string ProposalInstructionsUrl { get; }
@@ -131,6 +130,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         private ProjectCreateViewData(Models.Project project, Person currentPerson, string currentSectionDisplayName) : base(currentPerson)
         {
             EntityName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+            ProvideFeedbackUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.PendingProjectFeedback());
             CurrentPersonIsSubmitter = new ProjectCreateFeature().HasPermissionByPerson(CurrentPerson);
             CurrentPersonIsApprover = project != null && new ProjectApproveFeature().HasPermission(currentPerson, project).HasPermission;
             ProjectWorkflowSectionGroupings = ProjectWorkflowSectionGrouping.All.OrderBy(x => x.SortOrder).ToList();
