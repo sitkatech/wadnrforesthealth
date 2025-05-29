@@ -81,15 +81,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public IEnumerable<ValidationResult> GetValidationResults()
         {
-            var validationResults = new List<ValidationResult>();
-
-            if (!ProjectClassificationSimples.Any(x => x.Selected))
-            {
-                validationResults.Add(new ValidationResult(
-                    $"You must select at least one {Models.FieldDefinition.Classification.GetFieldDefinitionLabel()} per {Models.FieldDefinition.Classification.GetFieldDefinitionLabel()} System."));
-            }
-
-            return validationResults;
+            return new List<ValidationResult>();
         }
     }
 }

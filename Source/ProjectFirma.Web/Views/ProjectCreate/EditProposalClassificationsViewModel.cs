@@ -81,26 +81,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public IEnumerable<ValidationResult> GetValidationResults()
         {
-            var validationResults = new List<ValidationResult>();
-
-            if (!ProjectClassificationSimples.Any())
-            {
-                validationResults.Add(new ValidationResult($"You must select at least one {Models.FieldDefinition.Classification.GetFieldDefinitionLabel()} per {Models.FieldDefinition.ClassificationSystem.GetFieldDefinitionLabel()}"));
-            }
-
-            ProjectClassificationSimples.Select(x => x.ClassificationSystemID).Distinct().ForEach(s =>
-            {
-                var classificationSystem =
-                    HttpRequestStorage.DatabaseEntities.ClassificationSystems.GetClassificationSystem(s);
-                var selectedClassifications = ProjectClassificationSimples.Where(x => x.ClassificationSystemID == s && x.Selected);
-                if (!selectedClassifications.Any())
-                {
-                    validationResults.Add(new ValidationResult(
-                        $"You must select at least one {classificationSystem.ClassificationSystemName}"));
-                }
-            });
-
-            return validationResults;
+            return new List<ValidationResult>();
         }
     }
 }
