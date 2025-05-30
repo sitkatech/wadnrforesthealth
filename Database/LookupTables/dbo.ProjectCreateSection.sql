@@ -9,7 +9,7 @@ values
 --(7, 'ReportedPerformanceMeasures', 'Reported Performance Measures', 70, 1, 3),
 (8, 'ExpectedFunding', 'Expected Funding', 80, 0, 4),
 --(9, 'ReportedExpenditures', 'Reported Expenditures', 90, 1, 4),
-(11, 'Classifications', 'Classifications', 110, 1, 5),
+(11, 'Classifications', 'Classifications', 110, 0, 5),
 (13, 'Photos', 'Photos', 130, 0, 5),
 (14, 'NotesAndDocuments', 'Documents and Notes', 140, 0, 5),
 (15, 'Organizations', 'Organizations', 25, 1, 1),
