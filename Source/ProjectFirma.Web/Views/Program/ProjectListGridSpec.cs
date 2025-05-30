@@ -38,6 +38,8 @@ namespace ProjectFirma.Web.Views.Program
             }
 
 
+            Add(Models.FieldDefinition.ProjectIdentifier.ToGridHeaderString(), x => x.ProjectGisIdentifier, 105, AgGridColumnFilterType.Text);
+
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.FhtProjectNumber}\" }}", 105, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(),
                 x => $"{{ \"link\":\"{x.GetDetailUrl()}\",\"displayText\":\"{x.ProjectName}\" }}",

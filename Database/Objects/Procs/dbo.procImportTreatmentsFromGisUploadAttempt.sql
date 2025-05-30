@@ -112,9 +112,8 @@ INSERT INTO #tempTreatments
 
 select p.ProjectID
 , x.GisFeatureGeometry.MakeValid()
-, null --GrantAllocationAwardLandownerCostShareLineItemID
-, case when guso.ApplyStartDateToTreatments = 1 then isnull(TRY_PARSE(x.StartDate AS DATETIME), null) else null end as TreatmentStartDate
-, case when guso.ApplyEndDateToTreatments = 1 then isnull(TRY_PARSE(x.EndDate AS DATETIME), null) else null end as TreatmentEndDate
+, case when guso.ApplyStartDateToTreatments = 1 then coalesce(TRY_PARSE(x.StartDate AS DATETIME), dbo.fConvertDateTimeUtcToPacificStandardTime(dbo.fUnixTimeToDateTime2(TRY_PARSE(x.StartDate AS bigint))), null) else null end as TreatmentStartDate
+, case when guso.ApplyEndDateToTreatments = 1 then coalesce(TRY_PARSE(x.EndDate AS DATETIME), dbo.fConvertDateTimeUtcToPacificStandardTime(dbo.fUnixTimeToDateTime2(TRY_PARSE(x.EndDate AS bigint))), null) else null end as TreatmentEndDate
 , case  when @footprintAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
         else isnull(TRY_PARSE(x.FootprintAcres AS decimal(38,10)),0) end  as [TreatmentFootprintAcres]
 , case  when @treatedAcresMetadataAttributeID = -1 then isnull(CalculatedArea,0)
