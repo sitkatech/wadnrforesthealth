@@ -84,12 +84,6 @@ namespace ProjectFirma.Web.Models
             return CheckIfFieldIsImported(programsToCheck, FieldDefinition.ProjectIdentifier);
         }
 
-        public bool IsCompletionDateImported()
-        {
-            var programsToCheck = ProjectPrograms.Select(x => x.Program);
-            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.CompletionDate);
-        }
-
         public bool IsLeadImplementerOrganizationImported()
         {
             var programsToCheck = ProjectPrograms.Select(x => x.Program);
@@ -112,6 +106,11 @@ namespace ProjectFirma.Web.Models
             var programsToCheck = ProjectPrograms.Select(x => x.Program);
             return CheckIfFieldIsImported(programsToCheck, FieldDefinition.PlannedDate);
         }
+        public bool IsCompletionDateImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.CompletionDate);
+        }
 
         public bool IsProjectStageImported()
         {
@@ -121,8 +120,22 @@ namespace ProjectFirma.Web.Models
 
         public static bool CheckIfFieldIsImported(IEnumerable<Program> programsToCheck, FieldDefinition fieldDefinition)
         {
+            //Start Date and Completion Date are dependent on checkboxes being checked.
+            //This is true for Projects and Treatments. But Treatments are not editable at all if they are imported, so we are only checking the Project checkboxes here
             foreach (var program in programsToCheck)
             {
+                if (fieldDefinition == FieldDefinition.PlannedDate && !program.GisUploadSourceOrganization.ApplyStartDateToProject)
+                {
+                    // Planned/Start date is not being applied to Project for this program continue to check other.
+                    continue;
+                }
+
+                if (fieldDefinition == FieldDefinition.CompletionDate && !program.GisUploadSourceOrganization.ApplyCompletedDateToProject)
+                {
+                    // Completion date is not being applied to Project for this program continue to check other.
+                    continue;
+                }
+
                 if (program.GisUploadSourceOrganization.GisDefaultMappings.Any(x => x.FieldDefinitionID == fieldDefinition.FieldDefinitionID && !string.IsNullOrEmpty(x.GisDefaultMappingColumnName)))
                 {
                     return true;
