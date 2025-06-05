@@ -64,7 +64,11 @@ where ltrim(rtrim(x.ProgramIndex)) = '99C' and (ltrim(rtrim(x.ProjectCode)) = '-
 
 
 /*
-select * from dbo.vLoaStageGrantAllocation x where x.ProgramIndex like '%99c%'
+select * from dbo.vLoaStageGrantAllocation x where x.GrantID = 25
+select x.LoaStageID, x.GrantID, x.GrantAllocationID, x.IsNortheast, x.IsSoutheast, x.ProgramIndex, x.ProjectCode
+from dbo.vLoaStageGrantAllocationByProgramIndexProjectCode x
+where x.GrantID = 25
+
 
 */
 

@@ -111,13 +111,14 @@ begin
               left join dbo.Person person on person.Email = x.ForesterEmail
               left join dbo.ProjectPerson pp on pp.PersonID = person.PersonID and pp.ProjectID = p.ProjectID and pp.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
               left join dbo.ProjectPerson ppOld on ppOld.ProjectID = p.ProjectID and ppOld.ProjectPersonRelationshipTypeID = (select top 1 x.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType x where x.ProjectPersonRelationshipTypeName = 'PrimaryContact')
+			  --where p.ProjectID = 16694
 
                 delete from dbo.ProjectPerson where ProjectPersonID in 
                 (select x.OldProjectPersonID from #projectForesterInfo x where (x.ProjectPersonID is not null and x.OldProjectPersonID is not null and x.ProjectPersonID != x.OldProjectPersonID) or 
                                                                                           (x.ProjectPersonID is null and x.OldProjectPersonID is not null and x.ForesterFirstName is not null and x.ForesterLastName is not null) )
 
               insert into dbo.ProjectPerson(ProjectID, PersonID, ProjectPersonRelationshipTypeID, CreatedAsPartOfBulkImport)
-              select 
+              select
               x.ProjectID
               , x.PersonID
               , (select top 1 y.ProjectPersonRelationshipTypeID from dbo.ProjectPersonRelationshipType y where y.ProjectPersonRelationshipTypeName = 'PrimaryContact')

@@ -20,6 +20,6 @@ x on x.GrantID = g.GrantID
 go
 
 /*
-select * from dbo.vSingularGrantAllocation
+select * from dbo.vSingularGrantAllocation where GrantID = 25
 
 */
