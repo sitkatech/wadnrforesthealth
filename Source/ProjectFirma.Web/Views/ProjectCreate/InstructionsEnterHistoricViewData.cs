@@ -19,8 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
@@ -33,7 +31,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public readonly bool IsNewProjectCreate;
 
         public readonly ViewPageContentViewData InstructionsViewPageContentViewData;
-        public InstructionsEnterHistoricViewData(Person currentPerson, Models.FirmaPage firmaPage, bool isNewProjectCreate) : base(currentPerson, "Instructions", SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null)))
+        public InstructionsEnterHistoricViewData(Person currentPerson, Models.FirmaPage firmaPage, bool isNewProjectCreate) : base(currentPerson, "Instructions")
         {
             PageTitle = $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
             InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));

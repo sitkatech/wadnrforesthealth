@@ -6131,6 +6131,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fConvertDateTimeUtcToPacificStandardTime" ReturnType="datetime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="x" Type="datetime" Mode="In" />
+  </Function>
   <Function Name="fGetBoundingBoxForProjectIdList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ProjectIDList" Type="varchar(max)" Mode="In" />
     <ReturnType>
@@ -6218,6 +6221,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="fRemoveLeadingZeroes" ReturnType="nvarchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="inputString" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="fUnixTimeToDateTime2" ReturnType="datetime2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="x" Type="bigint" Mode="In" />
   </Function>
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />

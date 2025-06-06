@@ -58,18 +58,7 @@ namespace ProjectFirma.Web.Models
     {
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
-            // 5/15/2019 TK - WADNR may need this in phase 2. Removed this from the except because entry is removed from DB ", ProjectCreateSection.ReportedExpenditures"
-            var projectCreateSections = ProjectCreateSections.Except(new List<ProjectCreateSection> { ProjectCreateSection.ExpectedFunding }).ToList();
-            if (project != null && project.IsExpectedFundingRelevant())
-            {
-                projectCreateSections.Add(ProjectCreateSection.ExpectedFunding);
-            }
-
-            //if (project != null && project.AreReportedExpendituresRelevant())
-            //{
-            //    projectCreateSections.Add(ProjectCreateSection.ReportedExpenditures);
-            //}
-            return GetProjectCreateSectionsImpl(project, projectCreateSections, ignoreStatus);
+            return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
         }
 
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
@@ -96,6 +85,20 @@ namespace ProjectFirma.Web.Models
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
                                                                             UpdateStatus updateStatus, 
                                                                             bool ignoreStatus)
+        {
+            return GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
+        }
+    }
+
+    public partial class ProjectWorkflowSectionGroupingProjectSetup
+    {
+        public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
+        {
+            return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
+        }
+
+        public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
+            UpdateStatus updateStatus, bool ignoreStatus)
         {
             return GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
         }

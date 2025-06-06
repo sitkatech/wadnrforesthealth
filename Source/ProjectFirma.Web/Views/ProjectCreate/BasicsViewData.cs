@@ -50,8 +50,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public BasicsViewDataForAngular BasicsViewDataForAngular { get; set; }
 
 		public BasicsViewData(Person currentPerson,
-            IEnumerable<Models.ProjectType> projectTypes, string instructionsPageUrl)
-            : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, instructionsPageUrl)
+            IEnumerable<Models.ProjectType> projectTypes)
+            : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName)
         {
             AssignParameters(projectTypes, -1);
         }

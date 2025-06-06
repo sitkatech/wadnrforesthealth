@@ -134,7 +134,7 @@ namespace ProjectFirma.Web.Models
 
     public partial class FirmaPageTypeEnterHistoricProjectInstructions
     {
-        public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null));
+        public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(null));
     }
 
     public partial class FirmaPageTypeProjectStewardOrganizationList
