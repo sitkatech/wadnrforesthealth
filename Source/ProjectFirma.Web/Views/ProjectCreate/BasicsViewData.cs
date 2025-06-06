@@ -25,6 +25,8 @@ using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
@@ -38,6 +40,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         private string ProjectDisplayName { get; }
         public bool IsEditable = true;
         public bool ProjectTypeHasBeenSet { get; set; }
+        public ViewPageContentViewData InstructionsViewPageContentViewData { get; set; }
 
         public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
 
@@ -50,18 +53,20 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public BasicsViewDataForAngular BasicsViewDataForAngular { get; set; }
 
 		public BasicsViewData(Person currentPerson,
-            IEnumerable<Models.ProjectType> projectTypes)
+            IEnumerable<Models.ProjectType> projectTypes, Models.FirmaPage firmaPage)
             : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName)
         {
             AssignParameters(projectTypes, -1);
+            InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));
         }
 
         public BasicsViewData(Person currentPerson,
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
-            IEnumerable<Models.ProjectType> projectTypes)
+            IEnumerable<Models.ProjectType> projectTypes, Models.FirmaPage firmaPage)
             : base(currentPerson, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
+            InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));
             ProjectDisplayName = project.DisplayName;
             AssignParameters(projectTypes, project.ProjectID);
             ProjectTypeHasBeenSet = project?.ProjectType != null;

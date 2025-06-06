@@ -60,6 +60,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeReportProjects ReportProjects = FirmaPageTypeReportProjects.Instance;
         public static readonly FirmaPageTypeReportAddReport ReportAddReport = FirmaPageTypeReportAddReport.Instance;
         public static readonly FirmaPageTypeVendor Vendor = FirmaPageTypeVendor.Instance;
+        public static readonly FirmaPageTypeProjectCreateInstructions ProjectCreateInstructions = FirmaPageTypeProjectCreateInstructions.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -69,7 +70,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, ManageUpdateNotifications, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, ManageUpdateNotifications, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor, ProjectCreateInstructions };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -195,6 +196,8 @@ namespace ProjectFirma.Web.Models
                     return PriorityLandscapesList;
                 case FirmaPageTypeEnum.ProgramsList:
                     return ProgramsList;
+                case FirmaPageTypeEnum.ProjectCreateInstructions:
+                    return ProjectCreateInstructions;
                 case FirmaPageTypeEnum.ProjectMap:
                     return ProjectMap;
                 case FirmaPageTypeEnum.ProjectStewardOrganizationList:
@@ -271,7 +274,8 @@ namespace ProjectFirma.Web.Models
         Reports = 71,
         ReportProjects = 72,
         ReportAddReport = 73,
-        Vendor = 74
+        Vendor = 74,
+        ProjectCreateInstructions = 75
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -518,5 +522,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeVendor(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeVendor Instance = new FirmaPageTypeVendor(74, @"Vendor", @"Vendors", 1);
+    }
+
+    public partial class FirmaPageTypeProjectCreateInstructions : FirmaPageType
+    {
+        private FirmaPageTypeProjectCreateInstructions(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeProjectCreateInstructions Instance = new FirmaPageTypeProjectCreateInstructions(75, @"ProjectCreateInstructions", @"Project Create Instructions", 2);
     }
 }

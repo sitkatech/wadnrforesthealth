@@ -22,6 +22,7 @@
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Shared
 @inherits ProjectFirma.Web.Views.ProjectCreate.Basics
 
 @section JavascriptAndStylesContent
@@ -63,7 +64,9 @@
     </script>
 
 }
-<p>Add your @FieldDefinition.Project.GetFieldDefinitionLabel()’s basic information here.</p>
+<div>
+    @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.InstructionsViewPageContentViewData); }
+</div>
 <hr />
 <div id="EditProjectApp" ng-controller="EditProjectController">
     @using (Html.BeginForm())

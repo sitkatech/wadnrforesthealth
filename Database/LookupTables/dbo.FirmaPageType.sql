@@ -51,4 +51,5 @@ values
 (71, 'Reports', 'Reports', 1),
 (72, 'ReportProjects', 'Report Projects', 1),
 (73, 'ReportAddReport', 'Add a Report', 2),
-(74, 'Vendor', 'Vendors', 1)
+(74, 'Vendor', 'Vendors', 1),
+(75, 'ProjectCreateInstructions', 'Project Create Instructions', 2)

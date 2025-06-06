@@ -131,8 +131,10 @@ namespace ProjectFirma.Web.Controllers
 
         private ViewResult ViewCreateAndEditBasics(BasicsViewModel viewModel)
         {
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectCreateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var viewData = new BasicsViewData(CurrentPerson, projectTypes);
+            var viewData = new BasicsViewData(CurrentPerson, projectTypes, firmaPage);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -160,9 +162,11 @@ namespace ProjectFirma.Web.Controllers
         {
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsBasicsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsBasicsSectionComplete;
-            
+
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectCreateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes);
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes, firmaPage);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
