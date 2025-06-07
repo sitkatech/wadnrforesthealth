@@ -22,6 +22,7 @@
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Shared
 @inherits ProjectFirma.Web.Views.ProjectCreate.Basics
 
 @section JavascriptAndStylesContent
@@ -63,7 +64,9 @@
     </script>
 
 }
-<p>Add your @FieldDefinition.Project.GetFieldDefinitionLabel()’s basic information here.</p>
+<div>
+    @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.InstructionsViewPageContentViewData); }
+</div>
 <hr />
 <div id="EditProjectApp" ng-controller="EditProjectController">
     @using (Html.BeginForm())
@@ -94,15 +97,6 @@
                     @Html.ValidationMessageFor(m => m.ProjectName)
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-4 control-label">
-                    @Html.LabelWithSugarFor(m => m.ProjectDescription, false)
-                </div>
-                <div class="col-xs-12 col-sm-8">
-                    @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 8), null, new List<string> { "form-control" }, false)
-                    @Html.ValidationMessageFor(m => m.ProjectDescription)
-                </div>
-            </div>
 
             <div class="form-group">
                 <div class="col-xs-12 col-sm-4 control-label">
@@ -119,7 +113,7 @@
                         @ViewDataTyped.ProjectStage.ProjectStageDisplayName
                     }
                 </div>
-                </div>
+            </div>
             <div class="form-group">
                 <div class="col-xs-12 col-sm-4 control-label">
                     @Html.LabelWithSugarFor(m => m.PlannedDate)
@@ -129,94 +123,127 @@
                     @Html.ValidationMessageFor(m => m.PlannedDate)
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-4 control-label">
-                    @Html.LabelWithSugarFor(m => m.ExpirationDate)
-                </div>
-                <div class="col-xs-12 col-sm-8">
-                    @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                    @Html.ValidationMessageFor(m => m.ExpirationDate)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-4 control-label">
-                    @Html.LabelWithSugarFor(m => m.CompletionDate)
-                </div>
-                <div class="col-xs-12 col-sm-8">
-                    @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
-                    @Html.ValidationMessageFor(m => m.CompletionDate)
-                </div>
-            </div>
-            <div class="form-group">
-                <div id="focusAreaDiv" class="col-xs-12 col-sm-4 control-label">
-                    @Html.LabelWithSugarFor(m => m.FocusAreaID)
-                </div>
-                <div class="col-xs-12 col-sm-8">
-                    @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })
-                    @Html.ValidationMessageFor(m => m.FocusAreaID)
-                </div>
-            </div>
 
-
-
-            <div class="form-group">
-                <div class="col-xs-4 control-label">
-                    <strong>@FieldDefinition.Program.GetFieldDefinitionLabel() to Add: </strong>
-                </div>
-                <div class="col-xs-8">
-                    <div class="input-group">
-                        <select ng-model="ProgramIDToAdd"
-                                class="selectpicker"
-                                data-live-search="true"
-                                data-container="body"
-                                title="Select a @FieldDefinition.Program.GetFieldDefinitionLabel() to Add"
-                                data-width="100%">
-                            <option value="-1" selected>Select a Program to Add</option>
-                            <option ng-repeat="program in filteredPrograms()"
-                                    value="{{program.ProgramID}}"
-                                    ng-selected="ProgramIDToAdd == program.ProgramIDToAdd"
-                                    ng-bind="program.DisplayString"
-                                    data-tokens="{{program.DisplayString}}"></option>
-                        </select>
-                        <span class="input-group-btn">
-                            <button class="btn btn-firma" type="button" ng-click="addRow()">
-                                <span class="glyphicon glyphicon-plus"></span> Add
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <div class="row narrowRow">
-                    <div class="col-xs-4 control-label">
-                        @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
-                    </div>
-                    <div class="col-xs-8 col-xs-offset-4" ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
-
-                        <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectProgram)" style="cursor: pointer"></span>
-                        <span ng-bind="projectProgram.DisplayString"></span>
-                    </div>
-                </div>
-
-                
-            </div>
             
-            <div class="form-group">
-                <div class="col-xs-4 control-label">
-                    @Html.LabelWithSugarFor(m => m.PercentageMatch)
-                </div>
-                <div class="col-xs-8">
-                    @Html.EditorFor(m => m.PercentageMatch, new {  
-                        htmlAttributes = new { 
-                            min="0", max="100"
-                        } 
-                    })
-                    @Html.ValidationMessageFor(m => m.PercentageMatch)
+            
+            <div class="panel panel-default">
+                <div class="panel-heading"><button id="optionalFieldsButton" type="button" class="btn btn-link" onclick="">Optional Basic Fields <span class="glyphicon glyphicon-chevron-down"></span></button></div>
+                <div id="basicsOptionalFieldContainer" class="hidden panel-body">
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4 control-label">
+                            @Html.LabelWithSugarFor(m => m.ProjectDescription, false)
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                            @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 8), null, new List<string> { "form-control" }, false)
+                            @Html.ValidationMessageFor(m => m.ProjectDescription)
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4 control-label">
+                            @Html.LabelWithSugarFor(m => m.ExpirationDate)
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                            @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                            @Html.ValidationMessageFor(m => m.ExpirationDate)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4 control-label">
+                            @Html.LabelWithSugarFor(m => m.CompletionDate)
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                            @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
+                            @Html.ValidationMessageFor(m => m.CompletionDate)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="focusAreaDiv" class="col-xs-12 col-sm-4 control-label">
+                            @Html.LabelWithSugarFor(m => m.FocusAreaID)
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                            @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })
+                            @Html.ValidationMessageFor(m => m.FocusAreaID)
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-xs-4 control-label">
+                            <strong>@FieldDefinition.Program.GetFieldDefinitionLabel() to Add: </strong>
+                        </div>
+                        <div class="col-xs-8">
+                            <div class="input-group">
+                                <select ng-model="ProgramIDToAdd"
+                                        class="selectpicker"
+                                        data-live-search="true"
+                                        data-container="body"
+                                        title="Select a @FieldDefinition.Program.GetFieldDefinitionLabel() to Add"
+                                        data-width="100%">
+                                    <option value="-1" selected>Select a Program to Add</option>
+                                    <option ng-repeat="program in filteredPrograms()"
+                                            value="{{program.ProgramID}}"
+                                            ng-selected="ProgramIDToAdd == program.ProgramIDToAdd"
+                                            ng-bind="program.DisplayString"
+                                            data-tokens="{{program.DisplayString}}"></option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-firma" type="button" ng-click="addRow()">
+                                        <span class="glyphicon glyphicon-plus"></span> Add
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="row narrowRow">
+                            <div class="col-xs-4 control-label">
+                                @Html.Raw(Html.LabelWithSugarFor(FieldDefinition.Program))<strong>s</strong>
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-4" ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getProgramName]">
+
+                                <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectProgram)" style="cursor: pointer"></span>
+                                <span ng-bind="projectProgram.DisplayString"></span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4 control-label">
+                            @Html.LabelWithSugarFor(m => m.PercentageMatch)
+                        </div>
+                        <div class="col-xs-8">
+                            @Html.EditorFor(m => m.PercentageMatch, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    min = "0",
+                                    max = "100"
+                                }
+                            })
+                            @Html.ValidationMessageFor(m => m.PercentageMatch)
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.LeadImplementerID, 600)
+                </div>
+                <div class="col-xs-8">
+                    @Html.SearchableDropDownListFor(x => x.LeadImplementerID, ViewDataTyped.OrganizationsForLeadImplementer)
+                    @Html.ValidationMessageFor(m => m.LeadImplementerID)
+                </div>
+            </div>
 
         </div>
         <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples">
@@ -236,7 +263,7 @@
     }
 </div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     jQuery(document)
         .ready(function() {
             // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
@@ -269,5 +296,20 @@
                         .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
                 }
             });
+
+            jQuery("#optionalFieldsButton").on('click', function () {
+                if (jQuery("#basicsOptionalFieldContainer").hasClass("show")) {
+                    jQuery("#basicsOptionalFieldContainer").removeClass("show");
+                    jQuery("#basicsOptionalFieldContainer").addClass("hidden");
+                    jQuery("#optionalFieldsButton span.glyphicon").removeClass("glyphicon-chevron-up");
+                    jQuery("#optionalFieldsButton span.glyphicon").addClass("glyphicon-chevron-down");
+                } else {
+                    jQuery("#basicsOptionalFieldContainer").removeClass("hidden");
+                    jQuery("#basicsOptionalFieldContainer").addClass("show");
+                    jQuery("#optionalFieldsButton span.glyphicon").removeClass("glyphicon-chevron-down");
+                    jQuery("#optionalFieldsButton span.glyphicon").addClass("glyphicon-chevron-up");
+                }
+            });
+
         });
-    </script>
+</script>

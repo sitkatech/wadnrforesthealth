@@ -72,30 +72,30 @@ namespace ProjectFirma.Web.Controllers
             return new ProposalSectionsStatus(project);
         }
 
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ActionResult InstructionsEnterHistoric(int? projectID)
-        {
-            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.EnterHistoricProjectInstructions);
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
+        //[LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        //public ActionResult InstructionsEnterHistoric(int? projectID)
+        //{
+        //    var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.EnterHistoricProjectInstructions);
+        //    var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
 
-            if (projectID.HasValue)
-            {
-                var project = HttpRequestStorage.DatabaseEntities.Projects.GetProject(projectID.Value);
-                var proposalSectionsStatus = GetProposalSectionsStatus(project);
-                var viewData = new InstructionsEnterHistoricViewData(CurrentPerson, project, proposalSectionsStatus, firmaPage, false);
+        //    if (projectID.HasValue)
+        //    {
+        //        var project = HttpRequestStorage.DatabaseEntities.Projects.GetProject(projectID.Value);
+        //        var proposalSectionsStatus = GetProposalSectionsStatus(project);
+        //        var viewData = new InstructionsEnterHistoricViewData(CurrentPerson, project, proposalSectionsStatus, firmaPage, false);
 
-                return RazorView<InstructionsEnterHistoric, InstructionsEnterHistoricViewData>(viewData);
-            }
-            else
-            {
-                var viewData = new InstructionsEnterHistoricViewData(CurrentPerson, firmaPage, true);
-                return RazorView<InstructionsEnterHistoric, InstructionsEnterHistoricViewData>(viewData);
-            }
-        }
+        //        return RazorView<InstructionsEnterHistoric, InstructionsEnterHistoricViewData>(viewData);
+        //    }
+        //    else
+        //    {
+        //        var viewData = new InstructionsEnterHistoricViewData(CurrentPerson, firmaPage, true);
+        //        return RazorView<InstructionsEnterHistoric, InstructionsEnterHistoricViewData>(viewData);
+        //    }
+        //}
 
         [HttpGet]
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ActionResult CreateAndEditBasics(bool newProjectIsProposal)
+        public ActionResult CreateAndEditBasics()
         {
             var basicsViewModel = new BasicsViewModel();
             return ViewCreateAndEditBasics(basicsViewModel);
@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult CreateAndEditBasics(bool newProjectIsProposal, BasicsViewModel viewModel)
+        public ActionResult CreateAndEditBasics(BasicsViewModel viewModel)
         {
             return CreateAndEditBasicsPostImpl(viewModel);
         }
@@ -131,9 +131,16 @@ namespace ProjectFirma.Web.Controllers
 
         private ViewResult ViewCreateAndEditBasics(BasicsViewModel viewModel)
         {
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectCreateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var instructionsPageUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null));
-            var viewData = new BasicsViewData(CurrentPerson, projectTypes, instructionsPageUrl);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
+            var viewData = new BasicsViewData(CurrentPerson, projectTypes, firmaPage, organizations);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -161,9 +168,17 @@ namespace ProjectFirma.Web.Controllers
         {
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsBasicsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsBasicsSectionComplete;
-            
+
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectCreateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes, firmaPage, organizations);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }

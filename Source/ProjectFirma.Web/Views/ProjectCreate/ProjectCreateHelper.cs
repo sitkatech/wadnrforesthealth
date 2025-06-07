@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public static HtmlString AddProjectButton()
         {
-            return new HtmlString($"<a class=\"btn-firma btn\" href=\"{SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))}\">{GetAddNewProjectButtonText()}</a>");
+            return new HtmlString($"<a class=\"btn-firma btn\" href=\"{SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(null))}\">{GetAddNewProjectButtonText()}</a>");
         }
 
     }

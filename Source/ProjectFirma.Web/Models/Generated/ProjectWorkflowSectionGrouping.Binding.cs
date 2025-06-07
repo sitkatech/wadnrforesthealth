@@ -23,6 +23,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectWorkflowSectionGroupingLocation Location = ProjectWorkflowSectionGroupingLocation.Instance;
         public static readonly ProjectWorkflowSectionGroupingExpenditures Expenditures = ProjectWorkflowSectionGroupingExpenditures.Instance;
         public static readonly ProjectWorkflowSectionGroupingAdditionalData AdditionalData = ProjectWorkflowSectionGroupingAdditionalData.Instance;
+        public static readonly ProjectWorkflowSectionGroupingProjectSetup ProjectSetup = ProjectWorkflowSectionGroupingProjectSetup.Instance;
 
         public static readonly List<ProjectWorkflowSectionGrouping> All;
         public static readonly ReadOnlyDictionary<int, ProjectWorkflowSectionGrouping> AllLookupDictionary;
@@ -32,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectWorkflowSectionGrouping()
         {
-            All = new List<ProjectWorkflowSectionGrouping> { Overview, Location, Expenditures, AdditionalData };
+            All = new List<ProjectWorkflowSectionGrouping> { Overview, Location, Expenditures, AdditionalData, ProjectSetup };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectWorkflowSectionGrouping>(All.ToDictionary(x => x.ProjectWorkflowSectionGroupingID));
         }
 
@@ -113,6 +114,8 @@ namespace ProjectFirma.Web.Models
                     return Location;
                 case ProjectWorkflowSectionGroupingEnum.Overview:
                     return Overview;
+                case ProjectWorkflowSectionGroupingEnum.ProjectSetup:
+                    return ProjectSetup;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -124,7 +127,8 @@ namespace ProjectFirma.Web.Models
         Overview = 1,
         Location = 2,
         Expenditures = 4,
-        AdditionalData = 5
+        AdditionalData = 5,
+        ProjectSetup = 6
     }
 
     public partial class ProjectWorkflowSectionGroupingOverview : ProjectWorkflowSectionGrouping
@@ -149,5 +153,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectWorkflowSectionGroupingAdditionalData(int projectWorkflowSectionGroupingID, string projectWorkflowSectionGroupingName, string projectWorkflowSectionGroupingDisplayName, int sortOrder) : base(projectWorkflowSectionGroupingID, projectWorkflowSectionGroupingName, projectWorkflowSectionGroupingDisplayName, sortOrder) {}
         public static readonly ProjectWorkflowSectionGroupingAdditionalData Instance = new ProjectWorkflowSectionGroupingAdditionalData(5, @"AdditionalData", @"Additional Data", 50);
+    }
+
+    public partial class ProjectWorkflowSectionGroupingProjectSetup : ProjectWorkflowSectionGrouping
+    {
+        private ProjectWorkflowSectionGroupingProjectSetup(int projectWorkflowSectionGroupingID, string projectWorkflowSectionGroupingName, string projectWorkflowSectionGroupingDisplayName, int sortOrder) : base(projectWorkflowSectionGroupingID, projectWorkflowSectionGroupingName, projectWorkflowSectionGroupingDisplayName, sortOrder) {}
+        public static readonly ProjectWorkflowSectionGroupingProjectSetup Instance = new ProjectWorkflowSectionGroupingProjectSetup(6, @"ProjectSetup", @"Project Setup", 15);
     }
 }

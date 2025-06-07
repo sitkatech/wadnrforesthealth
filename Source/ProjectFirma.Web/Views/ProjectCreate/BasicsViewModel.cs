@@ -67,6 +67,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
         public int? PercentageMatch { get; set; }
 
+        [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.LeadImplementerOrganization)]
+        public int LeadImplementerID { get; set; }
+
+
         public int? ImportExternalProjectStagingID { get; set; }
 
         public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
@@ -93,6 +98,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             FocusAreaID = project.FocusAreaID;
             ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
             PercentageMatch = project.PercentageMatch;
+            LeadImplementerID = project.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID)?.OrganizationID ?? -1;
 
         }
 
@@ -110,6 +116,18 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.CompletionDate = CompletionDate;
             project.FocusAreaID = FocusAreaID;
             project.PercentageMatch = PercentageMatch;
+
+            var previousLeadImplementerProjectOrganization = project.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+
+            if (LeadImplementerID > 0 && (previousLeadImplementerProjectOrganization != null && LeadImplementerID != previousLeadImplementerProjectOrganization.OrganizationID))
+            {
+                HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
+                var allProjectOrgs = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
+                var newLeadImplementerOrg = new ProjectOrganization(project.ProjectID, LeadImplementerID, RelationshipType.LeadImplementerID);
+                var updatedListOfProjectOrgs = project.ProjectOrganizations.Where(x => x.ProjectOrganizationID != previousLeadImplementerProjectOrganization.ProjectOrganizationID).ToList();
+                updatedListOfProjectOrgs.Add(newLeadImplementerOrg);
+                project.ProjectOrganizations.Merge(updatedListOfProjectOrgs, allProjectOrgs, (x, y) => x.ProjectID == y.ProjectID && x.OrganizationID == y.OrganizationID && x.RelationshipTypeID == y.RelationshipTypeID );
+            }
 
             if (ProjectProgramSimples == null)
             {

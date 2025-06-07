@@ -37,7 +37,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public string ProposalDetailUrl { get; }
         public string ProvideFeedbackUrl { get; }
-        public string ProposalInstructionsUrl { get; }
         public string ProposalBasicsUrl { get; }
         public string HistoricProjectBasicsUrl { get; }
         public string ProposalNotesUrl { get; }
@@ -55,8 +54,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool CanAdvanceStage { get; }
         public bool ProjectStateIsValidInWizard { get; }
         public bool CurrentPersonCanWithdraw { get; set; }
-        public bool IsInstructionsPage { get; }
-        public string InstructionsPageUrl { get;  }
+
         public List<ProjectWorkflowSectionGrouping> ProjectWorkflowSectionGroupings { get; }
         public ProjectStage ProjectStage { get; set; }
 
@@ -65,8 +63,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             string currentSectionDisplayName,
             ProposalSectionsStatus proposalSectionsStatus) : this(project, currentPerson, currentSectionDisplayName)
         {
-            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
-            bool isBasicsPage = currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase);
 
             Check.Assert(project != null, "Project should be created in database by this point so it cannot be null.");
             // SLG- See Story #1506 - Causing us much grief, perhaps the disease is really better than this cure? We know the Project record exists, is that maybe enough?
@@ -82,8 +78,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             CanAdvanceStage = ProposalSectionsStatus.AreAllSectionsValidForProject(project);
             // ReSharper disable PossibleNullReferenceException
             ProjectStateIsValidInWizard = project.ProjectApprovalStatus == ProjectApprovalStatus.Draft || project.ProjectApprovalStatus == ProjectApprovalStatus.Returned || project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
-
-            InstructionsPageUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(project.ProjectID));
 
             var pageTitle = $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
             PageTitle = $"{pageTitle}: {project.DisplayName}";
@@ -106,16 +100,14 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         //New (not yet created) Projects use this constructor. Valid only for Instructions and Basics page.
 
-        protected ProjectCreateViewData(Person currentPerson, string currentSectionDisplayName, string proposalInstructionsUrl) : this(null, currentPerson, currentSectionDisplayName)
+        protected ProjectCreateViewData(Person currentPerson, string currentSectionDisplayName) : this(null, currentPerson, currentSectionDisplayName)
         {
             Check.Assert(currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase) || currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase));
 
             Project = null;
             ProposalSectionsStatus = new ProposalSectionsStatus();
 
-            InstructionsPageUrl = proposalInstructionsUrl;
-            ProposalInstructionsUrl = proposalInstructionsUrl;
-            HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));
+            HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics());
 
             CurrentPersonCanWithdraw = false;
 
