@@ -134,7 +134,13 @@ namespace ProjectFirma.Web.Controllers
             var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectCreateInstructions);
             var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var viewData = new BasicsViewData(CurrentPerson, projectTypes, firmaPage);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
+            var viewData = new BasicsViewData(CurrentPerson, projectTypes, firmaPage, organizations);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -166,7 +172,13 @@ namespace ProjectFirma.Web.Controllers
             var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectCreateInstructions);
             var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes, firmaPage);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes, firmaPage, organizations);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
