@@ -117,14 +117,21 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.FocusAreaID = FocusAreaID;
             project.PercentageMatch = PercentageMatch;
 
-            var previousLeadImplementerProjectOrganization = project.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            
 
-            if (LeadImplementerID > 0 && (previousLeadImplementerProjectOrganization != null && LeadImplementerID != previousLeadImplementerProjectOrganization.OrganizationID))
+            if (LeadImplementerID > 0)
             {
                 HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
                 var allProjectOrgs = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
                 var newLeadImplementerOrg = new ProjectOrganization(project.ProjectID, LeadImplementerID, RelationshipType.LeadImplementerID);
-                var updatedListOfProjectOrgs = project.ProjectOrganizations.Where(x => x.ProjectOrganizationID != previousLeadImplementerProjectOrganization.ProjectOrganizationID).ToList();
+                var updatedListOfProjectOrgs = project.ProjectOrganizations.ToList();
+
+                var previousLeadImplementerProjectOrganization = project.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+                if (previousLeadImplementerProjectOrganization != null)
+                {
+                    updatedListOfProjectOrgs = updatedListOfProjectOrgs.Where(x => x.ProjectOrganizationID != previousLeadImplementerProjectOrganization.ProjectOrganizationID).ToList();
+                }
+
                 updatedListOfProjectOrgs.Add(newLeadImplementerOrg);
                 project.ProjectOrganizations.Merge(updatedListOfProjectOrgs, allProjectOrgs, (x, y) => x.ProjectID == y.ProjectID && x.OrganizationID == y.OrganizationID && x.RelationshipTypeID == y.RelationshipTypeID );
             }

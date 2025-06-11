@@ -123,12 +123,21 @@
                     @Html.ValidationMessageFor(m => m.PlannedDate)
                 </div>
             </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.LeadImplementerID, 600)
+                </div>
+                <div class="col-xs-8">
+                    @Html.SearchableDropDownListFor(x => x.LeadImplementerID, ViewDataTyped.OrganizationsForLeadImplementer)
+                    @Html.ValidationMessageFor(m => m.LeadImplementerID)
+                </div>
+            </div>
 
             
-            
-            <div class="panel panel-default">
-                <div class="panel-heading"><button id="optionalFieldsButton" type="button" class="btn btn-link" onclick="">Optional Basic Fields <span class="glyphicon glyphicon-chevron-down"></span></button></div>
-                <div id="basicsOptionalFieldContainer" class="hidden panel-body">
+
+                <div ><button id="optionalFieldsButton" type="button" class="btn btn-link" onclick="">Optional Basic Fields <span class="glyphicon glyphicon-chevron-down"></span></button></div>
+                <div id="basicsOptionalFieldContainer" class="hidden">
 
                     <div class="form-group">
                         <div class="col-xs-12 col-sm-4 control-label">
@@ -235,17 +244,8 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-xs-4 control-label">
-                    @Html.LabelWithSugarFor(m => m.LeadImplementerID, 600)
-                </div>
-                <div class="col-xs-8">
-                    @Html.SearchableDropDownListFor(x => x.LeadImplementerID, ViewDataTyped.OrganizationsForLeadImplementer)
-                    @Html.ValidationMessageFor(m => m.LeadImplementerID)
-                </div>
-            </div>
 
-        </div>
+
         <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples">
             <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectID}}" />
             <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProgramID}}" />
