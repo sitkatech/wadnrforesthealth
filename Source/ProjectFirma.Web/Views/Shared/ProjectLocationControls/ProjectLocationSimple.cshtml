@@ -56,14 +56,15 @@ Source code is available upon request via <support@sitkatech.com>.
     .noBold {
         font-weight: normal;
     }
+    .summaryLayout{
+        font-size:13px
+    }
 </style>
 
 <div class="row">
     <div class="col-xs-12">
         <p>
-            Enter your @FieldDefinition.Project.GetFieldDefinitionLabel()’s approximate location by plotting a point on the map.
-            This "Simple" information is used to indicate the general location of your @FieldDefinition.Project.GetFieldDefinitionLabel() within the @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel(). 
-            If your @FieldDefinition.Project.GetFieldDefinitionLabel()'s location cannot be approximated by a point, provide a brief explanation of the location information in the @Html.DisplayNameFor(m => m.ProjectLocationNotes) field.
+            Enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s approximate location by plotting a point on the map or by providing latitude and longitude coordinates.
         </p>
     </div>
 </div>
@@ -86,8 +87,7 @@ Source code is available upon request via <support@sitkatech.com>.
                         Plot a point on the map
                     </label>
                 </div>
-                <input type="hidden" name="@Html.NameFor(m => m.ProjectLocationPointX)" value="{{AngularModel.@Html.NameFor(m => m.ProjectLocationPointX)}}" />
-                <input type="hidden" name="@Html.NameFor(m => m.ProjectLocationPointY)" value="{{AngularModel.@Html.NameFor(m => m.ProjectLocationPointY)}}" />
+                
                 @Html.ValidationMessageFor(x => x.ProjectLocationPointX)
             </div>
             <div class="form-group">
@@ -95,27 +95,61 @@ Source code is available upon request via <support@sitkatech.com>.
                     <label class="noBold">
                         <input type="radio" name="@Html.NameFor(m => m.ProjectLocationSimpleType)"
                                ng-model="AngularModel.ProjectLocationSimpleType"
-                               value="@ProjectLocationSimpleTypeEnum.None"
+                               value="@ProjectLocationSimpleTypeEnum.LatLngInput"
                                ng-click="toggleMap()" />
-                        No Location
+                        Enter lat/lng coordinates (DD)
                     </label>
                 </div>
+                @Html.ValidationMessageFor(x => x.ProjectLocationPointX)
             </div>
+
+            <div class="form-group" ng-show="displayLatLngInputs()">
+                <div class="input-group">
+                    <div class="input-group-addon">Lat</div>
+                    <input class="form-control text-right" type="text" placeholder="Decimal or DMS" name="@Html.NameFor(m => m.ProjectLocationPointY)" ng-model="AngularModel.@Html.NameFor(m => m.ProjectLocationPointY)" ng-change="changedLatLngInput()" ng-blur="checkInputsForDegreeMinutes()" />
+                    @Html.ValidationMessageFor(x => x.ProjectLocationPointY)
+                </div>
+            </div>
+            <div class="form-group" ng-show="displayLatLngInputs()">
+                <div class="input-group">
+                    <div class="input-group-addon">Lng</div>
+                    <input class="form-control text-right" type="text" placeholder="Decimal or DMS" name="@Html.NameFor(m => m.ProjectLocationPointX)" ng-model="AngularModel.@Html.NameFor(m => m.ProjectLocationPointX)" ng-change="changedLatLngInput()" ng-blur="checkInputsForDegreeMinutes()" />
+                    @Html.ValidationMessageFor(x => x.ProjectLocationPointX)
+                </div>
+            </div>
+           
+
             <div class="form-group">
                 <label class="control-label">@Html.DisplayNameFor(m => m.ProjectLocationNotes)</label>
                 <textarea class="form-control" style="resize: none;" name="@Html.NameFor(m => m.ProjectLocationNotes)"
                           ng-model="AngularModel.@Html.NameFor(m => m.ProjectLocationNotes)"></textarea>
                 @Html.ValidationMessageFor(m => m.ProjectLocationNotes)
             </div>
-            <div ng-show="getProjectLocationProperties()">
+            <div >
                 <hr />
                 <table class="summaryLayout">
                     <tr>
                         <th colspan="2">Location Information</th>
                     </tr>
-                    <tr ng-repeat="(key, value) in getProjectLocationProperties()">
-                        <td>{{key}}:</td>
-                        <td>{{value}}</td>
+                    <tr >
+                        <th> @Html.LabelWithSugarFor(FieldDefinition.PriorityLandscape, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) @FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel():</th>
+                        <td>{{propertiesForPointOnMap["Priority Landscape"]}}</td>
+                    </tr>
+                    <tr >
+                        <th>@Html.LabelWithSugarFor(FieldDefinition.DNRUplandRegion, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)  @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel():</th>
+                        <td>{{propertiesForPointOnMap["DNR Upland Region"]}}</td>
+                    </tr>
+                    <tr >
+                        <th>@Html.LabelWithSugarFor(FieldDefinition.County, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) @FieldDefinition.County.GetFieldDefinitionLabel():</th>
+                        <td>{{propertiesForPointOnMap["County"]}}</td>
+                    </tr>
+                    <tr >
+                        <th>Latitude:</th>
+                        <td>{{propertiesForPointOnMap["Latitude"]}}</td>
+                    </tr>
+                    <tr >
+                        <th>Longitude:</th>
+                        <td>{{propertiesForPointOnMap["Longitude"]}}</td>
                     </tr>
                 </table>
             </div>
