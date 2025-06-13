@@ -73,6 +73,13 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.GrantModification.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GrantModification.GetDetailUrl(), x.GrantModification.GrantModificationName), 250, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
+            if (!currentPerson.IsAnonymousUser)
+            {
+                Add(Models.FieldDefinition.GrantAllocationCurrentBalance.ToGridHeaderString(),
+                    x => x.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart, 90,
+                    AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            }
+
             Add(Models.FieldDefinition.GrantManager.ToGridHeaderString(), x => x.GrantManager != null ? x.GrantManager.FullNameFirstLastAndOrgShortName : string.Empty, 150, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.GetAllProgramManagerPersonNamesAsString(), 150, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
