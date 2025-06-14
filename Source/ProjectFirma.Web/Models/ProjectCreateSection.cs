@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Models
             }
 
             var locationSimpleValidationResults = new LocationSimpleViewModel(project).GetValidationResults();
-            return !locationSimpleValidationResults.Any();            
+            return !locationSimpleValidationResults.Any() && project.ProjectLocationPoint != null;            
         }
 
         public override string GetSectionUrl(Project project)

@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[ProjectCreateSection](
 	[SortOrder] [int] NOT NULL,
 	[HasCompletionStatus] [bit] NOT NULL,
 	[ProjectWorkflowSectionGroupingID] [int] NOT NULL,
+	[IsSectionRequired] [bit] NOT NULL,
  CONSTRAINT [PK_ProjectCreateSection_ProjectCreateSectionID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectCreateSectionID] ASC

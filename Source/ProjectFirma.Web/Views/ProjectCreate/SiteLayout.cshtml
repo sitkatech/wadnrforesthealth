@@ -181,6 +181,10 @@
                                             </span>
                                             <span style="display: inline-block; width: 80%">
                                                 <span>@projectSectionSimple.SectionDisplayName</span>
+                                                @if (projectSectionSimple.IsSectionRequired)
+                                                {
+                                                    <span><sup><span class="requiredFieldIcon glyphicon glyphicon-flash" style="color: #800020;"></span></sup></span>
+                                                }
                                             </span>
                                         </a>
                                     </li>
