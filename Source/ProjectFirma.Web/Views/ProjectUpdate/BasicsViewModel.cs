@@ -132,14 +132,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion Date is required", m => m.CompletionDate);
             }
 
             var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;
             if (isCompleted && CompletionDate > DateTime.Now)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
-                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Year needs to be less than or equal to the current year",
+                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Date needs to be less than or equal to the current year",
                     m => m.CompletionDate);
             }
 
