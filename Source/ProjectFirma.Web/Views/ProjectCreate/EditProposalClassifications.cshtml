@@ -35,7 +35,7 @@
 </style>
 @using (Html.BeginForm())
 {
-    <div>
+    <div style="max-width:700px">
         Optionally click one or more checkboxes below and add additional narrative details to associate this @FieldDefinition.Project.GetFieldDefinitionLabel() with specific Project Theme @(Html.LabelWithSugarFor(FieldDefinition.Classification, FieldDefinition.Classification.GetFieldDefinitionLabelPluralized())).
 
     </div>
