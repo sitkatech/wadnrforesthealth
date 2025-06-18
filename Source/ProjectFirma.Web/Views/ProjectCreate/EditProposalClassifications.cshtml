@@ -35,9 +35,12 @@
 </style>
 @using (Html.BeginForm())
 {
-<div>
-    Click the checkboxes below to associate this @FieldDefinition.Project.GetFieldDefinitionLabel() with one or more @(Html.LabelWithSugarFor(FieldDefinition.Classification, FieldDefinition.Classification.GetFieldDefinitionLabelPluralized())).
-</div>
+    <div>
+        Optionally click one or more checkboxes below and add additional narrative details to associate this @FieldDefinition.Project.GetFieldDefinitionLabel() with specific Project Theme @(Html.LabelWithSugarFor(FieldDefinition.Classification, FieldDefinition.Classification.GetFieldDefinitionLabelPluralized())).
+
+    </div>
+    <br/>
+
 <div>
     @foreach (var classificationSystem in ViewDataTyped.ClassificationSystems)
         {
