@@ -59,8 +59,7 @@ namespace ProjectFirma.Web.Models
 
         private bool IsPassingAllValidationRules()
         {
-            return AreProjectBasicsValid && AreExpendituresValid() &&
-                  // ArePerformanceMeasuresValid() &&
+            return AreProjectBasicsValid && 
                    IsProjectLocationSimpleValid() &&
                    IsProjectPriorityLandscapeValid() &&
                    IsProjectRegionValid();
@@ -101,27 +100,11 @@ namespace ProjectFirma.Web.Models
             // basics & map
             ProjectUpdate.CreateFromProject(projectUpdateBatch);
 
-            // expenditures
-            ProjectGrantAllocationExpenditureUpdate.CreateFromProject(projectUpdateBatch);
-
-            // project expenditures exempt reporting years
-            ProjectExemptReportingYearUpdate.CreateExpendituresExemptReportingYearsFromProject(projectUpdateBatch);
-
             // expenditures exempt explanation
             projectUpdateBatch.SyncExpendituresYearsExemptionExplanation();
 
             // Expected Funding
             ProjectGrantAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
-
-            // performance measures
-            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
-            //PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
-
-            // project performance measures exempt reporting years
-            ProjectExemptReportingYearUpdate.CreatePerformanceMeasuresExemptReportingYearsFromProject(projectUpdateBatch);
-
-            // project exempt reporting years reason
-            projectUpdateBatch.SyncPerformanceMeasureActualYearsExemptionExplanation();
 
             // project locations - detailed
             ProjectLocationUpdate.CreateFromProject(projectUpdateBatch);
@@ -156,9 +139,6 @@ namespace ProjectFirma.Web.Models
             // Documents
             ProjectDocumentUpdate.CreateFromProject(projectUpdateBatch);
 
-            // Custom attributes
-            ProjectCustomAttributeUpdate.CreateFromProject(projectUpdateBatch);
-
             return projectUpdateBatch;
         }
 
@@ -177,11 +157,6 @@ namespace ProjectFirma.Web.Models
             // create a project update history record
             CreateNewTransitionRecord(projectUpdateBatch, ProjectUpdateState.Created, currentPerson, DateTime.Now);
             return projectUpdateBatch;
-        }
-
-        public void SyncPerformanceMeasureActualYearsExemptionExplanation()
-        {
-            PerformanceMeasureActualYearsExemptionExplanation = Project.PerformanceMeasureActualYearsExemptionExplanation;
         }
 
         public void SyncExpendituresYearsExemptionExplanation()
@@ -236,38 +211,10 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectDocumentUpdates);
         }
 
-        public void DeletePerformanceMeasuresProjectExemptReportingYearUpdates()
-        {
-            var performanceMeasuresExemptReportingYears = this.GetPerformanceMeasuresExemptReportingYears();
-            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(performanceMeasuresExemptReportingYears);
-            PerformanceMeasureActualYearsExemptionExplanation = null;
-            RefreshFromDatabase(performanceMeasuresExemptReportingYears);
-        }
-        public void DeleteExpendituresProjectExemptReportingYearUpdates()
-        {
-            var performanceMeasuresExemptReportingYears = this.GetExpendituresExemptReportingYears();
-            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(performanceMeasuresExemptReportingYears);
-            NoExpendituresToReportExplanation = null;
-            RefreshFromDatabase(performanceMeasuresExemptReportingYears);
-        }
-
-        public void DeleteProjectGrantAllocationExpenditureUpdates()
-        {
-            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditureUpdates.DeleteProjectGrantAllocationExpenditureUpdate(ProjectGrantAllocationExpenditureUpdates);
-            RefreshFromDatabase(ProjectGrantAllocationExpenditureUpdates);
-        }
-
         public void DeleteProjectGrantAllocationRequestUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.DeleteProjectGrantAllocationRequestUpdate(ProjectGrantAllocationRequestUpdates);
             RefreshFromDatabase(ProjectGrantAllocationRequestUpdates);
-        }
-
-        public void DeletePerformanceMeasureActualUpdates()
-        {
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.DeletePerformanceMeasureActualSubcategoryOptionUpdate(PerformanceMeasureActualUpdates.SelectMany(x => x.PerformanceMeasureActualSubcategoryOptionUpdates.Select(y => y.PerformanceMeasureActualSubcategoryOptionUpdateID)).ToList());
-            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.DeletePerformanceMeasureActualUpdate(PerformanceMeasureActualUpdates);
-            RefreshFromDatabase(PerformanceMeasureActualUpdates);
         }
 
         public void DeleteProjectLocationUpdates()
@@ -306,14 +253,6 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectUpdatePrograms);
         }
 
-        public void DeleteProjectAttributeUpdates()
-        {
-            var values = ProjectCustomAttributeUpdates.SelectMany(x => x.ProjectCustomAttributeUpdateValues).ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.DeleteProjectCustomAttributeUpdateValue(values);
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.DeleteProjectCustomAttributeUpdate(ProjectCustomAttributeUpdates);
-            RefreshFromDatabase(ProjectCustomAttributeUpdates);
-        }
-
         public void DeleteProjectContactUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.DeleteProjectPersonUpdate(ProjectPersonUpdates);
@@ -350,133 +289,12 @@ namespace ProjectFirma.Web.Models
             private set => _areProjectBasicsValid = value;
         }
 
-        public ProjectAttributeValidationResult ValidateProjectAttributes()
-        {
-            return new ProjectAttributeValidationResult(ProjectUpdate);
-        }
-
-        private bool? _areProjectAttributesValid;
-        public bool AreProjectAttributesValid
-        {
-            get
-            {
-                if (!_areProjectAttributesValid.HasValue)
-                {
-                    _areProjectAttributesValid = ValidateProjectAttributes().IsValid;
-                }
-                return _areProjectAttributesValid.Value;
-            }
-            private set => _areProjectAttributesValid = value;
-        }
-
-        public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;
-
-        public PerformanceMeasuresValidationResult ValidatePerformanceMeasures()
-        {
-            if (!AreProjectBasicsValid)
-            {
-                return new PerformanceMeasuresValidationResult(FirmaValidationMessages.UpdateSectionIsDependentUponBasicsSection);
-            }
-            
-            // validation 1: ensure that we have PM values from ProjectUpdate start year to min(endyear, currentyear); if the ProjectUpdate record has a stage of Planning/Design, we do not do this validation
-            var missingYears = new HashSet<int>();
-            if (ProjectUpdate.ProjectStage.RequiresPerformanceMeasureActuals() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
-            {
-                var exemptYears = this.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList();
-                var yearsExpected = ProjectUpdate.GetProjectUpdateImplementationStartToCompletionDateRange().Where(x => !exemptYears.Contains(x)).ToList();
-                var yearsEntered = PerformanceMeasureActualUpdates.Select(x => x.CalendarYear).Distinct();
-                missingYears = yearsExpected.GetMissingYears(yearsEntered);
-            }
-            // validation 2: incomplete PM row (missing performanceMeasureSubcategory option id)
-            var performanceMeasureActualUpdatesWithIncompleteWarnings = ValidateNoIncompletePerformanceMeasureActualUpdateRow();
-
-            //validation 3: duplicate PM row
-            var performanceMeasureActualUpdatesWithDuplicateWarnings = ValidateNoDuplicatePerformanceMeasureActualUpdateRow();
-
-            //validation4: data entered for exempt years
-            var performanceMeasureActualUpdatesWithExemptYear = ValidateNoExemptYearsWithReportedPerformanceMeasureRow();
-
-            var performanceMeasuresValidationResult = new PerformanceMeasuresValidationResult(missingYears, performanceMeasureActualUpdatesWithIncompleteWarnings, performanceMeasureActualUpdatesWithDuplicateWarnings, performanceMeasureActualUpdatesWithExemptYear);
-            return performanceMeasuresValidationResult;
-        }
-
-        private HashSet<int> ValidateNoIncompletePerformanceMeasureActualUpdateRow()
-        {
-            var performanceMeasureActualUpdatesWithMissingSubcategoryOptions =
-                PerformanceMeasureActualUpdates.Where(
-                    x => !x.ActualValue.HasValue || x.PerformanceMeasure.PerformanceMeasureSubcategories.Count != x.PerformanceMeasureActualSubcategoryOptionUpdates.Count).ToList();
-            return new HashSet<int>(performanceMeasureActualUpdatesWithMissingSubcategoryOptions.Select(x => x.PerformanceMeasureActualUpdateID));
-        }
-
-        private HashSet<int> ValidateNoDuplicatePerformanceMeasureActualUpdateRow()
-        {
-            if (PerformanceMeasureActualUpdates == null)
-            {
-                return new HashSet<int>();
-            }
-            var duplicates =  PerformanceMeasureActualUpdates
-                .GroupBy(x => new { x.PerformanceMeasureID, x.CalendarYear })
-                .Select(x => x.ToList())
-                .ToList()
-                .Select(x => x)
-                .Where(x => x.Select(m => m.PerformanceMeasureActualSubcategoryOptionUpdates).ToList().Select(z => String.Join("_", z.Select(s => s.PerformanceMeasureSubcategoryOptionID).ToList())).ToList().HasDuplicates()).ToList();
-
-            return new HashSet<int>(duplicates.SelectMany(x => x).ToList().Select(x => x.PerformanceMeasureActualUpdateID));
-        }
-
-        private HashSet<int> ValidateNoExemptYearsWithReportedPerformanceMeasureRow()
-        {
-            if (PerformanceMeasureActualUpdates == null)
-            {
-                return new HashSet<int>();
-            }
-            var exemptYears = this.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList();
-
-            var performanceMeasureActualUpdatesWithExemptYear =
-                PerformanceMeasureActualUpdates.Where(x => exemptYears.Contains(x.CalendarYear)).ToList();            
-
-            return new HashSet<int>(performanceMeasureActualUpdatesWithExemptYear.Select(x => x.PerformanceMeasureActualUpdateID));
-        }
-
-        public bool ArePerformanceMeasuresValid()
-        {
-            return NewStageIsPlanningDesign || ValidatePerformanceMeasures().IsValid;
-        }
-
-        public List<string> ValidateExpendituresAndForceValidation()
-        {
-            AreProjectBasicsValid = ValidateProjectBasics().IsValid;
-            return ValidateExpenditures();
-        }
 
         public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectGrantAllocationRequestSimple> newprojectGrantAllocationRequests)
         {
             return new ExpectedFundingValidationResult();
         }
 
-        public List<string> ValidateExpenditures()
-        {
-            if (!AreProjectBasicsValid)
-            {
-                return new List<string> {FirmaValidationMessages.UpdateSectionIsDependentUponBasicsSection};
-            }
-
-            if (ProjectUpdate.ProjectStage.RequiresReportedExpenditures() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
-            {
-                // validation 1: ensure that we have expenditure values from ProjectUpdate start year to min(endyear, currentyear)
-                var yearsExpected = ProjectUpdate.GetProjectUpdatePlanningDesignStartToCompletionDateRange();
-                var validateExpenditures = ExpendituresValidationResult.ValidateImpl(
-                    this.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList(),
-                    NoExpendituresToReportExplanation, yearsExpected, new List<IGrantAllocationExpenditure>(ProjectGrantAllocationExpenditureUpdates));
-                return validateExpenditures;
-            }
-            return new List<string>();
-        }
-
-        public bool AreExpendituresValid()
-        {
-            return ValidateExpenditures().Count == 0;
-        }
 
         public OrganizationsValidationResult ValidateOrganizations()
         {
@@ -573,11 +391,7 @@ namespace ProjectFirma.Web.Models
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //IList<ProjectBudget> projectBudgets, 
             Person currentPerson, DateTime transitionDate,
-            IList<ProjectExemptReportingYear> projectExemptReportingYears,
-            IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
             IList<ProjectFundingSource> projectFundingSources,
-            IList<PerformanceMeasureActual> performanceMeasureActuals,
-            IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
             IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
             IList<ProjectPriorityLandscape> projectPriorityLandscapes, 
@@ -586,20 +400,14 @@ namespace ProjectFirma.Web.Models
             IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
-            IList<ProjectCustomAttribute> allProjectCustomAttributes,
-            IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
             IList<ProjectPerson> allProjectPersons,
             IList<ProjectProgram> allProjectPrograms,
             IList<Treatment> allTreatments)
         {
             Check.Require(IsSubmitted, $"You cannot approve a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted!");
-            CommitChangesToProject(projectExemptReportingYears,
-                projectGrantAllocationExpenditures,
-                projectFundingSources,
+            CommitChangesToProject(projectFundingSources,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
                 //                projectBudgets,
-                performanceMeasureActuals,
-                performanceMeasureActualSubcategoryOptions,
                 projectExternalLinks,
                 projectNotes,
                 projectImages,
@@ -610,8 +418,6 @@ namespace ProjectFirma.Web.Models
                 projectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
-                allProjectCustomAttributes,
-                allProjectCustomAttributeValues,
                 allProjectPersons,
                 allProjectPrograms,
                 allTreatments);
@@ -636,11 +442,7 @@ namespace ProjectFirma.Web.Models
         private void CommitChangesToProject( 
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
 //            IList<ProjectBudget> projectBudgets,
-                IList<ProjectExemptReportingYear> projectExemptReportingYears,
-                IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
                 IList<ProjectFundingSource> projectFundingSources,
-                IList<PerformanceMeasureActual> performanceMeasureActuals,
-                IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
                 IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
                 IList<ProjectPriorityLandscape> projectPriorityLandscapes,
@@ -649,8 +451,6 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
-                IList<ProjectCustomAttribute> allProjectCustomAttributes,
-                IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
                 IList<ProjectPerson> allProjectPeople,
                 IList<ProjectProgram> allProjectPrograms,
                 IList<Treatment> allTreatments)
@@ -661,9 +461,6 @@ namespace ProjectFirma.Web.Models
             //Programs
             ProjectUpdateProgram.CommitChangesToProject(this, allProjectPrograms);
 
-            // expenditures
-            ProjectGrantAllocationExpenditureUpdate.CommitChangesToProject(this, projectGrantAllocationExpenditures);
-
             // expected funding
             ProjectGrantAllocationRequestUpdate.CommitChangesToProject(this, projectGrantAllocationRequests);
 
@@ -672,22 +469,6 @@ namespace ProjectFirma.Web.Models
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //  project budgets
             //ProjectBudgetUpdate.CommitChangesToProject(this, projectBudgets);
-
-            // only relevant for stages past planning/design
-            if (!NewStageIsPlanningDesign)
-            {
-                //// performance measures
-                // TODO Neutered Per WA DNR #1446. May decide to bring it back later 
-                //PerformanceMeasureActualUpdate.CommitChangesToProject(this, performanceMeasureActuals,
-                //    performanceMeasureActualSubcategoryOptions);
-
-                // project exempt reporting years
-                ProjectExemptReportingYearUpdate.CommitChangesToProject(this, projectExemptReportingYears);
-
-                // project exempt reporting years reason
-                Project.PerformanceMeasureActualYearsExemptionExplanation =
-                    PerformanceMeasureActualYearsExemptionExplanation;
-            }
 
             // project location simple
             ProjectUpdate.CommitSimpleLocationToProject(Project);
@@ -722,9 +503,6 @@ namespace ProjectFirma.Web.Models
 
             // Documents
             ProjectDocumentUpdate.CommitChangesToProject(this, allProjectDocuments);
-
-            // Project Custom Attributes
-            ProjectCustomAttributeUpdate.CommitChangesToProject(this, allProjectCustomAttributes, allProjectCustomAttributeValues);
 
             // Treatments
             TreatmentUpdate.CommitChangesToProject(this, allTreatments);

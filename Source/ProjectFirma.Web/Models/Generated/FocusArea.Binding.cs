@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Models
         protected FocusArea()
         {
             this.FocusAreaLocationStagings = new HashSet<FocusAreaLocationStaging>();
-            this.GrantAllocationAwards = new HashSet<GrantAllocationAward>();
             this.Projects = new HashSet<Project>();
             this.ProjectUpdates = new HashSet<ProjectUpdate>();
         }
@@ -85,7 +84,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FocusAreaLocationStagings.Any() || GrantAllocationAwards.Any() || Projects.Any() || ProjectUpdates.Any();
+            return FocusAreaLocationStagings.Any() || Projects.Any() || ProjectUpdates.Any();
         }
 
         /// <summary>
@@ -98,11 +97,6 @@ namespace ProjectFirma.Web.Models
             if(FocusAreaLocationStagings.Any())
             {
                 dependentObjects.Add(typeof(FocusAreaLocationStaging).Name);
-            }
-
-            if(GrantAllocationAwards.Any())
-            {
-                dependentObjects.Add(typeof(GrantAllocationAward).Name);
             }
 
             if(Projects.Any())
@@ -120,7 +114,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(FocusAreaLocationStaging).Name, typeof(GrantAllocationAward).Name, typeof(Project).Name, typeof(ProjectUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(FocusAreaLocationStaging).Name, typeof(Project).Name, typeof(ProjectUpdate).Name};
 
 
         /// <summary>
@@ -150,11 +144,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantAllocationAwards.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in Projects.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -177,7 +166,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return FocusAreaID; } set { FocusAreaID = value; } }
 
         public virtual ICollection<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
-        public virtual ICollection<GrantAllocationAward> GrantAllocationAwards { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectUpdate> ProjectUpdates { get; set; }
         public FocusAreaStatus FocusAreaStatus { get { return FocusAreaStatus.AllLookupDictionary[FocusAreaStatusID]; } }

@@ -34,7 +34,6 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Map;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.ProjectUpdate;
-using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Tag;
@@ -48,11 +47,9 @@ using LtInfo.Common.MvcResults;
 using MoreLinq;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.ScheduledJobs;
-using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectInvoice;
-using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectImportBlockList;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
@@ -74,7 +71,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var latestNotApprovedUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             var viewModel = new EditProjectViewModel(project, latestNotApprovedUpdateBatch != null);
-            return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName, project.TotalExpenditures);
+            return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName);
         }
 
         [HttpPost]
@@ -85,13 +82,13 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName, project.TotalExpenditures);
+                return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName);
             }
             viewModel.UpdateModel(project, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditProjectViewModel viewModel, Project project, EditProjectType editProjectType, string projectTypeDisplayName, decimal? totalExpenditures)
+        private PartialViewResult ViewEdit(EditProjectViewModel viewModel, Project project, EditProjectType editProjectType, string projectTypeDisplayName)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().OrderBy(ap => ap.DisplayName).ToList();
@@ -102,10 +99,9 @@ namespace ProjectFirma.Web.Controllers
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList().Select(x => new ProgramSimple(x)).ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 projectTypeDisplayName,
-                ProjectStage.All.Except(new[] {ProjectStage.Proposed}), organizations,
+                ProjectStage.All, organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
-                totalExpenditures,
                 projectTypes,
                 focusAreas,
                 projectTypeHasBeenSet,
@@ -119,40 +115,6 @@ namespace ProjectFirma.Web.Controllers
                 Models.Project.ImportedFieldWarningMessage
             );
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [ProjectEditAsAdminFeature]
-        public PartialViewResult EditProjectAttributes(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var latestNotApprovedUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            var viewModel = new EditProjectAttributesViewModel(project, latestNotApprovedUpdateBatch != null);
-            return ViewEditProjectAttributes(viewModel, project,EditProjectAttributesType.ExistingProject, project.ProjectType.DisplayName);
-        }
-
-        [HttpPost]
-        [ProjectEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectAttributes(ProjectPrimaryKey projectPrimaryKey, EditProjectAttributesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditProjectAttributes(viewModel, project,EditProjectAttributesType.ExistingProject, project.ProjectType.DisplayName);
-            }
-            viewModel.UpdateModel(project, CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditProjectAttributes(EditProjectAttributesViewModel viewModel, Project project, EditProjectAttributesType editProjectAttributesType, string projectTypeDisplayName)
-        {
-            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
-            var viewData = new EditProjectAttributesViewData(editProjectAttributesType,
-                projectTypeDisplayName,
-                projectCustomAttributeTypes
-            );
-            return RazorPartialView<EditProjectAttributes, EditProjectAttributesViewData, EditProjectAttributesViewModel>(viewData, viewModel);
         }
 
         [CrossAreaRoute]
@@ -181,7 +143,6 @@ namespace ProjectFirma.Web.Controllers
             bool userHasEditProjectPermissions = new ProjectEditAsAdminFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userHasProjectUpdatePermissions = new ProjectUpdateCreateEditSubmitFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userCanEditProposal = new ProjectCreateFeature().HasPermission(CurrentPerson, project).HasPermission;
-            bool userHasPerformanceMeasureActualManagePermissions = new PerformanceMeasureActualFromProjectManageFeature().HasPermission(CurrentPerson, project).HasPermission;
             bool userCanViewProjectDocuments = (!CurrentPerson.IsAnonymousOrUnassigned);
 
             var editSimpleProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project));
@@ -191,9 +152,7 @@ namespace ProjectFirma.Web.Controllers
                 SitkaRoute<ProjectCountyController>.BuildUrlFromExpression(c => c.EditProjectCounties(project));
             var editProjectPriorityLandscapeUrl = SitkaRoute<ProjectPriorityLandscapeController>.BuildUrlFromExpression(c => c.EditProjectPriorityLandscapes(project));
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
-            var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
-            var editPerformanceMeasureActualsUrl = SitkaRoute<PerformanceMeasureActualController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureActualsForProject(project));
-            var editReportedExpendituresUrl = SitkaRoute<ProjectGrantAllocationExpenditureController>.BuildUrlFromExpression(c => c.EditProjectGrantAllocationExpendituresForProject(project));
+
             var editExternalLinksUrl = SitkaRoute<ProjectExternalLinkController>.BuildUrlFromExpression(c => c.EditProjectExternalLinks(project));
 
             var priorityLandscapes = project.GetProjectPriorityLandscapes().ToList();
@@ -206,9 +165,7 @@ namespace ProjectFirma.Web.Controllers
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
             var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()));
-            var performanceMeasureExpectedsSummaryViewData = new PerformanceMeasureExpectedSummaryViewData(new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.OrderBy(x=>x.PerformanceMeasure.PerformanceMeasureSortOrder)));
-            var performanceMeasureReportedValuesGroupedViewData = BuildPerformanceMeasureReportedValuesGroupedViewData(project);
-            var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
+
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
             var projectInvoiceDetailViewData = new ProjectInvoiceDetailViewData(CurrentPerson, project);
@@ -237,12 +194,10 @@ namespace ProjectFirma.Web.Controllers
 
             var classificationSystems = HttpRequestStorage.DatabaseEntities.ClassificationSystems.ToList();
 
-            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
-
             var treatmentGroupGridSpec = new TreatmentGroupGridSpec(CurrentPerson, project);
             var treatmentGridSpec = new TreatmentGridSpec(CurrentPerson, project);
-            var treatmentAreaGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
-            var treatmentGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
+            var treatmentAreaGridDataUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.TreatmentAreaProjectDetailGridJsonData(project));
+            var treatmentGridDataUrl = SitkaRoute<TreatmentController>.BuildUrlFromExpression(tc => tc.TreatmentProjectDetailGridJsonData(project));
 
             var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, project);
             var projectInteractionEventsGridDataUrl =
@@ -250,19 +205,14 @@ namespace ProjectFirma.Web.Controllers
                     pc.ProjectInteractionEventsGridJsonData(project.PrimaryKey));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
-            var projectCustomAttributeSimples = new ProjectCustomAttributes(project).Attributes.ToList();
-            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, projectCustomAttributeSimples, false);
+
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,
                 projectBasicsViewData,
-                projectAttributesViewData,
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
                 projectInvoiceDetailViewData,
-                performanceMeasureExpectedsSummaryViewData,
-                performanceMeasureReportedValuesGroupedViewData,
-                projectExpendituresSummaryViewData,
                 imageGalleryViewData,
                 projectNotesViewData,
                 internalNotesViewData,
@@ -271,14 +221,10 @@ namespace ProjectFirma.Web.Controllers
                 userHasProjectAdminPermissions,
                 userHasEditProjectPermissions,
                 userHasProjectUpdatePermissions,
-                userHasPerformanceMeasureActualManagePermissions,
                 mapFormID,
                 editSimpleProjectLocationUrl,
                 editDetailedProjectLocationUrl,
                 editOrganizationsUrl,
-                editPerformanceMeasureExpectedsUrl,
-                editPerformanceMeasureActualsUrl,
-                editReportedExpendituresUrl,
                 auditLogsGridSpec,
                 auditLogsGridDataUrl,
                 editExternalLinksUrl,
@@ -312,32 +258,6 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        private static ProjectExpendituresDetailViewData BuildProjectExpendituresDetailViewData(Project project)
-        {
-            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearsForGrantAllocationExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var fromGrantAllocationsAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
-                calendarYearsForGrantAllocationExpenditures);
-            var projectExpendituresDetailViewData = new ProjectExpendituresDetailViewData(
-                fromGrantAllocationsAndCalendarYears,
-                calendarYearsForGrantAllocationExpenditures.Select(x => new CalendarYearString(x)).ToList(),
-                FirmaHelpers.CalculateYearRanges(project.GetExpendituresExemptReportingYears().Select(x => x.CalendarYear)),
-                project.NoExpendituresToReportExplanation);
-            return projectExpendituresDetailViewData;
-        }
-
-        private static PerformanceMeasureReportedValuesGroupedViewData BuildPerformanceMeasureReportedValuesGroupedViewData(Project project)
-        {
-            var performanceMeasureReportedValues = project.GetReportedPerformanceMeasures();
-            var performanceMeasureSubcategoriesCalendarYearReportedValues =
-                PerformanceMeasureSubcategoriesCalendarYearReportedValue.CreateFromPerformanceMeasuresAndCalendarYears(new List<IPerformanceMeasureReportedValue>(performanceMeasureReportedValues.OrderBy(x=>x.PerformanceMeasure.SortOrder).ThenBy(x=>x.PerformanceMeasure.DisplayName)));
-            var performanceMeasureReportedValuesGroupedViewData = new PerformanceMeasureReportedValuesGroupedViewData(performanceMeasureSubcategoriesCalendarYearReportedValues,
-                FirmaHelpers.CalculateYearRanges(project.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear)),
-                project.PerformanceMeasureActualYearsExemptionExplanation,
-                performanceMeasureReportedValues.Select(x => x.CalendarYear).Distinct().Select(x => new CalendarYearString(x)).ToList(),
-                false);
-            return performanceMeasureReportedValuesGroupedViewData;
-        }
 
         private static ImageGalleryViewData BuildImageGalleryViewData(Project project, Person currentPerson)
         {
@@ -361,7 +281,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static List<ProjectStage> GetActiveProjectStages(Project project)
         {
-            var activeProjectStages = new List<ProjectStage> {ProjectStage.Proposed, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
+            var activeProjectStages = new List<ProjectStage> {ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed};
 
             if (project.ProjectStage == ProjectStage.Cancelled)
             {
@@ -402,20 +322,10 @@ namespace ProjectFirma.Web.Controllers
             new ProjectViewFeature().DemandPermission(CurrentPerson, project);
             var mapDivID = $"project_{project.ProjectID}_Map";
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
-            var chartName = $"ProjectFactSheet{project.ProjectID}PieChart";
-            var expenditureGooglePieChartSlices = project.GetExpenditureGooglePieChartSlices();
-            var googleChartDataTable = GetProjectFactSheetGoogleChartDataTable(expenditureGooglePieChartSlices);
-            var googleChartTitle = $"Investment by Funding Sector for: {project.ProjectName}";
-            var googleChartType = GoogleChartType.PieChart;
-            var googleChartConfiguration = new GooglePieChartConfiguration(googleChartTitle,
-                MeasurementUnitTypeEnum.Dollars, expenditureGooglePieChartSlices, googleChartType,
-                googleChartDataTable);
-            var googleChartJson = new GoogleChartJson(string.Empty, chartName, googleChartConfiguration,
-                googleChartType, googleChartDataTable, null);
+
             var firmaPageTypeFactSheetCustomText = FirmaPageType.ToType(FirmaPageTypeEnum.FactSheetCustomText);
             var firmaPageFactSheetCustomText = FirmaPage.GetFirmaPageByPageType(firmaPageTypeFactSheetCustomText);
-            var viewData = new BackwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson,
-                googleChartJson, expenditureGooglePieChartSlices, FirmaHelpers.DefaultColorRange, firmaPageFactSheetCustomText);
+            var viewData = new BackwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson, firmaPageFactSheetCustomText);
             return RazorView<BackwardLookingFactSheet, BackwardLookingFactSheetViewData>(viewData);
         }
 
@@ -481,7 +391,6 @@ namespace ProjectFirma.Web.Controllers
         public List<Project> GetListOfActiveProjectsVisibleToUser(Person currentPerson)
         {
             var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
-                .Include(x => x.PerformanceMeasureActuals)
                 .Include(x => x.ProjectPrograms)
                 .Include(x => x.ProjectCounties)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
@@ -490,24 +399,6 @@ namespace ProjectFirma.Web.Controllers
             
             return allActiveProjectsWithIncludes;
         }
-
-        [ProjectsInProposalStageViewListFeature]
-        public ViewResult Proposed()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.Proposals);
-            var viewData = new ProposedViewData(CurrentPerson, firmaPage);
-            return RazorView<Proposed, ProposedViewData>(viewData);
-        }
-
-        [ProjectsInProposalStageViewListFeature]
-        public GridJsonNetJObjectResult<Project> ProposedGridJsonData()
-        {
-            var gridSpec = new ProposalsGridSpec(CurrentPerson);
-            var proposals = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetProposalsVisibleToUser(CurrentPerson);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(proposals, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
 
         [PendingProjectsViewListFeature]
         public ViewResult Pending()
@@ -526,11 +417,6 @@ namespace ProjectFirma.Web.Controllers
             var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
             var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
 
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
-
             var elevatedRoles = new List<IRole> {Role.Admin, Role.EsaAdmin, Role.ProjectSteward};
             if (CurrentPerson.HasAnyOfTheseRoles(elevatedRoles))
             {
@@ -542,8 +428,7 @@ namespace ProjectFirma.Web.Controllers
                 filteredProposals = pendingProjects.Where(x =>
                     {
 
-                        return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
-                                organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(y => y.Organization)
+                        return x.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized).Select(y => y.Organization)
                             .Contains(CurrentPerson.Organization);
                     })
                     .ToList();
@@ -560,14 +445,6 @@ namespace ProjectFirma.Web.Controllers
             return FullDatabaseExcelDownloadImpl(activeProjectsVisibleToUser, FieldDefinition.Project.GetFieldDefinitionLabelPluralized());
         }
 
-        [ProjectsViewFullListFeature]
-        public ExcelResult ProposalsExcelDownload()
-        {
-            return FullDatabaseExcelDownloadImpl(
-                HttpRequestStorage.DatabaseEntities.Projects.ToList()
-                    .GetProposalsVisibleToUser(CurrentPerson),
-                FieldDefinition.Application.GetFieldDefinitionLabelPluralized());
-        }
 
         [ProjectsViewFullListFeature]
         public ExcelResult PendingExcelDownload()
@@ -596,16 +473,8 @@ namespace ProjectFirma.Web.Controllers
             var organizationsSpec = new ProjectImplementingOrganizationOrProjectFundingOrganizationExcelSpec();
             var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
             var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
-            var projectOrganizations = projects.SelectMany(p =>
-            {
-                
-                return p.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle,
-                        organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict);
-            }).ToList();
+            var projectOrganizations = projects.SelectMany(p => p.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized)).ToList();
             var wsOrganizations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {organizationFieldDefinitionLabelPluralized}", organizationsSpec, projectOrganizations);
             workSheets.Add(wsOrganizations);
 
@@ -614,24 +483,6 @@ namespace ProjectFirma.Web.Controllers
             var wsProjectNotes = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ProjectNote.GetFieldDefinitionLabelPluralized()}", projectNoteSpec, projectNotes);
             workSheets.Add(wsProjectNotes);
 
-            var performanceMeasureExpectedExcelSpec = new PerformanceMeasureExpectedExcelSpec();
-            var performanceMeasureExpecteds = (projects.SelectMany(p => p.PerformanceMeasureExpecteds)).ToList();
-            var wsPerformanceMeasureExpecteds = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet(
-                $"Expected {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}s",
-                performanceMeasureExpectedExcelSpec,
-                performanceMeasureExpecteds);
-            workSheets.Add(wsPerformanceMeasureExpecteds);
-
-            var performanceMeasureActualExcelSpec = new PerformanceMeasureActualExcelSpec();
-            var performanceMeasureActuals = (projects.SelectMany(p => p.GetReportedPerformanceMeasures())).ToList();
-            var wsPerformanceMeasureActuals = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet(
-                $"Reported {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}", performanceMeasureActualExcelSpec, performanceMeasureActuals);
-            workSheets.Add(wsPerformanceMeasureActuals);
-
-            var projectGrantAllocationExpenditureExcelSpec = new ProjectGrantAllocationExpenditureExcelSpec();
-            var projectGrantAllocationExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();
-            var wsProjectGrantAllocationExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectGrantAllocationExpenditureExcelSpec, projectGrantAllocationExpenditures);
-            workSheets.Add(wsProjectGrantAllocationExpenditures);
 
             MultiTenantHelpers.GetClassificationSystems().ForEach(c =>
             {
@@ -712,7 +563,7 @@ namespace ProjectFirma.Web.Controllers
             var projectIDsFound = HttpRequestStorage.DatabaseEntities.Projects.GetProjectFindResultsForProjectNameAndDescriptionAndNumber(searchCriteria).Select(x => x.ProjectID);
             var projectsFound =
                 HttpRequestStorage.DatabaseEntities.Projects.Where(x => projectIDsFound.Contains(x.ProjectID))
-                    .ToList().GetActiveProjectsAndProposalsVisibleToUser(CurrentPerson);
+                    .ToList().GetActiveProjectsVisibleToUser(CurrentPerson);
             return projectsFound;
         }
 
@@ -913,20 +764,6 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(taxonomyBranches, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
-        [ProjectsInProposalStageViewListFeature]
-        public GridJsonNetJObjectResult<Project> MyOrganizationsProposalsGridJsonData()
-        {
-            var gridSpec = new ProposalsGridSpec(CurrentPerson);
-
-            var proposals = HttpRequestStorage.DatabaseEntities.Projects.ToList()
-                .GetProposalsVisibleToUser(CurrentPerson)
-                .Where(x => x.ProposingPerson.OrganizationID == CurrentPerson.OrganizationID)
-                .ToList();
-
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(proposals, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
         
         [ProjectsViewFullListFeature]
         public PartialViewResult DenyCreateProject()
@@ -967,7 +804,8 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var projectCreateUrl =
                 SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(projectPrimaryKey));
             var projectStewardLabel = FieldDefinition.ProjectSteward.GetFieldDefinitionLabel();
-            var proposalLabel = FieldDefinition.Application.GetFieldDefinitionLabel();
+            // TK&HK 5-28-2025 - TODO:Application Changed from Application to Project, unsure if this function is needed with removal of Application
+            var proposalLabel = FieldDefinition.Project.GetFieldDefinitionLabel();
 
             var confirmMessage = CurrentPerson.HasRole(Role.ProjectSteward)
                 ? $"Although you are a {projectStewardLabel}, you do not have permission to edit this {proposalLabel} through this page because it is pending approval. You can <a href='{projectCreateUrl}'>review, edit, or approve</a> the proposal."

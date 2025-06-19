@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return TaxonomyBranches.SelectMany(x => x.ProjectTypes.SelectMany(y => y.Projects)).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return TaxonomyBranches.SelectMany(x => x.ProjectTypes.SelectMany(y => y.Projects)).ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public static bool IsTaxonomyTrunkNameUnique(IEnumerable<TaxonomyTrunk> taxonomyTrunks, string taxonomyTrunkName, int currentTaxonomyTrunkID)
@@ -91,10 +91,6 @@ namespace ProjectFirma.Web.Models
             get { return TaxonomyBranches.SelectMany(x => x.ProjectTypes).OrderBy(x => x.ProjectTypeName).ToList(); }
         }
 
-        public List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
-        {
-            return ProjectTypes.SelectMany(x => x.ProjectTypePerformanceMeasures).GroupBy(x => x.PerformanceMeasure).ToList();
-        }
 
         public FancyTreeNode ToFancyTreeNode(Person currentPerson)
         {

@@ -6,7 +6,6 @@ using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
@@ -37,29 +36,7 @@ namespace ProjectFirma.Web.Controllers
             return new ExcelResult(excelWorkbook, viewModel.ExcelFilename);
         }
 
-        [HttpGet]
-        [AnonymousUnclassifiedFeature]
-        [CrossAreaRoute]
-        public ContentResult DownloadPerformanceMeasureChartData()
-        {
-            return new ContentResult();
-        }
 
-        [HttpPost]
-        [AnonymousUnclassifiedFeature]
-        [CrossAreaRoute]
-        public ExcelResult DownloadPerformanceMeasureChartData(DownloadChartDataViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new Exception("Invalid POST data.");
-            }
-
-            var excelWorkbook = viewModel.GetExcelWorkbook(x => ExcelWorkbookSheetDescriptorFactory.MakeWorksheet(x.LegendTitle,
-                new PerformanceMeasureChartExcelSpec(x.GoogleChartDataTable.GoogleChartColumns.Where(y => PerformanceMeasureChartDataSimple.IsValidColumn(y.ColumnLabel, x)).ToList()),
-                PerformanceMeasureChartDataSimple.DeriveSimplesFromGoogleChartJson(x, viewModel.MainColumnLabel)) as IExcelWorkbookSheetDescriptor);
-            return new ExcelResult(excelWorkbook, viewModel.ExcelFilename);
-        }
 
         [HttpGet]
         [AnonymousUnclassifiedFeature]

@@ -68,7 +68,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
         public int? PercentageMatch { get; set; }
 
-        public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
         public List<ProjectUpdateProgramSimple> ProjectUpdateProgramSimples { get; set; }
 
         /// <summary>
@@ -133,23 +132,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
-            }
-
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
-            {
-                var landownerCostShareLineItemsOnProject = HttpRequestStorage.DatabaseEntities.GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.ProjectID == ProjectID).ToList();
-                if (landownerCostShareLineItemsOnProject.Any(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned))
-                {
-                    yield return new SitkaValidationResult<BasicsViewModel, int>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()} Treatments must be Completed or Cancelled.", m => m.ProjectStageID);
-                }
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion Date is required", m => m.CompletionDate);
             }
 
             var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;
             if (isCompleted && CompletionDate > DateTime.Now)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
-                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Year needs to be less than or equal to the current year",
+                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Date needs to be less than or equal to the current year",
                     m => m.CompletionDate);
             }
 

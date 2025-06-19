@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Common
 
         public static List<string> GetWmsLayerNames()
         {
-            return new List<string> { GetDNRUplandRegionWmsLayerName(), GetPriorityLandscapeWmsLayerName() };
+            return new List<string> { GetDNRUplandRegionWmsLayerName(), GetPriorityLandscapeWmsLayerName(), GetCountyWmsLayerName() };
         }
 
         public static string GetDNRUplandRegionWmsLayerName()

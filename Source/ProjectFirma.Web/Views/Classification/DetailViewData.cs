@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Views.Classification
             EditClassificationUrl = SitkaRoute<ClassificationController>.BuildUrlFromExpression(c => c.Edit(classification));
             IndexUrl = SitkaRoute<ProgramInfoController>.BuildUrlFromExpression(c => c.ClassificationSystem(classification.ClassificationSystem));
 
-            UserHasClassificationManagePermissions = new PerformanceMeasureManageFeature().HasPermissionByPerson(currentPerson);
+            UserHasClassificationManagePermissions = new ClassificationManageFeature().HasPermissionByPerson(currentPerson);
             ClassificationDisplayNamePluralized = classification.ClassificationSystem.ClassificationSystemNamePluralized;
             ClassificationDisplayName = classification.ClassificationSystem.ClassificationSystemName;
 

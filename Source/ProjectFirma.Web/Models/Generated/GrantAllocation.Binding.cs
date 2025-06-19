@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Models
         protected GrantAllocation()
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
-            this.GrantAllocationAwards = new HashSet<GrantAllocationAward>();
             this.GrantAllocationBudgetLineItems = new HashSet<GrantAllocationBudgetLineItem>();
             this.GrantAllocationChangeLogs = new HashSet<GrantAllocationChangeLog>();
             this.GrantAllocationExpenditures = new HashSet<GrantAllocationExpenditure>();
@@ -36,8 +35,6 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
             this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
-            this.ProjectGrantAllocationExpenditures = new HashSet<ProjectGrantAllocationExpenditure>();
-            this.ProjectGrantAllocationExpenditureUpdates = new HashSet<ProjectGrantAllocationExpenditureUpdate>();
             this.ProjectGrantAllocationRequests = new HashSet<ProjectGrantAllocationRequest>();
             this.ProjectGrantAllocationRequestUpdates = new HashSet<ProjectGrantAllocationRequestUpdate>();
         }
@@ -101,7 +98,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationAwards.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationChangeLogs.Any() || GrantAllocationExpenditures.Any() || GrantAllocationFileResources.Any() || GrantAllocationLikelyPeople.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationChangeLogs.Any() || GrantAllocationExpenditures.Any() || GrantAllocationFileResources.Any() || GrantAllocationLikelyPeople.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
         }
 
         /// <summary>
@@ -114,11 +111,6 @@ namespace ProjectFirma.Web.Models
             if(AgreementGrantAllocations.Any())
             {
                 dependentObjects.Add(typeof(AgreementGrantAllocation).Name);
-            }
-
-            if(GrantAllocationAwards.Any())
-            {
-                dependentObjects.Add(typeof(GrantAllocationAward).Name);
             }
 
             if(GrantAllocationBudgetLineItems.Any())
@@ -166,16 +158,6 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(GrantAllocationProgramManager).Name);
             }
 
-            if(ProjectGrantAllocationExpenditures.Any())
-            {
-                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditure).Name);
-            }
-
-            if(ProjectGrantAllocationExpenditureUpdates.Any())
-            {
-                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditureUpdate).Name);
-            }
-
             if(ProjectGrantAllocationRequests.Any())
             {
                 dependentObjects.Add(typeof(ProjectGrantAllocationRequest).Name);
@@ -191,7 +173,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationAward).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -217,11 +199,6 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in AgreementGrantAllocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationAwards.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -271,16 +248,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectGrantAllocationExpenditures.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectGrantAllocationExpenditureUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectGrantAllocationRequests.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -312,7 +279,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
-        public virtual ICollection<GrantAllocationAward> GrantAllocationAwards { get; set; }
         public virtual ICollection<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
         public virtual ICollection<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual ICollection<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
@@ -322,8 +288,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual ICollection<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
-        public virtual ICollection<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }

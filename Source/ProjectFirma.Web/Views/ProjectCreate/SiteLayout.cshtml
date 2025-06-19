@@ -73,10 +73,10 @@
             color: #3e72b0;
         }
 
-        .glyphicon-chevron-down {
+        /*.glyphicon-chevron-down {
             margin-left: 7px;
             margin-top: 7px;
-        }
+        }*/
     </style>
 
     @RenderSection("JavascriptAndStylesContent", false)
@@ -95,13 +95,13 @@
             @if (ViewDataTyped.Project != null)
             {
                 <li>
-                    <a href="@ViewDataTyped.ProposalDetailUrl"><span class="glyphicon glyphicon-chevron-left"></span>@FieldDefinition.Application.GetFieldDefinitionLabel() Details</a>
+                    <a href="@ViewDataTyped.ProposalDetailUrl"><span class="glyphicon glyphicon-chevron-left"></span>Pending @FieldDefinition.Project.GetFieldDefinitionLabel() Details</a>
                 </li>
             }
             @if (ViewDataTyped.CurrentPersonCanWithdraw && ViewDataTyped.Project != null && ViewDataTyped.Project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval)
             {
                 <li>
-                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("Withdraw this {0}", FieldDefinition.Application.GetFieldDefinitionLabel()), ViewDataTyped.WithdrawUrl, string.Format("Withdraw {0}", FieldDefinition.Application.GetFieldDefinitionLabel()), 500, "Withdraw", "Cancel", new List<string>(), null, null)
+                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("Withdraw this Pending {0}", FieldDefinition.Project.GetFieldDefinitionLabel()), ViewDataTyped.WithdrawUrl, string.Format("Withdraw {0}", FieldDefinition.Project.GetFieldDefinitionLabel()), 500, "Withdraw", "Cancel", new List<string>(), null, null)
                 </li>
             }
         </ul>
@@ -131,13 +131,6 @@
     <div class="col-xs-12 col-sm-4 col-md-3" style="padding-right: 0;">
         <nav id="wizardNav">
             <ul class="nav nav-stacked">
-                <li class="@(ViewDataTyped.IsInstructionsPage ? "active" : null) workflowSectionGroup" id="instructions">
-                    <a href="@ViewDataTyped.InstructionsPageUrl"
-                       style="display: block;">
-                        <span class="workflowStatusPlaceholder"></span>
-                        Instructions
-                    </a>
-                </li>
                 @foreach (var projectWorkflowSectionGrouping in ViewDataTyped.ProjectWorkflowSectionGroupings.OrderBy(x => x.SortOrder))
 
                 {
@@ -188,6 +181,10 @@
                                             </span>
                                             <span style="display: inline-block; width: 80%">
                                                 <span>@projectSectionSimple.SectionDisplayName</span>
+                                                @if (projectSectionSimple.IsSectionRequired)
+                                                {
+                                                    <span><sup><span class="requiredFieldIcon glyphicon glyphicon-flash" style="color: #800020;"></span></sup></span>
+                                                }
                                             </span>
                                         </a>
                                     </li>
@@ -206,19 +203,16 @@
         <div class="row"><div class="col-sm-12"><h3 style="margin-top: 5px; margin-bottom: 0px;">@ViewDataTyped.CurrentSectionDisplayName</h3></div></div>
         <hr style="border-top: 1px solid #ddd;" />
         @RenderBody()
-        @if (ViewDataTyped.IsInstructionsPage)
-        {
-            <span><sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup> Required Field</span>
-        }
+
+        <span><sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup> Required Field</span>
     </div>
 </div>
-@if (ViewDataTyped.Project != null)
-{
+
     <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3">
         <div class="row">
             <div class="col-xs-6" style="padding-left: 0;">
                 <div class="pull-left">
-                    @if (ViewDataTyped.Project.ProposingPersonID.HasValue)
+                    @if (ViewDataTyped.Project != null && ViewDataTyped.Project.ProposingPersonID.HasValue)
                     {
                         <p>
                             Created by @ViewDataTyped.Project.ProposingPerson.FullNameFirstLastAndOrgShortName on @ViewDataTyped.Project.ProposingDate
@@ -228,7 +222,11 @@
             </div>
             <div class="col-xs-6">
                 <div class="pull-right">
-                    <span>New @FieldDefinition.Project.GetFieldDefinitionLabel() Status: <span style="font-weight: bold">@ViewDataTyped.Project.ProjectApprovalStatus.ProjectApprovalStatusDisplayName</span></span>
+                    @if (ViewDataTyped.Project != null)
+                    {
+                        <span>New @FieldDefinition.Project.GetFieldDefinitionLabel() Status: <span style="font-weight: bold">@ViewDataTyped.Project.ProjectApprovalStatus.ProjectApprovalStatusDisplayName</span></span>
+                    }
+
                 </div>
             </div>
         </div>
@@ -237,7 +235,11 @@
             </div>
             <div class="col-xs-6">
                 <div class="pull-right">
-                    @if (ViewDataTyped.Project.ProjectApprovalStatus.ToEnum == ProjectApprovalStatusEnum.Draft || ViewDataTyped.Project.ProjectApprovalStatus.ToEnum == ProjectApprovalStatusEnum.Returned)
+                    @if (ViewDataTyped.Project == null)
+                    {
+                        <button class="btn btn-xs btn-firma" disabled>Submit</button>
+
+                    }else if (ViewDataTyped.Project.ProjectApprovalStatus.ToEnum == ProjectApprovalStatusEnum.Draft || ViewDataTyped.Project.ProjectApprovalStatus.ToEnum == ProjectApprovalStatusEnum.Returned)
                     {
                         if (ViewDataTyped.CanAdvanceStage)
                         {
@@ -250,29 +252,28 @@
                             <button class="btn btn-xs btn-firma" disabled>Submit</button>
                         }
                     }
-                    else
+                    else if (ViewDataTyped.Project.ProjectApprovalStatus.ToEnum == ProjectApprovalStatusEnum.PendingApproval)
                     {
-                        if (ViewDataTyped.Project.ProjectApprovalStatus.ToEnum == ProjectApprovalStatusEnum.PendingApproval)
+
+                        if (ViewDataTyped.CurrentPersonIsApprover)
                         {
-                            if (ViewDataTyped.CurrentPersonIsApprover)
+                            if (ViewDataTyped.CanAdvanceStage)
                             {
-                                if (ViewDataTyped.CanAdvanceStage)
-                                {
-                                    <span>
-                                        @ModalDialogFormHelper.ModalDialogFormLink(string.Format("<button class='btn btn-xs btn-firma'>{0} Approve</button>", BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-open")), ViewDataTyped.ApproveUrl, "Approve Proposal", 400, "Approve", "Cancel", null, null, null)
-                                    </span>
-                                }
-                                else
-                                {
-                                    <button class="btn btn-xs btn-firma" disabled>Approve</button>
-                                }
-                                <span>@ModalDialogFormHelper.ModalDialogFormLink("Return", ViewDataTyped.ReturnUrl, "Return Proposal to Submitter", 500, "Return", "Cancel", new List<string> { "submitProject btn btn-xs btn-firma" }, null, null)</span>
-                                <span>@ModalDialogFormHelper.ModalDialogFormLink("Reject", ViewDataTyped.RejectUrl, "Reject Proposal", 500, "Reject", "Cancel", new List<string> { "submitProject btn btn-xs btn-firma" }, null, null)</span>
+                                <span>
+                                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("<button class='btn btn-xs btn-firma'>{0} Approve</button>", BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-open")), ViewDataTyped.ApproveUrl, "Approve Proposal", 400, "Approve", "Cancel", null, null, null)
+                                </span>
                             }
+                            else
+                            {
+                                <button class="btn btn-xs btn-firma" disabled>Approve</button>
+                            }
+
+                            <span>@ModalDialogFormHelper.ModalDialogFormLink("Return", ViewDataTyped.ReturnUrl, "Return Proposal to Submitter", 500, "Return", "Cancel", new List<string> { "submitProject btn btn-xs btn-firma" }, null, null)</span>
+                            <span>@ModalDialogFormHelper.ModalDialogFormLink("Reject", ViewDataTyped.RejectUrl, "Reject Proposal", 500, "Reject", "Cancel", new List<string> { "submitProject btn btn-xs btn-firma" }, null, null)</span>
                         }
+                        
                     }
                 </div>
             </div>
         </div>
     </div>
-}

@@ -51,10 +51,8 @@ namespace ProjectFirma.Web.Controllers
                 "FirmaPageController.FirmaPageDetails",
                 "ResultsController.SpendingByOrganizationTypeByOrganization",
                 "ResultsController.SpendingByOrganizationTypeByOrganizationExcelDownload",
-                "PerformanceMeasureController.SaveChartConfiguration",
                 "RoleController.Detail",
                 "RoleController.PersonWithRoleGridJsonData",
-                "GrantAllocationAwardController.GetGrantAllocationDates"
             };
             var missingHumanReadable = missing.Select(x => $"{x.ReflectedType.Name}.{x.Name}").Where(x => !exceptions.Contains(x)).ToList();
             Assert.That(missingHumanReadable,

@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public int TaxonomyTierID => TaxonomyBranchID;
@@ -82,11 +82,6 @@ namespace ProjectFirma.Web.Models
         }
 
         public string AuditDescriptionString => TaxonomyBranchName;
-
-        public List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
-        {
-            return ProjectTypes.SelectMany(x => x.ProjectTypePerformanceMeasures).GroupBy(y => y.PerformanceMeasure).ToList();
-        }
 
         public FancyTreeNode ToFancyTreeNode(Person currentPerson)
         {

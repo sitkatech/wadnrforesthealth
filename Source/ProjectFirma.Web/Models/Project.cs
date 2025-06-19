@@ -1,4 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
+/*-----------------------------------------------------------------------
 <copyright file="Project.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
@@ -83,12 +84,6 @@ namespace ProjectFirma.Web.Models
             return CheckIfFieldIsImported(programsToCheck, FieldDefinition.ProjectIdentifier);
         }
 
-        public bool IsCompletionDateImported()
-        {
-            var programsToCheck = ProjectPrograms.Select(x => x.Program);
-            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.CompletionDate);
-        }
-
         public bool IsLeadImplementerOrganizationImported()
         {
             var programsToCheck = ProjectPrograms.Select(x => x.Program);
@@ -111,6 +106,11 @@ namespace ProjectFirma.Web.Models
             var programsToCheck = ProjectPrograms.Select(x => x.Program);
             return CheckIfFieldIsImported(programsToCheck, FieldDefinition.PlannedDate);
         }
+        public bool IsCompletionDateImported()
+        {
+            var programsToCheck = ProjectPrograms.Select(x => x.Program);
+            return CheckIfFieldIsImported(programsToCheck, FieldDefinition.CompletionDate);
+        }
 
         public bool IsProjectStageImported()
         {
@@ -120,8 +120,22 @@ namespace ProjectFirma.Web.Models
 
         public static bool CheckIfFieldIsImported(IEnumerable<Program> programsToCheck, FieldDefinition fieldDefinition)
         {
+            //Start Date and Completion Date are dependent on checkboxes being checked.
+            //This is true for Projects and Treatments. But Treatments are not editable at all if they are imported, so we are only checking the Project checkboxes here
             foreach (var program in programsToCheck)
             {
+                if (fieldDefinition == FieldDefinition.PlannedDate && !program.GisUploadSourceOrganization.ApplyStartDateToProject)
+                {
+                    // Planned/Start date is not being applied to Project for this program continue to check other.
+                    continue;
+                }
+
+                if (fieldDefinition == FieldDefinition.CompletionDate && !program.GisUploadSourceOrganization.ApplyCompletedDateToProject)
+                {
+                    // Completion date is not being applied to Project for this program continue to check other.
+                    continue;
+                }
+
                 if (program.GisUploadSourceOrganization.GisDefaultMappings.Any(x => x.FieldDefinitionID == fieldDefinition.FieldDefinitionID && !string.IsNullOrEmpty(x.GisDefaultMappingColumnName)))
                 {
                     return true;
@@ -131,23 +145,6 @@ namespace ProjectFirma.Web.Models
             return false;
         }
 
-        public decimal TotalPlannedFootprintAcres
-        {
-            get
-            {
-                return Math.Round(GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned)
-                    .Select(x => x.Treatment?.TreatmentFootprintAcres ?? 0).Sum(), 2);
-            }
-        }
-
-        public decimal TotalCompletedFootprintAcres
-        {
-            get
-            {
-                return Math.Round(GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Completed)
-                    .Select(x => x.Treatment?.TreatmentFootprintAcres ?? 0).Sum(), 2);
-            }
-        }
 
         public decimal TotalTreatedAcres
         {
@@ -188,24 +185,6 @@ namespace ProjectFirma.Web.Models
         public List<DNRUplandRegion> GetCanStewardProjectsRegions()
         {
             return ProjectRegions.Select(x => x.DNRUplandRegion).ToList();
-        }
-
-        public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
-        {
-            if (MultiTenantHelpers.GetRelationshipTypeToReportInAccomplishmentsDashboard() == null)
-            {
-                // Default is Funding Organizations
-                var organizations = ProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
-                    .Union(ProjectGrantAllocationRequests
-                        .Select(x => x.GrantAllocation.BottommostOrganization))
-                    .Distinct(new HavePrimaryKeyComparer<Organization>());
-                return organizations;
-            }
-            else
-            {
-                return ProjectOrganizations.Where(x => x.RelationshipType.ReportInAccomplishmentsDashboard)
-                    .Select(x => x.Organization).ToList();
-            }
         }
 
         public Person GetPrimaryContact()
@@ -269,16 +248,6 @@ namespace ProjectFirma.Web.Models
             return null;
         }
 
-
-        public decimal? TotalExpenditures
-        {
-            get
-            {
-                return ProjectGrantAllocationExpenditures.Any()
-                    ? ProjectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount)
-                    : (decimal?) null;
-            }
-        }
 
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
         public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
@@ -452,33 +421,14 @@ namespace ProjectFirma.Web.Models
             return IsMyProject(person) || new ProjectApproveFeature().HasPermission(person, this).HasPermission;
         }
 
-        public List<PerformanceMeasureReportedValue> GetReportedPerformanceMeasures()
-        {
-            var reportedPerformanceMeasures = GetNonVirtualPerformanceMeasureReportedValues();
-            return reportedPerformanceMeasures.OrderByDescending(pma => pma.CalendarYear)
-                .ThenBy(pma => pma.PerformanceMeasureID).ToList();
-        }
-
-        public List<PerformanceMeasureReportedValue> GetNonVirtualPerformanceMeasureReportedValues()
-        {
-            var performanceMeasureReportedValues = PerformanceMeasureActuals.Select(x => x.PerformanceMeasure)
-                .Distinct(new HavePrimaryKeyComparer<PerformanceMeasure>())
-                .SelectMany(x => x.GetReportedPerformanceMeasureValues(this)).ToList();
-            return performanceMeasureReportedValues.OrderByDescending(pma => pma.CalendarYear)
-                .ThenBy(pma => pma.PerformanceMeasureID).ToList();
-        }
-
         public FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties)
         {
             var featureCollection = new FeatureCollection();
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
 
             if (ProjectLocationSimpleType == ProjectLocationSimpleType.PointOnMap && HasProjectLocationPoint)
             {
                 featureCollection.Features.Add(
-                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), projectGrantAllocationExpenditureDict));
+                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true, FieldDefinition.Organization.GetFieldDefinitionLabel(), FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()));
             }
 
             return featureCollection;
@@ -610,18 +560,13 @@ namespace ProjectFirma.Web.Models
             var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
             var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
 
-            var allProjectGrantAllocationExpenditures =
-                HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-            var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
             featureCollection.Features.AddRange(filteredProjectList.Select(project =>
             {
                 
                 return project.MakePointFeatureWithRelevantProperties(project.ProjectLocationPoint,
                     addProjectProperties,
                     useDetailedCustomPopup, organizationFieldDefinitionLabelSingle,
-                    organizationFieldDefinitionLabelPluralized,
-                    projectGrantAllocationExpenditureDict);
+                    organizationFieldDefinitionLabelPluralized);
             }).ToList());
             return featureCollection;
         }
@@ -694,7 +639,7 @@ namespace ProjectFirma.Web.Models
             , bool useDetailedCustomPopup
             , string organizationFieldDefinitionLabelSingle
             , string organizationFieldDefinitionLabelPluralized
-            , Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
+            )
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(projectLocationPoint);
             feature.Properties.Add("TaxonomyTrunkID",
@@ -714,7 +659,7 @@ namespace ProjectFirma.Web.Models
                 feature.Properties.Add("ProjectTypeID", ProjectTypeID.ToString(CultureInfo.InvariantCulture));
                 feature.Properties.Add("ClassificationID",
                     string.Join(",", ProjectClassifications.Select(x => x.ClassificationID)));
-                var associatedOrganizations = this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict);
+                var associatedOrganizations = this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized);
                 foreach (var relationshipTypeGroup in associatedOrganizations.GroupBy(x => x.RelationshipType.RelationshipTypeName))
                 {
                     feature.Properties.Add($"{relationshipTypeGroup.First().RelationshipType.RelationshipTypeName}ID",
@@ -758,18 +703,9 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-
-                var allProjectGrantAllocationExpenditures =
-                    HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-                var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
-                // get the list of funders so we can exclude any that have other project associations
-                var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
-                var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
-                var fundingOrganizations = this.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Select(x => x.Organization.OrganizationID);
                 // Don't use GetAssociatedOrganizations because we don't care about funders for this list.
                 var associatedOrganizations = ProjectOrganizations.Where(x =>
-                    x.RelationshipType.ShowOnFactSheet && !fundingOrganizations.Contains(x.OrganizationID)).ToList();
+                    x.RelationshipType.ShowOnFactSheet).ToList();
                 associatedOrganizations.RemoveAll(x =>
                     x.OrganizationID == GetPrimaryContactOrganization()?.OrganizationID);
                 var organizationNames = associatedOrganizations
@@ -781,28 +717,10 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string FundingOrganizationNamesForFactSheet
+        public string AssociatedOrganizationNames(Organization organization, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized)
         {
-            get
-            {
-                var allProjectGrantAllocationExpenditures =
-                    HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.ToList();
-                var projectGrantAllocationExpenditureDict = allProjectGrantAllocationExpenditures.GroupBy(x => x.ProjectID).ToDictionary(x => x.Key, y => y.ToList());
-
-                var organizationFieldDefinitionLabelPluralized = FieldDefinition.Organization.GetFieldDefinitionLabelPluralized();
-                var organizationFieldDefinitionLabelSingle = FieldDefinition.Organization.GetFieldDefinitionLabel();
-                return string.Join(", ",
-                    this.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).OrderBy(x => x.Organization.OrganizationName)
-                        .Select(x => x.Organization.OrganizationName));
-            }
-        }
-
-        public string AssociatedOrganizationNames(Organization organization, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized, Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
-        {
-
-            
             var projectOrganizationAssociationNames = new List<string>();
-            this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict).Where(x => x.Organization == organization).ForEach(x =>
+            this.GetAssociatedOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized).Where(x => x.Organization == organization).ForEach(x =>
                 projectOrganizationAssociationNames.Add(x.RelationshipType.RelationshipTypeName));
             return string.Join(", ", projectOrganizationAssociationNames);
         }
@@ -886,42 +804,6 @@ namespace ProjectFirma.Web.Models
 
         public int FancyTreeNodeKey => ProjectID;
 
-        IEnumerable<IProjectCustomAttribute> IProject.ProjectCustomAttributes
-        {
-            get => ProjectCustomAttributes;
-            set => ProjectCustomAttributes = (ICollection<ProjectCustomAttribute>) value;
-        }
-
-        public List<GooglePieChartSlice> GetExpenditureGooglePieChartSlices()
-        {
-            var sortOrder = 0;
-            var googlePieChartSlices = new List<GooglePieChartSlice>();
-            var expendituresDictionary = ProjectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0)
-                .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
-                .ToDictionary(x => x.Key, x => x.Sum(y => y.ExpenditureAmount));
-
-            var groupedGrantAllocations = expendituresDictionary.Keys.GroupBy(x => x.BottommostOrganization.OrganizationType,
-                new HavePrimaryKeyComparer<OrganizationType>());
-            foreach (var groupedGrantAllocation in groupedGrantAllocations)
-            {
-                var sectorColor = ColorTranslator.FromHtml(groupedGrantAllocation.Key.LegendColor);
-                var sectorColorHsl = new HslColor(sectorColor.R, sectorColor.G, sectorColor.B);
-
-                groupedGrantAllocation.OrderBy(x => x.GrantAllocationName)
-                    .ForEach((grantAllocation, index) =>
-                    {
-                        var luminosity = 100.0 * (groupedGrantAllocation.Count() - index - 1) /
-                                         groupedGrantAllocation.Count() + 120;
-                        var color = ColorTranslator.ToHtml(new HslColor(sectorColorHsl.Hue, sectorColorHsl.Saturation,
-                            luminosity));
-
-                        googlePieChartSlices.Add(new GooglePieChartSlice(grantAllocation.FixedLengthDisplayName,
-                            Convert.ToDouble(expendituresDictionary[grantAllocation]), sortOrder++, color));
-                    });
-            }
-
-            return googlePieChartSlices;
-        }
 
         public List<GooglePieChartSlice> GetGrantAllocationRequestGooglePieChartSlices()
         {
@@ -971,22 +853,12 @@ namespace ProjectFirma.Web.Models
 
         public bool IsActiveProject()
         {
-            return !IsProposal() && ProjectApprovalStatus == ProjectApprovalStatus.Approved;
-        }
-
-        public bool IsProposal()
-        {
-            return ProjectStage == ProjectStage.Proposed;
-        }
-
-        public bool IsActiveProposal()
-        {
-            return IsProposal() && ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
+            return ProjectApprovalStatus == ProjectApprovalStatus.Approved;
         }
 
         public bool IsPendingProject()
         {
-            return !IsProposal() && ProjectApprovalStatus != ProjectApprovalStatus.Approved;
+            return ProjectApprovalStatus != ProjectApprovalStatus.Approved;
         }
 
         public bool IsRejected()
@@ -1010,27 +882,12 @@ namespace ProjectFirma.Web.Models
             return true;
         }
 
-        public bool AreReportedPerformanceMeasuresRelevant()
-        {
-            return ProjectStage != ProjectStage.Proposed && ProjectStage != ProjectStage.Planned;
-        }
-
-        public bool AreReportedExpendituresRelevant()
-        {
-            return ProjectStage != ProjectStage.Proposed;
-        }
-
         public bool IsInLandownerAssistanceProgram => ProjectPrograms.Any(x => x.ProgramID == Program.LandownerAssistanceProgramID);
 
         public static List<ProjectSectionSimple> GetApplicableProposalWizardSections(Project project, bool ignoreStatus)
         {
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus))
                 .OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
-        }
-
-        public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProject()
-        {
-            return ProjectType.GetProjectCustomAttributeTypesForThisProjectType();
         }
 
         public string GetPlannedDate()

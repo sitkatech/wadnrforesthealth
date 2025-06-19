@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit documents for {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
 
-            if (contextModelObject.Project.IsProposal() || contextModelObject.Project.IsPendingProject())
+            if (contextModelObject.Project.IsPendingProject())
             {
                 return new ProjectCreateFeature().HasPermission(person, contextModelObject.Project);
             }

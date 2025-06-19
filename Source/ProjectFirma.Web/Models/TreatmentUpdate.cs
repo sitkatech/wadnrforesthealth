@@ -39,7 +39,6 @@ namespace ProjectFirma.Web.Models
                 return new TreatmentUpdate()
                 {
                     ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID,
-                    GrantAllocationAwardLandownerCostShareLineItemID = t.GrantAllocationAwardLandownerCostShareLineItemID,
                     TreatmentStartDate = t.TreatmentStartDate,
                     TreatmentEndDate = t.TreatmentEndDate,
                     TreatmentFootprintAcres = t.TreatmentFootprintAcres,
@@ -82,7 +81,6 @@ namespace ProjectFirma.Web.Models
                         );
                     var treatment = new Treatment(
                         project.ProjectID,
-                        tu.GrantAllocationAwardLandownerCostShareLineItemID,
                         tu.TreatmentStartDate,
                         tu.TreatmentEndDate,
                         tu.TreatmentFootprintAcres,

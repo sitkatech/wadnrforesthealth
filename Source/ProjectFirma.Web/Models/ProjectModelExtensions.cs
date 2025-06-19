@@ -49,13 +49,7 @@ namespace ProjectFirma.Web.Models
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
         public static string GetEditUrl(this Project project)
         {
-            return project.IsProposal() ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(t => t.EditBasics(project.ProjectID)) : EditUrlTemplate.ParameterReplace(project.ProjectID);
-        }
-
-        public static readonly UrlTemplate<int> EditProjectAttributesUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.EditProjectAttributes(UrlTemplate.Parameter1Int)));
-        public static string GetEditProjectAttributesUrl(this Project project)
-        {
-            return project.IsProposal() ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(t => t.EditBasics(project.ProjectID)) : EditProjectAttributesUrlTemplate.ParameterReplace(project.ProjectID);
+            return EditUrlTemplate.ParameterReplace(project.ProjectID);
         }
 
         public static readonly UrlTemplate<int> ProjectCreateUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(t => t.EditBasics(UrlTemplate.Parameter1Int)));
@@ -118,18 +112,6 @@ namespace ProjectFirma.Web.Models
             return GetYearRangesImpl(projectUpdate, startYear);
         }
 
-        public static List<ProjectExemptReportingYear> GetPerformanceMeasuresExemptReportingYears(this Project project)
-        {
-            return project.ProjectExemptReportingYears
-                .Where(x => x.ProjectExemptReportingType == ProjectExemptReportingType.PerformanceMeasures)
-                .OrderBy(x => x.CalendarYear).ToList();
-        }
-        public static List<ProjectExemptReportingYear> GetExpendituresExemptReportingYears(this Project project)
-        {
-            return project.ProjectExemptReportingYears
-                .Where(x => x.ProjectExemptReportingType == ProjectExemptReportingType.Expenditures)
-                .OrderBy(x => x.CalendarYear).ToList();
-        }
 
         private static List<int> GetYearRangesImpl(IProject projectUpdate, DateTime? startDate)
         {
@@ -161,36 +143,14 @@ namespace ProjectFirma.Web.Models
                 currentYearToUse);
         }
 
-        /// <summary>
-        /// Returns the organizations that appear in this project's Expected Funding or Reported Funding
-        /// Returns as ProjectOrganization with a dummy "Funder" RelationshipType, which lives as a static property of the RelationshipType class
-        /// </summary>
-        /// <returns></returns>
-        public static List<ProjectOrganizationRelationship> GetFundingOrganizations(this Project project, string organizationFieldDefinitionLabelSingle, string organizationFieldDefinitionLabelPluralized, Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
-        {
-           
-            var thisListOfProjectGrantAllocationExpenditures =
-                projectGrantAllocationExpenditureDict.ContainsKey(project.ProjectID)
-                    ? projectGrantAllocationExpenditureDict[project.ProjectID]
-                    : new List<ProjectGrantAllocationExpenditure>();
-            var relationshipTypeFunder = new RelationshipType(ModelObjectHelpers.NotYetAssignedID, "Funder", false, false, false, string.Empty, true, true);
-            var fundingOrganizations = thisListOfProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
-                .Union(project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation.BottommostOrganization)).Distinct()
-                .Select(x => new ProjectOrganizationRelationship(project, x, relationshipTypeFunder));
-            Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), $"Must have {organizationFieldDefinitionLabelSingle} set for all Funding {organizationFieldDefinitionLabelPluralized}");
-            return fundingOrganizations.ToList();
-        }
 
         public static List<ProjectOrganizationRelationship> GetAssociatedOrganizations(this Project project
             , string organizationFieldDefinitionLabelSingle
             , string organizationFieldDefinitionLabelPluralized
-            , Dictionary<int, List<ProjectGrantAllocationExpenditure>> projectGrantAllocationExpenditureDict)
+            )
         {
-
- 
-
             var explicitOrganizations = project.ProjectOrganizations.Select(x => new ProjectOrganizationRelationship(project, x.Organization, x.RelationshipType)).ToList();
-            explicitOrganizations.AddRange(project.GetFundingOrganizations(organizationFieldDefinitionLabelSingle, organizationFieldDefinitionLabelPluralized, projectGrantAllocationExpenditureDict));
+
             return explicitOrganizations.DistinctBy(x => new {x.Project.ProjectID, x.Organization.OrganizationID})
                 .ToList();
         }

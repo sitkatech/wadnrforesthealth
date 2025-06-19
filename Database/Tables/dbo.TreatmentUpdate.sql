@@ -5,7 +5,6 @@ GO
 CREATE TABLE [dbo].[TreatmentUpdate](
 	[TreatmentUpdateID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
-	[GrantAllocationAwardLandownerCostShareLineItemID] [int] NULL,
 	[TreatmentStartDate] [datetime] NULL,
 	[TreatmentEndDate] [datetime] NULL,
 	[TreatmentFootprintAcres] [decimal](38, 10) NOT NULL,
@@ -38,11 +37,6 @@ ALTER TABLE [dbo].[TreatmentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentUpd
 REFERENCES [dbo].[GisUploadAttempt] ([GisUploadAttemptID])
 GO
 ALTER TABLE [dbo].[TreatmentUpdate] CHECK CONSTRAINT [FK_TreatmentUpdate_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID]
-GO
-ALTER TABLE [dbo].[TreatmentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID] FOREIGN KEY([GrantAllocationAwardLandownerCostShareLineItemID])
-REFERENCES [dbo].[GrantAllocationAwardLandownerCostShareLineItem] ([GrantAllocationAwardLandownerCostShareLineItemID])
-GO
-ALTER TABLE [dbo].[TreatmentUpdate] CHECK CONSTRAINT [FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID]
 GO
 ALTER TABLE [dbo].[TreatmentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentUpdate_Program_ProgramID] FOREIGN KEY([ProgramID])
 REFERENCES [dbo].[Program] ([ProgramID])

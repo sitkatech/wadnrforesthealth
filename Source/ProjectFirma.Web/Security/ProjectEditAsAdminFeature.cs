@@ -42,12 +42,6 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Project contextModelObject)
         {
-            bool isProposal = contextModelObject.IsProposal();
-            if (isProposal)
-            {
-                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You cannot edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it is in the Proposal stage.");
-            }
-
             bool isPending = contextModelObject.IsPendingProject();
             if (isPending)
             {

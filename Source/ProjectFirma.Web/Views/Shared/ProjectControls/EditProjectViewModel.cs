@@ -135,17 +135,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             var projectType =
                 HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
                     x.ProjectTypeID == project.ProjectTypeID);
-            var appropriateTypesOfProjectAttributes = projectType != null
-                ? projectType.GetProjectCustomAttributeTypesForThisProjectType()
-                : HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.Where(x => x.ApplyToAllProjectTypes)
-                    .ToList();
-            var badProjectAttributes = project.ProjectCustomAttributes.Where(pca =>
-                !appropriateTypesOfProjectAttributes.Select(x => x.ProjectCustomAttributeTypeID)
-                    .Contains(pca.ProjectCustomAttributeTypeID)).ToList();
-            var values = badProjectAttributes.SelectMany(x => x.ProjectCustomAttributeValues).ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.DeleteProjectCustomAttributeValue(values);
-            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.DeleteProjectCustomAttribute(badProjectAttributes);
-
 
             var existingProjectPrograms = project.ProjectPrograms.Select(x => x.ProjectProgramID).ToList();
 
@@ -192,16 +181,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
-            }
-
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
-            {
-                var landownerCostShareLineItemsOnProject = HttpRequestStorage.DatabaseEntities.GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.ProjectID == ProjectID).ToList();
-                if (landownerCostShareLineItemsOnProject.Any(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned))
-                {
-                    yield return new SitkaValidationResult<EditProjectViewModel, int>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()} Treatments must be Completed or Cancelled.", m => m.ProjectStageID);
-                }
+                yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion Date is required", m => m.CompletionDate);
             }
 
             var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;

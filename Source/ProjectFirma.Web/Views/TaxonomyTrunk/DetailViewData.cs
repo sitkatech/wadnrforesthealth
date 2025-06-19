@@ -28,7 +28,6 @@ using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Views.TaxonomyTrunk
@@ -57,18 +56,12 @@ namespace ProjectFirma.Web.Views.TaxonomyTrunk
         public string TaxonomyBranchDisplayNamePluralized { get; }
         public string ProjectTypeDisplayNamePluralized { get; }
 
-        public bool CanHaveAssociatedPerformanceMeasures { get; }
-        public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
-        public RelatedPerformanceMeasuresViewData RelatedPerformanceMeasuresViewData { get; }
-
         public string EditChildrenSortOrderUrl { get; }
 
         public DetailViewData(Person currentPerson,
             Models.TaxonomyTrunk taxonomyTrunk,
             ProjectLocationsMapInitJson projectLocationsMapInitJson,
-            ProjectLocationsMapViewData projectLocationsMapViewData, bool canHaveAssociatedPerformanceMeasures,
-            RelatedPerformanceMeasuresViewData relatedPerformanceMeasuresViewData,
-            List<PerformanceMeasureChartViewData> performanceMeasureChartViewDatas, TaxonomyLevel taxonomyLevel) : base(currentPerson)
+            ProjectLocationsMapViewData projectLocationsMapViewData, TaxonomyLevel taxonomyLevel) : base(currentPerson)
         {
             TaxonomyTrunk = taxonomyTrunk;
             TaxonomyTrunkDisplayName = Models.FieldDefinition.TaxonomyTrunk.GetFieldDefinitionLabel();
@@ -100,10 +93,6 @@ namespace ProjectFirma.Web.Views.TaxonomyTrunk
 
             BasicProjectInfoGridDataUrl = SitkaRoute<TaxonomyTrunkController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(taxonomyTrunk));
             ProjectTaxonomyViewData = new ProjectTaxonomyViewData(taxonomyTrunk, taxonomyLevel);
-
-            CanHaveAssociatedPerformanceMeasures = canHaveAssociatedPerformanceMeasures;
-            PerformanceMeasureChartViewDatas = performanceMeasureChartViewDatas;
-            RelatedPerformanceMeasuresViewData = relatedPerformanceMeasuresViewData;
 
             EditChildrenSortOrderUrl = SitkaRoute<TaxonomyTrunkController>.BuildUrlFromExpression(x => x.EditChildrenSortOrder(taxonomyTrunk));
         }

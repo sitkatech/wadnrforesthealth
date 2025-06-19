@@ -34,7 +34,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
     public class ProjectLocationSimpleViewModel : FormViewModel, IValidatableObject
     {
+        [Range(-180, 180, ErrorMessage = "Longitude must be between -180 and 180")]
         public double? ProjectLocationPointX { get; set; }
+        [Range(-90, 90, ErrorMessage = "Latitude must be between -90 and 90")]
         public double? ProjectLocationPointY { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -73,6 +75,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             switch (ProjectLocationSimpleType)
             {                
                 case ProjectLocationSimpleTypeEnum.PointOnMap:
+				case ProjectLocationSimpleTypeEnum.LatLngInput:
                     project.ProjectLocationPoint = DbSpatialHelper.MakeDbGeometryFromCoordinates(ProjectLocationPointX.Value, ProjectLocationPointY.Value, MapInitJson.CoordinateSystemId);
                     break;
                 case ProjectLocationSimpleTypeEnum.None:
@@ -98,13 +101,18 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
                 errors.Add(new SitkaValidationResult<ProjectLocationSimpleViewModel, double?>("Please specify a point on the map", x => x.ProjectLocationPointX));
             }
 
-            if (ProjectLocationSimpleType == ProjectLocationSimpleTypeEnum.None && string.IsNullOrWhiteSpace(ProjectLocationNotes))
+            if (ProjectLocationSimpleType == ProjectLocationSimpleTypeEnum.LatLngInput)
             {
-                errors.Add(
-                    new SitkaValidationResult<ProjectLocationSimpleViewModel, string>(
-                        $"If a location point or general {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} area is not available, explanatory information in the Notes section is required.",
-                        x => x.ProjectLocationNotes));
+                if (!ProjectLocationPointY.HasValue || ProjectLocationPointY < -90 || ProjectLocationPointY > 90)
+                {
+                    errors.Add(new SitkaValidationResult<ProjectLocationSimpleViewModel, double?>("Please enter a valid latitude", x => x.ProjectLocationPointY));
+                }
+                if (!ProjectLocationPointX.HasValue || ProjectLocationPointX < -180 || ProjectLocationPointX > 180)
+                {
+                    errors.Add(new SitkaValidationResult<ProjectLocationSimpleViewModel, double?>("Please enter a valid longitude", x => x.ProjectLocationPointX));
+                }
             }
+            
 
             return errors;
         }

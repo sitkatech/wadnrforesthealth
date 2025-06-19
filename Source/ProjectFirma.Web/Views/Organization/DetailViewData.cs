@@ -26,7 +26,6 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Agreement;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Program;
 using ProjectFirma.Web.Views.Shared;
 
@@ -52,19 +51,10 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly string AgreementOrganizationsGridName;
         public readonly string AgreementOrganizationsGridDataUrl;
 
-        public readonly ProjectsIncludingLeadImplementingGridSpec ProposalsGridSpec;
-        public readonly string ProposalsGridName;
-        public readonly string ProposalsGridDataUrl;
-
         public readonly ProjectsIncludingLeadImplementingGridSpec PendingProjectsGridSpec;
         public readonly string PendingProjectsGridName;
         public readonly string PendingProjectsGridDataUrl;
 
-        public readonly ViewGoogleChartViewData ExpendituresDirectlyFromOrganizationViewGoogleChartViewData;
-        public readonly ViewGoogleChartViewData ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData;
-        public readonly ProjectGrantAllocationExpendituresForOrganizationGridSpec ProjectGrantAllocationExpendituresForOrganizationGridSpec;
-        public readonly string ProjectGrantAllocationExpendituresForOrganizationGridName;
-        public readonly string ProjectGrantAllocationExpendituresForOrganizationGridDataUrl;
 
         public readonly string ManageGrantAllocationsUrl;
         public readonly string IndexUrl;
@@ -72,12 +62,7 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly MapInitJson MapInitJson;
         public readonly bool HasSpatialData;
 
-        public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
-
         public readonly string ProjectStewardOrLeadImplementorFieldDefinitionName;
-
-        public readonly bool ShowProposals;
-        public readonly string ProposalsPanelHeader;
 
         public readonly bool ShowPendingProjects;
 
@@ -91,9 +76,6 @@ namespace ProjectFirma.Web.Views.Organization
                             Models.Organization organization,
                             MapInitJson mapInitJson,
                             bool hasSpatialData,
-                            List<Models.PerformanceMeasure> performanceMeasures, 
-                            ViewGoogleChartViewData expendituresDirectlyFromOrganizationViewGoogleChartViewData,
-                            ViewGoogleChartViewData expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData,
                             bool atLeastOneAgreementHasFile) : base(currentPerson)
         {
             Organization = organization;
@@ -126,46 +108,12 @@ namespace ProjectFirma.Web.Views.Organization
                 ? Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.GetFieldDefinitionLabel()
                 : "Lead Implementer";
 
-            ProjectGrantAllocationExpendituresForOrganizationGridSpec =
-                new ProjectGrantAllocationExpendituresForOrganizationGridSpec(organization)
-                {
-                    ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel()}",
-                    ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}",
-                    SaveFiltersInCookie = true
-                };
-
-            ProjectGrantAllocationExpendituresForOrganizationGridName = "projectCalendarYearExpendituresForOrganizationGrid";
-            ProjectGrantAllocationExpendituresForOrganizationGridDataUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationExpendituresForOrganizationGridJsonData(organization));
-
             // Might be too weak; do we want to make this more specific?
             ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;
             HasSpatialData = hasSpatialData;
-            ExpendituresDirectlyFromOrganizationViewGoogleChartViewData = expendituresDirectlyFromOrganizationViewGoogleChartViewData;
-            ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData = expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData;
-
-            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x => organization.GetPerformanceMeasureChartViewData(x, currentPerson)).ToList();
-
-            ShowProposals = currentPerson.CanViewProposals;
-            ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()
-                ? Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()
-                : $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} (Not Visible to the Public)";
-
-            ProposalsGridSpec =
-                new ProjectsIncludingLeadImplementingGridSpec(organization, CurrentPerson, true)
-                {
-                    ObjectNameSingular = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}",
-                    ObjectNamePlural = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
-                    SaveFiltersInCookie = true
-                };
-
-            ProposalsGridName = "proposalsGrid";
-            ProposalsGridDataUrl =
-                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    tc => tc.ProposalsGridJsonData(organization));
-
 
             ProgramGridSpec =
                 new ProgramGridSpec(CurrentPerson, organization)

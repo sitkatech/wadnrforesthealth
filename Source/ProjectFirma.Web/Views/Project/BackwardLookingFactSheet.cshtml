@@ -53,18 +53,8 @@
     </style>
 
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
+    
 
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var chartJson = @Html.Raw(JObject.FromObject(ViewDataTyped.GoogleChartJson).ToString());
-            var chartWrapper = new google.visualization.ChartWrapper(chartJson);
-            chartWrapper.draw();
-        }
-    </script>
 }
 
 <div class="container noPrint">
@@ -124,20 +114,7 @@
                     </div>
                 </div>
             }
-            @{
-                var projectFundingOrganizationNamesForFactSheet = ViewDataTyped.Project.FundingOrganizationNamesForFactSheet;
-            }
-            @if (projectFundingOrganizationNamesForFactSheet != string.Empty)
-            {
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3">
-                        <strong>Funders</strong>
-                    </div>
-                    <div class="col-xs-12 col-sm-8 col-md-9">
-                        @projectFundingOrganizationNamesForFactSheet
-                    </div>
-                </div>
-            }
+
 
             @{
                 var projectOtherOrganizationNamesForFactSheet = ViewDataTyped.Project.ProjectOrganizationNamesForFactSheet;
@@ -207,42 +184,6 @@
                 <div class="col-xs-12">
                     <div class="projectDescription">@Html.Raw(ViewDataTyped.Project.ProjectDescription.HtmlEncodeWithBreaks())</div>
                 </div>
-                <div class="col-xs-12" style="margin-top: 10px">
-                    <h4>Key Accomplishments</h4>
-                    @if (ViewDataTyped.PerformanceMeasureReportedValues.Any())
-                    {
-                        <ul>
-                            @foreach (var performanceMeasureGroup in ViewDataTyped.PerformanceMeasureReportedValues)
-                            {
-                                if (performanceMeasureGroup.Key.IsAggregatable)
-                                {
-                                    <li>@performanceMeasureGroup.Key.PerformanceMeasureDisplayName: <strong>@performanceMeasureGroup.Key.MeasurementUnitType.DisplayValue(performanceMeasureGroup.Sum(x => x.ReportedValue)) @performanceMeasureGroup.Key.MeasurementUnitType.LegendDisplayName</strong></li>
-                                }
-
-                                var performanceMeasureSubcategoryOptionsToShowOnFactSheet = performanceMeasureGroup.Key.GetPerformanceMeasureSubcategoryOptions().Where(x => x.ShowOnFactSheet).ToList();
-                                if (performanceMeasureSubcategoryOptionsToShowOnFactSheet.Any())
-                                {
-                                    foreach (var subcategoryOption in performanceMeasureSubcategoryOptionsToShowOnFactSheet)
-                                    {
-                                        var performanceMeasureReportedValues = performanceMeasureGroup.Where(x => x.PerformanceMeasureActualSubcategoryOptions.Select(y => y.PerformanceMeasureSubcategoryOption).Contains(subcategoryOption)).ToList();
-
-                                        if(performanceMeasureReportedValues.Any())
-                                        {
-                                            <li>@performanceMeasureGroup.Key.PerformanceMeasureDisplayName (@subcategoryOption.PerformanceMeasureSubcategoryOptionName):
-                                                <strong>
-                                                    @performanceMeasureGroup.Key.MeasurementUnitType.DisplayValue(performanceMeasureReportedValues.Sum(x => x.ReportedValue)) @performanceMeasureGroup.Key.MeasurementUnitType.LegendDisplayName
-                                                </strong></li>
-                                        }
-                                    }
-                                }
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <div class="systemText">Accomplishments to be provided upon completion of @FieldDefinition.Project.GetFieldDefinitionLabel()</div>
-                    }
-                </div>
                 @foreach (var classificationSystem in MultiTenantHelpers.GetClassificationSystems())
                 {
                     <div class="col-xs-12">
@@ -294,38 +235,6 @@
                         var firmaMap = new ProjectFirmaMaps.ProjectLocationSummary(projectLocationSummaryMapInitJson);
                     });
                 </script>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div style="margin-left: auto; margin-right: auto; page-break-inside: avoid">
-                <h4>Expenditures</h4>
-                <div class="chartPanel">
-                    @if (ViewDataTyped.ExpenditureGooglePieChartSlices.Any())
-                    {
-                        <div class="text-center">
-                            <strong>Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Date: @ViewDataTyped.Project.ProjectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount).ToStringCurrency()</strong>
-                        </div>
-                        <div id="@ViewDataTyped.GoogleChartJson.ChartContainerID" class="googleChart" style="height: @(ViewDataTyped.CalculatedChartHeight)px;"></div>
-                        <div class="captionText">
-                            <div>
-                                @foreach (var googlePieChartSlice in ViewDataTyped.ExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder))
-                                {
-                                    <div class="chartLegendColorBox" style="display:inline-block; border: solid 6px @(googlePieChartSlice.Color);"></div>
-                                    <div style="display: inline-block;">
-                                        @(googlePieChartSlice.Label): @googlePieChartSlice.Value.ToString("C0")
-                                    </div>
-                                    <br />
-                                }
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="text-center">
-                            <p class="systemText">No expenditures provided</p>
-                        </div>
-                    }
-                </div>
             </div>
         </div>
     </div>

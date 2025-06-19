@@ -39,22 +39,7 @@
     </form>
     <div class="chartHeader" style="overflow-y: hidden; vertical-align: top; min-height: 30px;">
         @* ReSharper disable once UnknownCssClass *@
-        @if (ViewDataTyped.ShowChartTitle)
-        {
-            <div class="chartTitle">
-                @if (ViewDataTyped.PerformanceMeasure != null && ViewDataTyped.HyperlinkPerformanceMeasureName)
-                {
-                    <span class="helpicon glyphicon glyphicon-question-sign blue" title="Click to get more info on this @MultiTenantHelpers.GetPerformanceMeasureName()"
-                          onmouseover="ProjectFirma.Views.Methods.addHelpTooltipPopup(jQuery(this), @ViewDataTyped.PerformanceMeasure.PerformanceMeasureDisplayName.ToJS(), @ViewDataTyped.PerformanceMeasure.GetDefinitionAndGuidanceUrl().ToJS(), 430)">
-                    </span>
-                    <a href="@ViewDataTyped.PerformanceMeasure.GetSummaryUrl()" class="chartHeader">@ViewDataTyped.PerformanceMeasure.PerformanceMeasureDisplayName</a>
-                }
-                else
-                {
-                    <b>@ViewDataTyped.ChartTitle</b>
-                }
-            </div>
-        }
+
         @if (ViewDataTyped.GoogleChartJsons.Count == 1)
         {
             if (!ViewDataTyped.ChartTitle.Equals(ViewDataTyped.GoogleChartJsons.Single().LegendTitle, StringComparison.InvariantCultureIgnoreCase))

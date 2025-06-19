@@ -28,7 +28,6 @@ using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 
 namespace ProjectFirma.Web.Models
 {
@@ -46,7 +45,7 @@ namespace ProjectFirma.Web.Models
                 .Include(x => x.ProjectType)
                 .ToList();
 
-            return projects.GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            return projects.GetActiveProjectsVisibleToUser(currentPerson);
         }
 
         public List<GrantAllocation> GetAssociatedGrantAllocations(Person currentPerson)
@@ -106,10 +105,5 @@ namespace ProjectFirma.Web.Models
             return layerGeoJsons;
         }
 
-        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
-        {
-            var projects = GetAssociatedProjects(currentPerson);
-            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
-        }
     }
 }

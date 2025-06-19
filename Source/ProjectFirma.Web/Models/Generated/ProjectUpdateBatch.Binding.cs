@@ -25,14 +25,10 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectUpdateBatch()
         {
-            this.PerformanceMeasureActualUpdates = new HashSet<PerformanceMeasureActualUpdate>();
             this.ProjectCountyUpdates = new HashSet<ProjectCountyUpdate>();
-            this.ProjectCustomAttributeUpdates = new HashSet<ProjectCustomAttributeUpdate>();
             this.ProjectDocumentUpdates = new HashSet<ProjectDocumentUpdate>();
-            this.ProjectExemptReportingYearUpdates = new HashSet<ProjectExemptReportingYearUpdate>();
             this.ProjectExternalLinkUpdates = new HashSet<ProjectExternalLinkUpdate>();
             this.ProjectFundingSourceUpdates = new HashSet<ProjectFundingSourceUpdate>();
-            this.ProjectGrantAllocationExpenditureUpdates = new HashSet<ProjectGrantAllocationExpenditureUpdate>();
             this.ProjectGrantAllocationRequestUpdates = new HashSet<ProjectGrantAllocationRequestUpdate>();
             this.ProjectImageUpdates = new HashSet<ProjectImageUpdate>();
             this.ProjectLocationStagingUpdates = new HashSet<ProjectLocationStagingUpdate>();
@@ -51,23 +47,20 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation, string projectAttributesComment, string projectAttributesDiffLog, string noPriorityLandscapesExplanation, string noCountiesExplanation) : this()
+        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, int lastUpdatePersonID, string basicsComment, string expendituresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation, string projectAttributesComment, string projectAttributesDiffLog, string noPriorityLandscapesExplanation, string noCountiesExplanation) : this()
         {
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectID = projectID;
             this.LastUpdateDate = lastUpdateDate;
-            this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
             this.LastUpdatePersonID = lastUpdatePersonID;
             this.BasicsComment = basicsComment;
             this.ExpendituresComment = expendituresComment;
-            this.PerformanceMeasuresComment = performanceMeasuresComment;
             this.LocationSimpleComment = locationSimpleComment;
             this.LocationDetailedComment = locationDetailedComment;
             this.BudgetsComment = budgetsComment;
             this.ProjectUpdateStateID = projectUpdateStateID;
             this.IsPhotosUpdated = isPhotosUpdated;
             this.BasicsDiffLog = basicsDiffLog;
-            this.PerformanceMeasureDiffLog = performanceMeasureDiffLog;
             this.ExpendituresDiffLog = expendituresDiffLog;
             this.BudgetsDiffLog = budgetsDiffLog;
             this.ExternalLinksDiffLog = externalLinksDiffLog;
@@ -133,7 +126,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return PerformanceMeasureActualUpdates.Any() || ProjectCountyUpdates.Any() || ProjectCustomAttributeUpdates.Any() || ProjectDocumentUpdates.Any() || ProjectExemptReportingYearUpdates.Any() || ProjectExternalLinkUpdates.Any() || ProjectFundingSourceUpdates.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequestUpdates.Any() || ProjectImageUpdates.Any() || ProjectLocationStagingUpdates.Any() || ProjectLocationUpdates.Any() || ProjectNoteUpdates.Any() || ProjectOrganizationUpdates.Any() || ProjectPersonUpdates.Any() || ProjectPriorityLandscapeUpdates.Any() || ProjectRegionUpdates.Any() || (ProjectUpdate != null) || ProjectUpdateHistories.Any() || ProjectUpdatePrograms.Any() || TreatmentUpdates.Any();
+            return ProjectCountyUpdates.Any() || ProjectDocumentUpdates.Any() || ProjectExternalLinkUpdates.Any() || ProjectFundingSourceUpdates.Any() || ProjectGrantAllocationRequestUpdates.Any() || ProjectImageUpdates.Any() || ProjectLocationStagingUpdates.Any() || ProjectLocationUpdates.Any() || ProjectNoteUpdates.Any() || ProjectOrganizationUpdates.Any() || ProjectPersonUpdates.Any() || ProjectPriorityLandscapeUpdates.Any() || ProjectRegionUpdates.Any() || (ProjectUpdate != null) || ProjectUpdateHistories.Any() || ProjectUpdatePrograms.Any() || TreatmentUpdates.Any();
         }
 
         /// <summary>
@@ -143,29 +136,14 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(PerformanceMeasureActualUpdates.Any())
-            {
-                dependentObjects.Add(typeof(PerformanceMeasureActualUpdate).Name);
-            }
-
             if(ProjectCountyUpdates.Any())
             {
                 dependentObjects.Add(typeof(ProjectCountyUpdate).Name);
             }
 
-            if(ProjectCustomAttributeUpdates.Any())
-            {
-                dependentObjects.Add(typeof(ProjectCustomAttributeUpdate).Name);
-            }
-
             if(ProjectDocumentUpdates.Any())
             {
                 dependentObjects.Add(typeof(ProjectDocumentUpdate).Name);
-            }
-
-            if(ProjectExemptReportingYearUpdates.Any())
-            {
-                dependentObjects.Add(typeof(ProjectExemptReportingYearUpdate).Name);
             }
 
             if(ProjectExternalLinkUpdates.Any())
@@ -176,11 +154,6 @@ namespace ProjectFirma.Web.Models
             if(ProjectFundingSourceUpdates.Any())
             {
                 dependentObjects.Add(typeof(ProjectFundingSourceUpdate).Name);
-            }
-
-            if(ProjectGrantAllocationExpenditureUpdates.Any())
-            {
-                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditureUpdate).Name);
             }
 
             if(ProjectGrantAllocationRequestUpdates.Any())
@@ -253,7 +226,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectUpdateBatch).Name, typeof(PerformanceMeasureActualUpdate).Name, typeof(ProjectCountyUpdate).Name, typeof(ProjectCustomAttributeUpdate).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectExemptReportingYearUpdate).Name, typeof(ProjectExternalLinkUpdate).Name, typeof(ProjectFundingSourceUpdate).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequestUpdate).Name, typeof(ProjectImageUpdate).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectLocationUpdate).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectOrganizationUpdate).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectPriorityLandscapeUpdate).Name, typeof(ProjectRegionUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateHistory).Name, typeof(ProjectUpdateProgram).Name, typeof(TreatmentUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectUpdateBatch).Name, typeof(ProjectCountyUpdate).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectExternalLinkUpdate).Name, typeof(ProjectFundingSourceUpdate).Name, typeof(ProjectGrantAllocationRequestUpdate).Name, typeof(ProjectImageUpdate).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectLocationUpdate).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectOrganizationUpdate).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectPriorityLandscapeUpdate).Name, typeof(ProjectRegionUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateHistory).Name, typeof(ProjectUpdateProgram).Name, typeof(TreatmentUpdate).Name};
 
 
         /// <summary>
@@ -278,27 +251,12 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in PerformanceMeasureActualUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectCountyUpdates.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectCustomAttributeUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectDocumentUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectExemptReportingYearUpdates.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -309,11 +267,6 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in ProjectFundingSourceUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectGrantAllocationExpenditureUpdates.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -388,11 +341,9 @@ namespace ProjectFirma.Web.Models
         public int ProjectUpdateBatchID { get; set; }
         public int ProjectID { get; set; }
         public DateTime LastUpdateDate { get; set; }
-        public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public int LastUpdatePersonID { get; set; }
         public string BasicsComment { get; set; }
         public string ExpendituresComment { get; set; }
-        public string PerformanceMeasuresComment { get; set; }
         public string LocationSimpleComment { get; set; }
         public string LocationDetailedComment { get; set; }
         public string BudgetsComment { get; set; }
@@ -404,13 +355,6 @@ namespace ProjectFirma.Web.Models
         { 
             get { return BasicsDiffLog == null ? null : new HtmlString(BasicsDiffLog); }
             set { BasicsDiffLog = value?.ToString(); }
-        }
-        public string PerformanceMeasureDiffLog { get; set; }
-        [NotMapped]
-        public HtmlString PerformanceMeasureDiffLogHtmlString
-        { 
-            get { return PerformanceMeasureDiffLog == null ? null : new HtmlString(PerformanceMeasureDiffLog); }
-            set { PerformanceMeasureDiffLog = value?.ToString(); }
         }
         public string ExpendituresDiffLog { get; set; }
         [NotMapped]
@@ -461,14 +405,10 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateBatchID; } set { ProjectUpdateBatchID = value; } }
 
-        public virtual ICollection<PerformanceMeasureActualUpdate> PerformanceMeasureActualUpdates { get; set; }
         public virtual ICollection<ProjectCountyUpdate> ProjectCountyUpdates { get; set; }
-        public virtual ICollection<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
         public virtual ICollection<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
-        public virtual ICollection<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual ICollection<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
         public virtual ICollection<ProjectFundingSourceUpdate> ProjectFundingSourceUpdates { get; set; }
-        public virtual ICollection<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual ICollection<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual ICollection<ProjectLocationStagingUpdate> ProjectLocationStagingUpdates { get; set; }
@@ -490,10 +430,8 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-            public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int BasicsComment = 1000;
             public const int ExpendituresComment = 1000;
-            public const int PerformanceMeasuresComment = 1000;
             public const int LocationSimpleComment = 1000;
             public const int LocationDetailedComment = 1000;
             public const int BudgetsComment = 1000;

@@ -36,7 +36,6 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class ForwardLookingFactSheetViewData : ProjectViewData
     {
-        public List<IGrouping<Models.PerformanceMeasure, PerformanceMeasureExpected>> PerformanceMeasureExpectedValues { get; }
         public List<GooglePieChartSlice> GrantAllocationRequestAmountGooglePieChartSlices { get; }
         public Models.ProjectImage KeyPhoto { get; }
         public List<IGrouping<ProjectImageTiming, Models.ProjectImage>> ProjectImagesExceptKeyPhotoGroupedByTiming { get; }
@@ -68,9 +67,6 @@ namespace ProjectFirma.Web.Views.Project
         {
             PageTitle = project.DisplayName;
             BreadCrumbTitle = "Fact Sheet";
-
-            PerformanceMeasureExpectedValues = project.PerformanceMeasureExpecteds.GroupBy(x => x.PerformanceMeasure, new HavePrimaryKeyComparer<Models.PerformanceMeasure>())
-                .OrderBy(x=>x.Key.PerformanceMeasureSortOrder).ThenBy(x => x.Key.PerformanceMeasureDisplayName).ToList();
 
             KeyPhoto = project.KeyPhoto;
             ProjectImagesExceptKeyPhotoGroupedByTiming = project.ProjectImages.Where(x => !x.IsKeyPhoto && x.ProjectImageTiming != ProjectImageTiming.Unknown && !x.ExcludeFromFactSheet)

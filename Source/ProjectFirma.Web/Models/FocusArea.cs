@@ -30,15 +30,6 @@ namespace ProjectFirma.Web.Models
             get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.EstimatedTotalCost).Sum(); }
         }
 
-        public decimal? SumOfProjectReportedExpenditures
-        {
-            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.TotalExpenditures).Sum(); }
-        }
-
-        public decimal TotalCompletedFootprintAcres
-        {
-            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.TotalCompletedFootprintAcres).Sum(); }
-        }
 
         public string AuditDescriptionString => FocusAreaName;
 

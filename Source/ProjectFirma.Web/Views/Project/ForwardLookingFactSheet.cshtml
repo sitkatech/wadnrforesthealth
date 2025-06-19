@@ -55,18 +55,24 @@
     </style>
 
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
+    
+    
+    @if (ViewDataTyped.GrantAllocationRequestAmountGooglePieChartSlices.Any())
+    {
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
 
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var chartJson = @Html.Raw(JObject.FromObject(ViewDataTyped.GoogleChartJson).ToString());
+                var chartWrapper = new google.visualization.ChartWrapper(chartJson);
+                chartWrapper.draw();
+            }
+        </script>
+    }
 
-        function drawChart() {
-            var chartJson = @Html.Raw(JObject.FromObject(ViewDataTyped.GoogleChartJson).ToString());
-            var chartWrapper = new google.visualization.ChartWrapper(chartJson);
-            chartWrapper.draw();
-        }
-    </script>
+    
 }
 
 <div class="container noPrint">
@@ -123,20 +129,6 @@
                     </div>
                     <div class="col-xs-12 col-sm-8 col-md-9">
                         @ViewDataTyped.Project.GetPrimaryContactOrganization().OrganizationName
-                    </div>
-                </div>
-            }
-            @{
-                var projectFundingOrganizationNamesForFactSheet = ViewDataTyped.Project.FundingOrganizationNamesForFactSheet;
-            }
-            @if (projectFundingOrganizationNamesForFactSheet != string.Empty)
-            {
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3">
-                        <strong>Funders</strong>
-                    </div>
-                    <div class="col-xs-12 col-sm-8 col-md-9">
-                        @projectFundingOrganizationNamesForFactSheet
                     </div>
                 </div>
             }
@@ -228,50 +220,6 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="projectDescription">@Html.Raw(ViewDataTyped.Project.ProjectDescription.HtmlEncodeWithBreaks())</div>
-                </div>
-                <div class="col-xs-12" style="margin-top: 10px">
-                    <h4>Targeted Performance Measures</h4>
-                    @if (ViewDataTyped.PerformanceMeasureExpectedValues.Any())
-                    {
-                    <ul>
-                        @foreach (var performanceMeasureGroup in ViewDataTyped.PerformanceMeasureExpectedValues)
-                        {
-                            if (performanceMeasureGroup.Key.IsAggregatable)
-                            {
-                                if (performanceMeasureGroup.Any(x => x.ReportedValue != null))
-                                {
-                                    <li>@performanceMeasureGroup.Key.PerformanceMeasureDisplayName: <strong>@performanceMeasureGroup.Key.MeasurementUnitType.DisplayValue(performanceMeasureGroup.Sum(x => x.ReportedValue)) @performanceMeasureGroup.Key.MeasurementUnitType.LegendDisplayName</strong></li>
-                                }
-                                else
-                                {
-                                    <li>@performanceMeasureGroup.Key.PerformanceMeasureDisplayName</li>
-                                }
-
-                            }
-                            var performanceMeasureSubcategoryOptionsToShowOnFactSheet = performanceMeasureGroup.Key.GetPerformanceMeasureSubcategoryOptions().Where(x => x.ShowOnFactSheet).ToList();
-                            if (performanceMeasureSubcategoryOptionsToShowOnFactSheet.Any())
-                            {
-                                foreach (var subcategoryOption in performanceMeasureSubcategoryOptionsToShowOnFactSheet)
-                                {
-                                    var performanceMeasureExpectedValues = performanceMeasureGroup.Where(x => x.PerformanceMeasureExpectedSubcategoryOptions.Select(y => y.PerformanceMeasureSubcategoryOption).Contains(subcategoryOption)).ToList();
-                                    if (performanceMeasureExpectedValues.Any())
-                                    {
-                                        <li>
-                                            @performanceMeasureGroup.Key.PerformanceMeasureDisplayName (@subcategoryOption.PerformanceMeasureSubcategoryOptionName)
-                                            <strong>
-                                                @performanceMeasureGroup.Key.MeasurementUnitType.DisplayValue(performanceMeasureExpectedValues.Sum(x => x.ReportedValue)) @performanceMeasureGroup.Key.MeasurementUnitType.LegendDisplayName
-                                            </strong>
-                                        </li>
-                                    }
-                                }
-                            }
-                        }
-                    </ul>
-                    }
-                    else
-                    {
-                        <div class="systemText">No Expected Accomplishments provided</div>
-                    }
                 </div>
                 @foreach (var classificationSystem in MultiTenantHelpers.GetClassificationSystems())
                 {

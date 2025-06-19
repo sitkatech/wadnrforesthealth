@@ -257,8 +257,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var viewProjectFeature = new ProjectViewFeature();
             var allActiveProjectsWithIncludes = HttpRequestStorage.DatabaseEntities.Projects
-                .Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests)
-                .Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages)
+                .Include(x => x.ProjectImages)
                 .Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityLandscapes)
                 .Include(x => x.ProjectOrganizations).ToList().GetActiveProjectsVisibleToUser(currentPerson);
 

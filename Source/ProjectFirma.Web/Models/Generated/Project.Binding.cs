@@ -26,21 +26,15 @@ namespace ProjectFirma.Web.Models
         protected Project()
         {
             this.AgreementProjects = new HashSet<AgreementProject>();
-            this.GrantAllocationAwardLandownerCostShareLineItems = new HashSet<GrantAllocationAwardLandownerCostShareLineItem>();
             this.InteractionEventProjects = new HashSet<InteractionEventProject>();
             this.InvoicePaymentRequests = new HashSet<InvoicePaymentRequest>();
             this.NotificationProjects = new HashSet<NotificationProject>();
-            this.PerformanceMeasureActuals = new HashSet<PerformanceMeasureActual>();
-            this.PerformanceMeasureExpecteds = new HashSet<PerformanceMeasureExpected>();
             this.ProgramNotificationSentProjects = new HashSet<ProgramNotificationSentProject>();
             this.ProjectClassifications = new HashSet<ProjectClassification>();
             this.ProjectCounties = new HashSet<ProjectCounty>();
-            this.ProjectCustomAttributes = new HashSet<ProjectCustomAttribute>();
             this.ProjectDocuments = new HashSet<ProjectDocument>();
-            this.ProjectExemptReportingYears = new HashSet<ProjectExemptReportingYear>();
             this.ProjectExternalLinks = new HashSet<ProjectExternalLink>();
             this.ProjectFundingSources = new HashSet<ProjectFundingSource>();
-            this.ProjectGrantAllocationExpenditures = new HashSet<ProjectGrantAllocationExpenditure>();
             this.ProjectGrantAllocationRequests = new HashSet<ProjectGrantAllocationRequest>();
             this.ProjectImages = new HashSet<ProjectImage>();
             this.ProjectImportBlockLists = new HashSet<ProjectImportBlockList>();
@@ -61,7 +55,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, string noCountiesExplanation, int? percentageMatch) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, DateTime? expirationDate, string fhtProjectNumber, string noPriorityLandscapesExplanation, int? createGisUploadAttemptID, int? lastUpdateGisUploadAttemptID, string projectGisIdentifier, string projectFundingSourceNotes, string noCountiesExplanation, int? percentageMatch) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -71,7 +65,6 @@ namespace ProjectFirma.Web.Models
             this.CompletionDate = completionDate;
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
-            this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
             this.IsFeatured = isFeatured;
             this.ProjectLocationNotes = projectLocationNotes;
             this.PlannedDate = plannedDate;
@@ -79,7 +72,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectApprovalStatusID = projectApprovalStatusID;
             this.ProposingPersonID = proposingPersonID;
             this.ProposingDate = proposingDate;
-            this.PerformanceMeasureNotes = performanceMeasureNotes;
             this.SubmissionDate = submissionDate;
             this.ApprovalDate = approvalDate;
             this.ReviewedByPersonID = reviewedByPersonID;
@@ -147,7 +139,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementProjects.Any() || GrantAllocationAwardLandownerCostShareLineItems.Any() || InteractionEventProjects.Any() || InvoicePaymentRequests.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProgramNotificationSentProjects.Any() || ProjectClassifications.Any() || ProjectCounties.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectImportBlockLists.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
+            return AgreementProjects.Any() || InteractionEventProjects.Any() || InvoicePaymentRequests.Any() || NotificationProjects.Any() || ProgramNotificationSentProjects.Any() || ProjectClassifications.Any() || ProjectCounties.Any() || ProjectDocuments.Any() || ProjectExternalLinks.Any() || ProjectFundingSources.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectImportBlockLists.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityLandscapes.Any() || ProjectPrograms.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || Treatments.Any();
         }
 
         /// <summary>
@@ -160,11 +152,6 @@ namespace ProjectFirma.Web.Models
             if(AgreementProjects.Any())
             {
                 dependentObjects.Add(typeof(AgreementProject).Name);
-            }
-
-            if(GrantAllocationAwardLandownerCostShareLineItems.Any())
-            {
-                dependentObjects.Add(typeof(GrantAllocationAwardLandownerCostShareLineItem).Name);
             }
 
             if(InteractionEventProjects.Any())
@@ -182,16 +169,6 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(NotificationProject).Name);
             }
 
-            if(PerformanceMeasureActuals.Any())
-            {
-                dependentObjects.Add(typeof(PerformanceMeasureActual).Name);
-            }
-
-            if(PerformanceMeasureExpecteds.Any())
-            {
-                dependentObjects.Add(typeof(PerformanceMeasureExpected).Name);
-            }
-
             if(ProgramNotificationSentProjects.Any())
             {
                 dependentObjects.Add(typeof(ProgramNotificationSentProject).Name);
@@ -207,19 +184,9 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(ProjectCounty).Name);
             }
 
-            if(ProjectCustomAttributes.Any())
-            {
-                dependentObjects.Add(typeof(ProjectCustomAttribute).Name);
-            }
-
             if(ProjectDocuments.Any())
             {
                 dependentObjects.Add(typeof(ProjectDocument).Name);
-            }
-
-            if(ProjectExemptReportingYears.Any())
-            {
-                dependentObjects.Add(typeof(ProjectExemptReportingYear).Name);
             }
 
             if(ProjectExternalLinks.Any())
@@ -230,11 +197,6 @@ namespace ProjectFirma.Web.Models
             if(ProjectFundingSources.Any())
             {
                 dependentObjects.Add(typeof(ProjectFundingSource).Name);
-            }
-
-            if(ProjectGrantAllocationExpenditures.Any())
-            {
-                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditure).Name);
             }
 
             if(ProjectGrantAllocationRequests.Any())
@@ -317,7 +279,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(AgreementProject).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(InvoicePaymentRequest).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProgramNotificationSentProject).Name, typeof(ProjectClassification).Name, typeof(ProjectCounty).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(AgreementProject).Name, typeof(InteractionEventProject).Name, typeof(InvoicePaymentRequest).Name, typeof(NotificationProject).Name, typeof(ProgramNotificationSentProject).Name, typeof(ProjectClassification).Name, typeof(ProjectCounty).Name, typeof(ProjectDocument).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSource).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectImportBlockList).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityLandscape).Name, typeof(ProjectProgram).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(Treatment).Name};
 
 
         /// <summary>
@@ -347,11 +309,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantAllocationAwardLandownerCostShareLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in InteractionEventProjects.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -363,16 +320,6 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in NotificationProjects.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in PerformanceMeasureActuals.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in PerformanceMeasureExpecteds.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -392,17 +339,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectCustomAttributes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectDocuments.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectExemptReportingYears.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -413,11 +350,6 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in ProjectFundingSources.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectGrantAllocationExpenditures.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -507,7 +439,6 @@ namespace ProjectFirma.Web.Models
         public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
-        public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public bool IsFeatured { get; set; }
         public string ProjectLocationNotes { get; set; }
         public DateTime? PlannedDate { get; set; }
@@ -515,7 +446,6 @@ namespace ProjectFirma.Web.Models
         public int ProjectApprovalStatusID { get; set; }
         public int? ProposingPersonID { get; set; }
         public DateTime? ProposingDate { get; set; }
-        public string PerformanceMeasureNotes { get; set; }
         public DateTime? SubmissionDate { get; set; }
         public DateTime? ApprovalDate { get; set; }
         public int? ReviewedByPersonID { get; set; }
@@ -536,21 +466,15 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
         public virtual ICollection<AgreementProject> AgreementProjects { get; set; }
-        public virtual ICollection<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
         public virtual ICollection<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequests { get; set; }
         public virtual ICollection<NotificationProject> NotificationProjects { get; set; }
-        public virtual ICollection<PerformanceMeasureActual> PerformanceMeasureActuals { get; set; }
-        public virtual ICollection<PerformanceMeasureExpected> PerformanceMeasureExpecteds { get; set; }
         public virtual ICollection<ProgramNotificationSentProject> ProgramNotificationSentProjects { get; set; }
         public virtual ICollection<ProjectClassification> ProjectClassifications { get; set; }
         public virtual ICollection<ProjectCounty> ProjectCounties { get; set; }
-        public virtual ICollection<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
-        public virtual ICollection<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
         public virtual ICollection<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual ICollection<ProjectFundingSource> ProjectFundingSources { get; set; }
-        public virtual ICollection<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual ICollection<ProjectImage> ProjectImages { get; set; }
         public virtual ICollection<ProjectImportBlockList> ProjectImportBlockLists { get; set; }
@@ -580,9 +504,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProjectName = 140;
             public const int ProjectDescription = 4000;
-            public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int ProjectLocationNotes = 4000;
-            public const int PerformanceMeasureNotes = 500;
             public const int NoRegionsExplanation = 4000;
             public const int FhtProjectNumber = 20;
             public const int NoPriorityLandscapesExplanation = 4000;

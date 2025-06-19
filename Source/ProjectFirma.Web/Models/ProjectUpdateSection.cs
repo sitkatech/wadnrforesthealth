@@ -150,28 +150,6 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    
-
-    public partial class ProjectUpdateSectionPerformanceMeasures
-    {
-        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
-        {
-            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
-            //return projectUpdateBatch.ArePerformanceMeasuresValid();
-            return true;
-        }
-
-        public override string GetSectionUrl(Project project)
-        {
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.PerformanceMeasures(project)) : null;
-        }
-
-        public override bool SectionIsUpdated(UpdateStatus updateStatus)
-        {
-            return updateStatus.IsPerformanceMeasuresUpdated;
-        }
-    }
 
     // 5/15/2019 TK - WADNR may need this section in phase 2. Entry removed from DB for now 
     //public partial class ProjectUpdateSectionExpenditures

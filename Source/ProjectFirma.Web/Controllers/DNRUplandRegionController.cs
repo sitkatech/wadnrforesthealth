@@ -87,13 +87,7 @@ namespace ProjectFirma.Web.Controllers
 
             var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 405, true);
 
-            var performanceMeasures = associatedProjects
-                .SelectMany(x => x.PerformanceMeasureActuals)
-                .Select(x => x.PerformanceMeasure).Distinct()
-                .OrderBy(x => x.PerformanceMeasureDisplayName)
-            .ToList();
-
-            var viewData = new DetailViewData(CurrentPerson, region, mapInitJson, viewGoogleChartViewData, performanceMeasures);
+            var viewData = new DetailViewData(CurrentPerson, region, mapInitJson, viewGoogleChartViewData);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

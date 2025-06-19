@@ -51,27 +51,16 @@ namespace ProjectFirma.Web.Views.FocusArea
         public int NumberOfLeadImplementedProjects { get; }
         public int NumberOfProjectsContributedTo { get; }
 
-        public GrantAllocationAwardGridSpec GrantAllocationAwardGridSpec { get; }
-        public string GrantAllocationAwardGridName { get; }
-        public string GrantAllocationAwardGridDataUrl { get; }
-
         public DetailViewData(Person currentPerson,
                               Models.FocusArea focusArea,
                               MapInitJson mapInitJson,
-                              bool hasSpatialData,
-                              GrantAllocationAwardGridSpec grantAllocationAwardGridSpec
+                              bool hasSpatialData
                               ) : base(currentPerson)
         {
             FocusArea = focusArea;
             PageTitle = focusArea.FocusAreaName;
             ProjectFocusAreaGridName = "ProjectFocusAreaGrid";
             ProjectFocusAreaGridDataUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.DetailProjectFocusAreaGridJsonData(focusArea));
-
-            GrantAllocationAwardGridSpec = grantAllocationAwardGridSpec;
-            GrantAllocationAwardGridName = "grantAllocationAwardGridSpec";
-            GrantAllocationAwardGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(gaa => gaa.GrantAllocationAwardByFocusAreaGridJsonData(focusArea));
-
-
 
             //EntityName = $"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()}";
             UserHasFocusAreaManagePermissions = new FocusAreaManageFeature().HasPermissionByPerson(CurrentPerson);

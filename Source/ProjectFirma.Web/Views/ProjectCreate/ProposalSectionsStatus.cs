@@ -30,8 +30,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     public class ProposalSectionsStatus
     {
         public bool IsBasicsSectionComplete { get; set; }
-        public bool IsCustomAttributesSectionComplete { get; set; }
-        public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
         public bool IsClassificationsComplete { get; set; }
@@ -53,9 +51,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             var basicsResults = new BasicsViewModel(project).GetValidationResults();
             IsBasicsSectionComplete = !basicsResults.Any();
-
-            var customAttributeResults = new CustomAttributesViewModel(project).GetValidationResults();
-            IsCustomAttributesSectionComplete = !customAttributeResults.Any();
 
             var locationSimpleValidationResults = new LocationSimpleViewModel(project).GetValidationResults();
             IsProjectLocationSimpleSectionComplete = !locationSimpleValidationResults.Any();
@@ -85,10 +80,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             IsPriorityLandscapeSectionComplete = !editProjectPriorityLandscapesValidationResults.Any();
 
-            var performanceMeasureValidationResults =
-                new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
-            IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
-
             var efValidationResults = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(),
                                                                    project.EstimatedTotalCost,
                                                                    project.ProjectFundingSourceNotes,
@@ -107,7 +98,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public ProposalSectionsStatus()
         {
             IsBasicsSectionComplete = false;
-            IsPerformanceMeasureSectionComplete = false;
             IsClassificationsComplete = false;
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;

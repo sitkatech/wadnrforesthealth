@@ -31,14 +31,6 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectType : IAuditableEntity, ITaxonomyTier, IHaveASortOrder
     {
 
-        public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProjectType()
-        {
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
-                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
-                                .Select(y => y.ProjectTypeID).Contains(this.ProjectTypeID)).ToList();
-            return projectCustomAttributeTypesForThisProject;
-        }
 
         public int? SortOrder
         {
@@ -89,12 +81,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person currentPerson)
         {
-            return Projects.ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
-        }
-
-        public List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
-        {
-            return ProjectTypePerformanceMeasures.GroupBy(x => x.PerformanceMeasure).ToList();
+            return Projects.ToList().GetActiveProjectsVisibleToUser(currentPerson);
         }
     }
 }

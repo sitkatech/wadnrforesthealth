@@ -2,7 +2,7 @@
 delete from dbo.ProjectStage
 
 insert dbo.ProjectStage (ProjectStageID, ProjectStageColor, ProjectStageName, ProjectStageDisplayName, SortOrder) values 
-(1, '#dbbdff', 'Proposed', 'Proposed',5),
+--(1, '#dbbdff', 'Proposed', 'Proposed',5),
 (2, '#80B2FF', 'Planned', 'Planned', 20),
 (3, '#1975FF', 'Implementation', 'Implementation', 30),
 (4, '#000066', 'Completed', 'Completed', 50),

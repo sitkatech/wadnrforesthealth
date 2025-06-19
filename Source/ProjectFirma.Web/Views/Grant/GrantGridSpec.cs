@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.Grant
             {
                 Add(Models.FieldDefinition.GrantCurrentBalance.ToGridHeaderString(), x => x.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(), 90, AgGridColumnFormatType.CurrencyWithCents);
             }
-            
+
             Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantStatus.ToGridHeaderString(), x => x.GrantStatus.GrantStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);

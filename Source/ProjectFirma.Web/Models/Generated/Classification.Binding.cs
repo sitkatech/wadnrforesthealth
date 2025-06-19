@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Classification()
         {
-            this.ClassificationPerformanceMeasures = new HashSet<ClassificationPerformanceMeasure>();
             this.ProjectClassifications = new HashSet<ProjectClassification>();
         }
 
@@ -87,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ClassificationPerformanceMeasures.Any() || ProjectClassifications.Any();
+            return ProjectClassifications.Any();
         }
 
         /// <summary>
@@ -97,11 +96,6 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(ClassificationPerformanceMeasures.Any())
-            {
-                dependentObjects.Add(typeof(ClassificationPerformanceMeasure).Name);
-            }
-
             if(ProjectClassifications.Any())
             {
                 dependentObjects.Add(typeof(ProjectClassification).Name);
@@ -112,7 +106,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Classification).Name, typeof(ClassificationPerformanceMeasure).Name, typeof(ProjectClassification).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Classification).Name, typeof(ProjectClassification).Name};
 
 
         /// <summary>
@@ -137,11 +131,6 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in ClassificationPerformanceMeasures.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectClassifications.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -160,7 +149,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ClassificationID; } set { ClassificationID = value; } }
 
-        public virtual ICollection<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual ICollection<ProjectClassification> ProjectClassifications { get; set; }
         public virtual FileResource KeyImageFileResource { get; set; }
         public virtual ClassificationSystem ClassificationSystem { get; set; }

@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Models
         public abstract bool IsDeletable();
 
         public abstract bool RequiresReportedExpenditures();
-        public abstract bool RequiresPerformanceMeasureActuals();
         public abstract bool IsStagedIncludedInTransporationCostCalculations();
         public abstract bool ShouldShowOnMap();
 
@@ -43,47 +42,8 @@ namespace ProjectFirma.Web.Models
             _forwardLookingFactSheetProjectStages ?? (_forwardLookingFactSheetProjectStages =
             new List<ProjectStage>
             {
-                Proposed,
                 Planned
             });
-    }
-
-    public partial class ProjectStageProposed
-    {
-        public override bool IsOnCompletedList()
-        {
-            return false;
-        }
-
-        public override bool IsDeletable()
-        {
-            return false;
-        }
-
-        public override bool RequiresReportedExpenditures()
-        {
-            return false;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return false;
-        }
-
-        public override bool IsStagedIncludedInTransporationCostCalculations()
-        {
-            return true;
-        }
-
-        public override bool ShouldShowOnMap()
-        {
-            return true;
-        }
-
-        public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
-        {
-            return new List<ProjectStage>();
-        }
     }
 
     public partial class ProjectStagePlanned
@@ -103,11 +63,6 @@ namespace ProjectFirma.Web.Models
             return true;
         }
 
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return false;
-        }
-
         public override bool IsStagedIncludedInTransporationCostCalculations()
         {
             return true;
@@ -120,10 +75,7 @@ namespace ProjectFirma.Web.Models
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
         {
-            return All.Except(new[]
-            {
-                Proposed
-            });
+            return All;
         }
     }
 
@@ -144,11 +96,6 @@ namespace ProjectFirma.Web.Models
             return true;
         }
 
-        public override bool RequiresPerformanceMeasureActuals()
-        {
-            return true;
-        }
-
         public override bool IsStagedIncludedInTransporationCostCalculations()
         {
             return true;
@@ -161,7 +108,7 @@ namespace ProjectFirma.Web.Models
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
         {
-            return All.Except(new ProjectStage[] {Planned, Proposed});
+            return All.Except(new ProjectStage[] {Planned});
         }
     }
 
@@ -178,11 +125,6 @@ namespace ProjectFirma.Web.Models
         }
 
         public override bool RequiresReportedExpenditures()
-        {
-            return false;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
         {
             return false;
         }
@@ -217,11 +159,6 @@ namespace ProjectFirma.Web.Models
         }
 
         public override bool RequiresReportedExpenditures()
-        {
-            return false;
-        }
-
-        public override bool RequiresPerformanceMeasureActuals()
         {
             return false;
         }

@@ -240,7 +240,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.PruningAcres);
             }
 
             return null;
@@ -250,7 +250,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.ThinningAcres);
             }
 
             return null;
@@ -260,7 +260,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.ChippingAcres);
             }
 
             return null;
@@ -270,7 +270,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.MasticationAcres);
             }
 
             return null;
@@ -280,7 +280,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrazingAcres);
             }
 
             return null;
@@ -290,7 +290,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.LopAndScatterAcres);
             }
 
             return null;
@@ -300,7 +300,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.BiomassRemovalAcres);
             }
 
             return null;
@@ -310,7 +310,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.HandPileAcres);
             }
 
             return null;
@@ -320,7 +320,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.HandPileBurnAcres);
             }
 
             return null;
@@ -330,7 +330,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.MachinePileBurnAcres);
             }
 
             return null;
@@ -340,7 +340,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.BroadcastBurnAcres);
             }
 
             return null;
@@ -350,7 +350,7 @@ namespace ProjectFirma.Web.Views.Program
         {
             if (GisUploadSourceOrganization != null)
             {
-                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres);
+                return GetPossibleDefaultMetadataAttributeString(Models.FieldDefinition.OtherTreatmentAcres);
             }
 
             return null;

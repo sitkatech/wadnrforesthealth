@@ -18,9 +18,7 @@ begin
 */
 
 --remove references to ProjectUpdateBatch First:
-delete from dbo.PerformanceMeasureActualUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select ID from @ProjectIDList))
 delete from dbo.ProjectCountyUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select ID from @ProjectIDList))
-delete from dbo.ProjectCustomAttributeUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select ID from @ProjectIDList))
 delete from dbo.ProjectDocumentUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select ID from @ProjectIDList))
 delete from dbo.ProjectExemptReportingYearUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select ID from @ProjectIDList))
 delete from dbo.ProjectExternalLinkUpdate where ProjectUpdateBatchID in (select ProjectUpdateBatchID from dbo.ProjectUpdateBatch where ProjectID in (select ID from @ProjectIDList))
@@ -44,17 +42,13 @@ delete from dbo.ProjectUpdateProgram where ProjectUpdateBatchID in (select Proje
 
 --remove references to Project second:
 delete from dbo.AgreementProject where ProjectID in (select ID from @ProjectIDList)
-delete from dbo.GrantAllocationAwardLandownerCostShareLineItem where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.InteractionEventProject where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.Invoice where InvoicePaymentRequestID in (select InvoicePaymentRequestID from dbo.InvoicePaymentRequest where ProjectID in (select ID from @ProjectIDList))
 delete from dbo.InvoicePaymentRequest where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.NotificationProject where ProjectID in (select ID from @ProjectIDList)
-delete from dbo.PerformanceMeasureActual where ProjectID in (select ID from @ProjectIDList)
-delete from dbo.PerformanceMeasureExpected where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.ProgramNotificationSentProject where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.ProjectClassification where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.ProjectCounty where ProjectID in (select ID from @ProjectIDList)
-delete from dbo.ProjectCustomAttribute where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.ProjectDocument where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.ProjectExemptReportingYear where ProjectID in (select ID from @ProjectIDList)
 delete from dbo.ProjectExternalLink where ProjectID in (select ID from @ProjectIDList)

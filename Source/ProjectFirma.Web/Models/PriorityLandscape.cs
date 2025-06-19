@@ -7,7 +7,6 @@ using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
@@ -18,7 +17,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjectsVisibleToUser(Person currentPerson)
         {
-            var associatedProjectsVisibleToUser = ProjectPriorityLandscapes.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposalsVisibleToUser(currentPerson);
+            var associatedProjectsVisibleToUser = ProjectPriorityLandscapes.Select(ptc => ptc.Project).ToList().GetActiveProjectsVisibleToUser(currentPerson);
             return associatedProjectsVisibleToUser;
         }
 
@@ -60,10 +59,6 @@ namespace ProjectFirma.Web.Models
 
         public static List<LayerGeoJson> GetPriorityLandscapeAndAssociatedProjectLayers(PriorityLandscape priorityLandscape, List<Project> projects)
         {
-            //var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
-            //    Project.MappedPointsToGeoJsonFeatureCollection(projects, true, false),
-            //    "#ffff00", 1, LayerInitialVisibility.Show);
-
             var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectLocationsSimpleWmsLayerName(), "#ffff00", 1, LayerInitialVisibility.Show, $"ProjectID in ({string.Join(",", projects.Select(x => x.ProjectID).ToList())})", true);
             var priorityLandscapeLayerGeoJson = new LayerGeoJson(priorityLandscape.DisplayName,
@@ -93,39 +88,9 @@ namespace ProjectFirma.Web.Models
                 }
             }
 
-
-
-            //if (priorityLandscape.HasDualBenefitPrioritizationLayerData())
-            //{
-
-            //    var dualBenefitPrioritizationLayer = new LayerGeoJson("DNR Landscape Evaluation Dual Benefit Prioritization", FirmaWebConfiguration.WebMapServiceUrl,
-            //        FirmaWebConfiguration.GetDualBenefitPrioritizationWmsLayerName(), "", 1,
-            //        LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
-
-            //    layerGeoJsons.Add(dualBenefitPrioritizationLayer);
-
-            //}
-
-            //if (priorityLandscape.HasPriorityRankingLayerData())
-            //{
-
-            //    var priorityRankingLayer = new LayerGeoJson("DNR Landscape Evaluation Priority Ranking by POD and PCL", FirmaWebConfiguration.WebMapServiceUrl,
-            //        FirmaWebConfiguration.GetPriorityRankingWmsLayerName(), "", 1,
-            //        LayerInitialVisibility.Hide, $"PriorityLandscapeID={priorityLandscape.PriorityLandscapeID}", true);
-
-            //    layerGeoJsons.Add(priorityRankingLayer);
-
-            //}
-
-
             return layerGeoJsons;
         }
 
-        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
-        {
-            var projects = GetAssociatedProjectsVisibleToUser(currentPerson);
-            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
-        }
 
         public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {
@@ -133,20 +98,5 @@ namespace ProjectFirma.Web.Models
             PriorityLandscapeFileResources.Add(priorityLandscapeFileResource);
         }
 
-        public bool HasDualBenefitPrioritizationLayerData()
-        {
-            bool hasPclLayerData = this.PclBoundaryLines.Any() && this.PclLandscapeTreatmentPriorities.Any() &&
-                                   this.PclWildfireResponseBenefits.Any();
-
-            return hasPclLayerData;
-        }
-
-        public bool HasPriorityRankingLayerData()
-        {
-            bool podLayerData = this.PclVectorRankeds.Any() && this.PodVectorRankeds.Any() &&
-                                   this.PclBoundaryLines.Any();
-
-            return podLayerData;
-        }
     }
 }

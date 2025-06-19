@@ -49,39 +49,13 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 100, AgGridColumnFormatType.CurrencyWithCents,
                 AgGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationOverallBalance.ToGridHeaderString(), x => x.GetOverallBalance(), 75, AgGridColumnFormatType.CurrencyWithCents,
-                AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationContractualBalance.ToGridHeaderString(),
-                x => x.GetAllBudgetVsActualLineItemsByCostType().FirstOrDefault(y => y.CostType == CostType.Contractual)
-                    ?.BudgetMinusExpendituresFromDatamart, 100, AgGridColumnFormatType.CurrencyWithCents,
-                AgGridColumnAggregationType.Total);
 
-            Add(Models.FieldDefinition.GrantAllocationTravelBalance.ToGridHeaderString(),
-                x => x.GetAllBudgetVsActualLineItemsByCostType().FirstOrDefault(y => y.CostType == CostType.Travel)
-                    ?.BudgetMinusExpendituresFromDatamart, 75, AgGridColumnFormatType.CurrencyWithCents,
-                AgGridColumnAggregationType.Total);
-
-            Add(Models.FieldDefinition.GrantAllocationStaffBalance.ToGridHeaderString(),
-                x => x.GetAllBudgetVsActualLineItemsByCostType().FirstOrDefault(y => y.CostType == CostType.Personnel)
-                    ?.BudgetMinusExpendituresFromDatamart, 75, AgGridColumnFormatType.CurrencyWithCents,
-                AgGridColumnAggregationType.Total);
 
             Add(Models.FieldDefinition.GrantAllocationLikelyToUse.ToGridHeaderString(),
                 x => x.ToLikelyToUsePeopleListDisplayForAgGrid(),
                 175, AgGridColumnFilterType.HtmlLinkListJson);
-
-            Add(Models.FieldDefinition.GrantAllocationCompleted.ToGridHeaderString(), x =>
-            {
-                var completed = (decimal)(x.GetTotalBudgetVsActualLineItem().ExpendituresFromDatamart /
-                                          (x.GetOverallBalance() == 0 ? 1 : x.GetOverallBalance()));
-                return new HtmlString(
-                    $"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{x.GetAllocationCssClass(completed)}\">{completed.ToStringPercent().HtmlEncode()}</div>");
-            }, 100, AgGridColumnFormatType.Percent, AgGridColumnFilterType.Html);
-        
-
-
-
+            
 
         }
     }

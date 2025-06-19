@@ -23,7 +23,6 @@ namespace ProjectFirma.Web.Models.ApiJson
         public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
-        public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public bool IsFeatured { get; set; }
         public string ProjectLocationNotes { get; set; }
         public DateTime? PlannedDate { get; set; }
@@ -36,7 +35,6 @@ namespace ProjectFirma.Web.Models.ApiJson
         public int? ProposingPersonID { get; set; }
         public string ProposingPersonName { get; set; }
         public DateTime? ProposingDate { get; set; }
-        public string PerformanceMeasureNotes { get; set; }
         public DateTime? SubmissionDate { get; set; }
         public DateTime? ApprovalDate { get; set; }
         public int? ReviewedByPersonID { get; set; }
@@ -64,7 +62,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
             ProjectLocationPoint = project.ProjectLocationPoint;
-            PerformanceMeasureActualYearsExemptionExplanation  = project.PerformanceMeasureActualYearsExemptionExplanation;
+
             IsFeatured = project.IsFeatured;
             ProjectLocationNotes = project.ProjectLocationNotes;
             PlannedDate = project.PlannedDate;
@@ -80,7 +78,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             ProposingPersonID = project.ProposingPersonID;
             ProposingPersonName = project.ProposingPerson?.FullNameFirstLastAndOrgShortName;
             ProposingDate = project.ProposingDate;
-            PerformanceMeasureNotes = project.PerformanceMeasureNotes;
+
             SubmissionDate = project.SubmissionDate;
             ApprovalDate = project.ApprovalDate;
             ReviewedByPersonID = project.ReviewedByPersonID;

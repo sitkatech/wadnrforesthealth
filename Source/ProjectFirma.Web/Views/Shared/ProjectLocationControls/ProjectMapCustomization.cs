@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public const string ColorByQueryStringParameter = "ColorBy";
 
         public static readonly ProjectLocationFilterType DefaultLocationFilterType = ProjectLocationFilterType.ProjectStage;
-        public static List<int> GetDefaultLocationFilterValues(bool showProposals) => GetProjectStagesForMap(showProposals).Select(x => x.ProjectStageID).ToList();
+        public static List<int> GetDefaultLocationFilterValues(bool showProposals) => GetProjectStagesForMap().Select(x => x.ProjectStageID).ToList();
         public static readonly ProjectColorByType DefaultColorByType = ProjectColorByType.ProjectStage;
 
         public List<int> FilterPropertyValues { get; set; }
@@ -100,12 +100,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             return BuildCustomizedUrl(ProjectLocationFilterType, FilterPropertyValues.JoinCsv(p => p.ToString(), ","), ProjectColorByType);
         }
 
-        public static List<ProjectStage> GetProjectStagesForMap(bool showProposals)
+        public static List<ProjectStage> GetProjectStagesForMap()
         {
-            var exceptProposals = showProposals ? new List<ProjectStage>()
-                : new List<ProjectStage> { ProjectStage.Proposed};
             var projectStagesForMap = ProjectStage.All.Where(x => x.ShouldShowOnMap())
-                .Except(exceptProposals).OrderBy(x => x.SortOrder).ToList();
+                .OrderBy(x => x.SortOrder).ToList();
             return projectStagesForMap;
         }
 
@@ -121,7 +119,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
                 .ToList();
 
 
-            var projectsVisibleToUser = projects.GetActiveProjectsAndProposalsVisibleToUser(currentPerson).ToList();
+            var projectsVisibleToUser = projects.GetActiveProjectsVisibleToUser(currentPerson).ToList();
 
             return projectsVisibleToUser.Where(x => x.ProjectStage.ShouldShowOnMap()).OrderBy(x => x.ProjectStage.ProjectStageID).ToList();
         }

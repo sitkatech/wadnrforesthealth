@@ -23,9 +23,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
     public class UpdateStatus
     {
         public bool IsBasicsUpdated { get; }
-        public bool IsPerformanceMeasuresUpdated { get; }
         public bool IsExpectedFundingUpdated { get; }
-        public bool IsExpendituresUpdated { get; }
         public bool IsBudgetsUpdated { get; }
         public bool IsPhotosUpdated { get; }
         public bool IsLocationSimpleUpdated { get; }
@@ -33,7 +31,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public bool IsRegionsUpdated { get; }
         public bool IsCountiesUpdated { get; }
         public bool IsPriorityLandscapesUpdated { get; }
-        public bool IsProjectAttributesUpdated { get; }
         public bool IsExternalLinksUpdated { get; }
         public bool IsNotesUpdated { get; }
         public bool IsOrganizationsUpdated { get; }
@@ -41,13 +38,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public bool IsTreatmentsUpdated { get; }
 
         public UpdateStatus(bool isBasicsUpdated,
-            bool isPerformanceMeasuresUpdated,
-            bool isExpendituresUpdated,
             bool isBudgetsUpdated,
             bool isPhotosUpdated,
             bool isLocationSimpleUpdated,
             bool isLocationDetailUpdated,
-            bool isProjectAttributesUpdated,
             bool isPriorityLandscapesUpdated,
             bool isRegionsUpdated,
             bool isCountiesUpdated,
@@ -60,13 +54,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             )
         {
             IsBasicsUpdated = isBasicsUpdated;
-            IsPerformanceMeasuresUpdated = isPerformanceMeasuresUpdated;
-            IsExpendituresUpdated = isExpendituresUpdated;
             IsBudgetsUpdated = isBudgetsUpdated;
             IsPhotosUpdated = isPhotosUpdated;
             IsLocationSimpleUpdated = isLocationSimpleUpdated;
             IsLocationDetailUpdated = isLocationDetailUpdated;
-            IsProjectAttributesUpdated = isProjectAttributesUpdated;
             IsPriorityLandscapesUpdated = isPriorityLandscapesUpdated;
             IsRegionsUpdated = isRegionsUpdated;
             IsCountiesUpdated = isCountiesUpdated;

@@ -10,7 +10,6 @@
     <EntitySet Name="ArcOnlineFinanceApiRawJsonImport" EntityType="ProjectFirma.Web.Models.ArcOnlineFinanceApiRawJsonImport" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.AuditLog" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
-    <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
     <EntitySet Name="CostTypeDatamartMapping" EntityType="ProjectFirma.Web.Models.CostTypeDatamartMapping" />
     <EntitySet Name="Country" EntityType="ProjectFirma.Web.Models.Country" />
@@ -45,12 +44,6 @@
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.GisUploadSourceOrganization" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
-    <EntitySet Name="GrantAllocationAward" EntityType="ProjectFirma.Web.Models.GrantAllocationAward" />
-    <EntitySet Name="GrantAllocationAwardContractorInvoice" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice" />
-    <EntitySet Name="GrantAllocationAwardLandownerCostShareLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" />
-    <EntitySet Name="GrantAllocationAwardPersonnelAndBenefitsLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardPersonnelAndBenefitsLineItem" />
-    <EntitySet Name="GrantAllocationAwardSuppliesLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardSuppliesLineItem" />
-    <EntitySet Name="GrantAllocationAwardTravelLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" />
     <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.GrantAllocationChangeLog" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditure" />
@@ -87,27 +80,12 @@
     <EntitySet Name="OrganizationCode" EntityType="ProjectFirma.Web.Models.OrganizationCode" />
     <EntitySet Name="OrganizationType" EntityType="ProjectFirma.Web.Models.OrganizationType" />
     <EntitySet Name="OrganizationTypeRelationshipType" EntityType="ProjectFirma.Web.Models.OrganizationTypeRelationshipType" />
-    <EntitySet Name="PclBoundaryLine" EntityType="ProjectFirma.Web.Models.PclBoundaryLine" />
-    <EntitySet Name="PclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.PclLandscapeTreatmentPriority" />
-    <EntitySet Name="PclVectorRanked" EntityType="ProjectFirma.Web.Models.PclVectorRanked" />
-    <EntitySet Name="PclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.PclWildfireResponseBenefit" />
-    <EntitySet Name="PerformanceMeasure" EntityType="ProjectFirma.Web.Models.PerformanceMeasure" />
-    <EntitySet Name="PerformanceMeasureActual" EntityType="ProjectFirma.Web.Models.PerformanceMeasureActual" />
-    <EntitySet Name="PerformanceMeasureActualSubcategoryOption" EntityType="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOption" />
-    <EntitySet Name="PerformanceMeasureActualSubcategoryOptionUpdate" EntityType="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOptionUpdate" />
-    <EntitySet Name="PerformanceMeasureActualUpdate" EntityType="ProjectFirma.Web.Models.PerformanceMeasureActualUpdate" />
-    <EntitySet Name="PerformanceMeasureExpected" EntityType="ProjectFirma.Web.Models.PerformanceMeasureExpected" />
-    <EntitySet Name="PerformanceMeasureExpectedSubcategoryOption" EntityType="ProjectFirma.Web.Models.PerformanceMeasureExpectedSubcategoryOption" />
-    <EntitySet Name="PerformanceMeasureNote" EntityType="ProjectFirma.Web.Models.PerformanceMeasureNote" />
-    <EntitySet Name="PerformanceMeasureSubcategory" EntityType="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" />
-    <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.PerformanceMeasureSubcategoryOption" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Person" />
     <EntitySet Name="PersonAllowedAuthenticator" EntityType="ProjectFirma.Web.Models.PersonAllowedAuthenticator" />
     <EntitySet Name="PersonRole" EntityType="ProjectFirma.Web.Models.PersonRole" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.PersonStewardOrganization" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.PersonStewardRegion" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
-    <EntitySet Name="PodVectorRanked" EntityType="ProjectFirma.Web.Models.PodVectorRanked" />
     <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.PriorityLandscape" />
     <EntitySet Name="PriorityLandscapeFileResource" EntityType="ProjectFirma.Web.Models.PriorityLandscapeFileResource" />
     <EntitySet Name="Program" EntityType="ProjectFirma.Web.Models.Program" />
@@ -121,22 +99,13 @@
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
     <EntitySet Name="ProjectCounty" EntityType="ProjectFirma.Web.Models.ProjectCounty" />
     <EntitySet Name="ProjectCountyUpdate" EntityType="ProjectFirma.Web.Models.ProjectCountyUpdate" />
-    <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
-    <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
-    <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
-    <EntitySet Name="ProjectCustomAttributeUpdateValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdateValue" />
-    <EntitySet Name="ProjectCustomAttributeValue" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeValue" />
     <EntitySet Name="ProjectDocument" EntityType="ProjectFirma.Web.Models.ProjectDocument" />
     <EntitySet Name="ProjectDocumentType" EntityType="ProjectFirma.Web.Models.ProjectDocumentType" />
     <EntitySet Name="ProjectDocumentUpdate" EntityType="ProjectFirma.Web.Models.ProjectDocumentUpdate" />
-    <EntitySet Name="ProjectExemptReportingYear" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYear" />
-    <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYearUpdate" />
     <EntitySet Name="ProjectExternalLink" EntityType="ProjectFirma.Web.Models.ProjectExternalLink" />
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.ProjectExternalLinkUpdate" />
     <EntitySet Name="ProjectFundingSource" EntityType="ProjectFirma.Web.Models.ProjectFundingSource" />
     <EntitySet Name="ProjectFundingSourceUpdate" EntityType="ProjectFirma.Web.Models.ProjectFundingSourceUpdate" />
-    <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" />
-    <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" />
     <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationRequest" />
     <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationRequestUpdate" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.ProjectImage" />
@@ -160,8 +129,6 @@
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.ProjectRegionUpdate" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.ProjectTag" />
     <EntitySet Name="ProjectType" EntityType="ProjectFirma.Web.Models.ProjectType" />
-    <EntitySet Name="ProjectTypePerformanceMeasure" EntityType="ProjectFirma.Web.Models.ProjectTypePerformanceMeasure" />
-    <EntitySet Name="ProjectTypeProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" />
     <EntitySet Name="ProjectUpdate" EntityType="ProjectFirma.Web.Models.ProjectUpdate" />
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.ProjectUpdateBatch" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.ProjectUpdateConfiguration" />
@@ -188,14 +155,8 @@
     <EntitySet Name="WashingtonLegislativeDistrict" EntityType="ProjectFirma.Web.Models.WashingtonLegislativeDistrict" />
     <EntitySet Name="vArcOnlineRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vArcOnlineRawJsonImportIndex" />
     <EntitySet Name="vGeoServerCounty" EntityType="ProjectFirma.Web.Models.vGeoServerCounty" />
-    <EntitySet Name="vGeoServerPclBoundaryLine" EntityType="ProjectFirma.Web.Models.vGeoServerPclBoundaryLine" />
-    <EntitySet Name="vGeoServerPclLandscapeTreatmentPriority" EntityType="ProjectFirma.Web.Models.vGeoServerPclLandscapeTreatmentPriority" />
-    <EntitySet Name="vGeoServerPclVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPclVectorRanked" />
-    <EntitySet Name="vGeoServerPclWildfireResponseBenefit" EntityType="ProjectFirma.Web.Models.vGeoServerPclWildfireResponseBenefit" />
-    <EntitySet Name="vGeoServerPodVectorRanked" EntityType="ProjectFirma.Web.Models.vGeoServerPodVectorRanked" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
     <EntitySet Name="vLoaStageGrantAllocation" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocation" />
-    <EntitySet Name="vLoaStageGrantAllocationAward" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocationAward" />
     <EntitySet Name="vLoaStageGrantAllocationByProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.vLoaStageGrantAllocationByProgramIndexProjectCode" />
     <EntitySet Name="vLoaStageProjectGrantAllocation" EntityType="ProjectFirma.Web.Models.vLoaStageProjectGrantAllocation" />
     <EntitySet Name="vSingularGrantAllocation" EntityType="ProjectFirma.Web.Models.vSingularGrantAllocation" />
@@ -257,17 +218,9 @@
       <End Role="KeyImageFileResource" EntitySet="FileResource" />
       <End Role="ClassificationsWhereYouAreTheKeyImageFileResource" EntitySet="Classification" />
     </AssociationSet>
-    <AssociationSet Name="FK_ClassificationPerformanceMeasure_Classification_ClassificationID" Association="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_Classification_ClassificationID">
-      <End Role="Classification" EntitySet="Classification" />
-      <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectClassification_Classification_ClassificationID" Association="ProjectFirma.Web.Models.FK_ProjectClassification_Classification_ClassificationID">
       <End Role="Classification" EntitySet="Classification" />
       <End Role="ProjectClassifications" EntitySet="ProjectClassification" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
     </AssociationSet>
     <AssociationSet Name="FK_StateProvince_Country_CountryID" Association="ProjectFirma.Web.Models.FK_StateProvince_Country_CountryID">
       <End Role="Country" EntitySet="Country" />
@@ -349,10 +302,6 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID">
-      <End Role="GrantAllocationAwardContractorInvoiceFileResource" EntitySet="FileResource" />
-      <End Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" EntitySet="GrantAllocationAwardContractorInvoice" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
@@ -428,10 +377,6 @@
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAward_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID">
-      <End Role="FocusArea" EntitySet="FocusArea" />
-      <End Role="GrantAllocationAwards" EntitySet="GrantAllocationAward" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
@@ -577,10 +522,6 @@
       <End Role="GrantManager" EntitySet="Person" />
       <End Role="GrantAllocationsWhereYouAreTheGrantManager" EntitySet="GrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationAwards" EntitySet="GrantAllocationAward" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
@@ -617,14 +558,6 @@
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
@@ -632,46 +565,6 @@
     <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID">
-      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
-      <End Role="GrantAllocationAwardContractorInvoices" EntitySet="GrantAllocationAwardContractorInvoice" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
-      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
-      <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID">
-      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
-      <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" EntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID">
-      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
-      <End Role="GrantAllocationAwardSuppliesLineItems" EntitySet="GrantAllocationAwardSuppliesLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID">
-      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
-      <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
-      <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
-      <End Role="Treatments" EntitySet="Treatment" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" Association="ProjectFirma.Web.Models.FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
-      <End Role="GrantAllocationAwardLandownerCostShareLineItem" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
-      <End Role="TreatmentUpdates" EntitySet="TreatmentUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID">
-      <End Role="Person" EntitySet="Person" />
-      <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" EntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID">
-      <End Role="Person" EntitySet="Person" />
-      <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
       <End Role="ChangePerson" EntitySet="Person" />
@@ -861,118 +754,6 @@
       <End Role="RelationshipType" EntitySet="RelationshipType" />
       <End Role="OrganizationTypeRelationshipTypes" EntitySet="OrganizationTypeRelationshipType" />
     </AssociationSet>
-    <AssociationSet Name="FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclBoundaryLines" EntitySet="PclBoundaryLine" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclLandscapeTreatmentPriorities" EntitySet="PclLandscapeTreatmentPriority" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclVectorRankeds" EntitySet="PclVectorRanked" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PclWildfireResponseBenefits" EntitySet="PclWildfireResponseBenefit" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureActuals" EntitySet="PerformanceMeasureActual" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureActualSubcategoryOptions" EntitySet="PerformanceMeasureActualSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" EntitySet="PerformanceMeasureActualSubcategoryOptionUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualUpdate_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureActualUpdates" EntitySet="PerformanceMeasureActualUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureExpected_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureExpecteds" EntitySet="PerformanceMeasureExpected" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureExpectedSubcategoryOptions" EntitySet="PerformanceMeasureExpectedSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureNotes" EntitySet="PerformanceMeasureNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureSubcategory_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureSubcategory_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureSubcategories" EntitySet="PerformanceMeasureSubcategory" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="ProjectTypePerformanceMeasures" EntitySet="ProjectTypePerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActual_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="PerformanceMeasureActuals" EntitySet="PerformanceMeasureActual" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID">
-      <End Role="PerformanceMeasureActual" EntitySet="PerformanceMeasureActual" />
-      <End Role="PerformanceMeasureActualSubcategoryOptions" EntitySet="PerformanceMeasureActualSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-      <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
-      <End Role="PerformanceMeasureActualSubcategoryOptions" EntitySet="PerformanceMeasureActualSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-      <End Role="PerformanceMeasureSubcategoryOption" EntitySet="PerformanceMeasureSubcategoryOption" />
-      <End Role="PerformanceMeasureActualSubcategoryOptions" EntitySet="PerformanceMeasureActualSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID">
-      <End Role="PerformanceMeasureActualUpdate" EntitySet="PerformanceMeasureActualUpdate" />
-      <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" EntitySet="PerformanceMeasureActualSubcategoryOptionUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-      <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
-      <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" EntitySet="PerformanceMeasureActualSubcategoryOptionUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-      <End Role="PerformanceMeasureSubcategoryOption" EntitySet="PerformanceMeasureSubcategoryOption" />
-      <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" EntitySet="PerformanceMeasureActualSubcategoryOptionUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="PerformanceMeasureActualUpdates" EntitySet="PerformanceMeasureActualUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureExpected_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="PerformanceMeasureExpecteds" EntitySet="PerformanceMeasureExpected" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID">
-      <End Role="PerformanceMeasureExpected" EntitySet="PerformanceMeasureExpected" />
-      <End Role="PerformanceMeasureExpectedSubcategoryOptions" EntitySet="PerformanceMeasureExpectedSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-      <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
-      <End Role="PerformanceMeasureExpectedSubcategoryOptions" EntitySet="PerformanceMeasureExpectedSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-      <End Role="PerformanceMeasureSubcategoryOption" EntitySet="PerformanceMeasureSubcategoryOption" />
-      <End Role="PerformanceMeasureExpectedSubcategoryOptions" EntitySet="PerformanceMeasureExpectedSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureNote_Person_CreatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_CreatePersonID_PersonID">
-      <End Role="CreatePerson" EntitySet="Person" />
-      <End Role="PerformanceMeasureNotesWhereYouAreTheCreatePerson" EntitySet="PerformanceMeasureNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID">
-      <End Role="UpdatePerson" EntitySet="Person" />
-      <End Role="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" EntitySet="PerformanceMeasureNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" Association="ProjectFirma.Web.Models.FK_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-      <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
-      <End Role="PerformanceMeasureSubcategoryOptions" EntitySet="PerformanceMeasureSubcategoryOption" />
-    </AssociationSet>
     <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID">
       <End Role="AddedByPerson" EntitySet="Person" />
       <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
@@ -1097,10 +878,6 @@
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
     </AssociationSet>
-    <AssociationSet Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
-      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
-      <End Role="PodVectorRankeds" EntitySet="PodVectorRanked" />
-    </AssociationSet>
     <AssociationSet Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
       <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
       <End Role="PriorityLandscapeFileResources" EntitySet="PriorityLandscapeFileResource" />
@@ -1169,17 +946,9 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectCounties" EntitySet="ProjectCounty" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttribute_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectDocument_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectExemptReportingYear_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectExemptReportingYears" EntitySet="ProjectExemptReportingYear" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectExternalLink_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectExternalLink_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -1188,10 +957,6 @@
     <AssociationSet Name="FK_ProjectFundingSource_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectFundingSources" EntitySet="ProjectFundingSource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -1257,30 +1022,6 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectCountyUpdates" EntitySet="ProjectCountyUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectCustomAttributes" EntitySet="ProjectCustomAttribute" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID">
-      <End Role="ProjectCustomAttribute" EntitySet="ProjectCustomAttribute" />
-      <End Role="ProjectCustomAttributeValues" EntitySet="ProjectCustomAttributeValue" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
-      <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
-      <End Role="ProjectCustomAttributeUpdate" EntitySet="ProjectCustomAttributeUpdate" />
-      <End Role="ProjectCustomAttributeUpdateValues" EntitySet="ProjectCustomAttributeUpdateValue" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID" Association="ProjectFirma.Web.Models.FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID">
       <End Role="ProjectDocumentType" EntitySet="ProjectDocumentType" />
       <End Role="ProjectDocuments" EntitySet="ProjectDocument" />
@@ -1293,10 +1034,6 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectDocumentUpdates" EntitySet="ProjectDocumentUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectExemptReportingYearUpdates" EntitySet="ProjectExemptReportingYearUpdate" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectExternalLinkUpdates" EntitySet="ProjectExternalLinkUpdate" />
@@ -1304,10 +1041,6 @@
     <AssociationSet Name="FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectFundingSourceUpdates" EntitySet="ProjectFundingSourceUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1376,14 +1109,6 @@
     <AssociationSet Name="FK_ProjectType_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.FK_ProjectType_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="ProjectTypes" EntitySet="ProjectType" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID">
-      <End Role="ProjectType" EntitySet="ProjectType" />
-      <End Role="ProjectTypePerformanceMeasures" EntitySet="ProjectTypePerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID">
-      <End Role="ProjectType" EntitySet="ProjectType" />
-      <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1588,19 +1313,7 @@
     <Property Name="ClassificationSortOrder" Type="Int32" />
     <NavigationProperty Name="ClassificationSystem" Relationship="ProjectFirma.Web.Models.FK_Classification_ClassificationSystem_ClassificationSystemID" FromRole="Classifications" ToRole="ClassificationSystem" />
     <NavigationProperty Name="KeyImageFileResource" Relationship="ProjectFirma.Web.Models.FK_Classification_FileResource_KeyImageFileResourceID_FileResourceID" FromRole="ClassificationsWhereYouAreTheKeyImageFileResource" ToRole="KeyImageFileResource" />
-    <NavigationProperty Name="ClassificationPerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_Classification_ClassificationID" FromRole="Classification" ToRole="ClassificationPerformanceMeasures" />
     <NavigationProperty Name="ProjectClassifications" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Classification_ClassificationID" FromRole="Classification" ToRole="ProjectClassifications" />
-  </EntityType>
-  <EntityType Name="ClassificationPerformanceMeasure">
-    <Key>
-      <PropertyRef Name="ClassificationPerformanceMeasureID" />
-    </Key>
-    <Property Name="ClassificationPerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="ClassificationID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="IsPrimaryChart" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Classification" Relationship="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_Classification_ClassificationID" FromRole="ClassificationPerformanceMeasures" ToRole="Classification" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" FromRole="ClassificationPerformanceMeasures" ToRole="PerformanceMeasure" />
   </EntityType>
   <EntityType Name="ClassificationSystem">
     <Key>
@@ -1765,7 +1478,6 @@
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="FileResourcesWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
     <NavigationProperty Name="FirmaHomePageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaHomePageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaHomePageImages" />
     <NavigationProperty Name="FirmaPageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaPageImages" />
-    <NavigationProperty Name="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" FromRole="GrantAllocationAwardContractorInvoiceFileResource" ToRole="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" />
     <NavigationProperty Name="GrantAllocationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantAllocationFileResources" />
     <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantFileResources" />
     <NavigationProperty Name="GrantModificationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantModificationFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantModificationFileResources" />
@@ -1844,7 +1556,6 @@
     <Property Name="PlannedFootprintAcres" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" FromRole="FocusAreas" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="FocusAreaLocationStagings" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="FocusAreaLocationStagings" />
-    <NavigationProperty Name="GrantAllocationAwards" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="GrantAllocationAwards" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="Projects" />
     <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="ProjectUpdates" />
   </EntityType>
@@ -2073,7 +1784,6 @@
     <NavigationProperty Name="GrantModification" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_GrantModification_GrantModificationID" FromRole="GrantAllocations" ToRole="GrantModification" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
-    <NavigationProperty Name="GrantAllocationAwards" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationAwards" />
     <NavigationProperty Name="GrantAllocationBudgetLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationBudgetLineItems" />
     <NavigationProperty Name="GrantAllocationChangeLogs" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationChangeLogs" />
     <NavigationProperty Name="GrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationExpenditures" />
@@ -2083,117 +1793,8 @@
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramIndexProjectCodes" />
     <NavigationProperty Name="GrantAllocationProgramManagers" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramManagers" />
-    <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditures" />
-    <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditureUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectGrantAllocationRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequestUpdates" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAward">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardID" />
-    </Key>
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardExpirationDate" Type="DateTime" Nullable="false" />
-    <Property Name="ContractorInvoiceContractor" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardCalendarStartYear" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID" FromRole="GrantAllocationAwards" ToRole="FocusArea" />
-    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationAwards" ToRole="GrantAllocation" />
-    <NavigationProperty Name="GrantAllocationAwardContractorInvoices" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardContractorInvoices" />
-    <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardLandownerCostShareLineItems" />
-    <NavigationProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" />
-    <NavigationProperty Name="GrantAllocationAwardSuppliesLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardSuppliesLineItems" />
-    <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardTravelLineItems" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardContractorInvoice">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardContractorInvoiceID" />
-    </Key>
-    <Property Name="GrantAllocationAwardContractorInvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceNumber" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceDate" Type="DateTime" Nullable="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceTypeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceForemanHours" Type="Decimal" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardContractorInvoiceForemanRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceLaborHours" Type="Decimal" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardContractorInvoiceLaborRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceGrappleHours" Type="Decimal" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardContractorInvoiceGrappleRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceMasticationHours" Type="Decimal" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardContractorInvoiceMasticationRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceTotal" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceTaxRate" Type="Decimal" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardContractorInvoiceAcresReported" Type="Decimal" Precision="38" Scale="10" />
-    <Property Name="GrantAllocationAwardContractorInvoiceNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceFileResourceID" Type="Int32" />
-    <NavigationProperty Name="GrantAllocationAwardContractorInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" FromRole="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" ToRole="GrantAllocationAwardContractorInvoiceFileResource" />
-    <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardContractorInvoices" ToRole="GrantAllocationAward" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardLandownerCostShareLineItem">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
-    </Key>
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="LandownerCostShareLineItemStatusID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardLandownerCostShareLineItems" ToRole="GrantAllocationAward" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" FromRole="GrantAllocationAwardLandownerCostShareLineItems" ToRole="Project" />
-    <NavigationProperty Name="Treatments" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="GrantAllocationAwardLandownerCostShareLineItem" ToRole="Treatments" />
-    <NavigationProperty Name="TreatmentUpdates" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="GrantAllocationAwardLandownerCostShareLineItem" ToRole="TreatmentUpdates" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardPersonnelAndBenefitsLineItem">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" />
-    </Key>
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" Type="DateTime" Nullable="false" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-    <Property Name="PersonID" Type="Int32" />
-    <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" ToRole="GrantAllocationAward" />
-    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" FromRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" ToRole="Person" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardSuppliesLineItem">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardSuppliesLineItemID" />
-    </Key>
-    <Property Name="GrantAllocationAwardSuppliesLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardSuppliesLineItemDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardSuppliesLineItemTarOrMonth" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardSuppliesLineItemDate" Type="DateTime" Nullable="false" />
-    <Property Name="GrantAllocationAwardSuppliesLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardSuppliesLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardSuppliesLineItems" ToRole="GrantAllocationAward" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardTravelLineItem">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardTravelLineItemID" />
-    </Key>
-    <Property Name="GrantAllocationAwardTravelLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemTarOrMonth" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemDate" Type="DateTime" Nullable="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemTypeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemMiles" Type="Int32" />
-    <Property Name="GrantAllocationAwardTravelLineItemMileageRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardTravelLineItemAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardTravelLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-    <Property Name="PersonID" Type="Int32" />
-    <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardTravelLineItems" ToRole="GrantAllocationAward" />
-    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="GrantAllocationAwardTravelLineItems" ToRole="Person" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -2710,199 +2311,6 @@
     <NavigationProperty Name="OrganizationType" Relationship="ProjectFirma.Web.Models.FK_OrganizationTypeRelationshipType_OrganizationType_OrganizationTypeID" FromRole="OrganizationTypeRelationshipTypes" ToRole="OrganizationType" />
     <NavigationProperty Name="RelationshipType" Relationship="ProjectFirma.Web.Models.FK_OrganizationTypeRelationshipType_RelationshipType_RelationshipTypeID" FromRole="OrganizationTypeRelationshipTypes" ToRole="RelationshipType" />
   </EntityType>
-  <EntityType Name="PclBoundaryLine">
-    <Key>
-      <PropertyRef Name="PclBoundaryLineID" />
-    </Key>
-    <Property Name="PclBoundaryLineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Feature" Type="Geometry" Nullable="false" />
-    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PclBoundaryLines" ToRole="PriorityLandscape" />
-  </EntityType>
-  <EntityType Name="PclLandscapeTreatmentPriority">
-    <Key>
-      <PropertyRef Name="PclLandscapeTreatmentPriorityID" />
-    </Key>
-    <Property Name="PclLandscapeTreatmentPriorityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Feature" Type="Geometry" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PclLandscapeTreatmentPriorities" ToRole="PriorityLandscape" />
-  </EntityType>
-  <EntityType Name="PclVectorRanked">
-    <Key>
-      <PropertyRef Name="PclVectorRankedID" />
-    </Key>
-    <Property Name="PclVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Feature" Type="Geometry" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PclVectorRankeds" ToRole="PriorityLandscape" />
-  </EntityType>
-  <EntityType Name="PclWildfireResponseBenefit">
-    <Key>
-      <PropertyRef Name="PclWildfireResponseBenefitID" />
-    </Key>
-    <Property Name="PclWildfireResponseBenefitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Feature" Type="Geometry" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" FromRole="PclWildfireResponseBenefits" ToRole="PriorityLandscape" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasure">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureID" />
-    </Key>
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CriticalDefinitions" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectReporting" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="PerformanceMeasureDisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="MeasurementUnitTypeID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureTypeID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureDefinition" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="DataSourceText" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="ExternalDataSourceUrl" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="ChartCaption" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
-    <Property Name="SwapChartAxes" Type="Boolean" Nullable="false" />
-    <Property Name="CanCalculateTotal" Type="Boolean" Nullable="false" />
-    <Property Name="PerformanceMeasureSortOrder" Type="Int32" />
-    <Property Name="IsAggregatable" Type="Boolean" Nullable="false" />
-    <Property Name="PerformanceMeasureDataSourceTypeID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ClassificationPerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="ClassificationPerformanceMeasures" />
-    <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureActuals" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureActualSubcategoryOptions" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptionUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureActualSubcategoryOptionUpdates" />
-    <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureActualUpdates" />
-    <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureExpecteds" />
-    <NavigationProperty Name="PerformanceMeasureExpectedSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureExpectedSubcategoryOptions" />
-    <NavigationProperty Name="PerformanceMeasureNotes" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureNotes" />
-    <NavigationProperty Name="PerformanceMeasureSubcategories" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureSubcategory_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="PerformanceMeasureSubcategories" />
-    <NavigationProperty Name="ProjectTypePerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasure" ToRole="ProjectTypePerformanceMeasures" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureActual">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureActualID" />
-    </Key>
-    <Property Name="PerformanceMeasureActualID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="CalendarYear" Type="Int32" Nullable="false" />
-    <Property Name="ActualValue" Type="Double" Nullable="false" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureActuals" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="PerformanceMeasureActuals" ToRole="Project" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID" FromRole="PerformanceMeasureActual" ToRole="PerformanceMeasureActualSubcategoryOptions" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureActualSubcategoryOption">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureActualSubcategoryOptionID" />
-    </Key>
-    <Property Name="PerformanceMeasureActualSubcategoryOptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PerformanceMeasureActualID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryOptionID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureActualSubcategoryOptions" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="PerformanceMeasureActual" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID" FromRole="PerformanceMeasureActualSubcategoryOptions" ToRole="PerformanceMeasureActual" />
-    <NavigationProperty Name="PerformanceMeasureSubcategory" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureActualSubcategoryOptions" ToRole="PerformanceMeasureSubcategory" />
-    <NavigationProperty Name="PerformanceMeasureSubcategoryOption" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" FromRole="PerformanceMeasureActualSubcategoryOptions" ToRole="PerformanceMeasureSubcategoryOption" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureActualSubcategoryOptionUpdate">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureActualSubcategoryOptionUpdateID" />
-    </Key>
-    <Property Name="PerformanceMeasureActualSubcategoryOptionUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PerformanceMeasureActualUpdateID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryOptionID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureActualSubcategoryOptionUpdates" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="PerformanceMeasureActualUpdate" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID" FromRole="PerformanceMeasureActualSubcategoryOptionUpdates" ToRole="PerformanceMeasureActualUpdate" />
-    <NavigationProperty Name="PerformanceMeasureSubcategory" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureActualSubcategoryOptionUpdates" ToRole="PerformanceMeasureSubcategory" />
-    <NavigationProperty Name="PerformanceMeasureSubcategoryOption" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" FromRole="PerformanceMeasureActualSubcategoryOptionUpdates" ToRole="PerformanceMeasureSubcategoryOption" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureActualUpdate">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureActualUpdateID" />
-    </Key>
-    <Property Name="PerformanceMeasureActualUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="CalendarYear" Type="Int32" Nullable="false" />
-    <Property Name="ActualValue" Type="Double" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureActualUpdates" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptionUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID" FromRole="PerformanceMeasureActualUpdate" ToRole="PerformanceMeasureActualSubcategoryOptionUpdates" />
-    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="PerformanceMeasureActualUpdates" ToRole="ProjectUpdateBatch" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureExpected">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureExpectedID" />
-    </Key>
-    <Property Name="PerformanceMeasureExpectedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="ExpectedValue" Type="Double" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureExpecteds" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="PerformanceMeasureExpecteds" ToRole="Project" />
-    <NavigationProperty Name="PerformanceMeasureExpectedSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID" FromRole="PerformanceMeasureExpected" ToRole="PerformanceMeasureExpectedSubcategoryOptions" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureExpectedSubcategoryOption">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureExpectedSubcategoryOptionID" />
-    </Key>
-    <Property Name="PerformanceMeasureExpectedSubcategoryOptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PerformanceMeasureExpectedID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryOptionID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureExpectedSubcategoryOptions" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="PerformanceMeasureExpected" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID" FromRole="PerformanceMeasureExpectedSubcategoryOptions" ToRole="PerformanceMeasureExpected" />
-    <NavigationProperty Name="PerformanceMeasureSubcategory" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureExpectedSubcategoryOptions" ToRole="PerformanceMeasureSubcategory" />
-    <NavigationProperty Name="PerformanceMeasureSubcategoryOption" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" FromRole="PerformanceMeasureExpectedSubcategoryOptions" ToRole="PerformanceMeasureSubcategoryOption" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureNote">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureNoteID" />
-    </Key>
-    <Property Name="PerformanceMeasureNoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="Note" Type="String" Nullable="false" MaxLength="8000" Unicode="false" FixedLength="false" />
-    <Property Name="CreatePersonID" Type="Int32" />
-    <Property Name="CreateDate" Type="DateTime" Nullable="false" />
-    <Property Name="UpdatePersonID" Type="Int32" />
-    <Property Name="UpdateDate" Type="DateTime" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureNotes" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_CreatePersonID_PersonID" FromRole="PerformanceMeasureNotesWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
-    <NavigationProperty Name="UpdatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID" FromRole="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" ToRole="UpdatePerson" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureSubcategory">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-    </Key>
-    <Property Name="PerformanceMeasureSubcategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryDisplayName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="ChartConfigurationJson" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="GoogleChartTypeID" Type="Int32" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureSubcategory_PerformanceMeasure_PerformanceMeasureID" FromRole="PerformanceMeasureSubcategories" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureSubcategory" ToRole="PerformanceMeasureActualSubcategoryOptions" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptionUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureSubcategory" ToRole="PerformanceMeasureActualSubcategoryOptionUpdates" />
-    <NavigationProperty Name="PerformanceMeasureExpectedSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureSubcategory" ToRole="PerformanceMeasureExpectedSubcategoryOptions" />
-    <NavigationProperty Name="PerformanceMeasureSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureSubcategory" ToRole="PerformanceMeasureSubcategoryOptions" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureSubcategoryOption">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-    </Key>
-    <Property Name="PerformanceMeasureSubcategoryOptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PerformanceMeasureSubcategoryID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryOptionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="SortOrder" Type="Int32" />
-    <Property Name="ShowOnFactSheet" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" FromRole="PerformanceMeasureSubcategoryOption" ToRole="PerformanceMeasureActualSubcategoryOptions" />
-    <NavigationProperty Name="PerformanceMeasureActualSubcategoryOptionUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" FromRole="PerformanceMeasureSubcategoryOption" ToRole="PerformanceMeasureActualSubcategoryOptionUpdates" />
-    <NavigationProperty Name="PerformanceMeasureExpectedSubcategoryOptions" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" FromRole="PerformanceMeasureSubcategoryOption" ToRole="PerformanceMeasureExpectedSubcategoryOptions" />
-    <NavigationProperty Name="PerformanceMeasureSubcategory" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" FromRole="PerformanceMeasureSubcategoryOptions" ToRole="PerformanceMeasureSubcategory" />
-  </EntityType>
   <EntityType Name="Person">
     <Key>
       <PropertyRef Name="PersonID" />
@@ -2933,8 +2341,6 @@
     <NavigationProperty Name="ForesterWorkUnits" Relationship="ProjectFirma.Web.Models.FK_ForesterWorkUnit_Person_PersonID" FromRole="Person" ToRole="ForesterWorkUnits" />
     <NavigationProperty Name="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptCreatePerson" ToRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
-    <NavigationProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" />
-    <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardTravelLineItems" />
     <NavigationProperty Name="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" FromRole="ChangePerson" ToRole="GrantAllocationChangeLogsWhereYouAreTheChangePerson" />
     <NavigationProperty Name="GrantAllocationLikelyPeople" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationLikelyPerson_Person_PersonID" FromRole="Person" ToRole="GrantAllocationLikelyPeople" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheCreatedByPerson" />
@@ -2954,8 +2360,6 @@
     <NavigationProperty Name="Notifications" Relationship="ProjectFirma.Web.Models.FK_Notification_Person_PersonID" FromRole="Person" ToRole="Notifications" />
     <NavigationProperty Name="OrganizationsWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="OrganizationsWhereYouAreThePrimaryContactPerson" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Person_Organization_OrganizationID" FromRole="People" ToRole="Organization" />
-    <NavigationProperty Name="PerformanceMeasureNotesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="PerformanceMeasureNotesWhereYouAreTheCreatePerson" />
-    <NavigationProperty Name="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="PeopleWhereYouAreTheAddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="AddedByPerson" ToRole="PeopleWhereYouAreTheAddedByPerson" />
     <NavigationProperty Name="AddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="PeopleWhereYouAreTheAddedByPerson" ToRole="AddedByPerson" />
     <NavigationProperty Name="Vendor" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="People" ToRole="Vendor" />
@@ -3036,16 +2440,6 @@
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="PersonStewardTaxonomyBranches" ToRole="Person" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" FromRole="PersonStewardTaxonomyBranches" ToRole="TaxonomyBranch" />
   </EntityType>
-  <EntityType Name="PodVectorRanked">
-    <Key>
-      <PropertyRef Name="PodVectorRankedID" />
-    </Key>
-    <Property Name="PodVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Feature" Type="Geometry" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="PriorityLandscape" Relationship="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PodVectorRankeds" ToRole="PriorityLandscape" />
-  </EntityType>
   <EntityType Name="PriorityLandscape">
     <Key>
       <PropertyRef Name="PriorityLandscapeID" />
@@ -3058,11 +2452,6 @@
     <Property Name="PriorityLandscapeAboveMapText" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <Property Name="PriorityLandscapeCategoryID" Type="Int32" />
     <Property Name="PriorityLandscapeExternalResources" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="PclBoundaryLines" Relationship="ProjectFirma.Web.Models.FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclBoundaryLines" />
-    <NavigationProperty Name="PclLandscapeTreatmentPriorities" Relationship="ProjectFirma.Web.Models.FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclLandscapeTreatmentPriorities" />
-    <NavigationProperty Name="PclVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclVectorRankeds" />
-    <NavigationProperty Name="PclWildfireResponseBenefits" Relationship="ProjectFirma.Web.Models.FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PclWildfireResponseBenefits" />
-    <NavigationProperty Name="PodVectorRankeds" Relationship="ProjectFirma.Web.Models.FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PodVectorRankeds" />
     <NavigationProperty Name="PriorityLandscapeFileResources" Relationship="ProjectFirma.Web.Models.FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="PriorityLandscapeFileResources" />
     <NavigationProperty Name="ProjectPriorityLandscapes" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapes" />
     <NavigationProperty Name="ProjectPriorityLandscapeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" FromRole="PriorityLandscape" ToRole="ProjectPriorityLandscapeUpdates" />
@@ -3184,7 +2573,6 @@
     <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
-    <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
@@ -3192,7 +2580,6 @@
     <Property Name="ProjectApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="ProposingPersonID" Type="Int32" />
     <Property Name="ProposingDate" Type="DateTime" />
-    <Property Name="PerformanceMeasureNotes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="SubmissionDate" Type="DateTime" />
     <Property Name="ApprovalDate" Type="DateTime" />
     <Property Name="ReviewedByPersonID" Type="Int32" />
@@ -3213,24 +2600,18 @@
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="LastUpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Project_GisUploadAttempt_LastUpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="ProjectsWhereYouAreTheLastUpdateGisUploadAttempt" ToRole="LastUpdateGisUploadAttempt" />
-    <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" FromRole="Project" ToRole="GrantAllocationAwardLandownerCostShareLineItems" />
     <NavigationProperty Name="InteractionEventProjects" Relationship="ProjectFirma.Web.Models.FK_InteractionEventProject_Project_ProjectID" FromRole="Project" ToRole="InteractionEventProjects" />
     <NavigationProperty Name="InvoicePaymentRequests" Relationship="ProjectFirma.Web.Models.FK_InvoicePaymentRequest_Project_ProjectID" FromRole="Project" ToRole="InvoicePaymentRequests" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
-    <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
-    <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
     <NavigationProperty Name="ProposingPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ProposingPersonID_PersonID" FromRole="ProjectsWhereYouAreTheProposingPerson" ToRole="ProposingPerson" />
     <NavigationProperty Name="ReviewedByPerson" Relationship="ProjectFirma.Web.Models.FK_Project_Person_ReviewedByPersonID_PersonID" FromRole="ProjectsWhereYouAreTheReviewedByPerson" ToRole="ReviewedByPerson" />
     <NavigationProperty Name="ProgramNotificationSentProjects" Relationship="ProjectFirma.Web.Models.FK_ProgramNotificationSentProject_Project_ProjectID" FromRole="Project" ToRole="ProgramNotificationSentProjects" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="Projects" ToRole="ProjectType" />
     <NavigationProperty Name="ProjectClassifications" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="Project" ToRole="ProjectClassifications" />
     <NavigationProperty Name="ProjectCounties" Relationship="ProjectFirma.Web.Models.FK_ProjectCounty_Project_ProjectID" FromRole="Project" ToRole="ProjectCounties" />
-    <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID" FromRole="Project" ToRole="ProjectCustomAttributes" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID" FromRole="Project" ToRole="ProjectDocuments" />
-    <NavigationProperty Name="ProjectExemptReportingYears" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID" FromRole="Project" ToRole="ProjectExemptReportingYears" />
     <NavigationProperty Name="ProjectExternalLinks" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLink_Project_ProjectID" FromRole="Project" ToRole="ProjectExternalLinks" />
     <NavigationProperty Name="ProjectFundingSources" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSource_Project_ProjectID" FromRole="Project" ToRole="ProjectFundingSources" />
-    <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationExpenditures" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_Project_ProjectID" FromRole="Project" ToRole="ProjectImages" />
     <NavigationProperty Name="ProjectImportBlockLists" Relationship="ProjectFirma.Web.Models.FK_ProjectImportBlockList_Project_ProjectID" FromRole="Project" ToRole="ProjectImportBlockLists" />
@@ -3291,62 +2672,6 @@
     <NavigationProperty Name="County" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_County_CountyID" FromRole="ProjectCountyUpdates" ToRole="County" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectCountyUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
-  <EntityType Name="ProjectCustomAttribute">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_Project_ProjectID" FromRole="ProjectCustomAttributes" ToRole="Project" />
-    <NavigationProperty Name="ProjectCustomAttributeType" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributes" ToRole="ProjectCustomAttributeType" />
-    <NavigationProperty Name="ProjectCustomAttributeValues" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID" FromRole="ProjectCustomAttribute" ToRole="ProjectCustomAttributeValues" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeType">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeTypeID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomAttributeTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectCustomAttributeDataTypeID" Type="Int32" Nullable="false" />
-    <Property Name="MeasurementUnitTypeID" Type="Int32" />
-    <Property Name="IsRequired" Type="Boolean" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectCustomAttributeTypeOptionsSchema" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="ApplyToAllProjectTypes" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributes" />
-    <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributeUpdates" />
-    <NavigationProperty Name="ProjectTypeProjectCustomAttributeTypes" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectTypeProjectCustomAttributeTypes" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeUpdate">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ProjectCustomAttributeType" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeUpdates" ToRole="ProjectCustomAttributeType" />
-    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectCustomAttributeUpdates" ToRole="ProjectUpdateBatch" />
-    <NavigationProperty Name="ProjectCustomAttributeUpdateValues" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" FromRole="ProjectCustomAttributeUpdate" ToRole="ProjectCustomAttributeUpdateValues" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeUpdateValue">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeUpdateValueID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeUpdateValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomAttributeUpdateID" Type="Int32" Nullable="false" />
-    <Property Name="AttributeValue" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="ProjectCustomAttributeUpdate" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID" FromRole="ProjectCustomAttributeUpdateValues" ToRole="ProjectCustomAttributeUpdate" />
-  </EntityType>
-  <EntityType Name="ProjectCustomAttributeValue">
-    <Key>
-      <PropertyRef Name="ProjectCustomAttributeValueID" />
-    </Key>
-    <Property Name="ProjectCustomAttributeValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectCustomAttributeID" Type="Int32" Nullable="false" />
-    <Property Name="AttributeValue" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="ProjectCustomAttribute" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID" FromRole="ProjectCustomAttributeValues" ToRole="ProjectCustomAttribute" />
-  </EntityType>
   <EntityType Name="ProjectDocument">
     <Key>
       <PropertyRef Name="ProjectDocumentID" />
@@ -3385,26 +2710,6 @@
     <NavigationProperty Name="ProjectDocumentType" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectDocumentType_ProjectDocumentTypeID" FromRole="ProjectDocumentUpdates" ToRole="ProjectDocumentType" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectDocumentUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
-  <EntityType Name="ProjectExemptReportingYear">
-    <Key>
-      <PropertyRef Name="ProjectExemptReportingYearID" />
-    </Key>
-    <Property Name="ProjectExemptReportingYearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="CalendarYear" Type="Int32" Nullable="false" />
-    <Property Name="ProjectExemptReportingTypeID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID" FromRole="ProjectExemptReportingYears" ToRole="Project" />
-  </EntityType>
-  <EntityType Name="ProjectExemptReportingYearUpdate">
-    <Key>
-      <PropertyRef Name="ProjectExemptReportingYearUpdateID" />
-    </Key>
-    <Property Name="ProjectExemptReportingYearUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="CalendarYear" Type="Int32" Nullable="false" />
-    <Property Name="ProjectExemptReportingTypeID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectExemptReportingYearUpdates" ToRole="ProjectUpdateBatch" />
-  </EntityType>
   <EntityType Name="ProjectExternalLink">
     <Key>
       <PropertyRef Name="ProjectExternalLinkID" />
@@ -3442,30 +2747,6 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectFundingSourceUpdates" ToRole="ProjectUpdateBatch" />
-  </EntityType>
-  <EntityType Name="ProjectGrantAllocationExpenditure">
-    <Key>
-      <PropertyRef Name="ProjectGrantAllocationExpenditureID" />
-    </Key>
-    <Property Name="ProjectGrantAllocationExpenditureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="CalendarYear" Type="Int32" Nullable="false" />
-    <Property Name="ExpenditureAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationExpenditures" ToRole="GrantAllocation" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="ProjectGrantAllocationExpenditures" ToRole="Project" />
-  </EntityType>
-  <EntityType Name="ProjectGrantAllocationExpenditureUpdate">
-    <Key>
-      <PropertyRef Name="ProjectGrantAllocationExpenditureUpdateID" />
-    </Key>
-    <Property Name="ProjectGrantAllocationExpenditureUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="CalendarYear" Type="Int32" Nullable="false" />
-    <Property Name="ExpenditureAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationExpenditureUpdates" ToRole="GrantAllocation" />
-    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectGrantAllocationExpenditureUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationRequest">
     <Key>
@@ -3776,29 +3057,6 @@
     <Property Name="LimitVisibilityToAdmin" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="Projects" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_ProjectType_TaxonomyBranch_TaxonomyBranchID" FromRole="ProjectTypes" ToRole="TaxonomyBranch" />
-    <NavigationProperty Name="ProjectTypePerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="ProjectTypePerformanceMeasures" />
-    <NavigationProperty Name="ProjectTypeProjectCustomAttributeTypes" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="ProjectTypeProjectCustomAttributeTypes" />
-  </EntityType>
-  <EntityType Name="ProjectTypePerformanceMeasure">
-    <Key>
-      <PropertyRef Name="ProjectTypePerformanceMeasureID" />
-    </Key>
-    <Property Name="ProjectTypePerformanceMeasureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectTypeID" Type="Int32" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="Int32" Nullable="false" />
-    <Property Name="IsPrimaryProjectType" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" FromRole="ProjectTypePerformanceMeasures" ToRole="PerformanceMeasure" />
-    <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" FromRole="ProjectTypePerformanceMeasures" ToRole="ProjectType" />
-  </EntityType>
-  <EntityType Name="ProjectTypeProjectCustomAttributeType">
-    <Key>
-      <PropertyRef Name="ProjectTypeProjectCustomAttributeTypeID" />
-    </Key>
-    <Property Name="ProjectTypeProjectCustomAttributeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectTypeID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ProjectCustomAttributeType" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectTypeProjectCustomAttributeTypes" ToRole="ProjectCustomAttributeType" />
-    <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" FromRole="ProjectTypeProjectCustomAttributeTypes" ToRole="ProjectType" />
   </EntityType>
   <EntityType Name="ProjectUpdate">
     <Key>
@@ -3828,18 +3086,15 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="LastUpdateDate" Type="DateTime" Nullable="false" />
-    <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="LastUpdatePersonID" Type="Int32" Nullable="false" />
     <Property Name="BasicsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ExpendituresComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
-    <Property Name="PerformanceMeasuresComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="LocationSimpleComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="LocationDetailedComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="BudgetsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ProjectUpdateStateID" Type="Int32" Nullable="false" />
     <Property Name="IsPhotosUpdated" Type="Boolean" Nullable="false" />
     <Property Name="BasicsDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="PerformanceMeasureDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ExpendituresDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="BudgetsDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ExternalLinksDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
@@ -3856,16 +3111,12 @@
     <Property Name="ProjectAttributesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityLandscapesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoCountiesExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
     <NavigationProperty Name="ProjectCountyUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCountyUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCountyUpdates" />
-    <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectCustomAttributeUpdates" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectDocumentUpdates" />
-    <NavigationProperty Name="ProjectExemptReportingYearUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExemptReportingYearUpdates" />
     <NavigationProperty Name="ProjectExternalLinkUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExternalLinkUpdates" />
     <NavigationProperty Name="ProjectFundingSourceUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectFundingSourceUpdates" />
-    <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectGrantAllocationExpenditureUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectGrantAllocationRequestUpdates" />
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectImageUpdates" />
     <NavigationProperty Name="ProjectLocationStagingUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectLocationStagingUpdates" />
@@ -4110,7 +3361,6 @@
     </Key>
     <Property Name="TreatmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="Int32" />
     <Property Name="TreatmentStartDate" Type="DateTime" />
     <Property Name="TreatmentEndDate" Type="DateTime" />
     <Property Name="TreatmentFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
@@ -4129,7 +3379,6 @@
     <Property Name="CostPerAcre" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="UpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_Treatment_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentsWhereYouAreTheUpdateGisUploadAttempt" ToRole="UpdateGisUploadAttempt" />
-    <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="Treatments" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_Treatment_Program_ProgramID" FromRole="Treatments" ToRole="Program" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_Treatment_Project_ProjectID" FromRole="Treatments" ToRole="Project" />
     <NavigationProperty Name="ProjectLocation" Relationship="ProjectFirma.Web.Models.FK_Treatment_ProjectLocation_ProjectLocationID" FromRole="Treatments" ToRole="ProjectLocation" />
@@ -4159,7 +3408,6 @@
     </Key>
     <Property Name="TreatmentUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="Int32" />
     <Property Name="TreatmentStartDate" Type="DateTime" />
     <Property Name="TreatmentEndDate" Type="DateTime" />
     <Property Name="TreatmentFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
@@ -4178,7 +3426,6 @@
     <Property Name="CostPerAcre" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="CreateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_GisUploadAttempt_CreateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentUpdatesWhereYouAreTheCreateGisUploadAttempt" ToRole="CreateGisUploadAttempt" />
     <NavigationProperty Name="UpdateGisUploadAttempt" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_GisUploadAttempt_UpdateGisUploadAttemptID_GisUploadAttemptID" FromRole="TreatmentUpdatesWhereYouAreTheUpdateGisUploadAttempt" ToRole="UpdateGisUploadAttempt" />
-    <NavigationProperty Name="GrantAllocationAwardLandownerCostShareLineItem" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID" FromRole="TreatmentUpdates" ToRole="GrantAllocationAwardLandownerCostShareLineItem" />
     <NavigationProperty Name="Program" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_Program_ProgramID" FromRole="TreatmentUpdates" ToRole="Program" />
     <NavigationProperty Name="ProjectLocationUpdate" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_ProjectLocationUpdate_ProjectLocationUpdateID" FromRole="TreatmentUpdates" ToRole="ProjectLocationUpdate" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_TreatmentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="TreatmentUpdates" ToRole="ProjectUpdateBatch" />
@@ -4253,74 +3500,6 @@
     <Property Name="CountyFeature" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
-  <EntityType Name="vGeoServerPclBoundaryLine">
-    <Key>
-      <PropertyRef Name="PclBoundaryLineID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-    </Key>
-    <Property Name="PclBoundaryLineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Feature" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
-  <EntityType Name="vGeoServerPclLandscapeTreatmentPriority">
-    <Key>
-      <PropertyRef Name="PclLandscapeTreatmentPriorityID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PclLandscapeTreatmentPriorityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="Feature" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
-  <EntityType Name="vGeoServerPclVectorRanked">
-    <Key>
-      <PropertyRef Name="PclVectorRankedID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PclVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="Feature" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
-  <EntityType Name="vGeoServerPclWildfireResponseBenefit">
-    <Key>
-      <PropertyRef Name="PclWildfireResponseBenefitID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PclWildfireResponseBenefitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="Feature" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
-  <EntityType Name="vGeoServerPodVectorRanked">
-    <Key>
-      <PropertyRef Name="PodVectorRankedID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityLandscapeID" />
-      <PropertyRef Name="Color" />
-    </Key>
-    <Property Name="PodVectorRankedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="PriorityLandscapeID" Type="Int32" Nullable="false" />
-    <Property Name="Color" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="Feature" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
   <EntityType Name="vGeoServerPriorityLandscape">
     <Key>
       <PropertyRef Name="PriorityLandscapeID" />
@@ -4346,23 +3525,6 @@
     <Property Name="LoaStageID" Type="Int32" Nullable="false" />
     <Property Name="GrantID" Type="Int32" />
     <Property Name="GrantAllocationID" Type="Int32" />
-    <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
-    <Property Name="IsSoutheast" Type="Boolean" />
-    <Property Name="ProgramIndex" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="ProjectCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="vLoaStageGrantAllocationAward">
-    <Key>
-      <PropertyRef Name="LoaStageID" />
-      <PropertyRef Name="GrantAllocationAwardID" />
-      <PropertyRef Name="GrantAllocationID" />
-      <PropertyRef Name="GrantID" />
-      <PropertyRef Name="IsNortheast" />
-    </Key>
-    <Property Name="LoaStageID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" Nullable="false" />
     <Property Name="IsNortheast" Type="Boolean" Nullable="false" />
     <Property Name="IsSoutheast" Type="Boolean" />
     <Property Name="ProgramIndex" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -4606,18 +3768,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ClassificationPerformanceMeasure_Classification_ClassificationID">
-    <End Role="Classification" Type="ProjectFirma.Web.Models.Classification" Multiplicity="1" />
-    <End Role="ClassificationPerformanceMeasures" Type="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Classification">
-        <PropertyRef Name="ClassificationID" />
-      </Principal>
-      <Dependent Role="ClassificationPerformanceMeasures">
-        <PropertyRef Name="ClassificationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectClassification_Classification_ClassificationID">
     <End Role="Classification" Type="ProjectFirma.Web.Models.Classification" Multiplicity="1" />
     <End Role="ProjectClassifications" Type="ProjectFirma.Web.Models.ProjectClassification" Multiplicity="*" />
@@ -4627,18 +3777,6 @@
       </Principal>
       <Dependent Role="ProjectClassifications">
         <PropertyRef Name="ClassificationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="ClassificationPerformanceMeasures" Type="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="ClassificationPerformanceMeasures">
-        <PropertyRef Name="PerformanceMeasureID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4882,18 +4020,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID">
-    <End Role="GrantAllocationAwardContractorInvoiceFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
-    <End Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" Type="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAwardContractorInvoiceFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource">
-        <PropertyRef Name="GrantAllocationAwardContractorInvoiceFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocationFileResource_FileResource_FileResourceID">
     <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1" />
     <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.GrantAllocationFileResource" Multiplicity="*" />
@@ -5124,18 +4250,6 @@
         <PropertyRef Name="FocusAreaID" />
       </Principal>
       <Dependent Role="FocusAreaLocationStagings">
-        <PropertyRef Name="FocusAreaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAward_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="1" />
-    <End Role="GrantAllocationAwards" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FocusArea">
-        <PropertyRef Name="FocusAreaID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwards">
         <PropertyRef Name="FocusAreaID" />
       </Dependent>
     </ReferentialConstraint>
@@ -5572,18 +4686,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocationAward_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationAwards" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwards">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
     <End Role="GrantAllocationBudgetLineItems" Type="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" Multiplicity="*" />
@@ -5692,30 +4794,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditures">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.ProjectGrantAllocationRequest" Multiplicity="*" />
@@ -5737,126 +4815,6 @@
       </Principal>
       <Dependent Role="ProjectGrantAllocationRequestUpdates">
         <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="1" />
-    <End Role="GrantAllocationAwardContractorInvoices" Type="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAward">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardContractorInvoices">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="0..1" />
-    <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAward">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="1" />
-    <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardPersonnelAndBenefitsLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAward">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardPersonnelAndBenefitsLineItems">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="1" />
-    <End Role="GrantAllocationAwardSuppliesLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardSuppliesLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAward">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardSuppliesLineItems">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="1" />
-    <End Role="GrantAllocationAwardTravelLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAward">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardTravelLineItems">
-        <PropertyRef Name="GrantAllocationAwardID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Treatment_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
-    <End Role="GrantAllocationAwardLandownerCostShareLineItem" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="0..1" />
-    <End Role="Treatments" Type="ProjectFirma.Web.Models.Treatment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAwardLandownerCostShareLineItem">
-        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
-      </Principal>
-      <Dependent Role="Treatments">
-        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentUpdate_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID">
-    <End Role="GrantAllocationAwardLandownerCostShareLineItem" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="0..1" />
-    <End Role="TreatmentUpdates" Type="ProjectFirma.Web.Models.TreatmentUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAwardLandownerCostShareLineItem">
-        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
-      </Principal>
-      <Dependent Role="TreatmentUpdates">
-        <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardPersonnelAndBenefitsLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardPersonnelAndBenefitsLineItems">
-        <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardTravelLineItem_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="GrantAllocationAwardTravelLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardTravelLineItems">
-        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -6424,342 +5382,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PclBoundaryLine_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclBoundaryLines" Type="ProjectFirma.Web.Models.PclBoundaryLine" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclBoundaryLines">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PclLandscapeTreatmentPriority_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclLandscapeTreatmentPriorities" Type="ProjectFirma.Web.Models.PclLandscapeTreatmentPriority" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclLandscapeTreatmentPriorities">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PclVectorRanked_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclVectorRankeds" Type="ProjectFirma.Web.Models.PclVectorRanked" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclVectorRankeds">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PclWildfireResponseBenefit_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
-    <End Role="PclWildfireResponseBenefits" Type="ProjectFirma.Web.Models.PclWildfireResponseBenefit" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PclWildfireResponseBenefits">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureActuals" Type="ProjectFirma.Web.Models.PerformanceMeasureActual" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActuals">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOptionUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptionUpdates">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualUpdate_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualUpdates" Type="ProjectFirma.Web.Models.PerformanceMeasureActualUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualUpdates">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureExpected_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureExpecteds" Type="ProjectFirma.Web.Models.PerformanceMeasureExpected" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureExpecteds">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureExpectedSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureExpectedSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureExpectedSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureNotes" Type="ProjectFirma.Web.Models.PerformanceMeasureNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureNotes">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureSubcategory_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureSubcategories" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureSubcategories">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.PerformanceMeasure" Multiplicity="1" />
-    <End Role="ProjectTypePerformanceMeasures" Type="ProjectFirma.Web.Models.ProjectTypePerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="ProjectTypePerformanceMeasures">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActual_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="PerformanceMeasureActuals" Type="ProjectFirma.Web.Models.PerformanceMeasureActual" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActuals">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID">
-    <End Role="PerformanceMeasureActual" Type="ProjectFirma.Web.Models.PerformanceMeasureActual" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureActual">
-        <PropertyRef Name="PerformanceMeasureActualID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureActualID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-    <End Role="PerformanceMeasureSubcategory" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategory">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-    <End Role="PerformanceMeasureSubcategoryOption" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategoryOption" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategoryOption">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID">
-    <End Role="PerformanceMeasureActualUpdate" Type="ProjectFirma.Web.Models.PerformanceMeasureActualUpdate" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOptionUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureActualUpdate">
-        <PropertyRef Name="PerformanceMeasureActualUpdateID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptionUpdates">
-        <PropertyRef Name="PerformanceMeasureActualUpdateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-    <End Role="PerformanceMeasureSubcategory" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOptionUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategory">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptionUpdates">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-    <End Role="PerformanceMeasureSubcategoryOption" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategoryOption" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualSubcategoryOptionUpdates" Type="ProjectFirma.Web.Models.PerformanceMeasureActualSubcategoryOptionUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategoryOption">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualSubcategoryOptionUpdates">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="PerformanceMeasureActualUpdates" Type="ProjectFirma.Web.Models.PerformanceMeasureActualUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureActualUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureExpected_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="PerformanceMeasureExpecteds" Type="ProjectFirma.Web.Models.PerformanceMeasureExpected" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureExpecteds">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID">
-    <End Role="PerformanceMeasureExpected" Type="ProjectFirma.Web.Models.PerformanceMeasureExpected" Multiplicity="1" />
-    <End Role="PerformanceMeasureExpectedSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureExpectedSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureExpected">
-        <PropertyRef Name="PerformanceMeasureExpectedID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureExpectedSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureExpectedID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-    <End Role="PerformanceMeasureSubcategory" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" Multiplicity="1" />
-    <End Role="PerformanceMeasureExpectedSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureExpectedSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategory">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureExpectedSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-    <End Role="PerformanceMeasureSubcategoryOption" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategoryOption" Multiplicity="1" />
-    <End Role="PerformanceMeasureExpectedSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureExpectedSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategoryOption">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureExpectedSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureNote_Person_CreatePersonID_PersonID">
-    <End Role="CreatePerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="PerformanceMeasureNotesWhereYouAreTheCreatePerson" Type="ProjectFirma.Web.Models.PerformanceMeasureNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatePerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureNotesWhereYouAreTheCreatePerson">
-        <PropertyRef Name="CreatePersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID">
-    <End Role="UpdatePerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" Type="ProjectFirma.Web.Models.PerformanceMeasureNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UpdatePerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureNotesWhereYouAreTheUpdatePerson">
-        <PropertyRef Name="UpdatePersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-    <End Role="PerformanceMeasureSubcategory" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" Multiplicity="1" />
-    <End Role="PerformanceMeasureSubcategoryOptions" Type="ProjectFirma.Web.Models.PerformanceMeasureSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategory">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Person_Person_AddedByPersonID_PersonID">
     <End Role="AddedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
     <End Role="PeopleWhereYouAreTheAddedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="*" />
@@ -7132,18 +5754,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PodVectorRanked_PriorityLandscape_PriorityLandscapeID">
-    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
-    <End Role="PodVectorRankeds" Type="ProjectFirma.Web.Models.PodVectorRanked" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PriorityLandscape">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Principal>
-      <Dependent Role="PodVectorRankeds">
-        <PropertyRef Name="PriorityLandscapeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PriorityLandscapeFileResource_PriorityLandscape_PriorityLandscapeID">
     <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.PriorityLandscape" Multiplicity="1" />
     <End Role="PriorityLandscapeFileResources" Type="ProjectFirma.Web.Models.PriorityLandscapeFileResource" Multiplicity="*" />
@@ -7348,18 +5958,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectCustomAttribute_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="ProjectCustomAttributes" Type="ProjectFirma.Web.Models.ProjectCustomAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributes">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectDocument_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
     <End Role="ProjectDocuments" Type="ProjectFirma.Web.Models.ProjectDocument" Multiplicity="*" />
@@ -7368,18 +5966,6 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectDocuments">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectExemptReportingYear_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="ProjectExemptReportingYears" Type="ProjectFirma.Web.Models.ProjectExemptReportingYear" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectExemptReportingYears">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7404,18 +5990,6 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectFundingSources">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditures">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7612,78 +6186,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="1" />
-    <End Role="ProjectCustomAttributes" Type="ProjectFirma.Web.Models.ProjectCustomAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributes">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID">
-    <End Role="ProjectCustomAttribute" Type="ProjectFirma.Web.Models.ProjectCustomAttribute" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeValues" Type="ProjectFirma.Web.Models.ProjectCustomAttributeValue" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttribute">
-        <PropertyRef Name="ProjectCustomAttributeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeValues">
-        <PropertyRef Name="ProjectCustomAttributeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeUpdates" Type="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeUpdates">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
-    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="1" />
-    <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeType">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Principal>
-      <Dependent Role="ProjectTypeProjectCustomAttributeTypes">
-        <PropertyRef Name="ProjectCustomAttributeTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeUpdates" Type="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID">
-    <End Role="ProjectCustomAttributeUpdate" Type="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" Multiplicity="1" />
-    <End Role="ProjectCustomAttributeUpdateValues" Type="ProjectFirma.Web.Models.ProjectCustomAttributeUpdateValue" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCustomAttributeUpdate">
-        <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-      </Principal>
-      <Dependent Role="ProjectCustomAttributeUpdateValues">
-        <PropertyRef Name="ProjectCustomAttributeUpdateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectDocument_ProjectDocumentType_ProjectDocumentTypeID">
     <End Role="ProjectDocumentType" Type="ProjectFirma.Web.Models.ProjectDocumentType" Multiplicity="0..1" />
     <End Role="ProjectDocuments" Type="ProjectFirma.Web.Models.ProjectDocument" Multiplicity="*" />
@@ -7720,18 +6222,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectExemptReportingYearUpdates" Type="ProjectFirma.Web.Models.ProjectExemptReportingYearUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectExemptReportingYearUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectExternalLinkUpdates" Type="ProjectFirma.Web.Models.ProjectExternalLinkUpdate" Multiplicity="*" />
@@ -7752,18 +6242,6 @@
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
       <Dependent Role="ProjectFundingSourceUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
@@ -7969,30 +6447,6 @@
       </Principal>
       <Dependent Role="ProjectTypes">
         <PropertyRef Name="TaxonomyBranchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID">
-    <End Role="ProjectType" Type="ProjectFirma.Web.Models.ProjectType" Multiplicity="1" />
-    <End Role="ProjectTypePerformanceMeasures" Type="ProjectFirma.Web.Models.ProjectTypePerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectType">
-        <PropertyRef Name="ProjectTypeID" />
-      </Principal>
-      <Dependent Role="ProjectTypePerformanceMeasures">
-        <PropertyRef Name="ProjectTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID">
-    <End Role="ProjectType" Type="ProjectFirma.Web.Models.ProjectType" Multiplicity="1" />
-    <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectType">
-        <PropertyRef Name="ProjectTypeID" />
-      </Principal>
-      <Dependent Role="ProjectTypeProjectCustomAttributeTypes">
-        <PropertyRef Name="ProjectTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

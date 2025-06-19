@@ -27,7 +27,6 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GeoJson;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.PerformanceMeasure;
 
 namespace ProjectFirma.Web.Models
 {
@@ -109,11 +108,6 @@ namespace ProjectFirma.Web.Models
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(OrganizationBoundary);
             feature.Properties.Add(OrganizationType.OrganizationTypeName, OrganizationName);
             return new FeatureCollection(new List<Feature> { feature });
-        }
-        public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)
-        {
-            var projects = this.GetAllActiveProjectsAndProposals(currentPerson).ToList();
-            return new PerformanceMeasureChartViewData(performanceMeasure, currentPerson, false, projects);
         }
 
         public bool CanBeAnApprovingOrganization()

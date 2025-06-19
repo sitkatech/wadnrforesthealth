@@ -32,7 +32,6 @@ namespace ProjectFirma.Web.Controllers
         {
             Assert.That(File.Exists(WebPathToAbsolutePath(ProjectUpdateController.ProjectUpdateBatchDiffLogPartialViewPath)));
             Assert.That(File.Exists(WebPathToAbsolutePath(ProjectUpdateController.ProjectBasicsPartialViewPath)));
-            Assert.That(File.Exists(WebPathToAbsolutePath(ProjectUpdateController.PerformanceMeasureReportedValuesPartialViewPath)));
             Assert.That(File.Exists(WebPathToAbsolutePath(ProjectUpdateController.ProjectExpendituresPartialViewPath)));
             Assert.That(File.Exists(WebPathToAbsolutePath(ProjectUpdateController.ImageGalleryPartialViewPath)));
             Assert.That(File.Exists(WebPathToAbsolutePath(ProjectUpdateController.ExternalLinksPartialViewPath)));

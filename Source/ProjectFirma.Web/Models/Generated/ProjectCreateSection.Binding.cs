@@ -22,8 +22,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionBasics Basics = ProjectCreateSectionBasics.Instance;
         public static readonly ProjectCreateSectionLocationSimple LocationSimple = ProjectCreateSectionLocationSimple.Instance;
         public static readonly ProjectCreateSectionLocationDetailed LocationDetailed = ProjectCreateSectionLocationDetailed.Instance;
-        public static readonly ProjectCreateSectionExpectedPerformanceMeasures ExpectedPerformanceMeasures = ProjectCreateSectionExpectedPerformanceMeasures.Instance;
-        public static readonly ProjectCreateSectionReportedPerformanceMeasures ReportedPerformanceMeasures = ProjectCreateSectionReportedPerformanceMeasures.Instance;
         public static readonly ProjectCreateSectionExpectedFunding ExpectedFunding = ProjectCreateSectionExpectedFunding.Instance;
         public static readonly ProjectCreateSectionClassifications Classifications = ProjectCreateSectionClassifications.Instance;
         public static readonly ProjectCreateSectionPhotos Photos = ProjectCreateSectionPhotos.Instance;
@@ -43,14 +41,14 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, Treatments, Counties };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ProjectCreateSection(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID)
+        protected ProjectCreateSection(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired)
         {
             ProjectCreateSectionID = projectCreateSectionID;
             ProjectCreateSectionName = projectCreateSectionName;
@@ -58,6 +56,7 @@ namespace ProjectFirma.Web.Models
             SortOrder = sortOrder;
             HasCompletionStatus = hasCompletionStatus;
             ProjectWorkflowSectionGroupingID = projectWorkflowSectionGroupingID;
+            IsSectionRequired = isSectionRequired;
         }
         public ProjectWorkflowSectionGrouping ProjectWorkflowSectionGrouping { get { return ProjectWorkflowSectionGrouping.AllLookupDictionary[ProjectWorkflowSectionGroupingID]; } }
         [Key]
@@ -67,6 +66,7 @@ namespace ProjectFirma.Web.Models
         public int SortOrder { get; private set; }
         public bool HasCompletionStatus { get; private set; }
         public int ProjectWorkflowSectionGroupingID { get; private set; }
+        public bool IsSectionRequired { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCreateSectionID; } }
 
@@ -131,8 +131,6 @@ namespace ProjectFirma.Web.Models
                     return DNRUplandRegions;
                 case ProjectCreateSectionEnum.ExpectedFunding:
                     return ExpectedFunding;
-                case ProjectCreateSectionEnum.ExpectedPerformanceMeasures:
-                    return ExpectedPerformanceMeasures;
                 case ProjectCreateSectionEnum.LocationDetailed:
                     return LocationDetailed;
                 case ProjectCreateSectionEnum.LocationSimple:
@@ -145,8 +143,6 @@ namespace ProjectFirma.Web.Models
                     return Photos;
                 case ProjectCreateSectionEnum.PriorityLandscapes:
                     return PriorityLandscapes;
-                case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
-                    return ReportedPerformanceMeasures;
                 case ProjectCreateSectionEnum.Treatments:
                     return Treatments;
                 default:
@@ -160,8 +156,6 @@ namespace ProjectFirma.Web.Models
         Basics = 2,
         LocationSimple = 3,
         LocationDetailed = 4,
-        ExpectedPerformanceMeasures = 6,
-        ReportedPerformanceMeasures = 7,
         ExpectedFunding = 8,
         Classifications = 11,
         Photos = 13,
@@ -176,91 +170,79 @@ namespace ProjectFirma.Web.Models
 
     public partial class ProjectCreateSectionBasics : ProjectCreateSection
     {
-        private ProjectCreateSectionBasics(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionBasics Instance = new ProjectCreateSectionBasics(2, @"Basics", @"Basics", 20, true, 1);
+        private ProjectCreateSectionBasics(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionBasics Instance = new ProjectCreateSectionBasics(2, @"Basics", @"Basics", 20, true, 6, true);
     }
 
     public partial class ProjectCreateSectionLocationSimple : ProjectCreateSection
     {
-        private ProjectCreateSectionLocationSimple(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionLocationSimple Instance = new ProjectCreateSectionLocationSimple(3, @"LocationSimple", @"Location - Simple", 30, true, 2);
+        private ProjectCreateSectionLocationSimple(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionLocationSimple Instance = new ProjectCreateSectionLocationSimple(3, @"LocationSimple", @"Location - Simple", 30, true, 6, true);
     }
 
     public partial class ProjectCreateSectionLocationDetailed : ProjectCreateSection
     {
-        private ProjectCreateSectionLocationDetailed(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionLocationDetailed Instance = new ProjectCreateSectionLocationDetailed(4, @"LocationDetailed", @"Location - Detailed", 40, false, 2);
-    }
-
-    public partial class ProjectCreateSectionExpectedPerformanceMeasures : ProjectCreateSection
-    {
-        private ProjectCreateSectionExpectedPerformanceMeasures(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionExpectedPerformanceMeasures Instance = new ProjectCreateSectionExpectedPerformanceMeasures(6, @"ExpectedPerformanceMeasures", @"Expected Performance Measures", 60, true, 3);
-    }
-
-    public partial class ProjectCreateSectionReportedPerformanceMeasures : ProjectCreateSection
-    {
-        private ProjectCreateSectionReportedPerformanceMeasures(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionReportedPerformanceMeasures Instance = new ProjectCreateSectionReportedPerformanceMeasures(7, @"ReportedPerformanceMeasures", @"Reported Performance Measures", 70, true, 3);
+        private ProjectCreateSectionLocationDetailed(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionLocationDetailed Instance = new ProjectCreateSectionLocationDetailed(4, @"LocationDetailed", @"Location - Detailed", 40, false, 2, false);
     }
 
     public partial class ProjectCreateSectionExpectedFunding : ProjectCreateSection
     {
-        private ProjectCreateSectionExpectedFunding(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionExpectedFunding Instance = new ProjectCreateSectionExpectedFunding(8, @"ExpectedFunding", @"Expected Funding", 80, false, 4);
+        private ProjectCreateSectionExpectedFunding(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionExpectedFunding Instance = new ProjectCreateSectionExpectedFunding(8, @"ExpectedFunding", @"Expected Funding", 80, false, 5, false);
     }
 
     public partial class ProjectCreateSectionClassifications : ProjectCreateSection
     {
-        private ProjectCreateSectionClassifications(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionClassifications Instance = new ProjectCreateSectionClassifications(11, @"Classifications", @"Classifications", 110, true, 5);
+        private ProjectCreateSectionClassifications(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionClassifications Instance = new ProjectCreateSectionClassifications(11, @"Classifications", @"Classifications", 90, false, 5, false);
     }
 
     public partial class ProjectCreateSectionPhotos : ProjectCreateSection
     {
-        private ProjectCreateSectionPhotos(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionPhotos Instance = new ProjectCreateSectionPhotos(13, @"Photos", @"Photos", 130, false, 5);
+        private ProjectCreateSectionPhotos(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionPhotos Instance = new ProjectCreateSectionPhotos(13, @"Photos", @"Photos", 100, false, 5, false);
     }
 
     public partial class ProjectCreateSectionNotesAndDocuments : ProjectCreateSection
     {
-        private ProjectCreateSectionNotesAndDocuments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionNotesAndDocuments Instance = new ProjectCreateSectionNotesAndDocuments(14, @"NotesAndDocuments", @"Documents and Notes", 140, false, 5);
+        private ProjectCreateSectionNotesAndDocuments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionNotesAndDocuments Instance = new ProjectCreateSectionNotesAndDocuments(14, @"NotesAndDocuments", @"Documents and Notes", 110, false, 5, false);
     }
 
     public partial class ProjectCreateSectionOrganizations : ProjectCreateSection
     {
-        private ProjectCreateSectionOrganizations(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionOrganizations Instance = new ProjectCreateSectionOrganizations(15, @"Organizations", @"Organizations", 25, true, 1);
+        private ProjectCreateSectionOrganizations(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionOrganizations Instance = new ProjectCreateSectionOrganizations(15, @"Organizations", @"Organizations", 70, false, 5, false);
     }
 
     public partial class ProjectCreateSectionContacts : ProjectCreateSection
     {
-        private ProjectCreateSectionContacts(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionContacts Instance = new ProjectCreateSectionContacts(16, @"Contacts", @"Contacts", 26, true, 1);
+        private ProjectCreateSectionContacts(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionContacts Instance = new ProjectCreateSectionContacts(16, @"Contacts", @"Contacts", 65, false, 5, false);
     }
 
     public partial class ProjectCreateSectionDNRUplandRegions : ProjectCreateSection
     {
-        private ProjectCreateSectionDNRUplandRegions(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionDNRUplandRegions Instance = new ProjectCreateSectionDNRUplandRegions(17, @"DNRUplandRegions", @"DNR Upland Regions", 50, true, 2);
+        private ProjectCreateSectionDNRUplandRegions(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionDNRUplandRegions Instance = new ProjectCreateSectionDNRUplandRegions(17, @"DNRUplandRegions", @"DNR Upland Regions", 50, true, 2, false);
     }
 
     public partial class ProjectCreateSectionPriorityLandscapes : ProjectCreateSection
     {
-        private ProjectCreateSectionPriorityLandscapes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionPriorityLandscapes Instance = new ProjectCreateSectionPriorityLandscapes(18, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2);
+        private ProjectCreateSectionPriorityLandscapes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionPriorityLandscapes Instance = new ProjectCreateSectionPriorityLandscapes(18, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2, false);
     }
 
     public partial class ProjectCreateSectionTreatments : ProjectCreateSection
     {
-        private ProjectCreateSectionTreatments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionTreatments Instance = new ProjectCreateSectionTreatments(20, @"Treatments", @"Treatments", 90, false, 5);
+        private ProjectCreateSectionTreatments(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionTreatments Instance = new ProjectCreateSectionTreatments(20, @"Treatments", @"Treatments", 60, false, 2, false);
     }
 
     public partial class ProjectCreateSectionCounties : ProjectCreateSection
     {
-        private ProjectCreateSectionCounties(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionCounties Instance = new ProjectCreateSectionCounties(21, @"Counties", @"Counties", 55, true, 2);
+        private ProjectCreateSectionCounties(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID, bool isSectionRequired) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID, isSectionRequired) {}
+        public static readonly ProjectCreateSectionCounties Instance = new ProjectCreateSectionCounties(21, @"Counties", @"Counties", 55, true, 2, false);
     }
 }

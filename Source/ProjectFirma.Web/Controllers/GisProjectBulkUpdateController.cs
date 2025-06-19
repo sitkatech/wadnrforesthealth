@@ -883,11 +883,7 @@ namespace ProjectFirma.Web.Controllers
                 project.ProjectStageID = projectStage.ProjectStageID;
                 project.ProjectName = projectName;
                 project.LastUpdateGisUploadAttemptID = gisUploadAttemptID;
-                if (projectStage == ProjectStage.Proposed)
-                {
-                    project.ProjectApprovalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
-                }
-                if ((projectStage != ProjectStage.Proposed && projectStage != ProjectStage.Planned)  
+                if ((projectStage != ProjectStage.Planned)  
                     && (project.ProjectApprovalStatusID == ProjectApprovalStatus.Draft.ProjectApprovalStatusID
                     || project.ProjectApprovalStatusID == ProjectApprovalStatus.PendingApproval.ProjectApprovalStatusID))
                 {
@@ -897,10 +893,6 @@ namespace ProjectFirma.Web.Controllers
             else
             {
                 var approvalStatusID = ProjectApprovalStatus.Approved.ProjectApprovalStatusID;
-                if (projectStage == ProjectStage.Proposed)
-                {
-                    approvalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
-                }
 
                 project = new Project(otherProjectType.ProjectTypeID,
                     projectStage.ProjectStageID,

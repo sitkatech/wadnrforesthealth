@@ -45,10 +45,5 @@ namespace ProjectFirma.Web.Models
                 Is.EquivalentTo(new ProjectStage[] {ProjectStage.Implementation, ProjectStage.Planned}));
         }
 
-        [Test]
-        public void RequiresPerformanceMeasureActualsTest()
-        {
-            Assert.That(ProjectStage.All.Where(x => x.RequiresPerformanceMeasureActuals()), Is.EquivalentTo(new ProjectStage[] {ProjectStage.Implementation}));
-        }
     }
 }

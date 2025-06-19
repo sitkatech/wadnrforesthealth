@@ -4,6 +4,7 @@ insert into dbo.ProjectWorkflowSectionGrouping (ProjectWorkflowSectionGroupingID
 values
 (1, 'Overview', 'Overview', 10),
 (2, 'Location', 'Location', 20),
-(3, 'PerformanceMeasures', 'Performance Measures', 30),
+--(3, 'PerformanceMeasures', 'Performance Measures', 30),
 (4, 'Expenditures', 'Expenditures', 40),
-(5, 'AdditionalData', 'Additional Data', 50)
+(5, 'AdditionalData', 'Additional Data', 50),
+(6, 'ProjectSetup', 'Project Setup', 15)

@@ -136,7 +136,6 @@ namespace ProjectFirma.Web.Models
             return allocationCurrentBalance - indirect;
         }
 
-
         public string ToLikelyToUsePeopleListDisplayForAgGrid()
         {
             var listOfHtmlLinkObjects = new List<HtmlLinkObject>();
@@ -261,15 +260,6 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public int? ProjectsWhereYouAreTheGrantAllocationMinCalendarYear
-        {
-            get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Min(x => x.CalendarYear) : (int?)null; }
-        }
-
-        public int? ProjectsWhereYouAreTheGrantAllocationMaxCalendarYear
-        {
-            get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Max(x => x.CalendarYear) : (int?)null; }
-        }
 
         /// <summary>
         /// Stand-in for what used to be GrantAllocation.FixedLengthDisplayName

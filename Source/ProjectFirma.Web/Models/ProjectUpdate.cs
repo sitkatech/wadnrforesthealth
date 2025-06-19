@@ -106,11 +106,6 @@ namespace ProjectFirma.Web.Models
 
         public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
 
-        public IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes
-        {
-            get => ProjectUpdateBatch.ProjectCustomAttributeUpdates;
-            set => ProjectUpdateBatch.ProjectCustomAttributeUpdates = (ICollection<ProjectCustomAttributeUpdate>) value;
-        }
 
         public IEnumerable<IProjectLocation> GetProjectLocationDetails()
         {

@@ -39,7 +39,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public IEnumerable<SelectListItem> FocusAreas { get; }
         public string EditProjectTypeIntroductoryText { get; }
         public string ProjectTypeDisplayName { get; }
-        public decimal? TotalExpenditures { get; }
         public string DefaultPrimaryContactPersonName { get; }
         public bool HasThreeTierTaxonomy { get; }
         public bool ProjectTypeHasBeenSet { get; }
@@ -60,7 +59,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             IEnumerable<Models.Organization> organizations,
             IEnumerable<Person> primaryContactPeople,
             Person defaultPrimaryContactPerson,
-            decimal? totalExpenditures,
             List<Models.ProjectType> projectTypes,
             IEnumerable<Models.FocusArea> focusAreas,
             bool projectTypeHasBeenSet,
@@ -76,7 +74,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         {
             EditProjectTypeIntroductoryText = editProjectType.IntroductoryText;
             ProjectTypeDisplayName = projectTypeDisplayName;
-            TotalExpenditures = totalExpenditures;
+
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
             
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);

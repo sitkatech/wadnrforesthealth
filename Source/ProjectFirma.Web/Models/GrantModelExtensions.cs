@@ -67,6 +67,17 @@ namespace ProjectFirma.Web.Models
             return grant != null ? UrlTemplate.MakeHrefString(grant.GetDetailUrl(), grant.GrantNumber) : new HtmlString(null);
         }
 
+        public static Money GetTotalAwardAmount(this Grant grant)
+        {
+            Money total = 0;
+            foreach (var grantMod in grant.GrantModifications)
+            {
+                total += grantMod.GrantModificationAmount;
+            }
+
+            return total;
+        }
+
         public static Money GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(this Grant grant)
         {
             var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations).ToList();
@@ -76,17 +87,6 @@ namespace ProjectFirma.Web.Models
             foreach (var grantAllocationTotal in currentBalanceOfAllGrantAllocations)
             {
                 total += grantAllocationTotal;
-            }
-
-            return total;
-        }
-
-        public static Money GetTotalAwardAmount(this Grant grant)
-        {
-            Money total = 0;
-            foreach (var grantMod in grant.GrantModifications)
-            {
-                total += grantMod.GrantModificationAmount;
             }
 
             return total;

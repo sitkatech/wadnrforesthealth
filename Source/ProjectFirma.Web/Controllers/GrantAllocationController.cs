@@ -375,24 +375,11 @@ namespace ProjectFirma.Web.Controllers
             };
 
             var grantAllocationExpendituresGridSpec = new GrantAllocationExpendituresGridSpec();
-            var grantAllocationAwardsGridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, grantAllocation);
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec, grantAllocationAwardsGridSpec);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
-        [GrantAllocationsViewFeature]
-        public GridJsonNetJObjectResult<ProjectCalendarYearExpenditure> ProjectCalendarYearExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
-        {
-            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var projectGrantAllocationExpenditures = grantAllocation.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearRangeForExpenditures =
-                projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
-            var gridSpec = new ProjectCalendarYearExpendituresGridSpec(calendarYearRangeForExpenditures);
-            var projectGrantAllocations = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectGrantAllocationExpenditures, calendarYearRangeForExpenditures);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectCalendarYearExpenditure>(projectGrantAllocations, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
 
         [GrantAllocationsViewFeature]
         public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
@@ -417,8 +404,6 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
         #endregion
-
-
         #region "Grant Allocation Budget Line Item"
         [HttpGet]
         [GrantAllocationBudgetLineItemEditAsAdminFeature]
@@ -652,15 +637,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [GrantAllocationsViewFeature]
-        public GridJsonNetJObjectResult<GrantAllocationAward> GrantAllocationAwardsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
-        {
-            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var grantAllocationAwards = grantAllocation.GrantAllocationAwards.ToList();
-            var gridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, grantAllocation);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAward>(grantAllocationAwards, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
+
 
         #region Grant Allocation JSON API
 

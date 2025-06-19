@@ -67,6 +67,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [FieldDefinitionDisplay(FieldDefinitionEnum.PercentageMatch)]
         public int? PercentageMatch { get; set; }
 
+        [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.LeadImplementerOrganization)]
+        public int LeadImplementerID { get; set; }
+
+
         public int? ImportExternalProjectStagingID { get; set; }
 
         public List<ProjectProgramSimple> ProjectProgramSimples { get; set; }
@@ -93,6 +98,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             FocusAreaID = project.FocusAreaID;
             ProjectProgramSimples = project.ProjectPrograms.Select(x => new ProjectProgramSimple(x)).ToList();
             PercentageMatch = project.PercentageMatch;
+            LeadImplementerID = project.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID)?.OrganizationID ?? -1;
 
         }
 
@@ -111,19 +117,25 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.FocusAreaID = FocusAreaID;
             project.PercentageMatch = PercentageMatch;
 
-            var nonAllTypeAttributes = project.ProjectCustomAttributes.Where(x => !x.ProjectCustomAttributeType.ApplyToAllProjectTypes).ToList();
-            if (nonAllTypeAttributes.Any())
+            
+
+            if (LeadImplementerID > 0)
             {
-                foreach (var projectCustomAttribute in nonAllTypeAttributes)
+                HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
+                var allProjectOrgs = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
+                var newLeadImplementerOrg = new ProjectOrganization(project.ProjectID, LeadImplementerID, RelationshipType.LeadImplementerID);
+                var updatedListOfProjectOrgs = project.ProjectOrganizations.ToList();
+
+                var previousLeadImplementerProjectOrganization = project.ProjectOrganizations.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+                if (previousLeadImplementerProjectOrganization != null)
                 {
-                    var projectTypeList = projectCustomAttribute.ProjectCustomAttributeType
-                        .ProjectTypeProjectCustomAttributeTypes.Select(x => x.ProjectTypeID).ToList();
-                    if (!projectTypeList.Contains(project.ProjectTypeID))
-                    {
-                        projectCustomAttribute.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                    }
+                    updatedListOfProjectOrgs = updatedListOfProjectOrgs.Where(x => x.ProjectOrganizationID != previousLeadImplementerProjectOrganization.ProjectOrganizationID).ToList();
                 }
+
+                updatedListOfProjectOrgs.Add(newLeadImplementerOrg);
+                project.ProjectOrganizations.Merge(updatedListOfProjectOrgs, allProjectOrgs, (x, y) => x.ProjectID == y.ProjectID && x.OrganizationID == y.OrganizationID && x.RelationshipTypeID == y.RelationshipTypeID );
             }
+
             if (ProjectProgramSimples == null)
             {
                 ProjectProgramSimples = new List<ProjectProgramSimple>();
@@ -192,15 +204,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
-            }
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
-            {
-                var landownerCostShareLineItemsOnProject = HttpRequestStorage.DatabaseEntities.GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.ProjectID == ProjectID).ToList();
-                if (landownerCostShareLineItemsOnProject.Any(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned))
-                {
-                    yield return new SitkaValidationResult<BasicsViewModel, int?>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem} Treatments must be Completed or Cancelled.", m => m.ProjectStageID);
-                }
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion Date is required", m => m.CompletionDate);
             }
 
 

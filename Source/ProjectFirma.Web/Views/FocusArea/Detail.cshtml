@@ -96,18 +96,7 @@
                     </div>
 
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="panel panelFirma">
-                            <div class="panel-heading panelTitle">
-                                @FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabelPluralized() For This @FieldDefinition.FocusArea.GetFieldDefinitionLabel() (@ViewDataTyped.FocusArea.FocusAreaName)
-                            </div>
-                            <div class="panel-body">
-                                @Html.AgGrid(ViewDataTyped.GrantAllocationAwardGridSpec, ViewDataTyped.GrantAllocationAwardGridName, ViewDataTyped.GrantAllocationAwardGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panelFirma">
@@ -133,7 +122,7 @@
                                         @if (ViewDataTyped.HasSpatialData)
                                         {
                                             <p>
-                                                The map displays the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() location, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() that have spatial data.
+                                                The map displays the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() location, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() that have spatial data.
                                             </p>
                                             if (ViewDataTyped.FocusArea.FocusAreaLocation == null)
                                             {
@@ -200,18 +189,10 @@
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.PlannedFootprintAcres.HasValue ? ViewDataTyped.FocusArea.PlannedFootprintAcres.Value.ToString() : "None")</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalCompletedFootprintAcres): </div>
-                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.TotalCompletedFootprintAcres.ToString())</div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalProjectEstimatedTotalCosts):  </div>
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.SumOfProjectEstimatedTotalCost.HasValue ? ViewDataTyped.FocusArea.SumOfProjectEstimatedTotalCost.Value.ToString("C", CultureInfo.CurrentCulture) : "None")</div>
                                         </div>
-                                        @* 6/26/2019 TK - commenting out for now. This "Reported Expenditure" is pulling data from an old project firma table called ProjectGrantAllocationReportedExpenditures(previously ProjectFundingSourceReportedExpenditures). We no longer use this table for expenditure data in WADNR, but may be needed in phase 2. Expenditure data in WADNR comes from datamart and is stored in the GrantAllocationExpenditures table. *@
-                                        @*<div class="row">
-                                            <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalProjectReportedExpendiures): </div>
-                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.SumOfProjectReportedExpenditures.HasValue ? ViewDataTyped.FocusArea.SumOfProjectReportedExpenditures.Value.ToString("C", CultureInfo.CurrentCulture) : "None")</div>
-                                        </div>*@
+
                                         <br />
                                         <hr />
                                         <div class="row">
@@ -223,10 +204,8 @@
                                                     <tr>
                                                         <th scope="col" style="border-bottom: none;">Project</th>
                                                         <th scope="col" style="border-bottom: none;">Status</th>
-                                                        <th scope="col" style="border-bottom: none;">@Html.LabelWithSugarFor(FieldDefinition.ProjectTotalCompletedFootprintAcres, "Footprint Acres")</th>
                                                         <th scope="col" style="border-bottom: none;">Estimated Total Cost</th>
-                                                        @* 6/26/2019 TK - see above comments  *@
-                                                        @*<th scope="col" style="border-bottom: none;">Reported Expenditures</th>*@
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -240,15 +219,8 @@
                                                                 @project.ProjectStage.ProjectStageDisplayName
                                                             </td>
                                                             <td style="border-top: none;">
-                                                                @project.TotalCompletedFootprintAcres
-                                                            </td>
-                                                            <td style="border-top: none;">
                                                                 @(project.EstimatedTotalCost.HasValue ? project.EstimatedTotalCost.Value.ToString("C", CultureInfo.CurrentCulture) : "None")
                                                             </td>
-                                                            @* 6/26/2019 TK - see above comments  *@
-                                                            @*<td style="border-top: none;">
-                                                                @(project.TotalExpenditures.HasValue ? project.TotalExpenditures.Value.ToString("C", CultureInfo.CurrentCulture) : "None")
-                                                            </td>*@
                                                         </tr>
                                                     }
 

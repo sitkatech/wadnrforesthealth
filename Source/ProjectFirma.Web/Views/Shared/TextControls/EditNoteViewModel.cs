@@ -59,21 +59,6 @@ namespace ProjectFirma.Web.Views.Shared.TextControls
                 projectNote.UpdatePerson = currentPerson;
             }
         }
-
-        public void UpdateModel(PerformanceMeasureNote performanceMeasureNote, Person currentPerson)
-        {
-            performanceMeasureNote.Note = Note;
-            if (!ModelObjectHelpers.IsRealPrimaryKeyValue(performanceMeasureNote.PerformanceMeasureNoteID))
-            {
-                performanceMeasureNote.CreateDate = DateTime.Now;
-                performanceMeasureNote.CreatePerson = currentPerson;
-            }
-            else
-            {
-                performanceMeasureNote.UpdateDate = DateTime.Now;
-                performanceMeasureNote.UpdatePerson = currentPerson;
-            }
-        }
         
         public void UpdateModel(ProjectNoteUpdate projectNoteUpdate, Person currentPerson)
         {
