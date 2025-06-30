@@ -38,6 +38,8 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         public List<SelectListItem> FundingSources { get; }
         public bool IsMatchAndPayRelevant { get; }
 
+        public bool IsLoaProject { get; }
+
         private EditProjectGrantAllocationRequestsViewData(List<ProjectSimple> allProjects,
             List<GrantAllocationSimple> allGrantAllocations,
             int? projectID,
@@ -60,11 +62,13 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                     IsMatchAndPayRelevant = true;
                 }
             }
+
+            IsLoaProject = isLoa;
         }
 
         public EditProjectGrantAllocationRequestsViewData(ProjectSimple project,
             List<GrantAllocationSimple> allGrantAllocations)
-            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID,project.IsLoa, null)
+            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID, project.IsLoa, null)
         {
         }
 

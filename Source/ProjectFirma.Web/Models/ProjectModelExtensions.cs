@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Models
                 return fundingSourcesForDisplay;
             }
 
-            return $"No {FieldDefinition.FundingSource.FieldDefinitionDisplayName} selected.";
+            return $"None identified";
         }
 
         public static Organization GetLeadImplementer(this Project project)

@@ -252,23 +252,25 @@
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h3>
-                            @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditExpectedFundingUrl, "Edit Expected Funding", 1000, ViewDataTyped.UserHasEditProjectPermissions)
-                            Expected Funding
+                            @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectFundingUrl, string.Format("Edit {0} Funding", FieldDefinition.Project.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions)
+                            @FieldDefinition.Project.GetFieldDefinitionLabel() Funding
                         </h3>
                     </div>
                     <div class="panel-body">
-
-                        <div class="row">
-                            <label class="col-xs-6 col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</label>
-                            <div class="col-xs-6 col-sm-8">@ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()</div>
-                        </div>
+                        @if (ViewDataTyped.IsProjectAnLoaProject)
+                        {
+                            <div class="row">
+                                <label class="col-xs-6 col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</label>
+                                <div class="col-xs-6 col-sm-8">@(ViewDataTyped.Project.EstimatedTotalCost.HasValue ? ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency() : "Unknown")</div>
+                            </div>
+                        }
                         <div class="row">
                             <label class="col-xs-6 col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.FundingSource)</label>
                             <div class="col-xs-6 col-sm-8">@ViewDataTyped.Project.GetProjectFundingSourcesAsCommaSeparatedList()</div>
                         </div>
                         <div class="row">
                             <label class="col-xs-6 col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.FundingSourceNote)</label>
-                            <div class="col-xs-6 col-sm-8">@ViewDataTyped.Project.ProjectFundingSourceNotes</div>
+                            <div class="col-xs-6 col-sm-8">@(string.IsNullOrEmpty(ViewDataTyped.Project.ProjectFundingSourceNotes) ? "None entered" : ViewDataTyped.Project.ProjectFundingSourceNotes)</div>
                         </div>
                         <hr />
                         @{

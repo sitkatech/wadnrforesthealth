@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.Project
         public string EditProjectPriorityLandscapeUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
         public string EditExternalLinksUrl { get; }
-        public string EditExpectedFundingUrl { get; }
+        public string EditProjectFundingUrl { get; }
 
         public ProjectBasicsViewData ProjectBasicsViewData { get; }
         public ProjectLocationSummaryViewData ProjectLocationSummaryViewData { get; }
@@ -127,6 +127,8 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectInteractionEventsGridDataUrl { get;}
 
         public List<AgreementProject> ProjectAgreements { get; }
+
+        public bool IsProjectAnLoaProject { get; set; }
 
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
@@ -289,7 +291,7 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectInvoiceDetailViewData = projectInvoiceDetailViewData;
             ProjectFundingDetailViewData = projectFundingDetailViewData;
-            EditExpectedFundingUrl =
+            EditProjectFundingUrl =
                 SitkaRoute<ProjectGrantAllocationRequestController>.BuildUrlFromExpression(c =>
                     c.EditProjectGrantAllocationRequestsForProject(project));
 
@@ -357,6 +359,8 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
             ProjectAgreements = project.AgreementProjects.ToList();
+
+            IsProjectAnLoaProject = project.ProjectPrograms.Any(x => x.ProgramID == ProjectController.LoaProgramID);
         }
     }
 }
