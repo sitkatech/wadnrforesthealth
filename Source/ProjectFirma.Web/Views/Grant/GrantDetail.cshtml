@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.AgGridWrappers
 @using LtInfo.Common.HtmlHelperExtensions
@@ -136,7 +137,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
                             </div>
                             <div class="col-sm-8">
-                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.GetTotalAwardAmount().ToStringCurrency()</span>
+                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.TotalAwardAmount.ToStringCurrency()</span>
                             </div>
                         </div>
                         @if (ViewDataTyped.isUserLoggedIn)
