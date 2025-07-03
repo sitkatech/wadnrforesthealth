@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var grantStatus = GetDefaultGrantStatus();
                 var organization = TestFramework.TestOrganization.Create();
-                var grant = new Grant(TestFramework.MakeTestName("Grant", Grant.FieldLengths.GrantName), grantStatus, organization);
+                var grant = new Grant(TestFramework.MakeTestName("Grant", Grant.FieldLengths.GrantName), grantStatus, organization, 0);
                 //Grant.IsActive = true;
                 return grant;
             }
@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var grantStatus = GetDefaultGrantStatus();
                 var testGrantName = GetTestGrantName(organization, GetTestGrantName(organization, "Test Grant Name"));
-                var grant = new Grant(testGrantName, grantStatus, organization);
+                var grant = new Grant(testGrantName, grantStatus, organization, 0);
                 return grant;
             }
 
@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var grantStatus = GetDefaultGrantStatus();
                 var testGrantName = GetTestGrantName(organization, grantName);
-                var grant = new Grant(testGrantName, grantStatus, organization);
+                var grant = new Grant(testGrantName, grantStatus, organization, 0);
                 return grant;
             }
 
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var organization = TestFramework.TestOrganization.Insert(dbContext);
                 string testGrantName = TestFramework.MakeTestName("Test Grant Name");
                 var testGrantStatus = GetDefaultGrantStatus();
-                var grant = new Grant(testGrantName, testGrantStatus, organization);
+                var grant = new Grant(testGrantName, testGrantStatus, organization, 0);
 
                 dbContext.Grants.Add(grant);
                 return grant;

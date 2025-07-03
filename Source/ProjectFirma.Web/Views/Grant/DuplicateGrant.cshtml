@@ -79,16 +79,16 @@
         
         <div class="form-group">
             <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantModificationAmount)
+                @Html.LabelWithSugarFor(m => m.GrantTotalAwardAmount)
             </div>
             <div class="col-xs-8">
-                @Html.EditorFor(m => m.GrantModificationAmount)
-                @Html.ValidationMessageFor(m => m.GrantModificationAmount)
+                @Html.EditorFor(m => m.GrantTotalAwardAmount)
+                @Html.ValidationMessageFor(m => m.GrantTotalAwardAmount)
             </div>
         </div>
         
         
-        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName's @GrantModificationPurpose.InitialAward.GrantModificationPurposeName @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
+        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName.</p>
         <div class="form-group">
             <div class="col-xs-12"><p>Select the <strong>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</strong> you wish to copy:</p></div>
             <div class="col-xs-12">

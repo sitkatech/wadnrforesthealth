@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public GrantAllocationJson(Models.GrantAllocation grantAllocation)
         {
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantNumber = grantAllocation.GrantModification.Grant.GrantNumber;
+            this.GrantNumber = grantAllocation.Grant.GrantNumber;
             this.GrantAllocationName = grantAllocation.GrantAllocationName;
         }
 

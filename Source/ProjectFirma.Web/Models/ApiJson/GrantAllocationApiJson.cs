@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         {
             GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
-            GrantID = grantAllocation.GrantModification.GrantID;
+            GrantID = grantAllocation.GrantID;
             StartDate = grantAllocation.StartDate;
             EndDate = grantAllocation.EndDate;
             AllocationAmount = grantAllocation.AllocationAmount;

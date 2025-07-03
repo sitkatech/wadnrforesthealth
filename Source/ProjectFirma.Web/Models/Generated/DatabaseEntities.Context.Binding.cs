@@ -84,11 +84,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantAllocationSource> GrantAllocationSources { get; set; }
         public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
-        public virtual DbSet<GrantModificationFileResource> GrantModificationFileResources { get; set; }
-        public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
-        public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
-        public virtual DbSet<GrantModification> GrantModifications { get; set; }
-        public virtual DbSet<GrantModificationStatus> GrantModificationStatuses { get; set; }
         public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual DbSet<GrantNote> GrantNotes { get; set; }
         public virtual DbSet<Grant> Grants { get; set; }
@@ -567,26 +562,6 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantFileResource":
                     return GrantFileResources.GetGrantFileResource(primaryKey);
-
-                case "GrantModificationFileResource":
-                    return GrantModificationFileResources.GetGrantModificationFileResource(primaryKey);
-
-                case "GrantModificationGrantModificationPurpose":
-                    return GrantModificationGrantModificationPurposes.GetGrantModificationGrantModificationPurpose(primaryKey);
-
-                case "GrantModificationNoteInternal":
-                    return GrantModificationNoteInternals.GetGrantModificationNoteInternal(primaryKey);
-
-                case "GrantModificationPurpose":
-                    var grantModificationPurpose = GrantModificationPurpose.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(grantModificationPurpose, "GrantModificationPurpose", primaryKey);
-                    return grantModificationPurpose;
-
-                case "GrantModification":
-                    return GrantModifications.GetGrantModification(primaryKey);
-
-                case "GrantModificationStatus":
-                    return GrantModificationStatuses.GetGrantModificationStatus(primaryKey);
 
                 case "GrantNoteInternal":
                     return GrantNoteInternals.GetGrantNoteInternal(primaryKey);

@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantNumber, x.GetDetailUrl()).ToJsonObjectForAgGrid(), GrantAllocationGridSpec.GrantNumberColumnWidth, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.CFDANumber, 120, AgGridColumnFilterType.Html);
             Add(Models.FieldDefinition.GrantName.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantTitle, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
-            Add(Models.FieldDefinition.TotalAwardAmount.ToGridHeaderString(), x => x.GetTotalAwardAmount(), 90, AgGridColumnFormatType.CurrencyWithCents);
+            Add(Models.FieldDefinition.TotalAwardAmount.ToGridHeaderString(), x => x.TotalAwardAmount, 90, AgGridColumnFormatType.CurrencyWithCents);
 
             if (!currentPerson.IsAnonymousUser)
             {

@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFullAndChildless(dbContext);
             }
 
-            foreach (var x in GrantModifications.ToList())
+            foreach (var x in GrantAllocations.ToList())
             {
                 x.DeleteFullAndChildless(dbContext);
             }

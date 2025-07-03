@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             Check.EnsureNotNull(grantAllocation);
-            var relevantGrant = grantAllocation.GrantModification.Grant;
+            var relevantGrant = grantAllocation.Grant;
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
             return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, relevantGrant);
         }
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
             Check.EnsureNotNull(grantAllocation);
             if (!ModelState.IsValid)
             {
-                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, grantAllocation.GrantModification.Grant);
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, grantAllocation.Grant);
             }
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been updated.");
@@ -111,7 +111,7 @@ namespace ProjectFirma.Web.Controllers
             if (editGrantAllocationType == EditGrantAllocationType.ExistingGrantAllocation)
             {
                 // Sanity check; this should always agree for an existing one
-                Check.Ensure(optionalRelevantGrant.GrantID == grantAllocationBeingEdited.GrantModification.Grant.GrantID);
+                Check.Ensure(optionalRelevantGrant.GrantID == grantAllocationBeingEdited.Grant.GrantID);
             }
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
@@ -122,22 +122,13 @@ namespace ProjectFirma.Web.Controllers
             var sources = HttpRequestStorage.DatabaseEntities.GrantAllocationSources;
             var priorities = HttpRequestStorage.DatabaseEntities.GrantAllocationPriorities;
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
-            List<GrantModification> grantModifications;
-            if (optionalRelevantGrant == null)
-            {
-                grantModifications = HttpRequestStorage.DatabaseEntities.GrantModifications.ToList();
-            }
-            else
-            {
-                grantModifications = optionalRelevantGrant.GrantModifications.ToList();
-            }
+
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                                                             grantAllocationBeingEdited,
                                                             organizations,
                                                             grantTypes,
                                                             grants,
-                                                            grantModifications,
                                                             divisions,
                                                             regions,
                                                             federalFundCodes,
@@ -174,10 +165,8 @@ namespace ProjectFirma.Web.Controllers
                 // a Grant Allocation that may have lost their "program manager" permissions
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
             }
-            var grantModification = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.GrantModificationID);
-            // Sanity check for alignment
-            Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
-            var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
+
+            var grantAllocation = GrantAllocation.CreateNewBlank(relevantGrant);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
@@ -190,11 +179,11 @@ namespace ProjectFirma.Web.Controllers
         {
             var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
             Check.EnsureNotNull(originalGrantAllocation);
-            var relevantGrant = originalGrantAllocation.GrantModification.Grant;
+            var relevantGrant = originalGrantAllocation.Grant;
             
             // Copy original grant allocation to new view model, except for the grant mod and allocation amount
             var viewModel = new EditGrantAllocationViewModel(originalGrantAllocation);
-            viewModel.GrantModificationID = 0;
+            viewModel.GrantID = 0;
             viewModel.AllocationAmount = null;
             viewModel.GrantAllocationName = $"{viewModel.GrantAllocationName} - Copy";
 
@@ -210,7 +199,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
             Check.EnsureNotNull(originalGrantAllocation);
-            var relevantGrant = originalGrantAllocation.GrantModification.Grant;
+            var relevantGrant = originalGrantAllocation.Grant;
             if (!ModelState.IsValid)
             {
                 // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
@@ -218,10 +207,7 @@ namespace ProjectFirma.Web.Controllers
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
             }
 
-            var grantModification = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.GrantModificationID);
-            // Sanity check for alignment
-            Check.Ensure(relevantGrant.GrantID == grantModification.GrantID);
-            var grantAllocation = GrantAllocation.CreateNewBlank(grantModification);
+            var grantAllocation = GrantAllocation.CreateNewBlank(relevantGrant);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");

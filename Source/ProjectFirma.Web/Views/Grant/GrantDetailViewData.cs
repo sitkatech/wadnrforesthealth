@@ -38,9 +38,6 @@ namespace ProjectFirma.Web.Views.Grant
         public EntityNotesViewData GrantNotesViewData { get; set; }
         public EntityNotesViewData InternalGrantNotesViewData { get; set; }
 
-        public GrantModificationGridSpec GrantModificationGridSpec { get; }
-        public string GrantModificationGridName { get; }
-        public string GrantModificationGridDataUrl { get; }
         public FileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
         //public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
@@ -71,10 +68,6 @@ namespace ProjectFirma.Web.Views.Grant
             NewGrantNoteUrl = grant.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
-
-            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant);
-            GrantModificationGridName = "grantModificationsGridName";
-            GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 
             //GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, grant);
             //GrantAllocationGridName = "grantAllocationsGridName";

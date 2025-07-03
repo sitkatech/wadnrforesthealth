@@ -25,8 +25,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Grant()
         {
+            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantFileResources = new HashSet<GrantFileResource>();
-            this.GrantModifications = new HashSet<GrantModification>();
             this.GrantNotes = new HashSet<GrantNote>();
             this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
             this.Invoices = new HashSet<Invoice>();
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantFileResources.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any() || Invoices.Any();
+            return GrantAllocations.Any() || GrantFileResources.Any() || GrantNotes.Any() || GrantNoteInternals.Any() || Invoices.Any();
         }
 
         /// <summary>
@@ -105,14 +105,14 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(GrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
             if(GrantFileResources.Any())
             {
                 dependentObjects.Add(typeof(GrantFileResource).Name);
-            }
-
-            if(GrantModifications.Any())
-            {
-                dependentObjects.Add(typeof(GrantModification).Name);
             }
 
             if(GrantNotes.Any())
@@ -135,7 +135,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantFileResource).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantFileResource).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -160,12 +160,12 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantFileResources.ToList())
+            foreach(var x in GrantAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantModifications.ToList())
+            foreach(var x in GrantFileResources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -203,8 +203,8 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
+        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantFileResource> GrantFileResources { get; set; }
-        public virtual ICollection<GrantModification> GrantModifications { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }

@@ -105,11 +105,11 @@
 
         <div class="form-group">
             <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantModificationID)
+                @Html.LabelWithSugarFor(m => m.GrantID)
             </div>
             <div class="col-xs-6">
-                @Html.DropDownListFor(m => m.GrantModificationID, ViewDataTyped.GrantModifications, new { style = "width: auto;", @class = "form-control grantModificationSelectList" })
-                @Html.ValidationMessageFor(m => m.GrantModificationID)
+                @Html.DropDownListFor(m => m.GrantID, ViewDataTyped.GrantNumbers, new { style = "width: auto;", @class = "form-control grantSelectList" })
+                @Html.ValidationMessageFor(m => m.GrantID)
             </div>
         </div>
 

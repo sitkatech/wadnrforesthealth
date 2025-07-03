@@ -8,12 +8,10 @@ as
 
 
 select g.GrantID, ga.GrantAllocationID from dbo.[Grant] g
-join dbo.GrantModification gm on g.GrantID = gm.GrantID
-join dbo.GrantAllocation ga on ga.GrantModificationID = gm.GrantModificationID
+join dbo.GrantAllocation ga on ga.GrantID = g.GrantID
 join (
     select g.GrantID from dbo.[Grant] g
-    join dbo.GrantModification gm on g.GrantID = gm.GrantID
-    join dbo.GrantAllocation ga on ga.GrantModificationID = gm.GrantModificationID
+    join dbo.GrantAllocation ga on ga.GrantID = g.GrantID
     group by g.GrantID having count(*) = 1)
 x on x.GrantID = g.GrantID
 

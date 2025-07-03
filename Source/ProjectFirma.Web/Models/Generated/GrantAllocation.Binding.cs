@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int grantModificationID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID, bool? likelyToUse) : this()
+        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID, bool? likelyToUse, int grantID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantAllocationName = grantAllocationName;
@@ -54,42 +54,42 @@ namespace ProjectFirma.Web.Models
             this.DNRUplandRegionID = dNRUplandRegionID;
             this.DivisionID = divisionID;
             this.GrantManagerID = grantManagerID;
-            this.GrantModificationID = grantModificationID;
             this.GrantAllocationPriorityID = grantAllocationPriorityID;
             this.HasFundFSPs = hasFundFSPs;
             this.GrantAllocationSourceID = grantAllocationSourceID;
             this.LikelyToUse = likelyToUse;
+            this.GrantID = grantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantModificationID) : this()
+        public GrantAllocation(int grantID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.GrantModificationID = grantModificationID;
+            this.GrantID = grantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocation(GrantModification grantModification) : this()
+        public GrantAllocation(Grant grant) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantModificationID = grantModification.GrantModificationID;
-            this.GrantModification = grantModification;
-            grantModification.GrantAllocations.Add(this);
+            this.GrantID = grant.GrantID;
+            this.Grant = grant;
+            grant.GrantAllocations.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocation CreateNewBlank(GrantModification grantModification)
+        public static GrantAllocation CreateNewBlank(Grant grant)
         {
-            return new GrantAllocation(grantModification);
+            return new GrantAllocation(grant);
         }
 
         /// <summary>
@@ -270,11 +270,11 @@ namespace ProjectFirma.Web.Models
         public int? DNRUplandRegionID { get; set; }
         public int? DivisionID { get; set; }
         public int? GrantManagerID { get; set; }
-        public int GrantModificationID { get; set; }
         public int? GrantAllocationPriorityID { get; set; }
         public bool? HasFundFSPs { get; set; }
         public int? GrantAllocationSourceID { get; set; }
         public bool? LikelyToUse { get; set; }
+        public int GrantID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
@@ -295,9 +295,9 @@ namespace ProjectFirma.Web.Models
         public virtual DNRUplandRegion DNRUplandRegion { get; set; }
         public Division Division { get { return DivisionID.HasValue ? Division.AllLookupDictionary[DivisionID.Value] : null; } }
         public virtual Person GrantManager { get; set; }
-        public virtual GrantModification GrantModification { get; set; }
         public virtual GrantAllocationPriority GrantAllocationPriority { get; set; }
         public virtual GrantAllocationSource GrantAllocationSource { get; set; }
+        public virtual Grant Grant { get; set; }
 
         public static class FieldLengths
         {

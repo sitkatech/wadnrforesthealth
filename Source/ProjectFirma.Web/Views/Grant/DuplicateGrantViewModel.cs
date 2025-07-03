@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Views.Grant
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
         [Required]
-        public Money? GrantModificationAmount { get; set; }
+        public Money? GrantTotalAwardAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public DateTime? GrantStartDate { get; set; }
@@ -68,16 +68,16 @@ namespace ProjectFirma.Web.Views.Grant
         {
         }
 
-        public DuplicateGrantViewModel(Models.Grant grantToDuplicate, int initialAwardGrantModificationID)
+        public DuplicateGrantViewModel(Models.Grant grantToDuplicate)
         {
             GrantName = $"{grantToDuplicate.GrantName} - Copy";
             GrantStatusID = grantToDuplicate.GrantStatusID;
             GrantNumber = grantToDuplicate.GrantNumber;
-            GrantModificationAmount = 0;
+            GrantTotalAwardAmount = 0;
             GrantStartDate = grantToDuplicate.StartDate;
             GrantEndDate = grantToDuplicate.EndDate;
 
-            InitialAwardGrantModificationID = initialAwardGrantModificationID;
+
         }
 
         public void UpdateModel(Models.Grant grant)

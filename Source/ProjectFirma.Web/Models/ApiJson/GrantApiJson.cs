@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             EndDate = grant.EndDate;
             ConditionsAndRequirements = grant.ConditionsAndRequirements;
             ComplianceNotes = grant.ComplianceNotes;
-            AwardedFunds = grant.GetTotalAwardAmount();
+            AwardedFunds = grant.TotalAwardAmount;
             CFDANumber = grant.CFDANumber;
             GrantName = grant.GrantName;
             GrantTypeID = grant.GrantTypeID;

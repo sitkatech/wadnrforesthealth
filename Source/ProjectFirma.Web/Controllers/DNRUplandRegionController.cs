@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
             var gridSpec = new AssociatedGrantAllocationsGridSpec();
-            var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson).Where(x=>x.GrantModification.Grant.GrantStatus.GrantStatusID == GrantStatus.Active.GrantStatusID).OrderByDescending(x=>x.GrantAllocationPriority?.GrantAllocationPriorityNumber).ToList();
+            var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson).Where(x=>x.Grant.GrantStatus.GrantStatusID == GrantStatus.Active.GrantStatusID).OrderByDescending(x=>x.GrantAllocationPriority?.GrantAllocationPriorityNumber).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }

@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantTypeID = grant.GrantTypeID;
             GrantNumber = grant.GrantNumber;
             CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.GetTotalAwardAmount();
+            TotalAwardAmount = grant.TotalAwardAmount;
             GrantStartDate = grant.StartDate;
             GrantEndDate = grant.EndDate;
             

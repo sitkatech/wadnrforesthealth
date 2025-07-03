@@ -160,17 +160,10 @@ namespace ProjectFirma.Web.Controllers
             var grantToDuplicate = grantPrimaryKey.EntityObject;
             Check.EnsureNotNull(grantToDuplicate);
 
-            //get the grant allocations for the initial award grant mod
-            var grantModifications = grantToDuplicate.GrantModifications;
-            var initialAwardGrantMod = grantModifications.FirstOrDefault(x =>
-                x.GrantModificationGrantModificationPurposes.FirstOrDefault(gmp => gmp.GrantModificationPurposeID == GrantModificationPurpose.InitialAward.GrantModificationPurposeID) != null);
-            List<GrantAllocation> grantAllocations = new List<GrantAllocation>();
-            if (initialAwardGrantMod != null)
-            {
-                grantAllocations = initialAwardGrantMod.GrantAllocations.ToList();
-            }
+            //get the grant allocations
+            List<GrantAllocation> grantAllocations = grantToDuplicate.GrantAllocations.ToList();
 
-            var viewModel = new DuplicateGrantViewModel(grantToDuplicate, initialAwardGrantMod?.GrantModificationID ?? -1);
+            var viewModel = new DuplicateGrantViewModel(grantToDuplicate);
             return DuplicateGrantViewEdit(viewModel, grantToDuplicate, grantAllocations);
         }
 
@@ -182,11 +175,9 @@ namespace ProjectFirma.Web.Controllers
             var originalGrant = grantPrimaryKey.EntityObject;
             Check.EnsureNotNull(originalGrant);
 
-            var initialAwardGrantModificationForCopy = HttpRequestStorage.DatabaseEntities.GrantModifications.Single(gm => gm.GrantModificationID == viewModel.InitialAwardGrantModificationID);
-
             if (!ModelState.IsValid)
             {
-                return DuplicateGrantViewEdit(viewModel, originalGrant, initialAwardGrantModificationForCopy.GrantAllocations.ToList());
+                return DuplicateGrantViewEdit(viewModel, originalGrant, originalGrant.GrantAllocations.ToList());
             }
 
             var grantStatus = GrantStatus.All.Single(gs => gs.GrantStatusID == viewModel.GrantStatusID);
@@ -196,13 +187,6 @@ namespace ProjectFirma.Web.Controllers
             newGrant.CFDANumber = originalGrant.CFDANumber;
             newGrant.GrantTypeID = originalGrant.GrantTypeID;
 
-            var newGrantModification = GrantModification.CreateNewBlank(newGrant, initialAwardGrantModificationForCopy.GrantModificationStatus);
-            newGrantModification.GrantModificationAmount = viewModel.GrantModificationAmount ?? 0;
-            newGrantModification.GrantModificationStartDate = viewModel.GrantStartDate ?? DateTime.Today;
-            newGrantModification.GrantModificationEndDate = viewModel.GrantEndDate ?? DateTime.Today;
-            newGrantModification.GrantModificationName = GrantModificationPurpose.InitialAward.GrantModificationPurposeName;
-            var newGrantModificationPurpose = GrantModificationGrantModificationPurpose.CreateNewBlank(newGrantModification, GrantModificationPurpose.InitialAward);
-
             if (viewModel.GrantAllocationsToDuplicate != null && viewModel.GrantAllocationsToDuplicate.Any())
             {
                 foreach (var allocationID in viewModel.GrantAllocationsToDuplicate)
@@ -210,7 +194,7 @@ namespace ProjectFirma.Web.Controllers
                     var allocationToCopy =
                         HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga =>
                             ga.GrantAllocationID == allocationID);
-                    var newAllocation = GrantAllocation.CreateNewBlank(newGrantModification);
+                    var newAllocation = GrantAllocation.CreateNewBlank(newGrant);
                     newAllocation.GrantAllocationName = allocationToCopy.GrantAllocationName;
                     newAllocation.StartDate = allocationToCopy.StartDate;
                     newAllocation.EndDate = allocationToCopy.EndDate;
@@ -429,22 +413,11 @@ namespace ProjectFirma.Web.Controllers
             var relevantGrant = grantPrimaryKey.EntityObject;
             // Create button is irrelevant to this data-only usage
             var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
-            var grantAllocations = relevantGrant.GrantModifications.SelectMany(gm => gm.GrantAllocations).ToList();
+            var grantAllocations = relevantGrant.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
-        [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrantModification(GrantModificationPrimaryKey grantModificationPrimaryKey)
-        {
-            var grantModification = grantModificationPrimaryKey.EntityObject;
-            var relevantGrant = grantModification.Grant;
-            // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, relevantGrant);
-            var grantAllocations = grantModification.GrantAllocations.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
 
         /// <summary>
         /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.
@@ -456,20 +429,12 @@ namespace ProjectFirma.Web.Controllers
         {
             // Create button is irrelevant to this data-only usage
             var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Hidden, null);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantModification.Grant.GrantNumber == "").ToList();
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.Grant.GrantNumber == "").ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
-        [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
-        {
-            var grant = grantPrimaryKey.EntityObject;
-            var gridSpec = new GrantModificationGridSpec(CurrentPerson, grant);
-            var grantModifications = grant.GrantModifications.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantModification>(grantModifications, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
+
         #endregion
 
 
@@ -692,7 +657,7 @@ namespace ProjectFirma.Web.Controllers
             var relevantGrant = grantPrimaryKey.EntityObject;
             // Create button is irrelevant to this data-only usage
             var gridSpec = new GrantAllocationBudgetLineItemGridSpec();
-            var grantAllocations = relevantGrant.GrantModifications.SelectMany(gm => gm.GrantAllocations).ToList();
+            var grantAllocations = relevantGrant.GrantAllocations.ToList();
             var budgetLineItems = grantAllocations.Select(ga => new GrantAllocationBudgetLineItemForGrid(ga)).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationBudgetLineItemForGrid>(budgetLineItems, gridSpec);
             return gridJsonNetJObjectResult;
@@ -701,10 +666,9 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFeature]
         public GridJsonNetJObjectResult<Agreement> GrantAgreementGridJsonData(GrantPrimaryKey grantPrimaryKey)
         {
-            // 2/4/22 TK - need to walk "grant -> grant mod -> grant allocation -> AgreementGrantAllocation -> Agreement"
+            // 2/4/22 TK - need to walk "grant -> grant allocation -> AgreementGrantAllocation -> Agreement"
             var grant = grantPrimaryKey.EntityObject;
-            var grantMods = grant.GrantModifications;
-            var grantAllocations = grantMods.SelectMany(x => x.GrantAllocations);
+            var grantAllocations = grant.GrantAllocations;
             var agreementGrantAllocations = grantAllocations.SelectMany(x => x.AgreementGrantAllocations);
             var agreements = agreementGrantAllocations.Select(x => x.Agreement).ToList();
 
@@ -717,7 +681,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsByGrantGridJsonData(GrantPrimaryKey grantPrimaryKey)
         {
             var grant = grantPrimaryKey.EntityObject;
-            var grantAllocations = grant.GrantModifications.SelectMany(x => x.GrantAllocations);
+            var grantAllocations = grant.GrantAllocations;
             var projectGrantAllocationRequests = grantAllocations.SelectMany(x => x.ProjectGrantAllocationRequests).ToList();
             var gridSpec = new ProjectGrantAllocationRequestsByGrantGridSpec();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectGrantAllocationRequests, gridSpec);
