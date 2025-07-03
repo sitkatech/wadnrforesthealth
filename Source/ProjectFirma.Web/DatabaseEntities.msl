@@ -488,6 +488,7 @@
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="TotalAwardAmount" ColumnName="TotalAwardAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

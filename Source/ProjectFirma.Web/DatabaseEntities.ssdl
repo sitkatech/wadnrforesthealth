@@ -1679,6 +1679,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ShortName" Type="varchar" MaxLength="64" />
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="TotalAwardAmount" Type="money" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>

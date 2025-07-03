@@ -1749,6 +1749,7 @@
     <Property Name="ShortName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
     <Property Name="GrantStatusID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="TotalAwardAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantType" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="Grants" ToRole="GrantType" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Grants" ToRole="Organization" />
     <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="Grant" ToRole="GrantFileResources" />

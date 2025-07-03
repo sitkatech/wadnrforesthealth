@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID, decimal totalAwardAmount) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
@@ -49,12 +49,13 @@ namespace ProjectFirma.Web.Models
             this.ShortName = shortName;
             this.GrantStatusID = grantStatusID;
             this.OrganizationID = organizationID;
+            this.TotalAwardAmount = totalAwardAmount;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(string grantName, int grantStatusID, int organizationID) : this()
+        public Grant(string grantName, int grantStatusID, int organizationID, decimal totalAwardAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -62,12 +63,13 @@ namespace ProjectFirma.Web.Models
             this.GrantName = grantName;
             this.GrantStatusID = grantStatusID;
             this.OrganizationID = organizationID;
+            this.TotalAwardAmount = totalAwardAmount;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Grant(string grantName, GrantStatus grantStatus, Organization organization) : this()
+        public Grant(string grantName, GrantStatus grantStatus, Organization organization, decimal totalAwardAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -76,6 +78,7 @@ namespace ProjectFirma.Web.Models
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
             organization.Grants.Add(this);
+            this.TotalAwardAmount = totalAwardAmount;
         }
 
         /// <summary>
@@ -83,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Grant CreateNewBlank(GrantStatus grantStatus, Organization organization)
         {
-            return new Grant(default(string), grantStatus, organization);
+            return new Grant(default(string), grantStatus, organization, default(decimal));
         }
 
         /// <summary>
@@ -196,6 +199,7 @@ namespace ProjectFirma.Web.Models
         public string ShortName { get; set; }
         public int GrantStatusID { get; set; }
         public int OrganizationID { get; set; }
+        public decimal TotalAwardAmount { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 

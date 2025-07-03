@@ -15,6 +15,7 @@ CREATE TABLE [dbo].[Grant](
 	[ShortName] [varchar](64) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[GrantStatusID] [int] NOT NULL,
 	[OrganizationID] [int] NOT NULL,
+	[TotalAwardAmount] [money] NOT NULL,
  CONSTRAINT [PK_Grant_GrantID] PRIMARY KEY CLUSTERED 
 (
 	[GrantID] ASC
