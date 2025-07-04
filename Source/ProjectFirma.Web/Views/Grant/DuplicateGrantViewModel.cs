@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Grant
         [StringLength(Models.Grant.FieldLengths.GrantNumber)]
         public string GrantNumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
         [Required]
         public Money? GrantTotalAwardAmount { get; set; }
 

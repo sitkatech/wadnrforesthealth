@@ -40,3 +40,4 @@ drop table dbo.GrantModificationPurpose
 drop table dbo.GrantModificationStatus
 
 
+delete from dbo.FieldDefinitionData where FieldDefinitionID in (347, 348, 349, 350, 351, 352, 353, 354, 355)
