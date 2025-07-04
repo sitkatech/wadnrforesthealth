@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Common
         public static readonly string ProgramNameUnique = $"{FieldDefinition.Program.GetFieldDefinitionLabel()} name already exists for this organization.";
         public static readonly string GrantNoteIsEmptyText = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
         public static readonly string GrantAllocationNoteIsEmptyText = $"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
-        public static readonly string GrantModificationNoteInternalIsEmptyText = $"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
+
         public static readonly string OrganizationShortNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} short name already exists.";
         public static readonly string ProgramShortNameUnique = $"{FieldDefinition.Program.GetFieldDefinitionLabel()} short name already exists for this organization.";
         public static readonly string ClassificationNameUnique = $"{FieldDefinition.Classification.GetFieldDefinitionLabel()} name already exists.";

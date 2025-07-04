@@ -8,7 +8,6 @@ namespace ProjectFirma.Web.Models
 {
     public class GrantAllocationBudgetLineItemForGrid 
     {
-        public GrantModification GrantModification { get; set; }
         public GrantAllocation GrantAllocation { get; set; }
 
         public decimal PersonnelAmount { get; set; }
@@ -25,7 +24,6 @@ namespace ProjectFirma.Web.Models
 
         public GrantAllocationBudgetLineItemForGrid(GrantAllocation grantAllocation)
         {
-            GrantModification = grantAllocation.GrantModification;
             GrantAllocation = grantAllocation;
 
             //There are DB constraints that force one and only one Budget Line Item for each Cost Type for each Allocation, therefore the .First call should never crash.

@@ -57,11 +57,6 @@
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationSource" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantFileResource" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantModificationFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantModificationFileResource" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.Store.GrantModificationStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
@@ -451,16 +446,16 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
       <End Role="GrantAllocationPriority" EntitySet="GrantAllocationPriority" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID">
       <End Role="GrantAllocationSource" EntitySet="GrantAllocationSource" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantModification_GrantModificationID">
-      <End Role="GrantModification" EntitySet="GrantModification" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Organization_OrganizationID">
@@ -554,38 +549,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <AssociationSet Name="FK_GrantFileResource_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantFileResource_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantFileResources" EntitySet="GrantFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModification_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="GrantModifications" EntitySet="GrantModification" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
-      <End Role="GrantModificationStatus" EntitySet="GrantModificationStatus" />
-      <End Role="GrantModifications" EntitySet="GrantModification" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationFileResource_FileResource_FileResourceID">
-      <End Role="FileResource" EntitySet="FileResource" />
-      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationFileResource_GrantModification_GrantModificationID">
-      <End Role="GrantModification" EntitySet="GrantModification" />
-      <End Role="GrantModificationFileResources" EntitySet="GrantModificationFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
-      <End Role="GrantModification" EntitySet="GrantModification" />
-      <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
-      <End Role="GrantModification" EntitySet="GrantModification" />
-      <End Role="GrantModificationNoteInternals" EntitySet="GrantModificationNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
-      <End Role="CreatedByPerson" EntitySet="Person" />
-      <End Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantModificationNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
-      <End Role="LastUpdatedByPerson" EntitySet="Person" />
-      <End Role="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantModificationNoteInternal" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantNote_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -1679,6 +1642,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ShortName" Type="varchar" MaxLength="64" />
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="TotalAwardAmount" Type="money" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -1694,11 +1658,11 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="DNRUplandRegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
-    <Property Name="GrantModificationID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationPriorityID" Type="int" />
     <Property Name="HasFundFSPs" Type="bit" />
     <Property Name="GrantAllocationSourceID" Type="int" />
     <Property Name="LikelyToUse" Type="bit" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -1865,56 +1829,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="Description" Type="varchar" MaxLength="1000" />
-  </EntityType>
-  <EntityType Name="GrantModification">
-    <Key>
-      <PropertyRef Name="GrantModificationID" />
-    </Key>
-    <Property Name="GrantModificationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantModificationName" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="GrantModificationStartDate" Type="datetime" Nullable="false" />
-    <Property Name="GrantModificationEndDate" Type="datetime" Nullable="false" />
-    <Property Name="GrantModificationStatusID" Type="int" Nullable="false" />
-    <Property Name="GrantModificationAmount" Type="money" Nullable="false" />
-    <Property Name="GrantModificationDescription" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="GrantModificationFileResource">
-    <Key>
-      <PropertyRef Name="GrantModificationFileResourceID" />
-    </Key>
-    <Property Name="GrantModificationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantModificationID" Type="int" Nullable="false" />
-    <Property Name="FileResourceID" Type="int" Nullable="false" />
-    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="Description" Type="varchar" MaxLength="1000" />
-  </EntityType>
-  <EntityType Name="GrantModificationGrantModificationPurpose">
-    <Key>
-      <PropertyRef Name="GrantModificationGrantModificationPurposeID" />
-    </Key>
-    <Property Name="GrantModificationGrantModificationPurposeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantModificationID" Type="int" Nullable="false" />
-    <Property Name="GrantModificationPurposeID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantModificationNoteInternal">
-    <Key>
-      <PropertyRef Name="GrantModificationNoteInternalID" />
-    </Key>
-    <Property Name="GrantModificationNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantModificationID" Type="int" Nullable="false" />
-    <Property Name="GrantModificationNoteInternalText" Type="varchar(max)" />
-    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="LastUpdatedByPersonID" Type="int" />
-    <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantModificationStatus">
-    <Key>
-      <PropertyRef Name="GrantModificationStatusID" />
-    </Key>
-    <Property Name="GrantModificationStatusID" Type="int" Nullable="false" />
-    <Property Name="GrantModificationStatusName" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="GrantNote">
     <Key>
@@ -3785,6 +3699,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocation_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
     <End Role="GrantAllocationPriority" Type="ProjectFirma.Web.Models.Store.GrantAllocationPriority" Multiplicity="0..1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
@@ -3806,18 +3732,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="GrantAllocationSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_GrantModification_GrantModificationID">
-    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModification">
-        <PropertyRef Name="GrantModificationID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="GrantModificationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4094,104 +4008,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Principal>
       <Dependent Role="GrantFileResources">
         <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModification_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="GrantModifications" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="GrantModifications">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
-    <End Role="GrantModificationStatus" Type="ProjectFirma.Web.Models.Store.GrantModificationStatus" Multiplicity="1" />
-    <End Role="GrantModifications" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModificationStatus">
-        <PropertyRef Name="GrantModificationStatusID" />
-      </Principal>
-      <Dependent Role="GrantModifications">
-        <PropertyRef Name="GrantModificationStatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationFileResource_FileResource_FileResourceID">
-    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.Store.GrantModificationFileResource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantModificationFileResources">
-        <PropertyRef Name="FileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationFileResource_GrantModification_GrantModificationID">
-    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
-    <End Role="GrantModificationFileResources" Type="ProjectFirma.Web.Models.Store.GrantModificationFileResource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModification">
-        <PropertyRef Name="GrantModificationID" />
-      </Principal>
-      <Dependent Role="GrantModificationFileResources">
-        <PropertyRef Name="GrantModificationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
-    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
-    <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModification">
-        <PropertyRef Name="GrantModificationID" />
-      </Principal>
-      <Dependent Role="GrantModificationGrantModificationPurposes">
-        <PropertyRef Name="GrantModificationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
-    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
-    <End Role="GrantModificationNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantModification">
-        <PropertyRef Name="GrantModificationID" />
-      </Principal>
-      <Dependent Role="GrantModificationNoteInternals">
-        <PropertyRef Name="GrantModificationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
-    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson">
-        <PropertyRef Name="CreatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
-    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LastUpdatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson">
-        <PropertyRef Name="LastUpdatedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

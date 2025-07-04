@@ -58,6 +58,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public FileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
+        public bool IsUserLoggedIn { get; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
@@ -102,7 +103,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             CurrentAgreementGrantAllocationsInSortedOrder = agreementGrantAllocationsList;
 
 
-
+            IsUserLoggedIn = !currentPerson.IsAnonymousOrUnassigned;
         }
     }
 }

@@ -38,9 +38,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public int GrantAllocationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModification)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
         [Required]
-        public int GrantModificationID { get; set; }
+        public int GrantID { get; set; }
 
         [StringLength(Models.GrantAllocation.FieldLengths.GrantAllocationName)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationName)]
@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
-            GrantModificationID = grantAllocation.GrantModificationID;
+            GrantID = grantAllocation.GrantID;
 
             ProgramIndexProjectCodeJsons =
                 ProgramIndexProjectCodeJson
@@ -274,7 +274,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             var clone = new EditGrantAllocationViewModel
             {
                 GrantAllocationID = GrantAllocationID,
-                GrantModificationID = GrantModificationID,
+                GrantID = GrantID,
                 GrantAllocationName = GrantAllocationName,
                 OrganizationID = OrganizationID,
                 ProgramIndexProjectCodeJsons = ProgramIndexProjectCodeJsons,

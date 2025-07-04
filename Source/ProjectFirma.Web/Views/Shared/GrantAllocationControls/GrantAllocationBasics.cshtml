@@ -82,7 +82,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
         </div>
         <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantModification.Grant.GrantStatus.GrantStatusName</span>
+            <span>@ViewDataTyped.GrantAllocation.Grant.GrantStatus.GrantStatusName</span>
         </div>
     </div>
     <div class="row">
@@ -90,7 +90,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantType)
         </div>
         <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantModification.Grant.GrantTypeDisplay</span>
+            <span>@ViewDataTyped.GrantAllocation.Grant.GrantTypeDisplay</span>
         </div>
     </div>
     <div class="row">
@@ -98,17 +98,10 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
         </div>
         <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantModification.Grant.GetGrantNumberAsUrl()</span>
+            <span>@ViewDataTyped.GrantAllocation.Grant.GetGrantNumberAsUrl()</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5 text-right">
-            @Html.LabelWithSugarFor(FieldDefinition.GrantModification)
-        </div>
-        <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantModification.GetGrantModificationNameAsUrl()</span>
-        </div>
-    </div>
+
     <div class="row">
         <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.ProgramIndexProjectCode)
@@ -122,7 +115,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.CFDA)
         </div>
         <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantModification.Grant.CFDANumber</span>
+            <span>@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
         </div>
     </div>
     <div class="row">
@@ -149,14 +142,18 @@ Source code is available upon request via <support@sitkatech.com>.
             <span>@ViewDataTyped.GrantAllocation.AllocationAmount.ToStringCurrency()</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5 text-right">
-            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationCurrentBalance)
+    @if (ViewDataTyped.IsUserLoggedIn)
+    {
+        <div class="row">
+            <div class="col-sm-5 text-right">
+                @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationCurrentBalance)
+            </div>
+            <div class="col-sm-7">
+                <span>@ViewDataTyped.GrantAllocation.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart.ToString("C") </span>
+            </div>
         </div>
-        <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart.ToString("C") </span>
-        </div>
-    </div>
+    }
+    
     <div class="row">
         <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)

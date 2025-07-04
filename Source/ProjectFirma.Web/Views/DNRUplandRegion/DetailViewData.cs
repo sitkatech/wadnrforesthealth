@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
         public string EditContactUrl { get; }
         public string EditPageContentUrl { get; }
+        public bool UserHasAccountWithRole { get; }
 
         public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData) : base(currentPerson)
         {
@@ -57,6 +58,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             PageTitle = dnrUplandRegion.DNRUplandRegionName;
             EntityName = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel();
             UserHasRegionManagePermissions = new DNRUplandRegionManageFeature().HasPermissionByPerson(currentPerson);
+            UserHasAccountWithRole = !currentPerson.IsAnonymousOrUnassigned;
             IndexUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "regionProjectListGrid";

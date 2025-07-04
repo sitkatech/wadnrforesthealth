@@ -25,7 +25,7 @@
 
 
 <h2>@FieldDefinition.Grant.GetFieldDefinitionLabel() Duplication</h2>
-<p>Saving this form will create a new @FieldDefinition.Grant.GetFieldDefinitionLabel(), an initial @FieldDefinition.GrantModification.GetFieldDefinitionLabel(), and @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() from the @ViewDataTyped.GrantToDuplicate.GrantName @FieldDefinition.Grant.GetFieldDefinitionLabel(). </p>
+<p>Saving this form will create a new @FieldDefinition.Grant.GetFieldDefinitionLabel() and @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() from the @ViewDataTyped.GrantToDuplicate.GrantName @FieldDefinition.Grant.GetFieldDefinitionLabel(). </p>
 <p>Contributing Organization, @FieldDefinition.GrantType.GetFieldDefinitionLabel(), and CFDA will be copied automatically.</p>
 
 @Html.ValidationSummary()
@@ -79,16 +79,16 @@
         
         <div class="form-group">
             <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantModificationAmount)
+                @Html.LabelWithSugarFor(m => m.GrantTotalAwardAmount)
             </div>
             <div class="col-xs-8">
-                @Html.EditorFor(m => m.GrantModificationAmount)
-                @Html.ValidationMessageFor(m => m.GrantModificationAmount)
+                @Html.EditorFor(m => m.GrantTotalAwardAmount)
+                @Html.ValidationMessageFor(m => m.GrantTotalAwardAmount)
             </div>
         </div>
         
         
-        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName's @GrantModificationPurpose.InitialAward.GrantModificationPurposeName @FieldDefinition.GrantModification.GetFieldDefinitionLabel().</p>
+        <p>The @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() below are associated with @ViewDataTyped.GrantToDuplicate.GrantName.</p>
         <div class="form-group">
             <div class="col-xs-12"><p>Select the <strong>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</strong> you wish to copy:</p></div>
             <div class="col-xs-12">

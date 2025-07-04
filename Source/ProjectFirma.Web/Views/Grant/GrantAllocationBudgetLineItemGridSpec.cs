@@ -20,7 +20,6 @@ namespace ProjectFirma.Web.Views.Grant
 
             //CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
-            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GrantModification.GetGrantModificationNameAsUrl(), 225, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 225,AgGridColumnFilterType.Text);
             Add(CostType.Personnel.CostTypeDisplayName, x => x.PersonnelAmount, 80, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add(CostType.Benefits.CostTypeDisplayName, x => x.BenefitsAmount, 80, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);

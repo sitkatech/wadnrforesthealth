@@ -25,8 +25,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Grant()
         {
+            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantFileResources = new HashSet<GrantFileResource>();
-            this.GrantModifications = new HashSet<GrantModification>();
             this.GrantNotes = new HashSet<GrantNote>();
             this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
             this.Invoices = new HashSet<Invoice>();
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID, decimal totalAwardAmount) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
@@ -49,12 +49,13 @@ namespace ProjectFirma.Web.Models
             this.ShortName = shortName;
             this.GrantStatusID = grantStatusID;
             this.OrganizationID = organizationID;
+            this.TotalAwardAmount = totalAwardAmount;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(string grantName, int grantStatusID, int organizationID) : this()
+        public Grant(string grantName, int grantStatusID, int organizationID, decimal totalAwardAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -62,12 +63,13 @@ namespace ProjectFirma.Web.Models
             this.GrantName = grantName;
             this.GrantStatusID = grantStatusID;
             this.OrganizationID = organizationID;
+            this.TotalAwardAmount = totalAwardAmount;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Grant(string grantName, GrantStatus grantStatus, Organization organization) : this()
+        public Grant(string grantName, GrantStatus grantStatus, Organization organization, decimal totalAwardAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -76,6 +78,7 @@ namespace ProjectFirma.Web.Models
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
             organization.Grants.Add(this);
+            this.TotalAwardAmount = totalAwardAmount;
         }
 
         /// <summary>
@@ -83,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Grant CreateNewBlank(GrantStatus grantStatus, Organization organization)
         {
-            return new Grant(default(string), grantStatus, organization);
+            return new Grant(default(string), grantStatus, organization, default(decimal));
         }
 
         /// <summary>
@@ -92,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantFileResources.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any() || Invoices.Any();
+            return GrantAllocations.Any() || GrantFileResources.Any() || GrantNotes.Any() || GrantNoteInternals.Any() || Invoices.Any();
         }
 
         /// <summary>
@@ -102,14 +105,14 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
+            if(GrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
             if(GrantFileResources.Any())
             {
                 dependentObjects.Add(typeof(GrantFileResource).Name);
-            }
-
-            if(GrantModifications.Any())
-            {
-                dependentObjects.Add(typeof(GrantModification).Name);
             }
 
             if(GrantNotes.Any())
@@ -132,7 +135,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantFileResource).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantFileResource).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -157,12 +160,12 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantFileResources.ToList())
+            foreach(var x in GrantAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantModifications.ToList())
+            foreach(var x in GrantFileResources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -196,11 +199,12 @@ namespace ProjectFirma.Web.Models
         public string ShortName { get; set; }
         public int GrantStatusID { get; set; }
         public int OrganizationID { get; set; }
+        public decimal TotalAwardAmount { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
+        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantFileResource> GrantFileResources { get; set; }
-        public virtual ICollection<GrantModification> GrantModifications { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
