@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class GrantAllocationBudgetVsActualsGridSpec : GridSpec<BudgetVsActualLineItem>
     {
-        public GrantAllocationBudgetVsActualsGridSpec()
+        public GrantAllocationBudgetVsActualsGridSpec(Models.Person currentPerson)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Budget Vs Actuals";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} Budget Vs Actuals";
@@ -19,8 +19,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             Add("Cost Type", x => x.CostType.CostTypeDisplayName, 125, AgGridColumnFilterType.None);
             Add("Budget", x => x.Budget, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            Add("Expenditures From Datamart", x => x.ExpendituresFromDatamart, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            Add("Budget Minus Expenditures", x => x.BudgetMinusExpendituresFromDatamart, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+
+            if(!currentPerson.IsAnonymousOrUnassigned)
+            {
+                Add("Expenditures From Datamart", x => x.ExpendituresFromDatamart, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+                Add("Budget Minus Expenditures", x => x.BudgetMinusExpendituresFromDatamart, 125, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            }
 
         }
     }

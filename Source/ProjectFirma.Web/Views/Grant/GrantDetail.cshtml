@@ -132,6 +132,8 @@
                                 <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
                             </div>
                         </div>
+                        @if (ViewDataTyped.isUserLoggedIn)
+                        {
                         <div class="row">
                             <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
@@ -140,8 +142,7 @@
                                 <span id="TotalAwardAmount">@ViewDataTyped.Grant.TotalAwardAmount.ToStringCurrency()</span>
                             </div>
                         </div>
-                        @if (ViewDataTyped.isUserLoggedIn)
-                        {
+                        
                         <div class="row">
                             <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
@@ -230,7 +231,7 @@
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                    Funding by @FieldDefinition.Project.GetFieldDefinitionLabel() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
                 </div>
                 <div class="panel-body">
                     @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationRequestsByGrantGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)

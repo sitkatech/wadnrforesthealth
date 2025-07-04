@@ -97,7 +97,7 @@ namespace ProjectFirma.Web.Views.Grant
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
             ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsByGrantGridJsonData(grant));
 
-            isUserLoggedIn = !currentPerson.IsAnonymousUser;
+            isUserLoggedIn = !currentPerson.IsAnonymousOrUnassigned;
         }
     }
 }

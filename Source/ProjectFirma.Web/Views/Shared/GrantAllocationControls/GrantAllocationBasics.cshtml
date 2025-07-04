@@ -142,14 +142,18 @@ Source code is available upon request via <support@sitkatech.com>.
             <span>@ViewDataTyped.GrantAllocation.AllocationAmount.ToStringCurrency()</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5 text-right">
-            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationCurrentBalance)
+    @if (ViewDataTyped.IsUserLoggedIn)
+    {
+        <div class="row">
+            <div class="col-sm-5 text-right">
+                @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationCurrentBalance)
+            </div>
+            <div class="col-sm-7">
+                <span>@ViewDataTyped.GrantAllocation.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart.ToString("C") </span>
+            </div>
         </div>
-        <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart.ToString("C") </span>
-        </div>
-    </div>
+    }
+    
     <div class="row">
         <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)

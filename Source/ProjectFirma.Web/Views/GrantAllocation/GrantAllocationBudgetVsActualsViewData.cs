@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public GrantAllocationBudgetVsActualsViewData(Person currentPerson, Models.GrantAllocation grantAllocation) : base(currentPerson)
         {
-            GrantAllocationBudgetVsActualsGridSpec = new GrantAllocationBudgetVsActualsGridSpec();
+            GrantAllocationBudgetVsActualsGridSpec = new GrantAllocationBudgetVsActualsGridSpec(currentPerson);
             GrantAllocationBudgetVsActualsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationBudgetVsActualsGridJsonData(grantAllocation));
 
         }

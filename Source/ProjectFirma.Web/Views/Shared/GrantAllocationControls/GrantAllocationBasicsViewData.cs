@@ -29,13 +29,15 @@ namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
         public Models.GrantAllocation GrantAllocation { get; }
         public bool UserHasGrantAllocationManagePermissions { get; }
         public bool ShowDownload { get; set; }
+        public bool IsUserLoggedIn { get; }
 
-        public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasGrantAllocationManagePermissions, TaxonomyLevel taxonomyLevel)
+        public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasGrantAllocationManagePermissions, bool isUserLoggedIn)
         {
             GrantAllocation = grantAllocation;
             UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
             // Used for creating file download links, if files available
             ShowDownload = grantAllocation.GrantAllocationFileResources.Any();
+            IsUserLoggedIn = isUserLoggedIn;
         }        
     }
 }

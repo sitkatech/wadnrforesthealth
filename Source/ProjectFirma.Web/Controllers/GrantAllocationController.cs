@@ -322,8 +322,8 @@ namespace ProjectFirma.Web.Controllers
                 throw new Exception($"Could not find GrantAllocationID # {grantAllocationPrimaryKey.PrimaryKeyValue}; has it been deleted?");
             }
 
-            var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
-            var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, taxonomyLevel);
+
+            var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, !CurrentPerson.IsAnonymousOrUnassigned);
             var userHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
             var grantAllocationNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantAllocation.GrantAllocationNotes)),
@@ -382,7 +382,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<BudgetVsActualLineItem> GrantAllocationBudgetVsActualsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var gridSpec = new GrantAllocationBudgetVsActualsGridSpec();
+            var gridSpec = new GrantAllocationBudgetVsActualsGridSpec(CurrentPerson);
 
             var grantAllocationBudgetVsActualLineItems = grantAllocation.GetAllBudgetVsActualLineItemsByCostType();
 
