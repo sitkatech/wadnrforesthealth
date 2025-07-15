@@ -205,7 +205,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
-            //grantAllocation.GrantID = GrantID;
+            grantAllocation.GrantID = GrantID;
             
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
