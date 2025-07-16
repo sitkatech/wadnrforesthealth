@@ -129,6 +129,19 @@
 
     @{ GrantAllocationBudgetVsActuals.RenderPartialView(Html, ViewDataTyped.GrantAllocationBudgetVsActualsViewData); }
 
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -147,20 +160,6 @@
                     {
                         <p>There are no @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()</p>
                     }
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
-                </div>
-                <div class="panel-body">
-                    @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>

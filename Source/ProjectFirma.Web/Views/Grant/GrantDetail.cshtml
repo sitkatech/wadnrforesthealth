@@ -132,7 +132,7 @@
                                 <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
@@ -143,16 +143,16 @@
                         </div>
                         @if (ViewDataTyped.isUserLoggedIn)
                         {
-                        <div class="row">
-                            <div class="col-sm-4">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
+                                </div>
+                                <div class="col-sm-8">
+                                    <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
+                                </div>
                             </div>
-                            <div class="col-sm-8">
-                                <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
-                            </div>
-                        </div>
                         }
-                        
+
                         <div class="row">
                             <div class="col-sm-4">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
@@ -184,49 +184,29 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     @if (ViewDataTyped.isUserLoggedIn)
     {
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        @Html.AgGrid(ViewDataTyped.GrantAllocationBudgetLineItemGridSpec, ViewDataTyped.GrantAllocationBudgetLineItemGridName, ViewDataTyped.GrantAllocationBudgetLineItemGridDataUrl, "height:350px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        <h3>
+                            @FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="basicsLayout">
+                            @Html.AgGrid(ViewDataTyped.GrantAllocationBudgetLineItemGridSpec, ViewDataTyped.GrantAllocationBudgetLineItemGridName, ViewDataTyped.GrantAllocationBudgetLineItemGridDataUrl, "height:350px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     }
-    
-    
-    @if (ViewDataTyped.isUserLoggedIn)
-    {
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="basicsLayout">
-                        @Html.AgGrid(ViewDataTyped.GrantAgreementGridSpec, ViewDataTyped.GrantAgreementGridName, ViewDataTyped.GrantAgreementGridDataUrl, "height:350px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    }
-    
+
+
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
@@ -240,6 +220,26 @@
         </div>
     </div>
 
+
+    @if (ViewDataTyped.isUserLoggedIn)
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        <h3>
+                            @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="basicsLayout">
+                            @Html.AgGrid(ViewDataTyped.GrantAgreementGridSpec, ViewDataTyped.GrantAgreementGridName, ViewDataTyped.GrantAgreementGridDataUrl, "height:350px;", AgGridResizeType.VerticalResizableHorizontalAutoFit)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     <div class="row">
         <div class="col-sm-12">
