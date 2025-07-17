@@ -211,6 +211,27 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
+        public PartialViewResult StartProjectUpdate(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
+            var viewData = new ConfirmDialogFormViewData($"To make changes to the project you must start a {FieldDefinition.Project.GetFieldDefinitionLabel()} update. <br/>The reviewer will then receive your update and either approve or return your {FieldDefinition.Project.GetFieldDefinitionLabel()} update request.", true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectUpdateCreateEditSubmitFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult StartProjectUpdate(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            ProjectUpdateBatch.GetLatestNotApprovedProjectUpdateBatchOrCreateNewAndSaveToDatabase(project, CurrentPerson);
+            return new ModalDialogFormJsonResult(new SitkaRoute<ProjectUpdateController>(x => x.Basics(project)).BuildUrlFromExpression()); 
+        }
+
+
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
         public ActionResult Basics(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;

@@ -90,13 +90,22 @@
 
     @if (ViewDataTyped.CanLaunchProjectOrProposalWizard)
     {
-        <a class="btn btn-firma" href="@ViewDataTyped.ProjectWizardUrl" title="@ViewDataTyped.ProjectUpdateButtonText">@AgGridHtmlHelpers.EditIconBootstrap @ViewDataTyped.ProjectUpdateButtonText</a>
+        if (ViewDataTyped.ShowProjectUpdateModal)
+        {
+            @ModalDialogFormHelper.ModalDialogFormLink(AgGridHtmlHelpers.EditIconBootstrap + " " + ViewDataTyped.ProjectUpdateButtonText, SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.StartProjectUpdate(ViewDataTyped.Project.ProjectID)), "Starting project update", 950, "Create project update", "Cancel", new List<string>() { "btn", "btn-firma" }, null, null)
+        }
+        else
+        {
+            <a class="btn btn-firma" href="@ViewDataTyped.ProjectWizardUrl" title="@ViewDataTyped.ProjectUpdateButtonText">@AgGridHtmlHelpers.EditIconBootstrap @ViewDataTyped.ProjectUpdateButtonText</a>
+        }
+        
     }
+
     @if (ViewDataTyped.CanViewProjectFactSheet)
     {
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetFactSheetUrl()" title="View Fact Sheet">@AgGridHtmlHelpers.FactSheetIcon View Fact Sheet</a>
     }
-     
+
     @if (ViewDataTyped.UserHasEditProjectPermissions && ViewDataTyped.Project.IsInLandownerAssistanceProgram)
     {
         <a class="btn btn-firma" href="@ViewDataTyped.Project.GetDownloadLandOwnerAssistanceApprovalLetterUrl()" title="Download Financial Assistance Approval Letter">@FirmaAgGridHtmlHelpers.EnvelopeIcon Download Financial Assistance Approval Letter</a>
@@ -278,7 +287,7 @@
                         }
                     </div>
                 </div>
-                
+
                 @if (ViewDataTyped.UserHasEditProjectPermissions)
                 {
                     <div class="panel panelFirma">
