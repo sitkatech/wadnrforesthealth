@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             PrimaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
             HtmlPageTitle += $" - {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Updates";
             EntityName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update";
-            PageTitle = $"Update: {Project.DisplayName}";
+            PageTitle = $"Update {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}: {Project.DisplayName}";
             ProjectUpdateMyProjectsUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate());
             ProjectUpdateHistoryUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.History(Project));
             DeleteProjectUpdateUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DeleteProjectUpdate(Project));
