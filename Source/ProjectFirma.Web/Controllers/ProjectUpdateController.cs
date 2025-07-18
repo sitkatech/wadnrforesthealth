@@ -263,7 +263,9 @@ namespace ProjectFirma.Web.Controllers
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage);
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectUpdateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage, firmaPage);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 

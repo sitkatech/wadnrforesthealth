@@ -240,4 +240,9 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.CreateAndEditBasics());
     }
+
+    public partial class FirmaPageTypeProjectUpdateInstructions
+    {
+        public override string GetViewUrl() => SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Basics(null));
+    }
 }
