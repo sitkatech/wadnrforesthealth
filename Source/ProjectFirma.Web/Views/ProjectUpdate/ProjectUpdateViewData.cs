@@ -55,12 +55,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public List<ProjectWorkflowSectionGrouping> ProjectWorkflowSectionGroupings { get; }
         public string CurrentSectionDisplayName { get; }
         public bool IsInstructionsPage { get;  }
-        public string InstructionsPageUrl { get; }
 
         public ProjectUpdateViewData(Person currentPerson, ProjectUpdateBatch projectUpdateBatch, UpdateStatus updateStatus, List<string> validationWarnings, string currentSectionDisplayName) : base(currentPerson, null)
         {
-            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
-            InstructionsPageUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Instructions(projectUpdateBatch.Project));
             ProjectWorkflowSectionGroupings = ProjectWorkflowSectionGrouping.All.OrderBy(x => x.SortOrder).ToList();                
             ProjectUpdateBatch = projectUpdateBatch;
             Project = projectUpdateBatch.Project;
