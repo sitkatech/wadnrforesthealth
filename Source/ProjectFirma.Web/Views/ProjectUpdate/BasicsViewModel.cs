@@ -130,23 +130,23 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     m => m.CompletionDate);
             }
 
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion Date is required", m => m.CompletionDate);
-            }
+            //if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
+            //{
+            //    yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion Date is required", m => m.CompletionDate);
+            //}
 
-            var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;
-            if (isCompleted && CompletionDate > DateTime.Now)
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
-                    $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Date needs to be less than or equal to the current year",
-                    m => m.CompletionDate);
-            }
+            //var isCompleted = ProjectStageID == ProjectStage.Completed.ProjectStageID;
+            //if (isCompleted && CompletionDate > DateTime.Now)
+            //{
+            //    yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
+            //        $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed stage, the Completion Date needs to be less than or equal to the current year",
+            //        m => m.CompletionDate);
+            //}
 
-            if (PercentageMatch.HasValue && (PercentageMatch.Value < 0 || PercentageMatch.Value > 100))
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>("Percentage Match must be blank or between 0 and 100 inclusive.", m => m.PercentageMatch);
-            }
+            //if (PercentageMatch.HasValue && (PercentageMatch.Value < 0 || PercentageMatch.Value > 100))
+            //{
+            //    yield return new SitkaValidationResult<BasicsViewModel, int?>("Percentage Match must be blank or between 0 and 100 inclusive.", m => m.PercentageMatch);
+            //}
         }
     }
 }

@@ -18,13 +18,14 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using LtInfo.Common.DbSpatial;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
-using LtInfo.Common.DbSpatial;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
@@ -66,6 +67,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     throw new ArgumentOutOfRangeException();
             }
             project.ProjectLocationNotes = ProjectLocationNotes;
+        }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
         }
     }
 }

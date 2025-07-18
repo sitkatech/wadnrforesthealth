@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ArcGisProjectLocationJsons = projectLocationUpdates.Where(x => x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> results = new List<ValidationResult>();
 

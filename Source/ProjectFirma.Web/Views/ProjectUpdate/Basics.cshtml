@@ -95,7 +95,7 @@
         </div>
         <div class="row form-group form-group-condensed">
             <div class="col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectStageID, true)
+                @Html.LabelWithSugarFor(m => m.ProjectStageID)
             </div>
             <div class="col-sm-8" style="padding-left: 10px;">
                 @if (ViewDataTyped.IsEditable)
@@ -191,7 +191,7 @@
 
         <div class="form-group">
             <div id="focusAreaDiv" class="col-xs-12 col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.FocusAreaID, true)
+                @Html.LabelWithSugarFor(m => m.FocusAreaID)
             </div>
             <div class="col-xs-12 col-sm-8">
                 @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })

@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using ProjectFirma.Web.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 
 
@@ -43,6 +44,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectPriorityLandscapeUpdate> currentProjectUpdatePriorityLandscapes, ObservableCollection<ProjectPriorityLandscapeUpdate> allProjectUpdatePriorityLandscapes)
         {
             UpdateModel(projectUpdateBatch, currentProjectUpdatePriorityLandscapes, allProjectUpdatePriorityLandscapes);
+        }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
         }
     }
 }
