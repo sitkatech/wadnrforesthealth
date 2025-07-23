@@ -24,6 +24,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.ProjectCreate;
 using ProjectFirma.Web.Views.Shared;
 using System.Collections.Generic;
 using System.Globalization;
@@ -52,6 +53,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public ViewPageContentViewData ProjectUpdateInstructionsContentViewData { get; set; }
 
+        public IEnumerable<SelectListItem> OrganizationsForLeadImplementer { get; set; }
+
 
         public BasicsViewData(Person currentPerson, Models.ProjectUpdate projectUpdate,
             IEnumerable<ProjectStage> projectStages, 
@@ -60,7 +63,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             List<Models.FocusArea> focusAreas, 
             List<Models.Program> allPrograms,
             string importedFieldWarningMessage,
-            Models.FirmaPage firmaPage)
+            Models.FirmaPage firmaPage,
+            List<Models.Organization> organizations)
             : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, basicsValidationResult.GetWarningMessages(), ProjectUpdateSection.Basics.ProjectUpdateSectionDisplayName)
         {
             ProjectUpdate = projectUpdate;
@@ -80,6 +84,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             
             ProjectUpdateInstructionsContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));
+
+            OrganizationsForLeadImplementer = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(), y => y.DisplayNameWithoutAbbreviation);
         }
     }
 

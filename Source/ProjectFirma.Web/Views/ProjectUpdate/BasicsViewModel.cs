@@ -70,6 +70,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public List<ProjectUpdateProgramSimple> ProjectUpdateProgramSimples { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.LeadImplementerOrganization)]
+        public int LeadImplementerID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -90,6 +93,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
             ProjectUpdateProgramSimples = projectUpdate.ProjectUpdateBatch.ProjectUpdatePrograms.Select(x=> new ProjectUpdateProgramSimple(x)).ToList();
             PercentageMatch = projectUpdate.PercentageMatch;
+            LeadImplementerID = projectUpdate.ProjectUpdateBatch.ProjectOrganizationUpdates.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID)?.OrganizationID ?? -1;
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -117,7 +121,22 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     allProjectUpdatePrograms, 
                         (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.ProgramID == y.ProgramID);
 
+            if (LeadImplementerID > 0)
+            {
+                HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
+                var allProjectOrgUpdates = HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.Local;
+                var newLeadImplementerOrg = new ProjectOrganizationUpdate(projectUpdate.ProjectUpdateBatchID, LeadImplementerID, RelationshipType.LeadImplementerID);
+                var updatedListOfProjectOrgs = projectUpdate.ProjectUpdateBatch.ProjectOrganizationUpdates.ToList();
 
+                var previousLeadImplementerProjectOrganization = projectUpdate.ProjectUpdateBatch.ProjectOrganizationUpdates.SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+                if (previousLeadImplementerProjectOrganization != null)
+                {
+                    updatedListOfProjectOrgs = updatedListOfProjectOrgs.Where(x => x.ProjectOrganizationUpdateID != previousLeadImplementerProjectOrganization.ProjectOrganizationUpdateID).ToList();
+                }
+
+                updatedListOfProjectOrgs.Add(newLeadImplementerOrg);
+                projectUpdate.ProjectUpdateBatch.ProjectOrganizationUpdates.Merge(updatedListOfProjectOrgs, allProjectOrgUpdates, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.OrganizationID == y.OrganizationID && x.RelationshipTypeID == y.RelationshipTypeID);
+            }
 
         }
 

@@ -263,9 +263,14 @@ namespace ProjectFirma.Web.Controllers
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
             var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectUpdateInstructions);
             var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage, firmaPage);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage, firmaPage, organizations);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
