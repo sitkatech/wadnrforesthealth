@@ -221,17 +221,33 @@
                                 @{ ProjectLocationSummary.RenderPartialView(Html, ViewDataTyped.ProjectLocationSummaryViewData); }
                             </div>
                         </div>
-                        @if (ViewDataTyped.UserHasProjectAdminPermissions)
-                        {
+
                             <div class="panel panelFirma">
                                 <div class="panel-heading panelTitle">
                                     <h3>Tags</h3>
                                 </div>
                                 <div class="panel-body">
-                                    @{ ProjectBasicsTags.RenderPartialView(Html, ViewDataTyped.ProjectBasicsTagsViewData); }
+                                    @if (ViewDataTyped.UserHasProjectAdminPermissions)
+                                    {
+                                        ProjectBasicsTags.RenderPartialView(Html, ViewDataTyped.ProjectBasicsTagsViewData);
+                                    }
+                                    else
+                                    {
+                                        <div id="projectTags" style="line-height: 2em; margin-top: 5px; text-align: left;">
+                                            <span class="pills-list">
+
+                                                @foreach (var projectTag in ViewDataTyped.Project.ProjectTags)
+                                                {
+                                                    <div class="btn btn-sm btn-tag" style="margin: 0px 5px 5px 0px; display: inline-block; position: relative; overflow: hidden; white-space: nowrap;" data-tag-id="@projectTag.Tag.DisplayName"><a class="tag-link" target="" href="@projectTag.Tag.SummaryUrl">@projectTag.Tag.DisplayName</a></div>
+                                                }
+                                            </span>
+                                        </div>
+                                    }
+
+
                                 </div>
                             </div>
-                        }
+                        
                     </div>
                 </div>
                 <div class="panel panelFirma">

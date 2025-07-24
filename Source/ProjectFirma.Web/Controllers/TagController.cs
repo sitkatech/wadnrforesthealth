@@ -31,6 +31,7 @@ using ProjectFirma.Web.Views.Shared;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Security.Shared;
 using Detail = ProjectFirma.Web.Views.Tag.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Tag.DetailViewData;
 using Edit = ProjectFirma.Web.Views.Tag.Edit;
@@ -44,7 +45,7 @@ namespace ProjectFirma.Web.Controllers
 {
     public class TagController : FirmaBaseController
     {
-        [FirmaAdminFeature]
+        [AnonymousUnclassifiedFeature]
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
@@ -52,7 +53,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [FirmaAdminFeature]
+        [AnonymousUnclassifiedFeature]
         public GridJsonNetJObjectResult<Tag> IndexGridJsonData()
         {
             var hasTagDeletePermission = new FirmaAdminFeature().HasPermissionByPerson(CurrentPerson);
@@ -116,7 +117,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 
-        [FirmaAdminFeature]
+        [AnonymousUnclassifiedFeature]
         public ViewResult Detail(string tagName)
         {
             var tag = HttpRequestStorage.DatabaseEntities.Tags.GetTag(tagName);
@@ -248,7 +249,7 @@ namespace ProjectFirma.Web.Controllers
             return existingTag;
         }
 
-        [FirmaAdminFeature]
+        [AnonymousUnclassifiedFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(TagPrimaryKey tagPrimaryKey)
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, true);

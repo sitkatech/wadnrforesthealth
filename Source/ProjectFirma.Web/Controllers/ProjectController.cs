@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Controllers
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
-            var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()));
+            var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()), userHasProjectAdminPermissions);
 
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
