@@ -63,13 +63,13 @@ namespace ProjectFirma.Web.Models
 
             var emailsToSendTo = peopleToNotify.Select(x => x.Email).ToList();
             var subject = $"The update for {FieldDefinition.Project.GetFieldDefinitionLabel()} {projectUpdateBatch.Project.DisplayName} was submitted";
-            var instructionsUrl = SitkaRoute<ProjectUpdateController>.BuildAbsoluteUrlHttpsFromExpression(x => x.Instructions(projectUpdateBatch.Project));
+            var basicsUrl = SitkaRoute<ProjectUpdateController>.BuildAbsoluteUrlHttpsFromExpression(x => x.Basics(projectUpdateBatch.Project));
             var message = $@"
 <p>The update for {FieldDefinition.Project.GetFieldDefinitionLabel()} {projectUpdateBatch.Project.DisplayName} on {
                     latestProjectUpdateHistorySubmitted.TransitionDate.ToStringDate()
                 } was just submitted by {submitterPerson.FullNameFirstLastAndOrg}.</p>
 <p>Please review and Approve or Return it at your earliest convenience.<br />
-<a href=""{instructionsUrl}"">View this {FieldDefinition.Project.GetFieldDefinitionLabel()} update</a></p>
+<a href=""{basicsUrl}"">View this {FieldDefinition.Project.GetFieldDefinitionLabel()} update</a></p>
 <p>You received this email because you are assigned to receive support notifications within the ProjectFirma tool.</p>
 ";
 
@@ -156,7 +156,7 @@ Thank you for keeping your {FieldDefinition.Project.GetFieldDefinitionLabel()} i
             }
 
             var returnerPerson = projectUpdateBatch.LatestProjectUpdateHistoryReturned.UpdatePerson;
-            var instructionsUrl = SitkaRoute<ProjectUpdateController>.BuildAbsoluteUrlHttpsFromExpression(x => x.Instructions(projectUpdateBatch.Project));
+            var basicsUrl = SitkaRoute<ProjectUpdateController>.BuildAbsoluteUrlHttpsFromExpression(x => x.Basics(projectUpdateBatch.Project));
             var message = $@"
 Dear {personNames},
 <p>
@@ -167,7 +167,7 @@ Dear {personNames},
                 }.
 </p>
 <p>
-    <a href=""{instructionsUrl}"">View this {FieldDefinition.Project.GetFieldDefinitionLabel()} update</a>
+    <a href=""{basicsUrl}"">View this {FieldDefinition.Project.GetFieldDefinitionLabel()} update</a>
 </p>
 <p>
     Please review this update and address the comments that {

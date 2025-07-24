@@ -55,19 +55,16 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public List<ProjectWorkflowSectionGrouping> ProjectWorkflowSectionGroupings { get; }
         public string CurrentSectionDisplayName { get; }
         public bool IsInstructionsPage { get;  }
-        public string InstructionsPageUrl { get; }
 
         public ProjectUpdateViewData(Person currentPerson, ProjectUpdateBatch projectUpdateBatch, UpdateStatus updateStatus, List<string> validationWarnings, string currentSectionDisplayName) : base(currentPerson, null)
         {
-            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
-            InstructionsPageUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Instructions(projectUpdateBatch.Project));
             ProjectWorkflowSectionGroupings = ProjectWorkflowSectionGrouping.All.OrderBy(x => x.SortOrder).ToList();                
             ProjectUpdateBatch = projectUpdateBatch;
             Project = projectUpdateBatch.Project;
             PrimaryContactPerson = projectUpdateBatch.Project.GetPrimaryContact();
             HtmlPageTitle += $" - {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Updates";
             EntityName = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update";
-            PageTitle = $"Update: {Project.DisplayName}";
+            PageTitle = $"Update {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}: {Project.DisplayName}";
             ProjectUpdateMyProjectsUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate());
             ProjectUpdateHistoryUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.History(Project));
             DeleteProjectUpdateUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DeleteProjectUpdate(Project));

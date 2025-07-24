@@ -1706,8 +1706,6 @@
     <Compile Include="Security\ProjectDeleteProposalFeature.cs" />
     <Compile Include="Security\ProjectUpdateAdminFeatureWithProjectContext.cs" />
     <Compile Include="Views\GrantAllocation\ProjectGrantAllocationRequestsGridSpec.cs" />
-    <Compile Include="Views\ProjectCreate\InstructionsEnterHistoric.cs" />
-    <Compile Include="Views\ProjectCreate\InstructionsEnterHistoricViewData.cs" />
     <Compile Include="Views\ProjectCreate\Organizations.cs" />
     <Compile Include="Views\ProjectCreate\OrganizationsViewData.cs" />
     <Compile Include="Views\ProjectCreate\OrganizationsViewModel.cs" />
@@ -2303,8 +2301,6 @@
     <Compile Include="Views\ProjectUpdate\ExternalLinksViewData.cs" />
     <Compile Include="Views\ProjectUpdate\History.cs" />
     <Compile Include="Views\ProjectUpdate\HistoryViewData.cs" />
-    <Compile Include="Views\ProjectUpdate\Instructions.cs" />
-    <Compile Include="Views\ProjectUpdate\InstructionsViewData.cs" />
     <Compile Include="Views\ProjectUpdate\LocationDetailed.cs" />
     <Compile Include="Views\ProjectUpdate\LocationDetailedViewData.cs" />
     <Compile Include="Views\ProjectUpdate\LocationDetailedViewModel.cs" />
@@ -2496,7 +2492,6 @@
     <Content Include="Views\Project\ForwardLookingFactSheet.cshtml" />
     <Content Include="Views\ProjectStewardOrganization\Index.cshtml" />
     <Content Include="Views\Project\Pending.cshtml" />
-    <Content Include="Views\ProjectCreate\InstructionsEnterHistoric.cshtml" />
     <Content Include="Views\ProjectCreate\Organizations.cshtml" />
     <Content Include="Views\ProjectUpdate\Organizations.cshtml" />
     <Content Include="Views\Shared\ProjectOrganization\ProjectOrganizationsDetail.cshtml" />
@@ -3816,7 +3811,6 @@
     <Content Include="Views\ProjectUpdate\CustomNotification.cshtml" />
     <Content Include="Views\ProjectUpdate\ExternalLinks.cshtml" />
     <Content Include="Views\ProjectUpdate\History.cshtml" />
-    <Content Include="Views\ProjectUpdate\Instructions.cshtml" />
     <Content Include="Views\ProjectUpdate\LocationDetailed.cshtml" />
     <Content Include="Views\ProjectUpdate\LocationSimple.cshtml" />
     <Content Include="Views\ProjectUpdate\Manage.cshtml" />

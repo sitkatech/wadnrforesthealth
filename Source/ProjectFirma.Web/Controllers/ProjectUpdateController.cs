@@ -189,25 +189,27 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
-        public ViewResult Instructions(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult StartProjectUpdate(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = ProjectUpdateBatch.GetLatestNotApprovedProjectUpdateBatchOrCreateNew(project, CurrentPerson);
-            var updateStatus = GetUpdateStatus(projectUpdateBatch);
-            var viewData = new InstructionsViewData(CurrentPerson, projectUpdateBatch, updateStatus);
-            return RazorView<Instructions, InstructionsViewData>(viewData);
+            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
+            var viewData = new ConfirmDialogFormViewData($"To make changes to the project you must start a {FieldDefinition.Project.GetFieldDefinitionLabel()} update. <br/>The reviewer will then receive your update and either approve or return your {FieldDefinition.Project.GetFieldDefinitionLabel()} update request.", true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [ProjectUpdateCreateEditSubmitFeature]
-        public RedirectResult Instructions(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult StartProjectUpdate(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             ProjectUpdateBatch.GetLatestNotApprovedProjectUpdateBatchOrCreateNewAndSaveToDatabase(project, CurrentPerson);
-            return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Basics(project)));
+            return new ModalDialogFormJsonResult(new SitkaRoute<ProjectUpdateController>(x => x.Basics(project)).BuildUrlFromExpression()); 
         }
+
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
@@ -217,7 +219,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var viewModel = new BasicsViewModel(projectUpdate, projectUpdateBatch.BasicsComment);
@@ -233,7 +235,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             if (!ModelState.IsValid)
@@ -261,7 +263,14 @@ namespace ProjectFirma.Web.Controllers
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectUpdateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage, firmaPage, organizations);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -321,11 +330,12 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            var projectUpdate = projectUpdateBatch.ProjectUpdate;
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
+
+            var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectGrantAllocationRequestUpdates,
                                                          projectUpdateBatch.ExpectedFundingComment, 
@@ -344,7 +354,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -426,7 +436,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new PhotosViewData(CurrentPerson, projectUpdateBatch, updateStatus);
@@ -474,7 +484,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var viewModel = new LocationSimpleViewModel(projectUpdate.ProjectLocationPoint,
@@ -493,7 +503,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -578,7 +588,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var viewModel = new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment, projectUpdateBatch.ProjectLocationUpdates);
             return ViewLocationDetailed(projectUpdateBatch, viewModel);
@@ -593,7 +603,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -829,7 +839,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -958,7 +968,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             var regionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegionID).ToList();
@@ -976,7 +986,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             if (!ModelState.IsValid)
@@ -1072,7 +1082,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             var countiesIDs = projectUpdateBatch.ProjectCountyUpdates.Select(x => x.CountyID).ToList();
@@ -1090,7 +1100,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             if (!ModelState.IsValid)
@@ -1191,7 +1201,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             var priorityLandscapeIDs = projectUpdateBatch.ProjectPriorityLandscapeUpdates.Select(x => x.PriorityLandscapeID).ToList();
@@ -1209,7 +1219,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             if (!ModelState.IsValid)
@@ -1303,7 +1313,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var diffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffNotesAndDocuments(projectPrimaryKey));
@@ -1353,7 +1363,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var viewModel =
                 new EditProjectExternalLinksViewModel(
@@ -1371,7 +1381,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -1690,7 +1700,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var viewData = new HistoryViewData(projectUpdateBatch);
             return RazorPartialView<History, HistoryViewData>(viewData);
@@ -2868,7 +2878,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
 

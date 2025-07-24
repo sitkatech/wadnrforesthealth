@@ -19,13 +19,15 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.ProjectCounty;
 using ProjectFirma.Web.Views.ProjectRegion;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ProjectFirma.Web.Views.ProjectCounty;
+using System.Linq;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
@@ -45,6 +47,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectCountyUpdate> currentProjectUpdateCounties, ObservableCollection<ProjectCountyUpdate> allProjectUpdateCounties)
         {
             UpdateModel(projectUpdateBatch, currentProjectUpdateCounties, allProjectUpdateCounties);
+        }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
         }
     }
 }

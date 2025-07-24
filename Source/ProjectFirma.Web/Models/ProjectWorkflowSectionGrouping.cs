@@ -64,11 +64,7 @@ namespace ProjectFirma.Web.Models
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
             UpdateStatus updateStatus, bool ignoreStatus)
         {
-            var projectUpdateSections = ProjectUpdateSections.Except(new List<ProjectUpdateSection> { ProjectUpdateSection.ExpectedFunding }).ToList();
-            if (projectUpdateBatch.Project.IsExpectedFundingRelevant())
-            {
-                projectUpdateSections.Add(ProjectUpdateSection.ExpectedFunding);
-            }
+            var projectUpdateSections = ProjectUpdateSections;
 
             return GetProjectUpdateSectionsImpl(projectUpdateBatch, projectUpdateSections, updateStatus, ignoreStatus);
         }

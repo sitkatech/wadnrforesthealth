@@ -140,10 +140,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 yield break;
             }
 
-            if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
-            {
-                yield return new ValidationResult("Each Grant Allocation can only be used once.");
-            }
+            //if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
+            //{
+            //    yield return new ValidationResult("Each Grant Allocation can only be used once.");
+            //}
         }
     }
 }
