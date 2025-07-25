@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             
             ProjectUpdateInstructionsContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermissionByPerson(currentPerson));
 
-            OrganizationsForLeadImplementer = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(), y => y.DisplayNameWithoutAbbreviation);
+            OrganizationsForLeadImplementer = organizations.ToSelectList(x => x.OrganizationID.ToString(), y => y.DisplayNameWithoutAbbreviation);
         }
     }
 
