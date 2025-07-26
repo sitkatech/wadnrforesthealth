@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             TreatmentUpdateGrid = "treatmentUpdateGridUpdateWorkflow";
             TreatmentUpdateGridDataUrl = treatmentUpdateGridDataUrl;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshTreatments(projectUpdateBatch.Project.ProjectID));
-            ContinueUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Photos(projectUpdateBatch.Project));
+            ContinueUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Contacts(projectUpdateBatch.Project));
         }
     }
 }
