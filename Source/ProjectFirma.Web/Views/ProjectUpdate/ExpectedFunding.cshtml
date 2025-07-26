@@ -70,14 +70,17 @@ else if (ViewDataTyped.AreProjectBasicsValid)
     using (Html.BeginForm())
     {
         <div ng-app="ProjectFirmaApp" ng-controller="ExpectedFundingController">
-
-            <div class="form-group row">
-                <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
-                <div class="col-md-8">
-                    @Html.EditorFor(m => m.ProjectEstimatedTotalCost)
-                    @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
+            
+            @if (ViewDataTyped.Project.IsInLandownerAssistanceProgram)
+            {
+                <div class="form-group row">
+                    <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(m => m.ProjectEstimatedTotalCost)
+                        @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
+                    </div>
                 </div>
-            </div>
+            }
             <div class="form-group row">
                 <div class="col-md-4 text-right" >@Html.LabelWithSugarFor(m => m.FundingSourceIDs)</div>
                 <div class="col-md-8">

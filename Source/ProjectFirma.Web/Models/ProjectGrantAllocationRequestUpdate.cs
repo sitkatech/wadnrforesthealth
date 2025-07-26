@@ -41,6 +41,11 @@ namespace ProjectFirma.Web.Models
                         UpdateDate = pgar.UpdateDate
                     }
             ).ToList();
+
+            projectUpdateBatch.ProjectFundingSourceUpdates = project.ProjectFundingSources.Select(
+                pfs => new ProjectFundingSourceUpdate(projectUpdateBatch, pfs.FundingSource)
+            ).ToList();
+
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectGrantAllocationRequest> allProjectGrantAllocationRequests)

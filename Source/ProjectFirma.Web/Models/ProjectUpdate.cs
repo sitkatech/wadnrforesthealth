@@ -72,6 +72,7 @@ namespace ProjectFirma.Web.Models
             FocusAreaID = project.FocusAreaID;
             EstimatedTotalCost = project.EstimatedTotalCost;
             PercentageMatch = project.PercentageMatch;
+            ProjectFundingSourceNotes = project.ProjectFundingSourceNotes;
         }
 
         public void LoadSimpleLocationFromProject(Project project)

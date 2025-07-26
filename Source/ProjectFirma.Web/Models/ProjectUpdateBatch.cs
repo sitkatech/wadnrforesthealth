@@ -217,6 +217,12 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectGrantAllocationRequestUpdates);
         }
 
+        public void DeleteProjectFundingSourceUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.DeleteProjectFundingSourceUpdate(ProjectFundingSourceUpdates);
+            RefreshFromDatabase(ProjectFundingSourceUpdates);
+        }
+
         public void DeleteProjectLocationUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(ProjectLocationUpdates);

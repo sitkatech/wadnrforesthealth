@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
@@ -26,10 +27,18 @@ namespace ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
     public class ProjectGrantAllocationRequestsDetailViewData : FirmaUserControlViewData
     {
         public readonly List<GrantAllocationRequestAmount> GrantAllocationRequestAmounts;
+        public readonly List<FundingSource> FundingSources;
+        public readonly decimal? EstimatedTotalCost;
+        public readonly string ProjectFundingSourceNotes;
+        public readonly bool IsProjectAnLoaProject;
 
-        public ProjectGrantAllocationRequestsDetailViewData(List<GrantAllocationRequestAmount> grantAllocationRequestAmounts)
+        public ProjectGrantAllocationRequestsDetailViewData(List<GrantAllocationRequestAmount> grantAllocationRequestAmounts, List<FundingSource> fundingSources, decimal? estimatedTotalCost, string projectFundingSourceNotes, bool isProjectAnLoaProject)
         {
             GrantAllocationRequestAmounts = grantAllocationRequestAmounts;
+            FundingSources = fundingSources;
+            EstimatedTotalCost = estimatedTotalCost;
+            ProjectFundingSourceNotes = projectFundingSourceNotes;
+            IsProjectAnLoaProject = isProjectAnLoaProject;
         }
     }
 }
