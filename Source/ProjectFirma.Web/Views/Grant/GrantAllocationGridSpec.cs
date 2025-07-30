@@ -49,7 +49,11 @@ namespace ProjectFirma.Web.Views.Grant
             var userHasCreatePermissions = new GrantAllocationCreateFeature().HasPermissionByPerson(currentPerson);
             if (userHasCreatePermissions && createButtonType == GrantAllocationGridCreateButtonType.Shown)
             {
-                var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New(optionalRelevantGrant));
+                var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New());
+                if (optionalRelevantGrant != null)
+                {
+                    contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewFromGrant(optionalRelevantGrant));
+                }
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}");
             }
 

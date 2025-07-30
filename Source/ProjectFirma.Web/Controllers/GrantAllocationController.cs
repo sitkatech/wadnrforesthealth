@@ -141,7 +141,37 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantAllocationCreateFeature]
-        public PartialViewResult New(GrantPrimaryKey grantPrimaryKey)
+        public PartialViewResult New()
+        {
+            var viewModel = new EditGrantAllocationViewModel();
+            // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
+            // a Grant Allocation that may have lost their "program manager" permissions
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, null);
+        }
+
+        [HttpPost]
+        [GrantAllocationCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditGrantAllocationViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
+                // a Grant Allocation that may have lost their "program manager" permissions
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, null);
+            }
+
+            var relevantGrant = HttpRequestStorage.DatabaseEntities.Grants.GetGrant(viewModel.GrantID);
+            var grantAllocation = GrantAllocation.CreateNewBlank(relevantGrant);
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [GrantAllocationCreateFeature]
+        public PartialViewResult NewFromGrant(GrantPrimaryKey grantPrimaryKey)
         {
             Grant relevantGrant = grantPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationViewModel();
@@ -156,7 +186,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [GrantAllocationCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(GrantPrimaryKey grantPrimaryKey, EditGrantAllocationViewModel viewModel)
+        public ActionResult NewFromGrant(GrantPrimaryKey grantPrimaryKey, EditGrantAllocationViewModel viewModel)
         {
             Grant relevantGrant = grantPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
