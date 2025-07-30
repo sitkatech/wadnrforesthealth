@@ -242,7 +242,7 @@ namespace ProjectFirma.Web.Views.Project
                 else
                 {
                     ProjectUpdateButtonText = $"Update {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
-                    if (latestUpdateState == null)
+                    if (latestUpdateState == null || latestUpdateState == ProjectUpdateState.Approved)
                     {
                         ShowProjectUpdateModal = true;
                     }

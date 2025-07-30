@@ -297,9 +297,12 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdate.LoadUpdateFromProject(project);
                 projectUpdateBatch.DeleteProjectUpdatePrograms();
                 projectUpdate.LoadProgramsFromProject(project);
+                projectUpdateBatch.DeleteProjectOrganizationUpdates();
+                // refresh data
+                ProjectOrganizationUpdate.CreateFromProject(projectUpdateBatch);
                 projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             }
-            return new ModalDialogFormJsonResult();
+            return new ModalDialogFormJsonResult(SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Basics(projectPrimaryKey)));
         }
 
         private PartialViewResult ViewRefreshBasics(ConfirmDialogFormViewModel viewModel)
