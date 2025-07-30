@@ -2509,13 +2509,14 @@ namespace ProjectFirma.Web.Controllers
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isTreatmentsUpdated = false;  // MCS the ability to diff treatments will be added in a different story
-            //Must be called last, since basics actually changes the Project object which can break the other Diff functions
-            var isBasicsUpdated = DiffBasicsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             var isExpectedFundingUpdated = DiffExpectedFundingImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             var isOrganizationsUpdated = DiffOrganizationsImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isContactsUpdated = DiffContactsImpl(projectUpdateBatch.ProjectID).HasChanged;
+
+            //Must be called last, since basics actually changes the Project object which can break the other Diff functions
+            var isBasicsUpdated = DiffBasicsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             return new UpdateStatus(isBasicsUpdated,
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
