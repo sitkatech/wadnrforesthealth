@@ -1855,21 +1855,22 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
-            var originalHtml = GeneratePartialViewForProjectBasics(project);            
-            projectUpdate.CommitChangesToProject(project);
-            HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
-            var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
-            ProjectUpdateProgram.CommitChangesToProject(projectUpdateBatch, allProjectPrograms);
-            project.FocusArea = projectUpdate.FocusArea;
-            var updatedHtml = GeneratePartialViewForProjectBasics(project);
+            var originalHtml = GeneratePartialViewForProjectBasics(project);
+            var updatedHtml = GeneratePartialViewForProjectBasics(projectUpdateBatch);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
         private string GeneratePartialViewForProjectBasics(Project project)
         {
-            var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
-            var viewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
+            var viewData = new ProjectBasicsViewData(project);
+            var partialViewAsString = RenderPartialViewToString(ProjectBasicsPartialViewPath, viewData);
+            return partialViewAsString;
+        }
+        
+        private string GeneratePartialViewForProjectBasics(ProjectUpdateBatch projectUpdateBatch)
+        {
+            var viewData = new ProjectBasicsViewData(projectUpdateBatch);
             var partialViewAsString = RenderPartialViewToString(ProjectBasicsPartialViewPath, viewData);
             return partialViewAsString;
         }

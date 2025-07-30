@@ -633,6 +633,8 @@
     <Compile Include="Models\ProjectDocumentResource.cs" />
     <Compile Include="Models\ProjectDocumentResourceModelExtensions.cs" />
     <Compile Include="Models\ProjectLocationTest.cs" />
+    <Compile Include="Models\ProjectUpdateBatchModelExtensions.cs" />
+    <Compile Include="Models\ProjectUpdateProgramModelExtensions.cs" />
     <Compile Include="Models\RevertedProjectLocationUpdate.cs" />
     <Compile Include="Models\RoleTest.cs" />
     <Compile Include="Models\TreatmentCode.cs" />

@@ -46,24 +46,12 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <div class="basicsLayout">
 
-
-
-    @*@{ ProjectTaxonomy.RenderPartialView(Html, ViewDataTyped.ProjectTaxonomyViewData); }*@
-
-    @*<div class="row">
-            <div class="col-sm-3">
-                @Html.LabelWithSugarFor(FieldDefinition.FhtProjectNumber)
-            </div>
-            <div class="col-sm-9">
-                @ViewDataTyped.Project.FhtProjectNumber
-            </div>
-        </div>*@
     <div class="row">
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.ProjectStage)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.ProjectStage.ProjectStageDisplayName
+            @ViewDataTyped.ProjectStageDisplayName
         </div>
     </div>
 
@@ -72,7 +60,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.ProjectInitiationDate)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.GetPlannedDate()
+            @ViewDataTyped.PlannedDateString
         </div>
     </div>
 
@@ -81,7 +69,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.CompletionDate)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.GetCompletionDateFormatted()
+            @ViewDataTyped.CompletedDateString
         </div>
     </div>
 
@@ -90,7 +78,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.LeadImplementerOrganization)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.GetLeadImplementer().DisplayNameWithoutAbbreviation
+            @ViewDataTyped.LeadImplementerDisplay
         </div>
     </div>
 
@@ -101,7 +89,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.ProjectDescription)
         </div>
         <div class="col-sm-9">
-            @Html.Raw(ViewDataTyped.Project.ProjectDescription.HtmlEncodeWithBreaks())
+            @Html.Raw(ViewDataTyped.ProjectDescription)
         </div>
     </div>
     
@@ -110,7 +98,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.ExpirationDate)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.GetExpirationDateFormatted()
+            @ViewDataTyped.ExpirationDateString
         </div>
     </div>
 
@@ -119,7 +107,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.FocusArea)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.FocusArea.GetDisplayNameAsUrl()
+            @ViewDataTyped.FocusAreaDisplayName
         </div>
     </div>
     
@@ -128,7 +116,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.Program)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.ProjectPrograms.ToProgramListDisplay(true)
+            @ViewDataTyped.ProjectProgramListDisplayString
         </div>
     </div>
     
@@ -137,35 +125,11 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.PercentageMatch)
         </div>
         <div class="col-sm-9">
-            @ViewDataTyped.Project.PercentageMatchFormatted
+            @ViewDataTyped.PercentageMatchFormatted
         </div>
     </div>
 
-    @*<div class="row">
-        <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.ProjectApplicationDate)
-        </div>
-        <div class="col-sm-9">
-            @ViewDataTyped.Project.GetApplicationDate()
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.ProjectDecisionDate)
-        </div>
-        <div class="col-sm-9">
-            @ViewDataTyped.Project.GetDecisionDate()
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.ProjectIdentifier)
-        </div>
-        <div class="col-sm-9">
-            @ViewDataTyped.Project.ProjectGisIdentifier
-        </div>
-    </div>*@
 
 
 

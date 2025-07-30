@@ -163,7 +163,7 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, priorityLandscapes, regions, project.NoRegionsExplanation, project.NoPriorityLandscapesExplanation, counties, project.NoCountiesExplanation);
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
-            var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
+            var projectBasicsViewData = new ProjectBasicsViewData(project);
             var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()), userHasProjectAdminPermissions);
 
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);

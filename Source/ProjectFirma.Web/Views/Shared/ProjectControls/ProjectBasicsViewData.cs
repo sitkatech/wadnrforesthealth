@@ -19,21 +19,63 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
+using System.Web;
+using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectControls
 {
     public class ProjectBasicsViewData
     {
-        public Models.Project Project { get; }
-        public bool UserHasProjectBudgetManagePermissions { get; }
-        public ProjectTaxonomyViewData ProjectTaxonomyViewData { get; }
+        public string ProjectStageDisplayName { get; }
+        
+        public string PlannedDateString { get; }
+        
+        public string CompletedDateString { get; }
+        
+        public string LeadImplementerDisplay { get; }
+        
+        public string ProjectDescription { get; }
+        
+        public string ExpirationDateString { get; }
+        
+        public HtmlString FocusAreaDisplayName { get; }
+        
+        public HtmlString ProjectProgramListDisplayString { get; }
+        
+        public string PercentageMatchFormatted { get; }
+        
 
-        public ProjectBasicsViewData(Models.Project project, bool userHasProjectBudgetManagePermissions, TaxonomyLevel taxonomyLevel)
+        public ProjectBasicsViewData(Models.Project project)
         {
-            Project = project;
-            UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
-            ProjectTaxonomyViewData = new ProjectTaxonomyViewData(project, taxonomyLevel);
-        }        
+            ProjectStageDisplayName = project.ProjectStage.ProjectStageDisplayName;
+            PlannedDateString = project.GetPlannedDate();
+            CompletedDateString = project.GetCompletionDateFormatted();
+            LeadImplementerDisplay = project.GetLeadImplementer().DisplayNameWithoutAbbreviation;
+            ProjectDescription = project.ProjectDescription.HtmlEncodeWithBreaks();
+            ExpirationDateString = project.GetExpirationDateFormatted();
+            FocusAreaDisplayName = project.FocusArea.GetDisplayNameAsUrl();
+            ProjectProgramListDisplayString = project.ProjectPrograms.ToProgramListDisplay(true);
+            PercentageMatchFormatted = project.PercentageMatchFormatted;
+
+            
+        }
+
+        public ProjectBasicsViewData(Models.ProjectUpdateBatch projectUpdateBatch)
+        {
+            ProjectStageDisplayName = projectUpdateBatch.ProjectUpdate.ProjectStage.ProjectStageDisplayName;
+            PlannedDateString = projectUpdateBatch.ProjectUpdate.GetPlannedDate();
+            CompletedDateString = projectUpdateBatch.ProjectUpdate.GetCompletionDateFormatted();
+            LeadImplementerDisplay = projectUpdateBatch.GetLeadImplementer().DisplayNameWithoutAbbreviation;
+            ProjectDescription = projectUpdateBatch.ProjectUpdate.ProjectDescription.HtmlEncodeWithBreaks();
+            ExpirationDateString = projectUpdateBatch.ProjectUpdate.GetExpirationDateFormatted();
+            FocusAreaDisplayName = projectUpdateBatch.ProjectUpdate.FocusArea.GetDisplayNameAsUrl();
+            ProjectProgramListDisplayString = projectUpdateBatch.ProjectUpdatePrograms.ToProgramListDisplay(true);
+            PercentageMatchFormatted = projectUpdateBatch.ProjectUpdate.PercentageMatchFormatted;
+
+   
+            
+        }
     }
 }

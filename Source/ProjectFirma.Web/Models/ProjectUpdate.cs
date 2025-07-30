@@ -19,12 +19,13 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using GeoJSON.Net.Feature;
+using LtInfo.Common.GeoJson;
+using ProjectFirma.Web.Common;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
-using ProjectFirma.Web.Common;
-using GeoJSON.Net.Feature;
-using LtInfo.Common.GeoJson;
 
 namespace ProjectFirma.Web.Models
 {
@@ -33,6 +34,8 @@ namespace ProjectFirma.Web.Models
         public int ProjectTypeID => ProjectUpdateBatch.Project.ProjectTypeID;
         public int EntityID => ProjectUpdateID;
         public string DisplayName => ProjectUpdateBatch.Project.DisplayName;
+
+        public string PercentageMatchFormatted => PercentageMatch.HasValue ? $"{PercentageMatch}%" : String.Empty;
 
         public decimal GetTotalAmount()
         {
