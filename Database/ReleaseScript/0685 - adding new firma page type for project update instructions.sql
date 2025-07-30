@@ -5,4 +5,4 @@ values
 INSERT INTO [dbo].[FirmaPage]
            ([FirmaPageTypeID],[FirmaPageContent])
      VALUES
-           (76, '<ol><li>Fill out the fields on the page</li><li>Adjust any optional information in the other pages including location data</li><li>Submit project update</li></ol>')
+           (76, '<ol><li>Navigate through the sections of the Project that require updates and make necessary changes</li><li>Click save on each page where changes are made</li><li>Submit Project update</li></ol>')
