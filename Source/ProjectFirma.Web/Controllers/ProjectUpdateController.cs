@@ -2200,48 +2200,22 @@ namespace ProjectFirma.Web.Controllers
             var entityExternalLinksOriginal = new List<IEntityExternalLink>(project.ProjectExternalLinks);
             var entityExternalLinksUpdated = new List<IEntityExternalLink>(projectUpdateBatch.ProjectExternalLinkUpdates);
 
-            var originalHtml = GeneratePartialViewForOriginalExternalLinks(entityExternalLinksOriginal, entityExternalLinksUpdated);
-            var updatedHtml = GeneratePartialViewForModifiedExternalLinks(entityExternalLinksOriginal, entityExternalLinksUpdated);
+            var originalHtml = GeneratePartialViewForExternalLinks(entityExternalLinksOriginal);
+            var updatedHtml = GeneratePartialViewForExternalLinks(entityExternalLinksUpdated);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
-        private string GeneratePartialViewForOriginalExternalLinks(List<IEntityExternalLink> entityExternalLinksOriginal, List<IEntityExternalLink> entityExternalLinksUpdated)
+        private string GeneratePartialViewForExternalLinks(List<IEntityExternalLink> entityExternalLinksOriginal )
         {
-            var urlsInOriginal = entityExternalLinksOriginal.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsInModified = entityExternalLinksUpdated.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsOnlyInOriginal = urlsInOriginal.Where(x => !urlsInModified.Contains(x)).ToList();
 
             var externalLinksOriginal = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksOriginal);
-            var externalLinksUpdated = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksUpdated);
-            // find the ones that are only in the modified set and add them and mark them as "added"
-            externalLinksOriginal.AddRange(
-                externalLinksUpdated.Where(x => !urlsInOriginal.Contains(x.GetExternalLinkAsUrl()))
-                    .Select(x => new ExternalLink(x.ExternalLinkLabel, x.ExternalLinkUrl, HtmlDiffContainer.DisplayCssClassAddedElement))
-                    .ToList());
-            // find the ones only in original and mark them as "deleted"
-            externalLinksOriginal.Where(x => urlsOnlyInOriginal.Contains(x.GetExternalLinkAsUrl())).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
-            return GeneratePartialViewForExternalLinks(externalLinksOriginal);
+
+            return GeneratePartialViewForExternalLinksImpl(externalLinksOriginal);
         }
 
-        private string GeneratePartialViewForModifiedExternalLinks(List<IEntityExternalLink> entityExternalLinksOriginal, List<IEntityExternalLink> entityExternalLinksUpdated)
-        {
-            var urlsInOriginal = entityExternalLinksOriginal.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsInUpdated = entityExternalLinksUpdated.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsOnlyInUpdated = urlsInUpdated.Where(x => !urlsInOriginal.Contains(x)).ToList();
 
-            var externalLinksOriginal = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksOriginal);
-            var externalLinksUpdated = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksUpdated);
-            // find the ones that are only in the original set and add them and mark them as "deleted"
-            externalLinksUpdated.AddRange(
-                externalLinksOriginal.Where(x => !urlsInUpdated.Contains(x.GetExternalLinkAsUrl()))
-                    .Select(x => new ExternalLink(x.ExternalLinkLabel, x.ExternalLinkUrl, HtmlDiffContainer.DisplayCssClassDeletedElement))
-                    .ToList());
-            externalLinksUpdated.Where(x => urlsOnlyInUpdated.Contains(x.GetExternalLinkAsUrl())).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
-            return GeneratePartialViewForExternalLinks(externalLinksUpdated);
-        }
-
-        private string GeneratePartialViewForExternalLinks(List<ExternalLink> entityExternalLinks)
+        private string GeneratePartialViewForExternalLinksImpl(List<ExternalLink> entityExternalLinks)
         {
             var viewData = new EntityExternalLinksViewData(entityExternalLinks);
             var partialViewToString = RenderPartialViewToString(ExternalLinksPartialViewPath, viewData);
