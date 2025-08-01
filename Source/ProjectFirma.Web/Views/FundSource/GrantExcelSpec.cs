@@ -25,16 +25,16 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class GrantAllocationExcelSpec : ExcelWorksheetSpec<Models.GrantAllocation>
+    public class GrantAllocationExcelSpec : ExcelWorksheetSpec<Models.FundSourceAllocation>
     {
         public GrantAllocationExcelSpec()
         {
-            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.Grant.GrantNumber);
+            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.FundSource.FundSourceNumber);
             AddColumn(Models.FieldDefinition.GrantAllocationName.FieldDefinitionDisplayName, x => x.GrantAllocationName);
             AddColumn(Models.FieldDefinition.ProgramManager.FieldDefinitionDisplayName, x => x.GetAllProgramManagerPersonNamesAsString());
             AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
             AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
-            AddColumn($"Parent Grant {Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName}", x => x.Grant.GrantStatus.GrantStatusName);
+            AddColumn($"Parent Grant {Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName}", x => x.FundSource.FundSourceStatus.GrantStatusName);
             AddColumn(Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, x => x.DNRUplandRegion?.DNRUplandRegionName ?? string.Empty);
             AddColumn(Models.FieldDefinition.FederalFundCode.FieldDefinitionDisplayName, x => x.FederalFundCodeDisplay);
             AddColumn(Models.FieldDefinition.AllocationAmount.FieldDefinitionDisplayName, x => x.AllocationAmount);
@@ -43,17 +43,17 @@ namespace ProjectFirma.Web.Views.Grant
         }
     }
 
-    public class GrantExcelSpec : ExcelWorksheetSpec<Models.Grant>
+    public class GrantExcelSpec : ExcelWorksheetSpec<Models.FundSource>
     {
         public GrantExcelSpec()
         {
-            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.GrantNumber);
+            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.FundSourceNumber);
             AddColumn(Models.FieldDefinition.CFDA.FieldDefinitionDisplayName, x => x.CFDANumber);
-            AddColumn(Models.FieldDefinition.GrantName.FieldDefinitionDisplayName, x => x.GrantName);
+            AddColumn(Models.FieldDefinition.GrantName.FieldDefinitionDisplayName, x => x.FundSourceName);
             AddColumn(Models.FieldDefinition.TotalAwardAmount.FieldDefinitionDisplayName, x => x.TotalAwardAmount);
             AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
             AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
-            AddColumn(Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName, x => x.GrantStatus.GrantStatusName);
+            AddColumn(Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName, x => x.FundSourceStatus.GrantStatusName);
             AddColumn(Models.FieldDefinition.GrantType.FieldDefinitionDisplayName, x => x.GrantTypeDisplay);
         }
     }

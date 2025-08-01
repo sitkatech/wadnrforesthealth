@@ -38,10 +38,10 @@
                     }
                     <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestTotalAmount)</th>
                 </tr>
-                @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.GrantAllocation.DisplayName))
+                @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.FundSourceAllocation.DisplayName))
                 {
                     <tr>
-                        <td>@Html.Raw(grantAllocationRequestAmount.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl)</td>
+                        <td>@Html.Raw(grantAllocationRequestAmount.FundSourceAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl)</td>
                         @if (ViewDataTyped.IsMatchAndPayRelevant)
                         {
                             <th class="text-right">@grantAllocationRequestAmount.MatchAmount.ToStringCurrency()</th>

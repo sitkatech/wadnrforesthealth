@@ -64,14 +64,14 @@
 
     private string GrantJsonApiLink()
     {
-        string linkHtml = SitkaRoute<GrantController>.BuildLinkFromExpression(c => c.GrantJsonApi(), "Grant JSON");
+        string linkHtml = SitkaRoute<FundSourceController>.BuildLinkFromExpression(c => c.GrantJsonApi(), "Grant JSON");
         return linkHtml;
     }
 
     private string GrantStatusJsonApiLink()
     {
         // GrantStatusJsonApi
-        string linkHtml = SitkaRoute<GrantController>.BuildLinkFromExpression(c => c.GrantStatusJsonApi(), "Grant Status JSON");
+        string linkHtml = SitkaRoute<FundSourceController>.BuildLinkFromExpression(c => c.GrantStatusJsonApi(), "Grant Status JSON");
         return linkHtml;
     }
 

@@ -18,12 +18,12 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[GrantAllocation] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantAllocation]")]
-    public partial class GrantAllocation : IHavePrimaryKey, ICanDeleteFull
+    public partial class FundSourceAllocation : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected GrantAllocation()
+        protected FundSourceAllocation()
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.GrantAllocationBudgetLineItems = new HashSet<GrantAllocationBudgetLineItem>();
@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID, bool? likelyToUse, int grantID) : this()
+        public FundSourceAllocation(int grantAllocationID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int? grantAllocationPriorityID, bool? hasFundFSPs, int? grantAllocationSourceID, bool? likelyToUse, int grantID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantAllocationName = grantAllocationName;
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantID) : this()
+        public FundSourceAllocation(int grantID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -75,21 +75,21 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocation(Grant grant) : this()
+        public FundSourceAllocation(FundSource fundSource) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.GrantAllocations.Add(this);
+            this.GrantID = fundSource.FundSourceID;
+            this.FundSource = fundSource;
+            fundSource.GrantAllocations.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocation CreateNewBlank(Grant grant)
+        public static FundSourceAllocation CreateNewBlank(FundSource fundSource)
         {
-            return new GrantAllocation(grant);
+            return new FundSourceAllocation(fundSource);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundSourceAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace ProjectFirma.Web.Models
         public virtual Person GrantManager { get; set; }
         public virtual GrantAllocationPriority GrantAllocationPriority { get; set; }
         public virtual GrantAllocationSource GrantAllocationSource { get; set; }
-        public virtual Grant Grant { get; set; }
+        public virtual FundSource FundSource { get; set; }
 
         public static class FieldLengths
         {

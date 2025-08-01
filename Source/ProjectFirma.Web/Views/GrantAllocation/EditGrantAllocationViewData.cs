@@ -55,10 +55,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
 
         public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType,
-                                        Models.GrantAllocation grantAllocationBeingEdited,
+                                        Models.FundSourceAllocation fundSourceAllocationBeingEdited,
                                         IEnumerable<ProjectFirma.Web.Models.Organization> organizations,
-                                        IEnumerable<GrantType> grantTypes,
-                                        List<ProjectFirma.Web.Models.Grant> grants,
+                                        IEnumerable<FundSourceType> grantTypes,
+                                        List<ProjectFirma.Web.Models.FundSource> grants,
                                         IEnumerable<Division> divisions,
                                         IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
-            GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectList(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
+            GrantNumbers = grants.OrderBy(x => x.FundSourceNumber).ToSelectList(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceNumber);
             Divisions = divisions.OrderBy(x => x.DivisionDisplayName).ToSelectListWithEmptyFirstRow(x => x.DivisionID.ToString(CultureInfo.InvariantCulture), y => y.DivisionDisplayName);
             Regions = dnrUplandRegions.OrderBy(x => x.DNRUplandRegionName).ToSelectListWithEmptyFirstRow(x => x.DNRUplandRegionID.ToString(CultureInfo.InvariantCulture), y => y.DNRUplandRegionName);
 
@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             EditGrantAllocationType = editGrantAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
-            HasFundFsps = grantAllocationBeingEdited?.HasFundFSPs;
+            HasFundFsps = fundSourceAllocationBeingEdited?.HasFundFSPs;
             Sources = sources.ToSelectListWithEmptyFirstRow(
                 x => x.GrantAllocationSourceID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationSourceDisplayName);
 

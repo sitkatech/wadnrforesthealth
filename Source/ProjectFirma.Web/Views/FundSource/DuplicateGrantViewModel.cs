@@ -39,12 +39,12 @@ namespace ProjectFirma.Web.Views.Grant
         public int GrantStatusID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
-        [StringLength(Models.Grant.FieldLengths.GrantName)]
+        [StringLength(Models.FundSource.FieldLengths.FundSourceName)]
         [Required]
         public string GrantName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
-        [StringLength(Models.Grant.FieldLengths.GrantNumber)]
+        [StringLength(Models.FundSource.FieldLengths.FundSourceNumber)]
         public string GrantNumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
@@ -68,24 +68,24 @@ namespace ProjectFirma.Web.Views.Grant
         {
         }
 
-        public DuplicateGrantViewModel(Models.Grant grantToDuplicate)
+        public DuplicateGrantViewModel(Models.FundSource fundSourceToDuplicate)
         {
-            GrantName = $"{grantToDuplicate.GrantName} - Copy";
-            GrantStatusID = grantToDuplicate.GrantStatusID;
-            GrantNumber = grantToDuplicate.GrantNumber;
+            GrantName = $"{fundSourceToDuplicate.FundSourceName} - Copy";
+            GrantStatusID = fundSourceToDuplicate.FundSourceStatusID;
+            GrantNumber = fundSourceToDuplicate.FundSourceNumber;
             GrantTotalAwardAmount = 0;
-            GrantStartDate = grantToDuplicate.StartDate;
-            GrantEndDate = grantToDuplicate.EndDate;
+            GrantStartDate = fundSourceToDuplicate.StartDate;
+            GrantEndDate = fundSourceToDuplicate.EndDate;
 
 
         }
 
-        public void UpdateModel(Models.Grant grant)
+        public void UpdateModel(Models.FundSource fundSource)
         {
-            grant.GrantNumber = GrantNumber;
-            grant.StartDate = GrantStartDate;
-            grant.EndDate = GrantEndDate;
-            grant.GrantName = GrantName;
+            fundSource.FundSourceNumber = GrantNumber;
+            fundSource.StartDate = GrantStartDate;
+            fundSource.EndDate = GrantEndDate;
+            fundSource.FundSourceName = GrantName;
 
         }
 

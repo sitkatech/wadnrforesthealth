@@ -62,13 +62,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationExpenditure(GrantAllocation grantAllocation, int biennium, int fiscalMonth, int calendarYear, int calendarMonth, decimal expenditureAmount) : this()
+        public GrantAllocationExpenditure(FundSourceAllocation fundSourceAllocation, int biennium, int fiscalMonth, int calendarYear, int calendarMonth, decimal expenditureAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationExpenditureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationExpenditures.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationExpenditures.Add(this);
             this.Biennium = biennium;
             this.FiscalMonth = fiscalMonth;
             this.CalendarYear = calendarYear;
@@ -79,9 +79,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationExpenditure CreateNewBlank(GrantAllocation grantAllocation)
+        public static GrantAllocationExpenditure CreateNewBlank(FundSourceAllocation fundSourceAllocation)
         {
-            return new GrantAllocationExpenditure(grantAllocation, default(int), default(int), default(int), default(int), default(decimal));
+            return new GrantAllocationExpenditure(fundSourceAllocation, default(int), default(int), default(int), default(int), default(decimal));
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationExpenditureID; } set { GrantAllocationExpenditureID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public CostType CostType { get { return CostTypeID.HasValue ? CostType.AllLookupDictionary[CostTypeID.Value] : null; } }
 
         public static class FieldLengths

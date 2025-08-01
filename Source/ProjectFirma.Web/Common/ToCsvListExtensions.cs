@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Common
         /// </summary>
         public static string ToDistinctOrderedCsvListOfGrantNumber(this ICollection<AgreementGrantAllocation> agreementGrantAllocations)
         {
-            return MakeDistinctCaseInsensitiveStringListFromObjectList(agreementGrantAllocations, x => x.GrantAllocation.Grant.GrantNumber);
+            return MakeDistinctCaseInsensitiveStringListFromObjectList(agreementGrantAllocations, x => x.FundSourceAllocation.FundSource.FundSourceNumber);
         }
 
         private static string MakeDistinctCaseInsensitiveStringListFromObjectList<T>(ICollection<T> objectList, Func<T, string> funcObjectToString)

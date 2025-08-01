@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantType : IAuditableEntity
+    public partial class FundSourceType : IAuditableEntity
     {
         public string AuditDescriptionString => GrantTypeName;
     }

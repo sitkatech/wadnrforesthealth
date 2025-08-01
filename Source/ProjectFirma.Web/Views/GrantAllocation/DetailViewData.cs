@@ -60,46 +60,46 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
         public bool IsUserLoggedIn { get; }
 
-        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
+        public DetailViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
             , EntityNotesViewData grantAllocationNotesViewData
             , EntityNotesViewData grantAllocationNoteInternalsViewData
             , ViewGoogleChartViewData viewGoogleChartViewData
             , GridSpec<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequestsGridSpec
             , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec)
-            : base(currentPerson, grantAllocation)
+            : base(currentPerson, fundSourceAllocation)
         {
-            PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
+            PageTitle = fundSourceAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
 
             GrantAllocationBasicsViewData = grantAllocationBasicsViewData;
             GrantAllocationNotesViewData = grantAllocationNotesViewData;
 
-            NewGrantAllocationNoteUrl = grantAllocation.GetNewNoteUrl();
+            NewGrantAllocationNoteUrl = fundSourceAllocation.GetNewNoteUrl();
             GrantAllocationNoteInternalsViewData = grantAllocationNoteInternalsViewData;
 
             ViewGoogleChartViewData = viewGoogleChartViewData;
 
             ProjectGrantAllocationRequestsGridSpec = projectGrantAllocationRequestsGridSpec;
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
-            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsGridJsonData(grantAllocation));
+            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsGridJsonData(fundSourceAllocation));
 
             GrantAllocationExpendituresGridSpec = grantAllocationExpendituresGridSpec;
             GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
-            GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(grantAllocation));
+            GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(fundSourceAllocation));
 
-            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation, grantAllocation.GrantAllocationBudgetLineItems.ToList());
-            GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
+            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, fundSourceAllocation, fundSourceAllocation.GrantAllocationBudgetLineItems.ToList());
+            GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, fundSourceAllocation);
 
             var canEditDocuments = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             GrantAllocationDetailsFileDetailsViewData = new FileDetailsViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grantAllocation.GrantAllocationFileResources)),
-                SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(grantAllocation.PrimaryKey)),
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSourceAllocation.GrantAllocationFileResources)),
+                SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(fundSourceAllocation.PrimaryKey)),
                 canEditDocuments,
                 Models.FieldDefinition.GrantAllocation
             );
 
-            List<AgreementGrantAllocation> agreementGrantAllocationsList = grantAllocation.AgreementGrantAllocations.ToList();
+            List<AgreementGrantAllocation> agreementGrantAllocationsList = fundSourceAllocation.AgreementGrantAllocations.ToList();
             CurrentAgreementGrantAllocationsInSortedOrder = agreementGrantAllocationsList;
 
 

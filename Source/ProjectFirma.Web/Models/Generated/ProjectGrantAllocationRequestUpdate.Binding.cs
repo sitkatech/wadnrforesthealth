@@ -61,16 +61,16 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectGrantAllocationRequestUpdate(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation, DateTime createDate, bool importedFromTabularData) : this()
+        public ProjectGrantAllocationRequestUpdate(ProjectUpdateBatch projectUpdateBatch, FundSourceAllocation fundSourceAllocation, DateTime createDate, bool importedFromTabularData) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectGrantAllocationRequestUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
             this.ProjectUpdateBatch = projectUpdateBatch;
             projectUpdateBatch.ProjectGrantAllocationRequestUpdates.Add(this);
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.ProjectGrantAllocationRequestUpdates.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.ProjectGrantAllocationRequestUpdates.Add(this);
             this.CreateDate = createDate;
             this.ImportedFromTabularData = importedFromTabularData;
         }
@@ -78,9 +78,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectGrantAllocationRequestUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation)
+        public static ProjectGrantAllocationRequestUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, FundSourceAllocation fundSourceAllocation)
         {
-            return new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, grantAllocation, default(DateTime), default(bool));
+            return new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, fundSourceAllocation, default(DateTime), default(bool));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProjectGrantAllocationRequestUpdateID; } set { ProjectGrantAllocationRequestUpdateID = value; } }
 
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
 
         public static class FieldLengths
         {

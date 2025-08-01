@@ -18,12 +18,12 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[GrantFileResource] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantFileResource]")]
-    public partial class GrantFileResource : IHavePrimaryKey, ICanDeleteFull
+    public partial class FundSourceFileResource : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected GrantFileResource()
+        protected FundSourceFileResource()
         {
 
         }
@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantFileResource(int grantFileResourceID, int grantID, int fileResourceID, string displayName, string description) : this()
+        public FundSourceFileResource(int grantFileResourceID, int grantID, int fileResourceID, string displayName, string description) : this()
         {
             this.GrantFileResourceID = grantFileResourceID;
             this.GrantID = grantID;
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantFileResource(int grantID, int fileResourceID, string displayName) : this()
+        public FundSourceFileResource(int grantID, int fileResourceID, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -56,13 +56,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantFileResource(Grant grant, FileResource fileResource, string displayName) : this()
+        public FundSourceFileResource(FundSource fundSource, FileResource fileResource, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.GrantFileResources.Add(this);
+            this.GrantID = fundSource.FundSourceID;
+            this.FundSource = fundSource;
+            fundSource.GrantFileResources.Add(this);
             this.FileResourceID = fileResource.FileResourceID;
             this.FileResource = fileResource;
             fileResource.GrantFileResources.Add(this);
@@ -72,9 +72,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantFileResource CreateNewBlank(Grant grant, FileResource fileResource)
+        public static FundSourceFileResource CreateNewBlank(FundSource fundSource, FileResource fileResource)
         {
-            return new GrantFileResource(grant, fileResource, default(string));
+            return new FundSourceFileResource(fundSource, fileResource, default(string));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantFileResource).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundSourceFileResource).Name};
 
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantFileResourceID; } set { GrantFileResourceID = value; } }
 
-        public virtual Grant Grant { get; set; }
+        public virtual FundSource FundSource { get; set; }
         public virtual FileResource FileResource { get; set; }
 
         public static class FieldLengths

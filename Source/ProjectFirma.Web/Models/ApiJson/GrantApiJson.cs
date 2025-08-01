@@ -35,35 +35,35 @@ namespace ProjectFirma.Web.Models.ApiJson
         {
         }
 
-        public GrantApiJson(Grant grant)
+        public GrantApiJson(FundSource fundSource)
         {
-            GrantID = grant.GrantID;
-            GrantNumber = grant.GrantNumber;
-            StartDate = grant.StartDate;
-            EndDate = grant.EndDate;
-            ConditionsAndRequirements = grant.ConditionsAndRequirements;
-            ComplianceNotes = grant.ComplianceNotes;
-            AwardedFunds = grant.TotalAwardAmount;
-            CFDANumber = grant.CFDANumber;
-            GrantName = grant.GrantName;
-            GrantTypeID = grant.GrantTypeID;
-            GrantTypeName = grant.GrantTypeDisplay;
-            ShortName = grant.ShortName;
-            GrantStatusID = grant.GrantStatusID;
-            GrantStatusTypeName = grant.GrantStatus.GrantStatusName;
-            OrganizationID = grant.OrganizationID;
-            OrganizationName = grant.Organization.OrganizationName;
-            GrantFileResourceIDs = grant.GrantFileResources?.Select(x => x.FileResourceID).ToList();
+            GrantID = fundSource.FundSourceID;
+            GrantNumber = fundSource.FundSourceNumber;
+            StartDate = fundSource.StartDate;
+            EndDate = fundSource.EndDate;
+            ConditionsAndRequirements = fundSource.ConditionsAndRequirements;
+            ComplianceNotes = fundSource.ComplianceNotes;
+            AwardedFunds = fundSource.TotalAwardAmount;
+            CFDANumber = fundSource.CFDANumber;
+            GrantName = fundSource.FundSourceName;
+            GrantTypeID = fundSource.FundSourceTypeID;
+            GrantTypeName = fundSource.GrantTypeDisplay;
+            ShortName = fundSource.ShortName;
+            GrantStatusID = fundSource.FundSourceStatusID;
+            GrantStatusTypeName = fundSource.FundSourceStatus.GrantStatusName;
+            OrganizationID = fundSource.OrganizationID;
+            OrganizationName = fundSource.Organization.OrganizationName;
+            GrantFileResourceIDs = fundSource.GrantFileResources?.Select(x => x.FileResourceID).ToList();
         }
 
-        public static List<GrantApiJson> MakeGrantApiJsonsFromGrants(List<Grant> grants, bool doAlphaSort = true)
+        public static List<GrantApiJson> MakeGrantApiJsonsFromGrants(List<FundSource> grants, bool doAlphaSort = true)
         {
             var outgoingGrants = grants;
             if (doAlphaSort)
             {
                 // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
                 //outgoingGrants = GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grants);
-                outgoingGrants = outgoingGrants.OrderBy(g => g.GrantNumber).ToList();
+                outgoingGrants = outgoingGrants.OrderBy(g => g.FundSourceNumber).ToList();
             }
             return outgoingGrants.Select(ga => new GrantApiJson(ga)).ToList();
         }

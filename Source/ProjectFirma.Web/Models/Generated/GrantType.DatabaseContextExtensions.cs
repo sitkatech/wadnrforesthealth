@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static GrantType GetGrantType(this IQueryable<GrantType> grantTypes, int grantTypeID)
+        public static FundSourceType GetGrantType(this IQueryable<FundSourceType> grantTypes, int grantTypeID)
         {
             var grantType = grantTypes.SingleOrDefault(x => x.GrantTypeID == grantTypeID);
             Check.RequireNotNullThrowNotFound(grantType, "GrantType", grantTypeID);
@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteGrantType(this IQueryable<GrantType> grantTypes, List<int> grantTypeIDList)
+        public static void DeleteGrantType(this IQueryable<FundSourceType> grantTypes, List<int> grantTypeIDList)
         {
             if(grantTypeIDList.Any())
             {
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an object list (WADNR style)
-        public static void DeleteGrantType(this IQueryable<GrantType> grantTypes, ICollection<GrantType> grantTypesToDelete)
+        public static void DeleteGrantType(this IQueryable<FundSourceType> grantTypes, ICollection<FundSourceType> grantTypesToDelete)
         {
             if(grantTypesToDelete.Any())
             {
@@ -49,14 +49,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteGrantType(this IQueryable<GrantType> grantTypes, int grantTypeID)
+        public static void DeleteGrantType(this IQueryable<FundSourceType> grantTypes, int grantTypeID)
         {
             DeleteGrantType(grantTypes, new List<int> { grantTypeID });
         }
 
-        public static void DeleteGrantType(this IQueryable<GrantType> grantTypes, GrantType grantTypeToDelete)
+        public static void DeleteGrantType(this IQueryable<FundSourceType> grantTypes, FundSourceType fundSourceTypeToDelete)
         {
-            DeleteGrantType(grantTypes, new List<GrantType> { grantTypeToDelete });
+            DeleteGrantType(grantTypes, new List<FundSourceType> { fundSourceTypeToDelete });
         }
     }
 }

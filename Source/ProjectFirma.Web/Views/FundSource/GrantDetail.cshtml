@@ -69,7 +69,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.FundSource.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
                         Basics
                     </h3>
                 </div>
@@ -80,7 +80,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantName)
                             </div>
                             <div class="col-sm-8">
-                                <span id="Name">@ViewDataTyped.Grant.GrantName</span>
+                                <span id="Name">@ViewDataTyped.FundSource.GrantName</span>
                             </div>
                         </div>
                         <div class="row">
@@ -88,7 +88,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
                             </div>
                             <div class="col-sm-8">
-                                <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
+                                <span id="ShortName">@ViewDataTyped.FundSource.ShortName</span>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.Organization)
                             </div>
                             <div class="col-sm-8">
-                                <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
+                                <span id="Organization">@ViewDataTyped.FundSource.Organization.GetDisplayNameAsUrl()</span>
                             </div>
                         </div>
                         <div class="row">
@@ -105,7 +105,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
                             </div>
                             <div class="col-sm-8">
-                                <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
+                                <span id="Status">@ViewDataTyped.FundSource.GrantStatus.GrantStatusName</span>
                             </div>
                         </div>
                         <div class="row">
@@ -113,7 +113,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantType)
                             </div>
                             <div class="col-sm-8">
-                                <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
+                                <span id="Type">@ViewDataTyped.FundSource.GrantTypeDisplay</span>
                             </div>
                         </div>
                         <div class="row">
@@ -121,7 +121,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.CFDA)
                             </div>
                             <div class="col-sm-8">
-                                <span id="Type">@ViewDataTyped.Grant.CFDANumber</span>
+                                <span id="Type">@ViewDataTyped.FundSource.CFDANumber</span>
                             </div>
                         </div>
                         <div class="row">
@@ -129,7 +129,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
                             </div>
                             <div class="col-sm-8">
-                                <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
+                                <span id="GrantNumber">@ViewDataTyped.FundSource.GrantNumber</span>
                             </div>
                         </div>
 
@@ -138,7 +138,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
                             </div>
                             <div class="col-sm-8">
-                                <span id="TotalAwardAmount">@ViewDataTyped.Grant.TotalAwardAmount.ToStringCurrency()</span>
+                                <span id="TotalAwardAmount">@ViewDataTyped.FundSource.TotalAwardAmount.ToStringCurrency()</span>
                             </div>
                         </div>
                         @if (ViewDataTyped.isUserLoggedIn)
@@ -148,7 +148,7 @@
                                     @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
                                 </div>
                                 <div class="col-sm-8">
-                                    <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
+                                    <span>@ViewDataTyped.FundSource.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
                                 </div>
                             </div>
                         }
@@ -158,7 +158,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
                             </div>
                             <div class="col-sm-8">
-                                <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
+                                <span id="StartDate">@ViewDataTyped.FundSource.StartDateDisplay</span>
                             </div>
                         </div>
                         <div class="row">
@@ -166,7 +166,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
                             </div>
                             <div class="col-sm-8">
-                                <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
+                                <span id="EndDate">@ViewDataTyped.FundSource.EndDateDisplay</span>
                             </div>
                         </div>
                     </div>
@@ -193,7 +193,7 @@
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h3>
-                            @FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                            @FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.FundSource.GrantName)
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -211,7 +211,7 @@
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    Funding by @FieldDefinition.Project.GetFieldDefinitionLabel() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                    Funding by @FieldDefinition.Project.GetFieldDefinitionLabel() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.FundSource.GrantName)
                 </div>
                 <div class="panel-body">
                     @Html.AgGrid(ViewDataTyped.ProjectGrantAllocationRequestsByGrantGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
@@ -228,7 +228,7 @@
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h3>
-                            @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.Grant.GrantName)
+                            @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() for this @FieldDefinition.Grant.GetFieldDefinitionLabel() (@ViewDataTyped.FundSource.GrantName)
                         </h3>
                     </div>
                     <div class="panel-body">

@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models
             this.Agreements = new HashSet<Agreement>();
             this.DNRUplandRegionContentImages = new HashSet<DNRUplandRegionContentImage>();
             this.FocusAreas = new HashSet<FocusArea>();
-            this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantAllocations = new HashSet<FundSourceAllocation>();
             this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
             this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectRegionUpdates = new HashSet<ProjectRegionUpdate>();
@@ -106,7 +106,7 @@ namespace ProjectFirma.Web.Models
 
             if(GrantAllocations.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
+                dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
 
             if(PersonStewardRegions.Any())
@@ -129,7 +129,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(DNRUplandRegion).Name, typeof(Agreement).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(DNRUplandRegion).Name, typeof(Agreement).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FocusArea).Name, typeof(FundSourceAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<DNRUplandRegionContentImage> DNRUplandRegionContentImages { get; set; }
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }

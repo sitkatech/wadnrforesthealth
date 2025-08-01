@@ -121,7 +121,7 @@ namespace ProjectFirma.Web.Models
 
             // Make a test grant allocation and save it
             var dbContext = HttpRequestStorage.DatabaseEntities;
-            var testGrantAllocation = TestFramework.TestGrantAllocation.Create(dbContext);
+            var testGrantAllocation = TestFramework.TestFundSourceAllocation.Create(dbContext);
             var testOrganization = TestFramework.TestOrganization.Create(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 

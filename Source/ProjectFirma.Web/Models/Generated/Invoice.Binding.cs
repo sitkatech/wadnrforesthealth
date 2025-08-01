@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Models
         public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }
         public virtual FileResource InvoiceFileResource { get; set; }
         public virtual InvoicePaymentRequest InvoicePaymentRequest { get; set; }
-        public virtual Grant Grant { get; set; }
+        public virtual FundSource FundSource { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual ProjectCode ProjectCode { get; set; }
         public virtual OrganizationCode OrganizationCode { get; set; }

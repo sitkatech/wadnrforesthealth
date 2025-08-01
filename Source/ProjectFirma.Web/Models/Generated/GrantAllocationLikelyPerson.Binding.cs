@@ -53,13 +53,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationLikelyPerson(GrantAllocation grantAllocation, Person person) : this()
+        public GrantAllocationLikelyPerson(FundSourceAllocation fundSourceAllocation, Person person) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationLikelyPersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationLikelyPeople.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationLikelyPeople.Add(this);
             this.PersonID = person.PersonID;
             this.Person = person;
             person.GrantAllocationLikelyPeople.Add(this);
@@ -68,9 +68,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationLikelyPerson CreateNewBlank(GrantAllocation grantAllocation, Person person)
+        public static GrantAllocationLikelyPerson CreateNewBlank(FundSourceAllocation fundSourceAllocation, Person person)
         {
-            return new GrantAllocationLikelyPerson(grantAllocation, person);
+            return new GrantAllocationLikelyPerson(fundSourceAllocation, person);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationLikelyPersonID; } set { GrantAllocationLikelyPersonID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public virtual Person Person { get; set; }
 
         public static class FieldLengths

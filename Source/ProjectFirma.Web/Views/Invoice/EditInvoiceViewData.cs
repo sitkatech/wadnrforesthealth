@@ -45,10 +45,10 @@ namespace ProjectFirma.Web.Views.Invoice
 
         public EditInvoiceViewData(EditInvoiceType editInvoiceType,
             IEnumerable<InvoiceApprovalStatus> invoiceApprovalStatuses, IEnumerable<InvoiceStatus> invoiceStatuses,
-            IEnumerable<Person> people, IEnumerable<Models.Grant> grants, IEnumerable<Models.ProgramIndex> programIndices,
+            IEnumerable<Person> people, IEnumerable<Models.FundSource> grants, IEnumerable<Models.ProgramIndex> programIndices,
             IEnumerable<Models.ProjectCode> projectCodes, IEnumerable<OrganizationCode> organizationCodes)
         {
-            Grants = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => $"{y.GrantNumber} - {y.GrantName}");
+            Grants = grants.ToSelectListWithEmptyFirstRow(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => $"{y.FundSourceNumber} - {y.FundSourceName}");
             ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => $"{y.ProgramIndexCode} - {y.ProgramIndexTitle} ({y.Biennium})");
             ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.ProjectCodeName} - {y.ProjectCodeTitle}");
             OrganizationCodes = organizationCodes.ToSelectListWithEmptyFirstRow(x => x.OrganizationCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.OrganizationCodeValue} - {y.OrganizationCodeName} ");

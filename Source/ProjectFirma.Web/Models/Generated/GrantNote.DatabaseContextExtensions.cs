@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static GrantNote GetGrantNote(this IQueryable<GrantNote> grantNotes, int grantNoteID)
+        public static FundSourceNote GetGrantNote(this IQueryable<FundSourceNote> grantNotes, int grantNoteID)
         {
             var grantNote = grantNotes.SingleOrDefault(x => x.GrantNoteID == grantNoteID);
             Check.RequireNotNullThrowNotFound(grantNote, "GrantNote", grantNoteID);
@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteGrantNote(this IQueryable<GrantNote> grantNotes, List<int> grantNoteIDList)
+        public static void DeleteGrantNote(this IQueryable<FundSourceNote> grantNotes, List<int> grantNoteIDList)
         {
             if(grantNoteIDList.Any())
             {
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an object list (WADNR style)
-        public static void DeleteGrantNote(this IQueryable<GrantNote> grantNotes, ICollection<GrantNote> grantNotesToDelete)
+        public static void DeleteGrantNote(this IQueryable<FundSourceNote> grantNotes, ICollection<FundSourceNote> grantNotesToDelete)
         {
             if(grantNotesToDelete.Any())
             {
@@ -49,14 +49,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteGrantNote(this IQueryable<GrantNote> grantNotes, int grantNoteID)
+        public static void DeleteGrantNote(this IQueryable<FundSourceNote> grantNotes, int grantNoteID)
         {
             DeleteGrantNote(grantNotes, new List<int> { grantNoteID });
         }
 
-        public static void DeleteGrantNote(this IQueryable<GrantNote> grantNotes, GrantNote grantNoteToDelete)
+        public static void DeleteGrantNote(this IQueryable<FundSourceNote> grantNotes, FundSourceNote fundSourceNoteToDelete)
         {
-            DeleteGrantNote(grantNotes, new List<GrantNote> { grantNoteToDelete });
+            DeleteGrantNote(grantNotes, new List<FundSourceNote> { fundSourceNoteToDelete });
         }
     }
 }

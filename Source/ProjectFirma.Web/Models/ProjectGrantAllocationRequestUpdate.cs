@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectGrantAllocationRequestUpdates = project.ProjectGrantAllocationRequests.Select(
                 pgar =>
-                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.GrantAllocation, pgar.CreateDate, pgar.ImportedFromTabularData)
+                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.FundSourceAllocation, pgar.CreateDate, pgar.ImportedFromTabularData)
                     {
                         TotalAmount = pgar.TotalAmount,
                         MatchAmount = pgar.MatchAmount,
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             var projectGrantAllocationExpectedFundingFromProjectUpdate = projectUpdateBatch
                 .ProjectGrantAllocationRequestUpdates
-                .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID, x.CreateDate, x.ImportedFromTabularData)
+                .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.FundSourceAllocation.GrantAllocationID, x.CreateDate, x.ImportedFromTabularData)
                     {
                         TotalAmount = x.TotalAmount,
                         PayAmount = x.PayAmount,
@@ -79,8 +79,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                string grantAllocationID = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationID.ToString(): "none";
-                string grantAllocationName = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "none";
+                string grantAllocationID = this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationID.ToString(): "none";
+                string grantAllocationName = this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationName : "none";
                 return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} TotalAmount: {this.TotalAmount}";
             }
         }

@@ -18,13 +18,13 @@ namespace ProjectFirma.Web.Models.ApiJson
         {
         }
 
-        public GrantStatusApiJson(GrantStatus grantStatus)
+        public GrantStatusApiJson(FundSourceStatus fundSourceStatus)
         {
-            GrantStatusID = grantStatus.GrantStatusID;
-            GrantStatusName = grantStatus.GrantStatusName;
+            GrantStatusID = fundSourceStatus.GrantStatusID;
+            GrantStatusName = fundSourceStatus.GrantStatusName;
         }
 
-        public static List<GrantStatusApiJson> MakeGrantStatusApiJsonsFromGrantStatuses(List<GrantStatus> grantStatuses)
+        public static List<GrantStatusApiJson> MakeGrantStatusApiJsonsFromGrantStatuses(List<FundSourceStatus> grantStatuses)
         {
             var outgoingGrantStatuses = grantStatuses;
             return outgoingGrantStatuses.Select(gs => new GrantStatusApiJson(gs)).ToList();

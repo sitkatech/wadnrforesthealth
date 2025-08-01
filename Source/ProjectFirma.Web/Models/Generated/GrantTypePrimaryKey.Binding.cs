@@ -9,19 +9,19 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public class GrantTypePrimaryKey : LtInfo.Common.EntityModelBinding.LtInfoEntityPrimaryKey<GrantType>
+    public class GrantTypePrimaryKey : LtInfo.Common.EntityModelBinding.LtInfoEntityPrimaryKey<FundSourceType>
     {
         public GrantTypePrimaryKey(int primaryKeyValue) : base(primaryKeyValue){}
-        public GrantTypePrimaryKey(GrantType grantType) : base(grantType){}
+        public GrantTypePrimaryKey(FundSourceType fundSourceType) : base(fundSourceType){}
 
         public static implicit operator GrantTypePrimaryKey(int primaryKeyValue)
         {
             return new GrantTypePrimaryKey(primaryKeyValue);
         }
 
-        public static implicit operator GrantTypePrimaryKey(GrantType grantType)
+        public static implicit operator GrantTypePrimaryKey(FundSourceType fundSourceType)
         {
-            return new GrantTypePrimaryKey(grantType);
+            return new GrantTypePrimaryKey(fundSourceType);
         }
     }
 }

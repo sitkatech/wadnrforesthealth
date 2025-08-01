@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Views.Organization
                 : "Lead Implementer";
 
             // Might be too weak; do we want to make this more specific?
-            ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+            ManageGrantAllocationsUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;

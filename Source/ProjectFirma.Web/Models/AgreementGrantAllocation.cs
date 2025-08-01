@@ -8,14 +8,14 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString
         {
-            get { return this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "NullGrantAllocation"; }
+            get { return this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationName : "NullGrantAllocation"; }
 
         }
 
         public static List<AgreementGrantAllocation> OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<AgreementGrantAllocation> agreementGrantAllocations)
         {
-            var interiorGrantAllocations = agreementGrantAllocations.Select(aga => aga.GrantAllocation).ToList();
-            var interiorGrantAllocationInProperOrder = GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(interiorGrantAllocations);
+            var interiorGrantAllocations = agreementGrantAllocations.Select(aga => aga.FundSourceAllocation).ToList();
+            var interiorGrantAllocationInProperOrder = FundSourceAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(interiorGrantAllocations);
 
             List<AgreementGrantAllocation> outgoingAgreementGrantAllocations = new List<AgreementGrantAllocation>();
             foreach (var grantAllocation in interiorGrantAllocationInProperOrder)

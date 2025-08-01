@@ -37,35 +37,35 @@ namespace ProjectFirma.Web.Models.ApiJson
         {
         }
 
-        public GrantAllocationApiJson(GrantAllocation grantAllocation)
+        public GrantAllocationApiJson(FundSourceAllocation fundSourceAllocation)
         {
-            GrantAllocationID = grantAllocation.GrantAllocationID;
-            GrantAllocationName = grantAllocation.GrantAllocationName;
-            GrantID = grantAllocation.GrantID;
-            StartDate = grantAllocation.StartDate;
-            EndDate = grantAllocation.EndDate;
-            AllocationAmount = grantAllocation.AllocationAmount;
-            FederalFundCodeID = grantAllocation.FederalFundCodeID;
-            FederalFundCodeName = grantAllocation.FederalFundCodeDisplay;
-            OrganizationID = grantAllocation.OrganizationID;
-            OrganizationName = grantAllocation.Organization?.OrganizationName;
-            RegionID = grantAllocation.DNRUplandRegionID;
-            RegionName = grantAllocation.RegionNameDisplay;
-            DivisionID = grantAllocation.DivisionID;
-            DivisionName = grantAllocation.Division != null ? grantAllocation.Division.DivisionDisplayName : null;
-            GrantManagerID = grantAllocation.GrantManagerID;
-            GrantManagerName = grantAllocation.GrantManager?.FullNameFirstLastAndOrgShortName;
-            GrantAllocationFileResourceIDs = grantAllocation.GrantAllocationFileResources?.Select(x => x.FileResourceID).ToList();
+            GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            GrantAllocationName = fundSourceAllocation.GrantAllocationName;
+            GrantID = fundSourceAllocation.GrantID;
+            StartDate = fundSourceAllocation.StartDate;
+            EndDate = fundSourceAllocation.EndDate;
+            AllocationAmount = fundSourceAllocation.AllocationAmount;
+            FederalFundCodeID = fundSourceAllocation.FederalFundCodeID;
+            FederalFundCodeName = fundSourceAllocation.FederalFundCodeDisplay;
+            OrganizationID = fundSourceAllocation.OrganizationID;
+            OrganizationName = fundSourceAllocation.Organization?.OrganizationName;
+            RegionID = fundSourceAllocation.DNRUplandRegionID;
+            RegionName = fundSourceAllocation.RegionNameDisplay;
+            DivisionID = fundSourceAllocation.DivisionID;
+            DivisionName = fundSourceAllocation.Division != null ? fundSourceAllocation.Division.DivisionDisplayName : null;
+            GrantManagerID = fundSourceAllocation.GrantManagerID;
+            GrantManagerName = fundSourceAllocation.GrantManager?.FullNameFirstLastAndOrgShortName;
+            GrantAllocationFileResourceIDs = fundSourceAllocation.GrantAllocationFileResources?.Select(x => x.FileResourceID).ToList();
         }
 
         public static List<GrantAllocationApiJson> MakeGrantAllocationApiJsonsFromGrantAllocations(
-            List<GrantAllocation> grantAllocations, bool doAlphaSort = true)
+            List<FundSourceAllocation> grantAllocations, bool doAlphaSort = true)
         {
             var outgoingGrantAllocations = grantAllocations;
             if (doAlphaSort)
             {
                 // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-                outgoingGrantAllocations = GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+                outgoingGrantAllocations = FundSourceAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
             }
             return outgoingGrantAllocations.Select(ga => new GrantAllocationApiJson(ga)).ToList();
         }

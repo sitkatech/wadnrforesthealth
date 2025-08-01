@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Views.Grant
 {
     public abstract class GrantViewData : FirmaViewData
     {
-        public Models.Grant Grant { get; }
+        public Models.FundSource FundSource { get; }
         public string EditGrantUrl { get; set; }
         public bool UserHasEditGrantPermissions { get; set; }
 
@@ -36,15 +36,15 @@ namespace ProjectFirma.Web.Views.Grant
 
         public string GrantsListUrl { get; set; }    
 
-        protected GrantViewData(Person currentPerson, Models.Grant grant) : base(currentPerson, null)
+        protected GrantViewData(Person currentPerson, Models.FundSource fundSource) : base(currentPerson, null)
         {
-            Grant = grant;
-            HtmlPageTitle = grant.GrantTitle;
+            FundSource = fundSource;
+            HtmlPageTitle = fundSource.GrantTitle;
             EntityName = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
-            EditGrantUrl = grant.GetEditUrl();
+            EditGrantUrl = fundSource.GetEditUrl();
             UserHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             BackToGrantsText = $"Back to all {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
-            GrantsListUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+            GrantsListUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
         }
     }
 }

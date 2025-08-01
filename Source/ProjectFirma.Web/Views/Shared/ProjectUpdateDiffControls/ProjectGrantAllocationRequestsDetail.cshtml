@@ -69,10 +69,10 @@ Source code is available upon request via <support@sitkatech.com>.
         <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
         <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestTotalAmount)</th>
     </tr>
-    @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.GrantAllocation.GrantAllocationName))
+    @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.FundSourceAllocation.GrantAllocationName))
     {
         <tr class="@grantAllocationRequestAmount.DisplayCssClass">
-            <td>@grantAllocationRequestAmount.GrantAllocation.DisplayNameAsUrl</td>
+            <td>@grantAllocationRequestAmount.FundSourceAllocation.DisplayNameAsUrl</td>
             <td class="@grantAllocationRequestAmount.DisplayCssClass" style="text-align: right">
                 <span >@grantAllocationRequestAmount.TotalAmount.ToStringCurrency()</span>
             </td>

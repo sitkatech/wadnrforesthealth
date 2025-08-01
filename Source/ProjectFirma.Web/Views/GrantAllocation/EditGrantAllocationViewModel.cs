@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [Required]
         public int GrantID { get; set; }
 
-        [StringLength(Models.GrantAllocation.FieldLengths.GrantAllocationName)]
+        [StringLength(Models.FundSourceAllocation.FieldLengths.GrantAllocationName)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationName)]
         [Required]
         public string GrantAllocationName { get; set; }
@@ -110,30 +110,30 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProgramIndexProjectCodeJsons = new List<ProgramIndexProjectCodeJson>();
         }
 
-        public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
+        public EditGrantAllocationViewModel(Models.FundSourceAllocation fundSourceAllocation)
         {
-            GrantAllocationID = grantAllocation.GrantAllocationID;
-            GrantAllocationName = grantAllocation.GrantAllocationName;
-            OrganizationID = grantAllocation.OrganizationID;
-            GrantID = grantAllocation.GrantID;
+            GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            GrantAllocationName = fundSourceAllocation.GrantAllocationName;
+            OrganizationID = fundSourceAllocation.OrganizationID;
+            GrantID = fundSourceAllocation.GrantID;
 
             ProgramIndexProjectCodeJsons =
                 ProgramIndexProjectCodeJson
-                    .MakeProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(grantAllocation.GrantAllocationProgramIndexProjectCodes.ToList());
+                    .MakeProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(fundSourceAllocation.GrantAllocationProgramIndexProjectCodes.ToList());
 
-            FederalFundCodeID = grantAllocation.FederalFundCodeID;
-            DivisionID = grantAllocation.DivisionID;
-            DNRUplandRegionID = grantAllocation.RegionIDDisplay;
-            AllocationAmount = grantAllocation.AllocationAmount;
-            StartDate = grantAllocation.StartDate;
-            EndDate = grantAllocation.EndDate;
-            ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
-            GrantManagerID = grantAllocation.GrantManagerID;
-            PriorityID = grantAllocation.GrantAllocationPriorityID;
-            FundFSPsBool = grantAllocation.HasFundFSPs;
-            SourceID = grantAllocation.GrantAllocationSource?.GrantAllocationSourceID;
-            LikelyToUsePeopleBool = grantAllocation.LikelyToUse;
-            LikelyToUsePeopleIds = grantAllocation.GrantAllocationLikelyPeople.Select(x=>x.PersonID).ToList();
+            FederalFundCodeID = fundSourceAllocation.FederalFundCodeID;
+            DivisionID = fundSourceAllocation.DivisionID;
+            DNRUplandRegionID = fundSourceAllocation.RegionIDDisplay;
+            AllocationAmount = fundSourceAllocation.AllocationAmount;
+            StartDate = fundSourceAllocation.StartDate;
+            EndDate = fundSourceAllocation.EndDate;
+            ProgramManagerPersonIDs = fundSourceAllocation.ProgramManagerPersonIDs;
+            GrantManagerID = fundSourceAllocation.GrantManagerID;
+            PriorityID = fundSourceAllocation.GrantAllocationPriorityID;
+            FundFSPsBool = fundSourceAllocation.HasFundFSPs;
+            SourceID = fundSourceAllocation.GrantAllocationSource?.GrantAllocationSourceID;
+            LikelyToUsePeopleBool = fundSourceAllocation.LikelyToUse;
+            LikelyToUsePeopleIds = fundSourceAllocation.GrantAllocationLikelyPeople.Select(x=>x.PersonID).ToList();
 
             //GrantAllocationFileResourceDatas = grantAllocation.GrantAllocationFileResources
         }
@@ -201,38 +201,38 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         }
 
-        public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)
+        public void UpdateModel(Models.FundSourceAllocation fundSourceAllocation, Person currentPerson)
         {
-            grantAllocation.GrantAllocationName = GrantAllocationName;
-            grantAllocation.OrganizationID = OrganizationID;
-            grantAllocation.GrantID = GrantID;
+            fundSourceAllocation.GrantAllocationName = GrantAllocationName;
+            fundSourceAllocation.OrganizationID = OrganizationID;
+            fundSourceAllocation.GrantID = GrantID;
             
-            grantAllocation.FederalFundCodeID = FederalFundCodeID;
-            grantAllocation.DivisionID = DivisionID;
-            grantAllocation.GrantAllocationPriorityID = PriorityID;
-            grantAllocation.DNRUplandRegionID = DNRUplandRegionID;
-            if (grantAllocation.AllocationAmount != AllocationAmount)
+            fundSourceAllocation.FederalFundCodeID = FederalFundCodeID;
+            fundSourceAllocation.DivisionID = DivisionID;
+            fundSourceAllocation.GrantAllocationPriorityID = PriorityID;
+            fundSourceAllocation.DNRUplandRegionID = DNRUplandRegionID;
+            if (fundSourceAllocation.AllocationAmount != AllocationAmount)
             {
                 GrantAllocationChangeLog newChange = new GrantAllocationChangeLog(
-                         grantAllocation,
+                         fundSourceAllocation,
                          currentPerson,
                          DateTime.Now
                     );
-                newChange.GrantAllocationAmountOldValue = grantAllocation.AllocationAmount;
+                newChange.GrantAllocationAmountOldValue = fundSourceAllocation.AllocationAmount;
                 newChange.GrantAllocationAmountNewValue = AllocationAmount;
                 newChange.GrantAllocationAmountNote = GrantAllocationChangeLogNote;
             }
-            grantAllocation.AllocationAmount = AllocationAmount;
-            grantAllocation.StartDate = StartDate;
-            grantAllocation.EndDate = EndDate;
-            grantAllocation.GrantManagerID = GrantManagerID;
-            grantAllocation.HasFundFSPs = FundFSPsBool;
-            grantAllocation.GrantAllocationSourceID = SourceID;
-            grantAllocation.LikelyToUse = LikelyToUsePeopleBool;
+            fundSourceAllocation.AllocationAmount = AllocationAmount;
+            fundSourceAllocation.StartDate = StartDate;
+            fundSourceAllocation.EndDate = EndDate;
+            fundSourceAllocation.GrantManagerID = GrantManagerID;
+            fundSourceAllocation.HasFundFSPs = FundFSPsBool;
+            fundSourceAllocation.GrantAllocationSourceID = SourceID;
+            fundSourceAllocation.LikelyToUse = LikelyToUsePeopleBool;
 
             // Deleting existing records
-            grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
-            grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
+            fundSourceAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            fundSourceAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(fundSourceAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
 
             if (GrantAllocationFileResourceDatas?[0] != null)
             {
@@ -242,25 +242,25 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 foreach (var fileResource in fileResources)
                 {
                     HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                    var grantAllocationFileResource = new GrantAllocationFileResource(grantAllocation, fileResource, fileResource.OriginalCompleteFileName);
-                    grantAllocation.GrantAllocationFileResources.Add(grantAllocationFileResource);
+                    var grantAllocationFileResource = new GrantAllocationFileResource(fundSourceAllocation, fileResource, fileResource.OriginalCompleteFileName);
+                    fundSourceAllocation.GrantAllocationFileResources.Add(grantAllocationFileResource);
                 }
             }
 
             //delete existing GrantAllocationProgramIndexProjectCode records
-            grantAllocation.GrantAllocationProgramIndexProjectCodes.ToList().ForEach(gapipc => gapipc.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            fundSourceAllocation.GrantAllocationProgramIndexProjectCodes.ToList().ForEach(gapipc => gapipc.DeleteFull(HttpRequestStorage.DatabaseEntities));
             //create new rows of GrantAllocationProgramIndexProjectCode
-            grantAllocation.GrantAllocationProgramIndexProjectCodes =
+            fundSourceAllocation.GrantAllocationProgramIndexProjectCodes =
                 ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null).Select(gapipc =>
-                    new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
+                    new GrantAllocationProgramIndexProjectCode(fundSourceAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
 
             // Deleting existing records
-            grantAllocation.GrantAllocationLikelyPeople.ToList().ForEach(galp => galp.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            fundSourceAllocation.GrantAllocationLikelyPeople.ToList().ForEach(galp => galp.DeleteFull(HttpRequestStorage.DatabaseEntities));
             if (LikelyToUsePeopleBool == true)
             {
-                grantAllocation.GrantAllocationLikelyPeople = this.LikelyToUsePeopleIds != null
+                fundSourceAllocation.GrantAllocationLikelyPeople = this.LikelyToUsePeopleIds != null
                     ? this.LikelyToUsePeopleIds
-                        .Select(p => new GrantAllocationLikelyPerson(grantAllocation.GrantAllocationID, p)).ToList()
+                        .Select(p => new GrantAllocationLikelyPerson(fundSourceAllocation.GrantAllocationID, p)).ToList()
                     : new List<GrantAllocationLikelyPerson>();
             }
 

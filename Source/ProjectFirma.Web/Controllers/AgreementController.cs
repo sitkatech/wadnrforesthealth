@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Controllers
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes.OrderBy(x => x.AgreementTypeName);
             var agreementStatuses = HttpRequestStorage.DatabaseEntities.AgreementStatuses;
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.GrantName);
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.FundSourceName);
 
             var viewData = new EditAgreementViewData(editAgreementType,
                 organizations,

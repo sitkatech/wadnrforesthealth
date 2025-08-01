@@ -811,7 +811,7 @@ namespace ProjectFirma.Web.Models
             var googlePieChartSlices = new List<GooglePieChartSlice>();
 
             var totalAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.TotalAmount > 0)
-                .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
+                .GroupBy(x => x.FundSourceAllocation, new HavePrimaryKeyComparer<FundSourceAllocation>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.TotalAmount));
 
             var securedColorHsl = new {hue = 96.0, sat = 60.0};
@@ -926,8 +926,8 @@ namespace ProjectFirma.Web.Models
         }
 
         // read-only Helper accessors
-        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
-        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
+        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.FundSourceAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.FundSourceAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
 
 
  

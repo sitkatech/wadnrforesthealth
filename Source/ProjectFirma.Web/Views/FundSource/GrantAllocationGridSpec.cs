@@ -30,7 +30,7 @@ using ProjectFirma.Web.Security;
 namespace ProjectFirma.Web.Views.Grant
 {
 
-    public class GrantAllocationGridSpec : GridSpec<Models.GrantAllocation>
+    public class GrantAllocationGridSpec : GridSpec<Models.FundSourceAllocation>
     {
         public enum GrantAllocationGridCreateButtonType
         {
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Grant
 
         public const int GrantNumberColumnWidth = 180;
 
-        public GrantAllocationGridSpec(Person currentPerson, GrantAllocationGridCreateButtonType createButtonType, Models.Grant optionalRelevantGrant)
+        public GrantAllocationGridSpec(Person currentPerson, GrantAllocationGridCreateButtonType createButtonType, Models.FundSource optionalRelevantFundSource)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}";
@@ -50,14 +50,14 @@ namespace ProjectFirma.Web.Views.Grant
             if (userHasCreatePermissions && createButtonType == GrantAllocationGridCreateButtonType.Shown)
             {
                 var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New());
-                if (optionalRelevantGrant != null)
+                if (optionalRelevantFundSource != null)
                 {
-                    contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewFromGrant(optionalRelevantGrant));
+                    contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewFromGrant(optionalRelevantFundSource));
                 }
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}");
             }
 
-            CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
+            CustomExcelDownloadUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
             if (userHasDeletePermissions)
             {
@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.Grant
                 Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant.GrantNumber, GrantNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.FundSource.FundSourceNumber, GrantNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantAllocationName, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.GetAllProgramManagerPersonNamesAsString(), 150, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
-            Add($"Parent Grant {Models.FieldDefinition.GrantStatus.ToGridHeaderString()}", x => x.Grant.GrantStatus.GrantStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add($"Parent Grant {Models.FieldDefinition.GrantStatus.ToGridHeaderString()}", x => x.FundSource.FundSourceStatus.GrantStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.Division.ToGridHeaderString(), x => x.DivisionNameDisplay, 180, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.DNRUplandRegion.ToGridHeaderString(), x => x.RegionNameDisplay, 100, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.FederalFundCode.ToGridHeaderString(), x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, AgGridColumnFilterType.SelectFilterStrict);

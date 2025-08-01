@@ -52,9 +52,9 @@ namespace ProjectFirma.Web.Controllers
             return ViewDeleteGrantAllocation(grantAllocationPrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantAllocation(GrantAllocation grantAllocation, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewDeleteGrantAllocation(FundSourceAllocation fundSourceAllocation, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} '{grantAllocation.GrantAllocationName}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} '{fundSourceAllocation.GrantAllocationName}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             Check.EnsureNotNull(grantAllocation);
-            var relevantGrant = grantAllocation.Grant;
+            var relevantGrant = grantAllocation.FundSource;
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
             return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, relevantGrant);
         }
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
             Check.EnsureNotNull(grantAllocation);
             if (!ModelState.IsValid)
             {
-                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, grantAllocation.Grant);
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation, grantAllocation.FundSource);
             }
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been updated.");
@@ -105,13 +105,13 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult GrantAllocationViewEdit(EditGrantAllocationViewModel viewModel,
                                                           EditGrantAllocationType editGrantAllocationType,
-                                                          GrantAllocation grantAllocationBeingEdited,
-                                                          Grant optionalRelevantGrant)
+                                                          FundSourceAllocation fundSourceAllocationBeingEdited,
+                                                          FundSource optionalRelevantFundSource)
         {
             if (editGrantAllocationType == EditGrantAllocationType.ExistingGrantAllocation)
             {
                 // Sanity check; this should always agree for an existing one
-                Check.Ensure(optionalRelevantGrant.GrantID == grantAllocationBeingEdited.Grant.GrantID);
+                Check.Ensure(optionalRelevantFundSource.FundSourceID == fundSourceAllocationBeingEdited.FundSource.FundSourceID);
             }
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
@@ -125,7 +125,7 @@ namespace ProjectFirma.Web.Controllers
 
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
-                                                            grantAllocationBeingEdited,
+                                                            fundSourceAllocationBeingEdited,
                                                             organizations,
                                                             grantTypes,
                                                             grants,
@@ -162,7 +162,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var relevantGrant = HttpRequestStorage.DatabaseEntities.Grants.GetGrant(viewModel.GrantID);
-            var grantAllocation = GrantAllocation.CreateNewBlank(relevantGrant);
+            var grantAllocation = FundSourceAllocation.CreateNewBlank(relevantGrant);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
@@ -173,14 +173,14 @@ namespace ProjectFirma.Web.Controllers
         [GrantAllocationCreateFeature]
         public PartialViewResult NewFromGrant(GrantPrimaryKey grantPrimaryKey)
         {
-            Grant relevantGrant = grantPrimaryKey.EntityObject;
+            FundSource relevantFundSource = grantPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationViewModel();
             // Pre-populate allocation dates from the grant
-            viewModel.StartDate = relevantGrant.StartDate;
-            viewModel.EndDate = relevantGrant.EndDate;
+            viewModel.StartDate = relevantFundSource.StartDate;
+            viewModel.EndDate = relevantFundSource.EndDate;
             // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
             // a Grant Allocation that may have lost their "program manager" permissions
-            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantFundSource);
         }
 
         [HttpPost]
@@ -188,15 +188,15 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewFromGrant(GrantPrimaryKey grantPrimaryKey, EditGrantAllocationViewModel viewModel)
         {
-            Grant relevantGrant = grantPrimaryKey.EntityObject;
+            FundSource relevantFundSource = grantPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
                 // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
                 // a Grant Allocation that may have lost their "program manager" permissions
-                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantFundSource);
             }
 
-            var grantAllocation = GrantAllocation.CreateNewBlank(relevantGrant);
+            var grantAllocation = FundSourceAllocation.CreateNewBlank(relevantFundSource);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");
@@ -209,7 +209,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
             Check.EnsureNotNull(originalGrantAllocation);
-            var relevantGrant = originalGrantAllocation.Grant;
+            var relevantGrant = originalGrantAllocation.FundSource;
             
             // Copy original grant allocation to new view model, except for the grant mod and allocation amount
             var viewModel = new EditGrantAllocationViewModel(originalGrantAllocation);
@@ -229,7 +229,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var originalGrantAllocation = grantAllocationPrimaryKey.EntityObject;
             Check.EnsureNotNull(originalGrantAllocation);
-            var relevantGrant = originalGrantAllocation.Grant;
+            var relevantGrant = originalGrantAllocation.FundSource;
             if (!ModelState.IsValid)
             {
                 // 6/29/20 TK (SLG EDIT) - Null is correct here. the Grant Allocation passed in is used to get any "Program Managers" assigned on
@@ -237,7 +237,7 @@ namespace ProjectFirma.Web.Controllers
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null, relevantGrant);
             }
 
-            var grantAllocation = GrantAllocation.CreateNewBlank(relevantGrant);
+            var grantAllocation = FundSourceAllocation.CreateNewBlank(relevantGrant);
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             grantAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
             SetMessageForDisplay($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" has been created.");

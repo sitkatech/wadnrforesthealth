@@ -18,20 +18,20 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[GrantType] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantType]")]
-    public partial class GrantType : IHavePrimaryKey, ICanDeleteFull
+    public partial class FundSourceType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected GrantType()
+        protected FundSourceType()
         {
-            this.Grants = new HashSet<Grant>();
+            this.Grants = new HashSet<FundSource>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantType(int grantTypeID, string grantTypeName) : this()
+        public FundSourceType(int grantTypeID, string grantTypeName) : this()
         {
             this.GrantTypeID = grantTypeID;
             this.GrantTypeName = grantTypeName;
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantType(string grantTypeName) : this()
+        public FundSourceType(string grantTypeName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -52,9 +52,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantType CreateNewBlank()
+        public static FundSourceType CreateNewBlank()
         {
-            return new GrantType(default(string));
+            return new FundSourceType(default(string));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace ProjectFirma.Web.Models
             
             if(Grants.Any())
             {
-                dependentObjects.Add(typeof(Grant).Name);
+                dependentObjects.Add(typeof(FundSource).Name);
             }
             return dependentObjects.Distinct().ToList();
         }
@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantType).Name, typeof(Grant).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundSourceType).Name, typeof(FundSource).Name};
 
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantTypeID; } set { GrantTypeID = value; } }
 
-        public virtual ICollection<Grant> Grants { get; set; }
+        public virtual ICollection<FundSource> Grants { get; set; }
 
         public static class FieldLengths
         {

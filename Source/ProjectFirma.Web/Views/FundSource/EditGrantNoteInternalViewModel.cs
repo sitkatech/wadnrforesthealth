@@ -49,26 +49,26 @@ namespace ProjectFirma.Web.Views.Grant
         {
         }
 
-        public EditGrantNoteInternalViewModel(Models.GrantNoteInternal grantNoteInternaal)
+        public EditGrantNoteInternalViewModel(Models.FundSourceNoteInternal fundSourceNoteInternaal)
         {
-            GrantNoteText = grantNoteInternaal.GrantNoteText;
+            GrantNoteText = fundSourceNoteInternaal.GrantNoteText;
 
         }
 
-        public void UpdateModel(Models.GrantNoteInternal grantNoteInternal, Person currentPerson, EditGrantNoteType editGrantNoteType)
+        public void UpdateModel(Models.FundSourceNoteInternal fundSourceNoteInternal, Person currentPerson, EditGrantNoteType editGrantNoteType)
         {
             if (editGrantNoteType == EditGrantNoteTypeNewNote.Instance)
             {
-                grantNoteInternal.CreatedByPerson = currentPerson;
-                grantNoteInternal.CreatedDate = DateTime.Now;
+                fundSourceNoteInternal.CreatedByPerson = currentPerson;
+                fundSourceNoteInternal.CreatedDate = DateTime.Now;
             }
             else
             {
-                grantNoteInternal.LastUpdatedByPerson = currentPerson;
-                grantNoteInternal.LastUpdatedDate = DateTime.Now;
+                fundSourceNoteInternal.LastUpdatedByPerson = currentPerson;
+                fundSourceNoteInternal.LastUpdatedDate = DateTime.Now;
             }
 
-            grantNoteInternal.GrantNoteText = GrantNoteText;
+            fundSourceNoteInternal.GrantNoteText = GrantNoteText;
 
         }
 

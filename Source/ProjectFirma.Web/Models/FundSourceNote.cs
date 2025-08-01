@@ -5,7 +5,7 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantNote : IAuditableEntity, IEntityNote
+    public partial class FundSourceNote : IAuditableEntity, IEntityNote
     {
         public DateTime Created
         {
@@ -45,12 +45,12 @@ namespace ProjectFirma.Web.Models
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.DeleteGrantNote(GrantNoteID)); }
+            get { return SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.DeleteGrantNote(GrantNoteID)); }
         }
 
         public string EditUrl
         {
-            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.EditGrantNote(GrantNoteID)); }
+            get { return SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.EditGrantNote(GrantNoteID)); }
         }
         public string AuditDescriptionString
         {

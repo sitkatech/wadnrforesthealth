@@ -5,7 +5,7 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class GrantAllocationRequestAmount : IGrantAllocationRequestAmount
     {
-        public Models.GrantAllocation GrantAllocation { get; }
+        public Models.FundSourceAllocation FundSourceAllocation { get; }
 
         public decimal? TotalAmount { get; }
         public decimal? MatchAmount { get; }
@@ -16,9 +16,9 @@ namespace ProjectFirma.Web.Views.Project
         }
         public string DisplayCssClass;
 
-        public GrantAllocationRequestAmount(Models.GrantAllocation grantAllocation, decimal? totalAmount, decimal? matchAmount, decimal? payAmount,string displayCssClass)
+        public GrantAllocationRequestAmount(Models.FundSourceAllocation fundSourceAllocation, decimal? totalAmount, decimal? matchAmount, decimal? payAmount,string displayCssClass)
         {
-            GrantAllocation = grantAllocation;
+            FundSourceAllocation = fundSourceAllocation;
             TotalAmount = totalAmount;
             DisplayCssClass = displayCssClass;
             MatchAmount = matchAmount;
@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Views.Project
 
         public GrantAllocationRequestAmount(IGrantAllocationRequestAmount grantAllocationRequestAmount)
         {
-            GrantAllocation = grantAllocationRequestAmount.GrantAllocation;
+            FundSourceAllocation = grantAllocationRequestAmount.FundSourceAllocation;
             TotalAmount = grantAllocationRequestAmount.TotalAmount;
             MatchAmount = grantAllocationRequestAmount.MatchAmount;
             PayAmount = grantAllocationRequestAmount.PayAmount;
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Project
 
         public static GrantAllocationRequestAmount Clone(IGrantAllocationRequestAmount grantAllocationRequestAmountToDiff, string displayCssClass)
         {
-            return new GrantAllocationRequestAmount(grantAllocationRequestAmountToDiff.GrantAllocation,
+            return new GrantAllocationRequestAmount(grantAllocationRequestAmountToDiff.FundSourceAllocation,
                                                   grantAllocationRequestAmountToDiff.TotalAmount,
                                                   grantAllocationRequestAmountToDiff.MatchAmount,
                                                   grantAllocationRequestAmountToDiff.PayAmount,

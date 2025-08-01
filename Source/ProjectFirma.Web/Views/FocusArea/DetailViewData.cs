@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.FocusArea
                 };
 
             //GrantAllocations are accessed from the Grant Index page
-            ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+            ManageGrantAllocationsUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;

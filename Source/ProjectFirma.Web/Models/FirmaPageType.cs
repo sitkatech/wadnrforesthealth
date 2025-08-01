@@ -164,12 +164,12 @@ namespace ProjectFirma.Web.Models
     }
     public partial class FirmaPageTypeFullGrantList
     {
-        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
     public partial class FirmaPageTypeFullGrantAllocationList
     {
-        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
     public partial class FirmaPageTypePriorityLandscapesList
@@ -184,7 +184,7 @@ namespace ProjectFirma.Web.Models
 
     public partial class FirmaPageTypeFullAgreementList
     {
-        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
 

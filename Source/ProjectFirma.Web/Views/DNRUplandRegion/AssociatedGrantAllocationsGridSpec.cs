@@ -12,7 +12,7 @@ using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
-    public class AssociatedGrantAllocationsGridSpec : GridSpec<Models.GrantAllocation>
+    public class AssociatedGrantAllocationsGridSpec : GridSpec<Models.FundSourceAllocation>
     {
         public AssociatedGrantAllocationsGridSpec()
             { 
@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                     x.GrantAllocationProgramIndexProjectCodes?.Where(y=> y.ProjectCode != null).Select(y =>  y.ProjectCode?.ProjectCodeName).Distinct() ??
                     Array.Empty<string>()), 80, AgGridColumnFilterType.Text);
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.Grant.GrantNumber, x.Grant.GetDetailUrl()).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.FundSource.FundSourceNumber, x.FundSource.GetDetailUrl()).ToJsonObjectForAgGrid(), 150, AgGridColumnFilterType.HtmlLinkJson);
 
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 75, AgGridColumnFormatType.Date);
 

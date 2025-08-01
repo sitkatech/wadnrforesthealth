@@ -9,7 +9,7 @@ namespace ProjectFirma.Web.Views.Grant
         public ProjectGrantAllocationRequestsByGrantGridSpec()
         {
             Add(Models.FieldDefinition.GrantAllocation.ToGridHeaderString(),
-                a => new HtmlLinkObject(a.GrantAllocation.DisplayName, a.GrantAllocation.GetDetailUrl()).ToJsonObjectForAgGrid(),
+                a => new HtmlLinkObject(a.FundSourceAllocation.DisplayName, a.FundSourceAllocation.GetDetailUrl()).ToJsonObjectForAgGrid(),
                 200,
                 AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.Project.ToGridHeaderString(),

@@ -46,20 +46,20 @@ namespace ProjectFirma.Web.Views.Grant
         public int? GrantTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
-        [StringLength(Models.Grant.FieldLengths.GrantName)]
+        [StringLength(Models.FundSource.FieldLengths.FundSourceName)]
         [Required]
         public string GrantName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantShortName)]
-        [StringLength(Models.Grant.FieldLengths.ShortName)]
+        [StringLength(Models.FundSource.FieldLengths.ShortName)]
         public string GrantShortName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
-        [StringLength(Models.Grant.FieldLengths.GrantNumber)]
+        [StringLength(Models.FundSource.FieldLengths.FundSourceNumber)]
         public string GrantNumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
-        [StringLength(Models.Grant.FieldLengths.CFDANumber)]
+        [StringLength(Models.FundSource.FieldLengths.CFDANumber)]
         public string CFDANumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
@@ -79,33 +79,33 @@ namespace ProjectFirma.Web.Views.Grant
         {
         }
 
-        public EditGrantViewModel(Models.Grant grant)
+        public EditGrantViewModel(Models.FundSource fundSource)
         {
-            GrantName = grant.GrantName;
-            GrantShortName = grant.ShortName;
-            OrganizationID = grant.OrganizationID;
-            GrantStatusID = grant.GrantStatusID;
-            GrantTypeID = grant.GrantTypeID;
-            GrantNumber = grant.GrantNumber;
-            CFDANumber = grant.CFDANumber;
-            TotalAwardAmount = grant.TotalAwardAmount;
-            GrantStartDate = grant.StartDate;
-            GrantEndDate = grant.EndDate;
+            GrantName = fundSource.FundSourceName;
+            GrantShortName = fundSource.ShortName;
+            OrganizationID = fundSource.OrganizationID;
+            GrantStatusID = fundSource.FundSourceStatusID;
+            GrantTypeID = fundSource.FundSourceTypeID;
+            GrantNumber = fundSource.FundSourceNumber;
+            CFDANumber = fundSource.CFDANumber;
+            TotalAwardAmount = fundSource.TotalAwardAmount;
+            GrantStartDate = fundSource.StartDate;
+            GrantEndDate = fundSource.EndDate;
             
         }
 
-        public void UpdateModel(Models.Grant grant, Person currentPerson)
+        public void UpdateModel(Models.FundSource fundSource, Person currentPerson)
         {
-            grant.GrantName = GrantName;
-            grant.ShortName = GrantShortName;
-            grant.OrganizationID = OrganizationID;
-            grant.GrantStatusID = GrantStatusID;
-            grant.GrantTypeID = GrantTypeID;
-            grant.GrantNumber = GrantNumber;
-            grant.CFDANumber = CFDANumber;
+            fundSource.FundSourceName = GrantName;
+            fundSource.ShortName = GrantShortName;
+            fundSource.OrganizationID = OrganizationID;
+            fundSource.FundSourceStatusID = GrantStatusID;
+            fundSource.FundSourceTypeID = GrantTypeID;
+            fundSource.FundSourceNumber = GrantNumber;
+            fundSource.CFDANumber = CFDANumber;
             //grant.AwardedFunds = TotalAwardAmount;
-            grant.StartDate = GrantStartDate;
-            grant.EndDate = GrantEndDate;
+            fundSource.StartDate = GrantStartDate;
+            fundSource.EndDate = GrantEndDate;
 
         }
 

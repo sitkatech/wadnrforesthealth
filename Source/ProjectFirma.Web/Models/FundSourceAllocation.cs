@@ -13,13 +13,13 @@ using ProjectFirma.Web.Views.Shared.FileResourceControls;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocation : IAuditableEntity, ICanUploadNewFiles
+    public partial class FundSourceAllocation : IAuditableEntity, ICanUploadNewFiles
     {
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
 
-        public string GrantNumberAndGrantAllocationDisplayName => $"{Grant.GrantNumber} {GrantAllocationName}";
+        public string GrantNumberAndGrantAllocationDisplayName => $"{FundSource.FundSourceNumber} {GrantAllocationName}";
 
         public string AllocationAmountCurrencyDisplay => $"{AllocationAmount.ToStringCurrency()}";
 
@@ -202,7 +202,7 @@ namespace ProjectFirma.Web.Models
             return convertedProjectCodes;
         }
 
-        public static List<GrantAllocation> OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<GrantAllocation> grantAllocations)
+        public static List<FundSourceAllocation> OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<FundSourceAllocation> grantAllocations)
         {
             // Find all the GrantAllocations that have a proper year prefix ("2016-....")
             var allGrantAllocationsPrefixedWithGrantYear =
@@ -211,23 +211,23 @@ namespace ProjectFirma.Web.Models
                 allGrantAllocationsPrefixedWithGrantYear.Select(ga => ga.GrantAllocationID).ToList();
 
             // Start out showing properly prefixed year entries, with most recent on top
-            List<Models.GrantAllocation> outgoingGrantAllocations = new List<Models.GrantAllocation>();
+            List<Models.FundSourceAllocation> outgoingGrantAllocations = new List<Models.FundSourceAllocation>();
             outgoingGrantAllocations.AddRange(
                 allGrantAllocationsPrefixedWithGrantYear.OrderByDescending(x => GetGrantYearPrefixIfPresent(x)));
 
             // Then show everything else, alpha sorted.
             var grantAllocationsWithoutYears = grantAllocations
                 .Where(ga => !allGrantAllocationIDSPrefixedWithGrantYear.Contains(ga.GrantAllocationID)).ToList();
-            outgoingGrantAllocations.AddRange(grantAllocationsWithoutYears.OrderBy(x => x.Grant.GrantNumber));
+            outgoingGrantAllocations.AddRange(grantAllocationsWithoutYears.OrderBy(x => x.FundSource.FundSourceNumber));
             return outgoingGrantAllocations;
         }
 
-        private static string GetGrantYearPrefixIfPresent(GrantAllocation ga)
+        private static string GetGrantYearPrefixIfPresent(FundSourceAllocation ga)
         {
             const string yearMatchPattern = @"^(?<year>[1-9][0-9][0-9][0-9])-";
 
             var grantYearRegex = new Regex(yearMatchPattern);
-            var grantNumber = ga.Grant.GrantNumber;
+            var grantNumber = ga.FundSource.FundSourceNumber;
             if (string.IsNullOrEmpty(grantNumber))
             {
                 return null;
@@ -256,7 +256,7 @@ namespace ProjectFirma.Web.Models
                     return this.Organization;
                 }
 
-                return this.Grant.Organization;
+                return this.FundSource.Organization;
             }
         }
 

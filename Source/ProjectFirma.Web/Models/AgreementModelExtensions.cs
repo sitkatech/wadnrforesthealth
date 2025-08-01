@@ -30,22 +30,22 @@ namespace ProjectFirma.Web.Models
             return OrganizationDetailUrlTemplate.ParameterReplace(agreement.OrganizationID);
         }
 
-        public static readonly UrlTemplate<int> GrantDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> GrantDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
 
         public static HtmlString GetListOfGrantHrefs(this Models.Agreement agreement)
         {
-            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.GrantAllocation.Grant).DistinctBy(x => x.GrantNumber).OrderBy(x => x.GrantNumber, StringComparer.InvariantCultureIgnoreCase);
+            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.FundSourceAllocation.FundSource).DistinctBy(x => x.FundSourceNumber).OrderBy(x => x.FundSourceNumber, StringComparer.InvariantCultureIgnoreCase);
 
             var distinctListOfGrantHrefs = distinctListOfGrants.Select(x =>
-                UrlTemplate.MakeHrefString(GrantDetailUrlTemplate.ParameterReplace(x.GrantID), x.GrantNumber));
+                UrlTemplate.MakeHrefString(GrantDetailUrlTemplate.ParameterReplace(x.FundSourceID), x.FundSourceNumber));
             return new HtmlString(string.Join(", ", distinctListOfGrantHrefs.Select(x => x.ToHtmlString())));
         }
         
         public static string GetListOfGrantHrefsForAgGrid(this Models.Agreement agreement)
         {
-            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.GrantAllocation.Grant).DistinctBy(x => x.GrantNumber).OrderBy(x => x.GrantNumber, StringComparer.InvariantCultureIgnoreCase);
+            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.FundSourceAllocation.FundSource).DistinctBy(x => x.FundSourceNumber).OrderBy(x => x.FundSourceNumber, StringComparer.InvariantCultureIgnoreCase);
 
-            var distinctListOfGrantHrefs = distinctListOfGrants.Select(x => new HtmlLinkObject(x.GrantNumber, GrantDetailUrlTemplate.ParameterReplace(x.GrantID)));
+            var distinctListOfGrantHrefs = distinctListOfGrants.Select(x => new HtmlLinkObject(x.FundSourceNumber, GrantDetailUrlTemplate.ParameterReplace(x.FundSourceID)));
             return distinctListOfGrantHrefs.ToJsonArrayForAgGrid();
         }
 

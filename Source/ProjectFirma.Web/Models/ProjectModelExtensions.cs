@@ -174,7 +174,7 @@ namespace ProjectFirma.Web.Models
 
         public static string GetExpectedFundingGrantAllocationsAsCommaDelimitedListForAgGrid(this Project project)
         {
-            var grantAllocations = project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation);
+            var grantAllocations = project.ProjectGrantAllocationRequests.Select(x => x.FundSourceAllocation);
             return grantAllocations.Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl)).ToJsonArrayForAgGrid();
         }
     }

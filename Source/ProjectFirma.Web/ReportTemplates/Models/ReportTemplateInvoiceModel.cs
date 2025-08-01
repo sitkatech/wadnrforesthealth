@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 PaymentAmount = invoice.PaymentAmount;
                 MatchAmount = invoice.MatchAmount;
                 MatchAmountDisplayFromModel = invoice.MatchAmountForDisplay;
-                GrantNumber = invoice.Grant?.GrantNumber;
+                GrantNumber = invoice.FundSource?.FundSourceNumber;
                 ProgramIndexCode = invoice.ProgramIndex?.ProgramIndexCode;
                 ProjectCodeName = invoice.ProjectCode?.ProjectCodeName;
                 OrganizationCodeValue = invoice.OrganizationCode?.OrganizationCodeValue;

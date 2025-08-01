@@ -18,36 +18,36 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[Grant] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Grant]")]
-    public partial class Grant : IHavePrimaryKey, ICanDeleteFull
+    public partial class FundSource : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected Grant()
+        protected FundSource()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
-            this.GrantFileResources = new HashSet<GrantFileResource>();
-            this.GrantNotes = new HashSet<GrantNote>();
-            this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
+            this.GrantAllocations = new HashSet<FundSourceAllocation>();
+            this.GrantFileResources = new HashSet<FundSourceFileResource>();
+            this.GrantNotes = new HashSet<FundSourceNote>();
+            this.GrantNoteInternals = new HashSet<FundSourceNoteInternal>();
             this.Invoices = new HashSet<Invoice>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID, decimal totalAwardAmount) : this()
+        public FundSource(int fundSourceID, string fundSourceNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, string cFDANumber, string fundSourceName, int? fundSourceTypeID, string shortName, int fundSourceStatusID, int organizationID, decimal totalAwardAmount) : this()
         {
-            this.GrantID = grantID;
-            this.GrantNumber = grantNumber;
+            this.FundSourceID = fundSourceID;
+            this.FundSourceNumber = fundSourceNumber;
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.ConditionsAndRequirements = conditionsAndRequirements;
             this.ComplianceNotes = complianceNotes;
             this.CFDANumber = cFDANumber;
-            this.GrantName = grantName;
-            this.GrantTypeID = grantTypeID;
+            this.FundSourceName = fundSourceName;
+            this.FundSourceTypeID = fundSourceTypeID;
             this.ShortName = shortName;
-            this.GrantStatusID = grantStatusID;
+            this.FundSourceStatusID = fundSourceStatusID;
             this.OrganizationID = organizationID;
             this.TotalAwardAmount = totalAwardAmount;
         }
@@ -55,13 +55,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(string grantName, int grantStatusID, int organizationID, decimal totalAwardAmount) : this()
+        public FundSource(string fundSourceName, int fundSourceStatusID, int organizationID, decimal totalAwardAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.FundSourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.GrantName = grantName;
-            this.GrantStatusID = grantStatusID;
+            this.FundSourceName = fundSourceName;
+            this.FundSourceStatusID = fundSourceStatusID;
             this.OrganizationID = organizationID;
             this.TotalAwardAmount = totalAwardAmount;
         }
@@ -69,12 +69,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Grant(string grantName, GrantStatus grantStatus, Organization organization, decimal totalAwardAmount) : this()
+        public FundSource(string fundSourceName, FundSourceStatus fundSourceStatus, Organization organization, decimal totalAwardAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantName = grantName;
-            this.GrantStatusID = grantStatus.GrantStatusID;
+            this.FundSourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.FundSourceName = fundSourceName;
+            this.FundSourceStatusID = fundSourceStatus.GrantStatusID;
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
             organization.Grants.Add(this);
@@ -84,9 +84,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Grant CreateNewBlank(GrantStatus grantStatus, Organization organization)
+        public static FundSource CreateNewBlank(FundSourceStatus fundSourceStatus, Organization organization)
         {
-            return new Grant(default(string), grantStatus, organization, default(decimal));
+            return new FundSource(default(string), fundSourceStatus, organization, default(decimal));
         }
 
         /// <summary>
@@ -107,22 +107,22 @@ namespace ProjectFirma.Web.Models
             
             if(GrantAllocations.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
+                dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
 
             if(GrantFileResources.Any())
             {
-                dependentObjects.Add(typeof(GrantFileResource).Name);
+                dependentObjects.Add(typeof(FundSourceFileResource).Name);
             }
 
             if(GrantNotes.Any())
             {
-                dependentObjects.Add(typeof(GrantNote).Name);
+                dependentObjects.Add(typeof(FundSourceNote).Name);
             }
 
             if(GrantNoteInternals.Any())
             {
-                dependentObjects.Add(typeof(GrantNoteInternal).Name);
+                dependentObjects.Add(typeof(FundSourceNoteInternal).Name);
             }
 
             if(Invoices.Any())
@@ -135,7 +135,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantFileResource).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundSource).Name, typeof(FundSourceAllocation).Name, typeof(FundSourceFileResource).Name, typeof(FundSourceNote).Name, typeof(FundSourceNoteInternal).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -187,36 +187,36 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int GrantID { get; set; }
-        public string GrantNumber { get; set; }
+        public int FundSourceID { get; set; }
+        public string FundSourceNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string ConditionsAndRequirements { get; set; }
         public string ComplianceNotes { get; set; }
         public string CFDANumber { get; set; }
-        public string GrantName { get; set; }
-        public int? GrantTypeID { get; set; }
+        public string FundSourceName { get; set; }
+        public int? FundSourceTypeID { get; set; }
         public string ShortName { get; set; }
-        public int GrantStatusID { get; set; }
+        public int FundSourceStatusID { get; set; }
         public int OrganizationID { get; set; }
         public decimal TotalAwardAmount { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
+        public int PrimaryKey { get { return FundSourceID; } set { FundSourceID = value; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
-        public virtual ICollection<GrantFileResource> GrantFileResources { get; set; }
-        public virtual ICollection<GrantNote> GrantNotes { get; set; }
-        public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
+        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSourceFileResource> GrantFileResources { get; set; }
+        public virtual ICollection<FundSourceNote> GrantNotes { get; set; }
+        public virtual ICollection<FundSourceNoteInternal> GrantNoteInternals { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
-        public virtual GrantType GrantType { get; set; }
-        public GrantStatus GrantStatus { get { return GrantStatus.AllLookupDictionary[GrantStatusID]; } }
+        public virtual FundSourceType FundSourceType { get; set; }
+        public FundSourceStatus FundSourceStatus { get { return FundSourceStatus.AllLookupDictionary[FundSourceStatusID]; } }
         public virtual Organization Organization { get; set; }
 
         public static class FieldLengths
         {
-            public const int GrantNumber = 30;
+            public const int FundSourceNumber = 30;
             public const int CFDANumber = 10;
-            public const int GrantName = 64;
+            public const int FundSourceName = 64;
             public const int ShortName = 64;
         }
     }

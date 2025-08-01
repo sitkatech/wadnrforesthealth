@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.Invoice
                 Add("Download Invoice", x => AgGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant != null ? x.Grant.GetGrantNumberAsUrl(): new HtmlString(string.Empty), 180,
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.FundSource != null ? x.FundSource.GetGrantNumberAsUrl(): new HtmlString(string.Empty), 180,
                 AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.InvoiceNumber.ToGridHeaderString(), x => x.InvoiceNumber, 90, AgGridColumnFilterType.Text);
             Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDate, 90, AgGridColumnFormatType.Date);

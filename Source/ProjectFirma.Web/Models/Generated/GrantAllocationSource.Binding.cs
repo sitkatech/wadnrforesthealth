@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantAllocationSource()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantAllocations = new HashSet<FundSourceAllocation>();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Models
             
             if(GrantAllocations.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
+                dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
             return dependentObjects.Distinct().ToList();
         }
@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationSource).Name, typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationSource).Name, typeof(FundSourceAllocation).Name};
 
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationSourceID; } set { GrantAllocationSourceID = value; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
 
         public static class FieldLengths
         {

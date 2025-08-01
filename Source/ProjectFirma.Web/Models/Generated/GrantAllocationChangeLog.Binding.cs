@@ -58,13 +58,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationChangeLog(GrantAllocation grantAllocation, Person changePerson, DateTime changeDate) : this()
+        public GrantAllocationChangeLog(FundSourceAllocation fundSourceAllocation, Person changePerson, DateTime changeDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationChangeLogID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationChangeLogs.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationChangeLogs.Add(this);
             this.ChangePersonID = changePerson.PersonID;
             this.ChangePerson = changePerson;
             changePerson.GrantAllocationChangeLogsWhereYouAreTheChangePerson.Add(this);
@@ -74,9 +74,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationChangeLog CreateNewBlank(GrantAllocation grantAllocation, Person changePerson)
+        public static GrantAllocationChangeLog CreateNewBlank(FundSourceAllocation fundSourceAllocation, Person changePerson)
         {
-            return new GrantAllocationChangeLog(grantAllocation, changePerson, default(DateTime));
+            return new GrantAllocationChangeLog(fundSourceAllocation, changePerson, default(DateTime));
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationChangeLogID; } set { GrantAllocationChangeLogID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public virtual Person ChangePerson { get; set; }
 
         public static class FieldLengths

@@ -39,10 +39,10 @@ namespace ProjectFirma.Web.Views.Agreement
         public int? MOUAgreementTypeID { get; set; }
         public int? NDAAgreementTypeID { get; set; }
 
-        public EditAgreementViewData(EditAgreementType editAgreementType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.Grant> grants, IEnumerable<Models.AgreementType> agreementTypes, IEnumerable<Models.AgreementStatus> agreementStatuses)
+        public EditAgreementViewData(EditAgreementType editAgreementType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSource> grants, IEnumerable<Models.AgreementType> agreementTypes, IEnumerable<Models.AgreementStatus> agreementStatuses)
         {
             OrganizationList = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            GrantList = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantTitle);
+            GrantList = grants.ToSelectListWithEmptyFirstRow(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => y.GrantTitle);
             var agreementTypesAsList = agreementTypes.ToList();
             AgreementTypeList = agreementTypesAsList.ToSelectListWithEmptyFirstRow(x => x.AgreementTypeID.ToString(CultureInfo.InvariantCulture), y => y.AgreementTypeName);
             AgreementStatusList = agreementStatuses.ToSelectListWithEmptyFirstRow(x => x.AgreementStatusID.ToString(CultureInfo.InvariantCulture), y => y.AgreementStatusName);

@@ -26,17 +26,17 @@ namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
 {
     public class GrantAllocationBasicsViewData
     {
-        public Models.GrantAllocation GrantAllocation { get; }
+        public Models.FundSourceAllocation FundSourceAllocation { get; }
         public bool UserHasGrantAllocationManagePermissions { get; }
         public bool ShowDownload { get; set; }
         public bool IsUserLoggedIn { get; }
 
-        public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasGrantAllocationManagePermissions, bool isUserLoggedIn)
+        public GrantAllocationBasicsViewData(Models.FundSourceAllocation fundSourceAllocation, bool userHasGrantAllocationManagePermissions, bool isUserLoggedIn)
         {
-            GrantAllocation = grantAllocation;
+            FundSourceAllocation = fundSourceAllocation;
             UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
             // Used for creating file download links, if files available
-            ShowDownload = grantAllocation.GrantAllocationFileResources.Any();
+            ShowDownload = fundSourceAllocation.GrantAllocationFileResources.Any();
             IsUserLoggedIn = isUserLoggedIn;
         }        
     }

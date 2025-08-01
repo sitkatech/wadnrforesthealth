@@ -56,13 +56,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationFileResource(GrantAllocation grantAllocation, FileResource fileResource, string displayName) : this()
+        public GrantAllocationFileResource(FundSourceAllocation fundSourceAllocation, FileResource fileResource, string displayName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationFileResourceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationFileResources.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationFileResources.Add(this);
             this.FileResourceID = fileResource.FileResourceID;
             this.FileResource = fileResource;
             fileResource.GrantAllocationFileResources.Add(this);
@@ -72,9 +72,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationFileResource CreateNewBlank(GrantAllocation grantAllocation, FileResource fileResource)
+        public static GrantAllocationFileResource CreateNewBlank(FundSourceAllocation fundSourceAllocation, FileResource fileResource)
         {
-            return new GrantAllocationFileResource(grantAllocation, fileResource, default(string));
+            return new GrantAllocationFileResource(fundSourceAllocation, fileResource, default(string));
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationFileResourceID; } set { GrantAllocationFileResourceID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public virtual FileResource FileResource { get; set; }
 
         public static class FieldLengths

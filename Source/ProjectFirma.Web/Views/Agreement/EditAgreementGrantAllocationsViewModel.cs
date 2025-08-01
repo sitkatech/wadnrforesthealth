@@ -41,20 +41,20 @@ namespace ProjectFirma.Web.Views.Agreement
         {
         }
 
-        public GrantAllocationJson(Models.GrantAllocation grantAllocation)
+        public GrantAllocationJson(Models.FundSourceAllocation fundSourceAllocation)
         {
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantNumber = grantAllocation.Grant.GrantNumber;
-            this.GrantAllocationName = grantAllocation.GrantAllocationName;
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.GrantNumber = fundSourceAllocation.FundSource.FundSourceNumber;
+            this.GrantAllocationName = fundSourceAllocation.GrantAllocationName;
         }
 
-        public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.GrantAllocation> grantAllocations, bool doAlphaSort = true)
+        public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.FundSourceAllocation> grantAllocations, bool doAlphaSort = true)
         {
             var outgoingGrantAllocations = grantAllocations;
             if (doAlphaSort)
             {
                 // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-                outgoingGrantAllocations = Models.GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+                outgoingGrantAllocations = Models.FundSourceAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
             }
             return outgoingGrantAllocations.Select(ga => new GrantAllocationJson(ga)).ToList();
         }
@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             AgreementId = agreement.AgreementID;
             // Generate GrantAllocationJsons that are ordered descending by first part of GrantNumber 
-            var grantAllocations = agreement.AgreementGrantAllocations.Select(x => x.GrantAllocation).ToList();
+            var grantAllocations = agreement.AgreementGrantAllocations.Select(x => x.FundSourceAllocation).ToList();
             GrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(grantAllocations);
         }
 

@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {
             // Arrange
-            var grantAllocation = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation = TestFramework.TestFundSourceAllocation.Create();
 
             // Act
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
@@ -53,9 +53,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             // Arrange
             var organization = TestFramework.TestOrganization.Create();
-            var grantAllocation = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation = TestFramework.TestFundSourceAllocation.Create();
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
-            viewModel.GrantAllocationName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.GrantAllocationName), Models.GrantAllocation.FieldLengths.GrantAllocationName);
+            viewModel.GrantAllocationName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.GrantAllocationName), Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
             viewModel.OrganizationID = organization.OrganizationID;
             //viewModel.IsActive = true;
 
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public void CanValidateModelTest()
         {
             // Arrange
-            var grantAllocation = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation = TestFramework.TestFundSourceAllocation.Create();
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
             var nameOfGrantAllocationName = GeneralUtility.NameOf(() => viewModel.GrantAllocationName);
 
@@ -88,16 +88,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             // Act
             // Set string fields to string longer than their max lengths
-            viewModel.GrantAllocationName = TestFramework.MakeTestNameLongerThan(nameOfGrantAllocationName, Models.GrantAllocation.FieldLengths.GrantAllocationName);
+            viewModel.GrantAllocationName = TestFramework.MakeTestNameLongerThan(nameOfGrantAllocationName, Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
             DataAnnotationsValidator.TryValidate(viewModel, out validationResults);
 
             // Assert
             Assert.That(validationResults.Count, Is.EqualTo(1), "Expecting certain number of errors");
-            TestFramework.AssertFieldStringLength(validationResults, nameOfGrantAllocationName, Models.GrantAllocation.FieldLengths.GrantAllocationName);
+            TestFramework.AssertFieldStringLength(validationResults, nameOfGrantAllocationName, Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
 
             // Act
             // Happy path
-            viewModel.GrantAllocationName = TestFramework.MakeTestName(nameOfGrantAllocationName, Models.GrantAllocation.FieldLengths.GrantAllocationName);
+            viewModel.GrantAllocationName = TestFramework.MakeTestName(nameOfGrantAllocationName, Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
             var isValid = DataAnnotationsValidator.TryValidate(viewModel, out validationResults);
 
             // Assert

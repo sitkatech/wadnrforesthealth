@@ -13,7 +13,7 @@ namespace ProjectFirma.Web.Views.Grant
 
         public EditGrantType EditGrantType { get; set; }
 
-        public NewGrantViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes)
+        public NewGrantViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSourceStatus> grantStatuses, IEnumerable<Models.FundSourceType> grantTypes)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);

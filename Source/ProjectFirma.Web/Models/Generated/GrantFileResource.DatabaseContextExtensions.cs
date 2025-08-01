@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static GrantFileResource GetGrantFileResource(this IQueryable<GrantFileResource> grantFileResources, int grantFileResourceID)
+        public static FundSourceFileResource GetGrantFileResource(this IQueryable<FundSourceFileResource> grantFileResources, int grantFileResourceID)
         {
             var grantFileResource = grantFileResources.SingleOrDefault(x => x.GrantFileResourceID == grantFileResourceID);
             Check.RequireNotNullThrowNotFound(grantFileResource, "GrantFileResource", grantFileResourceID);
@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteGrantFileResource(this IQueryable<GrantFileResource> grantFileResources, List<int> grantFileResourceIDList)
+        public static void DeleteGrantFileResource(this IQueryable<FundSourceFileResource> grantFileResources, List<int> grantFileResourceIDList)
         {
             if(grantFileResourceIDList.Any())
             {
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an object list (WADNR style)
-        public static void DeleteGrantFileResource(this IQueryable<GrantFileResource> grantFileResources, ICollection<GrantFileResource> grantFileResourcesToDelete)
+        public static void DeleteGrantFileResource(this IQueryable<FundSourceFileResource> grantFileResources, ICollection<FundSourceFileResource> grantFileResourcesToDelete)
         {
             if(grantFileResourcesToDelete.Any())
             {
@@ -49,14 +49,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteGrantFileResource(this IQueryable<GrantFileResource> grantFileResources, int grantFileResourceID)
+        public static void DeleteGrantFileResource(this IQueryable<FundSourceFileResource> grantFileResources, int grantFileResourceID)
         {
             DeleteGrantFileResource(grantFileResources, new List<int> { grantFileResourceID });
         }
 
-        public static void DeleteGrantFileResource(this IQueryable<GrantFileResource> grantFileResources, GrantFileResource grantFileResourceToDelete)
+        public static void DeleteGrantFileResource(this IQueryable<FundSourceFileResource> grantFileResources, FundSourceFileResource fundSourceFileResourceToDelete)
         {
-            DeleteGrantFileResource(grantFileResources, new List<GrantFileResource> { grantFileResourceToDelete });
+            DeleteGrantFileResource(grantFileResources, new List<FundSourceFileResource> { fundSourceFileResourceToDelete });
         }
     }
 }

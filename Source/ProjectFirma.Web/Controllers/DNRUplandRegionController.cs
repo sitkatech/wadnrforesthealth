@@ -136,11 +136,11 @@ namespace ProjectFirma.Web.Controllers
 
 
         [DNRUplandRegionViewFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
+        public GridJsonNetJObjectResult<FundSourceAllocation> GrantAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
             var gridSpec = new AssociatedGrantAllocationsGridSpec();
-            var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson).Where(x=>x.Grant.GrantStatus.GrantStatusID == GrantStatus.Active.GrantStatusID).OrderByDescending(x=>x.GrantAllocationPriority?.GrantAllocationPriorityNumber).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson).Where(x=>x.FundSource.FundSourceStatus.GrantStatusID == FundSourceStatus.Active.GrantStatusID).OrderByDescending(x=>x.GrantAllocationPriority?.GrantAllocationPriorityNumber).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

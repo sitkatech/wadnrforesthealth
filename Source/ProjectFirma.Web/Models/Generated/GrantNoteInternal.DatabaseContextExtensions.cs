@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static GrantNoteInternal GetGrantNoteInternal(this IQueryable<GrantNoteInternal> grantNoteInternals, int grantNoteInternalID)
+        public static FundSourceNoteInternal GetGrantNoteInternal(this IQueryable<FundSourceNoteInternal> grantNoteInternals, int grantNoteInternalID)
         {
             var grantNoteInternal = grantNoteInternals.SingleOrDefault(x => x.GrantNoteInternalID == grantNoteInternalID);
             Check.RequireNotNullThrowNotFound(grantNoteInternal, "GrantNoteInternal", grantNoteInternalID);
@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteGrantNoteInternal(this IQueryable<GrantNoteInternal> grantNoteInternals, List<int> grantNoteInternalIDList)
+        public static void DeleteGrantNoteInternal(this IQueryable<FundSourceNoteInternal> grantNoteInternals, List<int> grantNoteInternalIDList)
         {
             if(grantNoteInternalIDList.Any())
             {
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an object list (WADNR style)
-        public static void DeleteGrantNoteInternal(this IQueryable<GrantNoteInternal> grantNoteInternals, ICollection<GrantNoteInternal> grantNoteInternalsToDelete)
+        public static void DeleteGrantNoteInternal(this IQueryable<FundSourceNoteInternal> grantNoteInternals, ICollection<FundSourceNoteInternal> grantNoteInternalsToDelete)
         {
             if(grantNoteInternalsToDelete.Any())
             {
@@ -49,14 +49,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteGrantNoteInternal(this IQueryable<GrantNoteInternal> grantNoteInternals, int grantNoteInternalID)
+        public static void DeleteGrantNoteInternal(this IQueryable<FundSourceNoteInternal> grantNoteInternals, int grantNoteInternalID)
         {
             DeleteGrantNoteInternal(grantNoteInternals, new List<int> { grantNoteInternalID });
         }
 
-        public static void DeleteGrantNoteInternal(this IQueryable<GrantNoteInternal> grantNoteInternals, GrantNoteInternal grantNoteInternalToDelete)
+        public static void DeleteGrantNoteInternal(this IQueryable<FundSourceNoteInternal> grantNoteInternals, FundSourceNoteInternal fundSourceNoteInternalToDelete)
         {
-            DeleteGrantNoteInternal(grantNoteInternals, new List<GrantNoteInternal> { grantNoteInternalToDelete });
+            DeleteGrantNoteInternal(grantNoteInternals, new List<FundSourceNoteInternal> { fundSourceNoteInternalToDelete });
         }
     }
 }

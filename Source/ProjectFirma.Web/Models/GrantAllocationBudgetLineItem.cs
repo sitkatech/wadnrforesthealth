@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class GrantAllocationBudgetLineItem : IAuditableEntity
     {
-        public string AuditDescriptionString => $" {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Budget Line Item {this.GrantAllocationBudgetLineItemID} for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} {(this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : string.Empty)}";
+        public string AuditDescriptionString => $" {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Budget Line Item {this.GrantAllocationBudgetLineItemID} for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} {(this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationName : string.Empty)}";
     }
 
 }

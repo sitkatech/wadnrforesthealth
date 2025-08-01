@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static GrantAllocation GetGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, int grantAllocationID)
+        public static FundSourceAllocation GetGrantAllocation(this IQueryable<FundSourceAllocation> grantAllocations, int grantAllocationID)
         {
             var grantAllocation = grantAllocations.SingleOrDefault(x => x.GrantAllocationID == grantAllocationID);
             Check.RequireNotNullThrowNotFound(grantAllocation, "GrantAllocation", grantAllocationID);
@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, List<int> grantAllocationIDList)
+        public static void DeleteGrantAllocation(this IQueryable<FundSourceAllocation> grantAllocations, List<int> grantAllocationIDList)
         {
             if(grantAllocationIDList.Any())
             {
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // Delete using an object list (WADNR style)
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, ICollection<GrantAllocation> grantAllocationsToDelete)
+        public static void DeleteGrantAllocation(this IQueryable<FundSourceAllocation> grantAllocations, ICollection<FundSourceAllocation> grantAllocationsToDelete)
         {
             if(grantAllocationsToDelete.Any())
             {
@@ -49,14 +49,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, int grantAllocationID)
+        public static void DeleteGrantAllocation(this IQueryable<FundSourceAllocation> grantAllocations, int grantAllocationID)
         {
             DeleteGrantAllocation(grantAllocations, new List<int> { grantAllocationID });
         }
 
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, GrantAllocation grantAllocationToDelete)
+        public static void DeleteGrantAllocation(this IQueryable<FundSourceAllocation> grantAllocations, FundSourceAllocation fundSourceAllocationToDelete)
         {
-            DeleteGrantAllocation(grantAllocations, new List<GrantAllocation> { grantAllocationToDelete });
+            DeleteGrantAllocation(grantAllocations, new List<FundSourceAllocation> { fundSourceAllocationToDelete });
         }
     }
 }

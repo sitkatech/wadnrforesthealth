@@ -56,13 +56,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationBudgetLineItem(GrantAllocation grantAllocation, CostType costType, decimal grantAllocationBudgetLineItemAmount) : this()
+        public GrantAllocationBudgetLineItem(FundSourceAllocation fundSourceAllocation, CostType costType, decimal grantAllocationBudgetLineItemAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationBudgetLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationBudgetLineItems.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationBudgetLineItems.Add(this);
             this.CostTypeID = costType.CostTypeID;
             this.GrantAllocationBudgetLineItemAmount = grantAllocationBudgetLineItemAmount;
         }
@@ -70,9 +70,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationBudgetLineItem CreateNewBlank(GrantAllocation grantAllocation, CostType costType)
+        public static GrantAllocationBudgetLineItem CreateNewBlank(FundSourceAllocation fundSourceAllocation, CostType costType)
         {
-            return new GrantAllocationBudgetLineItem(grantAllocation, costType, default(decimal));
+            return new GrantAllocationBudgetLineItem(fundSourceAllocation, costType, default(decimal));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationBudgetLineItemID; } set { GrantAllocationBudgetLineItemID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public CostType CostType { get { return CostType.AllLookupDictionary[CostTypeID]; } }
 
         public static class FieldLengths

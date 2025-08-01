@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
             this.FirmaHomePageImages = new HashSet<FirmaHomePageImage>();
             this.FirmaPageImages = new HashSet<FirmaPageImage>();
             this.GrantAllocationFileResources = new HashSet<GrantAllocationFileResource>();
-            this.GrantFileResources = new HashSet<GrantFileResource>();
+            this.GrantFileResources = new HashSet<FundSourceFileResource>();
             this.InteractionEventFileResources = new HashSet<InteractionEventFileResource>();
             this.InvoicesWhereYouAreTheInvoiceFileResource = new HashSet<Invoice>();
             this.OrganizationsWhereYouAreTheLogoFileResource = new HashSet<Organization>();
@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Models
 
             if(GrantFileResources.Any())
             {
-                dependentObjects.Add(typeof(GrantFileResource).Name);
+                dependentObjects.Add(typeof(FundSourceFileResource).Name);
             }
 
             if((InteractionEventFileResource != null))
@@ -238,7 +238,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationFileResource).Name, typeof(FundSourceFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual ICollection<FirmaPageImage> FirmaPageImages { get; set; }
         public virtual ICollection<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
-        public virtual ICollection<GrantFileResource> GrantFileResources { get; set; }
+        public virtual ICollection<FundSourceFileResource> GrantFileResources { get; set; }
         protected virtual ICollection<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         [NotMapped]
         public InteractionEventFileResource InteractionEventFileResource { get { return InteractionEventFileResources.SingleOrDefault(); } set { InteractionEventFileResources = new List<InteractionEventFileResource>{value};} }

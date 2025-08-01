@@ -33,7 +33,7 @@
 @functions {
     private string GetAgreementGrantAllocationUrl(AgreementGrantAllocation currentAgreementGrantAllocation)
     {
-        return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.GrantAllocation)));
+        return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.FundSourceAllocation)));
     }
 }
 
@@ -234,7 +234,7 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</a>
+                                    <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.FundSourceAllocation.GrantNumberAndGrantAllocationDisplayName</a>
                                 </td>
                             </tr>
                         }

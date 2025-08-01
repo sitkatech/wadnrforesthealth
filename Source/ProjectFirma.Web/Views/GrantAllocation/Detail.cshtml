@@ -76,7 +76,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.GrantAllocationName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.FundSourceAllocation.GrantAllocationName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
                         Basics
                     </h3>
                 </div>
@@ -218,7 +218,7 @@
                 <div class="panel-body">
                     <div class="basicsLayout">
                         <table class="summaryLayout">
-                            @foreach (var changeLog in ViewDataTyped.GrantAllocation.GrantAllocationChangeLogs.OrderByDescending(x => x.ChangeDate))
+                            @foreach (var changeLog in ViewDataTyped.FundSourceAllocation.GrantAllocationChangeLogs.OrderByDescending(x => x.ChangeDate))
                             {
                                 <tr>
                                     <th scope="row">Created:</th>

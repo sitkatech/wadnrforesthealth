@@ -33,12 +33,12 @@ namespace ProjectFirma.Web.Views.Grant
         public IEnumerable<SelectListItem> GrantStatuses { get; }
         public IEnumerable<SelectListItem> GrantAllocations { get; }
 
-        public Models.Grant GrantToDuplicate { get; set; }
+        public Models.FundSource FundSourceToDuplicate { get; set; }
 
-        public DuplicateGrantViewData(IEnumerable<Models.GrantStatus> grantStatuses, Models.Grant grantToDuplicate, List<Models.GrantAllocation> grantAllocations)
+        public DuplicateGrantViewData(IEnumerable<Models.FundSourceStatus> grantStatuses, Models.FundSource fundSourceToDuplicate, List<Models.FundSourceAllocation> grantAllocations)
         {
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
-            GrantToDuplicate = grantToDuplicate;
+            FundSourceToDuplicate = fundSourceToDuplicate;
             GrantAllocations = grantAllocations.ToSelectList(x => x.GrantAllocationID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationName, true);
 
         }

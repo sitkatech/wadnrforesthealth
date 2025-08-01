@@ -54,13 +54,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationProgramIndexProjectCode(GrantAllocation grantAllocation, ProgramIndex programIndex) : this()
+        public GrantAllocationProgramIndexProjectCode(FundSourceAllocation fundSourceAllocation, ProgramIndex programIndex) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationProgramIndexProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationProgramIndexProjectCodes.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationProgramIndexProjectCodes.Add(this);
             this.ProgramIndexID = programIndex.ProgramIndexID;
             this.ProgramIndex = programIndex;
             programIndex.GrantAllocationProgramIndexProjectCodes.Add(this);
@@ -69,9 +69,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationProgramIndexProjectCode CreateNewBlank(GrantAllocation grantAllocation, ProgramIndex programIndex)
+        public static GrantAllocationProgramIndexProjectCode CreateNewBlank(FundSourceAllocation fundSourceAllocation, ProgramIndex programIndex)
         {
-            return new GrantAllocationProgramIndexProjectCode(grantAllocation, programIndex);
+            return new GrantAllocationProgramIndexProjectCode(fundSourceAllocation, programIndex);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationProgramIndexProjectCodeID; } set { GrantAllocationProgramIndexProjectCodeID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual ProjectCode ProjectCode { get; set; }
 

@@ -18,12 +18,12 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[GrantNoteInternal] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantNoteInternal]")]
-    public partial class GrantNoteInternal : IHavePrimaryKey, ICanDeleteFull
+    public partial class FundSourceNoteInternal : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected GrantNoteInternal()
+        protected FundSourceNoteInternal()
         {
 
         }
@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantNoteInternal(int grantNoteInternalID, int grantID, string grantNoteText, int createdByPersonID, DateTime createdDate, int? lastUpdatedByPersonID, DateTime? lastUpdatedDate) : this()
+        public FundSourceNoteInternal(int grantNoteInternalID, int grantID, string grantNoteText, int createdByPersonID, DateTime createdDate, int? lastUpdatedByPersonID, DateTime? lastUpdatedDate) : this()
         {
             this.GrantNoteInternalID = grantNoteInternalID;
             this.GrantID = grantID;
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantNoteInternal(int grantID, int createdByPersonID, DateTime createdDate) : this()
+        public FundSourceNoteInternal(int grantID, int createdByPersonID, DateTime createdDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantNoteInternalID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -58,13 +58,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantNoteInternal(Grant grant, Person createdByPerson, DateTime createdDate) : this()
+        public FundSourceNoteInternal(FundSource fundSource, Person createdByPerson, DateTime createdDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantNoteInternalID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.GrantNoteInternals.Add(this);
+            this.GrantID = fundSource.FundSourceID;
+            this.FundSource = fundSource;
+            fundSource.GrantNoteInternals.Add(this);
             this.CreatedByPersonID = createdByPerson.PersonID;
             this.CreatedByPerson = createdByPerson;
             createdByPerson.GrantNoteInternalsWhereYouAreTheCreatedByPerson.Add(this);
@@ -74,9 +74,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantNoteInternal CreateNewBlank(Grant grant, Person createdByPerson)
+        public static FundSourceNoteInternal CreateNewBlank(FundSource fundSource, Person createdByPerson)
         {
-            return new GrantNoteInternal(grant, createdByPerson, default(DateTime));
+            return new FundSourceNoteInternal(fundSource, createdByPerson, default(DateTime));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundSourceNoteInternal).Name};
 
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantNoteInternalID; } set { GrantNoteInternalID = value; } }
 
-        public virtual Grant Grant { get; set; }
+        public virtual FundSource FundSource { get; set; }
         public virtual Person CreatedByPerson { get; set; }
         public virtual Person LastUpdatedByPerson { get; set; }
 

@@ -58,13 +58,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationNoteInternal(GrantAllocation grantAllocation, Person createdByPerson, DateTime createdDate) : this()
+        public GrantAllocationNoteInternal(FundSourceAllocation fundSourceAllocation, Person createdByPerson, DateTime createdDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationNoteInternalID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.GrantAllocationNoteInternals.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.GrantAllocationNoteInternals.Add(this);
             this.CreatedByPersonID = createdByPerson.PersonID;
             this.CreatedByPerson = createdByPerson;
             createdByPerson.GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Add(this);
@@ -74,9 +74,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationNoteInternal CreateNewBlank(GrantAllocation grantAllocation, Person createdByPerson)
+        public static GrantAllocationNoteInternal CreateNewBlank(FundSourceAllocation fundSourceAllocation, Person createdByPerson)
         {
-            return new GrantAllocationNoteInternal(grantAllocation, createdByPerson, default(DateTime));
+            return new GrantAllocationNoteInternal(fundSourceAllocation, createdByPerson, default(DateTime));
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationNoteInternalID; } set { GrantAllocationNoteInternalID = value; } }
 
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
         public virtual Person CreatedByPerson { get; set; }
         public virtual Person LastUpdatedByPerson { get; set; }
 

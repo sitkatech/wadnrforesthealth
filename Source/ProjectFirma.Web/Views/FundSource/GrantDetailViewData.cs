@@ -58,14 +58,14 @@ namespace ProjectFirma.Web.Views.Grant
         public bool isUserLoggedIn { get; }
 
         public GrantDetailViewData(Person currentPerson,
-                                    Models.Grant grant,
+                                    Models.FundSource fundSource,
                                     EntityNotesViewData grantNotesViewData,
                                     EntityNotesViewData internalNotesViewData)
-            : base(currentPerson, grant)
+            : base(currentPerson, fundSource)
         {
-            PageTitle = grant.GrantTitle.ToEllipsifiedStringClean(110);
+            PageTitle = fundSource.GrantTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} Detail";
-            NewGrantNoteUrl = grant.GetNewNoteUrl();
+            NewGrantNoteUrl = fundSource.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
 
@@ -75,15 +75,15 @@ namespace ProjectFirma.Web.Views.Grant
 
             GrantAllocationBudgetLineItemGridSpec = new GrantAllocationBudgetLineItemGridSpec();
             GrantAllocationBudgetLineItemGridName = "grantAllocationBudgetLineItemsGridName";
-            GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationBudgetLineItemGridJsonDataByGrant(grant));
+            GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantAllocationBudgetLineItemGridJsonDataByGrant(fundSource));
 
             GrantAgreementGridSpec = new GrantAgreementGridSpec();
             GrantAgreementGridName = "grantAgreementGridName";
-            GrantAgreementGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAgreementGridJsonData(grant));
+            GrantAgreementGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantAgreementGridJsonData(fundSource));
 
             GrantDetailsFileDetailsViewData = new FileDetailsViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
-                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantFiles(grant.PrimaryKey)),
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSource.GrantFileResources)),
+                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewGrantFiles(fundSource.PrimaryKey)),
                 new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson),
                 Models.FieldDefinition.Grant
             );
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Views.Grant
                 SaveFiltersInCookie = true
             };
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
-            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsByGrantGridJsonData(grant));
+            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsByGrantGridJsonData(fundSource));
 
             isUserLoggedIn = !currentPerson.IsAnonymousOrUnassigned;
         }

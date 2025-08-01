@@ -22,15 +22,15 @@ namespace ProjectFirma.Web.Models
 {
     public class GrantAllocationSimple
     {
-        public GrantAllocationSimple(GrantAllocation grantAllocation)
+        public GrantAllocationSimple(FundSourceAllocation fundSourceAllocation)
         {
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            OrganizationID = grantAllocation.BottommostOrganization.OrganizationID;
-            OrganizationName = grantAllocation.BottommostOrganization.OrganizationShortNameIfAvailable;
-            GrantAllocationName = grantAllocation.GrantAllocationName;
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            OrganizationID = fundSourceAllocation.BottommostOrganization.OrganizationID;
+            OrganizationName = fundSourceAllocation.BottommostOrganization.OrganizationShortNameIfAvailable;
+            GrantAllocationName = fundSourceAllocation.GrantAllocationName;
             IsActive = true; 
-            DisplayName = grantAllocation.GrantNumberAndGrantAllocationDisplayName;
-            DisplayNameWithAllocationAmount = grantAllocation.GrantNumberAndGrantAllocationWithAllocationAmountDisplay;
+            DisplayName = fundSourceAllocation.GrantNumberAndGrantAllocationDisplayName;
+            DisplayNameWithAllocationAmount = fundSourceAllocation.GrantNumberAndGrantAllocationWithAllocationAmountDisplay;
         }
 
         public int GrantAllocationID { get; }

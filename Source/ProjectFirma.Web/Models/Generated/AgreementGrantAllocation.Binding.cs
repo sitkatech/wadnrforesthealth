@@ -53,24 +53,24 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this()
+        public AgreementGrantAllocation(Agreement agreement, FundSourceAllocation fundSourceAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementGrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.AgreementID = agreement.AgreementID;
             this.Agreement = agreement;
             agreement.AgreementGrantAllocations.Add(this);
-            this.GrantAllocationID = grantAllocation.GrantAllocationID;
-            this.GrantAllocation = grantAllocation;
-            grantAllocation.AgreementGrantAllocations.Add(this);
+            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocation = fundSourceAllocation;
+            fundSourceAllocation.AgreementGrantAllocations.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, GrantAllocation grantAllocation)
+        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, FundSourceAllocation fundSourceAllocation)
         {
-            return new AgreementGrantAllocation(agreement, grantAllocation);
+            return new AgreementGrantAllocation(agreement, fundSourceAllocation);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return AgreementGrantAllocationID; } set { AgreementGrantAllocationID = value; } }
 
         public virtual Agreement Agreement { get; set; }
-        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual FundSourceAllocation FundSourceAllocation { get; set; }
 
         public static class FieldLengths
         {

@@ -18,12 +18,12 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[GrantNote] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantNote]")]
-    public partial class GrantNote : IHavePrimaryKey, ICanDeleteFull
+    public partial class FundSourceNote : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected GrantNote()
+        protected FundSourceNote()
         {
 
         }
@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantNote(int grantNoteID, int grantID, string grantNoteText, int createdByPersonID, DateTime createdDate, int? lastUpdatedByPersonID, DateTime? lastUpdatedDate) : this()
+        public FundSourceNote(int grantNoteID, int grantID, string grantNoteText, int createdByPersonID, DateTime createdDate, int? lastUpdatedByPersonID, DateTime? lastUpdatedDate) : this()
         {
             this.GrantNoteID = grantNoteID;
             this.GrantID = grantID;
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantNote(int grantID, int createdByPersonID, DateTime createdDate) : this()
+        public FundSourceNote(int grantID, int createdByPersonID, DateTime createdDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantNoteID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -58,13 +58,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantNote(Grant grant, Person createdByPerson, DateTime createdDate) : this()
+        public FundSourceNote(FundSource fundSource, Person createdByPerson, DateTime createdDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantNoteID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.GrantNotes.Add(this);
+            this.GrantID = fundSource.FundSourceID;
+            this.FundSource = fundSource;
+            fundSource.GrantNotes.Add(this);
             this.CreatedByPersonID = createdByPerson.PersonID;
             this.CreatedByPerson = createdByPerson;
             createdByPerson.GrantNotesWhereYouAreTheCreatedByPerson.Add(this);
@@ -74,9 +74,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantNote CreateNewBlank(Grant grant, Person createdByPerson)
+        public static FundSourceNote CreateNewBlank(FundSource fundSource, Person createdByPerson)
         {
-            return new GrantNote(grant, createdByPerson, default(DateTime));
+            return new FundSourceNote(fundSource, createdByPerson, default(DateTime));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantNote).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundSourceNote).Name};
 
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantNoteID; } set { GrantNoteID = value; } }
 
-        public virtual Grant Grant { get; set; }
+        public virtual FundSource FundSource { get; set; }
         public virtual Person CreatedByPerson { get; set; }
         public virtual Person LastUpdatedByPerson { get; set; }
 

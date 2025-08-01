@@ -1,6 +1,6 @@
 ﻿namespace ProjectFirma.Web.Models
 {
-    public partial class GrantStatus : IAuditableEntity
+    public partial class FundSourceStatus : IAuditableEntity
     {
         public string AuditDescriptionString
         {

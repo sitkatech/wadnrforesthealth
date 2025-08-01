@@ -2,7 +2,7 @@
 {
     public interface IGrantAllocationRequestAmount
     {
-        GrantAllocation GrantAllocation { get; }
+        FundSourceAllocation FundSourceAllocation { get; }
         decimal? TotalAmount { get; }
         decimal? MatchAmount { get; }
         decimal? PayAmount { get; }

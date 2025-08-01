@@ -40,10 +40,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public List<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; }
         public bool PersonHasPermissionToEditBudgetLineItems { get; }
 
-        public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.GrantAllocation grantAllocationBeingEdited, List<GrantAllocationBudgetLineItem> grantAllocationBudgetLineItems)
+        public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocationBeingEdited, List<GrantAllocationBudgetLineItem> grantAllocationBudgetLineItems)
         {
             CostTypes = CostType.GetLineItemCostTypes();
-            GrantAllocationID = grantAllocationBeingEdited.GrantAllocationID;
+            GrantAllocationID = fundSourceAllocationBeingEdited.GrantAllocationID;
             GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems.OrderBy(x => x.CostType.SortOrder).ToList();
 
             PersonHasPermissionToEditBudgetLineItems = new GrantAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             if (PersonHasPermissionToEditBudgetLineItems)
             {
                 FormPostUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x =>
-                    x.EditGrantAllocationBudgetLineItemAjax(grantAllocationBeingEdited.PrimaryKey));
+                    x.EditGrantAllocationBudgetLineItemAjax(fundSourceAllocationBeingEdited.PrimaryKey));
             }
         }
     }

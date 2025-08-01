@@ -35,45 +35,45 @@ namespace ProjectFirma.Web.Models
     public static class GrantAllocationModelExtensions
     {
         public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.DeleteGrantAllocation(UrlTemplate.Parameter1Int)));
-        public static string GetDeleteUrl(this GrantAllocation grantAllocation)
+        public static string GetDeleteUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return DeleteUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+            return DeleteUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
         }
 
         public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.GrantAllocationDetail(UrlTemplate.Parameter1Int)));
-        public static string GetDetailUrl(this GrantAllocation grantAllocation)
+        public static string GetDetailUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return DetailUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+            return DetailUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
         }
 
 
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
-        public static string GetEditUrl(this GrantAllocation grantAllocation)
+        public static string GetEditUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return EditUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+            return EditUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
         }
 
         public static readonly UrlTemplate<int> DuplicateUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.Duplicate(UrlTemplate.Parameter1Int)));
-        public static string GetDuplicateUrl(this GrantAllocation grantAllocation)
+        public static string GetDuplicateUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return DuplicateUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+            return DuplicateUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
         }
 
         public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationNote(UrlTemplate.Parameter1Int)));
-        public static string GetNewNoteUrl(this GrantAllocation grantAllocation)
+        public static string GetNewNoteUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return NewNoteUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+            return NewNoteUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
         }
 
-        public static List<BudgetVsActualLineItem> GetAllBudgetVsActualLineItemsByCostType(this GrantAllocation grantAllocation)
+        public static List<BudgetVsActualLineItem> GetAllBudgetVsActualLineItemsByCostType(this FundSourceAllocation fundSourceAllocation)
         {
             var budgetVsActualsLineItemList = new List<BudgetVsActualLineItem>();
 
             foreach (var costType in CostType.GetLineItemCostTypes())
             {
-                var budget = grantAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
+                var budget = fundSourceAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
 
-                var expendituresFromDatamart = grantAllocation.GrantAllocationExpenditures
+                var expendituresFromDatamart = fundSourceAllocation.GrantAllocationExpenditures
                     .Where(gae => gae.CostTypeID == costType.CostTypeID).Select(gae => gae.ExpenditureAmount).Sum();
                 
                 var budgetVsActualLineItem = new BudgetVsActualLineItem(costType, budget, expendituresFromDatamart);
@@ -83,20 +83,20 @@ namespace ProjectFirma.Web.Models
             return budgetVsActualsLineItemList;
         }
 
-        public static BudgetVsActualLineItem GetTotalBudgetVsActualLineItem(this GrantAllocation grantAllocation)
+        public static BudgetVsActualLineItem GetTotalBudgetVsActualLineItem(this FundSourceAllocation fundSourceAllocation)
         {
-            var budget = grantAllocation.GrantAllocationBudgetLineItems.Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
-            var expendituresFromDatamart = grantAllocation.GrantAllocationExpenditures.Select(gae => gae.ExpenditureAmount).Sum();
+            var budget = fundSourceAllocation.GrantAllocationBudgetLineItems.Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
+            var expendituresFromDatamart = fundSourceAllocation.GrantAllocationExpenditures.Select(gae => gae.ExpenditureAmount).Sum();
 
             var budgetVsActualLineItem = new BudgetVsActualLineItem(budget, expendituresFromDatamart);
             return budgetVsActualLineItem;
         }
 
-        public static string GetAssociatedProgramIndexProjectCodePairsCommaDelimited(this GrantAllocation grantAllocation)
+        public static string GetAssociatedProgramIndexProjectCodePairsCommaDelimited(this FundSourceAllocation fundSourceAllocation)
         {
             List<string> programIndexProjectCodePairs = new List<string>();
 
-            foreach (var pair in grantAllocation.GrantAllocationProgramIndexProjectCodes)
+            foreach (var pair in fundSourceAllocation.GrantAllocationProgramIndexProjectCodes)
             {
                 programIndexProjectCodePairs.Add(pair.ProgramIndexProjectCodeDisplayString);
             }
@@ -104,11 +104,11 @@ namespace ProjectFirma.Web.Models
             return string.Join(", ", programIndexProjectCodePairs);
         }
 
-        public static string GetAssociatedProgramIndexProjectCodePairsForAgGrid(this GrantAllocation grantAllocation)
+        public static string GetAssociatedProgramIndexProjectCodePairsForAgGrid(this FundSourceAllocation fundSourceAllocation)
         {
             List<HtmlLinkObject> programIndexProjectCodePairs = new List<HtmlLinkObject>();
 
-            foreach (var pair in grantAllocation.GrantAllocationProgramIndexProjectCodes)
+            foreach (var pair in fundSourceAllocation.GrantAllocationProgramIndexProjectCodes)
             {
                 var pairText = new HtmlLinkObject(pair.ProgramIndexProjectCodeDisplayString, string.Empty);
                 programIndexProjectCodePairs.Add(pairText);
@@ -118,16 +118,16 @@ namespace ProjectFirma.Web.Models
         }
 
 
-        public static List<GrantAllocationBudgetLineItem> CreateAllGrantAllocationBudgetLineItemsByCostType(this GrantAllocation grantAllocation)
+        public static List<GrantAllocationBudgetLineItem> CreateAllGrantAllocationBudgetLineItemsByCostType(this FundSourceAllocation fundSourceAllocation)
         {
             var grantAllocationBudgetLineItems = new List<GrantAllocationBudgetLineItem>();
             var shouldSaveChanges = false;
             foreach (var costType in CostType.GetLineItemCostTypes())
             {
-                var lineItemByCostType = grantAllocation.GrantAllocationBudgetLineItems.SingleOrDefault(bli => bli.CostTypeID == costType.CostTypeID);
+                var lineItemByCostType = fundSourceAllocation.GrantAllocationBudgetLineItems.SingleOrDefault(bli => bli.CostTypeID == costType.CostTypeID);
                 if (lineItemByCostType == null)
                 {
-                    var tempLineItem = new GrantAllocationBudgetLineItem(grantAllocation.GrantAllocationID, costType.CostTypeID, 0);
+                    var tempLineItem = new GrantAllocationBudgetLineItem(fundSourceAllocation.GrantAllocationID, costType.CostTypeID, 0);
                     lineItemByCostType = HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.Add(tempLineItem);
 
                     shouldSaveChanges = true;

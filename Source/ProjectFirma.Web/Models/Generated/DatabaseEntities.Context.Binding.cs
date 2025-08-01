@@ -81,13 +81,13 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantAllocationPriority> GrantAllocationPriorities { get; set; }
         public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<FundSourceAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantAllocationSource> GrantAllocationSources { get; set; }
-        public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
-        public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
-        public virtual DbSet<GrantNote> GrantNotes { get; set; }
-        public virtual DbSet<Grant> Grants { get; set; }
-        public virtual DbSet<GrantType> GrantTypes { get; set; }
+        public virtual DbSet<FundSourceFileResource> GrantFileResources { get; set; }
+        public virtual DbSet<FundSourceNoteInternal> GrantNoteInternals { get; set; }
+        public virtual DbSet<FundSourceNote> GrantNotes { get; set; }
+        public virtual DbSet<FundSource> Grants { get; set; }
+        public virtual DbSet<FundSourceType> GrantTypes { get; set; }
         public virtual DbSet<InteractionEventContact> InteractionEventContacts { get; set; }
         public virtual DbSet<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         public virtual DbSet<InteractionEventProject> InteractionEventProjects { get; set; }
@@ -573,7 +573,7 @@ namespace ProjectFirma.Web.Models
                     return Grants.GetGrant(primaryKey);
 
                 case "GrantStatus":
-                    var grantStatus = GrantStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    var grantStatus = FundSourceStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(grantStatus, "GrantStatus", primaryKey);
                     return grantStatus;
 

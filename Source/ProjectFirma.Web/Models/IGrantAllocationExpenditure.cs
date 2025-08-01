@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
 {
     public interface IGrantAllocationExpenditure : ICalendarYearMonetaryAmount
     {
-        GrantAllocation GrantAllocation { get; }
+        FundSourceAllocation FundSourceAllocation { get; }
         int GrantAllocationID { get; }
 
         decimal ExpenditureAmount { get; }

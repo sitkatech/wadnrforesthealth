@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.Views.Grant
     public class GrantCreateHelper
     {
         private static readonly string ProjectTypeSelectionUrl =
-            SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.New());
+            SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.New());
 
         private static string GetAddNewGrantButtonText() =>
             $"{BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus")} Add {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";

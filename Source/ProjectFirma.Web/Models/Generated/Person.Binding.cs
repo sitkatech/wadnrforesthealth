@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
             this.FileResourcesWhereYouAreTheCreatePerson = new HashSet<FileResource>();
             this.ForesterWorkUnits = new HashSet<ForesterWorkUnit>();
             this.GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson = new HashSet<GisUploadAttempt>();
-            this.GrantAllocationsWhereYouAreTheGrantManager = new HashSet<GrantAllocation>();
+            this.GrantAllocationsWhereYouAreTheGrantManager = new HashSet<FundSourceAllocation>();
             this.GrantAllocationChangeLogsWhereYouAreTheChangePerson = new HashSet<GrantAllocationChangeLog>();
             this.GrantAllocationLikelyPeople = new HashSet<GrantAllocationLikelyPerson>();
             this.GrantAllocationNotesWhereYouAreTheCreatedByPerson = new HashSet<GrantAllocationNote>();
@@ -39,10 +39,10 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
-            this.GrantNotesWhereYouAreTheCreatedByPerson = new HashSet<GrantNote>();
-            this.GrantNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantNote>();
-            this.GrantNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<GrantNoteInternal>();
-            this.GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantNoteInternal>();
+            this.GrantNotesWhereYouAreTheCreatedByPerson = new HashSet<FundSourceNote>();
+            this.GrantNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceNote>();
+            this.GrantNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<FundSourceNoteInternal>();
+            this.GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceNoteInternal>();
             this.InteractionEventsWhereYouAreTheStaffPerson = new HashSet<InteractionEvent>();
             this.InteractionEventContacts = new HashSet<InteractionEventContact>();
             this.InvoicePaymentRequestsWhereYouAreThePreparedByPerson = new HashSet<InvoicePaymentRequest>();
@@ -176,7 +176,7 @@ namespace ProjectFirma.Web.Models
 
             if(GrantAllocationsWhereYouAreTheGrantManager.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
+                dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
 
             if(GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any())
@@ -216,22 +216,22 @@ namespace ProjectFirma.Web.Models
 
             if(GrantNotesWhereYouAreTheCreatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantNote).Name);
+                dependentObjects.Add(typeof(FundSourceNote).Name);
             }
 
             if(GrantNotesWhereYouAreTheLastUpdatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantNote).Name);
+                dependentObjects.Add(typeof(FundSourceNote).Name);
             }
 
             if(GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantNoteInternal).Name);
+                dependentObjects.Add(typeof(FundSourceNoteInternal).Name);
             }
 
             if(GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantNoteInternal).Name);
+                dependentObjects.Add(typeof(FundSourceNoteInternal).Name);
             }
 
             if(InteractionEventsWhereYouAreTheStaffPerson.Any())
@@ -409,7 +409,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(DNRUplandRegion).Name, typeof(FileResource).Name, typeof(ForesterWorkUnit).Name, typeof(GisUploadAttempt).Name, typeof(GrantAllocation).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InvoicePaymentRequest).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonRole).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Program).Name, typeof(ProgramNotificationSent).Name, typeof(ProgramPerson).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TabularDataImport).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(DNRUplandRegion).Name, typeof(FileResource).Name, typeof(ForesterWorkUnit).Name, typeof(GisUploadAttempt).Name, typeof(FundSourceAllocation).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(FundSourceNote).Name, typeof(FundSourceNoteInternal).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InvoicePaymentRequest).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonRole).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Program).Name, typeof(ProgramNotificationSent).Name, typeof(ProgramPerson).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TabularDataImport).Name};
 
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<FileResource> FileResourcesWhereYouAreTheCreatePerson { get; set; }
         public virtual ICollection<ForesterWorkUnit> ForesterWorkUnits { get; set; }
         public virtual ICollection<GisUploadAttempt> GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson { get; set; }
-        public virtual ICollection<GrantAllocation> GrantAllocationsWhereYouAreTheGrantManager { get; set; }
+        public virtual ICollection<FundSourceAllocation> GrantAllocationsWhereYouAreTheGrantManager { get; set; }
         public virtual ICollection<GrantAllocationChangeLog> GrantAllocationChangeLogsWhereYouAreTheChangePerson { get; set; }
         public virtual ICollection<GrantAllocationLikelyPerson> GrantAllocationLikelyPeople { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotesWhereYouAreTheCreatedByPerson { get; set; }
@@ -732,10 +732,10 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
         public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual ICollection<GrantNote> GrantNotesWhereYouAreTheCreatedByPerson { get; set; }
-        public virtual ICollection<GrantNote> GrantNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
-        public virtual ICollection<GrantNoteInternal> GrantNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
-        public virtual ICollection<GrantNoteInternal> GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNote> GrantNotesWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNote> GrantNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNoteInternal> GrantNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNoteInternal> GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
         public virtual ICollection<InteractionEvent> InteractionEventsWhereYouAreTheStaffPerson { get; set; }
         public virtual ICollection<InteractionEventContact> InteractionEventContacts { get; set; }
         public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequestsWhereYouAreThePreparedByPerson { get; set; }

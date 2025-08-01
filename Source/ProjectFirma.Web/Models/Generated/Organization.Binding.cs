@@ -27,8 +27,8 @@ namespace ProjectFirma.Web.Models
         {
             this.Agreements = new HashSet<Agreement>();
             this.GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization = new HashSet<GisUploadSourceOrganization>();
-            this.Grants = new HashSet<Grant>();
-            this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.Grants = new HashSet<FundSource>();
+            this.GrantAllocations = new HashSet<FundSourceAllocation>();
             this.OrganizationBoundaryStagings = new HashSet<OrganizationBoundaryStaging>();
             this.People = new HashSet<Person>();
             this.PersonStewardOrganizations = new HashSet<PersonStewardOrganization>();
@@ -123,12 +123,12 @@ namespace ProjectFirma.Web.Models
 
             if(Grants.Any())
             {
-                dependentObjects.Add(typeof(Grant).Name);
+                dependentObjects.Add(typeof(FundSource).Name);
             }
 
             if(GrantAllocations.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
+                dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
 
             if(OrganizationBoundaryStagings.Any())
@@ -166,7 +166,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(GisUploadSourceOrganization).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(Program).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(GisUploadSourceOrganization).Name, typeof(FundSource).Name, typeof(FundSourceAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(Program).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
 
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization { get; set; }
-        public virtual ICollection<Grant> Grants { get; set; }
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSource> Grants { get; set; }
+        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
         public virtual ICollection<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
         public virtual ICollection<Person> People { get; set; }
         public virtual ICollection<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
