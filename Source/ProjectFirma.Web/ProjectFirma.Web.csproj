@@ -2013,6 +2013,7 @@
     <Content Include="Views\CustomPage\Index.cshtml" />
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectUpdate\EditProjectUpdateController.js" />
+    <Content Include="Views\ProjectUpdate\ProjectExternalLinkUpdateController.js" />
     <Content Include="Views\Results\ProjectMapController.js" />
     <Content Include="Views\Shared\FileResourceControls\NewFileController.js" />
     <Content Include="Views\Shared\ProjectControls\EditProjectController.js" />
