@@ -40,8 +40,8 @@ namespace ProjectFirma.Web.Views.Grant
             ObjectNameSingular = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
-            var userHasDeletePermissions = new GrantDeleteFeature().HasPermissionByPerson(currentPerson);
-            var userHasCreatePermissions = new GrantCreateFeature().HasPermissionByPerson(currentPerson);
+            var userHasDeletePermissions = new FundSourceDeleteFeature().HasPermissionByPerson(currentPerson);
+            var userHasCreatePermissions = new FundSourceCreateFeature().HasPermissionByPerson(currentPerson);
             if (userHasCreatePermissions)
             {
                 var contentUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.New());

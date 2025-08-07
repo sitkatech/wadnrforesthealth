@@ -196,7 +196,7 @@
                         <strong>Public Notes</strong>
                         @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantAllocationNotesViewData); }
 
-                        @if (new GrantAllocationNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+                        @if (new FundSourceAllocationNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
                         {
                             <strong>Internal Notes</strong>
                             EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantAllocationNoteInternalsViewData);

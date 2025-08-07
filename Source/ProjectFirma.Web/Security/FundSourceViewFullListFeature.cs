@@ -24,10 +24,8 @@ using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View Full Grant List")]
-    // Admin for now, until someone tells us differently
-    //public class GrantsViewFullListFeature : FirmaAdminFeature
-    public class GrantsViewFullListFeature : AnonymousUnclassifiedFeature
+    [SecurityFeatureDescription("View Full Fund Source List")]
+    public class FundSourceViewFullListFeature : AnonymousUnclassifiedFeature
     {
     }
 }

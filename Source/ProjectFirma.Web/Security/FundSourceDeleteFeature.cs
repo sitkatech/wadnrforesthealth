@@ -4,9 +4,9 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Delete Grant")]
-    public class GrantDeleteFeature : FirmaFeature
+    public class FundSourceDeleteFeature : FirmaFeature
     {
-        public GrantDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
+        public FundSourceDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
         {
         }
     }

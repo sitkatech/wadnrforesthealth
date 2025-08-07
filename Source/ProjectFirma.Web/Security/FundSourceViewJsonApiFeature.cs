@@ -2,7 +2,7 @@
 
 namespace ProjectFirma.Web.Security
 {
-    public class GrantsViewJsonApiFeature : AnonymousUnclassifiedFeature
+    public class FundSourceViewJsonApiFeature : AnonymousUnclassifiedFeature
     {
     }
 }

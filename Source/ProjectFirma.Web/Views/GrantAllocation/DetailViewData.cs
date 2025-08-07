@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, fundSourceAllocation, fundSourceAllocation.GrantAllocationBudgetLineItems.ToList());
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, fundSourceAllocation);
 
-            var canEditDocuments = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            var canEditDocuments = new FundSourceAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             GrantAllocationDetailsFileDetailsViewData = new FileDetailsViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSourceAllocation.GrantAllocationFileResources)),
                 SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(fundSourceAllocation.PrimaryKey)),

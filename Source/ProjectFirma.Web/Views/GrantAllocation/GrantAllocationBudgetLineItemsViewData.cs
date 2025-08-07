@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationID = fundSourceAllocationBeingEdited.GrantAllocationID;
             GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems.OrderBy(x => x.CostType.SortOrder).ToList();
 
-            PersonHasPermissionToEditBudgetLineItems = new GrantAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            PersonHasPermissionToEditBudgetLineItems = new FundSourceAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             //This will prevent the JS from posting back if the user doesn't have permission to edit the budget line items
             if (PersonHasPermissionToEditBudgetLineItems)
             {

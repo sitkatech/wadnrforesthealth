@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EntityName = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             EditGrantAllocationUrl = fundSourceAllocation.GetEditUrl();
 
-            UserHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            UserHasEditGrantAllocationPermissions = new FundSourceAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             BackToGrantAllocationsText = $"Back to all {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}";
             GrantAllocationsListUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
         }
