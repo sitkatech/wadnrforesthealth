@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="DuplicateGrantViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="DuplicateFundSourceViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -28,64 +28,64 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class DuplicateGrantViewModel : FormViewModel, IValidatableObject
+    public class DuplicateFundSourceViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantID { get; set; }
+        public int FundSourceID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStatus)]
         [Required]
-        public int GrantStatusID { get; set; }
+        public int FundSourceStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceName)]
         [StringLength(Models.FundSource.FieldLengths.FundSourceName)]
         [Required]
-        public string GrantName { get; set; }
+        public string FundSourceName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceNumber)]
         [StringLength(Models.FundSource.FieldLengths.FundSourceNumber)]
-        public string GrantNumber { get; set; }
+        public string FundSourceNumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
         [Required]
-        public Money? GrantTotalAwardAmount { get; set; }
+        public Money? FundSourceTotalAwardAmount { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
-        public DateTime? GrantStartDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStartDate)]
+        public DateTime? FundSourceStartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
-        public DateTime? GrantEndDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceEndDate)]
+        public DateTime? FundSourceEndDate { get; set; }
 
-        public List<int> GrantAllocationsToDuplicate { get; set; }
+        public List<int> FundSourceAllocationsToDuplicate { get; set; }
 
-        public int InitialAwardGrantModificationID { get; set; }
+        public int InitialAwardFundSourceModificationID { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public DuplicateGrantViewModel()
+        public DuplicateFundSourceViewModel()
         {
         }
 
-        public DuplicateGrantViewModel(Models.FundSource fundSourceToDuplicate)
+        public DuplicateFundSourceViewModel(Models.FundSource fundSourceToDuplicate)
         {
-            GrantName = $"{fundSourceToDuplicate.FundSourceName} - Copy";
-            GrantStatusID = fundSourceToDuplicate.FundSourceStatusID;
-            GrantNumber = fundSourceToDuplicate.FundSourceNumber;
-            GrantTotalAwardAmount = 0;
-            GrantStartDate = fundSourceToDuplicate.StartDate;
-            GrantEndDate = fundSourceToDuplicate.EndDate;
+            FundSourceName = $"{fundSourceToDuplicate.FundSourceName} - Copy";
+            FundSourceStatusID = fundSourceToDuplicate.FundSourceStatusID;
+            FundSourceNumber = fundSourceToDuplicate.FundSourceNumber;
+            FundSourceTotalAwardAmount = 0;
+            FundSourceStartDate = fundSourceToDuplicate.StartDate;
+            FundSourceEndDate = fundSourceToDuplicate.EndDate;
 
 
         }
 
         public void UpdateModel(Models.FundSource fundSource)
         {
-            fundSource.FundSourceNumber = GrantNumber;
-            fundSource.StartDate = GrantStartDate;
-            fundSource.EndDate = GrantEndDate;
-            fundSource.FundSourceName = GrantName;
+            fundSource.FundSourceNumber = FundSourceNumber;
+            fundSource.StartDate = FundSourceStartDate;
+            fundSource.EndDate = FundSourceEndDate;
+            fundSource.FundSourceName = FundSourceName;
 
         }
 
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Views.Grant
         {
             //if (OrganizationID == 0)
             //{
-            //    yield return new SitkaValidationResult<DuplicateGrantViewModel, int>(
+            //    yield return new SitkaValidationResult<DuplicateFundSourceViewModel, int>(
             //        FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
             //}
             return new List<ValidationResult>();

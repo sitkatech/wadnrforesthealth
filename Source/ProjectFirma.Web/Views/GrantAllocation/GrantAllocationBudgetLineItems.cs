@@ -22,15 +22,15 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Web.Mvc;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.FundSourceAllocation;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public abstract class GrantAllocationBudgetLineItems : TypedWebPartialViewPage<GrantAllocationBudgetLineItemsViewData>
+    public abstract class FundSourceAllocationBudgetLineItems : TypedWebPartialViewPage<FundSourceAllocationBudgetLineItemsViewData>
     {
-        public static void RenderPartialView(HtmlHelper html, GrantAllocationBudgetLineItemsViewData viewData)
+        public static void RenderPartialView(HtmlHelper html, FundSourceAllocationBudgetLineItemsViewData viewData)
         {
-            html.RenderRazorSitkaPartial<GrantAllocationBudgetLineItems, GrantAllocationBudgetLineItemsViewData>(viewData);
+            html.RenderRazorSitkaPartial<FundSourceAllocationBudgetLineItems, FundSourceAllocationBudgetLineItemsViewData>(viewData);
         }
     }
 }

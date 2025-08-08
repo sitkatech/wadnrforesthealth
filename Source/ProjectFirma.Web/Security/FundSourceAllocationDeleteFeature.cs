@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Delete Fund Source Allocation")]
     public class FundSourceAllocationDeleteFeature : FirmaFeature
     {
-        public FundSourceAllocationDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
+        public FundSourceAllocationDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageFundSourcesAndAgreements })
         {
 
         }

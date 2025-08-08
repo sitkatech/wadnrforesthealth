@@ -20,44 +20,44 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public abstract class EditGrantAllocation : TypedWebPartialViewPage<EditGrantAllocationViewData, EditGrantAllocationViewModel>
+    public abstract class EditFundSourceAllocation : TypedWebPartialViewPage<EditFundSourceAllocationViewData, EditFundSourceAllocationViewModel>
     {
     }
 
-    public abstract class EditGrantAllocationType
+    public abstract class EditFundSourceAllocationType
     {
         public readonly string IntroductoryText;
 
-        internal EditGrantAllocationType(string introductoryText)
+        internal EditFundSourceAllocationType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditGrantAllocationTypeNewGrant NewGrantAllocation = EditGrantAllocationTypeNewGrant.Instance;
-        public static readonly EditGrantAllocationTypeExistingGrantAllocation ExistingGrantAllocation = EditGrantAllocationTypeExistingGrantAllocation.Instance;
+        public static readonly EditFundSourceAllocationTypeNewFundSource NewFundSourceAllocation = EditFundSourceAllocationTypeNewFundSource.Instance;
+        public static readonly EditFundSourceAllocationTypeExistingFundSourceAllocation ExistingFundSourceAllocation = EditFundSourceAllocationTypeExistingFundSourceAllocation.Instance;
     }
 
-    public class EditGrantAllocationTypeNewGrant : EditGrantAllocationType
+    public class EditFundSourceAllocationTypeNewFundSource : EditFundSourceAllocationType
     {
-        private EditGrantAllocationTypeNewGrant(string introductoryText) : base(introductoryText)
+        private EditFundSourceAllocationTypeNewFundSource(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantAllocationTypeNewGrant Instance = new EditGrantAllocationTypeNewGrant(
-            $"<p>Enter basic information about the {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceAllocationTypeNewFundSource Instance = new EditFundSourceAllocationTypeNewFundSource(
+            $"<p>Enter basic information about the {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditGrantAllocationTypeExistingGrantAllocation : EditGrantAllocationType
+    public class EditFundSourceAllocationTypeExistingFundSourceAllocation : EditFundSourceAllocationType
     {
-        private EditGrantAllocationTypeExistingGrantAllocation(string introductoryText) : base(introductoryText)
+        private EditFundSourceAllocationTypeExistingFundSourceAllocation(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantAllocationTypeExistingGrantAllocation Instance =
-            new EditGrantAllocationTypeExistingGrantAllocation(
-                $"<p>Update this {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}'s information.</p>");
+        public static readonly EditFundSourceAllocationTypeExistingFundSourceAllocation Instance =
+            new EditFundSourceAllocationTypeExistingFundSourceAllocation(
+                $"<p>Update this {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}'s information.</p>");
     }
 
     

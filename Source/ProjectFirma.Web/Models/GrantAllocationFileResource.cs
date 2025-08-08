@@ -3,11 +3,11 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationFileResource : IAuditableEntity, IEntityDocument
+    public partial class FundSourceAllocationFileResource : IAuditableEntity, IEntityDocument
     {
-        public string AuditDescriptionString => $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}  \" {FundSourceAllocation?.GrantAllocationName ?? "<Not Found>"}\" document \"{FileResource?.OriginalCompleteFileName ?? "<Not Found>"}\"";
-        public string DeleteUrl => SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.DeleteGrantAllocationFile(GrantAllocationFileResourceID));
-        public string EditUrl => SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.EditGrantAllocationFile(GrantAllocationFileResourceID));
+        public string AuditDescriptionString => $"{Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}  \" {FundSourceAllocation?.FundSourceAllocationName ?? "<Not Found>"}\" document \"{FileResource?.OriginalCompleteFileName ?? "<Not Found>"}\"";
+        public string DeleteUrl => SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(x => x.DeleteFundSourceAllocationFile(FundSourceAllocationFileResourceID));
+        public string EditUrl => SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(x => x.EditFundSourceAllocationFile(FundSourceAllocationFileResourceID));
         public string DisplayCssClass { get; set; }
 
         public void DeleteFullAndChildless(DatabaseEntities dbContext)

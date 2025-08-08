@@ -1,6 +1,6 @@
 ﻿namespace ProjectFirma.Web.Models
 {
-    public interface IGrantAllocationRequestAmount
+    public interface IFundSourceAllocationRequestAmount
     {
         FundSourceAllocation FundSourceAllocation { get; }
         decimal? TotalAmount { get; }

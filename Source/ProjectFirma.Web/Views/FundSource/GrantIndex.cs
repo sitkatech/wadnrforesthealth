@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantIndex.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceIndex.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -19,9 +19,9 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class GrantIndex : LtInfo.Common.Mvc.TypedWebViewPage<GrantIndexViewData>
+    public abstract class FundSourceIndex : LtInfo.Common.Mvc.TypedWebViewPage<FundSourceIndexViewData>
     {
     }
 }

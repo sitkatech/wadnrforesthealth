@@ -23,7 +23,7 @@ using ProjectFirma.Web.Views.Shared.ProjectControls;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
-    public abstract class EditAgreementGrantAllocations : TypedWebPartialViewPage<EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>
+    public abstract class EditAgreementFundSourceAllocations : TypedWebPartialViewPage<EditAgreementFundSourceAllocationsViewData, EditAgreementFundSourceAllocationsViewModel>
     {
     }
 }

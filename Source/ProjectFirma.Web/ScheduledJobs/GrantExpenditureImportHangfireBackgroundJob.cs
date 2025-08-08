@@ -8,11 +8,11 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
-    public class GrantExpenditureImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
+    public class FundSourceExpenditureImportHangfireBackgroundJob : ArcOnlineFinanceApiUpdateBackgroundJob
     {
-        private static readonly Uri GrantExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.GrantExpendituresJsonApiBaseUrl);
+        private static readonly Uri FundSourceExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.FundSourceExpendituresJsonApiBaseUrl);
 
-        public static GrantExpenditureImportHangfireBackgroundJob Instance;
+        public static FundSourceExpenditureImportHangfireBackgroundJob Instance;
         public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
         {
             FirmaEnvironmentType.Local,
@@ -20,19 +20,19 @@ namespace ProjectFirma.Web.ScheduledJobs
             FirmaEnvironmentType.Qa
         };
 
-        static GrantExpenditureImportHangfireBackgroundJob()
+        static FundSourceExpenditureImportHangfireBackgroundJob()
         {
-            Instance = new GrantExpenditureImportHangfireBackgroundJob();
+            Instance = new FundSourceExpenditureImportHangfireBackgroundJob();
         }
 
-        public GrantExpenditureImportHangfireBackgroundJob() : base("Grant Expenditure Import", ConcurrencySetting.RunJobByItself)
+        public FundSourceExpenditureImportHangfireBackgroundJob() : base("FundSource Expenditure Import", ConcurrencySetting.RunJobByItself)
         {
         }
 
-        private void ClearGrantAllocationExpenditureTables(int bienniumFiscalYear)
+        private void ClearFundSourceAllocationExpenditureTables(int bienniumFiscalYear)
         {
-            Logger.Info($"Starting '{JobName}' ClearGrantAllocationExpenditureTables");
-            string vendorImportProc = "pClearGrantAllocationExpenditureTables";
+            Logger.Info($"Starting '{JobName}' ClearFundSourceAllocationExpenditureTables");
+            string vendorImportProc = "pClearFundSourceAllocationExpenditureTables";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -42,13 +42,13 @@ namespace ProjectFirma.Web.ScheduledJobs
                     cmd.ExecuteNonQuery();
                 }
             }
-            Logger.Info($"Ending '{JobName}' ClearGrantAllocationExpenditureTables");
+            Logger.Info($"Ending '{JobName}' ClearFundSourceAllocationExpenditureTables");
         }
 
 
-        public void DownloadGrantExpendituresTableForAllFiscalYears()
+        public void DownloadFundSourceExpendituresTableForAllFiscalYears()
         {
-            Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
+            Logger.Info($"Starting '{JobName}' DownloadFundSourceExpendituresTableForAllFiscalYears");
             ClearOutdatedArcOnlineFinanceApiRawJsonImportsTableEntries();
 
             var arcUtility = new ArcGisOnlineUtility();
@@ -82,13 +82,13 @@ namespace ProjectFirma.Web.ScheduledJobs
                 
             }
 
-            Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
+            Logger.Info($"Ending '{JobName}' DownloadFundSourceExpendituresTableForAllFiscalYears");
         }
 
-        private void GrantExpenditureImportJson(int arcOnlineFinanceApiRawJsonImportID, int bienniumToImport)
+        private void FundSourceExpenditureImportJson(int arcOnlineFinanceApiRawJsonImportID, int bienniumToImport)
         {
-            Logger.Info($"Starting '{JobName}' ArcOnlineGrantExpenditureImportJson");
-            string vendorImportProc = "dbo.pArcOnlineGrantExpenditureImportJson";
+            Logger.Info($"Starting '{JobName}' ArcOnlineFundSourceExpenditureImportJson");
+            string vendorImportProc = "dbo.pArcOnlineFundSourceExpenditureImportJson";
             using (SqlConnection sqlConnection = SqlHelpers.CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     cmd.ExecuteNonQuery();
                 }
             }
-            Logger.Info($"Ending '{JobName}' ArcOnlineGrantExpenditureImportJson");
+            Logger.Info($"Ending '{JobName}' ArcOnlineFundSourceExpenditureImportJson");
         }
 
         private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear,
@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium Fiscal Year {bienniumFiscalYear}");
 
-            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(ArcOnlineFinanceApiRawJsonImportTableType.GrantExpenditure.ArcOnlineFinanceApiRawJsonImportTableTypeID, bienniumFiscalYear);
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableTypeFromArcOnlineFinanceApi(ArcOnlineFinanceApiRawJsonImportTableType.FundSourceExpenditure.ArcOnlineFinanceApiRawJsonImportTableTypeID, bienniumFiscalYear);
 
             // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
             if (importInfo!= null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
@@ -117,15 +117,15 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
 
             // Clear the expenditure data for the given Biennium before doing the import
-            ClearGrantAllocationExpenditureTables(bienniumFiscalYear);
+            ClearFundSourceAllocationExpenditureTables(bienniumFiscalYear);
 
             var outFields = "FTE_AMOUNT,TAR_HR_AMOUNT,BIENNIUM,FISCAL_MONTH,FISCAL_ADJUSTMENT_MONTH,CALENDAR_YEAR,MONTH_NAME,SOURCE_SYSTEM,DOCUMENT_NUMBER,DOCUMENT_SUFFIX,DOCUMENT_DATE,DOCUMENT_INVOICE_NUMBER,INVOICE_DESCRIPTION,INVOICE_DATE,INVOICE_NUMBER,GL_ACCOUNT_NUMBER,OBJECT_CODE,OBJECT_NAME,SUB_OBJECT_CODE,SUB_OBJECT_NAME,SUB_SUB_OBJECT_CODE,SUB_SUB_OBJECT_NAME,APPROPRIATION_CODE,APPROPRIATION_NAME,FUND_CODE,FUND_NAME,ORG_CODE,ORG_NAME,PROGRAM_INDEX_CODE,PROGRAM_INDEX_NAME,PROGRAM_CODE,PROGRAM_NAME,SUB_PROGRAM_CODE,SUB_PROGRAM_NAME,ACTIVITY_CODE,ACTIVITY_NAME,SUB_ACTIVITY_CODE,SUB_ACTIVITY_NAME,PROJECT_CODE,PROJECT_NAME,VENDOR_NUMBER,VENDOR_NAME,EXPENDITURE_ACCURED,ENCUMBRANCE";
             var orderByFields = "";
             var whereClause = $"BIENNIUM='{bienniumFiscalYear}'";
-            var grantExpenditureJson = DownloadArcOnlineUrlToString(GrantExpendituresJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex);
-            Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
+            var fundSourceExpenditureJson = DownloadArcOnlineUrlToString(FundSourceExpendituresJsonApiBaseUrl, token, whereClause, outFields, orderByFields, ArcOnlineFinanceApiRawJsonImportTableType.ProgramIndex);
+            Logger.Info($"FundSourceExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {fundSourceExpenditureJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, grantExpenditureJson);
+            var arcOnlineFinanceApiRawJsonImportID = ShoveRawJsonStringIntoTable(ArcOnlineFinanceApiRawJsonImportTableType.FundSourceExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, fundSourceExpenditureJson);
             Logger.Info($"New ArcOnlineFinanceApiRawJsonImportID: {arcOnlineFinanceApiRawJsonImportID}");
 
 
@@ -133,7 +133,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             try
             {
                 // Import the given Biennium
-                GrantExpenditureImportJson(arcOnlineFinanceApiRawJsonImportID, bienniumFiscalYear);
+                FundSourceExpenditureImportJson(arcOnlineFinanceApiRawJsonImportID, bienniumFiscalYear);
             }
             catch (Exception e)
             {
@@ -149,13 +149,13 @@ namespace ProjectFirma.Web.ScheduledJobs
         }
 
         /// <summary>
-        /// Get the fully qualified URL for JSON GrantExpenditures
+        /// Get the fully qualified URL for JSON FundSourceExpenditures
         /// </summary>
         /// <param name="biennium">Biennium is required</param>
         /// <returns></returns>
-        public static Uri GetGrantExpendituresJsonApiUrlWithAllParameters(int biennium)
+        public static Uri GetFundSourceExpendituresJsonApiUrlWithAllParameters(int biennium)
         {
-            var builder = new UriBuilder(GrantExpendituresJsonApiBaseUrl);
+            var builder = new UriBuilder(FundSourceExpendituresJsonApiBaseUrl);
             //builder.Query += $"/{biennium}";
             builder.Query += $"q={biennium}";
             return builder.Uri;
@@ -163,7 +163,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            DownloadGrantExpendituresTableForAllFiscalYears();
+            DownloadFundSourceExpendituresTableForAllFiscalYears();
         }
 
 

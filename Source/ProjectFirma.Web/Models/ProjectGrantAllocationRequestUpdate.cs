@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectGrantAllocationRequestUpdate.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="ProjectFundSourceAllocationRequestUpdate.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -25,15 +25,15 @@ using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectGrantAllocationRequestUpdate : IGrantAllocationRequestAmount, IAuditableEntity
+    public partial class ProjectFundSourceAllocationRequestUpdate : IFundSourceAllocationRequestAmount, IAuditableEntity
     {
 
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            projectUpdateBatch.ProjectGrantAllocationRequestUpdates = project.ProjectGrantAllocationRequests.Select(
+            projectUpdateBatch.ProjectFundSourceAllocationRequestUpdates = project.ProjectFundSourceAllocationRequests.Select(
                 pgar =>
-                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.FundSourceAllocation, pgar.CreateDate, pgar.ImportedFromTabularData)
+                    new ProjectFundSourceAllocationRequestUpdate(projectUpdateBatch, pgar.FundSourceAllocation, pgar.CreateDate, pgar.ImportedFromTabularData)
                     {
                         TotalAmount = pgar.TotalAmount,
                         MatchAmount = pgar.MatchAmount,
@@ -48,12 +48,12 @@ namespace ProjectFirma.Web.Models
 
         }
 
-        public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectGrantAllocationRequest> allProjectGrantAllocationRequests)
+        public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectFundSourceAllocationRequest> allProjectFundSourceAllocationRequests)
         {
             var project = projectUpdateBatch.Project;
-            var projectGrantAllocationExpectedFundingFromProjectUpdate = projectUpdateBatch
-                .ProjectGrantAllocationRequestUpdates
-                .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.FundSourceAllocation.GrantAllocationID, x.CreateDate, x.ImportedFromTabularData)
+            var projectFundSourceAllocationExpectedFundingFromProjectUpdate = projectUpdateBatch
+                .ProjectFundSourceAllocationRequestUpdates
+                .Select(x => new ProjectFundSourceAllocationRequest(project.ProjectID, x.FundSourceAllocation.FundSourceAllocationID, x.CreateDate, x.ImportedFromTabularData)
                     {
                         TotalAmount = x.TotalAmount,
                         PayAmount = x.PayAmount,
@@ -61,9 +61,9 @@ namespace ProjectFirma.Web.Models
                         UpdateDate = x.UpdateDate
                     }
                 ).ToList();
-            project.ProjectGrantAllocationRequests.Merge(projectGrantAllocationExpectedFundingFromProjectUpdate,
-                allProjectGrantAllocationRequests,
-                (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
+            project.ProjectFundSourceAllocationRequests.Merge(projectFundSourceAllocationExpectedFundingFromProjectUpdate,
+                allProjectFundSourceAllocationRequests,
+                (x, y) => x.ProjectID == y.ProjectID && x.FundSourceAllocationID == y.FundSourceAllocationID,
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
@@ -79,9 +79,9 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                string grantAllocationID = this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationID.ToString(): "none";
-                string grantAllocationName = this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationName : "none";
-                return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} TotalAmount: {this.TotalAmount}";
+                string fundSourceAllocationID = this.FundSourceAllocation != null ? this.FundSourceAllocation.FundSourceAllocationID.ToString(): "none";
+                string fundSourceAllocationName = this.FundSourceAllocation != null ? this.FundSourceAllocation.FundSourceAllocationName : "none";
+                return $"FundSourceAllocationID: {fundSourceAllocationID}  FundSource Allocation Name: {fundSourceAllocationName} TotalAmount: {this.TotalAmount}";
             }
         }
 

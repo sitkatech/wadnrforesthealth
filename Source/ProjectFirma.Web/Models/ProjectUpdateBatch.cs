@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Models
             projectUpdateBatch.SyncExpendituresYearsExemptionExplanation();
 
             // Expected Funding
-            ProjectGrantAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
+            ProjectFundSourceAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
 
             // project locations - detailed
             ProjectLocationUpdate.CreateFromProject(projectUpdateBatch);
@@ -211,10 +211,10 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectDocumentUpdates);
         }
 
-        public void DeleteProjectGrantAllocationRequestUpdates()
+        public void DeleteProjectFundSourceAllocationRequestUpdates()
         {
-            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.DeleteProjectGrantAllocationRequestUpdate(ProjectGrantAllocationRequestUpdates);
-            RefreshFromDatabase(ProjectGrantAllocationRequestUpdates);
+            HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequestUpdates.DeleteProjectFundSourceAllocationRequestUpdate(ProjectFundSourceAllocationRequestUpdates);
+            RefreshFromDatabase(ProjectFundSourceAllocationRequestUpdates);
         }
 
         public void DeleteProjectFundingSourceUpdates()
@@ -296,7 +296,7 @@ namespace ProjectFirma.Web.Models
         }
 
 
-        public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectGrantAllocationRequestSimple> newprojectGrantAllocationRequests)
+        public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectFundSourceAllocationRequestSimple> newprojectFundSourceAllocationRequests)
         {
             return new ExpectedFundingValidationResult();
         }
@@ -403,7 +403,7 @@ namespace ProjectFirma.Web.Models
             IList<ProjectPriorityLandscape> projectPriorityLandscapes, 
             IList<ProjectRegion> projectRegions, 
             IList<ProjectCounty> projectCounties,
-            IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
+            IList<ProjectFundSourceAllocationRequest> projectFundSourceAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
             IList<ProjectPerson> allProjectPersons,
@@ -421,7 +421,7 @@ namespace ProjectFirma.Web.Models
                 projectPriorityLandscapes,
                 projectRegions,
                 projectCounties,
-                projectGrantAllocationRequests,
+                projectFundSourceAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
                 allProjectPersons,
@@ -454,7 +454,7 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectPriorityLandscape> projectPriorityLandscapes,
                 IList<ProjectRegion> projectRegions,
                 IList<ProjectCounty> projectCounties,
-                IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
+                IList<ProjectFundSourceAllocationRequest> projectFundSourceAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
                 IList<ProjectPerson> allProjectPeople,
@@ -468,7 +468,7 @@ namespace ProjectFirma.Web.Models
             ProjectUpdateProgram.CommitChangesToProject(this, allProjectPrograms);
 
             // expected funding
-            ProjectGrantAllocationRequestUpdate.CommitChangesToProject(this, projectGrantAllocationRequests);
+            ProjectFundSourceAllocationRequestUpdate.CommitChangesToProject(this, projectFundSourceAllocationRequests);
 
             ProjectFundingSourceUpdate.CommitChangesToProject(this, projectFundingSources);
 

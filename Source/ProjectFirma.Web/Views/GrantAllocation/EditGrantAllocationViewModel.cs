@@ -32,20 +32,20 @@ using System.Web;
 using DocumentFormat.OpenXml.Office2013.Word;
 using Person = ProjectFirma.Web.Models.Person;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject
+    public class EditFundSourceAllocationViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantAllocationID { get; set; }
+        public int FundSourceAllocationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSource)]
         [Required]
-        public int GrantID { get; set; }
+        public int FundSourceID { get; set; }
 
-        [StringLength(Models.FundSourceAllocation.FieldLengths.GrantAllocationName)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationName)]
+        [StringLength(Models.FundSourceAllocation.FieldLengths.FundSourceAllocationName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationName)]
         [Required]
-        public string GrantAllocationName { get; set; }
+        public string FundSourceAllocationName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
         [Required]
@@ -66,60 +66,60 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
         public Money? AllocationAmount { get; set; }
 
-        [StringLength(Models.GrantAllocationChangeLog.FieldLengths.GrantAllocationAmountNote)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationChangeLogNote)]
-        public string GrantAllocationChangeLogNote { get; set; }
+        [StringLength(Models.FundSourceAllocationChangeLog.FieldLengths.FundSourceAllocationAmountNote)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationChangeLogNote)]
+        public string FundSourceAllocationChangeLogNote { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStartDate)]
         public DateTime? StartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceEndDate)]
         public DateTime? EndDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramManager)]
         public List<int> ProgramManagerPersonIDs { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantManager)]
-        public int? GrantManagerID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceManager)]
+        public int? FundSourceManagerID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationPriority)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationPriority)]
         public int? PriorityID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationFundFSPs)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationFundFSPs)]
         public bool? FundFSPsBool { get; set; }
 
         public bool? LikelyToUsePeopleBool { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationLikelyToUse)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationLikelyToUse)]
         public List<int> LikelyToUsePeopleIds { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationSource)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationSource)]
         public int? SourceID { get; set; }
 
         [DisplayName("File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
-        public List<HttpPostedFileBase> GrantAllocationFileResourceDatas { get; set; }
+        public List<HttpPostedFileBase> FundSourceAllocationFileResourceDatas { get; set; }
 
         
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantAllocationViewModel()
+        public EditFundSourceAllocationViewModel()
         {
             ProgramIndexProjectCodeJsons = new List<ProgramIndexProjectCodeJson>();
         }
 
-        public EditGrantAllocationViewModel(Models.FundSourceAllocation fundSourceAllocation)
+        public EditFundSourceAllocationViewModel(Models.FundSourceAllocation fundSourceAllocation)
         {
-            GrantAllocationID = fundSourceAllocation.GrantAllocationID;
-            GrantAllocationName = fundSourceAllocation.GrantAllocationName;
+            FundSourceAllocationID = fundSourceAllocation.FundSourceAllocationID;
+            FundSourceAllocationName = fundSourceAllocation.FundSourceAllocationName;
             OrganizationID = fundSourceAllocation.OrganizationID;
-            GrantID = fundSourceAllocation.GrantID;
+            FundSourceID = fundSourceAllocation.FundSourceID;
 
             ProgramIndexProjectCodeJsons =
                 ProgramIndexProjectCodeJson
-                    .MakeProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(fundSourceAllocation.GrantAllocationProgramIndexProjectCodes.ToList());
+                    .MakeProgramIndexProjectCodeJsonsFromFundSourceAllocationProgramIndexProjectCodes(fundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes.ToList());
 
             FederalFundCodeID = fundSourceAllocation.FederalFundCodeID;
             DivisionID = fundSourceAllocation.DivisionID;
@@ -128,14 +128,14 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             StartDate = fundSourceAllocation.StartDate;
             EndDate = fundSourceAllocation.EndDate;
             ProgramManagerPersonIDs = fundSourceAllocation.ProgramManagerPersonIDs;
-            GrantManagerID = fundSourceAllocation.GrantManagerID;
-            PriorityID = fundSourceAllocation.GrantAllocationPriorityID;
+            FundSourceManagerID = fundSourceAllocation.FundSourceManagerID;
+            PriorityID = fundSourceAllocation.FundSourceAllocationPriorityID;
             FundFSPsBool = fundSourceAllocation.HasFundFSPs;
-            SourceID = fundSourceAllocation.GrantAllocationSource?.GrantAllocationSourceID;
+            SourceID = fundSourceAllocation.FundSourceAllocationSource?.FundSourceAllocationSourceID;
             LikelyToUsePeopleBool = fundSourceAllocation.LikelyToUse;
-            LikelyToUsePeopleIds = fundSourceAllocation.GrantAllocationLikelyPeople.Select(x=>x.PersonID).ToList();
+            LikelyToUsePeopleIds = fundSourceAllocation.FundSourceAllocationLikelyPeople.Select(x=>x.PersonID).ToList();
 
-            //GrantAllocationFileResourceDatas = grantAllocation.GrantAllocationFileResources
+            //FundSourceAllocationFileResourceDatas = fundSourceAllocation.FundSourceAllocationFileResources
         }
 
         public static int CountWordsSeparatedByWhitespaceOrCommaInString(string stringToCheck)
@@ -147,10 +147,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (GrantAllocationName == "")
+            if (FundSourceAllocationName == "")
             {
-                yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
-                    FirmaValidationMessages.OrganizationNameUnique, m => m.GrantAllocationName);
+                yield return new SitkaValidationResult<EditFundSourceAllocationViewModel, string>(
+                    FirmaValidationMessages.OrganizationNameUnique, m => m.FundSourceAllocationName);
             }
 
 
@@ -162,7 +162,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     if ((programIndexProjectCodePair.ProgramIndexID == null || programIndexProjectCodePair.ProgramIndexID < 1) &&
                         string.IsNullOrEmpty(programIndexProjectCodePair.ProgramIndexName))
                     {
-                        yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()} cannot be blank.",
+                        yield return new SitkaValidationResult<EditFundSourceAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()} cannot be blank.",
                             m => m.ProgramIndexProjectCodeJsons);
                     }else if (programIndexProjectCodePair.ProgramIndexID < 1 && !string.IsNullOrEmpty(programIndexProjectCodePair.ProgramIndexName))
                     {
@@ -170,7 +170,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                         var foundProgramIndex = HttpRequestStorage.DatabaseEntities.ProgramIndices.FirstOrDefault(pi => pi.ProgramIndexCode.ToUpper() == programIndexProjectCodePair.ProgramIndexName.ToUpper());
                         if (foundProgramIndex == null)
                         {
-                            yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProgramIndexName}) is invalid.",
+                            yield return new SitkaValidationResult<EditFundSourceAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProgramIndexName}) is invalid.",
                                 m => m.ProgramIndexProjectCodeJsons);
                         }
                         else
@@ -186,7 +186,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                         var foundProjectCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.FirstOrDefault(pc => pc.ProjectCodeName.ToUpper() == programIndexProjectCodePair.ProjectCodeName.ToUpper());
                         if (foundProjectCode == null)
                         {
-                            yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProjectCode.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProjectCodeName}) is invalid.", m => m.ProgramIndexProjectCodeJsons);
+                            yield return new SitkaValidationResult<EditFundSourceAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProjectCode.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProjectCodeName}) is invalid.", m => m.ProgramIndexProjectCodeJsons);
                         }
                         else
                         {
@@ -203,65 +203,65 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public void UpdateModel(Models.FundSourceAllocation fundSourceAllocation, Person currentPerson)
         {
-            fundSourceAllocation.GrantAllocationName = GrantAllocationName;
+            fundSourceAllocation.FundSourceAllocationName = FundSourceAllocationName;
             fundSourceAllocation.OrganizationID = OrganizationID;
-            fundSourceAllocation.GrantID = GrantID;
+            fundSourceAllocation.FundSourceID = FundSourceID;
             
             fundSourceAllocation.FederalFundCodeID = FederalFundCodeID;
             fundSourceAllocation.DivisionID = DivisionID;
-            fundSourceAllocation.GrantAllocationPriorityID = PriorityID;
+            fundSourceAllocation.FundSourceAllocationPriorityID = PriorityID;
             fundSourceAllocation.DNRUplandRegionID = DNRUplandRegionID;
             if (fundSourceAllocation.AllocationAmount != AllocationAmount)
             {
-                GrantAllocationChangeLog newChange = new GrantAllocationChangeLog(
+                FundSourceAllocationChangeLog newChange = new FundSourceAllocationChangeLog(
                          fundSourceAllocation,
                          currentPerson,
                          DateTime.Now
                     );
-                newChange.GrantAllocationAmountOldValue = fundSourceAllocation.AllocationAmount;
-                newChange.GrantAllocationAmountNewValue = AllocationAmount;
-                newChange.GrantAllocationAmountNote = GrantAllocationChangeLogNote;
+                newChange.FundSourceAllocationAmountOldValue = fundSourceAllocation.AllocationAmount;
+                newChange.FundSourceAllocationAmountNewValue = AllocationAmount;
+                newChange.FundSourceAllocationAmountNote = FundSourceAllocationChangeLogNote;
             }
             fundSourceAllocation.AllocationAmount = AllocationAmount;
             fundSourceAllocation.StartDate = StartDate;
             fundSourceAllocation.EndDate = EndDate;
-            fundSourceAllocation.GrantManagerID = GrantManagerID;
+            fundSourceAllocation.FundSourceManagerID = FundSourceManagerID;
             fundSourceAllocation.HasFundFSPs = FundFSPsBool;
-            fundSourceAllocation.GrantAllocationSourceID = SourceID;
+            fundSourceAllocation.FundSourceAllocationSourceID = SourceID;
             fundSourceAllocation.LikelyToUse = LikelyToUsePeopleBool;
 
             // Deleting existing records
-            fundSourceAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
-            fundSourceAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(fundSourceAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
+            fundSourceAllocation.FundSourceAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            fundSourceAllocation.FundSourceAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new FundSourceAllocationProgramManager(fundSourceAllocation.FundSourceAllocationID, p)).ToList() : new List<FundSourceAllocationProgramManager>();
 
-            if (GrantAllocationFileResourceDatas?[0] != null)
+            if (FundSourceAllocationFileResourceDatas?[0] != null)
             {
-                var fileResources = GrantAllocationFileResourceDatas.Select(fileData =>
+                var fileResources = FundSourceAllocationFileResourceDatas.Select(fileData =>
                     FileResource.CreateNewFromHttpPostedFile(fileData, currentPerson));
 
                 foreach (var fileResource in fileResources)
                 {
                     HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                    var grantAllocationFileResource = new GrantAllocationFileResource(fundSourceAllocation, fileResource, fileResource.OriginalCompleteFileName);
-                    fundSourceAllocation.GrantAllocationFileResources.Add(grantAllocationFileResource);
+                    var fundSourceAllocationFileResource = new FundSourceAllocationFileResource(fundSourceAllocation, fileResource, fileResource.OriginalCompleteFileName);
+                    fundSourceAllocation.FundSourceAllocationFileResources.Add(fundSourceAllocationFileResource);
                 }
             }
 
-            //delete existing GrantAllocationProgramIndexProjectCode records
-            fundSourceAllocation.GrantAllocationProgramIndexProjectCodes.ToList().ForEach(gapipc => gapipc.DeleteFull(HttpRequestStorage.DatabaseEntities));
-            //create new rows of GrantAllocationProgramIndexProjectCode
-            fundSourceAllocation.GrantAllocationProgramIndexProjectCodes =
+            //delete existing FundSourceAllocationProgramIndexProjectCode records
+            fundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes.ToList().ForEach(gapipc => gapipc.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            //create new rows of FundSourceAllocationProgramIndexProjectCode
+            fundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes =
                 ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null).Select(gapipc =>
-                    new GrantAllocationProgramIndexProjectCode(fundSourceAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
+                    new FundSourceAllocationProgramIndexProjectCode(fundSourceAllocation.FundSourceAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
 
             // Deleting existing records
-            fundSourceAllocation.GrantAllocationLikelyPeople.ToList().ForEach(galp => galp.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            fundSourceAllocation.FundSourceAllocationLikelyPeople.ToList().ForEach(galp => galp.DeleteFull(HttpRequestStorage.DatabaseEntities));
             if (LikelyToUsePeopleBool == true)
             {
-                fundSourceAllocation.GrantAllocationLikelyPeople = this.LikelyToUsePeopleIds != null
+                fundSourceAllocation.FundSourceAllocationLikelyPeople = this.LikelyToUsePeopleIds != null
                     ? this.LikelyToUsePeopleIds
-                        .Select(p => new GrantAllocationLikelyPerson(fundSourceAllocation.GrantAllocationID, p)).ToList()
-                    : new List<GrantAllocationLikelyPerson>();
+                        .Select(p => new FundSourceAllocationLikelyPerson(fundSourceAllocation.FundSourceAllocationID, p)).ToList()
+                    : new List<FundSourceAllocationLikelyPerson>();
             }
 
 
@@ -269,29 +269,29 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         // Some fields can't be serialized to JSON which is needed for the Angular controller,
         // so this creates a clone without those fields
-        public EditGrantAllocationViewModel SerializableClone()
+        public EditFundSourceAllocationViewModel SerializableClone()
         {
-            var clone = new EditGrantAllocationViewModel
+            var clone = new EditFundSourceAllocationViewModel
             {
-                GrantAllocationID = GrantAllocationID,
-                GrantID = GrantID,
-                GrantAllocationName = GrantAllocationName,
+                FundSourceAllocationID = FundSourceAllocationID,
+                FundSourceID = FundSourceID,
+                FundSourceAllocationName = FundSourceAllocationName,
                 OrganizationID = OrganizationID,
                 ProgramIndexProjectCodeJsons = ProgramIndexProjectCodeJsons,
                 FederalFundCodeID = FederalFundCodeID,
                 DivisionID = DivisionID,
                 DNRUplandRegionID = DNRUplandRegionID,
                 AllocationAmount = AllocationAmount,
-                GrantAllocationChangeLogNote = GrantAllocationChangeLogNote,
+                FundSourceAllocationChangeLogNote = FundSourceAllocationChangeLogNote,
                 StartDate = StartDate,
                 EndDate = EndDate,
                 ProgramManagerPersonIDs = ProgramManagerPersonIDs,
-                GrantManagerID = GrantManagerID,
+                FundSourceManagerID = FundSourceManagerID,
                 PriorityID = PriorityID,
                 FundFSPsBool = FundFSPsBool,
                 SourceID = SourceID,
                 LikelyToUsePeopleIds = LikelyToUsePeopleIds,
-                GrantAllocationFileResourceDatas = new List<HttpPostedFileBase>()
+                FundSourceAllocationFileResourceDatas = new List<HttpPostedFileBase>()
             };
 
             // HttpPostedFileBase cannot be serialize by the default serializer
@@ -330,9 +330,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         }
 
-        public static List<ProgramIndexProjectCodeJson> MakeProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(List<Models.GrantAllocationProgramIndexProjectCode> grantAllocationProgramIndexProjectCodes)
+        public static List<ProgramIndexProjectCodeJson> MakeProgramIndexProjectCodeJsonsFromFundSourceAllocationProgramIndexProjectCodes(List<Models.FundSourceAllocationProgramIndexProjectCode> fundSourceAllocationProgramIndexProjectCodes)
         {
-            return grantAllocationProgramIndexProjectCodes.Select(gapipc => gapipc.ProjectCode == null ? new ProgramIndexProjectCodeJson(gapipc.ProgramIndex) : new ProgramIndexProjectCodeJson(gapipc.ProgramIndex, gapipc.ProjectCode)).ToList();
+            return fundSourceAllocationProgramIndexProjectCodes.Select(gapipc => gapipc.ProjectCode == null ? new ProgramIndexProjectCodeJson(gapipc.ProgramIndex) : new ProgramIndexProjectCodeJson(gapipc.ProgramIndex, gapipc.ProjectCode)).ToList();
         }
 
 

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrant.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditFundSource.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -21,44 +21,44 @@ Source code is available upon request via <support@sitkatech.com>.
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class EditGrant : TypedWebPartialViewPage<EditGrantViewData, EditGrantViewModel>
+    public abstract class EditFundSource : TypedWebPartialViewPage<EditFundSourceViewData, EditFundSourceViewModel>
     {
     }
 
-    public abstract class EditGrantType
+    public abstract class EditFundSourceType
     {
         public readonly string IntroductoryText;
 
-        internal EditGrantType(string introductoryText)
+        internal EditFundSourceType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditGrantTypeNewGrant NewGrant = EditGrantTypeNewGrant.Instance;
-        public static readonly EditGrantTypeExistingGrant ExistingGrant = EditGrantTypeExistingGrant.Instance;
+        public static readonly EditFundSourceTypeNewFundSource NewFundSource = EditFundSourceTypeNewFundSource.Instance;
+        public static readonly EditFundSourceTypeExistingFundSource ExistingFundSource = EditFundSourceTypeExistingFundSource.Instance;
     }
 
-    public class EditGrantTypeNewGrant : EditGrantType
+    public class EditFundSourceTypeNewFundSource : EditFundSourceType
     {
-        private EditGrantTypeNewGrant(string introductoryText) : base(introductoryText)
+        private EditFundSourceTypeNewFundSource(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantTypeNewGrant Instance = new EditGrantTypeNewGrant(
-            $"<p>Enter basic information about the {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceTypeNewFundSource Instance = new EditFundSourceTypeNewFundSource(
+            $"<p>Enter basic information about the {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditGrantTypeExistingGrant : EditGrantType
+    public class EditFundSourceTypeExistingFundSource : EditFundSourceType
     {
-        private EditGrantTypeExistingGrant(string introductoryText) : base(introductoryText)
+        private EditFundSourceTypeExistingFundSource(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantTypeExistingGrant Instance =
-            new EditGrantTypeExistingGrant(
-                $"<p>Update this {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}'s information.</p>");
+        public static readonly EditFundSourceTypeExistingFundSource Instance =
+            new EditFundSourceTypeExistingFundSource(
+                $"<p>Update this {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}'s information.</p>");
     }
 
     

@@ -6,15 +6,15 @@ using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class GrantAllocationProgramIndexProjectCodeController : FirmaBaseController
+    public class FundSourceAllocationProgramIndexProjectCodeController : FirmaBaseController
     {
-        #region WADNR Grant JSON API
+        #region WADNR FundSource JSON API
 
         [ProjectCodeViewJsonApiFeature]
-        public JsonNetJArrayResult GrantAllocationProgramIndexProjectCodeJsonApi()
+        public JsonNetJArrayResult FundSourceAllocationProgramIndexProjectCodeJsonApi()
         {
-            var grantAllocationProgramIndexProjectCodes = HttpRequestStorage.DatabaseEntities.GrantAllocationProgramIndexProjectCodes.ToList();
-            var jsonProjectCodes = GrantAllocationProgramIndexProjectCodeApiJson.MakeGrantAllocationProgramIndexProjectCodeApiJsonsFromGrantAllocationProgramIndexProjectCodes(grantAllocationProgramIndexProjectCodes, false);
+            var fundSourceAllocationProgramIndexProjectCodes = HttpRequestStorage.DatabaseEntities.FundSourceAllocationProgramIndexProjectCodes.ToList();
+            var jsonProjectCodes = FundSourceAllocationProgramIndexProjectCodeApiJson.MakeFundSourceAllocationProgramIndexProjectCodeApiJsonsFromFundSourceAllocationProgramIndexProjectCodes(fundSourceAllocationProgramIndexProjectCodes, false);
             return new JsonNetJArrayResult(jsonProjectCodes);
         }
 

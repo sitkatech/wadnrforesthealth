@@ -43,23 +43,23 @@ namespace ProjectFirma.Web.Common
             return SecuredAction(person, routeExpression, "{0}");
         }
 
-        public static string SecuredAction<T>(Person person, Expression<Action<T>> routeExpression, string grantedFormat) where T : Controller
+        public static string SecuredAction<T>(Person person, Expression<Action<T>> routeExpression, string fundSourceedFormat) where T : Controller
         {
-            return SecuredAction(person, routeExpression, grantedFormat, DefaultDeniedFormat);
+            return SecuredAction(person, routeExpression, fundSourceedFormat, DefaultDeniedFormat);
         }
 
-        public static string SecuredAction<T>(Person person, Expression<Action<T>> routeExpression, string grantedFormat, string deniedFormat) where T : Controller
+        public static string SecuredAction<T>(Person person, Expression<Action<T>> routeExpression, string fundSourceedFormat, string deniedFormat) where T : Controller
         {
             var body = SitkaRoute<T>.GetRouteExpressionBody(routeExpression);
             var firmaFeatureLookupAttribute = body.Method.GetCustomAttributes(typeof(FirmaBaseFeature), true).Cast<FirmaBaseFeature>().SingleOrDefault();
             Check.RequireNotNull(firmaFeatureLookupAttribute, string.Format("Could not find feature for {0}", SitkaRoute<T>.BuildUrlFromExpression(routeExpression)));
-            return firmaFeatureLookupAttribute.HasPermissionByPerson(person) ? String.Format("<a href=\"{0}\">{1}</a>", SitkaRoute<T>.BuildUrlFromExpression(routeExpression), grantedFormat) : deniedFormat;
+            return firmaFeatureLookupAttribute.HasPermissionByPerson(person) ? String.Format("<a href=\"{0}\">{1}</a>", SitkaRoute<T>.BuildUrlFromExpression(routeExpression), fundSourceedFormat) : deniedFormat;
         }
 
         public static string SecuredActionLink<T>(Person person, Expression<Action<T>> routeExpression, string linkText, string cssClass) where T : Controller
         {
-            var grantedFormat = String.Format("<a href=\"{{0}}\" class=\"{1}\">{0}</a>", linkText, cssClass);
-            return SecuredAction(person, routeExpression, grantedFormat);
+            var fundSourceedFormat = String.Format("<a href=\"{{0}}\" class=\"{1}\">{0}</a>", linkText, cssClass);
+            return SecuredAction(person, routeExpression, fundSourceedFormat);
         }
 
         public static string SecuredActionLink<T>(Person person, Expression<Action<T>> routeExpression, string linkText) where T : Controller

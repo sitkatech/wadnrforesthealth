@@ -1,42 +1,42 @@
 ﻿using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class EditGrantNoteInternal : TypedWebPartialViewPage<EditGrantNoteInternalViewData, EditGrantNoteInternalViewModel>
+    public abstract class EditFundSourceNoteInternal : TypedWebPartialViewPage<EditFundSourceNoteInternalViewData, EditFundSourceNoteInternalViewModel>
     {
     }
 
-    public abstract class EditGrantNoteInternalType
+    public abstract class EditFundSourceNoteInternalType
     {
         public readonly string IntroductoryText;
 
-        internal EditGrantNoteInternalType(string introductoryText)
+        internal EditFundSourceNoteInternalType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditGrantNoteInternalTypeNewNote NewNote = EditGrantNoteInternalTypeNewNote.Instance;
-        public static readonly EditGrantNoteInternalTypeExistingNote ExistingNote = EditGrantNoteInternalTypeExistingNote.Instance;
+        public static readonly EditFundSourceNoteInternalTypeNewNote NewNote = EditFundSourceNoteInternalTypeNewNote.Instance;
+        public static readonly EditFundSourceNoteInternalTypeExistingNote ExistingNote = EditFundSourceNoteInternalTypeExistingNote.Instance;
     }
 
-    public class EditGrantNoteInternalTypeNewNote : EditGrantNoteInternalType
+    public class EditFundSourceNoteInternalTypeNewNote : EditFundSourceNoteInternalType
     {
-        private EditGrantNoteInternalTypeNewNote(string introductoryText) : base(introductoryText)
+        private EditFundSourceNoteInternalTypeNewNote(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantNoteInternalTypeNewNote Instance = new EditGrantNoteInternalTypeNewNote(
-            $"<p>Enter a new {Models.FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceNoteInternalTypeNewNote Instance = new EditFundSourceNoteInternalTypeNewNote(
+            $"<p>Enter a new {Models.FieldDefinition.FundSourceNoteInternal.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditGrantNoteInternalTypeExistingNote : EditGrantNoteInternalType
+    public class EditFundSourceNoteInternalTypeExistingNote : EditFundSourceNoteInternalType
     {
-        private EditGrantNoteInternalTypeExistingNote(string introductoryText) : base(introductoryText)
+        private EditFundSourceNoteInternalTypeExistingNote(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantNoteInternalTypeExistingNote Instance =
-            new EditGrantNoteInternalTypeExistingNote(
-                $"<p>Update this {Models.FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceNoteInternalTypeExistingNote Instance =
+            new EditFundSourceNoteInternalTypeExistingNote(
+                $"<p>Update this {Models.FieldDefinition.FundSourceNoteInternal.GetFieldDefinitionLabel()}.</p>");
     }
 }

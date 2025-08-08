@@ -19,46 +19,46 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using ProjectFirma.Web.Views.Shared.FundSourceAllocationControls;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public abstract class EditGrantAllocationNote : TypedWebPartialViewPage<EditGrantAllocationNoteViewData, EditGrantAllocationNoteViewModel>
+    public abstract class EditFundSourceAllocationNote : TypedWebPartialViewPage<EditFundSourceAllocationNoteViewData, EditFundSourceAllocationNoteViewModel>
     {
     }
 
-    public abstract class EditGrantAllocationNoteType
+    public abstract class EditFundSourceAllocationNoteType
     {
         public readonly string IntroductoryText;
 
-        internal EditGrantAllocationNoteType(string introductoryText)
+        internal EditFundSourceAllocationNoteType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditGrantAllocationNoteTypeNewNote NewNote = EditGrantAllocationNoteTypeNewNote.Instance;
-        public static readonly EditGrantAllocationNoteTypeExistingNote ExistingGrantAllocationNote = EditGrantAllocationNoteTypeExistingNote.Instance;
+        public static readonly EditFundSourceAllocationNoteTypeNewNote NewNote = EditFundSourceAllocationNoteTypeNewNote.Instance;
+        public static readonly EditFundSourceAllocationNoteTypeExistingNote ExistingFundSourceAllocationNote = EditFundSourceAllocationNoteTypeExistingNote.Instance;
     }
 
-    public class EditGrantAllocationNoteTypeNewNote : EditGrantAllocationNoteType
+    public class EditFundSourceAllocationNoteTypeNewNote : EditFundSourceAllocationNoteType
     {
-        private EditGrantAllocationNoteTypeNewNote(string introductoryText) : base(introductoryText)
+        private EditFundSourceAllocationNoteTypeNewNote(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantAllocationNoteTypeNewNote Instance = new EditGrantAllocationNoteTypeNewNote(
-            $"<p>Enter a new {Models.FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceAllocationNoteTypeNewNote Instance = new EditFundSourceAllocationNoteTypeNewNote(
+            $"<p>Enter a new {Models.FieldDefinition.FundSourceAllocationNote.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditGrantAllocationNoteTypeExistingNote : EditGrantAllocationNoteType
+    public class EditFundSourceAllocationNoteTypeExistingNote : EditFundSourceAllocationNoteType
     {
-        private EditGrantAllocationNoteTypeExistingNote(string introductoryText) : base(introductoryText)
+        private EditFundSourceAllocationNoteTypeExistingNote(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantAllocationNoteTypeExistingNote Instance =
-            new EditGrantAllocationNoteTypeExistingNote(
-                $"<p>Update this {Models.FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceAllocationNoteTypeExistingNote Instance =
+            new EditFundSourceAllocationNoteTypeExistingNote(
+                $"<p>Update this {Models.FieldDefinition.FundSourceAllocationNote.GetFieldDefinitionLabel()}.</p>");
     }
 
     

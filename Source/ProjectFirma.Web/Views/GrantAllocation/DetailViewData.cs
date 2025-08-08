@@ -30,77 +30,77 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.FocusArea;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using ProjectFirma.Web.Views.Shared.FundSourceAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class DetailViewData : GrantAllocationViewData
+    public class DetailViewData : FundSourceAllocationViewData
     {
-        public GrantAllocationBasicsViewData GrantAllocationBasicsViewData { get; }
-        public string NewGrantAllocationNoteUrl { get; set; }
-        public EntityNotesViewData GrantAllocationNotesViewData { get; set; }
-        public EntityNotesViewData GrantAllocationNoteInternalsViewData { get; set; }
+        public FundSourceAllocationBasicsViewData FundSourceAllocationBasicsViewData { get; }
+        public string NewFundSourceAllocationNoteUrl { get; set; }
+        public EntityNotesViewData FundSourceAllocationNotesViewData { get; set; }
+        public EntityNotesViewData FundSourceAllocationNoteInternalsViewData { get; set; }
         public ViewGoogleChartViewData ViewGoogleChartViewData { get; }
 
-        public GridSpec<Models.ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsGridSpec { get; }
-        public string ProjectGrantAllocationRequestsGridName { get; }
-        public string ProjectGrantAllocationRequestsGridDataUrl { get; }
+        public GridSpec<Models.ProjectFundSourceAllocationRequest> ProjectFundSourceAllocationRequestsGridSpec { get; }
+        public string ProjectFundSourceAllocationRequestsGridName { get; }
+        public string ProjectFundSourceAllocationRequestsGridDataUrl { get; }
 
-        public GrantAllocationBudgetLineItemsViewData GrantAllocationBudgetLineItemsViewData { get; }
+        public FundSourceAllocationBudgetLineItemsViewData FundSourceAllocationBudgetLineItemsViewData { get; }
 
-        public GrantAllocationBudgetVsActualsViewData GrantAllocationBudgetVsActualsViewData { get; }
+        public FundSourceAllocationBudgetVsActualsViewData FundSourceAllocationBudgetVsActualsViewData { get; }
 
-        public GrantAllocationExpendituresGridSpec GrantAllocationExpendituresGridSpec { get; }
+        public FundSourceAllocationExpendituresGridSpec FundSourceAllocationExpendituresGridSpec { get; }
         
-        public string GrantAllocationExpendituresGridName { get; }
-        public string GrantAllocationExpendituresGridDataUrl { get; }
+        public string FundSourceAllocationExpendituresGridName { get; }
+        public string FundSourceAllocationExpendituresGridDataUrl { get; }
 
-        public FileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
-        public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
+        public FileDetailsViewData FundSourceAllocationDetailsFileDetailsViewData { get; set; }
+        public List<AgreementFundSourceAllocation> CurrentAgreementFundSourceAllocationsInSortedOrder { get; }
         public bool IsUserLoggedIn { get; }
 
         public DetailViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocation
-            , GrantAllocationBasicsViewData grantAllocationBasicsViewData
-            , EntityNotesViewData grantAllocationNotesViewData
-            , EntityNotesViewData grantAllocationNoteInternalsViewData
+            , FundSourceAllocationBasicsViewData fundSourceAllocationBasicsViewData
+            , EntityNotesViewData fundSourceAllocationNotesViewData
+            , EntityNotesViewData fundSourceAllocationNoteInternalsViewData
             , ViewGoogleChartViewData viewGoogleChartViewData
-            , GridSpec<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequestsGridSpec
-            , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec)
+            , GridSpec<Models.ProjectFundSourceAllocationRequest> projectFundSourceAllocationRequestsGridSpec
+            , FundSourceAllocationExpendituresGridSpec fundSourceAllocationExpendituresGridSpec)
             : base(currentPerson, fundSourceAllocation)
         {
-            PageTitle = fundSourceAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
-            BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
+            PageTitle = fundSourceAllocation.FundSourceAllocationName.ToEllipsifiedStringClean(110);
+            BreadCrumbTitle = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} Detail";
 
-            GrantAllocationBasicsViewData = grantAllocationBasicsViewData;
-            GrantAllocationNotesViewData = grantAllocationNotesViewData;
+            FundSourceAllocationBasicsViewData = fundSourceAllocationBasicsViewData;
+            FundSourceAllocationNotesViewData = fundSourceAllocationNotesViewData;
 
-            NewGrantAllocationNoteUrl = fundSourceAllocation.GetNewNoteUrl();
-            GrantAllocationNoteInternalsViewData = grantAllocationNoteInternalsViewData;
+            NewFundSourceAllocationNoteUrl = fundSourceAllocation.GetNewNoteUrl();
+            FundSourceAllocationNoteInternalsViewData = fundSourceAllocationNoteInternalsViewData;
 
             ViewGoogleChartViewData = viewGoogleChartViewData;
 
-            ProjectGrantAllocationRequestsGridSpec = projectGrantAllocationRequestsGridSpec;
-            ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
-            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsGridJsonData(fundSourceAllocation));
+            ProjectFundSourceAllocationRequestsGridSpec = projectFundSourceAllocationRequestsGridSpec;
+            ProjectFundSourceAllocationRequestsGridName = "projectsFundSourceAllocationRequestsFromFundSourceAllocationGrid";
+            ProjectFundSourceAllocationRequestsGridDataUrl = SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(tc => tc.ProjectFundSourceAllocationRequestsGridJsonData(fundSourceAllocation));
 
-            GrantAllocationExpendituresGridSpec = grantAllocationExpendituresGridSpec;
-            GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
-            GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(fundSourceAllocation));
+            FundSourceAllocationExpendituresGridSpec = fundSourceAllocationExpendituresGridSpec;
+            FundSourceAllocationExpendituresGridName = "fundSourceAllocationExpendituresGrid";
+            FundSourceAllocationExpendituresGridDataUrl = SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(gac => gac.FundSourceAllocationExpendituresGridJsonData(fundSourceAllocation));
 
-            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, fundSourceAllocation, fundSourceAllocation.GrantAllocationBudgetLineItems.ToList());
-            GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, fundSourceAllocation);
+            FundSourceAllocationBudgetLineItemsViewData = new FundSourceAllocationBudgetLineItemsViewData(currentPerson, fundSourceAllocation, fundSourceAllocation.FundSourceAllocationBudgetLineItems.ToList());
+            FundSourceAllocationBudgetVsActualsViewData = new FundSourceAllocationBudgetVsActualsViewData(currentPerson, fundSourceAllocation);
 
             var canEditDocuments = new FundSourceAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            GrantAllocationDetailsFileDetailsViewData = new FileDetailsViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSourceAllocation.GrantAllocationFileResources)),
-                SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(fundSourceAllocation.PrimaryKey)),
+            FundSourceAllocationDetailsFileDetailsViewData = new FileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSourceAllocation.FundSourceAllocationFileResources)),
+                SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(x => x.NewFundSourceAllocationFiles(fundSourceAllocation.PrimaryKey)),
                 canEditDocuments,
-                Models.FieldDefinition.GrantAllocation
+                Models.FieldDefinition.FundSourceAllocation
             );
 
-            List<AgreementGrantAllocation> agreementGrantAllocationsList = fundSourceAllocation.AgreementGrantAllocations.ToList();
-            CurrentAgreementGrantAllocationsInSortedOrder = agreementGrantAllocationsList;
+            List<AgreementFundSourceAllocation> agreementFundSourceAllocationsList = fundSourceAllocation.AgreementFundSourceAllocations.ToList();
+            CurrentAgreementFundSourceAllocationsInSortedOrder = agreementFundSourceAllocationsList;
 
 
             IsUserLoggedIn = !currentPerson.IsAnonymousOrUnassigned;

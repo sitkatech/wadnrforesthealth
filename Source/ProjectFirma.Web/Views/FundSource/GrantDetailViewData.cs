@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantDetailViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceDetailViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -26,76 +26,76 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.FundSourceAllocation;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class GrantDetailViewData : GrantViewData
+    public class FundSourceDetailViewData : FundSourceViewData
     {
-        public string NewGrantNoteUrl { get; set; }
-        public EntityNotesViewData GrantNotesViewData { get; set; }
-        public EntityNotesViewData InternalGrantNotesViewData { get; set; }
+        public string NewFundSourceNoteUrl { get; set; }
+        public EntityNotesViewData FundSourceNotesViewData { get; set; }
+        public EntityNotesViewData InternalFundSourceNotesViewData { get; set; }
 
-        public FileDetailsViewData GrantDetailsFileDetailsViewData { get; }
+        public FileDetailsViewData FundSourceDetailsFileDetailsViewData { get; }
 
-        //public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
-        //public string GrantAllocationGridName { get; }
-        //public string GrantAllocationGridDataUrlTemplate { get; }
+        //public FundSourceAllocationGridSpec FundSourceAllocationGridSpec { get; }
+        //public string FundSourceAllocationGridName { get; }
+        //public string FundSourceAllocationGridDataUrlTemplate { get; }
 
-        public GrantAllocationBudgetLineItemGridSpec GrantAllocationBudgetLineItemGridSpec { get; }
-        public string GrantAllocationBudgetLineItemGridName { get; }
-        public string GrantAllocationBudgetLineItemGridDataUrl { get; }
+        public FundSourceAllocationBudgetLineItemGridSpec FundSourceAllocationBudgetLineItemGridSpec { get; }
+        public string FundSourceAllocationBudgetLineItemGridName { get; }
+        public string FundSourceAllocationBudgetLineItemGridDataUrl { get; }
 
-        public GrantAgreementGridSpec GrantAgreementGridSpec { get; }
-        public string GrantAgreementGridName { get; }
-        public string GrantAgreementGridDataUrl { get; }
-        public ProjectGrantAllocationRequestsByGrantGridSpec ProjectGrantAllocationRequestsByGrantGridSpec { get; }
-        public string ProjectGrantAllocationRequestsGridName { get; }
-        public string ProjectGrantAllocationRequestsGridDataUrl { get; }
+        public FundSourceAgreementGridSpec FundSourceAgreementGridSpec { get; }
+        public string FundSourceAgreementGridName { get; }
+        public string FundSourceAgreementGridDataUrl { get; }
+        public ProjectFundSourceAllocationRequestsByFundSourceGridSpec ProjectFundSourceAllocationRequestsByFundSourceGridSpec { get; }
+        public string ProjectFundSourceAllocationRequestsGridName { get; }
+        public string ProjectFundSourceAllocationRequestsGridDataUrl { get; }
 
         public bool isUserLoggedIn { get; }
 
-        public GrantDetailViewData(Person currentPerson,
+        public FundSourceDetailViewData(Person currentPerson,
                                     Models.FundSource fundSource,
-                                    EntityNotesViewData grantNotesViewData,
+                                    EntityNotesViewData fundSourceNotesViewData,
                                     EntityNotesViewData internalNotesViewData)
             : base(currentPerson, fundSource)
         {
-            PageTitle = fundSource.GrantTitle.ToEllipsifiedStringClean(110);
-            BreadCrumbTitle = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} Detail";
-            NewGrantNoteUrl = fundSource.GetNewNoteUrl();
-            GrantNotesViewData = grantNotesViewData;
-            InternalGrantNotesViewData = internalNotesViewData;
+            PageTitle = fundSource.FundSourceTitle.ToEllipsifiedStringClean(110);
+            BreadCrumbTitle = $"{Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()} Detail";
+            NewFundSourceNoteUrl = fundSource.GetNewNoteUrl();
+            FundSourceNotesViewData = fundSourceNotesViewData;
+            InternalFundSourceNotesViewData = internalNotesViewData;
 
-            //GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, grant);
-            //GrantAllocationGridName = "grantAllocationsGridName";
-            //GrantAllocationGridDataUrlTemplate = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrantModification(UrlTemplate.Parameter1Int));
+            //FundSourceAllocationGridSpec = new FundSourceAllocationGridSpec(currentPerson, FundSourceAllocationGridSpec.FundSourceAllocationGridCreateButtonType.Shown, fundSource);
+            //FundSourceAllocationGridName = "fundSourceAllocationsGridName";
+            //FundSourceAllocationGridDataUrlTemplate = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourceAllocationGridJsonDataByFundSourceModification(UrlTemplate.Parameter1Int));
 
-            GrantAllocationBudgetLineItemGridSpec = new GrantAllocationBudgetLineItemGridSpec();
-            GrantAllocationBudgetLineItemGridName = "grantAllocationBudgetLineItemsGridName";
-            GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantAllocationBudgetLineItemGridJsonDataByGrant(fundSource));
+            FundSourceAllocationBudgetLineItemGridSpec = new FundSourceAllocationBudgetLineItemGridSpec();
+            FundSourceAllocationBudgetLineItemGridName = "fundSourceAllocationBudgetLineItemsGridName";
+            FundSourceAllocationBudgetLineItemGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourceAllocationBudgetLineItemGridJsonDataByFundSource(fundSource));
 
-            GrantAgreementGridSpec = new GrantAgreementGridSpec();
-            GrantAgreementGridName = "grantAgreementGridName";
-            GrantAgreementGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantAgreementGridJsonData(fundSource));
+            FundSourceAgreementGridSpec = new FundSourceAgreementGridSpec();
+            FundSourceAgreementGridName = "fundSourceAgreementGridName";
+            FundSourceAgreementGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourceAgreementGridJsonData(fundSource));
 
-            GrantDetailsFileDetailsViewData = new FileDetailsViewData(
-                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSource.GrantFileResources)),
-                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewGrantFiles(fundSource.PrimaryKey)),
+            FundSourceDetailsFileDetailsViewData = new FileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(fundSource.FundSourceFileResources)),
+                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewFundSourceFiles(fundSource.PrimaryKey)),
                 new FundSourceEditAsAdminFeature().HasPermissionByPerson(currentPerson),
-                Models.FieldDefinition.Grant
+                Models.FieldDefinition.FundSource
             );
 
-            ProjectGrantAllocationRequestsByGrantGridSpec = new ProjectGrantAllocationRequestsByGrantGridSpec()
+            ProjectFundSourceAllocationRequestsByFundSourceGridSpec = new ProjectFundSourceAllocationRequestsByFundSourceGridSpec()
             {
                 ObjectNameSingular = "Project",
                 ObjectNamePlural = "Projects",
                 SaveFiltersInCookie = true
             };
-            ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
-            ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsByGrantGridJsonData(fundSource));
+            ProjectFundSourceAllocationRequestsGridName = "projectsFundSourceAllocationRequestsFromFundSourceAllocationGrid";
+            ProjectFundSourceAllocationRequestsGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.ProjectFundSourceAllocationRequestsByFundSourceGridJsonData(fundSource));
 
             isUserLoggedIn = !currentPerson.IsAnonymousOrUnassigned;
         }

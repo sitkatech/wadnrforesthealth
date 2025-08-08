@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Controllers
             return Json(programIndicesAsAnonymousJsonStructure, JsonRequestBehavior.AllowGet);
         }
 
-        #region WADNR Grant JSON API
+        #region WADNR FundSource JSON API
 
         // Tammy doesn't want to see these, finds them confusing/redundant. Commenting them out, but can be resurrected if desired.
 

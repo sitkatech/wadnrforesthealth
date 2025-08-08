@@ -24,17 +24,17 @@ using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
 {
-    public class ProjectGrantAllocationRequestsDetailViewData : FirmaUserControlViewData
+    public class ProjectFundSourceAllocationRequestsDetailViewData : FirmaUserControlViewData
     {
-        public readonly List<GrantAllocationRequestAmount> GrantAllocationRequestAmounts;
+        public readonly List<FundSourceAllocationRequestAmount> FundSourceAllocationRequestAmounts;
         public readonly List<FundingSource> FundingSources;
         public readonly decimal? EstimatedTotalCost;
         public readonly string ProjectFundingSourceNotes;
         public readonly bool IsProjectAnLoaProject;
 
-        public ProjectGrantAllocationRequestsDetailViewData(List<GrantAllocationRequestAmount> grantAllocationRequestAmounts, List<FundingSource> fundingSources, decimal? estimatedTotalCost, string projectFundingSourceNotes, bool isProjectAnLoaProject)
+        public ProjectFundSourceAllocationRequestsDetailViewData(List<FundSourceAllocationRequestAmount> fundSourceAllocationRequestAmounts, List<FundingSource> fundingSources, decimal? estimatedTotalCost, string projectFundingSourceNotes, bool isProjectAnLoaProject)
         {
-            GrantAllocationRequestAmounts = grantAllocationRequestAmounts;
+            FundSourceAllocationRequestAmounts = fundSourceAllocationRequestAmounts;
             FundingSources = fundingSources;
             EstimatedTotalCost = estimatedTotalCost;
             ProjectFundingSourceNotes = projectFundingSourceNotes;

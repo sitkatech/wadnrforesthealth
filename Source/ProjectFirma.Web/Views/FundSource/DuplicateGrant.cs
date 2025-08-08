@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="DuplicateGrant.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="DuplicateFundSource.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -21,9 +21,9 @@ Source code is available upon request via <support@sitkatech.com>.
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class DuplicateGrant : TypedWebPartialViewPage<DuplicateGrantViewData, DuplicateGrantViewModel>
+    public abstract class DuplicateFundSource : TypedWebPartialViewPage<DuplicateFundSourceViewData, DuplicateFundSourceViewModel>
     {
     }
 

@@ -30,37 +30,37 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class GrantAllocationBudgetLineItemsViewData : FirmaUserControlViewData
+    public class FundSourceAllocationBudgetLineItemsViewData : FirmaUserControlViewData
     {
         public List<CostType> CostTypes { get; }
         public string FormPostUrl { get; }
-        public int GrantAllocationID { get; }
-        public List<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; }
+        public int FundSourceAllocationID { get; }
+        public List<FundSourceAllocationBudgetLineItem> FundSourceAllocationBudgetLineItems { get; }
         public bool PersonHasPermissionToEditBudgetLineItems { get; }
 
-        public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocationBeingEdited, List<GrantAllocationBudgetLineItem> grantAllocationBudgetLineItems)
+        public FundSourceAllocationBudgetLineItemsViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocationBeingEdited, List<FundSourceAllocationBudgetLineItem> fundSourceAllocationBudgetLineItems)
         {
             CostTypes = CostType.GetLineItemCostTypes();
-            GrantAllocationID = fundSourceAllocationBeingEdited.GrantAllocationID;
-            GrantAllocationBudgetLineItems = grantAllocationBudgetLineItems.OrderBy(x => x.CostType.SortOrder).ToList();
+            FundSourceAllocationID = fundSourceAllocationBeingEdited.FundSourceAllocationID;
+            FundSourceAllocationBudgetLineItems = fundSourceAllocationBudgetLineItems.OrderBy(x => x.CostType.SortOrder).ToList();
 
             PersonHasPermissionToEditBudgetLineItems = new FundSourceAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             //This will prevent the JS from posting back if the user doesn't have permission to edit the budget line items
             if (PersonHasPermissionToEditBudgetLineItems)
             {
-                FormPostUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x =>
-                    x.EditGrantAllocationBudgetLineItemAjax(fundSourceAllocationBeingEdited.PrimaryKey));
+                FormPostUrl = SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(x =>
+                    x.EditFundSourceAllocationBudgetLineItemAjax(fundSourceAllocationBeingEdited.PrimaryKey));
             }
         }
     }
 
-    public class GrantAllocationBudgetLineItemAjaxModel
+    public class FundSourceAllocationBudgetLineItemAjaxModel
     {
-        public int GrantAllocationID { get; set; }
+        public int FundSourceAllocationID { get; set; }
 
-        public int GrantAllocationBudgetLineItemID { get; set; }
+        public int FundSourceAllocationBudgetLineItemID { get; set; }
 
         [Required]
         [DisplayName("Budget Line Item Amount")]
@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public GrantAllocationBudgetLineItemAjaxModel()
+        public FundSourceAllocationBudgetLineItemAjaxModel()
         {
         }
 

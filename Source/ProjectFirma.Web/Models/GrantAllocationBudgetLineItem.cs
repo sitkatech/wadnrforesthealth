@@ -4,9 +4,9 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationBudgetLineItem : IAuditableEntity
+    public partial class FundSourceAllocationBudgetLineItem : IAuditableEntity
     {
-        public string AuditDescriptionString => $" {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Budget Line Item {this.GrantAllocationBudgetLineItemID} for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} {(this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationName : string.Empty)}";
+        public string AuditDescriptionString => $" {FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} Budget Line Item {this.FundSourceAllocationBudgetLineItemID} for {FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} {(this.FundSourceAllocation != null ? this.FundSourceAllocation.FundSourceAllocationName : string.Empty)}";
     }
 
 }

@@ -27,42 +27,42 @@ using LtInfo.Common;
 using LtInfo.Common.Models;
 using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.FundSourceAllocation;
 using LtInfo.Common.AgGridWrappers;
 
 namespace ProjectFirma.Web.Models
 {
-    public static class GrantAllocationModelExtensions
+    public static class FundSourceAllocationModelExtensions
     {
-        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.DeleteGrantAllocation(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.DeleteFundSourceAllocation(UrlTemplate.Parameter1Int)));
         public static string GetDeleteUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return DeleteUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
+            return DeleteUrlTemplate.ParameterReplace(fundSourceAllocation.FundSourceAllocationID);
         }
 
-        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.GrantAllocationDetail(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.FundSourceAllocationDetail(UrlTemplate.Parameter1Int)));
         public static string GetDetailUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return DetailUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
+            return DetailUrlTemplate.ParameterReplace(fundSourceAllocation.FundSourceAllocationID);
         }
 
 
-        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
         public static string GetEditUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return EditUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
+            return EditUrlTemplate.ParameterReplace(fundSourceAllocation.FundSourceAllocationID);
         }
 
-        public static readonly UrlTemplate<int> DuplicateUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.Duplicate(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DuplicateUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.Duplicate(UrlTemplate.Parameter1Int)));
         public static string GetDuplicateUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return DuplicateUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
+            return DuplicateUrlTemplate.ParameterReplace(fundSourceAllocation.FundSourceAllocationID);
         }
 
-        public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationNote(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.NewFundSourceAllocationNote(UrlTemplate.Parameter1Int)));
         public static string GetNewNoteUrl(this FundSourceAllocation fundSourceAllocation)
         {
-            return NewNoteUrlTemplate.ParameterReplace(fundSourceAllocation.GrantAllocationID);
+            return NewNoteUrlTemplate.ParameterReplace(fundSourceAllocation.FundSourceAllocationID);
         }
 
         public static List<BudgetVsActualLineItem> GetAllBudgetVsActualLineItemsByCostType(this FundSourceAllocation fundSourceAllocation)
@@ -71,9 +71,9 @@ namespace ProjectFirma.Web.Models
 
             foreach (var costType in CostType.GetLineItemCostTypes())
             {
-                var budget = fundSourceAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
+                var budget = fundSourceAllocation.FundSourceAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.FundSourceAllocationBudgetLineItemAmount).Sum();
 
-                var expendituresFromDatamart = fundSourceAllocation.GrantAllocationExpenditures
+                var expendituresFromDatamart = fundSourceAllocation.FundSourceAllocationExpenditures
                     .Where(gae => gae.CostTypeID == costType.CostTypeID).Select(gae => gae.ExpenditureAmount).Sum();
                 
                 var budgetVsActualLineItem = new BudgetVsActualLineItem(costType, budget, expendituresFromDatamart);
@@ -85,8 +85,8 @@ namespace ProjectFirma.Web.Models
 
         public static BudgetVsActualLineItem GetTotalBudgetVsActualLineItem(this FundSourceAllocation fundSourceAllocation)
         {
-            var budget = fundSourceAllocation.GrantAllocationBudgetLineItems.Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
-            var expendituresFromDatamart = fundSourceAllocation.GrantAllocationExpenditures.Select(gae => gae.ExpenditureAmount).Sum();
+            var budget = fundSourceAllocation.FundSourceAllocationBudgetLineItems.Select(bli => bli.FundSourceAllocationBudgetLineItemAmount).Sum();
+            var expendituresFromDatamart = fundSourceAllocation.FundSourceAllocationExpenditures.Select(gae => gae.ExpenditureAmount).Sum();
 
             var budgetVsActualLineItem = new BudgetVsActualLineItem(budget, expendituresFromDatamart);
             return budgetVsActualLineItem;
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
         {
             List<string> programIndexProjectCodePairs = new List<string>();
 
-            foreach (var pair in fundSourceAllocation.GrantAllocationProgramIndexProjectCodes)
+            foreach (var pair in fundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes)
             {
                 programIndexProjectCodePairs.Add(pair.ProgramIndexProjectCodeDisplayString);
             }
@@ -108,7 +108,7 @@ namespace ProjectFirma.Web.Models
         {
             List<HtmlLinkObject> programIndexProjectCodePairs = new List<HtmlLinkObject>();
 
-            foreach (var pair in fundSourceAllocation.GrantAllocationProgramIndexProjectCodes)
+            foreach (var pair in fundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes)
             {
                 var pairText = new HtmlLinkObject(pair.ProgramIndexProjectCodeDisplayString, string.Empty);
                 programIndexProjectCodePairs.Add(pairText);
@@ -118,21 +118,21 @@ namespace ProjectFirma.Web.Models
         }
 
 
-        public static List<GrantAllocationBudgetLineItem> CreateAllGrantAllocationBudgetLineItemsByCostType(this FundSourceAllocation fundSourceAllocation)
+        public static List<FundSourceAllocationBudgetLineItem> CreateAllFundSourceAllocationBudgetLineItemsByCostType(this FundSourceAllocation fundSourceAllocation)
         {
-            var grantAllocationBudgetLineItems = new List<GrantAllocationBudgetLineItem>();
+            var fundSourceAllocationBudgetLineItems = new List<FundSourceAllocationBudgetLineItem>();
             var shouldSaveChanges = false;
             foreach (var costType in CostType.GetLineItemCostTypes())
             {
-                var lineItemByCostType = fundSourceAllocation.GrantAllocationBudgetLineItems.SingleOrDefault(bli => bli.CostTypeID == costType.CostTypeID);
+                var lineItemByCostType = fundSourceAllocation.FundSourceAllocationBudgetLineItems.SingleOrDefault(bli => bli.CostTypeID == costType.CostTypeID);
                 if (lineItemByCostType == null)
                 {
-                    var tempLineItem = new GrantAllocationBudgetLineItem(fundSourceAllocation.GrantAllocationID, costType.CostTypeID, 0);
-                    lineItemByCostType = HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.Add(tempLineItem);
+                    var tempLineItem = new FundSourceAllocationBudgetLineItem(fundSourceAllocation.FundSourceAllocationID, costType.CostTypeID, 0);
+                    lineItemByCostType = HttpRequestStorage.DatabaseEntities.FundSourceAllocationBudgetLineItems.Add(tempLineItem);
 
                     shouldSaveChanges = true;
                 }
-                grantAllocationBudgetLineItems.Add(lineItemByCostType);
+                fundSourceAllocationBudgetLineItems.Add(lineItemByCostType);
             }
 
             if (shouldSaveChanges)
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Models
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
             }
 
-            return grantAllocationBudgetLineItems;
+            return fundSourceAllocationBudgetLineItems;
         }
 
 

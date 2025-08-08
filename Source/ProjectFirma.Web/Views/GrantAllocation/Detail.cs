@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
     public abstract class Detail : LtInfo.Common.Mvc.TypedWebViewPage<DetailViewData>
     {

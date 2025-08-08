@@ -29,20 +29,20 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.User;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class EditGrantAllocationViewData : FirmaUserControlViewData
+    public class EditFundSourceAllocationViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> Organizations { get; }
 
-        public EditGrantAllocationType EditGrantAllocationType { get; set; }
-        public IEnumerable<SelectListItem> GrantTypes { get; }
-        public IEnumerable<SelectListItem> GrantNumbers { get; }
+        public EditFundSourceAllocationType EditFundSourceAllocationType { get; set; }
+        public IEnumerable<SelectListItem> FundSourceTypes { get; }
+        public IEnumerable<SelectListItem> FundSourceNumbers { get; }
         public IEnumerable<SelectListItem> Divisions { get; }
         public IEnumerable<SelectListItem> Regions { get; }
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
         public IEnumerable<SelectListItem> ProgramManagersSelectList { get; }
-        public IEnumerable<SelectListItem> GrantManagers { get; }
+        public IEnumerable<SelectListItem> FundSourceManagers { get; }
         public IEnumerable<SelectListItem> Priorities { get; }
 
         public IEnumerable<SelectListItem> Sources { get; }
@@ -50,50 +50,50 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public bool? HasFundFsps { get; }
         public IEnumerable<SelectListItem> LikelyPeopleSelectList { get; }
 
-        public EditGrantAllocationAngularViewData AngularViewData { get; }
+        public EditFundSourceAllocationAngularViewData AngularViewData { get; }
 
 
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType,
+        public EditFundSourceAllocationViewData(EditFundSourceAllocationType editFundSourceAllocationType,
                                         Models.FundSourceAllocation fundSourceAllocationBeingEdited,
                                         IEnumerable<ProjectFirma.Web.Models.Organization> organizations,
-                                        IEnumerable<FundSourceType> grantTypes,
-                                        List<ProjectFirma.Web.Models.FundSource> grants,
+                                        IEnumerable<FundSourceType> fundSourceTypes,
+                                        List<ProjectFirma.Web.Models.FundSource> fundSources,
                                         IEnumerable<Division> divisions,
                                         IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
-                                        IEnumerable<GrantAllocationSource> sources,
-                                        IEnumerable<GrantAllocationPriority> priorities,
+                                        IEnumerable<FundSourceAllocationSource> sources,
+                                        IEnumerable<FundSourceAllocationPriority> priorities,
                                         List<Person> allPeople)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
-            GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
-            GrantNumbers = grants.OrderBy(x => x.FundSourceNumber).ToSelectList(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceNumber);
+            FundSourceTypes = fundSourceTypes.ToSelectListWithEmptyFirstRow(x => x.FundSourceTypeID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceTypeName);
+            FundSourceNumbers = fundSources.OrderBy(x => x.FundSourceNumber).ToSelectList(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceNumber);
             Divisions = divisions.OrderBy(x => x.DivisionDisplayName).ToSelectListWithEmptyFirstRow(x => x.DivisionID.ToString(CultureInfo.InvariantCulture), y => y.DivisionDisplayName);
             Regions = dnrUplandRegions.OrderBy(x => x.DNRUplandRegionName).ToSelectListWithEmptyFirstRow(x => x.DNRUplandRegionID.ToString(CultureInfo.InvariantCulture), y => y.DNRUplandRegionName);
 
-            AngularViewData = new EditGrantAllocationAngularViewData();
+            AngularViewData = new EditFundSourceAllocationAngularViewData();
 
             FederalFundCodes = federalFundCodes.OrderBy(x => x.FederalFundCodeAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
-            GrantManagers = allPeople.OrderBy(x => x.FullNameLastFirst)
+            FundSourceManagers = allPeople.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
 
-            Priorities = priorities.OrderBy(x => x.GrantAllocationPriorityNumber)
-                .ToSelectListWithEmptyFirstRow(x => x.GrantAllocationPriorityID.ToString(CultureInfo.InvariantCulture),
-                    y => y.GrantAllocationPriorityNumber.ToString());
+            Priorities = priorities.OrderBy(x => x.FundSourceAllocationPriorityNumber)
+                .ToSelectListWithEmptyFirstRow(x => x.FundSourceAllocationPriorityID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FundSourceAllocationPriorityNumber.ToString());
 
             ProgramManagersSelectList = allPeople.OrderBy(x => x.FullNameLastFirst)
 
                 .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
             y => y.FullNameFirstLastAndOrgShortName);
 
-            EditGrantAllocationType = editGrantAllocationType;
+            EditFundSourceAllocationType = editFundSourceAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index((int)IndexGridSpec.UsersStatusFilterTypeEnum.AllActiveUsersAndContacts));
             HasFundFsps = fundSourceAllocationBeingEdited?.HasFundFSPs;
             Sources = sources.ToSelectListWithEmptyFirstRow(
-                x => x.GrantAllocationSourceID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationSourceDisplayName);
+                x => x.FundSourceAllocationSourceID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceAllocationSourceDisplayName);
 
             LikelyPeopleSelectList = allPeople.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
@@ -105,11 +105,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
 
 
-    public class EditGrantAllocationAngularViewData
+    public class EditFundSourceAllocationAngularViewData
     {
         
 
-        public EditGrantAllocationAngularViewData()
+        public EditFundSourceAllocationAngularViewData()
         {
             
         }

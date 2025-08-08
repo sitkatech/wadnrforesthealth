@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantDetail.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceDetail.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -21,9 +21,9 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class GrantDetail : LtInfo.Common.Mvc.TypedWebViewPage<GrantDetailViewData>
+    public abstract class FundSourceDetail : LtInfo.Common.Mvc.TypedWebViewPage<FundSourceDetailViewData>
     {
         public string StringToDateString(string stringDate)
         {

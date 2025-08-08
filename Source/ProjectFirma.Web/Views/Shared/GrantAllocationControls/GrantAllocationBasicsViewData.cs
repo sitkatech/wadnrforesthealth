@@ -22,21 +22,21 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Linq;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
+namespace ProjectFirma.Web.Views.Shared.FundSourceAllocationControls
 {
-    public class GrantAllocationBasicsViewData
+    public class FundSourceAllocationBasicsViewData
     {
         public Models.FundSourceAllocation FundSourceAllocation { get; }
-        public bool UserHasGrantAllocationManagePermissions { get; }
+        public bool UserHasFundSourceAllocationManagePermissions { get; }
         public bool ShowDownload { get; set; }
         public bool IsUserLoggedIn { get; }
 
-        public GrantAllocationBasicsViewData(Models.FundSourceAllocation fundSourceAllocation, bool userHasGrantAllocationManagePermissions, bool isUserLoggedIn)
+        public FundSourceAllocationBasicsViewData(Models.FundSourceAllocation fundSourceAllocation, bool userHasFundSourceAllocationManagePermissions, bool isUserLoggedIn)
         {
             FundSourceAllocation = fundSourceAllocation;
-            UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
+            UserHasFundSourceAllocationManagePermissions = userHasFundSourceAllocationManagePermissions;
             // Used for creating file download links, if files available
-            ShowDownload = fundSourceAllocation.GrantAllocationFileResources.Any();
+            ShowDownload = fundSourceAllocation.FundSourceAllocationFileResources.Any();
             IsUserLoggedIn = isUserLoggedIn;
         }        
     }

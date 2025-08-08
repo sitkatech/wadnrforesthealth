@@ -6,17 +6,17 @@ using System.Linq;
 namespace ProjectFirma.Web.Models.ApiJson
 {
     /// <summary>
-    ///     This is similar to the class GrantAllocationJson, but this one is specifically meant to be used with the external
+    ///     This is similar to the class FundSourceAllocationJson, but this one is specifically meant to be used with the external
     ///     WADNR APIs, and so should
     ///     not be changed casually.
     /// </summary>
-    [DebuggerDisplay("GrantAllocationID: {GrantAllocationID} - GrantAllocationName: {GrantAllocationName}")]
-    public class GrantAllocationApiJson
+    [DebuggerDisplay("FundSourceAllocationID: {FundSourceAllocationID} - FundSourceAllocationName: {FundSourceAllocationName}")]
+    public class FundSourceAllocationApiJson
     {
         // There is some selective denormalization here to assist WADNR's comprehension (ProgramIndexName, FederalFundCodeName, OrganizationName, etc.)
-        public int GrantAllocationID { get; set; }
-        public string GrantAllocationName { get; set; }
-        public int GrantID { get; set; }
+        public int FundSourceAllocationID { get; set; }
+        public string FundSourceAllocationName { get; set; }
+        public int FundSourceID { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
@@ -28,20 +28,20 @@ namespace ProjectFirma.Web.Models.ApiJson
         public string RegionName { get; set; }
         public int? DivisionID { get; set; }
         public string DivisionName { get; set; }
-        public int? GrantManagerID { get; set; }
-        public string GrantManagerName { get; set; }
-        public List<int> GrantAllocationFileResourceIDs { get; set; }
+        public int? FundSourceManagerID { get; set; }
+        public string FundSourceManagerName { get; set; }
+        public List<int> FundSourceAllocationFileResourceIDs { get; set; }
 
         // For use by model binder
-        public GrantAllocationApiJson()
+        public FundSourceAllocationApiJson()
         {
         }
 
-        public GrantAllocationApiJson(FundSourceAllocation fundSourceAllocation)
+        public FundSourceAllocationApiJson(FundSourceAllocation fundSourceAllocation)
         {
-            GrantAllocationID = fundSourceAllocation.GrantAllocationID;
-            GrantAllocationName = fundSourceAllocation.GrantAllocationName;
-            GrantID = fundSourceAllocation.GrantID;
+            FundSourceAllocationID = fundSourceAllocation.FundSourceAllocationID;
+            FundSourceAllocationName = fundSourceAllocation.FundSourceAllocationName;
+            FundSourceID = fundSourceAllocation.FundSourceID;
             StartDate = fundSourceAllocation.StartDate;
             EndDate = fundSourceAllocation.EndDate;
             AllocationAmount = fundSourceAllocation.AllocationAmount;
@@ -53,21 +53,21 @@ namespace ProjectFirma.Web.Models.ApiJson
             RegionName = fundSourceAllocation.RegionNameDisplay;
             DivisionID = fundSourceAllocation.DivisionID;
             DivisionName = fundSourceAllocation.Division != null ? fundSourceAllocation.Division.DivisionDisplayName : null;
-            GrantManagerID = fundSourceAllocation.GrantManagerID;
-            GrantManagerName = fundSourceAllocation.GrantManager?.FullNameFirstLastAndOrgShortName;
-            GrantAllocationFileResourceIDs = fundSourceAllocation.GrantAllocationFileResources?.Select(x => x.FileResourceID).ToList();
+            FundSourceManagerID = fundSourceAllocation.FundSourceManagerID;
+            FundSourceManagerName = fundSourceAllocation.FundSourceManager?.FullNameFirstLastAndOrgShortName;
+            FundSourceAllocationFileResourceIDs = fundSourceAllocation.FundSourceAllocationFileResources?.Select(x => x.FileResourceID).ToList();
         }
 
-        public static List<GrantAllocationApiJson> MakeGrantAllocationApiJsonsFromGrantAllocations(
-            List<FundSourceAllocation> grantAllocations, bool doAlphaSort = true)
+        public static List<FundSourceAllocationApiJson> MakeFundSourceAllocationApiJsonsFromFundSourceAllocations(
+            List<FundSourceAllocation> fundSourceAllocations, bool doAlphaSort = true)
         {
-            var outgoingGrantAllocations = grantAllocations;
+            var outgoingFundSourceAllocations = fundSourceAllocations;
             if (doAlphaSort)
             {
-                // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-                outgoingGrantAllocations = FundSourceAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+                // This sort order is semi-important; we are highlighting properly constructed, year prefixed FundSource Numbers and pushing everything else to the bottom.
+                outgoingFundSourceAllocations = FundSourceAllocation.OrderFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(fundSourceAllocations);
             }
-            return outgoingGrantAllocations.Select(ga => new GrantAllocationApiJson(ga)).ToList();
+            return outgoingFundSourceAllocations.Select(ga => new FundSourceAllocationApiJson(ga)).ToList();
         }
     }
 }

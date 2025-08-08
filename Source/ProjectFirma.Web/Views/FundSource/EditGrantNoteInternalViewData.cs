@@ -1,13 +1,13 @@
-﻿namespace ProjectFirma.Web.Views.Grant
+﻿namespace ProjectFirma.Web.Views.FundSource
 {
-    public class EditGrantNoteInternalViewData : FirmaUserControlViewData
+    public class EditFundSourceNoteInternalViewData : FirmaUserControlViewData
     {
 
-        public EditGrantNoteInternalType EditGrantNoteInternalType { get; set; }
+        public EditFundSourceNoteInternalType EditFundSourceNoteInternalType { get; set; }
 
-        public EditGrantNoteInternalViewData(EditGrantNoteInternalType editGrantNoteInternalType)
+        public EditFundSourceNoteInternalViewData(EditFundSourceNoteInternalType editFundSourceNoteInternalType)
         {
-            EditGrantNoteInternalType = editGrantNoteInternalType;
+            EditFundSourceNoteInternalType = editFundSourceNoteInternalType;
         }
     }
 }

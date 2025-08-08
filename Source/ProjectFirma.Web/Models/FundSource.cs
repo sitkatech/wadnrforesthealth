@@ -7,24 +7,24 @@ namespace ProjectFirma.Web.Models
     {
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
-        public string GrantTypeDisplay => FundSourceTypeID.HasValue ? FundSourceType.GrantTypeName : string.Empty;
-        public string GrantTitle => string.IsNullOrWhiteSpace(ShortName) ? FundSourceName : $"{FundSourceName} ({ShortName})";
+        public string FundSourceTypeDisplay => FundSourceTypeID.HasValue ? FundSourceType.FundSourceTypeName : string.Empty;
+        public string FundSourceTitle => string.IsNullOrWhiteSpace(ShortName) ? FundSourceName : $"{FundSourceName} ({ShortName})";
         public string AuditDescriptionString => FundSourceName;
 
         public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {
-            var grantFileResource = new FundSourceFileResource(this, fileResource, displayName) {Description = description};
-            GrantFileResources.Add(grantFileResource);
+            var fundSourceFileResource = new FundSourceFileResource(this, fileResource, displayName) {Description = description};
+            FundSourceFileResources.Add(fundSourceFileResource);
         }
 
         public void DeleteFullAndChildless(DatabaseEntities dbContext)
         {
-            foreach (var x in GrantFileResources.ToList())
+            foreach (var x in FundSourceFileResources.ToList())
             {
                 x.DeleteFullAndChildless(dbContext);
             }
 
-            foreach (var x in GrantAllocations.ToList())
+            foreach (var x in FundSourceAllocations.ToList())
             {
                 x.DeleteFullAndChildless(dbContext);
             }

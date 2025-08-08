@@ -7,7 +7,7 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Edit Fund Source Allocation")]
     public class FundSourceAllocationEditAsAdminFeature : FirmaFeature
     {
-        public FundSourceAllocationEditAsAdminFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
+        public FundSourceAllocationEditAsAdminFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageFundSourcesAndAgreements })
         {
 
         }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantNote.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditFundSourceNote.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -20,44 +20,44 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class EditGrantNote : TypedWebPartialViewPage<EditGrantNoteViewData, EditGrantNoteViewModel>
+    public abstract class EditFundSourceNote : TypedWebPartialViewPage<EditFundSourceNoteViewData, EditFundSourceNoteViewModel>
     {
     }
 
-    public abstract class EditGrantNoteType
+    public abstract class EditFundSourceNoteType
     {
         public readonly string IntroductoryText;
 
-        internal EditGrantNoteType(string introductoryText)
+        internal EditFundSourceNoteType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditGrantNoteTypeNewNote NewNote = EditGrantNoteTypeNewNote.Instance;
-        public static readonly EditGrantNoteTypeExistingNote ExistingNote = EditGrantNoteTypeExistingNote.Instance;
+        public static readonly EditFundSourceNoteTypeNewNote NewNote = EditFundSourceNoteTypeNewNote.Instance;
+        public static readonly EditFundSourceNoteTypeExistingNote ExistingNote = EditFundSourceNoteTypeExistingNote.Instance;
     }
 
-    public class EditGrantNoteTypeNewNote : EditGrantNoteType
+    public class EditFundSourceNoteTypeNewNote : EditFundSourceNoteType
     {
-        private EditGrantNoteTypeNewNote(string introductoryText) : base(introductoryText)
+        private EditFundSourceNoteTypeNewNote(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantNoteTypeNewNote Instance = new EditGrantNoteTypeNewNote(
-            $"<p>Enter a new {Models.FieldDefinition.GrantNote.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceNoteTypeNewNote Instance = new EditFundSourceNoteTypeNewNote(
+            $"<p>Enter a new {Models.FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditGrantNoteTypeExistingNote : EditGrantNoteType
+    public class EditFundSourceNoteTypeExistingNote : EditFundSourceNoteType
     {
-        private EditGrantNoteTypeExistingNote(string introductoryText) : base(introductoryText)
+        private EditFundSourceNoteTypeExistingNote(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditGrantNoteTypeExistingNote Instance =
-            new EditGrantNoteTypeExistingNote(
-                $"<p>Update this {Models.FieldDefinition.GrantNote.GetFieldDefinitionLabel()}.</p>");
+        public static readonly EditFundSourceNoteTypeExistingNote Instance =
+            new EditFundSourceNoteTypeExistingNote(
+                $"<p>Update this {Models.FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()}.</p>");
     }
 
     

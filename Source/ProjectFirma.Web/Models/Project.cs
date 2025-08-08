@@ -211,8 +211,8 @@ namespace ProjectFirma.Web.Models
 
         public decimal? GetTotalFunding()
         {
-            return ProjectGrantAllocationRequests.Any()
-                ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
+            return ProjectFundSourceAllocationRequests.Any()
+                ? (decimal?) ProjectFundSourceAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
                 : null;
         }
 
@@ -230,19 +230,19 @@ namespace ProjectFirma.Web.Models
 
         //public decimal? GetUnsecuredFunding()
         //{
-        //    return ProjectGrantAllocationRequests.Any()
-        //        ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
+        //    return ProjectFundSourceAllocationRequests.Any()
+        //        ? (decimal?) ProjectFundSourceAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
         //        : null;
         //}
 
-        public decimal? GetNoGrantAllocationIdentifiedAmount()
+        public decimal? GetNoFundSourceAllocationIdentifiedAmount()
         {
             decimal? totalFunding = GetTotalFunding() == null ? null : GetTotalFunding();
 
-            var noGrantAllocationIdentifiedAmount = (EstimatedTotalCost ?? 0) - (totalFunding ?? 0);
-            if (noGrantAllocationIdentifiedAmount >= 0)
+            var noFundSourceAllocationIdentifiedAmount = (EstimatedTotalCost ?? 0) - (totalFunding ?? 0);
+            if (noFundSourceAllocationIdentifiedAmount >= 0)
             {
-                return noGrantAllocationIdentifiedAmount;
+                return noFundSourceAllocationIdentifiedAmount;
             }
 
             return null;
@@ -805,23 +805,23 @@ namespace ProjectFirma.Web.Models
         public int FancyTreeNodeKey => ProjectID;
 
 
-        public List<GooglePieChartSlice> GetGrantAllocationRequestGooglePieChartSlices()
+        public List<GooglePieChartSlice> GetFundSourceAllocationRequestGooglePieChartSlices()
         {
             var sortOrder = 0;
             var googlePieChartSlices = new List<GooglePieChartSlice>();
 
-            var totalAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.TotalAmount > 0)
+            var totalAmountsDictionary = ProjectFundSourceAllocationRequests.Where(x => x.TotalAmount > 0)
                 .GroupBy(x => x.FundSourceAllocation, new HavePrimaryKeyComparer<FundSourceAllocation>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.TotalAmount));
 
             var securedColorHsl = new {hue = 96.0, sat = 60.0};
             var unsecuredColorHsl = new {hue = 33.3, sat = 240.0};
 
-            totalAmountsDictionary.OrderBy(x => x.Key.GrantAllocationName).ForEach(
-                (grantAllocationDictionaryItem, index) =>
+            totalAmountsDictionary.OrderBy(x => x.Key.FundSourceAllocationName).ForEach(
+                (fundSourceAllocationDictionaryItem, index) =>
                 {
-                    var grantAllocation = grantAllocationDictionaryItem.Key;
-                    var fundingAmount = grantAllocationDictionaryItem.Value;
+                    var fundSourceAllocation = fundSourceAllocationDictionaryItem.Key;
+                    var fundingAmount = fundSourceAllocationDictionaryItem.Value;
 
                     var luminosity = 100.0 * (totalAmountsDictionary.Count - index - 1) /
                                      totalAmountsDictionary.Count + 120;
@@ -829,7 +829,7 @@ namespace ProjectFirma.Web.Models
                         luminosity));
 
                     googlePieChartSlices.Add(new GooglePieChartSlice(
-                        "Secured Funding: " + grantAllocation.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
+                        "Secured Funding: " + fundSourceAllocation.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
                         sortOrder++, color));
                 });
 
@@ -838,14 +838,14 @@ namespace ProjectFirma.Web.Models
 
         public List<GooglePieChartSlice> GetRequestAmountGooglePieChartSlices()
         {
-            var requestAmountsDictionary = GetGrantAllocationRequestGooglePieChartSlices();
-            var noGrantAllocationIdentifiedAmount =
+            var requestAmountsDictionary = GetFundSourceAllocationRequestGooglePieChartSlices();
+            var noFundSourceAllocationIdentifiedAmount =
                 Convert.ToDouble(EstimatedTotalCost ?? 0) - requestAmountsDictionary.Sum(x => x.Value);
-            if (noGrantAllocationIdentifiedAmount > 0)
+            if (noFundSourceAllocationIdentifiedAmount > 0)
             {
                 var sortOrder = requestAmountsDictionary.Any() ? requestAmountsDictionary.Max(x => x.SortOrder) + 1 : 0;
-                requestAmountsDictionary.Add(new GooglePieChartSlice($"No {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Identified",
-                    noGrantAllocationIdentifiedAmount, sortOrder, "#dbdbdb"));
+                requestAmountsDictionary.Add(new GooglePieChartSlice($"No {FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} Identified",
+                    noFundSourceAllocationIdentifiedAmount, sortOrder, "#dbdbdb"));
             }
 
             return requestAmountsDictionary;
@@ -926,8 +926,8 @@ namespace ProjectFirma.Web.Models
         }
 
         // read-only Helper accessors
-        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.FundSourceAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
-        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.FundSourceAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
+        public List<ProgramIndex> ProgramIndices => this.ProjectFundSourceAllocationRequests.SelectMany(aga => aga.FundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.ProjectFundSourceAllocationRequests.SelectMany(aga => aga.FundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
 
 
  

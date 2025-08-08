@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="DuplicateGrantViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="DuplicateFundSourceViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -26,20 +26,20 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class DuplicateGrantViewData : FirmaUserControlViewData
+    public class DuplicateFundSourceViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> GrantStatuses { get; }
-        public IEnumerable<SelectListItem> GrantAllocations { get; }
+        public IEnumerable<SelectListItem> FundSourceStatuses { get; }
+        public IEnumerable<SelectListItem> FundSourceAllocations { get; }
 
         public Models.FundSource FundSourceToDuplicate { get; set; }
 
-        public DuplicateGrantViewData(IEnumerable<Models.FundSourceStatus> grantStatuses, Models.FundSource fundSourceToDuplicate, List<Models.FundSourceAllocation> grantAllocations)
+        public DuplicateFundSourceViewData(IEnumerable<Models.FundSourceStatus> fundSourceStatuses, Models.FundSource fundSourceToDuplicate, List<Models.FundSourceAllocation> fundSourceAllocations)
         {
-            GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
+            FundSourceStatuses = fundSourceStatuses.ToSelectListWithEmptyFirstRow(x => x.FundSourceStatusID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceStatusName);
             FundSourceToDuplicate = fundSourceToDuplicate;
-            GrantAllocations = grantAllocations.ToSelectList(x => x.GrantAllocationID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationName, true);
+            FundSourceAllocations = fundSourceAllocations.ToSelectList(x => x.FundSourceAllocationID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceAllocationName, true);
 
         }
     }

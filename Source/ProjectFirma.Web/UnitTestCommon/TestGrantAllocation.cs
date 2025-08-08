@@ -13,61 +13,61 @@ namespace ProjectFirma.Web.UnitTestCommon
         {
             public static FundSourceAllocation Create()
             {
-                var grant = TestFundSource.Create();
+                var fundSource = TestFundSource.Create();
                 var org = TestOrganization.Create();
-                var grantAllocation = TestFundSourceAllocation.Create(grant, GetTestGrantAllocationName(org, "Test Grant Allocation"));
-                //GrantAllocation.IsActive = true;
-                return grantAllocation;
+                var fundSourceAllocation = TestFundSourceAllocation.Create(fundSource, GetTestFundSourceAllocationName(org, "Test FundSource Allocation"));
+                //FundSourceAllocation.IsActive = true;
+                return fundSourceAllocation;
             }
 
-            public static FundSourceAllocation Create(FundSource fundSource, string grantAllocationName)
+            public static FundSourceAllocation Create(FundSource fundSource, string fundSourceAllocationName)
             {
-                var grantAllocation = new FundSourceAllocation(fundSource);
-                grantAllocation.GrantAllocationName = grantAllocationName;
-                return grantAllocation;
+                var fundSourceAllocation = new FundSourceAllocation(fundSource);
+                fundSourceAllocation.FundSourceAllocationName = fundSourceAllocationName;
+                return fundSourceAllocation;
             }
 
-            public static FundSourceAllocation CreateWithoutChangingName(string grantAllocationName)
+            public static FundSourceAllocation CreateWithoutChangingName(string fundSourceAllocationName)
             {
-                var grant = TestFundSource.Create();
-                var grantAllocation = new FundSourceAllocation(grant);
-                grantAllocation.GrantAllocationName = grantAllocationName;
-                return grantAllocation;
+                var fundSource = TestFundSource.Create();
+                var fundSourceAllocation = new FundSourceAllocation(fundSource);
+                fundSourceAllocation.FundSourceAllocationName = fundSourceAllocationName;
+                return fundSourceAllocation;
             }
 
-            public static FundSourceAllocation CreateWithoutChangingName(string grantAllocationName, Organization organization)
+            public static FundSourceAllocation CreateWithoutChangingName(string fundSourceAllocationName, Organization organization)
             {
-                var grant = TestFundSource.Create();
-                var grantAllocation = new FundSourceAllocation(grant);
-                grantAllocation.GrantAllocationName = grantAllocationName;
-                grantAllocation.Organization = organization;
-                grantAllocation.OrganizationID = organization.OrganizationID;
-                return grantAllocation;
+                var fundSource = TestFundSource.Create();
+                var fundSourceAllocation = new FundSourceAllocation(fundSource);
+                fundSourceAllocation.FundSourceAllocationName = fundSourceAllocationName;
+                fundSourceAllocation.Organization = organization;
+                fundSourceAllocation.OrganizationID = organization.OrganizationID;
+                return fundSourceAllocation;
             }
 
-            private static string GetTestGrantAllocationName(Organization organization, string grantAllocationName)
+            private static string GetTestFundSourceAllocationName(Organization organization, string fundSourceAllocationName)
             {
-                return string.Format("{0}{1}", organization.OrganizationName, grantAllocationName);
+                return string.Format("{0}{1}", organization.OrganizationName, fundSourceAllocationName);
             }
 
             public static FundSourceAllocation Create(DatabaseEntities dbContext)
             {
-                var grant = TestFramework.TestFundSource.Insert(dbContext);
-                string testGrantAllocationName = TestFramework.MakeTestName("Test Grant Allocation Name");
-                var grantAllocation = new FundSourceAllocation(grant);
-                grantAllocation.GrantAllocationName = testGrantAllocationName;
+                var fundSource = TestFramework.TestFundSource.Insert(dbContext);
+                string testFundSourceAllocationName = TestFramework.MakeTestName("Test FundSource Allocation Name");
+                var fundSourceAllocation = new FundSourceAllocation(fundSource);
+                fundSourceAllocation.FundSourceAllocationName = testFundSourceAllocationName;
 
-                dbContext.GrantAllocations.Add(grantAllocation);
-                return grantAllocation;
+                dbContext.FundSourceAllocations.Add(fundSourceAllocation);
+                return fundSourceAllocation;
             }
 
 
 
             public static FundSourceAllocation Insert(DatabaseEntities dbContext)
             {
-                var grantAllocation = Create(dbContext);
+                var fundSourceAllocation = Create(dbContext);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
-                return grantAllocation;
+                return fundSourceAllocation;
             }
         }
     }

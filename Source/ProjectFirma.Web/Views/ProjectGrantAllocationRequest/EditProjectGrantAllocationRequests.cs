@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditprojectGrantAllocationRequests.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditprojectFundSourceAllocationRequests.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -19,9 +19,9 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
+namespace ProjectFirma.Web.Views.ProjectFundSourceAllocationRequest
 {
-    public abstract class EditProjectGrantAllocationRequests : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectGrantAllocationRequestsViewData, EditProjectGrantAllocationRequestsViewModel>
+    public abstract class EditProjectFundSourceAllocationRequests : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectFundSourceAllocationRequestsViewData, EditProjectFundSourceAllocationRequestsViewModel>
     {
     }
 }

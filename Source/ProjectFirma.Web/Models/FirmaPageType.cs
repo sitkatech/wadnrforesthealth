@@ -162,12 +162,12 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
     }
-    public partial class FirmaPageTypeFullGrantList
+    public partial class FirmaPageTypeFullFundSourceList
     {
         public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
-    public partial class FirmaPageTypeFullGrantAllocationList
+    public partial class FirmaPageTypeFullFundSourceAllocationList
     {
         public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }

@@ -146,7 +146,7 @@ namespace ProjectFirma.Web.Views
             var financialsMenu = new LtInfoMenuItem("Financials");
 
             financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FundSourceController>(c => c.Index()), currentPerson, 
-              $"Full {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List", "Group1"));
+              $"Full {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()} List", "Group1"));
 
             financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<AgreementController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} List", "Group2"));
 

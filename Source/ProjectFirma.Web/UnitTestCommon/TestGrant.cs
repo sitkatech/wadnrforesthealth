@@ -13,57 +13,57 @@ namespace ProjectFirma.Web.UnitTestCommon
         {
             public static FundSource Create()
             {
-                var grantStatus = GetDefaultGrantStatus();
+                var fundSourceStatus = GetDefaultFundSourceStatus();
                 var organization = TestFramework.TestOrganization.Create();
-                var grant = new FundSource(TestFramework.MakeTestName("Grant", FundSource.FieldLengths.FundSourceName), grantStatus, organization, 0);
-                //Grant.IsActive = true;
-                return grant;
+                var fundSource = new FundSource(TestFramework.MakeTestName("FundSource", FundSource.FieldLengths.FundSourceName), fundSourceStatus, organization, 0);
+                //FundSource.IsActive = true;
+                return fundSource;
             }
 
-            private static FundSourceStatus GetDefaultGrantStatus()
+            private static FundSourceStatus GetDefaultFundSourceStatus()
             {
                 return FundSourceStatus.All.First();
             }
 
             public static FundSource Create(Organization organization)
             {
-                var grantStatus = GetDefaultGrantStatus();
-                var testGrantName = GetTestGrantName(organization, GetTestGrantName(organization, "Test Grant Name"));
-                var grant = new FundSource(testGrantName, grantStatus, organization, 0);
-                return grant;
+                var fundSourceStatus = GetDefaultFundSourceStatus();
+                var testFundSourceName = GetTestFundSourceName(organization, GetTestFundSourceName(organization, "Test FundSource Name"));
+                var fundSource = new FundSource(testFundSourceName, fundSourceStatus, organization, 0);
+                return fundSource;
             }
 
-            public static FundSource Create(Organization organization, string grantName)
+            public static FundSource Create(Organization organization, string fundSourceName)
             {
-                var grantStatus = GetDefaultGrantStatus();
-                var testGrantName = GetTestGrantName(organization, grantName);
-                var grant = new FundSource(testGrantName, grantStatus, organization, 0);
-                return grant;
+                var fundSourceStatus = GetDefaultFundSourceStatus();
+                var testFundSourceName = GetTestFundSourceName(organization, fundSourceName);
+                var fundSource = new FundSource(testFundSourceName, fundSourceStatus, organization, 0);
+                return fundSource;
             }
 
 
-            private static string GetTestGrantName(Organization organization, string grantName)
+            private static string GetTestFundSourceName(Organization organization, string fundSourceName)
             {
-                return $"{organization.OrganizationName}{grantName}";
+                return $"{organization.OrganizationName}{fundSourceName}";
             }
 
 
             public static FundSource Create(DatabaseEntities dbContext)
             {
                 var organization = TestFramework.TestOrganization.Insert(dbContext);
-                string testGrantName = TestFramework.MakeTestName("Test Grant Name");
-                var testGrantStatus = GetDefaultGrantStatus();
-                var grant = new FundSource(testGrantName, testGrantStatus, organization, 0);
+                string testFundSourceName = TestFramework.MakeTestName("Test FundSource Name");
+                var testFundSourceStatus = GetDefaultFundSourceStatus();
+                var fundSource = new FundSource(testFundSourceName, testFundSourceStatus, organization, 0);
 
-                dbContext.Grants.Add(grant);
-                return grant;
+                dbContext.FundSources.Add(fundSource);
+                return fundSource;
             }
 
             public static FundSource Insert(DatabaseEntities dbContext)
             {
-                var grant = Create(dbContext);
+                var fundSource = Create(dbContext);
                 HttpRequestStorage.DatabaseEntities.SaveChanges();
-                return grant;
+                return fundSource;
             }
         }
     }

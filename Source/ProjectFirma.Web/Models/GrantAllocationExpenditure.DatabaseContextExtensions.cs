@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[GrantAllocationExpenditure]
+//  Source Table: [dbo].[FundSourceAllocationExpenditure]
 
 using System;
 using System.Collections.Generic;
@@ -16,36 +16,36 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-       public static GoogleChartJson ToGoogleChart(this IEnumerable<GrantAllocationExpenditure> grantAllocationExpenditures,
-            Func<GrantAllocationExpenditure, string> filterFunction,
+       public static GoogleChartJson ToGoogleChart(this IEnumerable<FundSourceAllocationExpenditure> fundSourceAllocationExpenditures,
+            Func<FundSourceAllocationExpenditure, string> filterFunction,
             List<string> filterValues,
-            Func<GrantAllocationExpenditure, IComparable> sortFunction,
+            Func<FundSourceAllocationExpenditure, IComparable> sortFunction,
             string chartContainerID,
             string chartTitle)
         {
-            var grantAllocationExpenditureList = grantAllocationExpenditures.ToList();
-            if (!grantAllocationExpenditureList.Any())
+            var fundSourceAllocationExpenditureList = fundSourceAllocationExpenditures.ToList();
+            if (!fundSourceAllocationExpenditureList.Any())
             {
                 return null;
             }
-            var beginCalendarYear = grantAllocationExpenditureList.Min(x => x.CalendarYear);
-            var endCalendarYear = grantAllocationExpenditureList.Max(x => x.CalendarYear);
+            var beginCalendarYear = fundSourceAllocationExpenditureList.Min(x => x.CalendarYear);
+            var endCalendarYear = fundSourceAllocationExpenditureList.Max(x => x.CalendarYear);
             var rangeOfYears = FirmaDateUtilities.GetRangeOfYears(beginCalendarYear, endCalendarYear);
 
-            return grantAllocationExpenditureList.ToGoogleChart(filterFunction, filterValues, sortFunction, rangeOfYears, chartContainerID, chartTitle, GoogleChartType.AreaChart, true);
+            return fundSourceAllocationExpenditureList.ToGoogleChart(filterFunction, filterValues, sortFunction, rangeOfYears, chartContainerID, chartTitle, GoogleChartType.AreaChart, true);
         }
 
-        public static GoogleChartJson ToGoogleChart(this IEnumerable<GrantAllocationExpenditure> grantAllocationExpenditures,
-            Func<GrantAllocationExpenditure, string> filterFunction,
+        public static GoogleChartJson ToGoogleChart(this IEnumerable<FundSourceAllocationExpenditure> fundSourceAllocationExpenditures,
+            Func<FundSourceAllocationExpenditure, string> filterFunction,
             List<string> filterValues,
-            Func<GrantAllocationExpenditure, IComparable> sortFunction,
+            Func<FundSourceAllocationExpenditure, IComparable> sortFunction,
             List<int> rangeOfYears,
             string chartContainerID,
             string chartTitle,
             GoogleChartType googleChartType,
             bool isStacked)
         {
-            var fullCategoryYearDictionary = GetFullCategoryYearDictionary(grantAllocationExpenditures, filterFunction, filterValues, sortFunction, rangeOfYears);
+            var fullCategoryYearDictionary = GetFullCategoryYearDictionary(fundSourceAllocationExpenditures, filterFunction, filterValues, sortFunction, rangeOfYears);
             var googleChartDataTable = GetGoogleChartDataTable(fullCategoryYearDictionary, rangeOfYears, googleChartType);
             var googleChartAxis = new GoogleChartAxis("Annual Expenditures", MeasurementUnitTypeEnum.Dollars, GoogleChartAxisLabelFormat.Short);
             var googleChartConfiguration = new GoogleChartConfiguration(chartTitle,
@@ -62,10 +62,10 @@ namespace ProjectFirma.Web.Models
 
 
 
-        public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<GrantAllocationExpenditure> grantAllocationExpenditures,
-                                                                                                 Func<GrantAllocationExpenditure, string> filterFunction,
+        public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<FundSourceAllocationExpenditure> fundSourceAllocationExpenditures,
+                                                                                                 Func<FundSourceAllocationExpenditure, string> filterFunction,
                                                                                                  List<string> filterValues,
-                                                                                                 Func<GrantAllocationExpenditure, IComparable> sortFunction,
+                                                                                                 Func<FundSourceAllocationExpenditure, IComparable> sortFunction,
                                                                                                  List<int> rangeOfYears)
         {
             // Not absolutely sure these are happening in the real world, so I'm trapping for them. -- SLG
@@ -73,8 +73,8 @@ namespace ProjectFirma.Web.Models
             Check.Ensure(rangeOfYears.Count == rangeOfYears.Distinct().Count(), $"Found repeated years in rangeOfYears: {string.Join(", ", rangeOfYears)}. This is a bug.");
 
             var fullCategoryYearDictionary = filterValues.ToDictionary(x => x, x => rangeOfYears.ToDictionary(y => y, y => 0m));
-            var grantAllocationExpendituresByYear = grantAllocationExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList();
-            grantAllocationExpendituresByYear.ForEach(x =>
+            var fundSourceAllocationExpendituresByYear = fundSourceAllocationExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList();
+            fundSourceAllocationExpendituresByYear.ForEach(x =>
             {
                 filterValues.ForEach(s =>
                 {

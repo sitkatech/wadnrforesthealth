@@ -29,71 +29,71 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Views.Agreement
 {
 
-    [DebuggerDisplay("GrantAllocationID: {GrantAllocationID} - GrantAllocationName: {GrantAllocationName}")]
-    public class GrantAllocationJson
+    [DebuggerDisplay("FundSourceAllocationID: {FundSourceAllocationID} - FundSourceAllocationName: {FundSourceAllocationName}")]
+    public class FundSourceAllocationJson
     {
-        public int GrantAllocationID { get; set; }
-        public string GrantAllocationName { get; set; }
-        public string GrantNumber { get; set; }
+        public int FundSourceAllocationID { get; set; }
+        public string FundSourceAllocationName { get; set; }
+        public string FundSourceNumber { get; set; }
 
         // For use by model binder
-        public GrantAllocationJson()
+        public FundSourceAllocationJson()
         {
         }
 
-        public GrantAllocationJson(Models.FundSourceAllocation fundSourceAllocation)
+        public FundSourceAllocationJson(Models.FundSourceAllocation fundSourceAllocation)
         {
-            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
-            this.GrantNumber = fundSourceAllocation.FundSource.FundSourceNumber;
-            this.GrantAllocationName = fundSourceAllocation.GrantAllocationName;
+            this.FundSourceAllocationID = fundSourceAllocation.FundSourceAllocationID;
+            this.FundSourceNumber = fundSourceAllocation.FundSource.FundSourceNumber;
+            this.FundSourceAllocationName = fundSourceAllocation.FundSourceAllocationName;
         }
 
-        public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.FundSourceAllocation> grantAllocations, bool doAlphaSort = true)
+        public static List<FundSourceAllocationJson> MakeFundSourceAllocationJsonsFromFundSourceAllocations(List<Models.FundSourceAllocation> fundSourceAllocations, bool doAlphaSort = true)
         {
-            var outgoingGrantAllocations = grantAllocations;
+            var outgoingFundSourceAllocations = fundSourceAllocations;
             if (doAlphaSort)
             {
-                // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-                outgoingGrantAllocations = Models.FundSourceAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+                // This sort order is semi-important; we are highlighting properly constructed, year prefixed FundSource Numbers and pushing everything else to the bottom.
+                outgoingFundSourceAllocations = Models.FundSourceAllocation.OrderFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(fundSourceAllocations);
             }
-            return outgoingGrantAllocations.Select(ga => new GrantAllocationJson(ga)).ToList();
+            return outgoingFundSourceAllocations.Select(ga => new FundSourceAllocationJson(ga)).ToList();
         }
 
 
     }
 
-    public class EditAgreementGrantAllocationsViewModel : FormViewModel
+    public class EditAgreementFundSourceAllocationsViewModel : FormViewModel
     {
         public int AgreementId { get; set; }
-        public List<GrantAllocationJson> GrantAllocationJsons { get; set; }
+        public List<FundSourceAllocationJson> FundSourceAllocationJsons { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditAgreementGrantAllocationsViewModel()
+        public EditAgreementFundSourceAllocationsViewModel()
         {
-            GrantAllocationJsons = new List<GrantAllocationJson>();
+            FundSourceAllocationJsons = new List<FundSourceAllocationJson>();
         }
 
-        public EditAgreementGrantAllocationsViewModel(Models.Agreement agreement)
+        public EditAgreementFundSourceAllocationsViewModel(Models.Agreement agreement)
         {
             AgreementId = agreement.AgreementID;
-            // Generate GrantAllocationJsons that are ordered descending by first part of GrantNumber 
-            var grantAllocations = agreement.AgreementGrantAllocations.Select(x => x.FundSourceAllocation).ToList();
-            GrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(grantAllocations);
+            // Generate FundSourceAllocationJsons that are ordered descending by first part of FundSourceNumber 
+            var fundSourceAllocations = agreement.AgreementFundSourceAllocations.Select(x => x.FundSourceAllocation).ToList();
+            FundSourceAllocationJsons = FundSourceAllocationJson.MakeFundSourceAllocationJsonsFromFundSourceAllocations(fundSourceAllocations);
         }
 
         public void UpdateModel(Models.Agreement agreement)
         {
-            // Clear out existing Agreement Grant Allocations
-            agreement.AgreementGrantAllocations.ToList().ForEach(aga => aga.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            // Clear out existing Agreement FundSource Allocations
+            agreement.AgreementFundSourceAllocations.ToList().ForEach(aga => aga.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
-            // Create all-new Agreement Grant Allocations
-            var allPossibleGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            List<int> allSelectedGrantAllocationIds = GrantAllocationJsons.Select(gaj => gaj.GrantAllocationID).ToList();
-            var allSelectedGrantAllocations = allPossibleGrantAllocations.Where(ga => allSelectedGrantAllocationIds.Contains(ga.GrantAllocationID)).ToList();
+            // Create all-new Agreement FundSource Allocations
+            var allPossibleFundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.ToList();
+            List<int> allSelectedFundSourceAllocationIds = FundSourceAllocationJsons.Select(gaj => gaj.FundSourceAllocationID).ToList();
+            var allSelectedFundSourceAllocations = allPossibleFundSourceAllocations.Where(ga => allSelectedFundSourceAllocationIds.Contains(ga.FundSourceAllocationID)).ToList();
 
-            agreement.AgreementGrantAllocations = allSelectedGrantAllocations.Select(ga => new AgreementGrantAllocation(agreement, ga)).ToList();
+            agreement.AgreementFundSourceAllocations = allSelectedFundSourceAllocations.Select(ga => new AgreementFundSourceAllocation(agreement, ga)).ToList();
         }
     }
 }

@@ -41,21 +41,21 @@ namespace ProjectFirma.Web.Models
                 .Where(x => x.ProjectRegions.Any(y => y.DNRUplandRegionID == this.DNRUplandRegionID))
                 .Include(x => x.ProjectOrganizations)
                 .Include(x => x.ProjectTags)
-                .Include(x => x.ProjectGrantAllocationRequests)
+                .Include(x => x.ProjectFundSourceAllocationRequests)
                 .Include(x => x.ProjectType)
                 .ToList();
 
             return projects.GetActiveProjectsVisibleToUser(currentPerson);
         }
 
-        public List<FundSourceAllocation> GetAssociatedGrantAllocations(Person currentPerson)
+        public List<FundSourceAllocation> GetAssociatedFundSourceAllocations(Person currentPerson)
         {
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations
+            var fundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations
                 .Where(x => x.DNRUplandRegionID == this.DNRUplandRegionID)
-                //.Include(x => x.GrantAllocationLikelyPeople)
+                //.Include(x => x.FundSourceAllocationLikelyPeople)
                 .ToList();
 
-            return grantAllocations;
+            return fundSourceAllocations;
         }
 
         public string AuditDescriptionString => DNRUplandRegionName;

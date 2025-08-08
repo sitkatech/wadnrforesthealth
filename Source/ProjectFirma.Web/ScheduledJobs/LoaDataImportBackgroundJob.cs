@@ -193,7 +193,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             public string Date_Time_Collected { get; set; }
             public string Forester { get; set; }
             public string Collection_Method { get; set; }
-            public string Grant_Name { get; set; }
+            public string FundSource_Name { get; set; }
             public string Fund_Source { get; set; }
             public string Agreement_Number { get; set; }
             public string Project_Index_Code { get; set; }

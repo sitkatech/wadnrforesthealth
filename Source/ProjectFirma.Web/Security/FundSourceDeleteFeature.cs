@@ -3,10 +3,10 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Delete Grant")]
+    [SecurityFeatureDescription("Delete FundSource")]
     public class FundSourceDeleteFeature : FirmaFeature
     {
-        public FundSourceDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements })
+        public FundSourceDeleteFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.CanManageFundSourcesAndAgreements })
         {
         }
     }

@@ -7,14 +7,14 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Invoice;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class GrantAllocationBudgetVsActualsGridSpec : GridSpec<BudgetVsActualLineItem>
+    public class FundSourceAllocationBudgetVsActualsGridSpec : GridSpec<BudgetVsActualLineItem>
     {
-        public GrantAllocationBudgetVsActualsGridSpec(Models.Person currentPerson)
+        public FundSourceAllocationBudgetVsActualsGridSpec(Models.Person currentPerson)
         {
-            ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Budget Vs Actuals";
-            ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} Budget Vs Actuals";
+            ObjectNameSingular = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} Budget Vs Actuals";
+            ObjectNamePlural = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()} Budget Vs Actuals";
             ShowFilterBar = true;
 
             Add("Cost Type", x => x.CostType.CostTypeDisplayName, 125, AgGridColumnFilterType.None);

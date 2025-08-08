@@ -26,16 +26,16 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class EditGrantAllocationNoteInternalViewData : FirmaUserControlViewData
+    public class EditFundSourceAllocationNoteInternalViewData : FirmaUserControlViewData
     {
 
-        public EditGrantAllocationNoteInternalType EditGrantAllocationNoteInternalType { get; set; }
+        public EditFundSourceAllocationNoteInternalType EditFundSourceAllocationNoteInternalType { get; set; }
 
-        public EditGrantAllocationNoteInternalViewData(EditGrantAllocationNoteInternalType editGrantAllocationNoteInternalType)
+        public EditFundSourceAllocationNoteInternalViewData(EditFundSourceAllocationNoteInternalType editFundSourceAllocationNoteInternalType)
         {
-            EditGrantAllocationNoteInternalType = editGrantAllocationNoteInternalType;
+            EditFundSourceAllocationNoteInternalType = editFundSourceAllocationNoteInternalType;
         }
     }
 }

@@ -19,31 +19,31 @@ namespace ProjectFirma.Web.Models
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
 
-        public string GrantNumberAndGrantAllocationDisplayName => $"{FundSource.FundSourceNumber} {GrantAllocationName}";
+        public string FundSourceNumberAndFundSourceAllocationDisplayName => $"{FundSource.FundSourceNumber} {FundSourceAllocationName}";
 
         public string AllocationAmountCurrencyDisplay => $"{AllocationAmount.ToStringCurrency()}";
 
-        public string GrantNumberAndGrantAllocationWithAllocationAmountDisplay => $"{GrantNumberAndGrantAllocationDisplayName} ({AllocationAmountCurrencyDisplay})";
+        public string FundSourceNumberAndFundSourceAllocationWithAllocationAmountDisplay => $"{FundSourceNumberAndFundSourceAllocationDisplayName} ({AllocationAmountCurrencyDisplay})";
 
-        public HtmlString GrantNumberAndGrantAllocationDisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, GrantNumberAndGrantAllocationDisplayName);
+        public HtmlString FundSourceNumberAndFundSourceAllocationDisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, FundSourceNumberAndFundSourceAllocationDisplayName);
 
         // ReSharper disable once InconsistentNaming
         public int RegionIDDisplay => DNRUplandRegionID.HasValue ? DNRUplandRegion.DNRUplandRegionID : -1;
         public string RegionNameDisplay => DNRUplandRegion != null ? DNRUplandRegion.DNRUplandRegionName : string.Empty;
         public string DivisionNameDisplay => Division != null ? Division.DivisionDisplayName : string.Empty;
 
-        public string DisplayName => this.GrantAllocationName;
+        public string DisplayName => this.FundSourceAllocationName;
         public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, DisplayName);
 
         public string SummaryUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.GrantAllocationDetail(GrantAllocationID)); }
+            get { return SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(x => x.FundSourceAllocationDetail(FundSourceAllocationID)); }
         }
 
 
         public string AuditDescriptionString
         {
-            get { return GrantAllocationName; }
+            get { return FundSourceAllocationName; }
         }
 
         public List<int> ProgramManagerPersonIDs
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Person> ProgramManagerPersons
         {
-            get { return GrantAllocationProgramManagers.Select(gapm => gapm.Person).ToList(); }
+            get { return FundSourceAllocationProgramManagers.Select(gapm => gapm.Person).ToList(); }
         }
 
         public string GetAllProgramManagerPersonNamesAsString()
@@ -89,7 +89,7 @@ namespace ProjectFirma.Web.Models
             {
                 return new HtmlString("Contractual Only");
             }
-            var likelyToUseUrlsList = this.GrantAllocationLikelyPeople.Select(ltup => ltup.Person.GetFullNameFirstLastAsUrl()).ToList();
+            var likelyToUseUrlsList = this.FundSourceAllocationLikelyPeople.Select(ltup => ltup.Person.GetFullNameFirstLastAsUrl()).ToList();
             var likelyToUseUrlsStringBuilder = new StringBuilder();
             foreach (var likelyToUseUrl in likelyToUseUrlsList)
             {
@@ -106,15 +106,15 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
-        /// Allocation is the percentage based on pay amount total from "expected funding by project" section from the grant allocation detail page divided by the contractual amount from the "grant allocation budget line items" section on the grant allocation detail page
+        /// Allocation is the percentage based on pay amount total from "expected funding by project" section from the fundSource allocation detail page divided by the contractual amount from the "fundSource allocation budget line items" section on the fundSource allocation detail page
         /// </summary>
         /// <returns></returns>
         public HtmlString GetAllocationStringForDnrUplandRegionGrid()
         {
-            var expectedFundingByProject = ProjectGrantAllocationRequests.Sum(y => y.PayAmount);
-            var budgetLineItem = GrantAllocationBudgetLineItems.Single(z => z.CostType == CostType.Contractual);
+            var expectedFundingByProject = ProjectFundSourceAllocationRequests.Sum(y => y.PayAmount);
+            var budgetLineItem = FundSourceAllocationBudgetLineItems.Single(z => z.CostType == CostType.Contractual);
 
-            var contractualAmount = budgetLineItem.GrantAllocationBudgetLineItemAmount;
+            var contractualAmount = budgetLineItem.FundSourceAllocationBudgetLineItemAmount;
             if (contractualAmount == 0)
             {
                 return new HtmlString($"<div style=\"padding-right:30%;height: 94%;margin-left: -5px; width:130%;padding-top: 7px; background-color:{AllocationColor[150]}\">N/A - Cannot divide by 0</div>");
@@ -131,8 +131,8 @@ namespace ProjectFirma.Web.Models
         {
             var allocationCurrentBalance =
                 this.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart;
-            var indirect = GrantAllocationBudgetLineItems.Where(z => z.CostType == CostType.IndirectCosts)
-                .Sum(z => z.GrantAllocationBudgetLineItemAmount);
+            var indirect = FundSourceAllocationBudgetLineItems.Where(z => z.CostType == CostType.IndirectCosts)
+                .Sum(z => z.FundSourceAllocationBudgetLineItemAmount);
             return allocationCurrentBalance - indirect;
         }
 
@@ -142,7 +142,7 @@ namespace ProjectFirma.Web.Models
 
             if (LikelyToUse == true)
             {
-                var likelyToUse = GrantAllocationLikelyPeople.Select(x => x.Person != null ? new HtmlLinkObject(x.Person.FullNameFirstLast, x.Person.GetDetailUrl()) : new HtmlLinkObject(string.Empty, string.Empty)).ToList();
+                var likelyToUse = FundSourceAllocationLikelyPeople.Select(x => x.Person != null ? new HtmlLinkObject(x.Person.FullNameFirstLast, x.Person.GetDetailUrl()) : new HtmlLinkObject(string.Empty, string.Empty)).ToList();
                 if (likelyToUse.Any())
                 {
                     return likelyToUse.ToJsonArrayForAgGrid();
@@ -202,45 +202,45 @@ namespace ProjectFirma.Web.Models
             return convertedProjectCodes;
         }
 
-        public static List<FundSourceAllocation> OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<FundSourceAllocation> grantAllocations)
+        public static List<FundSourceAllocation> OrderFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(List<FundSourceAllocation> fundSourceAllocations)
         {
-            // Find all the GrantAllocations that have a proper year prefix ("2016-....")
-            var allGrantAllocationsPrefixedWithGrantYear =
-                grantAllocations.Where(ga => GetGrantYearPrefixIfPresent(ga) != null).ToList();
-            var allGrantAllocationIDSPrefixedWithGrantYear =
-                allGrantAllocationsPrefixedWithGrantYear.Select(ga => ga.GrantAllocationID).ToList();
+            // Find all the FundSourceAllocations that have a proper year prefix ("2016-....")
+            var allFundSourceAllocationsPrefixedWithFundSourceYear =
+                fundSourceAllocations.Where(ga => GetFundSourceYearPrefixIfPresent(ga) != null).ToList();
+            var allFundSourceAllocationIDSPrefixedWithFundSourceYear =
+                allFundSourceAllocationsPrefixedWithFundSourceYear.Select(ga => ga.FundSourceAllocationID).ToList();
 
             // Start out showing properly prefixed year entries, with most recent on top
-            List<Models.FundSourceAllocation> outgoingGrantAllocations = new List<Models.FundSourceAllocation>();
-            outgoingGrantAllocations.AddRange(
-                allGrantAllocationsPrefixedWithGrantYear.OrderByDescending(x => GetGrantYearPrefixIfPresent(x)));
+            List<Models.FundSourceAllocation> outgoingFundSourceAllocations = new List<Models.FundSourceAllocation>();
+            outgoingFundSourceAllocations.AddRange(
+                allFundSourceAllocationsPrefixedWithFundSourceYear.OrderByDescending(x => GetFundSourceYearPrefixIfPresent(x)));
 
             // Then show everything else, alpha sorted.
-            var grantAllocationsWithoutYears = grantAllocations
-                .Where(ga => !allGrantAllocationIDSPrefixedWithGrantYear.Contains(ga.GrantAllocationID)).ToList();
-            outgoingGrantAllocations.AddRange(grantAllocationsWithoutYears.OrderBy(x => x.FundSource.FundSourceNumber));
-            return outgoingGrantAllocations;
+            var fundSourceAllocationsWithoutYears = fundSourceAllocations
+                .Where(ga => !allFundSourceAllocationIDSPrefixedWithFundSourceYear.Contains(ga.FundSourceAllocationID)).ToList();
+            outgoingFundSourceAllocations.AddRange(fundSourceAllocationsWithoutYears.OrderBy(x => x.FundSource.FundSourceNumber));
+            return outgoingFundSourceAllocations;
         }
 
-        private static string GetGrantYearPrefixIfPresent(FundSourceAllocation ga)
+        private static string GetFundSourceYearPrefixIfPresent(FundSourceAllocation ga)
         {
             const string yearMatchPattern = @"^(?<year>[1-9][0-9][0-9][0-9])-";
 
-            var grantYearRegex = new Regex(yearMatchPattern);
-            var grantNumber = ga.FundSource.FundSourceNumber;
-            if (string.IsNullOrEmpty(grantNumber))
+            var fundSourceYearRegex = new Regex(yearMatchPattern);
+            var fundSourceNumber = ga.FundSource.FundSourceNumber;
+            if (string.IsNullOrEmpty(fundSourceNumber))
             {
                 return null;
             }
-            MatchCollection matches = grantYearRegex.Matches(grantNumber);
+            MatchCollection matches = fundSourceYearRegex.Matches(fundSourceNumber);
             if (matches.Count > 0)
             {
                 var firstMatch = matches[0];
-                // Grant year prefix
+                // FundSource year prefix
                 return firstMatch.Groups["year"].Value;
             }
 
-            // No grant year prefix
+            // No fundSource year prefix
             return null;
         }
 
@@ -262,7 +262,7 @@ namespace ProjectFirma.Web.Models
 
 
         /// <summary>
-        /// Stand-in for what used to be GrantAllocation.FixedLengthDisplayName
+        /// Stand-in for what used to be FundSourceAllocation.FixedLengthDisplayName
         /// </summary>
         public string FixedLengthDisplayName
         {
@@ -273,20 +273,20 @@ namespace ProjectFirma.Web.Models
                     return BottommostOrganization.OrganizationShortNameIfAvailable;
                 }
                 var organizationShortNameIfAvailable = $"({BottommostOrganization.OrganizationShortNameIfAvailable})";
-                return organizationShortNameIfAvailable.Length < 45 ? $"{GrantAllocationName.ToEllipsifiedString(45 - organizationShortNameIfAvailable.Length)} {organizationShortNameIfAvailable}" : $"{GrantAllocationName} {organizationShortNameIfAvailable}";
+                return organizationShortNameIfAvailable.Length < 45 ? $"{FundSourceAllocationName.ToEllipsifiedString(45 - organizationShortNameIfAvailable.Length)} {organizationShortNameIfAvailable}" : $"{FundSourceAllocationName} {organizationShortNameIfAvailable}";
             }
         }
 
         public void AddNewFileResource(FileResource fileResource, string displayName, string description)
         {
-            var grantAllocationFileResource =
-                new GrantAllocationFileResource(this, fileResource, displayName) {Description = description};
-            GrantAllocationFileResources.Add(grantAllocationFileResource);
+            var fundSourceAllocationFileResource =
+                new FundSourceAllocationFileResource(this, fileResource, displayName) {Description = description};
+            FundSourceAllocationFileResources.Add(fundSourceAllocationFileResource);
         }
 
         public void DeleteFullAndChildless(DatabaseEntities dbContext)
         {
-            foreach (var x in GrantAllocationFileResources.ToList())
+            foreach (var x in FundSourceAllocationFileResources.ToList())
             {
                 x.DeleteFullAndChildless(dbContext);
             }

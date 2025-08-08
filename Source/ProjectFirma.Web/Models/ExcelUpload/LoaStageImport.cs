@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models.ExcelUpload
         public readonly DateTime? ProjectExpirationDate;
         public readonly DateTime? ApplicationDate;
         public readonly DateTime? DecisionDate;
-        public readonly string GrantNumber;
+        public readonly string FundSourceNumber;
         public readonly string FocusArea;
         public readonly string ProjectCode;
         public readonly string ProgramIndex;
@@ -102,11 +102,11 @@ namespace ProjectFirma.Web.Models.ExcelUpload
                 }
 
 
-                // Column - Grant Number Key
-                GrantNumber = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.GrantNumberKey, columnMappingDictionary);
+                // Column - FundSource Number Key
+                FundSourceNumber = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.FundSourceNumberKey, columnMappingDictionary);
 
-                // Column - Grant Key
-                FocusArea = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.GrantKey, columnMappingDictionary);
+                // Column - FundSource Key
+                FocusArea = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.FundSourceKey, columnMappingDictionary);
 
                 // Column - Code Key
                 ProjectCode = ExcelColumnHelper.GetStringDataValueForColumnName(dr, rowIndex, LoaStageImports.CodeKey, columnMappingDictionary);

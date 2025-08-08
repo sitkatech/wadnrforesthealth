@@ -7,27 +7,27 @@ namespace ProjectFirma.Web.Models.ApiJson
     /// <summary>
     /// This JSON class is specifically meant to be used with the external WADNR APIs, and so should not be changed casually.
     /// </summary>
-    [DebuggerDisplay("GrantStatusID: {GrantStatusID} - GrantStatusName: {GrantStatusName}")]
-    public class GrantStatusApiJson
+    [DebuggerDisplay("FundSourceStatusID: {FundSourceStatusID} - FundSourceStatusName: {FundSourceStatusName}")]
+    public class FundSourceStatusApiJson
     {
-        public int GrantStatusID { get; set; }
-        public string GrantStatusName { get; set; }
+        public int FundSourceStatusID { get; set; }
+        public string FundSourceStatusName { get; set; }
 
         // For use by model binder
-        public GrantStatusApiJson()
+        public FundSourceStatusApiJson()
         {
         }
 
-        public GrantStatusApiJson(FundSourceStatus fundSourceStatus)
+        public FundSourceStatusApiJson(FundSourceStatus fundSourceStatus)
         {
-            GrantStatusID = fundSourceStatus.GrantStatusID;
-            GrantStatusName = fundSourceStatus.GrantStatusName;
+            FundSourceStatusID = fundSourceStatus.FundSourceStatusID;
+            FundSourceStatusName = fundSourceStatus.FundSourceStatusName;
         }
 
-        public static List<GrantStatusApiJson> MakeGrantStatusApiJsonsFromGrantStatuses(List<FundSourceStatus> grantStatuses)
+        public static List<FundSourceStatusApiJson> MakeFundSourceStatusApiJsonsFromFundSourceStatuses(List<FundSourceStatus> fundSourceStatuses)
         {
-            var outgoingGrantStatuses = grantStatuses;
-            return outgoingGrantStatuses.Select(gs => new GrantStatusApiJson(gs)).ToList();
+            var outgoingFundSourceStatuses = fundSourceStatuses;
+            return outgoingFundSourceStatuses.Select(gs => new FundSourceStatusApiJson(gs)).ToList();
         }
     }
 }

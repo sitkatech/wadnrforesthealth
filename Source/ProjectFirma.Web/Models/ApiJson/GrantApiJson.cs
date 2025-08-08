@@ -8,64 +8,64 @@ namespace ProjectFirma.Web.Models.ApiJson
     /// <summary>
     /// This class is specifically meant to be used with the external WADNR APIs, and so should not be changed casually.
     /// </summary>
-    [DebuggerDisplay("GrantID: {GrantID} - GrantName: {GrantAllocationName}")]
-    public class GrantApiJson
+    [DebuggerDisplay("FundSourceID: {FundSourceID} - FundSourceName: {FundSourceAllocationName}")]
+    public class FundSourceApiJson
     {
-        // There is some selective denormalization here to assist WADNR's comprehension (GrantTypeName, GrantStatusTypeName, OrganizationName, etc.)
-        public int GrantID { get; set; }
-        public string GrantNumber { get; set; }
+        // There is some selective denormalization here to assist WADNR's comprehension (FundSourceTypeName, FundSourceStatusTypeName, OrganizationName, etc.)
+        public int FundSourceID { get; set; }
+        public string FundSourceNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string ConditionsAndRequirements { get; set; }
         public string ComplianceNotes { get; set; }
         public decimal? AwardedFunds { get; set; }
         public string CFDANumber { get; set; }
-        public string GrantName { get; set; }
-        public int? GrantTypeID { get; set; }
-        public string GrantTypeName { get; set; }
+        public string FundSourceName { get; set; }
+        public int? FundSourceTypeID { get; set; }
+        public string FundSourceTypeName { get; set; }
         public string ShortName { get; set; }
-        public int GrantStatusID { get; set; }
-        public string GrantStatusTypeName { get; set; }
+        public int FundSourceStatusID { get; set; }
+        public string FundSourceStatusTypeName { get; set; }
         public int OrganizationID { get; set; }
         public string OrganizationName { get; set; }
-        public List<int> GrantFileResourceIDs { get; set; }
+        public List<int> FundSourceFileResourceIDs { get; set; }
 
         // For use by model binder
-        public GrantApiJson()
+        public FundSourceApiJson()
         {
         }
 
-        public GrantApiJson(FundSource fundSource)
+        public FundSourceApiJson(FundSource fundSource)
         {
-            GrantID = fundSource.FundSourceID;
-            GrantNumber = fundSource.FundSourceNumber;
+            FundSourceID = fundSource.FundSourceID;
+            FundSourceNumber = fundSource.FundSourceNumber;
             StartDate = fundSource.StartDate;
             EndDate = fundSource.EndDate;
             ConditionsAndRequirements = fundSource.ConditionsAndRequirements;
             ComplianceNotes = fundSource.ComplianceNotes;
             AwardedFunds = fundSource.TotalAwardAmount;
             CFDANumber = fundSource.CFDANumber;
-            GrantName = fundSource.FundSourceName;
-            GrantTypeID = fundSource.FundSourceTypeID;
-            GrantTypeName = fundSource.GrantTypeDisplay;
+            FundSourceName = fundSource.FundSourceName;
+            FundSourceTypeID = fundSource.FundSourceTypeID;
+            FundSourceTypeName = fundSource.FundSourceTypeDisplay;
             ShortName = fundSource.ShortName;
-            GrantStatusID = fundSource.FundSourceStatusID;
-            GrantStatusTypeName = fundSource.FundSourceStatus.GrantStatusName;
+            FundSourceStatusID = fundSource.FundSourceStatusID;
+            FundSourceStatusTypeName = fundSource.FundSourceStatus.FundSourceStatusName;
             OrganizationID = fundSource.OrganizationID;
             OrganizationName = fundSource.Organization.OrganizationName;
-            GrantFileResourceIDs = fundSource.GrantFileResources?.Select(x => x.FileResourceID).ToList();
+            FundSourceFileResourceIDs = fundSource.FundSourceFileResources?.Select(x => x.FileResourceID).ToList();
         }
 
-        public static List<GrantApiJson> MakeGrantApiJsonsFromGrants(List<FundSource> grants, bool doAlphaSort = true)
+        public static List<FundSourceApiJson> MakeFundSourceApiJsonsFromFundSources(List<FundSource> fundSources, bool doAlphaSort = true)
         {
-            var outgoingGrants = grants;
+            var outgoingFundSources = fundSources;
             if (doAlphaSort)
             {
-                // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-                //outgoingGrants = GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grants);
-                outgoingGrants = outgoingGrants.OrderBy(g => g.FundSourceNumber).ToList();
+                // This sort order is semi-important; we are highlighting properly constructed, year prefixed FundSource Numbers and pushing everything else to the bottom.
+                //outgoingFundSources = FundSourceAllocation.OrderFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(fundSources);
+                outgoingFundSources = outgoingFundSources.OrderBy(g => g.FundSourceNumber).ToList();
             }
-            return outgoingGrants.Select(ga => new GrantApiJson(ga)).ToList();
+            return outgoingFundSources.Select(ga => new FundSourceApiJson(ga)).ToList();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantIndexViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceIndexViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -23,39 +23,39 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Common;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class GrantIndexViewData : FirmaViewData
+    public class FundSourceIndexViewData : FirmaViewData
     {
-        public readonly GrantGridSpec GrantGridSpec;
-        public readonly string GrantGridName;
-        public readonly string GrantGridDataUrl;
+        public readonly FundSourceGridSpec FundSourceGridSpec;
+        public readonly string FundSourceGridName;
+        public readonly string FundSourceGridDataUrl;
 
-        public readonly GrantAllocationGridSpec GrantAllocationGridSpec;
-        public readonly string GrantAllocationGridName;
-        public readonly string GrantAllocationGridDataUrl;
+        public readonly FundSourceAllocationGridSpec FundSourceAllocationGridSpec;
+        public readonly string FundSourceAllocationGridName;
+        public readonly string FundSourceAllocationGridDataUrl;
 
-        public readonly GrantAllocationGridSpec GrantAllocationNoDataGridSpec;
-        public readonly string GrantAllocationNoDataGridName;
-        public readonly string GrantAllocationNoDataGridDataUrl;
+        public readonly FundSourceAllocationGridSpec FundSourceAllocationNoDataGridSpec;
+        public readonly string FundSourceAllocationNoDataGridName;
+        public readonly string FundSourceAllocationNoDataGridDataUrl;
 
         public readonly bool userIsLoggedIn;
 
-        public GrantIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public FundSourceIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = $"Full {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List";
+            PageTitle = $"Full {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()} List";
 
-            GrantGridSpec = new GrantGridSpec(currentPerson);
-            GrantGridName = "grantsGridName";
-            GrantGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantGridJsonData());
+            FundSourceGridSpec = new FundSourceGridSpec(currentPerson);
+            FundSourceGridName = "fundSourcesGridName";
+            FundSourceGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourceGridJsonData());
 
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, null);
-            GrantAllocationGridName = "grantAllocationsGridName";
-            GrantAllocationGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.AllGrantAllocationGridJsonData());
+            FundSourceAllocationGridSpec = new FundSourceAllocationGridSpec(currentPerson, FundSourceAllocationGridSpec.FundSourceAllocationGridCreateButtonType.Shown, null);
+            FundSourceAllocationGridName = "fundSourceAllocationsGridName";
+            FundSourceAllocationGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.AllFundSourceAllocationGridJsonData());
 
-            GrantAllocationNoDataGridSpec = new GrantAllocationGridSpec(currentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, null);
-            GrantAllocationNoDataGridName = "grantAllocationsNoDataGridName";
-            GrantAllocationNoDataGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridWithoutAnyJsonData());
+            FundSourceAllocationNoDataGridSpec = new FundSourceAllocationGridSpec(currentPerson, FundSourceAllocationGridSpec.FundSourceAllocationGridCreateButtonType.Shown, null);
+            FundSourceAllocationNoDataGridName = "fundSourceAllocationsNoDataGridName";
+            FundSourceAllocationNoDataGridDataUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourceAllocationGridWithoutAnyJsonData());
 
             userIsLoggedIn = !currentPerson.IsAnonymousUser;
         }

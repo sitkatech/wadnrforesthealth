@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantController.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceController.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -25,7 +25,7 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Views.FundSource;
 using ProjectFirma.Web.Views.Shared;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
@@ -36,7 +36,7 @@ using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Shared.FileResourceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
-using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.FundSourceAllocation;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -44,15 +44,15 @@ namespace ProjectFirma.Web.Controllers
     {
         [HttpGet]
         [FundSourceDeleteFeature]
-        public PartialViewResult DeleteGrant(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public PartialViewResult DeleteFundSource(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(fundSourcePrimaryKey.PrimaryKeyValue);
-            return ViewDeleteGrant(fundSourcePrimaryKey.EntityObject, viewModel);
+            return ViewDeleteFundSource(fundSourcePrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrant(FundSource fundSource, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewDeleteFundSource(FundSource fundSource, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.Grant.GetFieldDefinitionLabel()} '{fundSource.GrantTitle}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.FundSource.GetFieldDefinitionLabel()} '{fundSource.FundSourceTitle}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -60,16 +60,16 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [FundSourceDeleteFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrant(FundSourcePrimaryKey fundSourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteFundSource(FundSourcePrimaryKey fundSourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            var grant = fundSourcePrimaryKey.EntityObject;
+            var fundSource = fundSourcePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewDeleteGrant(grant, viewModel);
+                return ViewDeleteFundSource(fundSource, viewModel);
             }
 
-            var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantTitle}\" successfully deleted.";
-            grant.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
+            var message = $"{FieldDefinition.FundSource.GetFieldDefinitionLabel()} \"{fundSource.FundSourceTitle}\" successfully deleted.";
+            fundSource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -78,38 +78,38 @@ namespace ProjectFirma.Web.Controllers
         [FundSourceEditAsAdminFeature]
         public PartialViewResult Edit(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var grant = fundSourcePrimaryKey.EntityObject;
-            var viewModel = new EditGrantViewModel(grant);
-            return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
+            var fundSource = fundSourcePrimaryKey.EntityObject;
+            var viewModel = new EditFundSourceViewModel(fundSource);
+            return ViewEdit(viewModel,  EditFundSourceType.ExistingFundSource);
         }
 
         [HttpPost]
         [FundSourceEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Edit(FundSourcePrimaryKey fundSourcePrimaryKey, EditGrantViewModel viewModel)
+        public ActionResult Edit(FundSourcePrimaryKey fundSourcePrimaryKey, EditFundSourceViewModel viewModel)
         {
-            var grant = fundSourcePrimaryKey.EntityObject;
+            var fundSource = fundSourcePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
+                return ViewEdit(viewModel,  EditFundSourceType.ExistingFundSource);
             }
-            viewModel.UpdateModel(grant, CurrentPerson);
-            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.FundSourceName}\" has been updated.");
+            viewModel.UpdateModel(fundSource, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.FundSource.GetFieldDefinitionLabel()} \"{fundSource.FundSourceName}\" has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditGrantViewModel viewModel, EditGrantType editGrantType)
+        private PartialViewResult ViewEdit(EditFundSourceViewModel viewModel, EditFundSourceType editFundSourceType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantStatuses = FundSourceStatus.All;
-            var grantTypes = HttpRequestStorage.DatabaseEntities.FundSourceTypes;
+            var fundSourceStatuses = FundSourceStatus.All;
+            var fundSourceTypes = HttpRequestStorage.DatabaseEntities.FundSourceTypes;
             
-            var viewData = new EditGrantViewData(editGrantType,
+            var viewData = new EditFundSourceViewData(editFundSourceType,
                 organizations, 
-                grantStatuses,
-                grantTypes
+                fundSourceStatuses,
+                fundSourceTypes
             );
-            return RazorPartialView<EditGrant, EditGrantViewData, EditGrantViewModel>(viewData, viewModel);
+            return RazorPartialView<EditFundSource, EditFundSourceViewData, EditFundSourceViewModel>(viewData, viewModel);
         }
 
 
@@ -117,39 +117,39 @@ namespace ProjectFirma.Web.Controllers
         [FundSourceCreateFeature]
         public PartialViewResult New()
         {
-            var viewModel = new NewGrantViewModel();
-            return ViewNew(viewModel, EditGrantType.NewGrant);
+            var viewModel = new NewFundSourceViewModel();
+            return ViewNew(viewModel, EditFundSourceType.NewFundSource);
         }
 
         [HttpPost]
         [FundSourceCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(NewGrantViewModel viewModel)
+        public ActionResult New(NewFundSourceViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return ViewNew(viewModel, EditGrantType.NewGrant);
+                return ViewNew(viewModel, EditFundSourceType.NewFundSource);
             }
-            var grantStatus = FundSourceStatus.All.Single(g => g.FundSourceStatusID == viewModel.GrantStatusID);
-            var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
-            var grant = FundSource.CreateNewBlank(grantStatus, grantOrganization);
-            viewModel.UpdateModel(grant, CurrentPerson);
-            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.FundSourceName}\" has been created.");
+            var fundSourceStatus = FundSourceStatus.All.Single(g => g.FundSourceStatusID == viewModel.FundSourceStatusID);
+            var fundSourceOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
+            var fundSource = FundSource.CreateNewBlank(fundSourceStatus, fundSourceOrganization);
+            viewModel.UpdateModel(fundSource, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.FundSource.GetFieldDefinitionLabel()} \"{fundSource.FundSourceName}\" has been created.");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewNew(NewGrantViewModel viewModel, EditGrantType editGrantType)
+        private PartialViewResult ViewNew(NewFundSourceViewModel viewModel, EditFundSourceType editFundSourceType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantStatuses = FundSourceStatus.All;
-            var grantTypes = HttpRequestStorage.DatabaseEntities.FundSourceTypes;
+            var fundSourceStatuses = FundSourceStatus.All;
+            var fundSourceTypes = HttpRequestStorage.DatabaseEntities.FundSourceTypes;
 
-            var viewData = new NewGrantViewData(editGrantType,
+            var viewData = new NewFundSourceViewData(editFundSourceType,
                 organizations,
-                grantStatuses,
-                grantTypes
+                fundSourceStatuses,
+                fundSourceTypes
             );
-            return RazorPartialView<NewGrant, NewGrantViewData, NewGrantViewModel>(viewData, viewModel);
+            return RazorPartialView<NewFundSource, NewFundSourceViewData, NewFundSourceViewModel>(viewData, viewModel);
         }
 
 
@@ -157,44 +157,44 @@ namespace ProjectFirma.Web.Controllers
         [FundSourceCreateFeature]
         public PartialViewResult Duplicate(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var grantToDuplicate = fundSourcePrimaryKey.EntityObject;
-            Check.EnsureNotNull(grantToDuplicate);
+            var fundSourceToDuplicate = fundSourcePrimaryKey.EntityObject;
+            Check.EnsureNotNull(fundSourceToDuplicate);
 
-            //get the grant allocations
-            List<FundSourceAllocation> grantAllocations = grantToDuplicate.FundSourceAllocations.ToList();
+            //get the fundSource allocations
+            List<FundSourceAllocation> fundSourceAllocations = fundSourceToDuplicate.FundSourceAllocations.ToList();
 
-            var viewModel = new DuplicateGrantViewModel(grantToDuplicate);
-            return DuplicateGrantViewEdit(viewModel, grantToDuplicate, grantAllocations);
+            var viewModel = new DuplicateFundSourceViewModel(fundSourceToDuplicate);
+            return DuplicateFundSourceViewEdit(viewModel, fundSourceToDuplicate, fundSourceAllocations);
         }
 
         [HttpPost]
         [FundSourceCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Duplicate(FundSourcePrimaryKey fundSourcePrimaryKey, DuplicateGrantViewModel viewModel)
+        public ActionResult Duplicate(FundSourcePrimaryKey fundSourcePrimaryKey, DuplicateFundSourceViewModel viewModel)
         {
-            var originalGrant = fundSourcePrimaryKey.EntityObject;
-            Check.EnsureNotNull(originalGrant);
+            var originalFundSource = fundSourcePrimaryKey.EntityObject;
+            Check.EnsureNotNull(originalFundSource);
 
             if (!ModelState.IsValid)
             {
-                return DuplicateGrantViewEdit(viewModel, originalGrant, originalGrant.FundSourceAllocations.ToList());
+                return DuplicateFundSourceViewEdit(viewModel, originalFundSource, originalFundSource.FundSourceAllocations.ToList());
             }
 
-            var grantStatus = FundSourceStatus.All.Single(gs => gs.FundSourceStatusID == viewModel.GrantStatusID);
-            var organization = originalGrant.Organization;
-            var newGrant = FundSource.CreateNewBlank(grantStatus, organization);
-            viewModel.UpdateModel(newGrant);
-            newGrant.CFDANumber = originalGrant.CFDANumber;
-            newGrant.FundSourceTypeID = originalGrant.FundSourceTypeID;
+            var fundSourceStatus = FundSourceStatus.All.Single(gs => gs.FundSourceStatusID == viewModel.FundSourceStatusID);
+            var organization = originalFundSource.Organization;
+            var newFundSource = FundSource.CreateNewBlank(fundSourceStatus, organization);
+            viewModel.UpdateModel(newFundSource);
+            newFundSource.CFDANumber = originalFundSource.CFDANumber;
+            newFundSource.FundSourceTypeID = originalFundSource.FundSourceTypeID;
 
-            if (viewModel.GrantAllocationsToDuplicate != null && viewModel.GrantAllocationsToDuplicate.Any())
+            if (viewModel.FundSourceAllocationsToDuplicate != null && viewModel.FundSourceAllocationsToDuplicate.Any())
             {
-                foreach (var allocationID in viewModel.GrantAllocationsToDuplicate)
+                foreach (var allocationID in viewModel.FundSourceAllocationsToDuplicate)
                 {
                     var allocationToCopy =
                         HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Single(ga =>
                             ga.FundSourceAllocationID == allocationID);
-                    var newAllocation = FundSourceAllocation.CreateNewBlank(newGrant);
+                    var newAllocation = FundSourceAllocation.CreateNewBlank(newFundSource);
                     newAllocation.FundSourceAllocationName = allocationToCopy.FundSourceAllocationName;
                     newAllocation.StartDate = allocationToCopy.StartDate;
                     newAllocation.EndDate = allocationToCopy.EndDate;
@@ -207,23 +207,23 @@ namespace ProjectFirma.Web.Controllers
                     newAllocation.FundSourceManagerID = allocationToCopy.FundSourceManagerID;
 
                     // 10/7/20 TK - make sure we setup the budgetLineItems for the new allocation
-                    newAllocation.CreateAllGrantAllocationBudgetLineItemsByCostType();
+                    newAllocation.CreateAllFundSourceAllocationBudgetLineItemsByCostType();
                 }
             }
 
             //need to save changes here, because otherwise the MessageForDisplay will link to an item with a negative ID, causing errors
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{UrlTemplate.MakeHrefString(newGrant.GetDetailUrl(), newGrant.FundSourceName)}\" has been created.");
+            SetMessageForDisplay($"{FieldDefinition.FundSource.GetFieldDefinitionLabel()} \"{UrlTemplate.MakeHrefString(newFundSource.GetDetailUrl(), newFundSource.FundSourceName)}\" has been created.");
             return new ModalDialogFormJsonResult();
-            //return RedirectToAction(new SitkaRoute<GrantController>(gc => gc.GrantDetail(newGrant.GrantID)));
+            //return RedirectToAction(new SitkaRoute<FundSourceController>(gc => gc.FundSourceDetail(newFundSource.FundSourceID)));
         }
 
-        private PartialViewResult DuplicateGrantViewEdit(DuplicateGrantViewModel viewModel, FundSource fundSourceToDuplicate, List<FundSourceAllocation> grantAllocations)
+        private PartialViewResult DuplicateFundSourceViewEdit(DuplicateFundSourceViewModel viewModel, FundSource fundSourceToDuplicate, List<FundSourceAllocation> fundSourceAllocations)
         {
-            var grantStatuses = FundSourceStatus.All;
+            var fundSourceStatuses = FundSourceStatus.All;
             
-            var viewData = new DuplicateGrantViewData(grantStatuses, fundSourceToDuplicate, grantAllocations);
-            return RazorPartialView<DuplicateGrant, DuplicateGrantViewData, DuplicateGrantViewModel>(viewData, viewModel);
+            var viewData = new DuplicateFundSourceViewData(fundSourceStatuses, fundSourceToDuplicate, fundSourceAllocations);
+            return RazorPartialView<DuplicateFundSource, DuplicateFundSourceViewData, DuplicateFundSourceViewModel>(viewData, viewModel);
         }
 
 
@@ -231,53 +231,53 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [FundSourceEditAsAdminFeature]
-        public PartialViewResult NewGrantFiles(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public PartialViewResult NewFundSourceFiles(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
             Check.EnsureNotNull(fundSourcePrimaryKey.EntityObject);
             var viewModel = new NewFileViewModel();
-            return ViewNewGrantFiles(viewModel);
+            return ViewNewFundSourceFiles(viewModel);
         }
 
         [HttpPost]
         [FundSourceEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantFiles(FundSourcePrimaryKey fundSourcePrimaryKey, NewFileViewModel viewModel)
+        public ActionResult NewFundSourceFiles(FundSourcePrimaryKey fundSourcePrimaryKey, NewFileViewModel viewModel)
         {
-            var grant = fundSourcePrimaryKey.EntityObject;
+            var fundSource = fundSourcePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNewGrantFiles(new NewFileViewModel());
+                return ViewNewFundSourceFiles(new NewFileViewModel());
             }
 
-            viewModel.UpdateModel(grant, CurrentPerson);
-            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.FundSourceName}\".");
+            viewModel.UpdateModel(fundSource, CurrentPerson);
+            SetMessageForDisplay($"Successfully created {viewModel.FileResourcesData.Count} new files(s) for {FieldDefinition.FundSource.GetFieldDefinitionLabel()} \"{fundSource.FundSourceName}\".");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewNewGrantFiles(NewFileViewModel viewModel)
+        private PartialViewResult ViewNewFundSourceFiles(NewFileViewModel viewModel)
         {
-            var viewData = new NewFileViewData(FieldDefinition.Grant.GetFieldDefinitionLabel());
+            var viewData = new NewFileViewData(FieldDefinition.FundSource.GetFieldDefinitionLabel());
             return RazorPartialView<NewFile, NewFileViewData, NewFileViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
         [FundSourceManageFileResourceAsAdminFeature]
-        public PartialViewResult EditGrantFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey)
+        public PartialViewResult EditFundSourceFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey)
         {
             var fileResource = fundSourceFileResourcePrimaryKey.EntityObject;
             var viewModel = new EditFileResourceViewModel(fileResource);
-            return ViewEditGrantFile(viewModel);
+            return ViewEditFundSourceFile(viewModel);
         }
 
         [HttpPost]
         [FundSourceManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGrantFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
+        public ActionResult EditFundSourceFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey, EditFileResourceViewModel viewModel)
         {
             var fileResource = fundSourceFileResourcePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEditGrantFile(viewModel);
+                return ViewEditFundSourceFile(viewModel);
             }
 
             viewModel.UpdateModel(fileResource);
@@ -285,7 +285,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditGrantFile(EditFileResourceViewModel viewModel)
+        private PartialViewResult ViewEditFundSourceFile(EditFileResourceViewModel viewModel)
         {
             var viewData = new EditFileResourceViewData();
             return RazorPartialView<EditFileResource, EditFileResourceViewData, EditFileResourceViewModel>(viewData, viewModel);
@@ -293,30 +293,30 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [FundSourceManageFileResourceAsAdminFeature]
-        public PartialViewResult DeleteGrantFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey)
+        public PartialViewResult DeleteFundSourceFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(fundSourceFileResourcePrimaryKey.PrimaryKeyValue);
-            return ViewDeleteGrantFile(fundSourceFileResourcePrimaryKey.EntityObject, viewModel);
+            return ViewDeleteFundSourceFile(fundSourceFileResourcePrimaryKey.EntityObject, viewModel);
         }
 
         [HttpPost]
         [FundSourceManageFileResourceAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrantFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteFundSourceFile(FundSourceFileResourcePrimaryKey fundSourceFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            var grantFileResource = fundSourceFileResourcePrimaryKey.EntityObject;
+            var fundSourceFileResource = fundSourceFileResourcePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewDeleteGrantFile(grantFileResource, viewModel);
+                return ViewDeleteFundSourceFile(fundSourceFileResource, viewModel);
             }
 
-            var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} file \"{grantFileResource.DisplayName}\" created on '{grantFileResource.FileResource.CreateDate}' by '{grantFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
-            grantFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
+            var message = $"{FieldDefinition.FundSource.GetFieldDefinitionLabel()} file \"{fundSourceFileResource.DisplayName}\" created on '{fundSourceFileResource.FileResource.CreateDate}' by '{fundSourceFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
+            fundSourceFileResource.DeleteFullAndChildless(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewDeleteGrantFile(FundSourceFileResource fundSourceFileResource, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewDeleteFundSourceFile(FundSourceFileResource fundSourceFileResource, ConfirmDialogFormViewModel viewModel)
         {
             var confirmMessage = $"Are you sure you want to delete this \"{fundSourceFileResource.DisplayName}\" file created on '{fundSourceFileResource.FileResource.CreateDate}' by '{fundSourceFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
@@ -326,55 +326,55 @@ namespace ProjectFirma.Web.Controllers
         #endregion
 
         [FundSourceViewFeature]
-        public ViewResult GrantDetail(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public ViewResult FundSourceDetail(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var grant = fundSourcePrimaryKey.EntityObject;
-            var userHasEditGrantPermissions = new FundSourceEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
-            var grantNotesViewData = new EntityNotesViewData(
-                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNotes)),
-                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewGrantNote(fundSourcePrimaryKey)),
-                grant.FundSourceName,
-                userHasEditGrantPermissions);
+            var fundSource = fundSourcePrimaryKey.EntityObject;
+            var userHasEditFundSourcePermissions = new FundSourceEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
+            var fundSourceNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(fundSource.FundSourceNotes)),
+                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewFundSourceNote(fundSourcePrimaryKey)),
+                fundSource.FundSourceName,
+                userHasEditFundSourcePermissions);
 
-            var internalGrantNotesViewData = new EntityNotesViewData(
-                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNoteInternals)),
-                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewGrantNoteInternal(fundSourcePrimaryKey)),
-                grant.FundSourceName,
-                userHasEditGrantPermissions);
-            var viewData = new Views.Grant.GrantDetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
-            return RazorView<GrantDetail, GrantDetailViewData>(viewData);
+            var internalFundSourceNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(fundSource.FundSourceNoteInternals)),
+                SitkaRoute<FundSourceController>.BuildUrlFromExpression(x => x.NewFundSourceNoteInternal(fundSourcePrimaryKey)),
+                fundSource.FundSourceName,
+                userHasEditFundSourcePermissions);
+            var viewData = new Views.FundSource.FundSourceDetailViewData(CurrentPerson, fundSource, fundSourceNotesViewData, internalFundSourceNotesViewData);
+            return RazorView<FundSourceDetail, FundSourceDetailViewData>(viewData);
         }
 
         [FundSourceViewFullListFeature]
         public ViewResult Index()
         {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullGrantList);
-            var viewData = new GrantIndexViewData(CurrentPerson, firmaPage);
-            return RazorView<GrantIndex, GrantIndexViewData>(viewData);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullFundSourceList);
+            var viewData = new FundSourceIndexViewData(CurrentPerson, firmaPage);
+            return RazorView<FundSourceIndex, FundSourceIndexViewData>(viewData);
         }
 
         [FundSourceViewFullListFeature]
-        public ExcelResult GrantsExcelDownload()
+        public ExcelResult FundSourcesExcelDownload()
         {
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var workbookTitle = FieldDefinition.Grant.GetFieldDefinitionLabelPluralized();
-            return GrantsExcelDownloadImpl(grants, grantAllocations, workbookTitle);
+            var fundSources = HttpRequestStorage.DatabaseEntities.FundSources.ToList();
+            var fundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.ToList();
+            var workbookTitle = FieldDefinition.FundSource.GetFieldDefinitionLabelPluralized();
+            return FundSourcesExcelDownloadImpl(fundSources, fundSourceAllocations, workbookTitle);
         }
 
-        private ExcelResult GrantsExcelDownloadImpl(List<FundSource> grants, List<FundSourceAllocation> grantAllocations, string workbookTitle)
+        private ExcelResult FundSourcesExcelDownloadImpl(List<FundSource> fundSources, List<FundSourceAllocation> fundSourceAllocations, string workbookTitle)
         {
             var workSheets = new List<IExcelWorkbookSheetDescriptor>();
 
-            // Grants
-            var grantSpec = new GrantExcelSpec();
-            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}", grantSpec, grants);
-            workSheets.Add(wsGrants);
+            // FundSources
+            var fundSourceSpec = new FundSourceExcelSpec();
+            var wsFundSources = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.FundSource.GetFieldDefinitionLabelPluralized()}", fundSourceSpec, fundSources);
+            workSheets.Add(wsFundSources);
 
-            // Grant Allocations
-            var grantAllocationsSpec = new GrantAllocationExcelSpec();
-            var wsGrantAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", grantAllocationsSpec, grantAllocations);
-            workSheets.Add(wsGrantAllocations);
+            // FundSource Allocations
+            var fundSourceAllocationsSpec = new FundSourceAllocationExcelSpec();
+            var wsFundSourceAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()}", fundSourceAllocationsSpec, fundSourceAllocations);
+            workSheets.Add(wsFundSourceAllocations);
 
             // Overall excel file
             var wbm = new ExcelWorkbookMaker(workSheets);
@@ -386,51 +386,51 @@ namespace ProjectFirma.Web.Controllers
 
         #region "Grid Json Object Functions"
         [FundSourceViewFullListFeature]
-        public GridJsonNetJObjectResult<FundSource> GrantGridJsonData()
+        public GridJsonNetJObjectResult<FundSource> FundSourceGridJsonData()
         {
-            var gridSpec = new GrantGridSpec(CurrentPerson);
-            // They want the most current grants on top it seems, and sorting by Grant Number might be good enough -- SLG 7/2/2020
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderByDescending(g => g.FundSourceNumber).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSource>(grants, gridSpec);
+            var gridSpec = new FundSourceGridSpec(CurrentPerson);
+            // They want the most current fundSources on top it seems, and sorting by FundSource Number might be good enough -- SLG 7/2/2020
+            var fundSources = HttpRequestStorage.DatabaseEntities.FundSources.OrderByDescending(g => g.FundSourceNumber).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSource>(fundSources, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
         // Move these to their relevant controllers instead??
 
         [FundSourceViewFullListFeature]
-        public GridJsonNetJObjectResult<FundSourceAllocation> AllGrantAllocationGridJsonData()
+        public GridJsonNetJObjectResult<FundSourceAllocation> AllFundSourceAllocationGridJsonData()
         {
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, null);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(grantAllocations, gridSpec);
+            var gridSpec = new FundSourceAllocationGridSpec(CurrentPerson, FundSourceAllocationGridSpec.FundSourceAllocationGridCreateButtonType.Shown, null);
+            var fundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(fundSourceAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
         [FundSourceViewFullListFeature]
-        public GridJsonNetJObjectResult<FundSourceAllocation> GrantAllocationGridJsonDataByGrant(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public GridJsonNetJObjectResult<FundSourceAllocation> FundSourceAllocationGridJsonDataByFundSource(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var relevantGrant = fundSourcePrimaryKey.EntityObject;
+            var relevantFundSource = fundSourcePrimaryKey.EntityObject;
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, relevantGrant);
-            var grantAllocations = relevantGrant.GrantAllocations.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(grantAllocations, gridSpec);
+            var gridSpec = new FundSourceAllocationGridSpec(CurrentPerson, FundSourceAllocationGridSpec.FundSourceAllocationGridCreateButtonType.Shown, relevantFundSource);
+            var fundSourceAllocations = relevantFundSource.FundSourceAllocations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(fundSourceAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
 
         /// <summary>
-        /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.
-        /// Trying to make clear to user which grants don't have associated grantAllocations yet.
+        /// Used to display an empty fundSourceAllocation grid with "no results" when a row in the fundSource grid containing no current relationship to fundSourceAllocations is selected.
+        /// Trying to make clear to user which fundSources don't have associated fundSourceAllocations yet.
         /// </summary>
         /// <returns>An empty dataset for grid population</returns>
         [FundSourceViewFullListFeature]
-        public GridJsonNetJObjectResult<FundSourceAllocation> GrantAllocationGridWithoutAnyJsonData()
+        public GridJsonNetJObjectResult<FundSourceAllocation> FundSourceAllocationGridWithoutAnyJsonData()
         {
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson, GrantAllocationGridSpec.GrantAllocationGridCreateButtonType.Shown, null);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.FundSource.FundSourceNumber == "").ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(grantAllocations, gridSpec);
+            var gridSpec = new FundSourceAllocationGridSpec(CurrentPerson, FundSourceAllocationGridSpec.FundSourceAllocationGridCreateButtonType.Shown, null);
+            var fundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Where(ga => ga.FundSource.FundSourceNumber == "").ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(fundSourceAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
@@ -438,14 +438,14 @@ namespace ProjectFirma.Web.Controllers
         #endregion
 
 
-        #region WADNR Grant JSON API
+        #region WADNR FundSource JSON API
 
         [FundSourceViewJsonApiFeature]
-        public JsonNetJArrayResult GrantJsonApi()
+        public JsonNetJArrayResult FundSourceJsonApi()
         {
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            var jsonApiGrants = GrantApiJson.MakeGrantApiJsonsFromGrants(grants, false);
-            return new JsonNetJArrayResult(jsonApiGrants);
+            var fundSources = HttpRequestStorage.DatabaseEntities.FundSources.ToList();
+            var jsonApiFundSources = FundSourceApiJson.MakeFundSourceApiJsonsFromFundSources(fundSources, false);
+            return new JsonNetJArrayResult(jsonApiFundSources);
         }
 
         /// <summary>
@@ -453,147 +453,147 @@ namespace ProjectFirma.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [FundSourceViewJsonApiFeature]
-        public JsonNetJArrayResult GrantStatusJsonApi()
+        public JsonNetJArrayResult FundSourceStatusJsonApi()
         {
-            var grantStatuses = FundSourceStatus.All.ToList();
-            var jsonApiGrantStatuses = GrantStatusApiJson.MakeGrantStatusApiJsonsFromGrantStatuses(grantStatuses);
-            return new JsonNetJArrayResult(jsonApiGrantStatuses);
+            var fundSourceStatuses = FundSourceStatus.All.ToList();
+            var jsonApiFundSourceStatuses = FundSourceStatusApiJson.MakeFundSourceStatusApiJsonsFromFundSourceStatuses(fundSourceStatuses);
+            return new JsonNetJArrayResult(jsonApiFundSourceStatuses);
         }
 
 
         #endregion
 
 
-        #region "Grant Note including internal"
+        #region "FundSource Note including internal"
         [HttpGet]
         [FundSourceEditAsAdminFeature]
-        public PartialViewResult NewGrantNote(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public PartialViewResult NewFundSourceNote(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var viewModel = new EditGrantNoteViewModel();
-            return ViewEditNote(viewModel, EditGrantNoteType.NewNote);
+            var viewModel = new EditFundSourceNoteViewModel();
+            return ViewEditNote(viewModel, EditFundSourceNoteType.NewNote);
         }
 
         [HttpGet]
         [FundSourceEditAsAdminFeature]
-        public PartialViewResult NewGrantNoteInternal(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public PartialViewResult NewFundSourceNoteInternal(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var viewModel = new EditGrantNoteInternalViewModel();
-            return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.NewNote);
+            var viewModel = new EditFundSourceNoteInternalViewModel();
+            return ViewEditNoteInternal(viewModel, EditFundSourceNoteInternalType.NewNote);
         }
 
         [HttpPost]
         [FundSourceEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantNoteInternal(FundSourcePrimaryKey fundSourcePrimaryKey, EditGrantNoteInternalViewModel viewModel)
+        public ActionResult NewFundSourceNoteInternal(FundSourcePrimaryKey fundSourcePrimaryKey, EditFundSourceNoteInternalViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.NewNote);
+                return ViewEditNoteInternal(viewModel, EditFundSourceNoteInternalType.NewNote);
             }
-            var grant = fundSourcePrimaryKey.EntityObject;
-            var grantNoteInternal = FundSourceNoteInternal.CreateNewBlank(grant, CurrentPerson);
-            viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.NewNote);
-            HttpRequestStorage.DatabaseEntities.GrantNoteInternals.Add(grantNoteInternal);
-            SetMessageForDisplay($"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} has been created.");
+            var fundSource = fundSourcePrimaryKey.EntityObject;
+            var fundSourceNoteInternal = FundSourceNoteInternal.CreateNewBlank(fundSource, CurrentPerson);
+            viewModel.UpdateModel(fundSourceNoteInternal, CurrentPerson, EditFundSourceNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.FundSourceNoteInternals.Add(fundSourceNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.FundSourceNoteInternal.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
         [HttpPost]
         [FundSourceEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantNote(FundSourcePrimaryKey fundSourcePrimaryKey, EditGrantNoteViewModel viewModel)
+        public ActionResult NewFundSourceNote(FundSourcePrimaryKey fundSourcePrimaryKey, EditFundSourceNoteViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditNote(viewModel, EditGrantNoteType.NewNote);
+                return ViewEditNote(viewModel, EditFundSourceNoteType.NewNote);
             }
-            var grant = fundSourcePrimaryKey.EntityObject;
-            var grantNote = FundSourceNote.CreateNewBlank(grant, CurrentPerson);
-            viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.NewNote);
-            HttpRequestStorage.DatabaseEntities.FundSourceNotes.Add(grantNote);
-            SetMessageForDisplay($"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} has been created.");
+            var fundSource = fundSourcePrimaryKey.EntityObject;
+            var fundSourceNote = FundSourceNote.CreateNewBlank(fundSource, CurrentPerson);
+            viewModel.UpdateModel(fundSourceNote, CurrentPerson, EditFundSourceNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.FundSourceNotes.Add(fundSourceNote);
+            SetMessageForDisplay($"{FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()} has been created.");
             return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
         [FundSourceNoteEditAsAdminFeature]
-        public PartialViewResult EditGrantNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey)
+        public PartialViewResult EditFundSourceNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey)
         {
-            var grantNote = fundSourceNotePrimaryKey.EntityObject;
-            var viewModel = new EditGrantNoteViewModel(grantNote);
-            return ViewEditNote(viewModel, EditGrantNoteType.ExistingNote);
+            var fundSourceNote = fundSourceNotePrimaryKey.EntityObject;
+            var viewModel = new EditFundSourceNoteViewModel(fundSourceNote);
+            return ViewEditNote(viewModel, EditFundSourceNoteType.ExistingNote);
         }
 
         [HttpPost]
         [FundSourceNoteEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGrantNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey, EditGrantNoteViewModel viewModel)
+        public ActionResult EditFundSourceNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey, EditFundSourceNoteViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditNote(viewModel, EditGrantNoteType.ExistingNote);
+                return ViewEditNote(viewModel, EditFundSourceNoteType.ExistingNote);
             }
 
-            var grantNote = fundSourceNotePrimaryKey.EntityObject;
-            viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.ExistingNote);
-            HttpRequestStorage.DatabaseEntities.FundSourceNotes.AddOrUpdate(grantNote);
-            SetMessageForDisplay($"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} has been updated.");
+            var fundSourceNote = fundSourceNotePrimaryKey.EntityObject;
+            viewModel.UpdateModel(fundSourceNote, CurrentPerson, EditFundSourceNoteType.ExistingNote);
+            HttpRequestStorage.DatabaseEntities.FundSourceNotes.AddOrUpdate(fundSourceNote);
+            SetMessageForDisplay($"{FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
 
-        private PartialViewResult ViewEditNoteInternal(EditGrantNoteInternalViewModel viewModel, EditGrantNoteInternalType editGrantNoteInternalType)
+        private PartialViewResult ViewEditNoteInternal(EditFundSourceNoteInternalViewModel viewModel, EditFundSourceNoteInternalType editFundSourceNoteInternalType)
         {
-            var viewData = new EditGrantNoteInternalViewData(editGrantNoteInternalType);
-            return RazorPartialView<EditGrantNoteInternal, EditGrantNoteInternalViewData, EditGrantNoteInternalViewModel>(viewData, viewModel);
+            var viewData = new EditFundSourceNoteInternalViewData(editFundSourceNoteInternalType);
+            return RazorPartialView<EditFundSourceNoteInternal, EditFundSourceNoteInternalViewData, EditFundSourceNoteInternalViewModel>(viewData, viewModel);
         }
 
 
         [HttpGet]
         [FundSourceNoteInternalEditAsAdminFeature]
-        public PartialViewResult EditGrantNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey)
+        public PartialViewResult EditFundSourceNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey)
         {
-            var grantNoteInternal = fundSourceNoteInternalPrimaryKey.EntityObject;
-            var viewModel = new EditGrantNoteInternalViewModel(grantNoteInternal);
-            return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.ExistingNote);
+            var fundSourceNoteInternal = fundSourceNoteInternalPrimaryKey.EntityObject;
+            var viewModel = new EditFundSourceNoteInternalViewModel(fundSourceNoteInternal);
+            return ViewEditNoteInternal(viewModel, EditFundSourceNoteInternalType.ExistingNote);
         }
 
         [HttpPost]
         [FundSourceNoteInternalEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGrantNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey, EditGrantNoteInternalViewModel viewModel)
+        public ActionResult EditFundSourceNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey, EditFundSourceNoteInternalViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.ExistingNote);
+                return ViewEditNoteInternal(viewModel, EditFundSourceNoteInternalType.ExistingNote);
             }
 
-            var grantNoteInternal = fundSourceNoteInternalPrimaryKey.EntityObject;
-            viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.ExistingNote);
-            HttpRequestStorage.DatabaseEntities.FundSourceNoteInternals.AddOrUpdate(grantNoteInternal);
-            SetMessageForDisplay($"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} has been updated.");
+            var fundSourceNoteInternal = fundSourceNoteInternalPrimaryKey.EntityObject;
+            viewModel.UpdateModel(fundSourceNoteInternal, CurrentPerson, EditFundSourceNoteType.ExistingNote);
+            HttpRequestStorage.DatabaseEntities.FundSourceNoteInternals.AddOrUpdate(fundSourceNoteInternal);
+            SetMessageForDisplay($"{FieldDefinition.FundSourceNoteInternal.GetFieldDefinitionLabel()} has been updated.");
             return new ModalDialogFormJsonResult();
         }
 
 
-        private PartialViewResult ViewEditNote(EditGrantNoteViewModel viewModel, EditGrantNoteType editGrantNoteType)
+        private PartialViewResult ViewEditNote(EditFundSourceNoteViewModel viewModel, EditFundSourceNoteType editFundSourceNoteType)
         {
-            var viewData = new EditGrantNoteViewData(editGrantNoteType);
-            return RazorPartialView<EditGrantNote, EditGrantNoteViewData, EditGrantNoteViewModel>(viewData, viewModel);
+            var viewData = new EditFundSourceNoteViewData(editFundSourceNoteType);
+            return RazorPartialView<EditFundSourceNote, EditFundSourceNoteViewData, EditFundSourceNoteViewModel>(viewData, viewModel);
         }
 
 
         [HttpGet]
         [FundSourceNoteInternalEditAsAdminFeature]
-        public PartialViewResult DeleteGrantNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey)
+        public PartialViewResult DeleteFundSourceNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(fundSourceNoteInternalPrimaryKey.PrimaryKeyValue);
-            return ViewDeleteGrantNoteInternal(fundSourceNoteInternalPrimaryKey.EntityObject, viewModel);
+            return ViewDeleteFundSourceNoteInternal(fundSourceNoteInternalPrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantNoteInternal(FundSourceNoteInternal fundSourceNoteInternal, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewDeleteFundSourceNoteInternal(FundSourceNoteInternal fundSourceNoteInternal, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} created on '{fundSourceNoteInternal.CreatedDate}' by '{fundSourceNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.FundSourceNoteInternal.GetFieldDefinitionLabel()} created on '{fundSourceNoteInternal.CreatedDate}' by '{fundSourceNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -601,31 +601,31 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [FundSourceNoteInternalEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrantNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteFundSourceNoteInternal(FundSourceNoteInternalPrimaryKey fundSourceNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            var grantNoteInternal = fundSourceNoteInternalPrimaryKey.EntityObject;
+            var fundSourceNoteInternal = fundSourceNoteInternalPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewDeleteGrantNoteInternal(grantNoteInternal, viewModel);
+                return ViewDeleteFundSourceNoteInternal(fundSourceNoteInternal, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
-            grantNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            var message = $"{FieldDefinition.FundSourceNoteInternal.GetFieldDefinitionLabel()} created on '{fundSourceNoteInternal.CreatedDate}' by '{fundSourceNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            fundSourceNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
         [FundSourceNoteEditAsAdminFeature]
-        public PartialViewResult DeleteGrantNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey)
+        public PartialViewResult DeleteFundSourceNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(fundSourceNotePrimaryKey.PrimaryKeyValue);
-            return ViewDeleteGrantNote(fundSourceNotePrimaryKey.EntityObject, viewModel);
+            return ViewDeleteFundSourceNote(fundSourceNotePrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewDeleteGrantNote(FundSourceNote fundSourceNote, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewDeleteFundSourceNote(FundSourceNote fundSourceNote, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{fundSourceNote.CreatedDate}' by '{fundSourceNote.CreatedByPerson.FullNameFirstLast}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()} created on '{fundSourceNote.CreatedDate}' by '{fundSourceNote.CreatedByPerson.FullNameFirstLast}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -635,16 +635,16 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [FundSourceNoteEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrantNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteFundSourceNote(FundSourceNotePrimaryKey fundSourceNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            var grantNote = fundSourceNotePrimaryKey.EntityObject;
+            var fundSourceNote = fundSourceNotePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewDeleteGrantNote(grantNote, viewModel);
+                return ViewDeleteFundSourceNote(fundSourceNote, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNote.CreatedDate}' by '{grantNote.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
-            grantNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            var message = $"{FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()} created on '{fundSourceNote.CreatedDate}' by '{fundSourceNote.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            fundSourceNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -652,39 +652,39 @@ namespace ProjectFirma.Web.Controllers
 
 
         [FundSourceViewFeature]
-        public GridJsonNetJObjectResult<GrantAllocationBudgetLineItemForGrid> GrantAllocationBudgetLineItemGridJsonDataByGrant(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public GridJsonNetJObjectResult<FundSourceAllocationBudgetLineItemForGrid> FundSourceAllocationBudgetLineItemGridJsonDataByFundSource(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var relevantGrant = fundSourcePrimaryKey.EntityObject;
+            var relevantFundSource = fundSourcePrimaryKey.EntityObject;
             // Create button is irrelevant to this data-only usage
-            var gridSpec = new GrantAllocationBudgetLineItemGridSpec();
-            var grantAllocations = relevantGrant.FundSourceAllocations.ToList();
-            var budgetLineItems = grantAllocations.Select(ga => new GrantAllocationBudgetLineItemForGrid(ga)).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationBudgetLineItemForGrid>(budgetLineItems, gridSpec);
+            var gridSpec = new FundSourceAllocationBudgetLineItemGridSpec();
+            var fundSourceAllocations = relevantFundSource.FundSourceAllocations.ToList();
+            var budgetLineItems = fundSourceAllocations.Select(ga => new FundSourceAllocationBudgetLineItemForGrid(ga)).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocationBudgetLineItemForGrid>(budgetLineItems, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
         [FundSourceViewFeature]
-        public GridJsonNetJObjectResult<Agreement> GrantAgreementGridJsonData(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public GridJsonNetJObjectResult<Agreement> FundSourceAgreementGridJsonData(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            // 2/4/22 TK - need to walk "grant -> grant allocation -> AgreementGrantAllocation -> Agreement"
-            var grant = fundSourcePrimaryKey.EntityObject;
-            var grantAllocations = grant.FundSourceAllocations;
-            var agreementGrantAllocations = grantAllocations.SelectMany(x => x.AgreementFundSourceAllocations);
-            var agreements = agreementGrantAllocations.Select(x => x.Agreement).ToList();
+            // 2/4/22 TK - need to walk "fundSource -> fundSource allocation -> AgreementFundSourceAllocation -> Agreement"
+            var fundSource = fundSourcePrimaryKey.EntityObject;
+            var fundSourceAllocations = fundSource.FundSourceAllocations;
+            var agreementFundSourceAllocations = fundSourceAllocations.SelectMany(x => x.AgreementFundSourceAllocations);
+            var agreements = agreementFundSourceAllocations.Select(x => x.Agreement).ToList();
 
-            var gridSpec = new GrantAgreementGridSpec();
+            var gridSpec = new FundSourceAgreementGridSpec();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
         [FundSourceViewFeature]
-        public GridJsonNetJObjectResult<ProjectFundSourceAllocationRequest> ProjectGrantAllocationRequestsByGrantGridJsonData(FundSourcePrimaryKey fundSourcePrimaryKey)
+        public GridJsonNetJObjectResult<ProjectFundSourceAllocationRequest> ProjectFundSourceAllocationRequestsByFundSourceGridJsonData(FundSourcePrimaryKey fundSourcePrimaryKey)
         {
-            var grant = fundSourcePrimaryKey.EntityObject;
-            var grantAllocations = grant.FundSourceAllocations;
-            var projectGrantAllocationRequests = grantAllocations.SelectMany(x => x.ProjectFundSourceAllocationRequests).ToList();
-            var gridSpec = new ProjectGrantAllocationRequestsByGrantGridSpec();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectFundSourceAllocationRequest>(projectGrantAllocationRequests, gridSpec);
+            var fundSource = fundSourcePrimaryKey.EntityObject;
+            var fundSourceAllocations = fundSource.FundSourceAllocations;
+            var projectFundSourceAllocationRequests = fundSourceAllocations.SelectMany(x => x.ProjectFundSourceAllocationRequests).ToList();
+            var gridSpec = new ProjectFundSourceAllocationRequestsByFundSourceGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectFundSourceAllocationRequest>(projectFundSourceAllocationRequests, gridSpec);
             return gridJsonNetJObjectResult;
         }
     }

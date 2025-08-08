@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditprojectGrantAllocationRequestsViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditprojectFundSourceAllocationRequestsViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -31,9 +31,9 @@ using NUnit.Framework;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
+namespace ProjectFirma.Web.Views.ProjectFundSourceAllocationRequest
 {
-    public class EditProjectGrantAllocationRequestsViewModel : FormViewModel, IValidatableObject
+    public class EditProjectFundSourceAllocationRequestsViewModel : FormViewModel, IValidatableObject
     {
         
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         [Required]
         public int PrimaryKeyID { get; set; }
 
-        public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
+        public List<ProjectFundSourceAllocationRequestSimple> ProjectFundSourceAllocationRequests { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FundingSource)]
         public List<int> FundingSourceIDs { get; set; }
@@ -56,23 +56,23 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         [StringLength(Models.Project.FieldLengths.ProjectFundingSourceNotes)]
         public string ProjectFundingSourceNotes { get; set; }
 
-        //TODO: Get TotalAmount in here, pass to Angular Controller in EditProjectGrantAllocationRequests.cshtml
+        //TODO: Get TotalAmount in here, pass to Angular Controller in EditProjectFundSourceAllocationRequests.cshtml
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditProjectGrantAllocationRequestsViewModel()
+        public EditProjectFundSourceAllocationRequestsViewModel()
         {
         }
 
-        public EditProjectGrantAllocationRequestsViewModel(int primaryKeyID, List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, 
+        public EditProjectFundSourceAllocationRequestsViewModel(int primaryKeyID, List<Models.ProjectFundSourceAllocationRequest> projectFundSourceAllocationRequests, 
                                                            bool forProject, 
                                                            Money? projectEstimatedTotalCost,
                                                            string projectFundingSourceNotes,
                                                            List<ProjectFundingSource> projectFundingSources)
         {
-            ProjectGrantAllocationRequests = projectGrantAllocationRequests
-                .Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
+            ProjectFundSourceAllocationRequests = projectFundSourceAllocationRequests
+                .Select(x => new ProjectFundSourceAllocationRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ForProject = forProject;
             ProjectFundingSourceNotes = projectFundingSourceNotes;
@@ -80,35 +80,35 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
             PrimaryKeyID = primaryKeyID;
         }
 
-        public void UpdateModel(List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
-                                IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests, 
+        public void UpdateModel(List<Models.ProjectFundSourceAllocationRequest> currentProjectFundSourceAllocationRequests,
+                                IList<Models.ProjectFundSourceAllocationRequest> allProjectFundSourceAllocationRequests, 
                                 Models.Project project,
                                 List<ProjectFundingSource> currentProjectFundingSources,
                                 IList<ProjectFundingSource> allProjectFundingSources)
         {
             var dateNow = DateTime.Now;
-            var projectGrantAllocationRequestsModified = new List<Models.ProjectGrantAllocationRequest>();
-            if (ProjectGrantAllocationRequests != null)
+            var projectFundSourceAllocationRequestsModified = new List<Models.ProjectFundSourceAllocationRequest>();
+            if (ProjectFundSourceAllocationRequests != null)
             {
 
-                foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequests)
+                foreach (var projectFundSourceAllocationRequestSimple in ProjectFundSourceAllocationRequests)
                 {
-                    var existingCurrentOne = currentProjectGrantAllocationRequests.SingleOrDefault(x =>
-                        x.ProjectID == projectGrantAllocationRequestSimple.ProjectID &&
-                        x.GrantAllocationID == projectGrantAllocationRequestSimple.GrantAllocationID);
+                    var existingCurrentOne = currentProjectFundSourceAllocationRequests.SingleOrDefault(x =>
+                        x.ProjectID == projectFundSourceAllocationRequestSimple.ProjectID &&
+                        x.FundSourceAllocationID == projectFundSourceAllocationRequestSimple.FundSourceAllocationID);
                     if (existingCurrentOne != null)
                     {
-                        var projectGrantAllocationRequestToAdd =
-                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                        var projectFundSourceAllocationRequestToAdd =
+                            projectFundSourceAllocationRequestSimple.ToProjectFundSourceAllocationRequest(
                                 existingCurrentOne.CreateDate, dateNow, existingCurrentOne.ImportedFromTabularData);
-                        projectGrantAllocationRequestsModified.Add(projectGrantAllocationRequestToAdd);
+                        projectFundSourceAllocationRequestsModified.Add(projectFundSourceAllocationRequestToAdd);
                     }
                     else
                     {
-                        var projectGrantAllocationRequestToAdd =
-                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                        var projectFundSourceAllocationRequestToAdd =
+                            projectFundSourceAllocationRequestSimple.ToProjectFundSourceAllocationRequest(
                                 dateNow, null, false);
-                        projectGrantAllocationRequestsModified.Add(projectGrantAllocationRequestToAdd);
+                        projectFundSourceAllocationRequestsModified.Add(projectFundSourceAllocationRequestToAdd);
                     }
                 }
             }
@@ -118,7 +118,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 if (project == null)
                 {
                     throw new InvalidOperationException(
-                        $"Project is required to update {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Requests for a Project");
+                        $"Project is required to update {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} Requests for a Project");
                 }
 
                 //Update the ProjectFundingSources
@@ -138,9 +138,9 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 project.EstimatedTotalCost = ProjectEstimatedTotalCost;
             }
 
-            currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsModified,
-                allProjectGrantAllocationRequests,
-                (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
+            currentProjectFundSourceAllocationRequests.Merge(projectFundSourceAllocationRequestsModified,
+                allProjectFundSourceAllocationRequests,
+                (x, y) => x.ProjectID == y.ProjectID && x.FundSourceAllocationID == y.FundSourceAllocationID,
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
@@ -163,29 +163,29 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                                    project.CreateGisUploadAttempt.GisUploadSourceOrganization
                                        .GisUploadSourceOrganizationName.Contains("LOA",
                                            StringComparison.InvariantCultureIgnoreCase);
-                if(projectIsLoa && (ProjectGrantAllocationRequests == null || !ProjectGrantAllocationRequests.Any()))
+                if(projectIsLoa && (ProjectFundSourceAllocationRequests == null || !ProjectFundSourceAllocationRequests.Any()))
                 {
-                    yield return new ValidationResult("LOA Projects must have at least one Grant Allocation");
+                    yield return new ValidationResult("LOA Projects must have at least one FundSource Allocation");
                 }
             }
 
-            if (ProjectGrantAllocationRequests == null)
+            if (ProjectFundSourceAllocationRequests == null)
             {
                 yield break;
             }
 
-            if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
+            if (ProjectFundSourceAllocationRequests.GroupBy(x => x.FundSourceAllocationID).Any(x => x.Count() > 1))
             {
-                yield return new ValidationResult("Each grant allocation can only be used once.");
+                yield return new ValidationResult("Each fundSource allocation can only be used once.");
             }
 
-            //foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
+            //foreach (var projectFundSourceAllocationRequest in ProjectFundSourceAllocationRequests)
             //{
-            //    if (projectGrantAllocationRequest.AreBothValuesZero())
+            //    if (projectFundSourceAllocationRequest.AreBothValuesZero())
             //    {
-            //        var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x => x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
+            //        var fundSourceAllocation = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Single(x => x.FundSourceAllocationID == projectFundSourceAllocationRequest.FundSourceAllocationID);
             //        yield return new ValidationResult(
-            //            $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.GrantAllocationName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
+            //            $"Secured Funding and Unsecured Funding cannot both be zero for FundSource Allocation: {fundSourceAllocation.FundSourceAllocationName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
             //    }
             //}
         }

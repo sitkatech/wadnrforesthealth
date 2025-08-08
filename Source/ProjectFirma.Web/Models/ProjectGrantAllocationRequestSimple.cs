@@ -3,38 +3,38 @@ using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public class ProjectGrantAllocationRequestSimple
+    public class ProjectFundSourceAllocationRequestSimple
     {
 
         /// <summary>
         /// Needed by ModelBinder
         /// </summary>
-        public ProjectGrantAllocationRequestSimple()
+        public ProjectFundSourceAllocationRequestSimple()
         {
         }
         
-        public ProjectGrantAllocationRequestSimple(ProjectGrantAllocationRequest projectGrantAllocationRequest)
+        public ProjectFundSourceAllocationRequestSimple(ProjectFundSourceAllocationRequest projectFundSourceAllocationRequest)
             : this()
         {
-            ProjectID = projectGrantAllocationRequest.ProjectID;
-            GrantAllocationID = projectGrantAllocationRequest.GrantAllocationID;
-            TotalAmount = projectGrantAllocationRequest.TotalAmount;
-            MatchAmount = projectGrantAllocationRequest.MatchAmount;
-            PayAmount = projectGrantAllocationRequest.PayAmount;
+            ProjectID = projectFundSourceAllocationRequest.ProjectID;
+            FundSourceAllocationID = projectFundSourceAllocationRequest.FundSourceAllocationID;
+            TotalAmount = projectFundSourceAllocationRequest.TotalAmount;
+            MatchAmount = projectFundSourceAllocationRequest.MatchAmount;
+            PayAmount = projectFundSourceAllocationRequest.PayAmount;
         }
 
-        public ProjectGrantAllocationRequestSimple(ProjectGrantAllocationRequestUpdate projectGrantAllocationRequestUpdate)
+        public ProjectFundSourceAllocationRequestSimple(ProjectFundSourceAllocationRequestUpdate projectFundSourceAllocationRequestUpdate)
         {
-            ProjectID = projectGrantAllocationRequestUpdate.ProjectUpdateBatchID;
-            GrantAllocationID = projectGrantAllocationRequestUpdate.GrantAllocationID;
-            TotalAmount = projectGrantAllocationRequestUpdate.TotalAmount;
-            MatchAmount = projectGrantAllocationRequestUpdate.MatchAmount;
-            PayAmount = projectGrantAllocationRequestUpdate.PayAmount;
+            ProjectID = projectFundSourceAllocationRequestUpdate.ProjectUpdateBatchID;
+            FundSourceAllocationID = projectFundSourceAllocationRequestUpdate.FundSourceAllocationID;
+            TotalAmount = projectFundSourceAllocationRequestUpdate.TotalAmount;
+            MatchAmount = projectFundSourceAllocationRequestUpdate.MatchAmount;
+            PayAmount = projectFundSourceAllocationRequestUpdate.PayAmount;
         }
 
-        public ProjectGrantAllocationRequest ToProjectGrantAllocationRequest(DateTime createDate, DateTime? updateDate, bool importedFromTabularData)
+        public ProjectFundSourceAllocationRequest ToProjectFundSourceAllocationRequest(DateTime createDate, DateTime? updateDate, bool importedFromTabularData)
         {
-            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, createDate, importedFromTabularData)
+            return new ProjectFundSourceAllocationRequest(ProjectID, FundSourceAllocationID, createDate, importedFromTabularData)
             {
                 TotalAmount = TotalAmount
                 , MatchAmount = MatchAmount
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
         }
 
         public int ProjectID { get; set; }
-        public int GrantAllocationID { get; set; }
+        public int FundSourceAllocationID { get; set; }
         
         [ValidateMoneyInRangeForSqlServer]
         public decimal? TotalAmount { get; set; }
@@ -63,9 +63,9 @@ namespace ProjectFirma.Web.Models
 
       
 
-        public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate(DateTime createDate, DateTime? updateDate, bool importedFromTabularData)
+        public ProjectFundSourceAllocationRequestUpdate ToProjectFundSourceAllocationRequestUpdate(DateTime createDate, DateTime? updateDate, bool importedFromTabularData)
         {
-            return new ProjectGrantAllocationRequestUpdate(ProjectID, GrantAllocationID, createDate, importedFromTabularData)
+            return new ProjectFundSourceAllocationRequestUpdate(ProjectID, FundSourceAllocationID, createDate, importedFromTabularData)
             {
                 TotalAmount = TotalAmount
                 , MatchAmount = MatchAmount

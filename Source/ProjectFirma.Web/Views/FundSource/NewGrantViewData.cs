@@ -3,22 +3,22 @@ using System.Globalization;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class NewGrantViewData : FirmaUserControlViewData
+    public class NewFundSourceViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> Organizations { get; }
-        public IEnumerable<SelectListItem> GrantTypes { get; }
-        public IEnumerable<SelectListItem> GrantStatuses { get; }
+        public IEnumerable<SelectListItem> FundSourceTypes { get; }
+        public IEnumerable<SelectListItem> FundSourceStatuses { get; }
 
-        public EditGrantType EditGrantType { get; set; }
+        public EditFundSourceType EditFundSourceType { get; set; }
 
-        public NewGrantViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSourceStatus> grantStatuses, IEnumerable<Models.FundSourceType> grantTypes)
+        public NewFundSourceViewData(EditFundSourceType editFundSourceType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSourceStatus> fundSourceStatuses, IEnumerable<Models.FundSourceType> fundSourceTypes)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
-            GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
-            EditGrantType = editGrantType;
+            FundSourceStatuses = fundSourceStatuses.ToSelectListWithEmptyFirstRow(x => x.FundSourceStatusID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceStatusName);
+            FundSourceTypes = fundSourceTypes.ToSelectListWithEmptyFirstRow(x => x.FundSourceTypeID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceTypeName);
+            EditFundSourceType = editFundSourceType;
         }
     }
 }

@@ -39,26 +39,26 @@ namespace ProjectFirma.Web.Models
 
         public string Note
         {
-            get { return GrantNoteText; }
-            set { GrantNoteText = value; }
+            get { return FundSourceNoteText; }
+            set { FundSourceNoteText = value; }
         }
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.DeleteGrantNote(GrantNoteID)); }
+            get { return SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.DeleteFundSourceNote(FundSourceNoteID)); }
         }
 
         public string EditUrl
         {
-            get { return SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.EditGrantNote(GrantNoteID)); }
+            get { return SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.EditFundSourceNote(FundSourceNoteID)); }
         }
         public string AuditDescriptionString
         {
             get
             {
-                var grant = HttpRequestStorage.DatabaseEntities.Grants.Find(GrantID);
-                var grantName = grant != null ? grant.AuditDescriptionString : ViewUtilities.NotFoundString;
-                return $"Grant: {grantName}";
+                var fundSource = HttpRequestStorage.DatabaseEntities.FundSources.Find(FundSourceID);
+                var fundSourceName = fundSource != null ? fundSource.AuditDescriptionString : ViewUtilities.NotFoundString;
+                return $"FundSource: {fundSourceName}";
             }
         }
     }

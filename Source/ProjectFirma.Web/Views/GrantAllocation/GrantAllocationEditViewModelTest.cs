@@ -26,26 +26,26 @@ using LtInfo.Common.Mvc;
 using NUnit.Framework;
 using ProjectFirma.Web.UnitTestCommon;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
     [TestFixture]
-    public class GrantAllocationEditViewModelTest
+    public class FundSourceAllocationEditViewModelTest
     {
         [Test]
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {
             // Arrange
-            var grantAllocation = TestFramework.TestFundSourceAllocation.Create();
+            var fundSourceAllocation = TestFramework.TestFundSourceAllocation.Create();
 
             // Act
-            var viewModel = new EditGrantAllocationViewModel(grantAllocation);
+            var viewModel = new EditFundSourceAllocationViewModel(fundSourceAllocation);
 
             // Assert
-            Assert.That(viewModel.GrantAllocationID, Is.EqualTo(grantAllocation.GrantAllocationID));
-            Assert.That(viewModel.GrantAllocationName, Is.EqualTo(grantAllocation.GrantAllocationName));
-            Assert.That(viewModel.OrganizationID, Is.EqualTo(grantAllocation.OrganizationID));
-            Assert.That(viewModel.SourceID, Is.EqualTo(grantAllocation.GrantAllocationSourceID));
-            //Assert.That(viewModel.IsActive, Is.EqualTo(grantAllocation.IsActive));
+            Assert.That(viewModel.FundSourceAllocationID, Is.EqualTo(fundSourceAllocation.FundSourceAllocationID));
+            Assert.That(viewModel.FundSourceAllocationName, Is.EqualTo(fundSourceAllocation.FundSourceAllocationName));
+            Assert.That(viewModel.OrganizationID, Is.EqualTo(fundSourceAllocation.OrganizationID));
+            Assert.That(viewModel.SourceID, Is.EqualTo(fundSourceAllocation.FundSourceAllocationSourceID));
+            //Assert.That(viewModel.IsActive, Is.EqualTo(fundSourceAllocation.IsActive));
         }
 
         [Test]
@@ -53,19 +53,19 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             // Arrange
             var organization = TestFramework.TestOrganization.Create();
-            var grantAllocation = TestFramework.TestFundSourceAllocation.Create();
-            var viewModel = new EditGrantAllocationViewModel(grantAllocation);
-            viewModel.GrantAllocationName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.GrantAllocationName), Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
+            var fundSourceAllocation = TestFramework.TestFundSourceAllocation.Create();
+            var viewModel = new EditFundSourceAllocationViewModel(fundSourceAllocation);
+            viewModel.FundSourceAllocationName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.FundSourceAllocationName), Models.FundSourceAllocation.FieldLengths.FundSourceAllocationName);
             viewModel.OrganizationID = organization.OrganizationID;
             //viewModel.IsActive = true;
 
             // Act
-            viewModel.UpdateModel(grantAllocation, TestFramework.TestPerson.Create());
+            viewModel.UpdateModel(fundSourceAllocation, TestFramework.TestPerson.Create());
 
             // Assert
-            Assert.That(grantAllocation.GrantAllocationName, Is.EqualTo(viewModel.GrantAllocationName));
-            Assert.That(grantAllocation.OrganizationID, Is.EqualTo(viewModel.OrganizationID));
-            //Assert.That(grantAllocation.IsActive, Is.EqualTo(viewModel.IsActive));
+            Assert.That(fundSourceAllocation.FundSourceAllocationName, Is.EqualTo(viewModel.FundSourceAllocationName));
+            Assert.That(fundSourceAllocation.OrganizationID, Is.EqualTo(viewModel.OrganizationID));
+            //Assert.That(fundSourceAllocation.IsActive, Is.EqualTo(viewModel.IsActive));
         }
 
         [Test]
@@ -73,9 +73,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public void CanValidateModelTest()
         {
             // Arrange
-            var grantAllocation = TestFramework.TestFundSourceAllocation.Create();
-            var viewModel = new EditGrantAllocationViewModel(grantAllocation);
-            var nameOfGrantAllocationName = GeneralUtility.NameOf(() => viewModel.GrantAllocationName);
+            var fundSourceAllocation = TestFramework.TestFundSourceAllocation.Create();
+            var viewModel = new EditFundSourceAllocationViewModel(fundSourceAllocation);
+            var nameOfFundSourceAllocationName = GeneralUtility.NameOf(() => viewModel.FundSourceAllocationName);
 
             ICollection<ValidationResult> validationResults;
 
@@ -84,20 +84,20 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             // Assert
             Assert.That(validationResults.Count, Is.EqualTo(1), "Expecting certain number of errors");
-            TestFramework.AssertFieldRequired(validationResults, nameOfGrantAllocationName);
+            TestFramework.AssertFieldRequired(validationResults, nameOfFundSourceAllocationName);
 
             // Act
             // Set string fields to string longer than their max lengths
-            viewModel.GrantAllocationName = TestFramework.MakeTestNameLongerThan(nameOfGrantAllocationName, Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
+            viewModel.FundSourceAllocationName = TestFramework.MakeTestNameLongerThan(nameOfFundSourceAllocationName, Models.FundSourceAllocation.FieldLengths.FundSourceAllocationName);
             DataAnnotationsValidator.TryValidate(viewModel, out validationResults);
 
             // Assert
             Assert.That(validationResults.Count, Is.EqualTo(1), "Expecting certain number of errors");
-            TestFramework.AssertFieldStringLength(validationResults, nameOfGrantAllocationName, Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
+            TestFramework.AssertFieldStringLength(validationResults, nameOfFundSourceAllocationName, Models.FundSourceAllocation.FieldLengths.FundSourceAllocationName);
 
             // Act
             // Happy path
-            viewModel.GrantAllocationName = TestFramework.MakeTestName(nameOfGrantAllocationName, Models.FundSourceAllocation.FieldLengths.GrantAllocationName);
+            viewModel.FundSourceAllocationName = TestFramework.MakeTestName(nameOfFundSourceAllocationName, Models.FundSourceAllocation.FieldLengths.FundSourceAllocationName);
             var isValid = DataAnnotationsValidator.TryValidate(viewModel, out validationResults);
 
             // Assert

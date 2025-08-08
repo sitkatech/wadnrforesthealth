@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectGrantAllocationRequestController.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="ProjectFundSourceAllocationRequestController.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -28,61 +28,61 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.ProjectGrantAllocationRequest;
+using ProjectFirma.Web.Views.ProjectFundSourceAllocationRequest;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class ProjectGrantAllocationRequestController : FirmaBaseController
+    public class ProjectFundSourceAllocationRequestController : FirmaBaseController
     {
         [HttpGet]
         [ProjectEditAsAdminFeature]
-        public PartialViewResult EditProjectGrantAllocationRequestsForProject(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult EditProjectFundSourceAllocationRequestsForProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
+            var currentProjectFundSourceAllocationRequests = project.ProjectFundSourceAllocationRequests.ToList();
             Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
 
-            var viewModel = new EditProjectGrantAllocationRequestsViewModel(project.ProjectID,currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost, project.ProjectFundingSourceNotes, project.ProjectFundingSources.ToList());
-            return ViewEditProjectGrantAllocationRequests(project, viewModel);
+            var viewModel = new EditProjectFundSourceAllocationRequestsViewModel(project.ProjectID,currentProjectFundSourceAllocationRequests, true, projectEstimatedTotalCost, project.ProjectFundingSourceNotes, project.ProjectFundingSources.ToList());
+            return ViewEditProjectFundSourceAllocationRequests(project, viewModel);
         }
 
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectGrantAllocationRequestsForProject(ProjectPrimaryKey projectPrimaryKey, EditProjectGrantAllocationRequestsViewModel viewModel)
+        public ActionResult EditProjectFundSourceAllocationRequestsForProject(ProjectPrimaryKey projectPrimaryKey, EditProjectFundSourceAllocationRequestsViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
+            var currentProjectFundSourceAllocationRequests = project.ProjectFundSourceAllocationRequests.ToList();
             if (!ModelState.IsValid)
             {
-                return ViewEditProjectGrantAllocationRequests(project, viewModel);
+                return ViewEditProjectFundSourceAllocationRequests(project, viewModel);
             }
-            return UpdateProjectGrantAllocationRequests(viewModel, currentProjectGrantAllocationRequests, project);
+            return UpdateProjectFundSourceAllocationRequests(viewModel, currentProjectFundSourceAllocationRequests, project);
         }
 
 
-        private static ActionResult UpdateProjectGrantAllocationRequests(EditProjectGrantAllocationRequestsViewModel viewModel,
-                                                                         List<ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests, 
+        private static ActionResult UpdateProjectFundSourceAllocationRequests(EditProjectFundSourceAllocationRequestsViewModel viewModel,
+                                                                         List<ProjectFundSourceAllocationRequest> currentProjectFundSourceAllocationRequests, 
                                                                          Project project)
         {
-            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
-            var allProjectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequests.Load();
+            var allProjectFundSourceAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequests.Local;
 
             HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Load();
             var allProjectFundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Local;
             var currentProjectFundingSources = project.ProjectFundingSources.ToList();
 
-            viewModel.UpdateModel(currentProjectGrantAllocationRequests, allProjectGrantAllocationRequests, project, currentProjectFundingSources, allProjectFundingSources);
+            viewModel.UpdateModel(currentProjectFundSourceAllocationRequests, allProjectFundSourceAllocationRequests, project, currentProjectFundingSources, allProjectFundingSources);
             
             return new ModalDialogFormJsonResult();
         }
 
 
-        private PartialViewResult ViewEditProjectGrantAllocationRequests(Project project, EditProjectGrantAllocationRequestsViewModel viewModel)
+        private PartialViewResult ViewEditProjectFundSourceAllocationRequests(Project project, EditProjectFundSourceAllocationRequestsViewModel viewModel)
         {
-            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditProjectGrantAllocationRequestsViewData(new ProjectSimple(project), allGrantAllocations);
-            return RazorPartialView<EditProjectGrantAllocationRequests, EditProjectGrantAllocationRequestsViewData, EditProjectGrantAllocationRequestsViewModel>(viewData, viewModel);
+            var allFundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.ToList().Select(x => new FundSourceAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var viewData = new EditProjectFundSourceAllocationRequestsViewData(new ProjectSimple(project), allFundSourceAllocations);
+            return RazorPartialView<EditProjectFundSourceAllocationRequests, EditProjectFundSourceAllocationRequestsViewData, EditProjectFundSourceAllocationRequestsViewModel>(viewData, viewModel);
         }
     }
 }

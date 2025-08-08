@@ -8,6 +8,6 @@ delete from dbo.ArcOnlineFinanceApiRawJsonImportTableType
 insert into dbo.ArcOnlineFinanceApiRawJsonImportTableType(ArcOnlineFinanceApiRawJsonImportTableTypeID, ArcOnlineFinanceApiRawJsonImportTableTypeName) values (1, 'Vendor')
 insert into dbo.ArcOnlineFinanceApiRawJsonImportTableType(ArcOnlineFinanceApiRawJsonImportTableTypeID, ArcOnlineFinanceApiRawJsonImportTableTypeName) values (2, 'ProgramIndex')
 insert into dbo.ArcOnlineFinanceApiRawJsonImportTableType(ArcOnlineFinanceApiRawJsonImportTableTypeID, ArcOnlineFinanceApiRawJsonImportTableTypeName) values (3, 'ProjectCode')
-insert into dbo.ArcOnlineFinanceApiRawJsonImportTableType(ArcOnlineFinanceApiRawJsonImportTableTypeID, ArcOnlineFinanceApiRawJsonImportTableTypeName) values (4, 'GrantExpenditure')
+insert into dbo.ArcOnlineFinanceApiRawJsonImportTableType(ArcOnlineFinanceApiRawJsonImportTableTypeID, ArcOnlineFinanceApiRawJsonImportTableTypeName) values (4, 'FundSourceExpenditure')
 
 

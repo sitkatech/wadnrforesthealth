@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantAllocationGridSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceAllocationGridSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -27,37 +27,37 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
 
-    public class GrantAllocationGridSpec : GridSpec<Models.FundSourceAllocation>
+    public class FundSourceAllocationGridSpec : GridSpec<Models.FundSourceAllocation>
     {
-        public enum GrantAllocationGridCreateButtonType
+        public enum FundSourceAllocationGridCreateButtonType
         {
             Hidden,
             Shown
         }
 
-        public const int GrantNumberColumnWidth = 180;
+        public const int FundSourceNumberColumnWidth = 180;
 
-        public GrantAllocationGridSpec(Person currentPerson, GrantAllocationGridCreateButtonType createButtonType, Models.FundSource optionalRelevantFundSource)
+        public FundSourceAllocationGridSpec(Person currentPerson, FundSourceAllocationGridCreateButtonType createButtonType, Models.FundSource optionalRelevantFundSource)
         {
-            ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
-            ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}";
+            ObjectNameSingular = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new FundSourceAllocationDeleteFeature().HasPermissionByPerson(currentPerson);
             var userHasCreatePermissions = new FundSourceAllocationCreateFeature().HasPermissionByPerson(currentPerson);
-            if (userHasCreatePermissions && createButtonType == GrantAllocationGridCreateButtonType.Shown)
+            if (userHasCreatePermissions && createButtonType == FundSourceAllocationGridCreateButtonType.Shown)
             {
-                var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New());
+                var contentUrl = SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.New());
                 if (optionalRelevantFundSource != null)
                 {
-                    contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewFromGrant(optionalRelevantFundSource));
+                    contentUrl = SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(t => t.NewFromFundSource(optionalRelevantFundSource));
                 }
-                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}");
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}");
             }
 
-            CustomExcelDownloadUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
+            CustomExcelDownloadUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourcesExcelDownload());
 
             if (userHasDeletePermissions)
             {
@@ -66,25 +66,25 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (userHasCreatePermissions)
             {
-                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
+                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.FundSource.FundSourceNumber, GrantNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantAllocationName, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.FundSourceNumber.ToGridHeaderString(), x => x.FundSource.FundSourceNumber, FundSourceNumberColumnWidth, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FundSourceAllocationName.ToGridHeaderString(), x => new HtmlLinkObject(x.FundSourceAllocationName, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
 
             if (!currentPerson.IsAnonymousUser)
             {
-                Add(Models.FieldDefinition.GrantAllocationCurrentBalance.ToGridHeaderString(),
+                Add(Models.FieldDefinition.FundSourceAllocationCurrentBalance.ToGridHeaderString(),
                     x => x.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart, 90,
                     AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             }
 
-            Add(Models.FieldDefinition.GrantManager.ToGridHeaderString(), x => x.GrantManager != null ? x.GrantManager.FullNameFirstLastAndOrgShortName : string.Empty, 150, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FundSourceManager.ToGridHeaderString(), x => x.FundSourceManager != null ? x.FundSourceManager.FullNameFirstLastAndOrgShortName : string.Empty, 150, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.GetAllProgramManagerPersonNamesAsString(), 150, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
-            Add($"Parent Grant {Models.FieldDefinition.GrantStatus.ToGridHeaderString()}", x => x.FundSource.FundSourceStatus.GrantStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FundSourceStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.FundSourceEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
+            Add($"Parent FundSource {Models.FieldDefinition.FundSourceStatus.ToGridHeaderString()}", x => x.FundSource.FundSourceStatus.FundSourceStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.Division.ToGridHeaderString(), x => x.DivisionNameDisplay, 180, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.DNRUplandRegion.ToGridHeaderString(), x => x.RegionNameDisplay, 100, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.FederalFundCode.ToGridHeaderString(), x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, AgGridColumnFilterType.SelectFilterStrict);

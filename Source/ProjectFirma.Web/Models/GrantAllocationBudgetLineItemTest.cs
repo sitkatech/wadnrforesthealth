@@ -8,59 +8,59 @@ using ProjectFirma.Web.UnitTestCommon;
 namespace ProjectFirma.Web.Models
 {
     [TestFixture]
-    public class GrantAllocationBudgetLineItemTest
+    public class FundSourceAllocationBudgetLineItemTest
     {
         [Test]
-        public void CheckForMissingGrantAllocationBudgetLineItems()
+        public void CheckForMissingFundSourceAllocationBudgetLineItems()
         {
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations;
+            var fundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations;
             var costTypeIdsForLineItems = CostType.GetLineItemCostTypes().Select(x => x.CostTypeID).ToList();
             int countOfMissingBudgetLineItems = 0;
 
-            //The key is the grantAllocationID and the value is a list of CostTypeIDs that the GrantAllocation is missing budget line items for
-            Dictionary<int, List<int>> grantAllocationsAndTheCostTypesMissing = new Dictionary<int, List<int>>();
+            //The key is the fundSourceAllocationID and the value is a list of CostTypeIDs that the FundSourceAllocation is missing budget line items for
+            Dictionary<int, List<int>> fundSourceAllocationsAndTheCostTypesMissing = new Dictionary<int, List<int>>();
 
-            foreach (var grantAllocation in grantAllocations)
+            foreach (var fundSourceAllocation in fundSourceAllocations)
             {
-                var currentGrantAllocationBudgetLineItemCostTypeIds = grantAllocation.GrantAllocationBudgetLineItems.Select(x => x.CostTypeID).ToList();
-                var idsNeeded = costTypeIdsForLineItems.Except(currentGrantAllocationBudgetLineItemCostTypeIds).ToList();
+                var currentFundSourceAllocationBudgetLineItemCostTypeIds = fundSourceAllocation.FundSourceAllocationBudgetLineItems.Select(x => x.CostTypeID).ToList();
+                var idsNeeded = costTypeIdsForLineItems.Except(currentFundSourceAllocationBudgetLineItemCostTypeIds).ToList();
                 if (idsNeeded.Any())
                 {
-                    grantAllocationsAndTheCostTypesMissing.Add(grantAllocation.GrantAllocationID, idsNeeded);
+                    fundSourceAllocationsAndTheCostTypesMissing.Add(fundSourceAllocation.FundSourceAllocationID, idsNeeded);
                     countOfMissingBudgetLineItems += idsNeeded.Count;
                 }
             }
 
-            var message = grantAllocationsAndTheCostTypesMissing.Select(x => $"grantAllocationID:{x.Key} costTypeID:{string.Join(",",x.Value)}");
-            Assert.That(!grantAllocationsAndTheCostTypesMissing.Any(), $"There are GrantAllocations missing GrantAllocationBudgetLineItems. There are {countOfMissingBudgetLineItems} missing BudgetLineItems. Here they are: {string.Join(" | ",message)}");
+            var message = fundSourceAllocationsAndTheCostTypesMissing.Select(x => $"fundSourceAllocationID:{x.Key} costTypeID:{string.Join(",",x.Value)}");
+            Assert.That(!fundSourceAllocationsAndTheCostTypesMissing.Any(), $"There are FundSourceAllocations missing FundSourceAllocationBudgetLineItems. There are {countOfMissingBudgetLineItems} missing BudgetLineItems. Here they are: {string.Join(" | ",message)}");
 
             /*
-             *  Here is the SQL needed to find and add all missing GrantAllocationBudgetLineItems:
+             *  Here is the SQL needed to find and add all missing FundSourceAllocationBudgetLineItems:
                 select *
                 into
-                    #tmpGrantAllocationBudgetLineItemsToCreate
+                    #tmpFundSourceAllocationBudgetLineItemsToCreate
                 from
                 (
                     select
-                        ga.GrantAllocationID,
+                        ga.FundSourceAllocationID,
                         ct.CostTypeID
                     from
-                        dbo.GrantAllocation as ga
+                        dbo.FundSourceAllocation as ga
                     cross join dbo.CostType as ct
-                    left outer join dbo.GrantAllocationBudgetLineItem as bli
-                        on bli.GrantAllocationID = ga.GrantAllocationID and bli.CostTypeID = ct.CostTypeID
+                    left outer join dbo.FundSourceAllocationBudgetLineItem as bli
+                        on bli.FundSourceAllocationID = ga.FundSourceAllocationID and bli.CostTypeID = ct.CostTypeID
                     where 
-                        bli.GrantAllocationBudgetLineItemID IS NULL AND 
+                        bli.FundSourceAllocationBudgetLineItemID IS NULL AND 
                         ct.IsValidInvoiceLineItemCostType = 1
                 ) as myData
 
-                INSERT INTO dbo.GrantAllocationBudgetLineItem(GrantAllocationID, CostTypeID, GrantAllocationBudgetLineItemAmount)
+                INSERT INTO dbo.FundSourceAllocationBudgetLineItem(FundSourceAllocationID, CostTypeID, FundSourceAllocationBudgetLineItemAmount)
                 SELECT
-                        GrantAllocationID as GrantAllocationID,
+                        FundSourceAllocationID as FundSourceAllocationID,
                         CostTypeID as CostTypeID,
-                        0 as GrantAllocationBudgetLineItemAmount
+                        0 as FundSourceAllocationBudgetLineItemAmount
                 FROM
-                    #tmpGrantAllocationBudgetLineItemsToCreate
+                    #tmpFundSourceAllocationBudgetLineItemsToCreate
              *
              */
 

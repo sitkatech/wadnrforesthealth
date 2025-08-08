@@ -1,7 +1,7 @@
 ﻿namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationProgramManager: IAuditableEntity
+    public partial class FundSourceAllocationProgramManager: IAuditableEntity
     {
-        public string AuditDescriptionString => $"GrantAllocationID: {this.GrantAllocationID} - GrantAllocationProgramManagerID {this.GrantAllocationProgramManagerID} - {this.Person?.FullNameFirstLast} - {this.FundSourceAllocation?.GrantAllocationName}";
+        public string AuditDescriptionString => $"FundSourceAllocationID: {this.FundSourceAllocationID} - FundSourceAllocationProgramManagerID {this.FundSourceAllocationProgramManagerID} - {this.Person?.FullNameFirstLast} - {this.FundSourceAllocation?.FundSourceAllocationName}";
     }
 }

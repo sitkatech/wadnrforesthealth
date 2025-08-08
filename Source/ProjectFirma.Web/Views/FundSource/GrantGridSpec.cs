@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantGridSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceGridSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -29,29 +29,29 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class GrantGridSpec : GridSpec<Models.FundSource>
+    public class FundSourceGridSpec : GridSpec<Models.FundSource>
     {
-        public static string GrantNumberHiddenColumnName = $"{Models.FieldDefinition.GrantNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()}AsText";
+        public static string FundSourceNumberHiddenColumnName = $"{Models.FieldDefinition.FundSourceNumber.GetFieldDefinitionLabel().ToStringSpecialForJavascript()}AsText";
 
-        public GrantGridSpec(Models.Person currentPerson)
+        public FundSourceGridSpec(Models.Person currentPerson)
         {
-            ObjectNameSingular = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
-            ObjectNamePlural = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
+            ObjectNameSingular = $"{Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.FundSource.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new FundSourceDeleteFeature().HasPermissionByPerson(currentPerson);
             var userHasCreatePermissions = new FundSourceCreateFeature().HasPermissionByPerson(currentPerson);
             if (userHasCreatePermissions)
             {
                 var contentUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.New());
-                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}");
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}");
             }
 
-            CustomExcelDownloadUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
+            CustomExcelDownloadUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(tc => tc.FundSourcesExcelDownload());
 
-            // hidden column for grant number for use by JavaScript
-            Add(GrantNumberHiddenColumnName, x => x.FundSourceNumber, 0);
+            // hidden column for fundSource number for use by JavaScript
+            Add(FundSourceNumberHiddenColumnName, x => x.FundSourceNumber, 0);
 
             if (userHasDeletePermissions)
             {
@@ -60,24 +60,24 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (userHasCreatePermissions)
             {
-                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{x.FundSourceName}\" to New {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
+                Add("Duplicate", x => AgGridHtmlHelpers.MakeDuplicateIconAndLinkBootstrap(x.GetDuplicateUrl(), 950, $"Duplicate {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()} \"{x.FundSourceName}\" to New {Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}"), 30, AgGridColumnFilterType.None);
             }
 
 
-            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.FundSourceNumber, x.GetDetailUrl()).ToJsonObjectForAgGrid(), GrantAllocationGridSpec.GrantNumberColumnWidth, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.FundSourceNumber.ToGridHeaderString(), x => new HtmlLinkObject(x.FundSourceNumber, x.GetDetailUrl()).ToJsonObjectForAgGrid(), FundSourceAllocationGridSpec.FundSourceNumberColumnWidth, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.CFDANumber, 120, AgGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.GrantName.ToGridHeaderString(), x => new HtmlLinkObject(x.GrantTitle, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
+            Add(Models.FieldDefinition.FundSourceName.ToGridHeaderString(), x => new HtmlLinkObject(x.FundSourceTitle, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 250, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.TotalAwardAmount.ToGridHeaderString(), x => x.TotalAwardAmount, 90, AgGridColumnFormatType.CurrencyWithCents);
 
             if (!currentPerson.IsAnonymousOrUnassigned)
             {
-                Add(Models.FieldDefinition.GrantCurrentBalance.ToGridHeaderString(), x => x.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(), 90, AgGridColumnFormatType.CurrencyWithCents);
+                Add(Models.FieldDefinition.FundSourceCurrentBalance.ToGridHeaderString(), x => x.GetCurrentBalanceOfFundSourceBasedOnAllFundSourceAllocationExpenditures(), 90, AgGridColumnFormatType.CurrencyWithCents);
             }
 
-            Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
-            Add(Models.FieldDefinition.GrantStatus.ToGridHeaderString(), x => x.FundSourceStatus.GrantStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantType.ToGridHeaderString(), x => x.GrantTypeDisplay, 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FundSourceStartDate.ToGridHeaderString(), x => x.StartDate, 90, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.FundSourceEndDate.ToGridHeaderString(), x => x.EndDate, 90, AgGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.FundSourceStatus.ToGridHeaderString(), x => x.FundSourceStatus.FundSourceStatusName, 90, AgGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.FundSourceType.ToGridHeaderString(), x => x.FundSourceTypeDisplay, 90, AgGridColumnFilterType.SelectFilterStrict);
             
         }
     }

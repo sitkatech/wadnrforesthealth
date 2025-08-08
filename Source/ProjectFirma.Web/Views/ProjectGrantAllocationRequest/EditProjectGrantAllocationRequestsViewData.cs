@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditprojectGrantAllocationRequestsViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditprojectFundSourceAllocationRequestsViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -26,34 +26,34 @@ using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
+namespace ProjectFirma.Web.Views.ProjectFundSourceAllocationRequest
 {
-    public class EditProjectGrantAllocationRequestsViewData : FirmaUserControlViewData
+    public class EditProjectFundSourceAllocationRequestsViewData : FirmaUserControlViewData
     {
-        public List<GrantAllocationSimple> AllGrantAllocations { get; }
+        public List<FundSourceAllocationSimple> AllFundSourceAllocations { get; }
         public List<ProjectSimple> AllProjects { get; }
         public int? ProjectID { get; }
-        public int? GrantAllocationID { get; }
-        public bool FromGrantAllocation { get; }
+        public int? FundSourceAllocationID { get; }
+        public bool FromFundSourceAllocation { get; }
         public List<SelectListItem> FundingSources { get; }
         public bool IsMatchAndPayRelevant { get; }
 
         public bool IsLoaProject { get; }
 
-        private EditProjectGrantAllocationRequestsViewData(List<ProjectSimple> allProjects,
-            List<GrantAllocationSimple> allGrantAllocations,
+        private EditProjectFundSourceAllocationRequestsViewData(List<ProjectSimple> allProjects,
+            List<FundSourceAllocationSimple> allFundSourceAllocations,
             int? projectID,
             bool isLoa,
-            int? grantAllocationID)
+            int? fundSourceAllocationID)
         {
-            AllGrantAllocations = allGrantAllocations;
+            AllFundSourceAllocations = allFundSourceAllocations;
             ProjectID = projectID;
-            GrantAllocationID = grantAllocationID;
+            FundSourceAllocationID = fundSourceAllocationID;
             AllProjects = allProjects;
             FundingSources = FundingSource.All.ToSelectList(x => x.FundingSourceID.ToString(), y => y.FundingSourceDisplayName).ToList();
 
-            var displayMode = GrantAllocationID.HasValue ? EditorDisplayMode.FromGrantAllocation : EditorDisplayMode.FromProject;
-            FromGrantAllocation = displayMode == EditorDisplayMode.FromGrantAllocation;
+            var displayMode = FundSourceAllocationID.HasValue ? EditorDisplayMode.FromFundSourceAllocation : EditorDisplayMode.FromProject;
+            FromFundSourceAllocation = displayMode == EditorDisplayMode.FromFundSourceAllocation;
             IsMatchAndPayRelevant = false;
             if (displayMode == EditorDisplayMode.FromProject)
             {
@@ -66,9 +66,9 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
             IsLoaProject = isLoa;
         }
 
-        public EditProjectGrantAllocationRequestsViewData(ProjectSimple project,
-            List<GrantAllocationSimple> allGrantAllocations)
-            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID, project.IsLoa, null)
+        public EditProjectFundSourceAllocationRequestsViewData(ProjectSimple project,
+            List<FundSourceAllocationSimple> allFundSourceAllocations)
+            : this(new List<ProjectSimple> { project }, allFundSourceAllocations, project.ProjectID, project.IsLoa, null)
         {
         }
 
@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         public enum EditorDisplayMode
         {
             FromProject,
-            FromGrantAllocation
+            FromFundSourceAllocation
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantAllocationExpendituresGridSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceAllocationExpendituresGridSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -24,11 +24,11 @@ using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class GrantAllocationExpendituresGridSpec : GridSpec<GrantAllocationExpenditure>
+    public class FundSourceAllocationExpendituresGridSpec : GridSpec<FundSourceAllocationExpenditure>
     {
-        public GrantAllocationExpendituresGridSpec()
+        public FundSourceAllocationExpendituresGridSpec()
         {
             Add(Models.FieldDefinition.CostType.ToGridHeaderString(), gae => gae.CostType?.CostTypeDisplayName, 150, AgGridColumnFilterType.SelectFilterStrict);
             Add( "Biennium", gae => gae.Biennium.ToString() , 90, AgGridColumnFilterType.SelectFilterStrict);

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantAllocationBasics.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceAllocationBasics.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -22,13 +22,13 @@ using System.Web.Mvc;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
+namespace ProjectFirma.Web.Views.Shared.FundSourceAllocationControls
 {
-    public abstract class GrantAllocationBasics : TypedWebPartialViewPage<GrantAllocationBasicsViewData>
+    public abstract class FundSourceAllocationBasics : TypedWebPartialViewPage<FundSourceAllocationBasicsViewData>
     {
-        public static void RenderPartialView(HtmlHelper html, GrantAllocationBasicsViewData viewData)
+        public static void RenderPartialView(HtmlHelper html, FundSourceAllocationBasicsViewData viewData)
         {
-            html.RenderRazorSitkaPartial<GrantAllocationBasics, GrantAllocationBasicsViewData>(viewData);
+            html.RenderRazorSitkaPartial<FundSourceAllocationBasics, FundSourceAllocationBasicsViewData>(viewData);
         }
     }
 }

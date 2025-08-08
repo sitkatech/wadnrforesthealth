@@ -2,8 +2,8 @@
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationSource : IAuditableEntity
+    public partial class FundSourceAllocationSource : IAuditableEntity
     {
-        public string AuditDescriptionString => $"Grant Allocation Source Grant Allocation Source Name: {this.GrantAllocationSourceName} Grant Allocation Source ID:{this.GrantAllocationSourceID}";
+        public string AuditDescriptionString => $"FundSource Allocation Source FundSource Allocation Source Name: {this.FundSourceAllocationSourceName} FundSource Allocation Source ID:{this.FundSourceAllocationSourceID}";
     }
 }

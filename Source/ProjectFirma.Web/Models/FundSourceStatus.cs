@@ -4,7 +4,7 @@
     {
         public string AuditDescriptionString
         {
-            get { return GrantStatusName; }
+            get { return FundSourceStatusName; }
         }
     }
 }

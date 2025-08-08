@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantNoteViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditFundSourceNoteViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -26,16 +26,16 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class EditGrantNoteViewData : FirmaUserControlViewData
+    public class EditFundSourceNoteViewData : FirmaUserControlViewData
     {
 
-        public EditGrantNoteType EditGrantNoteType { get; set; }
+        public EditFundSourceNoteType EditFundSourceNoteType { get; set; }
 
-        public EditGrantNoteViewData(EditGrantNoteType editGrantNoteType)
+        public EditFundSourceNoteViewData(EditFundSourceNoteType editFundSourceNoteType)
         {
-            EditGrantNoteType = editGrantNoteType;
+            EditFundSourceNoteType = editFundSourceNoteType;
         }
     }
 }

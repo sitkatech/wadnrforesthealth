@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectGrantAllocationRequest.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="ProjectFundSourceAllocationRequest.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -25,18 +25,18 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectGrantAllocationRequest : IAuditableEntity, IGrantAllocationRequestAmount
+    public partial class ProjectFundSourceAllocationRequest : IAuditableEntity, IFundSourceAllocationRequestAmount
     {
         public string AuditDescriptionString
         {
             get
             {
                 var project = HttpRequestStorage.DatabaseEntities.Projects.Find(ProjectID);
-                var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
+                var fundSourceAllocation = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Find(FundSourceAllocationID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
-                var grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
+                var fundSourceAllocationName = fundSourceAllocation != null ? fundSourceAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var totalRequestAmount = TotalAmount.ToStringCurrency();
-                return $"Project: {projectName}, Grant Allocation: {grantAllocationName}, Total Request Amount: {totalRequestAmount}";
+                return $"Project: {projectName}, FundSource Allocation: {fundSourceAllocationName}, Total Request Amount: {totalRequestAmount}";
             }
         }
 

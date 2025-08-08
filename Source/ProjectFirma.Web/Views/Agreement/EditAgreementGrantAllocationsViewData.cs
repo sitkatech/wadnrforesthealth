@@ -24,15 +24,15 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
-    public class EditAgreementGrantAllocationsViewData : FirmaUserControlViewData
+    public class EditAgreementFundSourceAllocationsViewData : FirmaUserControlViewData
     {
-        public List<GrantAllocationJson> AllPossibleGrantAllocationJsons { get; }
+        public List<FundSourceAllocationJson> AllPossibleFundSourceAllocationJsons { get; }
 
-        public EditAgreementGrantAllocationsViewData()
+        public EditAgreementFundSourceAllocationsViewData()
         {
 
-            var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            AllPossibleGrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(databaseEntitiesGrantAllocations);
+            var databaseEntitiesFundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.ToList();
+            AllPossibleFundSourceAllocationJsons = FundSourceAllocationJson.MakeFundSourceAllocationJsonsFromFundSourceAllocations(databaseEntitiesFundSourceAllocations);
         }
 
     }

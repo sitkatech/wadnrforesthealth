@@ -3,12 +3,12 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationProgramIndexProjectCode : IAuditableEntity
+    public partial class FundSourceAllocationProgramIndexProjectCode : IAuditableEntity
     {
 
-        public GrantAllocationProgramIndexProjectCode(int grantAllocationID, int programIndexID, int? projectCodeID) : this()
+        public FundSourceAllocationProgramIndexProjectCode(int fundSourceAllocationID, int programIndexID, int? projectCodeID) : this()
         {
-            this.GrantAllocationID = grantAllocationID;
+            this.FundSourceAllocationID = fundSourceAllocationID;
             this.ProgramIndexID = programIndexID;
             this.ProjectCodeID = projectCodeID;
         }
@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string GrantAllocationProgramIndexProjectCodeDisplayString
+        public string FundSourceAllocationProgramIndexProjectCodeDisplayString
         {
             get
             {
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models
                 string projectCodeName = projectCode != null ? projectCode.AuditDescriptionString : ViewUtilities.NotFoundString;
 
                 // If someone wants a different format here, have at it!
-                return $"GA{GrantAllocationID}~PI{programIndexName}~PC{projectCodeName}";
+                return $"GA{FundSourceAllocationID}~PI{programIndexName}~PC{projectCodeName}";
             }
         }
 
@@ -52,8 +52,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
-                string grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
+                var fundSourceAllocation = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Find(FundSourceAllocationID);
+                string fundSourceAllocationName = fundSourceAllocation != null ? fundSourceAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
 
                 var programIndex = HttpRequestStorage.DatabaseEntities.ProgramIndices.Find(ProgramIndexID);
                 string programIndexDisplayString = programIndex != null ? programIndex.ProgramIndexCode : ViewUtilities.NotFoundString;
@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Models
                 var projectCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.Find(ProjectCodeID);
                 string projectCodeDisplayString = projectCode != null ? projectCode.ProjectCodeName : ViewUtilities.NotFoundString;
 
-                return $"GrantAllocation: {grantAllocationName} ProgramIndex: {programIndexDisplayString} ProjectCode: {projectCodeDisplayString}";
+                return $"FundSourceAllocation: {fundSourceAllocationName} ProgramIndex: {programIndexDisplayString} ProjectCode: {projectCodeDisplayString}";
             }
         }
     }

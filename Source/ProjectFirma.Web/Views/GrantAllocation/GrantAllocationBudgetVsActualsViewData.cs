@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantAllocationBudgetVsActualsViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceAllocationBudgetVsActualsViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -24,20 +24,20 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class GrantAllocationBudgetVsActualsViewData : FirmaViewData
+    public class FundSourceAllocationBudgetVsActualsViewData : FirmaViewData
     {
-        public GrantAllocationBudgetVsActualsGridSpec GrantAllocationBudgetVsActualsGridSpec { get; }
-        public string GrantAllocationBudgetVsActualsGridDataUrl { get; }
+        public FundSourceAllocationBudgetVsActualsGridSpec FundSourceAllocationBudgetVsActualsGridSpec { get; }
+        public string FundSourceAllocationBudgetVsActualsGridDataUrl { get; }
 
-        public readonly string GrantAllocationBudgetVsActualsGridName = "grantAllocationBudgetVsActualGrid";
+        public readonly string FundSourceAllocationBudgetVsActualsGridName = "fundSourceAllocationBudgetVsActualGrid";
 
 
-        public GrantAllocationBudgetVsActualsViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocation) : base(currentPerson)
+        public FundSourceAllocationBudgetVsActualsViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocation) : base(currentPerson)
         {
-            GrantAllocationBudgetVsActualsGridSpec = new GrantAllocationBudgetVsActualsGridSpec(currentPerson);
-            GrantAllocationBudgetVsActualsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationBudgetVsActualsGridJsonData(fundSourceAllocation));
+            FundSourceAllocationBudgetVsActualsGridSpec = new FundSourceAllocationBudgetVsActualsGridSpec(currentPerson);
+            FundSourceAllocationBudgetVsActualsGridDataUrl = SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(gac => gac.FundSourceAllocationBudgetVsActualsGridJsonData(fundSourceAllocation));
 
         }
     }

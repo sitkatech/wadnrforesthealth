@@ -5,7 +5,7 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationNoteInternal : IAuditableEntity, IEntityNote
+    public partial class FundSourceAllocationNoteInternal : IAuditableEntity, IEntityNote
     {
         public DateTime Created
         {
@@ -39,27 +39,27 @@ namespace ProjectFirma.Web.Models
 
         public string Note
         {
-            get { return GrantAllocationNoteInternalText; }
-            set { GrantAllocationNoteInternalText = value; }
+            get { return FundSourceAllocationNoteInternalText; }
+            set { FundSourceAllocationNoteInternalText = value; }
         }
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.DeleteGrantAllocationNoteInternal(GrantAllocationNoteInternalID)); }
+            get { return SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(c => c.DeleteFundSourceAllocationNoteInternal(FundSourceAllocationNoteInternalID)); }
         }
 
         public string EditUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.EditGrantAllocationNoteInternal(GrantAllocationNoteInternalID)); }
+            get { return SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(c => c.EditFundSourceAllocationNoteInternal(FundSourceAllocationNoteInternalID)); }
         }
 
         public string AuditDescriptionString
         {
             get
             {
-                var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
-                var grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
-                return $"GrantAllocation: {grantAllocationName}";
+                var fundSourceAllocation = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Find(FundSourceAllocationID);
+                var fundSourceAllocationName = fundSourceAllocation != null ? fundSourceAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
+                return $"FundSourceAllocation: {fundSourceAllocationName}";
             }
         }
     }

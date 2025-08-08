@@ -3,7 +3,7 @@ using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Views.Project
 {
-    public class GrantAllocationRequestAmount : IGrantAllocationRequestAmount
+    public class FundSourceAllocationRequestAmount : IFundSourceAllocationRequestAmount
     {
         public Models.FundSourceAllocation FundSourceAllocation { get; }
 
@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Views.Project
         }
         public string DisplayCssClass;
 
-        public GrantAllocationRequestAmount(Models.FundSourceAllocation fundSourceAllocation, decimal? totalAmount, decimal? matchAmount, decimal? payAmount,string displayCssClass)
+        public FundSourceAllocationRequestAmount(Models.FundSourceAllocation fundSourceAllocation, decimal? totalAmount, decimal? matchAmount, decimal? payAmount,string displayCssClass)
         {
             FundSourceAllocation = fundSourceAllocation;
             TotalAmount = totalAmount;
@@ -25,20 +25,20 @@ namespace ProjectFirma.Web.Views.Project
             PayAmount = payAmount;
         }
 
-        public GrantAllocationRequestAmount(IGrantAllocationRequestAmount grantAllocationRequestAmount)
+        public FundSourceAllocationRequestAmount(IFundSourceAllocationRequestAmount fundSourceAllocationRequestAmount)
         {
-            FundSourceAllocation = grantAllocationRequestAmount.FundSourceAllocation;
-            TotalAmount = grantAllocationRequestAmount.TotalAmount;
-            MatchAmount = grantAllocationRequestAmount.MatchAmount;
-            PayAmount = grantAllocationRequestAmount.PayAmount;
+            FundSourceAllocation = fundSourceAllocationRequestAmount.FundSourceAllocation;
+            TotalAmount = fundSourceAllocationRequestAmount.TotalAmount;
+            MatchAmount = fundSourceAllocationRequestAmount.MatchAmount;
+            PayAmount = fundSourceAllocationRequestAmount.PayAmount;
         }
 
-        public static GrantAllocationRequestAmount Clone(IGrantAllocationRequestAmount grantAllocationRequestAmountToDiff, string displayCssClass)
+        public static FundSourceAllocationRequestAmount Clone(IFundSourceAllocationRequestAmount fundSourceAllocationRequestAmountToDiff, string displayCssClass)
         {
-            return new GrantAllocationRequestAmount(grantAllocationRequestAmountToDiff.FundSourceAllocation,
-                                                  grantAllocationRequestAmountToDiff.TotalAmount,
-                                                  grantAllocationRequestAmountToDiff.MatchAmount,
-                                                  grantAllocationRequestAmountToDiff.PayAmount,
+            return new FundSourceAllocationRequestAmount(fundSourceAllocationRequestAmountToDiff.FundSourceAllocation,
+                                                  fundSourceAllocationRequestAmountToDiff.TotalAmount,
+                                                  fundSourceAllocationRequestAmountToDiff.MatchAmount,
+                                                  fundSourceAllocationRequestAmountToDiff.PayAmount,
                                                   displayCssClass);
         }
     }

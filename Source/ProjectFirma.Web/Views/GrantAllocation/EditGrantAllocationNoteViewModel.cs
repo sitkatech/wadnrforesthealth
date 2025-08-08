@@ -26,17 +26,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class EditGrantAllocationNoteViewModel : FormViewModel, IValidatableObject
+    public class EditFundSourceAllocationNoteViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantAllocationID { get; set; }
+        public int FundSourceAllocationID { get; set; }
 
-        public int GrantAllocationNoteID { get; set; }
+        public int FundSourceAllocationNoteID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationNote)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationNote)]
         [Required]
-        public string GrantAllocationNoteText { get; set; }
+        public string FundSourceAllocationNoteText { get; set; }
 
        
 
@@ -45,39 +45,39 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantAllocationNoteViewModel()
+        public EditFundSourceAllocationNoteViewModel()
         {
         }
 
-        public EditGrantAllocationNoteViewModel(Models.GrantAllocationNote grantAllocationNote)
+        public EditFundSourceAllocationNoteViewModel(Models.FundSourceAllocationNote fundSourceAllocationNote)
         {
-            GrantAllocationNoteText = grantAllocationNote.GrantAllocationNoteText;
+            FundSourceAllocationNoteText = fundSourceAllocationNote.FundSourceAllocationNoteText;
 
         }
 
-        public void UpdateModel(Models.GrantAllocationNote grantAllocationNote, Person currentPerson, EditGrantAllocationNoteType editGrantAllocationNoteType)
+        public void UpdateModel(Models.FundSourceAllocationNote fundSourceAllocationNote, Person currentPerson, EditFundSourceAllocationNoteType editFundSourceAllocationNoteType)
         {
-            if (editGrantAllocationNoteType == EditGrantAllocationNoteTypeNewNote.Instance)
+            if (editFundSourceAllocationNoteType == EditFundSourceAllocationNoteTypeNewNote.Instance)
             {
-                grantAllocationNote.CreatedByPerson = currentPerson;
-                grantAllocationNote.CreatedDate = DateTime.Now;
+                fundSourceAllocationNote.CreatedByPerson = currentPerson;
+                fundSourceAllocationNote.CreatedDate = DateTime.Now;
             }
             else
             {
-                grantAllocationNote.LastUpdatedByPerson = currentPerson;
-                grantAllocationNote.LastUpdatedDate = DateTime.Now;
+                fundSourceAllocationNote.LastUpdatedByPerson = currentPerson;
+                fundSourceAllocationNote.LastUpdatedDate = DateTime.Now;
             }
 
-            grantAllocationNote.GrantAllocationNoteText = GrantAllocationNoteText;
+            fundSourceAllocationNote.FundSourceAllocationNoteText = FundSourceAllocationNoteText;
 
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrWhiteSpace(GrantAllocationNoteText))
+            if (string.IsNullOrWhiteSpace(FundSourceAllocationNoteText))
             {
-                yield return new SitkaValidationResult<EditGrantAllocationNoteViewModel, string>(
-                    FirmaValidationMessages.GrantAllocationNoteIsEmptyText, m => m.GrantAllocationNoteText);
+                yield return new SitkaValidationResult<EditFundSourceAllocationNoteViewModel, string>(
+                    FirmaValidationMessages.FundSourceAllocationNoteIsEmptyText, m => m.FundSourceAllocationNoteText);
             }
         }
     }

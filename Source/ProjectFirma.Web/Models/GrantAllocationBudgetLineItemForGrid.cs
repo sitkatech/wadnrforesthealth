@@ -6,7 +6,7 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public class GrantAllocationBudgetLineItemForGrid 
+    public class FundSourceAllocationBudgetLineItemForGrid 
     {
         public FundSourceAllocation FundSourceAllocation { get; set; }
 
@@ -22,21 +22,21 @@ namespace ProjectFirma.Web.Models
         public decimal TotalAmount { get; set; }
 
 
-        public GrantAllocationBudgetLineItemForGrid(FundSourceAllocation fundSourceAllocation)
+        public FundSourceAllocationBudgetLineItemForGrid(FundSourceAllocation fundSourceAllocation)
         {
             FundSourceAllocation = fundSourceAllocation;
 
             //There are DB constraints that force one and only one Budget Line Item for each Cost Type for each Allocation, therefore the .First call should never crash.
-            PersonnelAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Personnel.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            BenefitsAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Benefits.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            TravelAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Travel.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            SuppliesAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Supplies.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            ContractualAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Contractual.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            IndirectCostsAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.IndirectCosts.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            OtherAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Other.CostTypeID).GrantAllocationBudgetLineItemAmount;
-            EquipmentAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Equipment.CostTypeID).GrantAllocationBudgetLineItemAmount;
+            PersonnelAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Personnel.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            BenefitsAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Benefits.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            TravelAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Travel.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            SuppliesAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Supplies.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            ContractualAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Contractual.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            IndirectCostsAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.IndirectCosts.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            OtherAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Other.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
+            EquipmentAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.First(bli => bli.CostTypeID == CostType.Equipment.CostTypeID).FundSourceAllocationBudgetLineItemAmount;
 
-            TotalAmount = fundSourceAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID != CostType.Other.CostTypeID && bli.CostTypeID != CostType.Equipment.CostTypeID).Sum(bli => bli.GrantAllocationBudgetLineItemAmount);
+            TotalAmount = fundSourceAllocation.FundSourceAllocationBudgetLineItems.Where(bli => bli.CostTypeID != CostType.Other.CostTypeID && bli.CostTypeID != CostType.Equipment.CostTypeID).Sum(bli => bli.FundSourceAllocationBudgetLineItemAmount);
 
         }
     }

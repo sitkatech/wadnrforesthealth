@@ -24,11 +24,11 @@ using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
 {
-    public abstract class ProjectGrantAllocationRequestsDetail : TypedWebPartialViewPage<ProjectGrantAllocationRequestsDetailViewData>
+    public abstract class ProjectFundSourceAllocationRequestsDetail : TypedWebPartialViewPage<ProjectFundSourceAllocationRequestsDetailViewData>
     {
-        public static void RenderPartialView(HtmlHelper html, ProjectGrantAllocationRequestsDetailViewData viewData)
+        public static void RenderPartialView(HtmlHelper html, ProjectFundSourceAllocationRequestsDetailViewData viewData)
         {
-            html.RenderRazorSitkaPartial<ProjectGrantAllocationRequestsDetail, ProjectGrantAllocationRequestsDetailViewData>(viewData);
+            html.RenderRazorSitkaPartial<ProjectFundSourceAllocationRequestsDetail, ProjectFundSourceAllocationRequestsDetailViewData>(viewData);
         }
     }
 }

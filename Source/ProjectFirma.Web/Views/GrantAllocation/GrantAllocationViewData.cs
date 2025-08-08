@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -24,31 +24,31 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public abstract class GrantAllocationViewData : FirmaViewData
+    public abstract class FundSourceAllocationViewData : FirmaViewData
     {
         public Models.FundSourceAllocation FundSourceAllocation { get; }
-        public string EditGrantAllocationUrl { get; set; }
+        public string EditFundSourceAllocationUrl { get; set; }
 
-        public bool UserHasEditGrantAllocationPermissions { get; set; }
+        public bool UserHasEditFundSourceAllocationPermissions { get; set; }
 
-        public string BackToGrantAllocationsText { get; set; }
+        public string BackToFundSourceAllocationsText { get; set; }
 
-        public string GrantAllocationsListUrl { get; set; }
+        public string FundSourceAllocationsListUrl { get; set; }
         
         
 
-        protected GrantAllocationViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocation) : base(currentPerson, null)
+        protected FundSourceAllocationViewData(Person currentPerson, Models.FundSourceAllocation fundSourceAllocation) : base(currentPerson, null)
         {
             FundSourceAllocation = fundSourceAllocation;
-            HtmlPageTitle = fundSourceAllocation.GrantAllocationName;
-            EntityName = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
-            EditGrantAllocationUrl = fundSourceAllocation.GetEditUrl();
+            HtmlPageTitle = fundSourceAllocation.FundSourceAllocationName;
+            EntityName = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}";
+            EditFundSourceAllocationUrl = fundSourceAllocation.GetEditUrl();
 
-            UserHasEditGrantAllocationPermissions = new FundSourceAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            BackToGrantAllocationsText = $"Back to all {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}";
-            GrantAllocationsListUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
+            UserHasEditFundSourceAllocationPermissions = new FundSourceAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            BackToFundSourceAllocationsText = $"Back to all {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()}";
+            FundSourceAllocationsListUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
         }
     }
 }

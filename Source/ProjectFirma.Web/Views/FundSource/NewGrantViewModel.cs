@@ -10,96 +10,96 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class NewGrantViewModel : FormViewModel, IValidatableObject
+    public class NewFundSourceViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantID { get; set; }
+        public int FundSourceID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
         [Required]
         public int OrganizationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStatus)]
         [Required]
-        public int GrantStatusID { get; set; }
+        public int FundSourceStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
-        public int? GrantTypeID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceType)]
+        public int? FundSourceTypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceName)]
         [StringLength(Models.FundSource.FieldLengths.FundSourceName)]
         [Required]
-        public string GrantName { get; set; }
+        public string FundSourceName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantShortName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceShortName)]
         [StringLength(Models.FundSource.FieldLengths.ShortName)]
-        public string GrantShortName { get; set; }
+        public string FundSourceShortName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceNumber)]
         [StringLength(Models.FundSource.FieldLengths.FundSourceNumber)]
-        public string GrantNumber { get; set; }
+        public string FundSourceNumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
         [StringLength(Models.FundSource.FieldLengths.CFDANumber)]
         public string CFDANumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
-        public DateTime? GrantStartDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStartDate)]
+        public DateTime? FundSourceStartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
-        public DateTime? GrantEndDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceEndDate)]
+        public DateTime? FundSourceEndDate { get; set; }
 
         [DisplayName("File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
-        public List<HttpPostedFileBase> GrantFileResourceDatas { get; set; }
+        public List<HttpPostedFileBase> FundSourceFileResourceDatas { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public NewGrantViewModel()
+        public NewFundSourceViewModel()
         {
         }
 
-        public NewGrantViewModel(Models.FundSource fundSource)
+        public NewFundSourceViewModel(Models.FundSource fundSource)
         {
-            GrantName = fundSource.FundSourceName;
-            GrantShortName = fundSource.ShortName;
+            FundSourceName = fundSource.FundSourceName;
+            FundSourceShortName = fundSource.ShortName;
             OrganizationID = fundSource.OrganizationID;
-            GrantStatusID = fundSource.FundSourceStatusID;
-            GrantTypeID = fundSource.FundSourceTypeID;
-            GrantNumber = fundSource.FundSourceNumber;
+            FundSourceStatusID = fundSource.FundSourceStatusID;
+            FundSourceTypeID = fundSource.FundSourceTypeID;
+            FundSourceNumber = fundSource.FundSourceNumber;
             CFDANumber = fundSource.CFDANumber;
-            GrantStartDate = fundSource.StartDate;
-            GrantEndDate = fundSource.EndDate;
+            FundSourceStartDate = fundSource.StartDate;
+            FundSourceEndDate = fundSource.EndDate;
         }
 
         public void UpdateModel(Models.FundSource fundSource, Person currentPerson)
         {
-            fundSource.FundSourceName = GrantName;
-            fundSource.ShortName = GrantShortName;
+            fundSource.FundSourceName = FundSourceName;
+            fundSource.ShortName = FundSourceShortName;
             fundSource.OrganizationID = OrganizationID;
-            fundSource.FundSourceStatusID = GrantStatusID;
-            fundSource.FundSourceTypeID = GrantTypeID;
-            fundSource.FundSourceNumber = GrantNumber;
+            fundSource.FundSourceStatusID = FundSourceStatusID;
+            fundSource.FundSourceTypeID = FundSourceTypeID;
+            fundSource.FundSourceNumber = FundSourceNumber;
             fundSource.CFDANumber = CFDANumber;
-            fundSource.StartDate = GrantStartDate;
-            fundSource.EndDate = GrantEndDate;
+            fundSource.StartDate = FundSourceStartDate;
+            fundSource.EndDate = FundSourceEndDate;
 
-            if (GrantFileResourceDatas != null)
+            if (FundSourceFileResourceDatas != null)
             {
                 // We allow for empty file resources to be posted - at least until such time as they become required.
-                bool anyActualFileResourceDatasSupplied = GrantFileResourceDatas.Any(frd => frd != null);
+                bool anyActualFileResourceDatasSupplied = FundSourceFileResourceDatas.Any(frd => frd != null);
                 if (anyActualFileResourceDatasSupplied)
                 {
-                    foreach (var currentGrantFileResourceData in GrantFileResourceDatas)
+                    foreach (var currentFundSourceFileResourceData in FundSourceFileResourceDatas)
                     {
-                        Check.EnsureNotNull(currentGrantFileResourceData);
+                        Check.EnsureNotNull(currentFundSourceFileResourceData);
 
-                        var fileResource = FileResource.CreateNewFromHttpPostedFile(currentGrantFileResourceData, currentPerson);
+                        var fileResource = FileResource.CreateNewFromHttpPostedFile(currentFundSourceFileResourceData, currentPerson);
                         HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
-                        var grantFileResource = new FundSourceFileResource(fundSource, fileResource, fileResource.OriginalCompleteFileName);
-                        fundSource.GrantFileResources.Add(grantFileResource);
+                        var fundSourceFileResource = new FundSourceFileResource(fundSource, fileResource, fileResource.OriginalCompleteFileName);
+                        fundSource.FundSourceFileResources.Add(fundSourceFileResource);
                     }
                 }
             }
@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Views.Grant
         {
             if (OrganizationID == 0)
             {
-                yield return new SitkaValidationResult<EditGrantViewModel, int>(
+                yield return new SitkaValidationResult<EditFundSourceViewModel, int>(
                     FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
             }
         }

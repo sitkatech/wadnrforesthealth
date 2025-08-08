@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="IGrantAllocationExpenditure.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="IFundSourceAllocationExpenditure.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -20,10 +20,10 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Models
 {
-    public interface IGrantAllocationExpenditure : ICalendarYearMonetaryAmount
+    public interface IFundSourceAllocationExpenditure : ICalendarYearMonetaryAmount
     {
         FundSourceAllocation FundSourceAllocation { get; }
-        int GrantAllocationID { get; }
+        int FundSourceAllocationID { get; }
 
         decimal ExpenditureAmount { get; }
     }

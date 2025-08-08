@@ -31,14 +31,14 @@ namespace ProjectFirma.Web.Models
     public static class FundSourceModelExtensions
     {
 
-        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.DeleteGrant(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.DeleteFundSource(UrlTemplate.Parameter1Int)));
         public static string GetDeleteUrl(this FundSource fundSource)
         {
             return DeleteUrlTemplate.ParameterReplace(fundSource.FundSourceID);
         }
 
 
-        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.FundSourceDetail(UrlTemplate.Parameter1Int)));
         public static string GetDetailUrl(this FundSource fundSource)
         {
             return DetailUrlTemplate.ParameterReplace(fundSource.FundSourceID);
@@ -56,26 +56,26 @@ namespace ProjectFirma.Web.Models
             return DuplicateUrlTemplate.ParameterReplace(fundSource.FundSourceID);
         }
 
-        public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.NewGrantNote(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.NewFundSourceNote(UrlTemplate.Parameter1Int)));
         public static string GetNewNoteUrl(this FundSource fundSource)
         {
             return NewNoteUrlTemplate.ParameterReplace(fundSource.FundSourceID);
         }
 
-        public static HtmlString GetGrantNumberAsUrl(this FundSource fundSource)
+        public static HtmlString GetFundSourceNumberAsUrl(this FundSource fundSource)
         {
             return fundSource != null ? UrlTemplate.MakeHrefString(fundSource.GetDetailUrl(), fundSource.FundSourceNumber) : new HtmlString(null);
         }
 
-        public static Money GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(this FundSource fundSource)
+        public static Money GetCurrentBalanceOfFundSourceBasedOnAllFundSourceAllocationExpenditures(this FundSource fundSource)
         {
-            var grantAllocations = fundSource.GrantAllocations.ToList();
-            var allBudgetLineItemVsActualItems = grantAllocations.Select(ga => ga.GetTotalBudgetVsActualLineItem());
-            var currentBalanceOfAllGrantAllocations = allBudgetLineItemVsActualItems.Select(blai => blai.BudgetMinusExpendituresFromDatamart).ToList();
+            var fundSourceAllocations = fundSource.FundSourceAllocations.ToList();
+            var allBudgetLineItemVsActualItems = fundSourceAllocations.Select(ga => ga.GetTotalBudgetVsActualLineItem());
+            var currentBalanceOfAllFundSourceAllocations = allBudgetLineItemVsActualItems.Select(blai => blai.BudgetMinusExpendituresFromDatamart).ToList();
             Money total = 0;
-            foreach (var grantAllocationTotal in currentBalanceOfAllGrantAllocations)
+            foreach (var fundSourceAllocationTotal in currentBalanceOfAllFundSourceAllocations)
             {
-                total += grantAllocationTotal;
+                total += fundSourceAllocationTotal;
             }
 
             return total;

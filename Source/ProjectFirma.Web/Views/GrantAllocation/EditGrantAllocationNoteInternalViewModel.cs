@@ -26,17 +26,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.FundSourceAllocation
 {
-    public class EditGrantAllocationNoteInternalViewModel : FormViewModel, IValidatableObject
+    public class EditFundSourceAllocationNoteInternalViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantAllocationID { get; set; }
+        public int FundSourceAllocationID { get; set; }
 
-        public int GrantAllocationNoteInternalID { get; set; }
+        public int FundSourceAllocationNoteInternalID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationNoteInternal)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceAllocationNoteInternal)]
         [Required]
-        public string GrantAllocationNoteInternalText { get; set; }
+        public string FundSourceAllocationNoteInternalText { get; set; }
 
        
 
@@ -45,39 +45,39 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantAllocationNoteInternalViewModel()
+        public EditFundSourceAllocationNoteInternalViewModel()
         {
         }
 
-        public EditGrantAllocationNoteInternalViewModel(Models.GrantAllocationNoteInternal grantAllocationNoteInternal)
+        public EditFundSourceAllocationNoteInternalViewModel(Models.FundSourceAllocationNoteInternal fundSourceAllocationNoteInternal)
         {
-            GrantAllocationNoteInternalText = grantAllocationNoteInternal.GrantAllocationNoteInternalText;
+            FundSourceAllocationNoteInternalText = fundSourceAllocationNoteInternal.FundSourceAllocationNoteInternalText;
 
         }
 
-        public void UpdateModel(Models.GrantAllocationNoteInternal grantAllocationNoteInternal, Person currentPerson, EditGrantAllocationNoteType editGrantAllocationNoteType)
+        public void UpdateModel(Models.FundSourceAllocationNoteInternal fundSourceAllocationNoteInternal, Person currentPerson, EditFundSourceAllocationNoteType editFundSourceAllocationNoteType)
         {
-            if (editGrantAllocationNoteType == EditGrantAllocationNoteTypeNewNote.Instance)
+            if (editFundSourceAllocationNoteType == EditFundSourceAllocationNoteTypeNewNote.Instance)
             {
-                grantAllocationNoteInternal.CreatedByPerson = currentPerson;
-                grantAllocationNoteInternal.CreatedDate = DateTime.Now;
+                fundSourceAllocationNoteInternal.CreatedByPerson = currentPerson;
+                fundSourceAllocationNoteInternal.CreatedDate = DateTime.Now;
             }
             else
             {
-                grantAllocationNoteInternal.LastUpdatedByPerson = currentPerson;
-                grantAllocationNoteInternal.LastUpdatedDate = DateTime.Now;
+                fundSourceAllocationNoteInternal.LastUpdatedByPerson = currentPerson;
+                fundSourceAllocationNoteInternal.LastUpdatedDate = DateTime.Now;
             }
 
-            grantAllocationNoteInternal.GrantAllocationNoteInternalText = GrantAllocationNoteInternalText;
+            fundSourceAllocationNoteInternal.FundSourceAllocationNoteInternalText = FundSourceAllocationNoteInternalText;
 
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrWhiteSpace(GrantAllocationNoteInternalText))
+            if (string.IsNullOrWhiteSpace(FundSourceAllocationNoteInternalText))
             {
-                yield return new SitkaValidationResult<EditGrantAllocationNoteInternalViewModel, string>(
-                    FirmaValidationMessages.GrantAllocationNoteIsEmptyText, m => m.GrantAllocationNoteInternalText);
+                yield return new SitkaValidationResult<EditFundSourceAllocationNoteInternalViewModel, string>(
+                    FirmaValidationMessages.FundSourceAllocationNoteIsEmptyText, m => m.FundSourceAllocationNoteInternalText);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantAllocationSimple.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceAllocationSimple.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -20,22 +20,22 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Models
 {
-    public class GrantAllocationSimple
+    public class FundSourceAllocationSimple
     {
-        public GrantAllocationSimple(FundSourceAllocation fundSourceAllocation)
+        public FundSourceAllocationSimple(FundSourceAllocation fundSourceAllocation)
         {
-            this.GrantAllocationID = fundSourceAllocation.GrantAllocationID;
+            this.FundSourceAllocationID = fundSourceAllocation.FundSourceAllocationID;
             OrganizationID = fundSourceAllocation.BottommostOrganization.OrganizationID;
             OrganizationName = fundSourceAllocation.BottommostOrganization.OrganizationShortNameIfAvailable;
-            GrantAllocationName = fundSourceAllocation.GrantAllocationName;
+            FundSourceAllocationName = fundSourceAllocation.FundSourceAllocationName;
             IsActive = true; 
-            DisplayName = fundSourceAllocation.GrantNumberAndGrantAllocationDisplayName;
-            DisplayNameWithAllocationAmount = fundSourceAllocation.GrantNumberAndGrantAllocationWithAllocationAmountDisplay;
+            DisplayName = fundSourceAllocation.FundSourceNumberAndFundSourceAllocationDisplayName;
+            DisplayNameWithAllocationAmount = fundSourceAllocation.FundSourceNumberAndFundSourceAllocationWithAllocationAmountDisplay;
         }
 
-        public int GrantAllocationID { get; }
+        public int FundSourceAllocationID { get; }
         public int OrganizationID { get; }
-        public string GrantAllocationName { get; }
+        public string FundSourceAllocationName { get; }
         public bool IsActive { get; }
 
         public string OrganizationName { get; }

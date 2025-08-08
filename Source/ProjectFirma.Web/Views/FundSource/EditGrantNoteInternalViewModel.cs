@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantNoteInternalViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditFundSourceNoteInternalViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -26,17 +26,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class EditGrantNoteInternalViewModel : FormViewModel, IValidatableObject
+    public class EditFundSourceNoteInternalViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantID { get; set; }
+        public int FundSourceID { get; set; }
 
-        public int GrantNoteInternalID { get; set; }
+        public int FundSourceNoteInternalID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNoteInternal)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceNoteInternal)]
         [Required]
-        public string GrantNoteText { get; set; }
+        public string FundSourceNoteText { get; set; }
 
 
 
@@ -45,19 +45,19 @@ namespace ProjectFirma.Web.Views.Grant
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantNoteInternalViewModel()
+        public EditFundSourceNoteInternalViewModel()
         {
         }
 
-        public EditGrantNoteInternalViewModel(Models.FundSourceNoteInternal fundSourceNoteInternaal)
+        public EditFundSourceNoteInternalViewModel(Models.FundSourceNoteInternal fundSourceNoteInternaal)
         {
-            GrantNoteText = fundSourceNoteInternaal.GrantNoteText;
+            FundSourceNoteText = fundSourceNoteInternaal.FundSourceNoteText;
 
         }
 
-        public void UpdateModel(Models.FundSourceNoteInternal fundSourceNoteInternal, Person currentPerson, EditGrantNoteType editGrantNoteType)
+        public void UpdateModel(Models.FundSourceNoteInternal fundSourceNoteInternal, Person currentPerson, EditFundSourceNoteType editFundSourceNoteType)
         {
-            if (editGrantNoteType == EditGrantNoteTypeNewNote.Instance)
+            if (editFundSourceNoteType == EditFundSourceNoteTypeNewNote.Instance)
             {
                 fundSourceNoteInternal.CreatedByPerson = currentPerson;
                 fundSourceNoteInternal.CreatedDate = DateTime.Now;
@@ -68,16 +68,16 @@ namespace ProjectFirma.Web.Views.Grant
                 fundSourceNoteInternal.LastUpdatedDate = DateTime.Now;
             }
 
-            fundSourceNoteInternal.GrantNoteText = GrantNoteText;
+            fundSourceNoteInternal.FundSourceNoteText = FundSourceNoteText;
 
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrWhiteSpace(GrantNoteText))
+            if (string.IsNullOrWhiteSpace(FundSourceNoteText))
             {
-                yield return new SitkaValidationResult<EditGrantNoteViewModel, string>(
-                    FirmaValidationMessages.GrantNoteIsEmptyText, m => m.GrantNoteText);
+                yield return new SitkaValidationResult<EditFundSourceNoteViewModel, string>(
+                    FirmaValidationMessages.FundSourceNoteIsEmptyText, m => m.FundSourceNoteText);
             }
         }
     }

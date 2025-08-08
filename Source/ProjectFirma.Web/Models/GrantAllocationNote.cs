@@ -5,7 +5,7 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocationNote : IAuditableEntity, IEntityNote
+    public partial class FundSourceAllocationNote : IAuditableEntity, IEntityNote
     {
         public DateTime Created
         {
@@ -39,27 +39,27 @@ namespace ProjectFirma.Web.Models
 
         public string Note
         {
-            get { return GrantAllocationNoteText; }
-            set { GrantAllocationNoteText = value; }
+            get { return FundSourceAllocationNoteText; }
+            set { FundSourceAllocationNoteText = value; }
         }
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.DeleteGrantAllocationNote(GrantAllocationNoteID)); }
+            get { return SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(c => c.DeleteFundSourceAllocationNote(FundSourceAllocationNoteID)); }
         }
 
         public string EditUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.EditGrantAllocationNote(GrantAllocationNoteID)); }
+            get { return SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(c => c.EditFundSourceAllocationNote(FundSourceAllocationNoteID)); }
         }
 
         public string AuditDescriptionString
         {
             get
             {
-                var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
-                var grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
-                return $"GrantAllocation: {grantAllocationName}";
+                var fundSourceAllocation = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Find(FundSourceAllocationID);
+                var fundSourceAllocationName = fundSourceAllocation != null ? fundSourceAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
+                return $"FundSourceAllocation: {fundSourceAllocationName}";
             }
         }
     }

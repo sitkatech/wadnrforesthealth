@@ -7,39 +7,39 @@ namespace ProjectFirma.Web.Models.ApiJson
     /// <summary>
     /// This JSON class is specifically meant to be used with the external WADNR APIs, and so should not be changed casually.
     /// </summary>
-    [DebuggerDisplay("GrantAllocationProgramIndexProjectCodeID: {GrantAllocationProgramIndexProjectCodeID} - GrantAllocationID: {GrantAllocationID} - ProjectCodeID: {ProjectCodeID} - ProjectCodeName: {ProjectCodeName}")]
-    public class GrantAllocationProgramIndexProjectCodeApiJson
+    [DebuggerDisplay("FundSourceAllocationProgramIndexProjectCodeID: {FundSourceAllocationProgramIndexProjectCodeID} - FundSourceAllocationID: {FundSourceAllocationID} - ProjectCodeID: {ProjectCodeID} - ProjectCodeName: {ProjectCodeName}")]
+    public class FundSourceAllocationProgramIndexProjectCodeApiJson
     {
-        public int GrantAllocationProgramIndexProjectCodeID { get; set; }
-        public int GrantAllocationID { get; set; }
+        public int FundSourceAllocationProgramIndexProjectCodeID { get; set; }
+        public int FundSourceAllocationID { get; set; }
         public int ProgramIndexID { get; set; }
         public string ProgramIndexCode { get; set; }
         public int? ProjectCodeID { get; set; }
         public string ProjectCodeName { get; set; }
 
         // For use by model binder
-        public GrantAllocationProgramIndexProjectCodeApiJson()
+        public FundSourceAllocationProgramIndexProjectCodeApiJson()
         {
         }
 
-        public GrantAllocationProgramIndexProjectCodeApiJson(GrantAllocationProgramIndexProjectCode grantAllocationProgramIndexProjectCode)
+        public FundSourceAllocationProgramIndexProjectCodeApiJson(FundSourceAllocationProgramIndexProjectCode fundSourceAllocationProgramIndexProjectCode)
         {
-            GrantAllocationProgramIndexProjectCodeID = grantAllocationProgramIndexProjectCode.GrantAllocationProgramIndexProjectCodeID;
-            GrantAllocationID = grantAllocationProgramIndexProjectCode.GrantAllocationID;
-            ProgramIndexID = grantAllocationProgramIndexProjectCode.ProgramIndexID;
-            ProgramIndexCode = grantAllocationProgramIndexProjectCode.ProgramIndex.ProgramIndexCode;
-            ProjectCodeID = grantAllocationProgramIndexProjectCode.ProjectCodeID;
-            ProjectCodeName = grantAllocationProgramIndexProjectCode.ProjectCode?.ProjectCodeName;
+            FundSourceAllocationProgramIndexProjectCodeID = fundSourceAllocationProgramIndexProjectCode.FundSourceAllocationProgramIndexProjectCodeID;
+            FundSourceAllocationID = fundSourceAllocationProgramIndexProjectCode.FundSourceAllocationID;
+            ProgramIndexID = fundSourceAllocationProgramIndexProjectCode.ProgramIndexID;
+            ProgramIndexCode = fundSourceAllocationProgramIndexProjectCode.ProgramIndex.ProgramIndexCode;
+            ProjectCodeID = fundSourceAllocationProgramIndexProjectCode.ProjectCodeID;
+            ProjectCodeName = fundSourceAllocationProgramIndexProjectCode.ProjectCode?.ProjectCodeName;
         }
 
-        public static List<GrantAllocationProgramIndexProjectCodeApiJson> MakeGrantAllocationProgramIndexProjectCodeApiJsonsFromGrantAllocationProgramIndexProjectCodes(List<GrantAllocationProgramIndexProjectCode> grantAllocationProgramIndexProjectCodes, bool doAlphaSort = true)
+        public static List<FundSourceAllocationProgramIndexProjectCodeApiJson> MakeFundSourceAllocationProgramIndexProjectCodeApiJsonsFromFundSourceAllocationProgramIndexProjectCodes(List<FundSourceAllocationProgramIndexProjectCode> fundSourceAllocationProgramIndexProjectCodes, bool doAlphaSort = true)
         {
-            var outgoingProgramIndexProjectCodes = grantAllocationProgramIndexProjectCodes;
+            var outgoingProgramIndexProjectCodes = fundSourceAllocationProgramIndexProjectCodes;
             if (doAlphaSort)
             {
-                outgoingProgramIndexProjectCodes = outgoingProgramIndexProjectCodes.OrderBy(gapipc => gapipc.GrantAllocationProgramIndexProjectCodeDisplayString).ToList();
+                outgoingProgramIndexProjectCodes = outgoingProgramIndexProjectCodes.OrderBy(gapipc => gapipc.FundSourceAllocationProgramIndexProjectCodeDisplayString).ToList();
             }
-            return outgoingProgramIndexProjectCodes.Select(gapipc => new GrantAllocationProgramIndexProjectCodeApiJson(gapipc)).ToList();
+            return outgoingProgramIndexProjectCodes.Select(gapipc => new FundSourceAllocationProgramIndexProjectCodeApiJson(gapipc)).ToList();
         }
     }
 }

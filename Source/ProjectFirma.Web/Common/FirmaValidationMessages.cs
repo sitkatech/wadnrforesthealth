@@ -33,8 +33,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string ProgramIndexInvalid = $"{FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()} is not valid.";
         public static readonly string OrganizationNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} name already exists.";
         public static readonly string ProgramNameUnique = $"{FieldDefinition.Program.GetFieldDefinitionLabel()} name already exists for this organization.";
-        public static readonly string GrantNoteIsEmptyText = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
-        public static readonly string GrantAllocationNoteIsEmptyText = $"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
+        public static readonly string FundSourceNoteIsEmptyText = $"{FieldDefinition.FundSourceNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
+        public static readonly string FundSourceAllocationNoteIsEmptyText = $"{FieldDefinition.FundSourceAllocationNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
 
         public static readonly string OrganizationShortNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} short name already exists.";
         public static readonly string ProgramShortNameUnique = $"{FieldDefinition.Program.GetFieldDefinitionLabel()} short name already exists for this organization.";

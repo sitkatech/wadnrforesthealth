@@ -6,6 +6,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class FundSourceType : IAuditableEntity
     {
-        public string AuditDescriptionString => GrantTypeName;
+        public string AuditDescriptionString => FundSourceTypeName;
     }
 }

@@ -33,7 +33,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Views.FundSource;
 
 namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
 {

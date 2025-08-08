@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditFundSourceViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -26,22 +26,22 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class EditGrantViewData : FirmaUserControlViewData
+    public class EditFundSourceViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> Organizations { get; }
-        public IEnumerable<SelectListItem> GrantTypes { get; }
-        public IEnumerable<SelectListItem> GrantStatuses { get; }
+        public IEnumerable<SelectListItem> FundSourceTypes { get; }
+        public IEnumerable<SelectListItem> FundSourceStatuses { get; }
 
-        public EditGrantType EditGrantType { get; set; }
+        public EditFundSourceType EditFundSourceType { get; set; }
 
-        public EditGrantViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSourceStatus> grantStatuses, IEnumerable<Models.FundSourceType> grantTypes)
+        public EditFundSourceViewData(EditFundSourceType editFundSourceType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSourceStatus> fundSourceStatuses, IEnumerable<Models.FundSourceType> fundSourceTypes)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
-            GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
-            EditGrantType = editGrantType;
+            FundSourceStatuses = fundSourceStatuses.ToSelectListWithEmptyFirstRow(x => x.FundSourceStatusID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceStatusName);
+            FundSourceTypes = fundSourceTypes.ToSelectListWithEmptyFirstRow(x => x.FundSourceTypeID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceTypeName);
+            EditFundSourceType = editFundSourceType;
         }
     }
 }

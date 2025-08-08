@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantExcelSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceExcelSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -23,18 +23,18 @@ using LtInfo.Common.ExcelWorkbookUtilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class GrantAllocationExcelSpec : ExcelWorksheetSpec<Models.FundSourceAllocation>
+    public class FundSourceAllocationExcelSpec : ExcelWorksheetSpec<Models.FundSourceAllocation>
     {
-        public GrantAllocationExcelSpec()
+        public FundSourceAllocationExcelSpec()
         {
-            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.FundSource.FundSourceNumber);
-            AddColumn(Models.FieldDefinition.GrantAllocationName.FieldDefinitionDisplayName, x => x.GrantAllocationName);
+            AddColumn(Models.FieldDefinition.FundSourceNumber.FieldDefinitionDisplayName, x => x.FundSource.FundSourceNumber);
+            AddColumn(Models.FieldDefinition.FundSourceAllocationName.FieldDefinitionDisplayName, x => x.FundSourceAllocationName);
             AddColumn(Models.FieldDefinition.ProgramManager.FieldDefinitionDisplayName, x => x.GetAllProgramManagerPersonNamesAsString());
-            AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
-            AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
-            AddColumn($"Parent Grant {Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName}", x => x.FundSource.FundSourceStatus.GrantStatusName);
+            AddColumn(Models.FieldDefinition.FundSourceStartDate.FieldDefinitionDisplayName, x => x.StartDate);
+            AddColumn(Models.FieldDefinition.FundSourceEndDate.FieldDefinitionDisplayName, x => x.EndDate);
+            AddColumn($"Parent FundSource {Models.FieldDefinition.FundSourceStatus.FieldDefinitionDisplayName}", x => x.FundSource.FundSourceStatus.FundSourceStatusName);
             AddColumn(Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, x => x.DNRUplandRegion?.DNRUplandRegionName ?? string.Empty);
             AddColumn(Models.FieldDefinition.FederalFundCode.FieldDefinitionDisplayName, x => x.FederalFundCodeDisplay);
             AddColumn(Models.FieldDefinition.AllocationAmount.FieldDefinitionDisplayName, x => x.AllocationAmount);
@@ -43,18 +43,18 @@ namespace ProjectFirma.Web.Views.Grant
         }
     }
 
-    public class GrantExcelSpec : ExcelWorksheetSpec<Models.FundSource>
+    public class FundSourceExcelSpec : ExcelWorksheetSpec<Models.FundSource>
     {
-        public GrantExcelSpec()
+        public FundSourceExcelSpec()
         {
-            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.FundSourceNumber);
+            AddColumn(Models.FieldDefinition.FundSourceNumber.FieldDefinitionDisplayName, x => x.FundSourceNumber);
             AddColumn(Models.FieldDefinition.CFDA.FieldDefinitionDisplayName, x => x.CFDANumber);
-            AddColumn(Models.FieldDefinition.GrantName.FieldDefinitionDisplayName, x => x.FundSourceName);
+            AddColumn(Models.FieldDefinition.FundSourceName.FieldDefinitionDisplayName, x => x.FundSourceName);
             AddColumn(Models.FieldDefinition.TotalAwardAmount.FieldDefinitionDisplayName, x => x.TotalAwardAmount);
-            AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
-            AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
-            AddColumn(Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName, x => x.FundSourceStatus.GrantStatusName);
-            AddColumn(Models.FieldDefinition.GrantType.FieldDefinitionDisplayName, x => x.GrantTypeDisplay);
+            AddColumn(Models.FieldDefinition.FundSourceStartDate.FieldDefinitionDisplayName, x => x.StartDate);
+            AddColumn(Models.FieldDefinition.FundSourceEndDate.FieldDefinitionDisplayName, x => x.EndDate);
+            AddColumn(Models.FieldDefinition.FundSourceStatus.FieldDefinitionDisplayName, x => x.FundSourceStatus.FundSourceStatusName);
+            AddColumn(Models.FieldDefinition.FundSourceType.FieldDefinitionDisplayName, x => x.FundSourceTypeDisplay);
         }
     }
 }

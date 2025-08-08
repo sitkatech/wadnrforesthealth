@@ -1,8 +1,8 @@
 ﻿using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class NewGrant : TypedWebPartialViewPage<NewGrantViewData, NewGrantViewModel>
+    public abstract class NewFundSource : TypedWebPartialViewPage<NewFundSourceViewData, NewFundSourceViewModel>
     {
     }
 }

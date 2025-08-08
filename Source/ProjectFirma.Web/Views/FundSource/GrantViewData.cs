@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceViewData.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -24,27 +24,27 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public abstract class GrantViewData : FirmaViewData
+    public abstract class FundSourceViewData : FirmaViewData
     {
         public Models.FundSource FundSource { get; }
-        public string EditGrantUrl { get; set; }
-        public bool UserHasEditGrantPermissions { get; set; }
+        public string EditFundSourceUrl { get; set; }
+        public bool UserHasEditFundSourcePermissions { get; set; }
 
-        public string BackToGrantsText { get; set; }
+        public string BackToFundSourcesText { get; set; }
 
-        public string GrantsListUrl { get; set; }    
+        public string FundSourcesListUrl { get; set; }    
 
-        protected GrantViewData(Person currentPerson, Models.FundSource fundSource) : base(currentPerson, null)
+        protected FundSourceViewData(Person currentPerson, Models.FundSource fundSource) : base(currentPerson, null)
         {
             FundSource = fundSource;
-            HtmlPageTitle = fundSource.GrantTitle;
-            EntityName = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
-            EditGrantUrl = fundSource.GetEditUrl();
-            UserHasEditGrantPermissions = new FundSourceEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            BackToGrantsText = $"Back to all {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
-            GrantsListUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
+            HtmlPageTitle = fundSource.FundSourceTitle;
+            EntityName = $"{Models.FieldDefinition.FundSource.GetFieldDefinitionLabel()}";
+            EditFundSourceUrl = fundSource.GetEditUrl();
+            UserHasEditFundSourcePermissions = new FundSourceEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            BackToFundSourcesText = $"Back to all {Models.FieldDefinition.FundSource.GetFieldDefinitionLabelPluralized()}";
+            FundSourcesListUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
         }
     }
 }

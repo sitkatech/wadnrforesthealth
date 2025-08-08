@@ -4,27 +4,27 @@ using LtInfo.Common.DesignByContract;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class AgreementGrantAllocation : IAuditableEntity
+    public partial class AgreementFundSourceAllocation : IAuditableEntity
     {
         public string AuditDescriptionString
         {
-            get { return this.FundSourceAllocation != null ? this.FundSourceAllocation.GrantAllocationName : "NullGrantAllocation"; }
+            get { return this.FundSourceAllocation != null ? this.FundSourceAllocation.FundSourceAllocationName : "NullFundSourceAllocation"; }
 
         }
 
-        public static List<AgreementGrantAllocation> OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<AgreementGrantAllocation> agreementGrantAllocations)
+        public static List<AgreementFundSourceAllocation> OrderAgreementFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(List<AgreementFundSourceAllocation> agreementFundSourceAllocations)
         {
-            var interiorGrantAllocations = agreementGrantAllocations.Select(aga => aga.FundSourceAllocation).ToList();
-            var interiorGrantAllocationInProperOrder = FundSourceAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(interiorGrantAllocations);
+            var interiorFundSourceAllocations = agreementFundSourceAllocations.Select(aga => aga.FundSourceAllocation).ToList();
+            var interiorFundSourceAllocationInProperOrder = FundSourceAllocation.OrderFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(interiorFundSourceAllocations);
 
-            List<AgreementGrantAllocation> outgoingAgreementGrantAllocations = new List<AgreementGrantAllocation>();
-            foreach (var grantAllocation in interiorGrantAllocationInProperOrder)
+            List<AgreementFundSourceAllocation> outgoingAgreementFundSourceAllocations = new List<AgreementFundSourceAllocation>();
+            foreach (var fundSourceAllocation in interiorFundSourceAllocationInProperOrder)
             {
-                var currentSubset = agreementGrantAllocations.Where(aga => aga.GrantAllocationID == grantAllocation.GrantAllocationID).ToList();
-                outgoingAgreementGrantAllocations.AddRange(currentSubset);
+                var currentSubset = agreementFundSourceAllocations.Where(aga => aga.FundSourceAllocationID == fundSourceAllocation.FundSourceAllocationID).ToList();
+                outgoingAgreementFundSourceAllocations.AddRange(currentSubset);
             }
 
-            return outgoingAgreementGrantAllocations;
+            return outgoingAgreementFundSourceAllocations;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="EditFundSourceViewModel.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -28,35 +28,35 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.FundSource
 {
-    public class EditGrantViewModel : FormViewModel, IValidatableObject
+    public class EditFundSourceViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantID { get; set; }
+        public int FundSourceID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
         [Required]
         public int OrganizationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStatus)]
         [Required]
-        public int GrantStatusID { get; set; }
+        public int FundSourceStatusID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
-        public int? GrantTypeID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceType)]
+        public int? FundSourceTypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceName)]
         [StringLength(Models.FundSource.FieldLengths.FundSourceName)]
         [Required]
-        public string GrantName { get; set; }
+        public string FundSourceName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantShortName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceShortName)]
         [StringLength(Models.FundSource.FieldLengths.ShortName)]
-        public string GrantShortName { get; set; }
+        public string FundSourceShortName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceNumber)]
         [StringLength(Models.FundSource.FieldLengths.FundSourceNumber)]
-        public string GrantNumber { get; set; }
+        public string FundSourceNumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
         [StringLength(Models.FundSource.FieldLengths.CFDANumber)]
@@ -66,46 +66,46 @@ namespace ProjectFirma.Web.Views.Grant
         [Required]
         public Money? TotalAwardAmount { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
-        public DateTime? GrantStartDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceStartDate)]
+        public DateTime? FundSourceStartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
-        public DateTime? GrantEndDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSourceEndDate)]
+        public DateTime? FundSourceEndDate { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantViewModel()
+        public EditFundSourceViewModel()
         {
         }
 
-        public EditGrantViewModel(Models.FundSource fundSource)
+        public EditFundSourceViewModel(Models.FundSource fundSource)
         {
-            GrantName = fundSource.FundSourceName;
-            GrantShortName = fundSource.ShortName;
+            FundSourceName = fundSource.FundSourceName;
+            FundSourceShortName = fundSource.ShortName;
             OrganizationID = fundSource.OrganizationID;
-            GrantStatusID = fundSource.FundSourceStatusID;
-            GrantTypeID = fundSource.FundSourceTypeID;
-            GrantNumber = fundSource.FundSourceNumber;
+            FundSourceStatusID = fundSource.FundSourceStatusID;
+            FundSourceTypeID = fundSource.FundSourceTypeID;
+            FundSourceNumber = fundSource.FundSourceNumber;
             CFDANumber = fundSource.CFDANumber;
             TotalAwardAmount = fundSource.TotalAwardAmount;
-            GrantStartDate = fundSource.StartDate;
-            GrantEndDate = fundSource.EndDate;
+            FundSourceStartDate = fundSource.StartDate;
+            FundSourceEndDate = fundSource.EndDate;
             
         }
 
         public void UpdateModel(Models.FundSource fundSource, Person currentPerson)
         {
-            fundSource.FundSourceName = GrantName;
-            fundSource.ShortName = GrantShortName;
+            fundSource.FundSourceName = FundSourceName;
+            fundSource.ShortName = FundSourceShortName;
             fundSource.OrganizationID = OrganizationID;
-            fundSource.FundSourceStatusID = GrantStatusID;
-            fundSource.FundSourceTypeID = GrantTypeID;
-            fundSource.FundSourceNumber = GrantNumber;
+            fundSource.FundSourceStatusID = FundSourceStatusID;
+            fundSource.FundSourceTypeID = FundSourceTypeID;
+            fundSource.FundSourceNumber = FundSourceNumber;
             fundSource.CFDANumber = CFDANumber;
-            //grant.AwardedFunds = TotalAwardAmount;
-            fundSource.StartDate = GrantStartDate;
-            fundSource.EndDate = GrantEndDate;
+            //fundSource.AwardedFunds = TotalAwardAmount;
+            fundSource.StartDate = FundSourceStartDate;
+            fundSource.EndDate = FundSourceEndDate;
 
         }
 
@@ -113,7 +113,7 @@ namespace ProjectFirma.Web.Views.Grant
         {
             if (OrganizationID == 0)
             {
-                yield return new SitkaValidationResult<EditGrantViewModel, int>(
+                yield return new SitkaValidationResult<EditFundSourceViewModel, int>(
                     FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
             }
         }

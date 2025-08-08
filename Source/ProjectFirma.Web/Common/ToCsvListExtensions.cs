@@ -24,11 +24,11 @@ namespace ProjectFirma.Web.Common
         }
 
         /// <summary>
-        /// List of Grants as a comma delimited string ("234, 25B" for example) 
+        /// List of FundSources as a comma delimited string ("234, 25B" for example) 
         /// </summary>
-        public static string ToDistinctOrderedCsvListOfGrantNumber(this ICollection<AgreementGrantAllocation> agreementGrantAllocations)
+        public static string ToDistinctOrderedCsvListOfFundSourceNumber(this ICollection<AgreementFundSourceAllocation> agreementFundSourceAllocations)
         {
-            return MakeDistinctCaseInsensitiveStringListFromObjectList(agreementGrantAllocations, x => x.FundSourceAllocation.FundSource.FundSourceNumber);
+            return MakeDistinctCaseInsensitiveStringListFromObjectList(agreementFundSourceAllocations, x => x.FundSourceAllocation.FundSource.FundSourceNumber);
         }
 
         private static string MakeDistinctCaseInsensitiveStringListFromObjectList<T>(ICollection<T> objectList, Func<T, string> funcObjectToString)
