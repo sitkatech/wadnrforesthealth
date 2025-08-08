@@ -57,7 +57,7 @@
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     
     
-    @if (ViewDataTyped.GrantAllocationRequestAmountGooglePieChartSlices.Any())
+    @if (ViewDataTyped.FundSourceAllocationRequestAmountGooglePieChartSlices.Any())
     {
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
@@ -186,7 +186,7 @@
                     @ViewDataTyped.EstimatedTotalCost
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3">
-                    <strong> @FieldDefinition.ProjectGrantAllocationRequestTotalAmount.GetFieldDefinitionLabel()</strong>
+                    <strong> @FieldDefinition.ProjectFundSourceAllocationRequestTotalAmount.GetFieldDefinitionLabel()</strong>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3">
                     @ViewDataTyped.TotalFunding
@@ -197,7 +197,7 @@
                     <strong style="white-space: nowrap;">No Funding Identified</strong>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3">
-                    @ViewDataTyped.NoGrantAllocationIdentified
+                    @ViewDataTyped.NoFundSourceAllocationIdentified
                 </div>
             </div>
         </div>
@@ -278,7 +278,7 @@
             <div style="margin-left: auto; margin-right: auto; page-break-inside: avoid">
                 <h4>Targeted Funding</h4>
                 <div class="chartPanel">
-                    @if (ViewDataTyped.GrantAllocationRequestAmountGooglePieChartSlices.Any())
+                    @if (ViewDataTyped.FundSourceAllocationRequestAmountGooglePieChartSlices.Any())
                     {
                         <div id="@ViewDataTyped.GoogleChartJson.ChartContainerID" class="googleChart" style="height: @(ViewDataTyped.CalculatedChartHeight)px;"></div>
                         <div class="captionText">
@@ -288,7 +288,7 @@
                     else
                     {
                         <div class="text-center">
-                            <p class="systemText">No Targeted @FieldDefinition.GrantAllocation.FieldDefinitionDisplayName identified</p>
+                            <p class="systemText">No Targeted @FieldDefinition.FundSourceAllocation.FieldDefinitionDisplayName identified</p>
                         </div>
                     }
                 </div>

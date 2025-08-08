@@ -50,28 +50,28 @@
         return linkHtml;
     }
 
-    private string GrantAllocationJsonApiLink()
+    private string FundSourceAllocationJsonApiLink()
     {
-        string linkHtml = SitkaRoute<GrantAllocationController>.BuildLinkFromExpression(c => c.GrantAllocationJsonApi(), "Grant Allocation JSON");
+        string linkHtml = SitkaRoute<FundSourceAllocationController>.BuildLinkFromExpression(c => c.FundSourceAllocationJsonApi(), "FundSource Allocation JSON");
         return linkHtml;
     }
 
-    private string GrantAllocationProgramIndexProjectCodeJsonApiLink()
+    private string FundSourceAllocationProgramIndexProjectCodeJsonApiLink()
     {
-        string linkHtml = SitkaRoute<GrantAllocationProgramIndexProjectCodeController>.BuildLinkFromExpression(c => c.GrantAllocationProgramIndexProjectCodeJsonApi(), "Grant Allocation - Program Index - Project Code JSON");
+        string linkHtml = SitkaRoute<FundSourceAllocationProgramIndexProjectCodeController>.BuildLinkFromExpression(c => c.FundSourceAllocationProgramIndexProjectCodeJsonApi(), "FundSource Allocation - Program Index - Project Code JSON");
         return linkHtml;
     }
 
-    private string GrantJsonApiLink()
+    private string FundSourceJsonApiLink()
     {
-        string linkHtml = SitkaRoute<FundSourceController>.BuildLinkFromExpression(c => c.GrantJsonApi(), "Grant JSON");
+        string linkHtml = SitkaRoute<FundSourceController>.BuildLinkFromExpression(c => c.FundSourceJsonApi(), "FundSource JSON");
         return linkHtml;
     }
 
-    private string GrantStatusJsonApiLink()
+    private string FundSourceStatusJsonApiLink()
     {
-        // GrantStatusJsonApi
-        string linkHtml = SitkaRoute<FundSourceController>.BuildLinkFromExpression(c => c.GrantStatusJsonApi(), "Grant Status JSON");
+        // FundSourceStatusJsonApi
+        string linkHtml = SitkaRoute<FundSourceController>.BuildLinkFromExpression(c => c.FundSourceStatusJsonApi(), "FundSource Status JSON");
         return linkHtml;
     }
 
@@ -102,10 +102,10 @@
 @*<h3>@Html.Raw(ProjectCodeJsonApiLink())</h3>
 <h3>@Html.Raw(ProgramIndexJsonApiLink())</h3>*@
 <h3>@Html.Raw(AgreementJsonApiLink())</h3>
-<h3>@Html.Raw(GrantAllocationJsonApiLink())</h3>
-<h3>@Html.Raw(GrantAllocationProgramIndexProjectCodeJsonApiLink())</h3>
-<h3>@Html.Raw(GrantJsonApiLink())</h3>
-<h3>@Html.Raw(GrantStatusJsonApiLink())</h3>
+<h3>@Html.Raw(FundSourceAllocationJsonApiLink())</h3>
+<h3>@Html.Raw(FundSourceAllocationProgramIndexProjectCodeJsonApiLink())</h3>
+<h3>@Html.Raw(FundSourceJsonApiLink())</h3>
+<h3>@Html.Raw(FundSourceStatusJsonApiLink())</h3>
 <h3>@Html.Raw(InteractionEventJsonApiLink())</h3>
 <h3>@Html.Raw(InvoiceJsonApiLink())</h3>
 

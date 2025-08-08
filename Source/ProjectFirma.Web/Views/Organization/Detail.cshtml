@@ -101,25 +101,25 @@
                 <div class="col-md-6">
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
-                            <a href="@ViewDataTyped.ManageGrantAllocationsUrl">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</a>
+                            @Html.LabelWithSugarFor(FieldDefinition.FundSourceAllocation, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
+                            <a href="@ViewDataTyped.ManageFundSourceAllocationsUrl">@FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()</a>
 
                         </div>
                         <div class="panel-body">
-                            @if (ViewDataTyped.Organization.GrantAllocations.Any())
+                            @if (ViewDataTyped.Organization.FundSourceAllocations.Any())
                             {
                                 <ul>
-                                    @foreach (var grantAllocation in ViewDataTyped.Organization.GrantAllocations.OrderBy(x => x.GrantAllocationName))
+                                    @foreach (var fundSourceAllocation in ViewDataTyped.Organization.FundSourceAllocations.OrderBy(x => x.FundSourceAllocationName))
                                     {
                                         <li>
-                                            @grantAllocation.DisplayNameAsUrl
+                                            @fundSourceAllocation.DisplayNameAsUrl
                                         </li>
                                     }
                                 </ul>
                             }
                             else
                             {
-                                <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() set for this @FieldDefinition.Organization.GetFieldDefinitionLabel().</p>
+                                <p class="systemText">No @FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized() set for this @FieldDefinition.Organization.GetFieldDefinitionLabel().</p>
                             }
                         </div>
                     </div>

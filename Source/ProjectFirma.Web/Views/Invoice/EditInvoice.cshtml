@@ -45,11 +45,11 @@
 
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantID)
+            @Html.LabelWithSugarFor(m => m.FundSourceID)
         </div>
         <div class="col-xs-9">
-            @Html.SearchableDropDownListFor(m => m.GrantID, ViewDataTyped.Grants, new { style = "width: auto;", @class = "form-control selectpicker" })
-            @Html.ValidationMessageFor(m => m.GrantID)
+            @Html.SearchableDropDownListFor(m => m.FundSourceID, ViewDataTyped.FundSources, new { style = "width: auto;", @class = "form-control selectpicker" })
+            @Html.ValidationMessageFor(m => m.FundSourceID)
         </div>
     </div>
 

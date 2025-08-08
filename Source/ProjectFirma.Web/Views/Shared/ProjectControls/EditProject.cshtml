@@ -207,7 +207,7 @@
             </div>
         </div>
 
-        <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getGrantAllocationName, getProjectName]">
+        <div ng-repeat="projectProgram in AngularModel.ProjectProgramSimples | orderBy:[getFundSourceAllocationName, getProjectName]">
             <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectID}}" />
             <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProgramID}}" />
             <input type="hidden" name="@Html.NameFor(x => x.ProjectProgramSimples[0].ProjectProgramID).ToString().Replace("0", "{{$index}}")" value="{{projectProgram.ProjectProgramID}}" />
