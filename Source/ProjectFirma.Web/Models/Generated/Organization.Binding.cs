@@ -26,9 +26,9 @@ namespace ProjectFirma.Web.Models
         protected Organization()
         {
             this.Agreements = new HashSet<Agreement>();
+            this.FundSources = new HashSet<FundSource>();
+            this.FundSourceAllocations = new HashSet<FundSourceAllocation>();
             this.GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization = new HashSet<GisUploadSourceOrganization>();
-            this.Grants = new HashSet<FundSource>();
-            this.GrantAllocations = new HashSet<FundSourceAllocation>();
             this.OrganizationBoundaryStagings = new HashSet<OrganizationBoundaryStaging>();
             this.People = new HashSet<Person>();
             this.PersonStewardOrganizations = new HashSet<PersonStewardOrganization>();
@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Agreements.Any() || GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.Any() || Grants.Any() || GrantAllocations.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || Programs.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
+            return Agreements.Any() || FundSources.Any() || FundSourceAllocations.Any() || GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || Programs.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
         }
 
         /// <summary>
@@ -116,19 +116,19 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(Agreement).Name);
             }
 
-            if(GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.Any())
-            {
-                dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
-            }
-
-            if(Grants.Any())
+            if(FundSources.Any())
             {
                 dependentObjects.Add(typeof(FundSource).Name);
             }
 
-            if(GrantAllocations.Any())
+            if(FundSourceAllocations.Any())
             {
                 dependentObjects.Add(typeof(FundSourceAllocation).Name);
+            }
+
+            if(GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.Any())
+            {
+                dependentObjects.Add(typeof(GisUploadSourceOrganization).Name);
             }
 
             if(OrganizationBoundaryStagings.Any())
@@ -166,7 +166,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(GisUploadSourceOrganization).Name, typeof(FundSource).Name, typeof(FundSourceAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(Program).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(FundSource).Name, typeof(FundSourceAllocation).Name, typeof(GisUploadSourceOrganization).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(Program).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
 
 
         /// <summary>
@@ -196,17 +196,17 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in FundSources.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in Grants.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -259,9 +259,9 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return OrganizationID; } set { OrganizationID = value; } }
 
         public virtual ICollection<Agreement> Agreements { get; set; }
+        public virtual ICollection<FundSource> FundSources { get; set; }
+        public virtual ICollection<FundSourceAllocation> FundSourceAllocations { get; set; }
         public virtual ICollection<GisUploadSourceOrganization> GisUploadSourceOrganizationsWhereYouAreTheDefaultLeadImplementerOrganization { get; set; }
-        public virtual ICollection<FundSource> Grants { get; set; }
-        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
         public virtual ICollection<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
         public virtual ICollection<Person> People { get; set; }
         public virtual ICollection<PersonStewardOrganization> PersonStewardOrganizations { get; set; }

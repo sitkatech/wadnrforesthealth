@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[Invoice](
 	[InvoiceStatusID] [int] NOT NULL,
 	[InvoiceFileResourceID] [int] NULL,
 	[InvoicePaymentRequestID] [int] NOT NULL,
-	[GrantID] [int] NULL,
+	[FundSourceID] [int] NULL,
 	[ProgramIndexID] [int] NULL,
 	[ProjectCodeID] [int] NULL,
 	[OrganizationCodeID] [int] NULL,
@@ -34,10 +34,10 @@ REFERENCES [dbo].[FileResource] ([FileResourceID])
 GO
 ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID]
 GO
-ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_Grant_GrantID] FOREIGN KEY([GrantID])
-REFERENCES [dbo].[Grant] ([GrantID])
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_FundSource_FundSourceID] FOREIGN KEY([FundSourceID])
+REFERENCES [dbo].[FundSource] ([FundSourceID])
 GO
-ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_Grant_GrantID]
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_FundSource_FundSourceID]
 GO
 ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID] FOREIGN KEY([InvoiceApprovalStatusID])
 REFERENCES [dbo].[InvoiceApprovalStatus] ([InvoiceApprovalStatusID])

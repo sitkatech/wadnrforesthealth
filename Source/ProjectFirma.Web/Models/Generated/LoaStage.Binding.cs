@@ -31,12 +31,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public LoaStage(int loaStageID, string projectIdentifier, string projectStatus, string grantNumber, string focusAreaName, DateTime? projectExpirationDate, DateTime? letterDate, decimal? matchAmount, decimal? payAmount, string programIndex, string projectCode, bool isNortheast, bool isSoutheast, string foresterLastName, string foresterFirstName, string foresterPhone, string foresterEmail, DateTime? applicationDate, DateTime? decisionDate) : this()
+        public LoaStage(int loaStageID, string projectIdentifier, string projectStatus, string fundSourceNumber, string focusAreaName, DateTime? projectExpirationDate, DateTime? letterDate, decimal? matchAmount, decimal? payAmount, string programIndex, string projectCode, bool isNortheast, bool isSoutheast, string foresterLastName, string foresterFirstName, string foresterPhone, string foresterEmail, DateTime? applicationDate, DateTime? decisionDate) : this()
         {
             this.LoaStageID = loaStageID;
             this.ProjectIdentifier = projectIdentifier;
             this.ProjectStatus = projectStatus;
-            this.GrantNumber = grantNumber;
+            this.FundSourceNumber = fundSourceNumber;
             this.FocusAreaName = focusAreaName;
             this.ProjectExpirationDate = projectExpirationDate;
             this.LetterDate = letterDate;
@@ -121,7 +121,7 @@ namespace ProjectFirma.Web.Models
         public int LoaStageID { get; set; }
         public string ProjectIdentifier { get; set; }
         public string ProjectStatus { get; set; }
-        public string GrantNumber { get; set; }
+        public string FundSourceNumber { get; set; }
         public string FocusAreaName { get; set; }
         public DateTime? ProjectExpirationDate { get; set; }
         public DateTime? LetterDate { get; set; }
@@ -146,7 +146,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProjectIdentifier = 600;
             public const int ProjectStatus = 600;
-            public const int GrantNumber = 600;
+            public const int FundSourceNumber = 600;
             public const int FocusAreaName = 600;
             public const int ProgramIndex = 50;
             public const int ProjectCode = 50;

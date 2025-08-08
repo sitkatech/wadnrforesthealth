@@ -30,19 +30,19 @@ namespace ProjectFirma.Web.Models
             this.DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator = new HashSet<DNRUplandRegion>();
             this.FileResourcesWhereYouAreTheCreatePerson = new HashSet<FileResource>();
             this.ForesterWorkUnits = new HashSet<ForesterWorkUnit>();
+            this.FundSourceAllocationsWhereYouAreTheFundSourceManager = new HashSet<FundSourceAllocation>();
+            this.FundSourceAllocationChangeLogsWhereYouAreTheChangePerson = new HashSet<FundSourceAllocationChangeLog>();
+            this.FundSourceAllocationLikelyPeople = new HashSet<FundSourceAllocationLikelyPerson>();
+            this.FundSourceAllocationNotesWhereYouAreTheCreatedByPerson = new HashSet<FundSourceAllocationNote>();
+            this.FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceAllocationNote>();
+            this.FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<FundSourceAllocationNoteInternal>();
+            this.FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceAllocationNoteInternal>();
+            this.FundSourceAllocationProgramManagers = new HashSet<FundSourceAllocationProgramManager>();
+            this.FundSourceNotesWhereYouAreTheCreatedByPerson = new HashSet<FundSourceNote>();
+            this.FundSourceNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceNote>();
+            this.FundSourceNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<FundSourceNoteInternal>();
+            this.FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceNoteInternal>();
             this.GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson = new HashSet<GisUploadAttempt>();
-            this.GrantAllocationsWhereYouAreTheGrantManager = new HashSet<FundSourceAllocation>();
-            this.GrantAllocationChangeLogsWhereYouAreTheChangePerson = new HashSet<GrantAllocationChangeLog>();
-            this.GrantAllocationLikelyPeople = new HashSet<GrantAllocationLikelyPerson>();
-            this.GrantAllocationNotesWhereYouAreTheCreatedByPerson = new HashSet<GrantAllocationNote>();
-            this.GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantAllocationNote>();
-            this.GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<GrantAllocationNoteInternal>();
-            this.GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantAllocationNoteInternal>();
-            this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
-            this.GrantNotesWhereYouAreTheCreatedByPerson = new HashSet<FundSourceNote>();
-            this.GrantNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceNote>();
-            this.GrantNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<FundSourceNoteInternal>();
-            this.GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<FundSourceNoteInternal>();
             this.InteractionEventsWhereYouAreTheStaffPerson = new HashSet<InteractionEvent>();
             this.InteractionEventContacts = new HashSet<InteractionEventContact>();
             this.InvoicePaymentRequestsWhereYouAreThePreparedByPerson = new HashSet<InvoicePaymentRequest>();
@@ -134,7 +134,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementPeople.Any() || AuditLogs.Any() || DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || ForesterWorkUnits.Any() || GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any() || GrantAllocationsWhereYouAreTheGrantManager.Any() || GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any() || GrantAllocationLikelyPeople.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonRoles.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProgramsWhereYouAreTheProgramCreatePerson.Any() || ProgramsWhereYouAreTheProgramLastUpdatedByPerson.Any() || ProgramsWhereYouAreTheProgramPrimaryContactPerson.Any() || ProgramNotificationSentsWhereYouAreTheSentToPerson.Any() || ProgramPeople.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TabularDataImportsWhereYouAreTheLastProcessedPerson.Any() || TabularDataImportsWhereYouAreTheUploadPerson.Any();
+            return AgreementPeople.Any() || AuditLogs.Any() || DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || ForesterWorkUnits.Any() || FundSourceAllocationsWhereYouAreTheFundSourceManager.Any() || FundSourceAllocationChangeLogsWhereYouAreTheChangePerson.Any() || FundSourceAllocationLikelyPeople.Any() || FundSourceAllocationNotesWhereYouAreTheCreatedByPerson.Any() || FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || FundSourceAllocationProgramManagers.Any() || FundSourceNotesWhereYouAreTheCreatedByPerson.Any() || FundSourceNotesWhereYouAreTheLastUpdatedByPerson.Any() || FundSourceNoteInternalsWhereYouAreTheCreatedByPerson.Any() || FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicePaymentRequestsWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonRoles.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProgramsWhereYouAreTheProgramCreatePerson.Any() || ProgramsWhereYouAreTheProgramLastUpdatedByPerson.Any() || ProgramsWhereYouAreTheProgramPrimaryContactPerson.Any() || ProgramNotificationSentsWhereYouAreTheSentToPerson.Any() || ProgramPeople.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TabularDataImportsWhereYouAreTheLastProcessedPerson.Any() || TabularDataImportsWhereYouAreTheUploadPerson.Any();
         }
 
         /// <summary>
@@ -169,69 +169,69 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(ForesterWorkUnit).Name);
             }
 
-            if(GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any())
-            {
-                dependentObjects.Add(typeof(GisUploadAttempt).Name);
-            }
-
-            if(GrantAllocationsWhereYouAreTheGrantManager.Any())
+            if(FundSourceAllocationsWhereYouAreTheFundSourceManager.Any())
             {
                 dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
 
-            if(GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any())
+            if(FundSourceAllocationChangeLogsWhereYouAreTheChangePerson.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationChangeLog).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationChangeLog).Name);
             }
 
-            if(GrantAllocationLikelyPeople.Any())
+            if(FundSourceAllocationLikelyPeople.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationLikelyPerson).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationLikelyPerson).Name);
             }
 
-            if(GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any())
+            if(FundSourceAllocationNotesWhereYouAreTheCreatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationNote).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationNote).Name);
             }
 
-            if(GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any())
+            if(FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationNote).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationNote).Name);
             }
 
-            if(GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any())
+            if(FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationNoteInternal).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationNoteInternal).Name);
             }
 
-            if(GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
+            if(FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationNoteInternal).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationNoteInternal).Name);
             }
 
-            if(GrantAllocationProgramManagers.Any())
+            if(FundSourceAllocationProgramManagers.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationProgramManager).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationProgramManager).Name);
             }
 
-            if(GrantNotesWhereYouAreTheCreatedByPerson.Any())
+            if(FundSourceNotesWhereYouAreTheCreatedByPerson.Any())
             {
                 dependentObjects.Add(typeof(FundSourceNote).Name);
             }
 
-            if(GrantNotesWhereYouAreTheLastUpdatedByPerson.Any())
+            if(FundSourceNotesWhereYouAreTheLastUpdatedByPerson.Any())
             {
                 dependentObjects.Add(typeof(FundSourceNote).Name);
             }
 
-            if(GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any())
+            if(FundSourceNoteInternalsWhereYouAreTheCreatedByPerson.Any())
             {
                 dependentObjects.Add(typeof(FundSourceNoteInternal).Name);
             }
 
-            if(GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
+            if(FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
             {
                 dependentObjects.Add(typeof(FundSourceNoteInternal).Name);
+            }
+
+            if(GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.Any())
+            {
+                dependentObjects.Add(typeof(GisUploadAttempt).Name);
             }
 
             if(InteractionEventsWhereYouAreTheStaffPerson.Any())
@@ -409,7 +409,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(DNRUplandRegion).Name, typeof(FileResource).Name, typeof(ForesterWorkUnit).Name, typeof(GisUploadAttempt).Name, typeof(FundSourceAllocation).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationLikelyPerson).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(FundSourceNote).Name, typeof(FundSourceNoteInternal).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InvoicePaymentRequest).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonRole).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Program).Name, typeof(ProgramNotificationSent).Name, typeof(ProgramPerson).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TabularDataImport).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(DNRUplandRegion).Name, typeof(FileResource).Name, typeof(ForesterWorkUnit).Name, typeof(FundSourceAllocation).Name, typeof(FundSourceAllocationChangeLog).Name, typeof(FundSourceAllocationLikelyPerson).Name, typeof(FundSourceAllocationNote).Name, typeof(FundSourceAllocationNoteInternal).Name, typeof(FundSourceAllocationProgramManager).Name, typeof(FundSourceNote).Name, typeof(FundSourceNoteInternal).Name, typeof(GisUploadAttempt).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InvoicePaymentRequest).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonRole).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Program).Name, typeof(ProgramNotificationSent).Name, typeof(ProgramPerson).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TabularDataImport).Name};
 
 
         /// <summary>
@@ -459,67 +459,67 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in FundSourceAllocationsWhereYouAreTheFundSourceManager.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationChangeLogsWhereYouAreTheChangePerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationLikelyPeople.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationNotesWhereYouAreTheCreatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceAllocationProgramManagers.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceNotesWhereYouAreTheCreatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceNotesWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceNoteInternalsWhereYouAreTheCreatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationsWhereYouAreTheGrantManager.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationChangeLogsWhereYouAreTheChangePerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationLikelyPeople.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationNotesWhereYouAreTheCreatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantAllocationProgramManagers.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantNotesWhereYouAreTheCreatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantNotesWhereYouAreTheLastUpdatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantNoteInternalsWhereYouAreTheCreatedByPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -723,19 +723,19 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<DNRUplandRegion> DNRUplandRegionsWhereYouAreTheDNRUplandRegionCoordinator { get; set; }
         public virtual ICollection<FileResource> FileResourcesWhereYouAreTheCreatePerson { get; set; }
         public virtual ICollection<ForesterWorkUnit> ForesterWorkUnits { get; set; }
+        public virtual ICollection<FundSourceAllocation> FundSourceAllocationsWhereYouAreTheFundSourceManager { get; set; }
+        public virtual ICollection<FundSourceAllocationChangeLog> FundSourceAllocationChangeLogsWhereYouAreTheChangePerson { get; set; }
+        public virtual ICollection<FundSourceAllocationLikelyPerson> FundSourceAllocationLikelyPeople { get; set; }
+        public virtual ICollection<FundSourceAllocationNote> FundSourceAllocationNotesWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<FundSourceAllocationNote> FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<FundSourceAllocationNoteInternal> FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<FundSourceAllocationNoteInternal> FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<FundSourceAllocationProgramManager> FundSourceAllocationProgramManagers { get; set; }
+        public virtual ICollection<FundSourceNote> FundSourceNotesWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNote> FundSourceNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNoteInternal> FundSourceNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<FundSourceNoteInternal> FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
         public virtual ICollection<GisUploadAttempt> GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson { get; set; }
-        public virtual ICollection<FundSourceAllocation> GrantAllocationsWhereYouAreTheGrantManager { get; set; }
-        public virtual ICollection<GrantAllocationChangeLog> GrantAllocationChangeLogsWhereYouAreTheChangePerson { get; set; }
-        public virtual ICollection<GrantAllocationLikelyPerson> GrantAllocationLikelyPeople { get; set; }
-        public virtual ICollection<GrantAllocationNote> GrantAllocationNotesWhereYouAreTheCreatedByPerson { get; set; }
-        public virtual ICollection<GrantAllocationNote> GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
-        public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
-        public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
-        public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual ICollection<FundSourceNote> GrantNotesWhereYouAreTheCreatedByPerson { get; set; }
-        public virtual ICollection<FundSourceNote> GrantNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
-        public virtual ICollection<FundSourceNoteInternal> GrantNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
-        public virtual ICollection<FundSourceNoteInternal> GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
         public virtual ICollection<InteractionEvent> InteractionEventsWhereYouAreTheStaffPerson { get; set; }
         public virtual ICollection<InteractionEventContact> InteractionEventContacts { get; set; }
         public virtual ICollection<InvoicePaymentRequest> InvoicePaymentRequestsWhereYouAreThePreparedByPerson { get; set; }

@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected FederalFundCode()
         {
-            this.GrantAllocations = new HashSet<FundSourceAllocation>();
+            this.FundSourceAllocations = new HashSet<FundSourceAllocation>();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any();
+            return FundSourceAllocations.Any();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(GrantAllocations.Any())
+            if(FundSourceAllocations.Any())
             {
                 dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocations.ToList())
+            foreach(var x in FundSourceAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -112,7 +112,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FederalFundCodeID; } set { FederalFundCodeID = value; } }
 
-        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSourceAllocation> FundSourceAllocations { get; set; }
 
         public static class FieldLengths
         {

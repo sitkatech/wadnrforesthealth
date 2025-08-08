@@ -32,8 +32,8 @@ namespace ProjectFirma.Web.Models
             this.FieldDefinitionDataImages = new HashSet<FieldDefinitionDataImage>();
             this.FirmaHomePageImages = new HashSet<FirmaHomePageImage>();
             this.FirmaPageImages = new HashSet<FirmaPageImage>();
-            this.GrantAllocationFileResources = new HashSet<GrantAllocationFileResource>();
-            this.GrantFileResources = new HashSet<FundSourceFileResource>();
+            this.FundSourceAllocationFileResources = new HashSet<FundSourceAllocationFileResource>();
+            this.FundSourceFileResources = new HashSet<FundSourceFileResource>();
             this.InteractionEventFileResources = new HashSet<InteractionEventFileResource>();
             this.InvoicesWhereYouAreTheInvoiceFileResource = new HashSet<Invoice>();
             this.OrganizationsWhereYouAreTheLogoFileResource = new HashSet<Organization>();
@@ -113,7 +113,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || DNRUplandRegionContentImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationFileResources.Any() || GrantFileResources.Any() || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.Any() || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || ReportTemplates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
+            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || DNRUplandRegionContentImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || FundSourceAllocationFileResources.Any() || FundSourceFileResources.Any() || (InteractionEventFileResource != null) || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || (PriorityLandscapeFileResource != null) || ProgramsWhereYouAreTheProgramExampleGeospatialUploadFileResource.Any() || ProgramsWhereYouAreTheProgramFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || ReportTemplates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
@@ -158,12 +158,12 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(FirmaPageImage).Name);
             }
 
-            if(GrantAllocationFileResources.Any())
+            if(FundSourceAllocationFileResources.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationFileResource).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationFileResource).Name);
             }
 
-            if(GrantFileResources.Any())
+            if(FundSourceFileResources.Any())
             {
                 dependentObjects.Add(typeof(FundSourceFileResource).Name);
             }
@@ -238,7 +238,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocationFileResource).Name, typeof(FundSourceFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(DNRUplandRegionContentImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(FundSourceAllocationFileResource).Name, typeof(FundSourceFileResource).Name, typeof(InteractionEventFileResource).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(PriorityLandscapeFileResource).Name, typeof(Program).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(ReportTemplate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -298,12 +298,12 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantAllocationFileResources.ToList())
+            foreach(var x in FundSourceAllocationFileResources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantFileResources.ToList())
+            foreach(var x in FundSourceFileResources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -393,8 +393,8 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual ICollection<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual ICollection<FirmaPageImage> FirmaPageImages { get; set; }
-        public virtual ICollection<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
-        public virtual ICollection<FundSourceFileResource> GrantFileResources { get; set; }
+        public virtual ICollection<FundSourceAllocationFileResource> FundSourceAllocationFileResources { get; set; }
+        public virtual ICollection<FundSourceFileResource> FundSourceFileResources { get; set; }
         protected virtual ICollection<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         [NotMapped]
         public InteractionEventFileResource InteractionEventFileResource { get { return InteractionEventFileResources.SingleOrDefault(); } set { InteractionEventFileResources = new List<InteractionEventFileResource>{value};} }

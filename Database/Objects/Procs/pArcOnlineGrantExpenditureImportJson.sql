@@ -1,8 +1,8 @@
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND OBJECT_ID = OBJECT_ID('dbo.pArcOnlineGrantExpenditureImportJson'))
-    DROP PROCEDURE dbo.pArcOnlineGrantExpenditureImportJson
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND OBJECT_ID = OBJECT_ID('dbo.pArcOnlineFundSourceExpenditureImportJson'))
+    DROP PROCEDURE dbo.pArcOnlineFundSourceExpenditureImportJson
 GO
 
-CREATE PROCEDURE dbo.pArcOnlineGrantExpenditureImportJson
+CREATE PROCEDURE dbo.pArcOnlineFundSourceExpenditureImportJson
 (
     @ArcOnlineFinanceApiRawJsonImportID int null,
     -- Calendar year of the data we are importing
@@ -22,7 +22,7 @@ FTE_AMOUNT,TAR_HR_AMOUNT,BIENNIUM,FISCAL_MONTH,FISCAL_ADJUSTMENT_MONTH,CALENDAR_
     -- Create temp table from the bulk JSON field
     ---------------------------------------------
 
-    insert into dbo.GrantAllocationExpenditureJsonStage
+    insert into dbo.FundSourceAllocationExpenditureJsonStage
     ( Biennium, FiscalMo, FiscalAdjMo, CalYr, MoString, SourceSystem, DocNo, DocSuffix, DocDate, InvoiceDesc, InvoiceDate, GlAcctNo, ObjCd, ObjName, SubObjCd, SubObjName, SubSubObjCd, SubSubObjName, ApprnCd, ApprnName, FundCd, FundName, OrgCd, OrgName, ProgIdxCd, ProgIdxName, ProgCd, ProgName, SubProgCd, SubProgName, ActivityCd, ActivityName, SubActivityCd, SubActivityName, ProjectCd, ProjectName, VendorNo, VendorName, ExpendAccrued)
     SELECT  BIENNIUM, FISCAL_MONTH, FISCAL_ADJUSTMENT_MONTH, CALENDAR_YEAR, MONTH_NAME, SOURCE_SYSTEM, DOCUMENT_NUMBER, DOCUMENT_SUFFIX, DOCUMENT_DATE, INVOICE_DESCRIPTION, INVOICE_DATE, GL_ACCOUNT_NUMBER, OBJECT_CODE, [OBJECT_NAME], SUB_OBJECT_CODE, SUB_OBJECT_NAME, SUB_SUB_OBJECT_CODE, SUB_SUB_OBJECT_NAME, APPROPRIATION_CODE, APPROPRIATION_NAME, FUND_CODE, FUND_NAME, ORG_CODE, ORG_NAME, PROGRAM_INDEX_CODE, PROGRAM_INDEX_NAME, PROGRAM_CODE, [PROGRAM_NAME], SUB_PROGRAM_CODE, SUB_PROGRAM_NAME, ACTIVITY_CODE, ACTIVITY_NAME, SUB_ACTIVITY_CODE, SUB_ACTIVITY_NAME, PROJECT_CODE, PROJECT_NAME, VENDOR_NUMBER, VENDOR_NAME, EXPENDITURE_ACCURED
     from (select rji.RawJsonString from dbo.ArcOnlineFinanceApiRawJsonImport as rji where rji.ArcOnlineFinanceApiRawJsonImportID = @ArcOnlineFinanceApiRawJsonImportID) as j 
@@ -72,16 +72,16 @@ FTE_AMOUNT,TAR_HR_AMOUNT,BIENNIUM,FISCAL_MONTH,FISCAL_ADJUSTMENT_MONTH,CALENDAR_
         VENDOR_NAME varchar(max),
         EXPENDITURE_ACCURED money
     )
-    AS GrantExpenditureTemp
+    AS FundSourceExpenditureTemp
     -- Enforce the year limit from here on in the sproc
-    where GrantExpenditureTemp.Biennium = @BienniumToImport or @BienniumToImport is null
+    where FundSourceExpenditureTemp.Biennium = @BienniumToImport or @BienniumToImport is null
 
 
--- Insert incoming GrantExpenditures into GrantAllocationExpenditure
+-- Insert incoming FundSourceExpenditures into FundSourceAllocationExpenditure
 -- ==================================================================
-insert into dbo.GrantAllocationExpenditure
+insert into dbo.FundSourceAllocationExpenditure
     (
-        GrantAllocationID,
+        FundSourceAllocationID,
         CostTypeID,
         Biennium,
         FiscalMonth,
@@ -90,17 +90,17 @@ insert into dbo.GrantAllocationExpenditure
         ExpenditureAmount
     )
 select
-    gapc.GrantAllocationID,
+    gapc.FundSourceAllocationID,
     ctdm.CostTypeID as CostTypeID,
     tgp.BIENNIUM,
     tgp.FiscalMo,
     tgp.CalYr as CalendarYear,
     (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
     tgp.ExpendAccrued
-from dbo.GrantAllocationProgramIndexProjectCode as gapc
+from dbo.FundSourceAllocationProgramIndexProjectCode as gapc
 inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
 inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
-inner join dbo.GrantAllocationExpenditureJsonStage as tgp
+inner join dbo.FundSourceAllocationExpenditureJsonStage as tgp
         on 
         dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
         and 
@@ -124,9 +124,9 @@ go
 select * from dbo.ArcOnlineFinanceApiRawJsonImport
 
 set statistics time on
-exec pArcOnlineGrantExpenditureImportJson @ArcOnlineFinanceApiRawJsonImportID = 9, @BienniumToImport = 2009
+exec pArcOnlineFundSourceExpenditureImportJson @ArcOnlineFinanceApiRawJsonImportID = 9, @BienniumToImport = 2009
 
-exec pArcOnlineGrantExpenditureImportJson @ArcOnlineFinanceApiRawJsonImportID = 1308, @BienniumToImport = 2007
+exec pArcOnlineFundSourceExpenditureImportJson @ArcOnlineFinanceApiRawJsonImportID = 1308, @BienniumToImport = 2007
 
 set statistics time off
 

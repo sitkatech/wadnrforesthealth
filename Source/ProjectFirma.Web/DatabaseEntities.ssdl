@@ -2,7 +2,7 @@
 <Schema Namespace="ProjectFirma.Web.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementFundSourceAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementFundSourceAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementProject" EntityType="ProjectFirma.Web.Models.Store.AgreementProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
@@ -31,6 +31,24 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ForesterWorkUnit" EntityType="ProjectFirma.Web.Models.Store.ForesterWorkUnit" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSource" EntityType="ProjectFirma.Web.Models.Store.FundSource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocation" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationChangeLog" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationChangeLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationExpenditure" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationExpenditureJsonStage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationFileResource" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationFileResource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationLikelyPerson" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationLikelyPerson" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationNote" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationNote" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationPriority" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationPriority" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramIndexProjectCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramManager" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceAllocationSource" EntityType="ProjectFirma.Web.Models.Store.FundSourceAllocationSource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceFileResource" EntityType="ProjectFirma.Web.Models.Store.FundSourceFileResource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceNote" EntityType="ProjectFirma.Web.Models.Store.FundSourceNote" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceNoteInternal" EntityType="ProjectFirma.Web.Models.Store.FundSourceNoteInternal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FundSourceType" EntityType="ProjectFirma.Web.Models.Store.FundSourceType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisCrossWalkDefault" EntityType="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisDefaultMapping" EntityType="ProjectFirma.Web.Models.Store.GisDefaultMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisExcludeIncludeColumn" EntityType="ProjectFirma.Web.Models.Store.GisExcludeIncludeColumn" store:Type="Tables" Schema="dbo" />
@@ -42,24 +60,6 @@
     <EntitySet Name="GisUploadAttemptGisMetadataAttribute" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttemptGisMetadataAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadProgramMergeGrouping" EntityType="ProjectFirma.Web.Models.Store.GisUploadProgramMergeGrouping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditureJsonStage" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationFileResource" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationLikelyPerson" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationLikelyPerson" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationPriority" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationPriority" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationSource" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationSource" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.Store.GrantFileResource" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.Store.InteractionEvent" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventContact" EntityType="ProjectFirma.Web.Models.Store.InteractionEventContact" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InteractionEventFileResource" EntityType="ProjectFirma.Web.Models.Store.InteractionEventFileResource" store:Type="Tables" Schema="dbo" />
@@ -101,8 +101,8 @@
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectExternalLinkUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectFundingSource" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectFundingSourceUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectFundingSourceUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectFundSourceAllocationRequest" EntityType="ProjectFirma.Web.Models.Store.ProjectFundSourceAllocationRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectFundSourceAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectFundSourceAllocationRequestUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.Store.ProjectImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImageUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectImageUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectImportBlockList" EntityType="ProjectFirma.Web.Models.Store.ProjectImportBlockList" store:Type="Tables" Schema="dbo" />
@@ -183,52 +183,52 @@ FROM [dbo].[vGeoServerCounty] AS [vGeoServerCounty]</DefiningQuery>
 [vGeoServerPriorityLandscape].[MapColor] AS [MapColor]
 FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="vLoaStageGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocation">
+    <EntitySet Name="vLoaStageFundSourceAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageFundSourceAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageFundSourceAllocation">
       <DefiningQuery>SELECT 
-[vLoaStageGrantAllocation].[LoaStageID] AS [LoaStageID], 
-[vLoaStageGrantAllocation].[GrantID] AS [GrantID], 
-[vLoaStageGrantAllocation].[GrantAllocationID] AS [GrantAllocationID], 
-[vLoaStageGrantAllocation].[IsNortheast] AS [IsNortheast], 
-[vLoaStageGrantAllocation].[IsSoutheast] AS [IsSoutheast], 
-[vLoaStageGrantAllocation].[ProgramIndex] AS [ProgramIndex], 
-[vLoaStageGrantAllocation].[ProjectCode] AS [ProjectCode]
-FROM [dbo].[vLoaStageGrantAllocation] AS [vLoaStageGrantAllocation]</DefiningQuery>
+[vLoaStageFundSourceAllocation].[LoaStageID] AS [LoaStageID], 
+[vLoaStageFundSourceAllocation].[FundSourceID] AS [FundSourceID], 
+[vLoaStageFundSourceAllocation].[FundSourceAllocationID] AS [FundSourceAllocationID], 
+[vLoaStageFundSourceAllocation].[IsNortheast] AS [IsNortheast], 
+[vLoaStageFundSourceAllocation].[IsSoutheast] AS [IsSoutheast], 
+[vLoaStageFundSourceAllocation].[ProgramIndex] AS [ProgramIndex], 
+[vLoaStageFundSourceAllocation].[ProjectCode] AS [ProjectCode]
+FROM [dbo].[vLoaStageFundSourceAllocation] AS [vLoaStageFundSourceAllocation]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="vLoaStageGrantAllocationByProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.vLoaStageGrantAllocationByProgramIndexProjectCode" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
+    <EntitySet Name="vLoaStageFundSourceAllocationByProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.vLoaStageFundSourceAllocationByProgramIndexProjectCode" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageFundSourceAllocationByProgramIndexProjectCode">
       <DefiningQuery>SELECT 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[LoaStageID] AS [LoaStageID], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantAllocationID] AS [GrantAllocationID], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[GrantID] AS [GrantID], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[IsNortheast] AS [IsNortheast], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[IsSoutheast] AS [IsSoutheast], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[ProgramIndex] AS [ProgramIndex], 
-[vLoaStageGrantAllocationByProgramIndexProjectCode].[ProjectCode] AS [ProjectCode]
-FROM [dbo].[vLoaStageGrantAllocationByProgramIndexProjectCode] AS [vLoaStageGrantAllocationByProgramIndexProjectCode]</DefiningQuery>
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[LoaStageID] AS [LoaStageID], 
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[FundSourceAllocationID] AS [FundSourceAllocationID], 
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[FundSourceID] AS [FundSourceID], 
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[IsNortheast] AS [IsNortheast], 
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[IsSoutheast] AS [IsSoutheast], 
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[ProgramIndex] AS [ProgramIndex], 
+[vLoaStageFundSourceAllocationByProgramIndexProjectCode].[ProjectCode] AS [ProjectCode]
+FROM [dbo].[vLoaStageFundSourceAllocationByProgramIndexProjectCode] AS [vLoaStageFundSourceAllocationByProgramIndexProjectCode]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="vLoaStageProjectGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageProjectGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageProjectGrantAllocation">
+    <EntitySet Name="vLoaStageProjectFundSourceAllocation" EntityType="ProjectFirma.Web.Models.Store.vLoaStageProjectFundSourceAllocation" store:Type="Views" store:Schema="dbo" store:Name="vLoaStageProjectFundSourceAllocation">
       <DefiningQuery>SELECT 
-[vLoaStageProjectGrantAllocation].[ProjectID] AS [ProjectID], 
-[vLoaStageProjectGrantAllocation].[ProjectGisIdentifier] AS [ProjectGisIdentifier], 
-[vLoaStageProjectGrantAllocation].[MatchAmount] AS [MatchAmount], 
-[vLoaStageProjectGrantAllocation].[PayAmount] AS [PayAmount], 
-[vLoaStageProjectGrantAllocation].[ProjectStatus] AS [ProjectStatus], 
-[vLoaStageProjectGrantAllocation].[GrantAllocationID] AS [GrantAllocationID], 
-[vLoaStageProjectGrantAllocation].[LetterDate] AS [LetterDate], 
-[vLoaStageProjectGrantAllocation].[ProjectExpirationDate] AS [ProjectExpirationDate], 
-[vLoaStageProjectGrantAllocation].[ApplicationDate] AS [ApplicationDate], 
-[vLoaStageProjectGrantAllocation].[DecisionDate] AS [DecisionDate], 
-[vLoaStageProjectGrantAllocation].[LoaStageID] AS [LoaStageID], 
-[vLoaStageProjectGrantAllocation].[IsNortheast] AS [IsNortheast], 
-[vLoaStageProjectGrantAllocation].[IsSoutheast] AS [IsSoutheast], 
-[vLoaStageProjectGrantAllocation].[ProgramIndex] AS [ProgramIndex], 
-[vLoaStageProjectGrantAllocation].[ProjectCode] AS [ProjectCode]
-FROM [dbo].[vLoaStageProjectGrantAllocation] AS [vLoaStageProjectGrantAllocation]</DefiningQuery>
+[vLoaStageProjectFundSourceAllocation].[ProjectID] AS [ProjectID], 
+[vLoaStageProjectFundSourceAllocation].[ProjectGisIdentifier] AS [ProjectGisIdentifier], 
+[vLoaStageProjectFundSourceAllocation].[MatchAmount] AS [MatchAmount], 
+[vLoaStageProjectFundSourceAllocation].[PayAmount] AS [PayAmount], 
+[vLoaStageProjectFundSourceAllocation].[ProjectStatus] AS [ProjectStatus], 
+[vLoaStageProjectFundSourceAllocation].[FundSourceAllocationID] AS [FundSourceAllocationID], 
+[vLoaStageProjectFundSourceAllocation].[LetterDate] AS [LetterDate], 
+[vLoaStageProjectFundSourceAllocation].[ProjectExpirationDate] AS [ProjectExpirationDate], 
+[vLoaStageProjectFundSourceAllocation].[ApplicationDate] AS [ApplicationDate], 
+[vLoaStageProjectFundSourceAllocation].[DecisionDate] AS [DecisionDate], 
+[vLoaStageProjectFundSourceAllocation].[LoaStageID] AS [LoaStageID], 
+[vLoaStageProjectFundSourceAllocation].[IsNortheast] AS [IsNortheast], 
+[vLoaStageProjectFundSourceAllocation].[IsSoutheast] AS [IsSoutheast], 
+[vLoaStageProjectFundSourceAllocation].[ProgramIndex] AS [ProgramIndex], 
+[vLoaStageProjectFundSourceAllocation].[ProjectCode] AS [ProjectCode]
+FROM [dbo].[vLoaStageProjectFundSourceAllocation] AS [vLoaStageProjectFundSourceAllocation]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="vSingularGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.vSingularGrantAllocation" store:Type="Views" store:Schema="dbo" store:Name="vSingularGrantAllocation">
+    <EntitySet Name="vSingularFundSourceAllocation" EntityType="ProjectFirma.Web.Models.Store.vSingularFundSourceAllocation" store:Type="Views" store:Schema="dbo" store:Name="vSingularFundSourceAllocation">
       <DefiningQuery>SELECT 
-[vSingularGrantAllocation].[GrantID] AS [GrantID], 
-[vSingularGrantAllocation].[GrantAllocationID] AS [GrantAllocationID]
-FROM [dbo].[vSingularGrantAllocation] AS [vSingularGrantAllocation]</DefiningQuery>
+[vSingularFundSourceAllocation].[FundSourceID] AS [FundSourceID], 
+[vSingularFundSourceAllocation].[FundSourceAllocationID] AS [FundSourceAllocationID]
+FROM [dbo].[vSingularFundSourceAllocation] AS [vSingularFundSourceAllocation]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
       <DefiningQuery>SELECT 
@@ -270,13 +270,13 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
-    <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Agreement_AgreementID">
+    <AssociationSet Name="FK_AgreementFundSourceAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementFundSourceAllocation_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
-      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
+      <End Role="AgreementFundSourceAllocations" EntitySet="AgreementFundSourceAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
+    <AssociationSet Name="FK_AgreementFundSourceAllocation_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementFundSourceAllocation_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="AgreementFundSourceAllocations" EntitySet="AgreementFundSourceAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementPerson_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
@@ -370,6 +370,150 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="Person" EntitySet="Person" />
       <End Role="ForesterWorkUnits" EntitySet="ForesterWorkUnit" />
     </AssociationSet>
+    <AssociationSet Name="FK_FundSource_FundSourceType_FundSourceTypeID" Association="ProjectFirma.Web.Models.Store.FK_FundSource_FundSourceType_FundSourceTypeID">
+      <End Role="FundSourceType" EntitySet="FundSourceType" />
+      <End Role="FundSources" EntitySet="FundSource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_FundSource_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="FundSources" EntitySet="FundSource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="FundSourceAllocations" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_FederalFundCode_FederalFundCodeID">
+      <End Role="FederalFundCode" EntitySet="FederalFundCode" />
+      <End Role="FundSourceAllocations" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_FundSource_FundSourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_FundSource_FundSourceID">
+      <End Role="FundSource" EntitySet="FundSource" />
+      <End Role="FundSourceAllocations" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_FundSourceAllocationPriority_FundSourceAllocationPriorityID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_FundSourceAllocationPriority_FundSourceAllocationPriorityID">
+      <End Role="FundSourceAllocationPriority" EntitySet="FundSourceAllocationPriority" />
+      <End Role="FundSourceAllocations" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_FundSourceAllocationSource_FundSourceAllocationSourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_FundSourceAllocationSource_FundSourceAllocationSourceID">
+      <End Role="FundSourceAllocationSource" EntitySet="FundSourceAllocationSource" />
+      <End Role="FundSourceAllocations" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="FundSourceAllocations" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocation_Person_FundSourceManagerID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocation_Person_FundSourceManagerID_PersonID">
+      <End Role="FundSourceManager" EntitySet="Person" />
+      <End Role="FundSourceAllocationsWhereYouAreTheFundSourceManager" EntitySet="FundSourceAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationBudgetLineItem_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationBudgetLineItem_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationBudgetLineItems" EntitySet="FundSourceAllocationBudgetLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationChangeLog_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationChangeLog_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationChangeLogs" EntitySet="FundSourceAllocationChangeLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationChangeLog_Person_ChangePersonID_PersonID">
+      <End Role="ChangePerson" EntitySet="Person" />
+      <End Role="FundSourceAllocationChangeLogsWhereYouAreTheChangePerson" EntitySet="FundSourceAllocationChangeLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationExpenditure_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationExpenditure_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationExpenditures" EntitySet="FundSourceAllocationExpenditure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="FundSourceAllocationFileResources" EntitySet="FundSourceAllocationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationFileResource_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationFileResource_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationFileResources" EntitySet="FundSourceAllocationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationLikelyPerson_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationLikelyPerson_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationLikelyPeople" EntitySet="FundSourceAllocationLikelyPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationLikelyPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationLikelyPerson_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="FundSourceAllocationLikelyPeople" EntitySet="FundSourceAllocationLikelyPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationNote_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationNote_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationNotes" EntitySet="FundSourceAllocationNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationNote_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceAllocationNotesWhereYouAreTheCreatedByPerson" EntitySet="FundSourceAllocationNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationNote_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationNote_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="FundSourceAllocationNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationNoteInternal_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationNoteInternal_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationNoteInternals" EntitySet="FundSourceAllocationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationNoteInternal_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="FundSourceAllocationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="FundSourceAllocationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationProgramIndexProjectCode_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationProgramIndexProjectCode_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationProgramIndexProjectCodes" EntitySet="FundSourceAllocationProgramIndexProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID">
+      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
+      <End Role="FundSourceAllocationProgramIndexProjectCodes" EntitySet="FundSourceAllocationProgramIndexProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="FundSourceAllocationProgramIndexProjectCodes" EntitySet="FundSourceAllocationProgramIndexProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationProgramManager_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationProgramManager_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="FundSourceAllocationProgramManagers" EntitySet="FundSourceAllocationProgramManager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceAllocationProgramManager_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="FundSourceAllocationProgramManagers" EntitySet="FundSourceAllocationProgramManager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="FundSourceFileResources" EntitySet="FundSourceFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceFileResource_FundSource_FundSourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceFileResource_FundSource_FundSourceID">
+      <End Role="FundSource" EntitySet="FundSource" />
+      <End Role="FundSourceFileResources" EntitySet="FundSourceFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceNote_FundSource_FundSourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceNote_FundSource_FundSourceID">
+      <End Role="FundSource" EntitySet="FundSource" />
+      <End Role="FundSourceNotes" EntitySet="FundSourceNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceNote_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceNotesWhereYouAreTheCreatedByPerson" EntitySet="FundSourceNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceNote_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceNote_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="FundSourceNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceNoteInternal_FundSource_FundSourceID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceNoteInternal_FundSource_FundSourceID">
+      <End Role="FundSource" EntitySet="FundSource" />
+      <End Role="FundSourceNoteInternals" EntitySet="FundSourceNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceNoteInternal_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="FundSourceNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundSourceNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_FundSourceNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="FundSourceNoteInternal" />
+    </AssociationSet>
     <AssociationSet Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
       <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
       <End Role="GisCrossWalkDefaults" EntitySet="GisCrossWalkDefault" />
@@ -430,150 +574,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="RelationshipTypeForDefaultOrganization" EntitySet="RelationshipType" />
       <End Role="GisUploadSourceOrganizationsWhereYouAreTheRelationshipTypeForDefaultOrganization" EntitySet="GisUploadSourceOrganization" />
     </AssociationSet>
-    <AssociationSet Name="FK_Grant_GrantType_GrantTypeID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantType_GrantTypeID">
-      <End Role="GrantType" EntitySet="GrantType" />
-      <End Role="Grants" EntitySet="Grant" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Grant_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Grant_Organization_OrganizationID">
-      <End Role="Organization" EntitySet="Organization" />
-      <End Role="Grants" EntitySet="Grant" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID">
-      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
-      <End Role="FederalFundCode" EntitySet="FederalFundCode" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
-      <End Role="GrantAllocationPriority" EntitySet="GrantAllocationPriority" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID">
-      <End Role="GrantAllocationSource" EntitySet="GrantAllocationSource" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Organization_OrganizationID">
-      <End Role="Organization" EntitySet="Organization" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Person_GrantManagerID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Person_GrantManagerID_PersonID">
-      <End Role="GrantManager" EntitySet="Person" />
-      <End Role="GrantAllocationsWhereYouAreTheGrantManager" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationChangeLogs" EntitySet="GrantAllocationChangeLog" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
-      <End Role="ChangePerson" EntitySet="Person" />
-      <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" EntitySet="GrantAllocationChangeLog" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationExpenditures" EntitySet="GrantAllocationExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationFileResource_FileResource_FileResourceID">
-      <End Role="FileResource" EntitySet="FileResource" />
-      <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationLikelyPeople" EntitySet="GrantAllocationLikelyPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationLikelyPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationLikelyPerson_Person_PersonID">
-      <End Role="Person" EntitySet="Person" />
-      <End Role="GrantAllocationLikelyPeople" EntitySet="GrantAllocationLikelyPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationNotes" EntitySet="GrantAllocationNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
-      <End Role="CreatedByPerson" EntitySet="Person" />
-      <End Role="GrantAllocationNotesWhereYouAreTheCreatedByPerson" EntitySet="GrantAllocationNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID">
-      <End Role="LastUpdatedByPerson" EntitySet="Person" />
-      <End Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantAllocationNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationNoteInternals" EntitySet="GrantAllocationNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID">
-      <End Role="CreatedByPerson" EntitySet="Person" />
-      <End Role="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantAllocationNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
-      <End Role="LastUpdatedByPerson" EntitySet="Person" />
-      <End Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantAllocationNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID">
-      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
-      <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_Person_PersonID">
-      <End Role="Person" EntitySet="Person" />
-      <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantFileResource_FileResource_FileResourceID">
-      <End Role="FileResource" EntitySet="FileResource" />
-      <End Role="GrantFileResources" EntitySet="GrantFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantFileResource_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantFileResource_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="GrantFileResources" EntitySet="GrantFileResource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantNote_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="GrantNotes" EntitySet="GrantNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Person_CreatedByPersonID_PersonID">
-      <End Role="CreatedByPerson" EntitySet="Person" />
-      <End Role="GrantNotesWhereYouAreTheCreatedByPerson" EntitySet="GrantNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantNote_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Person_LastUpdatedByPersonID_PersonID">
-      <End Role="LastUpdatedByPerson" EntitySet="Person" />
-      <End Role="GrantNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNote" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantNoteInternal_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="GrantNoteInternals" EntitySet="GrantNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID">
-      <End Role="CreatedByPerson" EntitySet="Person" />
-      <End Role="GrantNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
-      <End Role="LastUpdatedByPerson" EntitySet="Person" />
-      <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
-    </AssociationSet>
     <AssociationSet Name="FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID">
       <End Role="InteractionEventType" EntitySet="InteractionEventType" />
       <End Role="InteractionEvents" EntitySet="InteractionEvent" />
@@ -610,8 +610,8 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="InvoiceFileResource" EntitySet="FileResource" />
       <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
+    <AssociationSet Name="FK_Invoice_FundSource_FundSourceID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_FundSource_FundSourceID">
+      <End Role="FundSource" EntitySet="FundSource" />
       <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoicePaymentRequest_InvoicePaymentRequestID">
@@ -874,21 +874,21 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectFundingSourceUpdates" EntitySet="ProjectFundingSourceUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
+    <AssociationSet Name="FK_ProjectFundSourceAllocationRequest_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundSourceAllocationRequest_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="ProjectFundSourceAllocationRequests" EntitySet="ProjectFundSourceAllocationRequest" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_Project_ProjectID">
+    <AssociationSet Name="FK_ProjectFundSourceAllocationRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundSourceAllocationRequest_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
+      <End Role="ProjectFundSourceAllocationRequests" EntitySet="ProjectFundSourceAllocationRequest" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
+    <AssociationSet Name="FK_ProjectFundSourceAllocationRequestUpdate_FundSourceAllocation_FundSourceAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundSourceAllocationRequestUpdate_FundSourceAllocation_FundSourceAllocationID">
+      <End Role="FundSourceAllocation" EntitySet="FundSourceAllocation" />
+      <End Role="ProjectFundSourceAllocationRequestUpdates" EntitySet="ProjectFundSourceAllocationRequestUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <AssociationSet Name="FK_ProjectFundSourceAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectFundSourceAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
+      <End Role="ProjectFundSourceAllocationRequestUpdates" EntitySet="ProjectFundSourceAllocationRequestUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectImage_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectImage_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
@@ -1216,13 +1216,13 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="AgreementFileResourceID" Type="int" />
     <Property Name="tmpAgreement2ID" Type="int" />
   </EntityType>
-  <EntityType Name="AgreementGrantAllocation">
+  <EntityType Name="AgreementFundSourceAllocation">
     <Key>
-      <PropertyRef Name="AgreementGrantAllocationID" />
+      <PropertyRef Name="AgreementFundSourceAllocationID" />
     </Key>
-    <Property Name="AgreementGrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementFundSourceAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementPerson">
     <Key>
@@ -1506,6 +1506,241 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="RegionName" Type="varchar" MaxLength="100" />
     <Property Name="ForesterWorkUnitLocation" Type="geometry" Nullable="false" />
   </EntityType>
+  <EntityType Name="FundSource">
+    <Key>
+      <PropertyRef Name="FundSourceID" />
+    </Key>
+    <Property Name="FundSourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceNumber" Type="varchar" MaxLength="30" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
+    <Property Name="ComplianceNotes" Type="varchar(max)" />
+    <Property Name="CFDANumber" Type="varchar" MaxLength="10" />
+    <Property Name="FundSourceName" Type="varchar" Nullable="false" MaxLength="64" />
+    <Property Name="FundSourceTypeID" Type="int" />
+    <Property Name="ShortName" Type="varchar" MaxLength="64" />
+    <Property Name="FundSourceStatusID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="TotalAwardAmount" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocation">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationID" />
+    </Key>
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationName" Type="nvarchar" MaxLength="100" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="AllocationAmount" Type="money" />
+    <Property Name="FederalFundCodeID" Type="int" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="DNRUplandRegionID" Type="int" />
+    <Property Name="DivisionID" Type="int" />
+    <Property Name="FundSourceManagerID" Type="int" />
+    <Property Name="FundSourceAllocationPriorityID" Type="int" />
+    <Property Name="HasFundFSPs" Type="bit" />
+    <Property Name="FundSourceAllocationSourceID" Type="int" />
+    <Property Name="LikelyToUse" Type="bit" />
+    <Property Name="FundSourceID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationBudgetLineItem">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationBudgetLineItemID" />
+    </Key>
+    <Property Name="FundSourceAllocationBudgetLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="CostTypeID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
+    <Property Name="FundSourceAllocationBudgetLineItemNote" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationChangeLog">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationChangeLogID" />
+    </Key>
+    <Property Name="FundSourceAllocationChangeLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationAmountOldValue" Type="money" />
+    <Property Name="FundSourceAllocationAmountNewValue" Type="money" />
+    <Property Name="FundSourceAllocationAmountNote" Type="nvarchar" MaxLength="2000" />
+    <Property Name="ChangePersonID" Type="int" Nullable="false" />
+    <Property Name="ChangeDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationExpenditure">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationExpenditureID" />
+    </Key>
+    <Property Name="FundSourceAllocationExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="CostTypeID" Type="int" />
+    <Property Name="Biennium" Type="int" Nullable="false" />
+    <Property Name="FiscalMonth" Type="int" Nullable="false" />
+    <Property Name="CalendarYear" Type="int" Nullable="false" />
+    <Property Name="CalendarMonth" Type="int" Nullable="false" />
+    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationExpenditureJsonStage">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationExpenditureJsonStageID" />
+    </Key>
+    <Property Name="FundSourceAllocationExpenditureJsonStageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Biennium" Type="int" />
+    <Property Name="FiscalMo" Type="int" />
+    <Property Name="FiscalAdjMo" Type="int" />
+    <Property Name="CalYr" Type="int" />
+    <Property Name="MoString" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystem" Type="varchar" MaxLength="50" />
+    <Property Name="DocNo" Type="varchar" MaxLength="200" />
+    <Property Name="DocSuffix" Type="varchar" MaxLength="10" />
+    <Property Name="DocDate" Type="datetime" />
+    <Property Name="InvoiceDesc" Type="varchar(max)" />
+    <Property Name="InvoiceDate" Type="datetime" />
+    <Property Name="GlAcctNo" Type="int" />
+    <Property Name="ObjCd" Type="varchar" MaxLength="20" />
+    <Property Name="ObjName" Type="varchar(max)" />
+    <Property Name="SubObjCd" Type="varchar" MaxLength="20" />
+    <Property Name="SubObjName" Type="varchar(max)" />
+    <Property Name="SubSubObjCd" Type="varchar" MaxLength="20" />
+    <Property Name="SubSubObjName" Type="varchar(max)" />
+    <Property Name="ApprnCd" Type="varchar" MaxLength="20" />
+    <Property Name="ApprnName" Type="varchar(max)" />
+    <Property Name="FundCd" Type="varchar" MaxLength="20" />
+    <Property Name="FundName" Type="varchar(max)" />
+    <Property Name="OrgCd" Type="varchar" MaxLength="20" />
+    <Property Name="OrgName" Type="varchar(max)" />
+    <Property Name="ProgIdxCd" Type="varchar" MaxLength="20" />
+    <Property Name="ProgIdxName" Type="varchar(max)" />
+    <Property Name="ProgCd" Type="varchar" MaxLength="20" />
+    <Property Name="ProgName" Type="varchar(max)" />
+    <Property Name="SubProgCd" Type="varchar" MaxLength="20" />
+    <Property Name="SubProgName" Type="varchar(max)" />
+    <Property Name="ActivityCd" Type="varchar" MaxLength="20" />
+    <Property Name="ActivityName" Type="varchar(max)" />
+    <Property Name="SubActivityCd" Type="varchar" MaxLength="20" />
+    <Property Name="SubActivityName" Type="varchar(max)" />
+    <Property Name="ProjectCd" Type="varchar" MaxLength="20" />
+    <Property Name="ProjectName" Type="varchar(max)" />
+    <Property Name="VendorNo" Type="varchar" MaxLength="100" />
+    <Property Name="VendorName" Type="varchar(max)" />
+    <Property Name="ExpendAccrued" Type="money" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationFileResource">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationFileResourceID" />
+    </Key>
+    <Property Name="FundSourceAllocationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationLikelyPerson">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationLikelyPersonID" />
+    </Key>
+    <Property Name="FundSourceAllocationLikelyPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationNote">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationNoteID" />
+    </Key>
+    <Property Name="FundSourceAllocationNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationNoteText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationNoteInternal">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationNoteInternalID" />
+    </Key>
+    <Property Name="FundSourceAllocationNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationNoteInternalText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationPriority">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationPriorityID" />
+    </Key>
+    <Property Name="FundSourceAllocationPriorityID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationPriorityNumber" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationPriorityColor" Type="varchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationProgramIndexProjectCode">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationProgramIndexProjectCodeID" />
+    </Key>
+    <Property Name="FundSourceAllocationProgramIndexProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="ProgramIndexID" Type="int" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="int" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationProgramManager">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationProgramManagerID" />
+    </Key>
+    <Property Name="FundSourceAllocationProgramManagerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceAllocationSource">
+    <Key>
+      <PropertyRef Name="FundSourceAllocationSourceID" />
+    </Key>
+    <Property Name="FundSourceAllocationSourceID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationSourceName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="FundSourceAllocationSourceDisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundSourceFileResource">
+    <Key>
+      <PropertyRef Name="FundSourceFileResourceID" />
+    </Key>
+    <Property Name="FundSourceFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceID" Type="int" Nullable="false" />
+    <Property Name="FileResourceID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="FundSourceNote">
+    <Key>
+      <PropertyRef Name="FundSourceNoteID" />
+    </Key>
+    <Property Name="FundSourceNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceID" Type="int" Nullable="false" />
+    <Property Name="FundSourceNoteText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FundSourceNoteInternal">
+    <Key>
+      <PropertyRef Name="FundSourceNoteInternalID" />
+    </Key>
+    <Property Name="FundSourceNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceID" Type="int" Nullable="false" />
+    <Property Name="FundSourceNoteText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FundSourceType">
+    <Key>
+      <PropertyRef Name="FundSourceTypeID" />
+    </Key>
+    <Property Name="FundSourceTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FundSourceTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
   <EntityType Name="GisCrossWalkDefault">
     <Key>
       <PropertyRef Name="GisCrossWalkDefaultID" />
@@ -1626,241 +1861,6 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ApplyEndDateToTreatments" Type="bit" Nullable="false" />
     <Property Name="GisUploadProgramMergeGroupingID" Type="int" />
   </EntityType>
-  <EntityType Name="Grant">
-    <Key>
-      <PropertyRef Name="GrantID" />
-    </Key>
-    <Property Name="GrantID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
-    <Property Name="StartDate" Type="datetime" />
-    <Property Name="EndDate" Type="datetime" />
-    <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
-    <Property Name="ComplianceNotes" Type="varchar(max)" />
-    <Property Name="CFDANumber" Type="varchar" MaxLength="10" />
-    <Property Name="GrantName" Type="varchar" Nullable="false" MaxLength="64" />
-    <Property Name="GrantTypeID" Type="int" />
-    <Property Name="ShortName" Type="varchar" MaxLength="64" />
-    <Property Name="GrantStatusID" Type="int" Nullable="false" />
-    <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="TotalAwardAmount" Type="money" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocation">
-    <Key>
-      <PropertyRef Name="GrantAllocationID" />
-    </Key>
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationName" Type="nvarchar" MaxLength="100" />
-    <Property Name="StartDate" Type="datetime" />
-    <Property Name="EndDate" Type="datetime" />
-    <Property Name="AllocationAmount" Type="money" />
-    <Property Name="FederalFundCodeID" Type="int" />
-    <Property Name="OrganizationID" Type="int" />
-    <Property Name="DNRUplandRegionID" Type="int" />
-    <Property Name="DivisionID" Type="int" />
-    <Property Name="GrantManagerID" Type="int" />
-    <Property Name="GrantAllocationPriorityID" Type="int" />
-    <Property Name="HasFundFSPs" Type="bit" />
-    <Property Name="GrantAllocationSourceID" Type="int" />
-    <Property Name="LikelyToUse" Type="bit" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocationBudgetLineItem">
-    <Key>
-      <PropertyRef Name="GrantAllocationBudgetLineItemID" />
-    </Key>
-    <Property Name="GrantAllocationBudgetLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="CostTypeID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
-    <Property Name="GrantAllocationBudgetLineItemNote" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="GrantAllocationChangeLog">
-    <Key>
-      <PropertyRef Name="GrantAllocationChangeLogID" />
-    </Key>
-    <Property Name="GrantAllocationChangeLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationAmountOldValue" Type="money" />
-    <Property Name="GrantAllocationAmountNewValue" Type="money" />
-    <Property Name="GrantAllocationAmountNote" Type="nvarchar" MaxLength="2000" />
-    <Property Name="ChangePersonID" Type="int" Nullable="false" />
-    <Property Name="ChangeDate" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocationExpenditure">
-    <Key>
-      <PropertyRef Name="GrantAllocationExpenditureID" />
-    </Key>
-    <Property Name="GrantAllocationExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="CostTypeID" Type="int" />
-    <Property Name="Biennium" Type="int" Nullable="false" />
-    <Property Name="FiscalMonth" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="CalendarMonth" Type="int" Nullable="false" />
-    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocationExpenditureJsonStage">
-    <Key>
-      <PropertyRef Name="GrantAllocationExpenditureJsonStageID" />
-    </Key>
-    <Property Name="GrantAllocationExpenditureJsonStageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="Biennium" Type="int" />
-    <Property Name="FiscalMo" Type="int" />
-    <Property Name="FiscalAdjMo" Type="int" />
-    <Property Name="CalYr" Type="int" />
-    <Property Name="MoString" Type="varchar" MaxLength="20" />
-    <Property Name="SourceSystem" Type="varchar" MaxLength="50" />
-    <Property Name="DocNo" Type="varchar" MaxLength="200" />
-    <Property Name="DocSuffix" Type="varchar" MaxLength="10" />
-    <Property Name="DocDate" Type="datetime" />
-    <Property Name="InvoiceDesc" Type="varchar(max)" />
-    <Property Name="InvoiceDate" Type="datetime" />
-    <Property Name="GlAcctNo" Type="int" />
-    <Property Name="ObjCd" Type="varchar" MaxLength="20" />
-    <Property Name="ObjName" Type="varchar(max)" />
-    <Property Name="SubObjCd" Type="varchar" MaxLength="20" />
-    <Property Name="SubObjName" Type="varchar(max)" />
-    <Property Name="SubSubObjCd" Type="varchar" MaxLength="20" />
-    <Property Name="SubSubObjName" Type="varchar(max)" />
-    <Property Name="ApprnCd" Type="varchar" MaxLength="20" />
-    <Property Name="ApprnName" Type="varchar(max)" />
-    <Property Name="FundCd" Type="varchar" MaxLength="20" />
-    <Property Name="FundName" Type="varchar(max)" />
-    <Property Name="OrgCd" Type="varchar" MaxLength="20" />
-    <Property Name="OrgName" Type="varchar(max)" />
-    <Property Name="ProgIdxCd" Type="varchar" MaxLength="20" />
-    <Property Name="ProgIdxName" Type="varchar(max)" />
-    <Property Name="ProgCd" Type="varchar" MaxLength="20" />
-    <Property Name="ProgName" Type="varchar(max)" />
-    <Property Name="SubProgCd" Type="varchar" MaxLength="20" />
-    <Property Name="SubProgName" Type="varchar(max)" />
-    <Property Name="ActivityCd" Type="varchar" MaxLength="20" />
-    <Property Name="ActivityName" Type="varchar(max)" />
-    <Property Name="SubActivityCd" Type="varchar" MaxLength="20" />
-    <Property Name="SubActivityName" Type="varchar(max)" />
-    <Property Name="ProjectCd" Type="varchar" MaxLength="20" />
-    <Property Name="ProjectName" Type="varchar(max)" />
-    <Property Name="VendorNo" Type="varchar" MaxLength="100" />
-    <Property Name="VendorName" Type="varchar(max)" />
-    <Property Name="ExpendAccrued" Type="money" />
-  </EntityType>
-  <EntityType Name="GrantAllocationFileResource">
-    <Key>
-      <PropertyRef Name="GrantAllocationFileResourceID" />
-    </Key>
-    <Property Name="GrantAllocationFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="FileResourceID" Type="int" Nullable="false" />
-    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="Description" Type="varchar" MaxLength="1000" />
-  </EntityType>
-  <EntityType Name="GrantAllocationLikelyPerson">
-    <Key>
-      <PropertyRef Name="GrantAllocationLikelyPersonID" />
-    </Key>
-    <Property Name="GrantAllocationLikelyPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="PersonID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocationNote">
-    <Key>
-      <PropertyRef Name="GrantAllocationNoteID" />
-    </Key>
-    <Property Name="GrantAllocationNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationNoteText" Type="varchar(max)" />
-    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="LastUpdatedByPersonID" Type="int" />
-    <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantAllocationNoteInternal">
-    <Key>
-      <PropertyRef Name="GrantAllocationNoteInternalID" />
-    </Key>
-    <Property Name="GrantAllocationNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationNoteInternalText" Type="varchar(max)" />
-    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="LastUpdatedByPersonID" Type="int" />
-    <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantAllocationPriority">
-    <Key>
-      <PropertyRef Name="GrantAllocationPriorityID" />
-    </Key>
-    <Property Name="GrantAllocationPriorityID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationPriorityNumber" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationPriorityColor" Type="varchar" Nullable="false" MaxLength="8" />
-  </EntityType>
-  <EntityType Name="GrantAllocationProgramIndexProjectCode">
-    <Key>
-      <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
-    </Key>
-    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="ProgramIndexID" Type="int" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="int" />
-  </EntityType>
-  <EntityType Name="GrantAllocationProgramManager">
-    <Key>
-      <PropertyRef Name="GrantAllocationProgramManagerID" />
-    </Key>
-    <Property Name="GrantAllocationProgramManagerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="PersonID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocationSource">
-    <Key>
-      <PropertyRef Name="GrantAllocationSourceID" />
-    </Key>
-    <Property Name="GrantAllocationSourceID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationSourceName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="GrantAllocationSourceDisplayName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="SortOrder" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantFileResource">
-    <Key>
-      <PropertyRef Name="GrantFileResourceID" />
-    </Key>
-    <Property Name="GrantFileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="FileResourceID" Type="int" Nullable="false" />
-    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="Description" Type="varchar" MaxLength="1000" />
-  </EntityType>
-  <EntityType Name="GrantNote">
-    <Key>
-      <PropertyRef Name="GrantNoteID" />
-    </Key>
-    <Property Name="GrantNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="GrantNoteText" Type="varchar(max)" />
-    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="LastUpdatedByPersonID" Type="int" />
-    <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantNoteInternal">
-    <Key>
-      <PropertyRef Name="GrantNoteInternalID" />
-    </Key>
-    <Property Name="GrantNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="GrantNoteText" Type="varchar(max)" />
-    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="LastUpdatedByPersonID" Type="int" />
-    <Property Name="LastUpdatedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="GrantType">
-    <Key>
-      <PropertyRef Name="GrantTypeID" />
-    </Key>
-    <Property Name="GrantTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantTypeName" Type="varchar" Nullable="false" MaxLength="100" />
-  </EntityType>
   <EntityType Name="InteractionEvent">
     <Key>
       <PropertyRef Name="InteractionEventID" />
@@ -1922,7 +1922,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceFileResourceID" Type="int" />
     <Property Name="InvoicePaymentRequestID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" />
+    <Property Name="FundSourceID" Type="int" />
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="ProjectCodeID" Type="int" />
     <Property Name="OrganizationCodeID" Type="int" />
@@ -1952,7 +1952,7 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="LoaStageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectIdentifier" Type="varchar" Nullable="false" MaxLength="600" />
     <Property Name="ProjectStatus" Type="varchar" MaxLength="600" />
-    <Property Name="GrantNumber" Type="varchar" MaxLength="600" />
+    <Property Name="FundSourceNumber" Type="varchar" MaxLength="600" />
     <Property Name="FocusAreaName" Type="varchar" MaxLength="600" />
     <Property Name="ProjectExpirationDate" Type="datetime" />
     <Property Name="LetterDate" Type="datetime" />
@@ -2330,13 +2330,13 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ProjectGrantAllocationRequest">
+  <EntityType Name="ProjectFundSourceAllocationRequest">
     <Key>
-      <PropertyRef Name="ProjectGrantAllocationRequestID" />
+      <PropertyRef Name="ProjectFundSourceAllocationRequestID" />
     </Key>
-    <Property Name="ProjectGrantAllocationRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectFundSourceAllocationRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
     <Property Name="MatchAmount" Type="money" />
     <Property Name="PayAmount" Type="money" />
@@ -2344,13 +2344,13 @@ FROM [dbo].[vTotalTreatedAcresByProject] AS [vTotalTreatedAcresByProject]</Defin
     <Property Name="UpdateDate" Type="datetime" />
     <Property Name="ImportedFromTabularData" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="ProjectGrantAllocationRequestUpdate">
+  <EntityType Name="ProjectFundSourceAllocationRequestUpdate">
     <Key>
-      <PropertyRef Name="ProjectGrantAllocationRequestUpdateID" />
+      <PropertyRef Name="ProjectFundSourceAllocationRequestUpdateID" />
     </Key>
-    <Property Name="ProjectGrantAllocationRequestUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectFundSourceAllocationRequestUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
     <Property Name="TotalAmount" Type="money" />
     <Property Name="MatchAmount" Type="money" />
     <Property Name="PayAmount" Type="money" />
@@ -3011,41 +3011,41 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectTreatment
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerWashingtonLegislativeDistrict' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageFundSourceAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vLoaStageGrantAllocation">
+  <EntityType Name="vLoaStageFundSourceAllocation">
     <Key>
       <PropertyRef Name="LoaStageID" />
       <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" />
-    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="FundSourceID" Type="int" />
+    <Property Name="FundSourceAllocationID" Type="int" />
     <Property Name="IsNortheast" Type="bit" Nullable="false" />
     <Property Name="IsSoutheast" Type="bit" />
     <Property Name="ProgramIndex" Type="varchar" MaxLength="50" />
     <Property Name="ProjectCode" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageGrantAllocationByProgramIndexProjectCode' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageFundSourceAllocationByProgramIndexProjectCode' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vLoaStageGrantAllocationByProgramIndexProjectCode">
+  <EntityType Name="vLoaStageFundSourceAllocationByProgramIndexProjectCode">
     <Key>
       <PropertyRef Name="LoaStageID" />
       <PropertyRef Name="IsNortheast" />
     </Key>
     <Property Name="LoaStageID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" />
-    <Property Name="GrantID" Type="int" />
+    <Property Name="FundSourceAllocationID" Type="int" />
+    <Property Name="FundSourceID" Type="int" />
     <Property Name="IsNortheast" Type="bit" Nullable="false" />
     <Property Name="IsSoutheast" Type="bit" />
     <Property Name="ProgramIndex" Type="varchar" MaxLength="50" />
     <Property Name="ProjectCode" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectFundSourceAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vLoaStageProjectGrantAllocation">
+  <EntityType Name="vLoaStageProjectFundSourceAllocation">
     <Key>
       <PropertyRef Name="ProjectID" />
       <PropertyRef Name="LoaStageID" />
@@ -3056,7 +3056,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAlloc
     <Property Name="MatchAmount" Type="money" />
     <Property Name="PayAmount" Type="money" />
     <Property Name="ProjectStatus" Type="varchar" MaxLength="600" />
-    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="FundSourceAllocationID" Type="int" />
     <Property Name="LetterDate" Type="datetime" />
     <Property Name="ProjectExpirationDate" Type="datetime" />
     <Property Name="ApplicationDate" Type="datetime" />
@@ -3068,15 +3068,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vLoaStageProjectGrantAlloc
     <Property Name="ProjectCode" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSingularGrantAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSingularFundSourceAllocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vSingularGrantAllocation">
+  <EntityType Name="vSingularFundSourceAllocation">
     <Key>
-      <PropertyRef Name="GrantID" />
-      <PropertyRef Name="GrantAllocationID" />
+      <PropertyRef Name="FundSourceID" />
+      <PropertyRef Name="FundSourceAllocationID" />
     </Key>
-    <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="FundSourceID" Type="int" Nullable="false" />
+    <Property Name="FundSourceAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3171,27 +3171,27 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AgreementGrantAllocation_Agreement_AgreementID">
+  <Association Name="FK_AgreementFundSourceAllocation_Agreement_AgreementID">
     <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
-    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
+    <End Role="AgreementFundSourceAllocations" Type="ProjectFirma.Web.Models.Store.AgreementFundSourceAllocation" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Agreement">
         <PropertyRef Name="AgreementID" />
       </Principal>
-      <Dependent Role="AgreementGrantAllocations">
+      <Dependent Role="AgreementFundSourceAllocations">
         <PropertyRef Name="AgreementID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
+  <Association Name="FK_AgreementFundSourceAllocation_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="AgreementFundSourceAllocations" Type="ProjectFirma.Web.Models.Store.AgreementFundSourceAllocation" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
       </Principal>
-      <Dependent Role="AgreementGrantAllocations">
-        <PropertyRef Name="GrantAllocationID" />
+      <Dependent Role="AgreementFundSourceAllocations">
+        <PropertyRef Name="FundSourceAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3471,6 +3471,438 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FundSource_FundSourceType_FundSourceTypeID">
+    <End Role="FundSourceType" Type="ProjectFirma.Web.Models.Store.FundSourceType" Multiplicity="0..1" />
+    <End Role="FundSources" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceType">
+        <PropertyRef Name="FundSourceTypeID" />
+      </Principal>
+      <Dependent Role="FundSources">
+        <PropertyRef Name="FundSourceTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSource_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="FundSources" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="FundSources">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="0..1" />
+    <End Role="FundSourceAllocations" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocations">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_FederalFundCode_FederalFundCodeID">
+    <End Role="FederalFundCode" Type="ProjectFirma.Web.Models.Store.FederalFundCode" Multiplicity="0..1" />
+    <End Role="FundSourceAllocations" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FederalFundCode">
+        <PropertyRef Name="FederalFundCodeID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocations">
+        <PropertyRef Name="FederalFundCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_FundSource_FundSourceID">
+    <End Role="FundSource" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="1" />
+    <End Role="FundSourceAllocations" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSource">
+        <PropertyRef Name="FundSourceID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocations">
+        <PropertyRef Name="FundSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_FundSourceAllocationPriority_FundSourceAllocationPriorityID">
+    <End Role="FundSourceAllocationPriority" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationPriority" Multiplicity="0..1" />
+    <End Role="FundSourceAllocations" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocationPriority">
+        <PropertyRef Name="FundSourceAllocationPriorityID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocations">
+        <PropertyRef Name="FundSourceAllocationPriorityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_FundSourceAllocationSource_FundSourceAllocationSourceID">
+    <End Role="FundSourceAllocationSource" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationSource" Multiplicity="0..1" />
+    <End Role="FundSourceAllocations" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocationSource">
+        <PropertyRef Name="FundSourceAllocationSourceID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocations">
+        <PropertyRef Name="FundSourceAllocationSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
+    <End Role="FundSourceAllocations" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocations">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocation_Person_FundSourceManagerID_PersonID">
+    <End Role="FundSourceManager" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="FundSourceAllocationsWhereYouAreTheFundSourceManager" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceManager">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationsWhereYouAreTheFundSourceManager">
+        <PropertyRef Name="FundSourceManagerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationBudgetLineItem_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationBudgetLineItems" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationBudgetLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationBudgetLineItems">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationChangeLog_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationChangeLogs" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationChangeLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationChangeLogs">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationChangeLog_Person_ChangePersonID_PersonID">
+    <End Role="ChangePerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceAllocationChangeLogsWhereYouAreTheChangePerson" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationChangeLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChangePerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationChangeLogsWhereYouAreTheChangePerson">
+        <PropertyRef Name="ChangePersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationExpenditure_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationExpenditure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationExpenditures">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
+    <End Role="FundSourceAllocationFileResources" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationFileResource_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationFileResources" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationFileResources">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationLikelyPerson_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationLikelyPeople" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationLikelyPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationLikelyPeople">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationLikelyPerson_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceAllocationLikelyPeople" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationLikelyPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationLikelyPeople">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationNote_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationNotes" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationNotes">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationNote_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceAllocationNotesWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationNotesWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationNote_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationNotesWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationNoteInternal_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationNoteInternals" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationNoteInternals">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationNoteInternal_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationNoteInternalsWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationProgramIndexProjectCode_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramIndexProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationProgramIndexProjectCodes">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID">
+    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="1" />
+    <End Role="FundSourceAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramIndexProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramIndex">
+        <PropertyRef Name="ProgramIndexID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationProgramIndexProjectCodes">
+        <PropertyRef Name="ProgramIndexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
+    <End Role="FundSourceAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramIndexProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationProgramIndexProjectCodes">
+        <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationProgramManager_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="FundSourceAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationProgramManagers">
+        <PropertyRef Name="FundSourceAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceAllocationProgramManager_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.FundSourceAllocationProgramManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceAllocationProgramManagers">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
+    <End Role="FundSourceFileResources" Type="ProjectFirma.Web.Models.Store.FundSourceFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="FundSourceFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceFileResource_FundSource_FundSourceID">
+    <End Role="FundSource" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="1" />
+    <End Role="FundSourceFileResources" Type="ProjectFirma.Web.Models.Store.FundSourceFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSource">
+        <PropertyRef Name="FundSourceID" />
+      </Principal>
+      <Dependent Role="FundSourceFileResources">
+        <PropertyRef Name="FundSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceNote_FundSource_FundSourceID">
+    <End Role="FundSource" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="1" />
+    <End Role="FundSourceNotes" Type="ProjectFirma.Web.Models.Store.FundSourceNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSource">
+        <PropertyRef Name="FundSourceID" />
+      </Principal>
+      <Dependent Role="FundSourceNotes">
+        <PropertyRef Name="FundSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceNote_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceNotesWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceNotesWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceNote_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="FundSourceNotesWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceNotesWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceNoteInternal_FundSource_FundSourceID">
+    <End Role="FundSource" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="1" />
+    <End Role="FundSourceNoteInternals" Type="ProjectFirma.Web.Models.Store.FundSourceNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundSource">
+        <PropertyRef Name="FundSourceID" />
+      </Principal>
+      <Dependent Role="FundSourceNoteInternals">
+        <PropertyRef Name="FundSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceNoteInternal_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="FundSourceNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceNoteInternalsWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundSourceNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.FundSourceNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="FundSourceNoteInternalsWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GisCrossWalkDefault_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
     <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" Multiplicity="1" />
     <End Role="GisCrossWalkDefaults" Type="ProjectFirma.Web.Models.Store.GisCrossWalkDefault" Multiplicity="*" />
@@ -3651,438 +4083,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Grant_GrantType_GrantTypeID">
-    <End Role="GrantType" Type="ProjectFirma.Web.Models.Store.GrantType" Multiplicity="0..1" />
-    <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantType">
-        <PropertyRef Name="GrantTypeID" />
-      </Principal>
-      <Dependent Role="Grants">
-        <PropertyRef Name="GrantTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Grant_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
-    <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organization">
-        <PropertyRef Name="OrganizationID" />
-      </Principal>
-      <Dependent Role="Grants">
-        <PropertyRef Name="OrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID">
-    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DNRUplandRegion">
-        <PropertyRef Name="DNRUplandRegionID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="DNRUplandRegionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
-    <End Role="FederalFundCode" Type="ProjectFirma.Web.Models.Store.FederalFundCode" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FederalFundCode">
-        <PropertyRef Name="FederalFundCodeID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="FederalFundCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_GrantAllocationPriority_GrantAllocationPriorityID">
-    <End Role="GrantAllocationPriority" Type="ProjectFirma.Web.Models.Store.GrantAllocationPriority" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationPriority">
-        <PropertyRef Name="GrantAllocationPriorityID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="GrantAllocationPriorityID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_GrantAllocationSource_GrantAllocationSourceID">
-    <End Role="GrantAllocationSource" Type="ProjectFirma.Web.Models.Store.GrantAllocationSource" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationSource">
-        <PropertyRef Name="GrantAllocationSourceID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="GrantAllocationSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organization">
-        <PropertyRef Name="OrganizationID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="OrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_Person_GrantManagerID_PersonID">
-    <End Role="GrantManager" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantAllocationsWhereYouAreTheGrantManager" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantManager">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationsWhereYouAreTheGrantManager">
-        <PropertyRef Name="GrantManagerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationBudgetLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationBudgetLineItems">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationChangeLogs" Type="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationChangeLogs">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
-    <End Role="ChangePerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ChangePerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson">
-        <PropertyRef Name="ChangePersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationExpenditures">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationFileResource_FileResource_FileResourceID">
-    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
-    <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.Store.GrantAllocationFileResource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantAllocationFileResources">
-        <PropertyRef Name="FileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.Store.GrantAllocationFileResource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationFileResources">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationLikelyPerson_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationLikelyPeople" Type="ProjectFirma.Web.Models.Store.GrantAllocationLikelyPerson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationLikelyPeople">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationLikelyPerson_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantAllocationLikelyPeople" Type="ProjectFirma.Web.Models.Store.GrantAllocationLikelyPerson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationLikelyPeople">
-        <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationNotes" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationNotes">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
-    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantAllocationNotesWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationNotesWhereYouAreTheCreatedByPerson">
-        <PropertyRef Name="CreatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID">
-    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LastUpdatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson">
-        <PropertyRef Name="LastUpdatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationNoteInternals">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID">
-    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson">
-        <PropertyRef Name="CreatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
-    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LastUpdatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson">
-        <PropertyRef Name="LastUpdatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProgramIndexProjectCodes">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID">
-    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="1" />
-    <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramIndex">
-        <PropertyRef Name="ProgramIndexID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProgramIndexProjectCodes">
-        <PropertyRef Name="ProgramIndexID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
-    <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProgramIndexProjectCodes">
-        <PropertyRef Name="ProjectCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProgramManagers">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProgramManager_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProgramManagers">
-        <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantFileResource_FileResource_FileResourceID">
-    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
-    <End Role="GrantFileResources" Type="ProjectFirma.Web.Models.Store.GrantFileResource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantFileResources">
-        <PropertyRef Name="FileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantFileResource_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="GrantFileResources" Type="ProjectFirma.Web.Models.Store.GrantFileResource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="GrantFileResources">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantNote_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="GrantNotes" Type="ProjectFirma.Web.Models.Store.GrantNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="GrantNotes">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantNote_Person_CreatedByPersonID_PersonID">
-    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantNotesWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantNotesWhereYouAreTheCreatedByPerson">
-        <PropertyRef Name="CreatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantNote_Person_LastUpdatedByPersonID_PersonID">
-    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantNotesWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LastUpdatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantNotesWhereYouAreTheLastUpdatedByPerson">
-        <PropertyRef Name="LastUpdatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantNoteInternal_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="GrantNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="GrantNoteInternals">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID">
-    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="GrantNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantNoteInternalsWhereYouAreTheCreatedByPerson">
-        <PropertyRef Name="CreatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
-    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantNoteInternal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LastUpdatedByPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
-        <PropertyRef Name="LastUpdatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_InteractionEvent_InteractionEventType_InteractionEventTypeID">
     <End Role="InteractionEventType" Type="ProjectFirma.Web.Models.Store.InteractionEventType" Multiplicity="1" />
     <End Role="InteractionEvents" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="*" />
@@ -4193,15 +4193,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="0..1" />
+  <Association Name="FK_Invoice_FundSource_FundSourceID">
+    <End Role="FundSource" Type="ProjectFirma.Web.Models.Store.FundSource" Multiplicity="0..1" />
     <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
+      <Principal Role="FundSource">
+        <PropertyRef Name="FundSourceID" />
       </Principal>
       <Dependent Role="Invoices">
-        <PropertyRef Name="GrantID" />
+        <PropertyRef Name="FundSourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4987,50 +4987,50 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" Multiplicity="*" />
+  <Association Name="FK_ProjectFundSourceAllocationRequest_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="ProjectFundSourceAllocationRequests" Type="ProjectFirma.Web.Models.Store.ProjectFundSourceAllocationRequest" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
       </Principal>
-      <Dependent Role="ProjectGrantAllocationRequests">
-        <PropertyRef Name="GrantAllocationID" />
+      <Dependent Role="ProjectFundSourceAllocationRequests">
+        <PropertyRef Name="FundSourceAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationRequest_Project_ProjectID">
+  <Association Name="FK_ProjectFundSourceAllocationRequest_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" Multiplicity="*" />
+    <End Role="ProjectFundSourceAllocationRequests" Type="ProjectFirma.Web.Models.Store.ProjectFundSourceAllocationRequest" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
         <PropertyRef Name="ProjectID" />
       </Principal>
-      <Dependent Role="ProjectGrantAllocationRequests">
+      <Dependent Role="ProjectFundSourceAllocationRequests">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationRequestUpdates" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" Multiplicity="*" />
+  <Association Name="FK_ProjectFundSourceAllocationRequestUpdate_FundSourceAllocation_FundSourceAllocationID">
+    <End Role="FundSourceAllocation" Type="ProjectFirma.Web.Models.Store.FundSourceAllocation" Multiplicity="1" />
+    <End Role="ProjectFundSourceAllocationRequestUpdates" Type="ProjectFirma.Web.Models.Store.ProjectFundSourceAllocationRequestUpdate" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
+      <Principal Role="FundSourceAllocation">
+        <PropertyRef Name="FundSourceAllocationID" />
       </Principal>
-      <Dependent Role="ProjectGrantAllocationRequestUpdates">
-        <PropertyRef Name="GrantAllocationID" />
+      <Dependent Role="ProjectFundSourceAllocationRequestUpdates">
+        <PropertyRef Name="FundSourceAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+  <Association Name="FK_ProjectFundSourceAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectGrantAllocationRequestUpdates" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" Multiplicity="*" />
+    <End Role="ProjectFundSourceAllocationRequestUpdates" Type="ProjectFirma.Web.Models.Store.ProjectFundSourceAllocationRequestUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProjectUpdateBatch">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
-      <Dependent Role="ProjectGrantAllocationRequestUpdates">
+      <Dependent Role="ProjectFundSourceAllocationRequestUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
@@ -6044,7 +6044,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
-  <Function Name="pArcOnlineGrantExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="pArcOnlineFundSourceExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ArcOnlineFinanceApiRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
   </Function>
@@ -6063,10 +6063,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="pClearArcOnlineFinanceApiRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearAuditLogTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="pClearGisImportTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="pClearGrantAllocationExpenditureTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="pClearFundSourceAllocationExpenditureTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="bienniumFiscalYear" Type="int" Mode="In" />
   </Function>
+  <Function Name="pClearGisImportTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearOutdatedArcOnlineFinanceApiRawJsonImports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
@@ -6074,15 +6074,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
   <Function Name="pClearSocrataDataMartRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pFundSourceExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
+    <Parameter Name="BienniumToImport" Type="int" Mode="In" />
+  </Function>
   <Function Name="pGeospatial_SpatialIndexCreate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="applyChanges" Type="bit" Mode="In" />
     <Parameter Name="databaseNameOptional" Type="nvarchar" Mode="In" />
     <Parameter Name="tableNameOptional" Type="nvarchar" Mode="In" />
     <Parameter Name="geometryColumnName" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="pGrantExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
-    <Parameter Name="BienniumToImport" Type="int" Mode="In" />
   </Function>
   <Function Name="pHangFireClearJobQueue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pHangFireRescheduleJobs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />

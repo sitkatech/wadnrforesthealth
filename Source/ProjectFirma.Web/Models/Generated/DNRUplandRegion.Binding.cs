@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models
             this.Agreements = new HashSet<Agreement>();
             this.DNRUplandRegionContentImages = new HashSet<DNRUplandRegionContentImage>();
             this.FocusAreas = new HashSet<FocusArea>();
-            this.GrantAllocations = new HashSet<FundSourceAllocation>();
+            this.FundSourceAllocations = new HashSet<FundSourceAllocation>();
             this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
             this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectRegionUpdates = new HashSet<ProjectRegionUpdate>();
@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Agreements.Any() || DNRUplandRegionContentImages.Any() || FocusAreas.Any() || GrantAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
+            return Agreements.Any() || DNRUplandRegionContentImages.Any() || FocusAreas.Any() || FundSourceAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Models
                 dependentObjects.Add(typeof(FocusArea).Name);
             }
 
-            if(GrantAllocations.Any())
+            if(FundSourceAllocations.Any())
             {
                 dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
@@ -169,7 +169,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantAllocations.ToList())
+            foreach(var x in FundSourceAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -215,7 +215,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<DNRUplandRegionContentImage> DNRUplandRegionContentImages { get; set; }
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
-        public virtual ICollection<FundSourceAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSourceAllocation> FundSourceAllocations { get; set; }
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
