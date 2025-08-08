@@ -43,7 +43,7 @@
     <add key="ProjectCodeJsonApiBaseUrl" value="${project-code-json-api-base-url}" />
     <add key="ProgramIndexJsonApiBaseUrl" value="${program-index-json-api-base-url}" />
     <add key="VendorJsonApiBaseUrl" value="${vendor-json-api-base-url}" />
-    <add key="GrantExpendituresJsonApiBaseUrl" value="${grant-expenditures-json-api-base-url}" />
+    <add key="FundSourceExpendituresJsonApiBaseUrl" value="${fund-source-expenditures-json-api-base-url}" />
     <add key="LastLoadDateUrl" value="${last-load-date-url}" />
     <add key="DataImportAuthUrl" value="${data-import-auth-url}" />
     <add key="DataImportAuthUsername" value="${data-import-auth-username}" />
