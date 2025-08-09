@@ -1245,7 +1245,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionFundedAmount : FieldDefinition
     {
         private FieldDefinitionFundedAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundedAmount Instance = new FieldDefinitionFundedAmount(56, @"FundedAmount", @"Funded Amount", @"<p>The amount of funding, by grant allocation, expended on a project for a specific year. To see the total amount of funding expended on a project, click on the specific project.</p>");
+        public static readonly FieldDefinitionFundedAmount Instance = new FieldDefinitionFundedAmount(56, @"FundedAmount", @"Funded Amount", @"<p>The amount of funding, by fund source allocation, expended on a project for a specific year. To see the total amount of funding expended on a project, click on the specific project.</p>");
     }
 
     public partial class FieldDefinitionProjectLocation : FieldDefinition
@@ -1413,7 +1413,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionUnsecuredFunding : FieldDefinition
     {
         private FieldDefinitionUnsecuredFunding(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionUnsecuredFunding Instance = new FieldDefinitionUnsecuredFunding(248, @"UnsecuredFunding", @"Unsecured Funding", @"<p>Funding that has been identified for a project but has not been acquired such as planned grant applications.</p>");
+        public static readonly FieldDefinitionUnsecuredFunding Instance = new FieldDefinitionUnsecuredFunding(248, @"UnsecuredFunding", @"Unsecured Funding", @"<p>Funding that has been identified for a project but has not been acquired such as planned fund source applications.</p>");
     }
 
     public partial class FieldDefinitionProjectStewardOrganizationDisplayName : FieldDefinition
@@ -1605,61 +1605,61 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionFundSourceName : FieldDefinition
     {
         private FieldDefinitionFundSourceName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceName Instance = new FieldDefinitionFundSourceName(283, @"FundSourceName", @"Fund Source Name", @"<p>The name of a grant. Fund Source names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>");
+        public static readonly FieldDefinitionFundSourceName Instance = new FieldDefinitionFundSourceName(283, @"FundSourceName", @"Fund Source Name", @"<p>The name of a fund source. Fund Source names should generally include a reference to 1) the location of the fund source, 2) the primary implementation activity, and 3) the fund source year</p>");
     }
 
     public partial class FieldDefinitionFundSourceShortName : FieldDefinition
     {
         private FieldDefinitionFundSourceShortName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceShortName Instance = new FieldDefinitionFundSourceShortName(284, @"FundSourceShortName", @"Short Name", @"<p>The short hand name to reference a grant</p>");
+        public static readonly FieldDefinitionFundSourceShortName Instance = new FieldDefinitionFundSourceShortName(284, @"FundSourceShortName", @"Short Name", @"<p>The short hand name to reference a fund source</p>");
     }
 
     public partial class FieldDefinitionFundSourceStatus : FieldDefinition
     {
         private FieldDefinitionFundSourceStatus(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceStatus Instance = new FieldDefinitionFundSourceStatus(285, @"FundSourceStatus", @"Status", @"<p>The status of a grant. This can be Active, Pending, Planned, or Closeout</p>");
+        public static readonly FieldDefinitionFundSourceStatus Instance = new FieldDefinitionFundSourceStatus(285, @"FundSourceStatus", @"Status", @"<p>The status of a fund source. This can be Active, Pending, Planned, or Closeout</p>");
     }
 
     public partial class FieldDefinitionFundSourceType : FieldDefinition
     {
         private FieldDefinitionFundSourceType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceType Instance = new FieldDefinitionFundSourceType(286, @"FundSourceType", @"Type", @"<p>The type of grant. This can either be Stand Alone, or CPG. </p>");
+        public static readonly FieldDefinitionFundSourceType Instance = new FieldDefinitionFundSourceType(286, @"FundSourceType", @"Type", @"<p>The type of fund source. This can either be Stand Alone, or CPG. </p>");
     }
 
     public partial class FieldDefinitionFundSourceNumber : FieldDefinition
     {
         private FieldDefinitionFundSourceNumber(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceNumber Instance = new FieldDefinitionFundSourceNumber(287, @"FundSourceNumber", @"Fund Source Number", @"<p>The grant number. </p>");
+        public static readonly FieldDefinitionFundSourceNumber Instance = new FieldDefinitionFundSourceNumber(287, @"FundSourceNumber", @"Fund Source Number", @"<p>The fund source number. </p>");
     }
 
     public partial class FieldDefinitionCFDA : FieldDefinition
     {
         private FieldDefinitionCFDA(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionCFDA Instance = new FieldDefinitionCFDA(288, @"CFDA", @"CFDA", @"<p>The CFDA code for a grant. </p>");
+        public static readonly FieldDefinitionCFDA Instance = new FieldDefinitionCFDA(288, @"CFDA", @"CFDA", @"<p>The CFDA code for a fund source. </p>");
     }
 
     public partial class FieldDefinitionTotalAwardAmount : FieldDefinition
     {
         private FieldDefinitionTotalAwardAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionTotalAwardAmount Instance = new FieldDefinitionTotalAwardAmount(289, @"TotalAwardAmount", @"Total Award Amount", @"<p>The total amount of money awarded by the grant. This may include the sum of all associated grant allocations. </p>");
+        public static readonly FieldDefinitionTotalAwardAmount Instance = new FieldDefinitionTotalAwardAmount(289, @"TotalAwardAmount", @"Total Award Amount", @"<p>The total amount of money awarded by the fund source. This may include the sum of all associated fund source allocations. </p>");
     }
 
     public partial class FieldDefinitionFundSourceStartDate : FieldDefinition
     {
         private FieldDefinitionFundSourceStartDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceStartDate Instance = new FieldDefinitionFundSourceStartDate(290, @"FundSourceStartDate", @"Start Date", @"<p>The start date of the grant. </p>");
+        public static readonly FieldDefinitionFundSourceStartDate Instance = new FieldDefinitionFundSourceStartDate(290, @"FundSourceStartDate", @"Start Date", @"<p>The start date of the fund source. </p>");
     }
 
     public partial class FieldDefinitionFundSourceEndDate : FieldDefinition
     {
         private FieldDefinitionFundSourceEndDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceEndDate Instance = new FieldDefinitionFundSourceEndDate(291, @"FundSourceEndDate", @"End Date", @"<p>The end date of the grant. </p>");
+        public static readonly FieldDefinitionFundSourceEndDate Instance = new FieldDefinitionFundSourceEndDate(291, @"FundSourceEndDate", @"End Date", @"<p>The end date of the fund source. </p>");
     }
 
     public partial class FieldDefinitionFundSourceNote : FieldDefinition
     {
         private FieldDefinitionFundSourceNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceNote Instance = new FieldDefinitionFundSourceNote(292, @"FundSourceNote", @"Fund Source Note", @"<p>Any additional important information about the grant. </p>");
+        public static readonly FieldDefinitionFundSourceNote Instance = new FieldDefinitionFundSourceNote(292, @"FundSourceNote", @"Fund Source Note", @"<p>Any additional important information about the fund source. </p>");
     }
 
     public partial class FieldDefinitionPriorityLandscape : FieldDefinition
@@ -1749,7 +1749,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionFundSourceAllocationNote : FieldDefinition
     {
         private FieldDefinitionFundSourceAllocationNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceAllocationNote Instance = new FieldDefinitionFundSourceAllocationNote(307, @"FundSourceAllocationNote", @"Fund Source Allocation Note", @"<p>Any additional important information about the grant allocation.</p>");
+        public static readonly FieldDefinitionFundSourceAllocationNote Instance = new FieldDefinitionFundSourceAllocationNote(307, @"FundSourceAllocationNote", @"Fund Source Allocation Note", @"<p>Any additional important information about the fund source allocation.</p>");
     }
 
     public partial class FieldDefinitionFileResource : FieldDefinition
@@ -1833,13 +1833,13 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionFundSourceNoteInternal : FieldDefinition
     {
         private FieldDefinitionFundSourceNoteInternal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceNoteInternal Instance = new FieldDefinitionFundSourceNoteInternal(321, @"FundSourceNoteInternal", @"Internal Fund Source Note", @"<p>Any additional important information about the grant. These notes are only visible to internal users </p>");
+        public static readonly FieldDefinitionFundSourceNoteInternal Instance = new FieldDefinitionFundSourceNoteInternal(321, @"FundSourceNoteInternal", @"Internal Fund Source Note", @"<p>Any additional important information about the fund source. These notes are only visible to internal users </p>");
     }
 
     public partial class FieldDefinitionFundSourceAllocationNoteInternal : FieldDefinition
     {
         private FieldDefinitionFundSourceAllocationNoteInternal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundSourceAllocationNoteInternal Instance = new FieldDefinitionFundSourceAllocationNoteInternal(322, @"FundSourceAllocationNoteInternal", @"Internal Fund Source Allocation Note", @"<p>Any additional important information about the grant allocation. These notes are only visible to internal users </p>");
+        public static readonly FieldDefinitionFundSourceAllocationNoteInternal Instance = new FieldDefinitionFundSourceAllocationNoteInternal(322, @"FundSourceAllocationNoteInternal", @"Internal Fund Source Allocation Note", @"<p>Any additional important information about the fund source allocation. These notes are only visible to internal users </p>");
     }
 
     public partial class FieldDefinitionInvoiceStatus : FieldDefinition
@@ -1905,7 +1905,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionInvoiceLineItem : FieldDefinition
     {
         private FieldDefinitionInvoiceLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionInvoiceLineItem Instance = new FieldDefinitionInvoiceLineItem(333, @"InvoiceLineItem", @"Invoice Line Item", @"<p>A line item on an invoice which includes an amount and the associated grant allocation/grant.</p>");
+        public static readonly FieldDefinitionInvoiceLineItem Instance = new FieldDefinitionInvoiceLineItem(333, @"InvoiceLineItem", @"Invoice Line Item", @"<p>A line item on an invoice which includes an amount and the associated fund source allocation/fund source.</p>");
     }
 
     public partial class FieldDefinitionInteractionEvent : FieldDefinition

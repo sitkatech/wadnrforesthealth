@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly SocrataDataMartRawJsonImportTableTypeVendor Vendor = SocrataDataMartRawJsonImportTableTypeVendor.Instance;
         public static readonly SocrataDataMartRawJsonImportTableTypeProgramIndex ProgramIndex = SocrataDataMartRawJsonImportTableTypeProgramIndex.Instance;
         public static readonly SocrataDataMartRawJsonImportTableTypeProjectCode ProjectCode = SocrataDataMartRawJsonImportTableTypeProjectCode.Instance;
-        public static readonly SocrataDataMartRawJsonImportTableTypeGrantExpenditure GrantExpenditure = SocrataDataMartRawJsonImportTableTypeGrantExpenditure.Instance;
+        public static readonly SocrataDataMartRawJsonImportTableTypeFundSourceExpenditure FundSourceExpenditure = SocrataDataMartRawJsonImportTableTypeFundSourceExpenditure.Instance;
 
         public static readonly List<SocrataDataMartRawJsonImportTableType> All;
         public static readonly ReadOnlyDictionary<int, SocrataDataMartRawJsonImportTableType> AllLookupDictionary;
@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static SocrataDataMartRawJsonImportTableType()
         {
-            All = new List<SocrataDataMartRawJsonImportTableType> { Vendor, ProgramIndex, ProjectCode, GrantExpenditure };
+            All = new List<SocrataDataMartRawJsonImportTableType> { Vendor, ProgramIndex, ProjectCode, FundSourceExpenditure };
             AllLookupDictionary = new ReadOnlyDictionary<int, SocrataDataMartRawJsonImportTableType>(All.ToDictionary(x => x.SocrataDataMartRawJsonImportTableTypeID));
         }
 
@@ -100,8 +100,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case SocrataDataMartRawJsonImportTableTypeEnum.GrantExpenditure:
-                    return GrantExpenditure;
+                case SocrataDataMartRawJsonImportTableTypeEnum.FundSourceExpenditure:
+                    return FundSourceExpenditure;
                 case SocrataDataMartRawJsonImportTableTypeEnum.ProgramIndex:
                     return ProgramIndex;
                 case SocrataDataMartRawJsonImportTableTypeEnum.ProjectCode:
@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Models
         Vendor = 1,
         ProgramIndex = 2,
         ProjectCode = 3,
-        GrantExpenditure = 4
+        FundSourceExpenditure = 4
     }
 
     public partial class SocrataDataMartRawJsonImportTableTypeVendor : SocrataDataMartRawJsonImportTableType
@@ -140,9 +140,9 @@ namespace ProjectFirma.Web.Models
         public static readonly SocrataDataMartRawJsonImportTableTypeProjectCode Instance = new SocrataDataMartRawJsonImportTableTypeProjectCode(3, @"ProjectCode");
     }
 
-    public partial class SocrataDataMartRawJsonImportTableTypeGrantExpenditure : SocrataDataMartRawJsonImportTableType
+    public partial class SocrataDataMartRawJsonImportTableTypeFundSourceExpenditure : SocrataDataMartRawJsonImportTableType
     {
-        private SocrataDataMartRawJsonImportTableTypeGrantExpenditure(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
-        public static readonly SocrataDataMartRawJsonImportTableTypeGrantExpenditure Instance = new SocrataDataMartRawJsonImportTableTypeGrantExpenditure(4, @"GrantExpenditure");
+        private SocrataDataMartRawJsonImportTableTypeFundSourceExpenditure(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
+        public static readonly SocrataDataMartRawJsonImportTableTypeFundSourceExpenditure Instance = new SocrataDataMartRawJsonImportTableTypeFundSourceExpenditure(4, @"FundSourceExpenditure");
     }
 }
