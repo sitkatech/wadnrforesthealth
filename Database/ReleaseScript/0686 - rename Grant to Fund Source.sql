@@ -173,7 +173,16 @@ execute sp_rename 'dbo.PK_GrantType_GrantTypeID', 'PK_FundSourceType_FundSourceT
 execute sp_rename 'dbo.PK_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID', 'PK_ProjectFundSourceAllocationRequest_ProjectFundSourceAllocationRequestID';
 execute sp_rename 'dbo.PK_ProjectGrantAllocationRequestUpdate_ProjectGrantAllocationRequestUpdateID', 'PK_ProjectFundSourceAllocationRequestUpdate_ProjectFundSourceAllocationRequestUpdateID';
 
-
+execute sp_rename 'dbo.AK_AgreementGrantAllocation_AgreementID_GrantAllocationID', 'AK_AgreementFundSourceAllocation_AgreementID_FundSourceAllocationID';
+execute sp_rename 'dbo.AK_GrantAllocationBudgetLineItem_GrantAllocationID_CostTypeID', 'AK_FundSourceAllocationBudgetLineItem_FundSourceAllocationID_CostTypeID';
+execute sp_rename 'dbo.AK_GrantAllocationFileResource_GrantAllocationID_FileResourceID', 'AK_FundSourceAllocationFileResource_FundSourceAllocationID_FileResourceID';
+execute sp_rename 'dbo.AK_GrantAllocationLikelyPerson_GrantAllocationID_PersonID', 'AK_FundSourceAllocationLikelyPerson_FundSourceAllocationID_PersonID';
+execute sp_rename 'dbo.AK_GrantAllocationProgramIndexProjectCode_GrantAllocationID_ProgramIndexID_ProjectCodeID', 'AK_FundSourceAllocationProgramIndexProjectCode_FundSourceAllocationID_ProgramIndexID_ProjectCodeID';
+execute sp_rename 'dbo.AK_GrantFileResource_GrantID_FileResourceID', 'AK_FundSourceFileResource_FundSourceID_FileResourceID';
+execute sp_rename 'dbo.AK_GrantStatus_GrantStatusName', 'AK_FundSourceStatus_FundSourceStatusName';
+execute sp_rename 'dbo.AK_GrantType_GrantTypeName', 'AK_FundSourceType_FundSourceTypeName';
+execute sp_rename 'dbo.AK_ProjectGrantAllocationRequest_ProjectID_GrantAllocationID', 'AK_ProjectFundSourceAllocationRequest_ProjectID_FundSourceAllocationID';
+execute sp_rename 'dbo.AK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatchID_GrantAllocationID', 'AK_ProjectFundSourceAllocationRequestUpdate_ProjectUpdateBatchID_FundSourceAllocationID';
 
 
 
@@ -183,11 +192,11 @@ execute sp_rename 'dbo.PK_ProjectGrantAllocationRequestUpdate_ProjectGrantAlloca
 EXECUTE sp_rename 'HumanResources.FK_Employee_Person_BusinessEntityID', 'FK_EmployeeID';
 SELECT [name],
        SCHEMA_NAME(schema_id) AS schema_name,
-       [type_desc], 
+       [type_desc],
+	   type,
 	   'execute sp_rename ''' + SCHEMA_NAME(schema_id) + '.' + [name] + ''', ''' + REPLACE([name],'Grant','FundSource') + ''';' as scriptToRun
 FROM sys.objects
-WHERE name like '%Grant%' and --parent_object_id = (OBJECT_ID('HumanResources.Employee')) AND 
-type IN ('C', 'F', 'PK')
+WHERE name like '%Grant%' --and type IN ('C', 'F', 'PK')
 order by [name]
 
 

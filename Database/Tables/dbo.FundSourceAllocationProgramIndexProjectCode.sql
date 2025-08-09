@@ -11,7 +11,7 @@ CREATE TABLE [dbo].[FundSourceAllocationProgramIndexProjectCode](
 (
 	[FundSourceAllocationProgramIndexProjectCodeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
- CONSTRAINT [AK_GrantAllocationProgramIndexProjectCode_GrantAllocationID_ProgramIndexID_ProjectCodeID] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_FundSourceAllocationProgramIndexProjectCode_FundSourceAllocationID_ProgramIndexID_ProjectCodeID] UNIQUE NONCLUSTERED 
 (
 	[FundSourceAllocationID] ASC,
 	[ProgramIndexID] ASC,

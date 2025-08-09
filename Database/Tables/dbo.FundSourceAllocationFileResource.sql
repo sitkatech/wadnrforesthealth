@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[FundSourceAllocationFileResource](
 (
 	[FundSourceAllocationFileResourceID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
- CONSTRAINT [AK_GrantAllocationFileResource_GrantAllocationID_FileResourceID] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_FundSourceAllocationFileResource_FundSourceAllocationID_FileResourceID] UNIQUE NONCLUSTERED 
 (
 	[FundSourceAllocationID] ASC,
 	[FileResourceID] ASC
