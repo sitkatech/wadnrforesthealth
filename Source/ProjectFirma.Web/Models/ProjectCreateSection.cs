@@ -174,9 +174,9 @@ namespace ProjectFirma.Web.Models
     //        {
     //            return false;
     //        }
-    //        var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-    //        var validationResults = new ExpendituresViewModel(projectGrantAllocationExpenditures,
-    //                projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
+    //        var projectFundSourceAllocationExpenditures = project.ProjectFundSourceAllocationExpenditures.ToList();
+    //        var validationResults = new ExpendituresViewModel(projectFundSourceAllocationExpenditures,
+    //                projectFundSourceAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
     //                project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList()) {ProjectID = project.ProjectID}
     //            .GetValidationResults();
     //        return !validationResults.Any();

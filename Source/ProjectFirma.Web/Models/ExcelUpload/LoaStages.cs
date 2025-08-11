@@ -112,8 +112,8 @@ Renamed: "Vendor Name" => "Name"
         public const string ProjectExpirationDateKey = "Project Expiration Date";
         public const string ApplicationDateKey = "Application Date";
         public const string DecisionDateKey = "Decision Date";
-        public const string GrantNumberKey = "Grant #";
-        public const string GrantKey = "Grant";
+        public const string FundSourceNumberKey = "FundSource #";
+        public const string FundSourceKey = "FundSource";
         public const string CodeKey = "Code";
         public const string IndexKey = "Index";
         public const string MatchKey = "Match";
@@ -132,8 +132,8 @@ Renamed: "Vendor Name" => "Name"
                 {"K", StatusKey},
                 {"M", LetterDateKey},
                 {"N", ProjectExpirationDateKey},
-                {"AZ", GrantNumberKey},
-                {"BE", GrantKey},
+                {"AZ", FundSourceNumberKey},
+                {"BE", FundSourceKey},
                 {"BF", CodeKey},
                 {"BG", IndexKey},
                 {"BJ", MatchKey},

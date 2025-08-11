@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-        public virtual DbSet<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
+        public virtual DbSet<AgreementFundSourceAllocation> AgreementFundSourceAllocations { get; set; }
         public virtual DbSet<AgreementPerson> AgreementPeople { get; set; }
         public virtual DbSet<AgreementProject> AgreementProjects { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
@@ -59,6 +59,24 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<ForesterWorkUnit> ForesterWorkUnits { get; set; }
+        public virtual DbSet<FundSourceAllocationBudgetLineItem> FundSourceAllocationBudgetLineItems { get; set; }
+        public virtual DbSet<FundSourceAllocationChangeLog> FundSourceAllocationChangeLogs { get; set; }
+        public virtual DbSet<FundSourceAllocationExpenditureJsonStage> FundSourceAllocationExpenditureJsonStages { get; set; }
+        public virtual DbSet<FundSourceAllocationExpenditure> FundSourceAllocationExpenditures { get; set; }
+        public virtual DbSet<FundSourceAllocationFileResource> FundSourceAllocationFileResources { get; set; }
+        public virtual DbSet<FundSourceAllocationLikelyPerson> FundSourceAllocationLikelyPeople { get; set; }
+        public virtual DbSet<FundSourceAllocationNoteInternal> FundSourceAllocationNoteInternals { get; set; }
+        public virtual DbSet<FundSourceAllocationNote> FundSourceAllocationNotes { get; set; }
+        public virtual DbSet<FundSourceAllocationPriority> FundSourceAllocationPriorities { get; set; }
+        public virtual DbSet<FundSourceAllocationProgramIndexProjectCode> FundSourceAllocationProgramIndexProjectCodes { get; set; }
+        public virtual DbSet<FundSourceAllocationProgramManager> FundSourceAllocationProgramManagers { get; set; }
+        public virtual DbSet<FundSourceAllocation> FundSourceAllocations { get; set; }
+        public virtual DbSet<FundSourceAllocationSource> FundSourceAllocationSources { get; set; }
+        public virtual DbSet<FundSourceFileResource> FundSourceFileResources { get; set; }
+        public virtual DbSet<FundSourceNoteInternal> FundSourceNoteInternals { get; set; }
+        public virtual DbSet<FundSourceNote> FundSourceNotes { get; set; }
+        public virtual DbSet<FundSource> FundSources { get; set; }
+        public virtual DbSet<FundSourceType> FundSourceTypes { get; set; }
         public virtual DbSet<GisCrossWalkDefault> GisCrossWalkDefaults { get; set; }
         public virtual DbSet<GisDefaultMapping> GisDefaultMappings { get; set; }
         public virtual DbSet<GisExcludeIncludeColumn> GisExcludeIncludeColumns { get; set; }
@@ -70,24 +88,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GisUploadAttempt> GisUploadAttempts { get; set; }
         public virtual DbSet<GisUploadProgramMergeGrouping> GisUploadProgramMergeGroupings { get; set; }
         public virtual DbSet<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
-        public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
-        public virtual DbSet<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
-        public virtual DbSet<GrantAllocationExpenditureJsonStage> GrantAllocationExpenditureJsonStages { get; set; }
-        public virtual DbSet<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
-        public virtual DbSet<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
-        public virtual DbSet<GrantAllocationLikelyPerson> GrantAllocationLikelyPeople { get; set; }
-        public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
-        public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
-        public virtual DbSet<GrantAllocationPriority> GrantAllocationPriorities { get; set; }
-        public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
-        public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
-        public virtual DbSet<GrantAllocationSource> GrantAllocationSources { get; set; }
-        public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
-        public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
-        public virtual DbSet<GrantNote> GrantNotes { get; set; }
-        public virtual DbSet<Grant> Grants { get; set; }
-        public virtual DbSet<GrantType> GrantTypes { get; set; }
         public virtual DbSet<InteractionEventContact> InteractionEventContacts { get; set; }
         public virtual DbSet<InteractionEventFileResource> InteractionEventFileResources { get; set; }
         public virtual DbSet<InteractionEventProject> InteractionEventProjects { get; set; }
@@ -128,8 +128,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
         public virtual DbSet<ProjectFundingSource> ProjectFundingSources { get; set; }
         public virtual DbSet<ProjectFundingSourceUpdate> ProjectFundingSourceUpdates { get; set; }
-        public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
-        public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
+        public virtual DbSet<ProjectFundSourceAllocationRequest> ProjectFundSourceAllocationRequests { get; set; }
+        public virtual DbSet<ProjectFundSourceAllocationRequestUpdate> ProjectFundSourceAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual DbSet<ProjectImportBlockList> ProjectImportBlockLists { get; set; }
@@ -179,10 +179,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<vArcOnlineRawJsonImportIndex> vArcOnlineRawJsonImportIndices { get; set; }
         public virtual DbSet<vGeoServerCounty> vGeoServerCounties { get; set; }
         public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
-        public virtual DbSet<vLoaStageGrantAllocationByProgramIndexProjectCode> vLoaStageGrantAllocationByProgramIndexProjectCodes { get; set; }
-        public virtual DbSet<vLoaStageGrantAllocation> vLoaStageGrantAllocations { get; set; }
-        public virtual DbSet<vLoaStageProjectGrantAllocation> vLoaStageProjectGrantAllocations { get; set; }
-        public virtual DbSet<vSingularGrantAllocation> vSingularGrantAllocations { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
         public virtual DbSet<vTotalTreatedAcresByProject> vTotalTreatedAcresByProjects { get; set; }
         public virtual DbSet<fGetBoundingBoxForProjectIdList_Result> fGetBoundingBoxForProjectIdListResults { get; set; }
@@ -308,8 +304,8 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(activityType, "ActivityType", primaryKey);
                     return activityType;
 
-                case "AgreementGrantAllocation":
-                    return AgreementGrantAllocations.GetAgreementGrantAllocation(primaryKey);
+                case "AgreementFundSourceAllocation":
+                    return AgreementFundSourceAllocations.GetAgreementFundSourceAllocation(primaryKey);
 
                 case "AgreementPerson":
                     return AgreementPeople.GetAgreementPerson(primaryKey);
@@ -473,6 +469,65 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(fundingSource, "FundingSource", primaryKey);
                     return fundingSource;
 
+                case "FundSourceAllocationBudgetLineItem":
+                    return FundSourceAllocationBudgetLineItems.GetFundSourceAllocationBudgetLineItem(primaryKey);
+
+                case "FundSourceAllocationChangeLog":
+                    return FundSourceAllocationChangeLogs.GetFundSourceAllocationChangeLog(primaryKey);
+
+                case "FundSourceAllocationExpenditureJsonStage":
+                    return FundSourceAllocationExpenditureJsonStages.GetFundSourceAllocationExpenditureJsonStage(primaryKey);
+
+                case "FundSourceAllocationExpenditure":
+                    return FundSourceAllocationExpenditures.GetFundSourceAllocationExpenditure(primaryKey);
+
+                case "FundSourceAllocationFileResource":
+                    return FundSourceAllocationFileResources.GetFundSourceAllocationFileResource(primaryKey);
+
+                case "FundSourceAllocationLikelyPerson":
+                    return FundSourceAllocationLikelyPeople.GetFundSourceAllocationLikelyPerson(primaryKey);
+
+                case "FundSourceAllocationNoteInternal":
+                    return FundSourceAllocationNoteInternals.GetFundSourceAllocationNoteInternal(primaryKey);
+
+                case "FundSourceAllocationNote":
+                    return FundSourceAllocationNotes.GetFundSourceAllocationNote(primaryKey);
+
+                case "FundSourceAllocationPriority":
+                    return FundSourceAllocationPriorities.GetFundSourceAllocationPriority(primaryKey);
+
+                case "FundSourceAllocationProgramIndexProjectCode":
+                    return FundSourceAllocationProgramIndexProjectCodes.GetFundSourceAllocationProgramIndexProjectCode(primaryKey);
+
+                case "FundSourceAllocationProgramManager":
+                    return FundSourceAllocationProgramManagers.GetFundSourceAllocationProgramManager(primaryKey);
+
+                case "FundSourceAllocation":
+                    return FundSourceAllocations.GetFundSourceAllocation(primaryKey);
+
+                case "FundSourceAllocationSource":
+                    return FundSourceAllocationSources.GetFundSourceAllocationSource(primaryKey);
+
+                case "FundSourceFileResource":
+                    return FundSourceFileResources.GetFundSourceFileResource(primaryKey);
+
+                case "FundSourceNoteInternal":
+                    return FundSourceNoteInternals.GetFundSourceNoteInternal(primaryKey);
+
+                case "FundSourceNote":
+                    return FundSourceNotes.GetFundSourceNote(primaryKey);
+
+                case "FundSource":
+                    return FundSources.GetFundSource(primaryKey);
+
+                case "FundSourceStatus":
+                    var fundSourceStatus = FundSourceStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(fundSourceStatus, "FundSourceStatus", primaryKey);
+                    return fundSourceStatus;
+
+                case "FundSourceType":
+                    return FundSourceTypes.GetFundSourceType(primaryKey);
+
                 case "GisCrossWalkDefault":
                     return GisCrossWalkDefaults.GetGisCrossWalkDefault(primaryKey);
 
@@ -520,65 +575,6 @@ namespace ProjectFirma.Web.Models
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
-
-                case "GrantAllocationBudgetLineItem":
-                    return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);
-
-                case "GrantAllocationChangeLog":
-                    return GrantAllocationChangeLogs.GetGrantAllocationChangeLog(primaryKey);
-
-                case "GrantAllocationExpenditureJsonStage":
-                    return GrantAllocationExpenditureJsonStages.GetGrantAllocationExpenditureJsonStage(primaryKey);
-
-                case "GrantAllocationExpenditure":
-                    return GrantAllocationExpenditures.GetGrantAllocationExpenditure(primaryKey);
-
-                case "GrantAllocationFileResource":
-                    return GrantAllocationFileResources.GetGrantAllocationFileResource(primaryKey);
-
-                case "GrantAllocationLikelyPerson":
-                    return GrantAllocationLikelyPeople.GetGrantAllocationLikelyPerson(primaryKey);
-
-                case "GrantAllocationNoteInternal":
-                    return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
-
-                case "GrantAllocationNote":
-                    return GrantAllocationNotes.GetGrantAllocationNote(primaryKey);
-
-                case "GrantAllocationPriority":
-                    return GrantAllocationPriorities.GetGrantAllocationPriority(primaryKey);
-
-                case "GrantAllocationProgramIndexProjectCode":
-                    return GrantAllocationProgramIndexProjectCodes.GetGrantAllocationProgramIndexProjectCode(primaryKey);
-
-                case "GrantAllocationProgramManager":
-                    return GrantAllocationProgramManagers.GetGrantAllocationProgramManager(primaryKey);
-
-                case "GrantAllocation":
-                    return GrantAllocations.GetGrantAllocation(primaryKey);
-
-                case "GrantAllocationSource":
-                    return GrantAllocationSources.GetGrantAllocationSource(primaryKey);
-
-                case "GrantFileResource":
-                    return GrantFileResources.GetGrantFileResource(primaryKey);
-
-                case "GrantNoteInternal":
-                    return GrantNoteInternals.GetGrantNoteInternal(primaryKey);
-
-                case "GrantNote":
-                    return GrantNotes.GetGrantNote(primaryKey);
-
-                case "Grant":
-                    return Grants.GetGrant(primaryKey);
-
-                case "GrantStatus":
-                    var grantStatus = GrantStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(grantStatus, "GrantStatus", primaryKey);
-                    return grantStatus;
-
-                case "GrantType":
-                    return GrantTypes.GetGrantType(primaryKey);
 
                 case "InteractionEventContact":
                     return InteractionEventContacts.GetInteractionEventContact(primaryKey);
@@ -760,11 +756,11 @@ namespace ProjectFirma.Web.Models
                 case "ProjectFundingSourceUpdate":
                     return ProjectFundingSourceUpdates.GetProjectFundingSourceUpdate(primaryKey);
 
-                case "ProjectGrantAllocationRequest":
-                    return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);
+                case "ProjectFundSourceAllocationRequest":
+                    return ProjectFundSourceAllocationRequests.GetProjectFundSourceAllocationRequest(primaryKey);
 
-                case "ProjectGrantAllocationRequestUpdate":
-                    return ProjectGrantAllocationRequestUpdates.GetProjectGrantAllocationRequestUpdate(primaryKey);
+                case "ProjectFundSourceAllocationRequestUpdate":
+                    return ProjectFundSourceAllocationRequestUpdates.GetProjectFundSourceAllocationRequestUpdate(primaryKey);
 
                 case "ProjectImage":
                     return ProjectImages.GetProjectImage(primaryKey);

@@ -172,10 +172,10 @@ namespace ProjectFirma.Web.Models
             return project.ProjectOrganizations.Where(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID).Select(x => x.Organization).SingleOrDefault();
         }
 
-        public static string GetExpectedFundingGrantAllocationsAsCommaDelimitedListForAgGrid(this Project project)
+        public static string GetExpectedFundingFundSourceAllocationsAsCommaDelimitedListForAgGrid(this Project project)
         {
-            var grantAllocations = project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation);
-            return grantAllocations.Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl)).ToJsonArrayForAgGrid();
+            var fundSourceAllocations = project.ProjectFundSourceAllocationRequests.Select(x => x.FundSourceAllocation);
+            return fundSourceAllocations.Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl)).ToJsonArrayForAgGrid();
         }
     }
 }

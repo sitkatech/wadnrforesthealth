@@ -114,7 +114,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
                 .Include(x => x.ProjectPrograms )
                 .Include(x => x.ProjectClassifications)
                 .Include(x => x.ProjectType)
-                .Include(x => x.ProjectGrantAllocationRequests)
+                .Include(x => x.ProjectFundSourceAllocationRequests)
                 //.Include(x => x.ProjectStage)
                 .ToList();
 

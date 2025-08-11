@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [StringLength(ProjectUpdateBatch.FieldLengths.ExpendituresComment)]
         public string Comments { get; set; }
 
-        public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
+        public List<ProjectFundSourceAllocationRequestSimple> ProjectFundSourceAllocationRequests { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         [JsonIgnore]
@@ -59,10 +59,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             
         }
 
-        public ExpectedFundingViewModel(List<ProjectGrantAllocationRequestUpdate> projectGrantAllocationRequestUpdates,
+        public ExpectedFundingViewModel(List<ProjectFundSourceAllocationRequestUpdate> projectFundSourceAllocationRequestUpdates,
             string comments, Money? projectEstimatedTotalCost, string projectFundingSourceNotes, List<ProjectFundingSourceUpdate> projectFundingSourceUpdates)
         {
-            ProjectGrantAllocationRequests = projectGrantAllocationRequestUpdates.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
+            ProjectFundSourceAllocationRequests = projectFundSourceAllocationRequestUpdates.Select(x => new ProjectFundSourceAllocationRequestSimple(x)).ToList();
             Comments = comments;
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ProjectFundingSourceNotes = projectFundingSourceNotes;
@@ -70,42 +70,42 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
-                                List<ProjectGrantAllocationRequestUpdate> currentProjectGrantAllocationRequestUpdates,
-                                IList<ProjectGrantAllocationRequestUpdate> allProjectGrantAllocationRequestUpdates, 
+                                List<ProjectFundSourceAllocationRequestUpdate> currentProjectFundSourceAllocationRequestUpdates,
+                                IList<ProjectFundSourceAllocationRequestUpdate> allProjectFundSourceAllocationRequestUpdates, 
                                 Models.ProjectUpdate projectUpdate,
                                 List<ProjectFundingSourceUpdate> currentProjectFundingSourceUpdates,
                                 IList<ProjectFundingSourceUpdate> allProjectFundingSourceUpdates)
         {
             var dateNow = DateTime.Now;
-            var projectGrantAllocationRequestUpdatesUpdated = new List<ProjectGrantAllocationRequestUpdate>();
-            if (ProjectGrantAllocationRequests != null)
+            var projectFundSourceAllocationRequestUpdatesUpdated = new List<ProjectFundSourceAllocationRequestUpdate>();
+            if (ProjectFundSourceAllocationRequests != null)
             {
 
-                foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequests)
+                foreach (var projectFundSourceAllocationRequestSimple in ProjectFundSourceAllocationRequests)
                 {
-                    var existingCurrentOne = currentProjectGrantAllocationRequestUpdates.SingleOrDefault(x =>
-                        x.ProjectUpdateBatchID == projectGrantAllocationRequestSimple.ProjectID &&
-                        x.GrantAllocationID == projectGrantAllocationRequestSimple.GrantAllocationID);
+                    var existingCurrentOne = currentProjectFundSourceAllocationRequestUpdates.SingleOrDefault(x =>
+                        x.ProjectUpdateBatchID == projectFundSourceAllocationRequestSimple.ProjectID &&
+                        x.FundSourceAllocationID == projectFundSourceAllocationRequestSimple.FundSourceAllocationID);
                     if (existingCurrentOne != null)
                     {
-                        var projectGrantAllocationRequestToAdd =
-                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequestUpdate(
+                        var projectFundSourceAllocationRequestToAdd =
+                            projectFundSourceAllocationRequestSimple.ToProjectFundSourceAllocationRequestUpdate(
                                 existingCurrentOne.CreateDate, dateNow, existingCurrentOne.ImportedFromTabularData);
-                        projectGrantAllocationRequestUpdatesUpdated.Add(projectGrantAllocationRequestToAdd);
+                        projectFundSourceAllocationRequestUpdatesUpdated.Add(projectFundSourceAllocationRequestToAdd);
                     }
                     else
                     {
-                        var projectGrantAllocationRequestToAdd =
-                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequestUpdate(
+                        var projectFundSourceAllocationRequestToAdd =
+                            projectFundSourceAllocationRequestSimple.ToProjectFundSourceAllocationRequestUpdate(
                                 dateNow, null, false);
-                        projectGrantAllocationRequestUpdatesUpdated.Add(projectGrantAllocationRequestToAdd);
+                        projectFundSourceAllocationRequestUpdatesUpdated.Add(projectFundSourceAllocationRequestToAdd);
                     }
                 }
             }
 
-            currentProjectGrantAllocationRequestUpdates.Merge(projectGrantAllocationRequestUpdatesUpdated,
-                allProjectGrantAllocationRequestUpdates,
-                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.GrantAllocationID == y.GrantAllocationID,
+            currentProjectFundSourceAllocationRequestUpdates.Merge(projectFundSourceAllocationRequestUpdatesUpdated,
+                allProjectFundSourceAllocationRequestUpdates,
+                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.FundSourceAllocationID == y.FundSourceAllocationID,
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
@@ -135,14 +135,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ProjectGrantAllocationRequests == null)
+            if (ProjectFundSourceAllocationRequests == null)
             {
                 yield break;
             }
 
-            //if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
+            //if (ProjectFundSourceAllocationRequests.GroupBy(x => x.FundSourceAllocationID).Any(x => x.Count() > 1))
             //{
-            //    yield return new ValidationResult("Each Grant Allocation can only be used once.");
+            //    yield return new ValidationResult("Each FundSource Allocation can only be used once.");
             //}
         }
     }

@@ -24,7 +24,7 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Views.FundSource;
 
 namespace ProjectFirma.Web.Views.Agreement
 {

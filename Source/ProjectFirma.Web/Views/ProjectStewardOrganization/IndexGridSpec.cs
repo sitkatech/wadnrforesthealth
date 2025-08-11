@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectStewardOrganization
             Add("Short Name", a => a.OrganizationShortName, 100);
             Add(Models.FieldDefinition.OrganizationPrimaryContact.ToGridHeaderString(), a => userViewFeature.HasPermission(currentPerson, a.PrimaryContactPerson).HasPermission ? a.PrimaryContactPersonAsUrl : new HtmlString(a.PrimaryContactPersonAsString), 120);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAllActiveProjectsAndProposals(currentPerson).Count, 90);
-            Add($"# of {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", a => a.GrantAllocations.Count, 150);
+            Add($"# of {Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()}", a => a.FundSourceAllocations.Count, 150);
             Add("# of Users", a => a.People.Count, 90);
             
         }

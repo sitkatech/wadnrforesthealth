@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly SupportRequestTypeReportBug ReportBug = SupportRequestTypeReportBug.Instance;
         public static readonly SupportRequestTypeHelpWithProjectUpdate HelpWithProjectUpdate = SupportRequestTypeHelpWithProjectUpdate.Instance;
         public static readonly SupportRequestTypeForgotLoginInfo ForgotLoginInfo = SupportRequestTypeForgotLoginInfo.Instance;
-        public static readonly SupportRequestTypeNewOrganizationOrGrantAllocation NewOrganizationOrGrantAllocation = SupportRequestTypeNewOrganizationOrGrantAllocation.Instance;
+        public static readonly SupportRequestTypeNewOrganizationOrFundSourceAllocation NewOrganizationOrFundSourceAllocation = SupportRequestTypeNewOrganizationOrFundSourceAllocation.Instance;
         public static readonly SupportRequestTypeProvideFeedback ProvideFeedback = SupportRequestTypeProvideFeedback.Instance;
         public static readonly SupportRequestTypeRequestOrganizationNameChange RequestOrganizationNameChange = SupportRequestTypeRequestOrganizationNameChange.Instance;
         public static readonly SupportRequestTypeOther Other = SupportRequestTypeOther.Instance;
@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static SupportRequestType()
         {
-            All = new List<SupportRequestType> { ReportBug, HelpWithProjectUpdate, ForgotLoginInfo, NewOrganizationOrGrantAllocation, ProvideFeedback, RequestOrganizationNameChange, Other, RequestProjectPrimaryContactChange, RequestPermissionToAddProjects };
+            All = new List<SupportRequestType> { ReportBug, HelpWithProjectUpdate, ForgotLoginInfo, NewOrganizationOrFundSourceAllocation, ProvideFeedback, RequestOrganizationNameChange, Other, RequestProjectPrimaryContactChange, RequestPermissionToAddProjects };
             AllLookupDictionary = new ReadOnlyDictionary<int, SupportRequestType>(All.ToDictionary(x => x.SupportRequestTypeID));
         }
 
@@ -113,8 +113,8 @@ namespace ProjectFirma.Web.Models
                     return ForgotLoginInfo;
                 case SupportRequestTypeEnum.HelpWithProjectUpdate:
                     return HelpWithProjectUpdate;
-                case SupportRequestTypeEnum.NewOrganizationOrGrantAllocation:
-                    return NewOrganizationOrGrantAllocation;
+                case SupportRequestTypeEnum.NewOrganizationOrFundSourceAllocation:
+                    return NewOrganizationOrFundSourceAllocation;
                 case SupportRequestTypeEnum.Other:
                     return Other;
                 case SupportRequestTypeEnum.ProvideFeedback:
@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Models
         ReportBug = 1,
         HelpWithProjectUpdate = 2,
         ForgotLoginInfo = 3,
-        NewOrganizationOrGrantAllocation = 4,
+        NewOrganizationOrFundSourceAllocation = 4,
         ProvideFeedback = 5,
         RequestOrganizationNameChange = 6,
         Other = 7,
@@ -164,10 +164,10 @@ namespace ProjectFirma.Web.Models
         public static readonly SupportRequestTypeForgotLoginInfo Instance = new SupportRequestTypeForgotLoginInfo(3, @"ForgotLoginInfo", @"Can't log in (forgot my username or password, account is locked, etc.)", 2);
     }
 
-    public partial class SupportRequestTypeNewOrganizationOrGrantAllocation : SupportRequestType
+    public partial class SupportRequestTypeNewOrganizationOrFundSourceAllocation : SupportRequestType
     {
-        private SupportRequestTypeNewOrganizationOrGrantAllocation(int supportRequestTypeID, string supportRequestTypeName, string supportRequestTypeDisplayName, int supportRequestTypeSortOrder) : base(supportRequestTypeID, supportRequestTypeName, supportRequestTypeDisplayName, supportRequestTypeSortOrder) {}
-        public static readonly SupportRequestTypeNewOrganizationOrGrantAllocation Instance = new SupportRequestTypeNewOrganizationOrGrantAllocation(4, @"NewOrganizationOrGrantAllocation", @"Need an Organization or Grant Allocation added to the list", 4);
+        private SupportRequestTypeNewOrganizationOrFundSourceAllocation(int supportRequestTypeID, string supportRequestTypeName, string supportRequestTypeDisplayName, int supportRequestTypeSortOrder) : base(supportRequestTypeID, supportRequestTypeName, supportRequestTypeDisplayName, supportRequestTypeSortOrder) {}
+        public static readonly SupportRequestTypeNewOrganizationOrFundSourceAllocation Instance = new SupportRequestTypeNewOrganizationOrFundSourceAllocation(4, @"NewOrganizationOrFundSourceAllocation", @"Need an Organization or Fund Source Allocation added to the list", 4);
     }
 
     public partial class SupportRequestTypeProvideFeedback : SupportRequestType

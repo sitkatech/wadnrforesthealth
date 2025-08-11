@@ -117,15 +117,15 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpPost]
         [JobManageFeature]
-        public ActionResult RunGrantExpendituresImportJob()
+        public ActionResult RunFundSourceExpendituresImportJob()
         {
             lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
             {
-                var grantExpenditureJob = new GrantExpenditureImportHangfireBackgroundJob();
-                grantExpenditureJob.DownloadGrantExpendituresTableForAllFiscalYears();
+                var fundSourceExpenditureJob = new FundSourceExpenditureImportHangfireBackgroundJob();
+                fundSourceExpenditureJob.DownloadFundSourceExpendituresTableForAllFiscalYears();
             }
 
-            var message = $"Grant Expenditures Imported";
+            var message = $"FundSource Expenditures Imported";
             SetMessageForDisplay(message);
 
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));

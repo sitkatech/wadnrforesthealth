@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
     {
         public IActionFilter ActionFilter;
 
-        protected FirmaFeatureWithContext(List<Role> grantedRoles) : base(grantedRoles.Select(x => (IRole)x).ToList())
+        protected FirmaFeatureWithContext(List<Role> fundSourceedRoles) : base(fundSourceedRoles.Select(x => (IRole)x).ToList())
         {
         }
 

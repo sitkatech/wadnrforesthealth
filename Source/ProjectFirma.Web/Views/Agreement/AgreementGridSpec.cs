@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.Agreement
             }
             Add(Models.FieldDefinition.AgreementType.ToGridHeaderString("Type"), x => x.AgreementType?.AgreementTypeAbbrev, 70, AgGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.AgreementNumber.ToGridHeaderString("Number"), x => x.AgreementNumber, 100, AgGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.Grant.ToGridHeaderString(), x => x.GetListOfGrantHrefsForAgGrid() , 130, AgGridColumnFilterType.HtmlLinkListJson);
+            Add(Models.FieldDefinition.FundSource.ToGridHeaderString(), x => x.GetListOfFundSourceHrefsForAgGrid() , 130, AgGridColumnFilterType.HtmlLinkListJson);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => new HtmlLinkObject(x.Organization.DisplayName, x.GetOrganizationDetailUrl()).ToJsonObjectForAgGrid(), 130, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.AgreementTitle.ToGridHeaderString(), x => new HtmlLinkObject(x.AgreementTitle, x.GetDetailUrl()).ToJsonObjectForAgGrid(), 180, AgGridColumnFilterType.HtmlLinkJson);
             Add(Models.FieldDefinition.AgreementStartDate.ToGridHeaderString("Start Date"), x => x.StartDate, 120, AgGridColumnFormatType.Date);

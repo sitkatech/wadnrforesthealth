@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected FederalFundCode()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.FundSourceAllocations = new HashSet<FundSourceAllocation>();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any();
+            return FundSourceAllocations.Any();
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(GrantAllocations.Any())
+            if(FundSourceAllocations.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocation).Name);
+                dependentObjects.Add(typeof(FundSourceAllocation).Name);
             }
             return dependentObjects.Distinct().ToList();
         }
@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FederalFundCode).Name, typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FederalFundCode).Name, typeof(FundSourceAllocation).Name};
 
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocations.ToList())
+            foreach(var x in FundSourceAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -112,7 +112,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FederalFundCodeID; } set { FederalFundCodeID = value; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<FundSourceAllocation> FundSourceAllocations { get; set; }
 
         public static class FieldLengths
         {

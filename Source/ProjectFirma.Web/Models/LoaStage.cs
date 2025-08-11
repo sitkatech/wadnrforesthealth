@@ -19,7 +19,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectStatus = loaStageImport.Status;
             this.MatchAmount = (decimal?) loaStageImport.MatchAmount;
             this.PayAmount = (decimal?)loaStageImport.PayAmount;
-            this.GrantNumber = loaStageImport.GrantNumber;
+            this.FundSourceNumber = loaStageImport.FundSourceNumber;
             this.FocusAreaName = loaStageImport.FocusArea;
             this.ProjectExpirationDate = loaStageImport.ProjectExpirationDate;
             this.LetterDate = loaStageImport.LetterDate;

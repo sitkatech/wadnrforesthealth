@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly string PendingProjectsGridDataUrl;
 
 
-        public readonly string ManageGrantAllocationsUrl;
+        public readonly string ManageFundSourceAllocationsUrl;
         public readonly string IndexUrl;
 
         public readonly MapInitJson MapInitJson;
@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Views.Organization
                 : "Lead Implementer";
 
             // Might be too weak; do we want to make this more specific?
-            ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+            ManageFundSourceAllocationsUrl = SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;

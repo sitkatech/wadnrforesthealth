@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[LoaStage](
 	[LoaStageID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectIdentifier] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ProjectStatus] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[GrantNumber] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[FundSourceNumber] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FocusAreaName] [varchar](600) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectExpirationDate] [datetime] NULL,
 	[LetterDate] [datetime] NULL,
@@ -34,6 +34,6 @@ SET ANSI_PADDING ON
 GO
 CREATE NONCLUSTERED INDEX [IDX_LoaStageGrantNumber] ON [dbo].[LoaStage]
 (
-	[GrantNumber] ASC
+	[FundSourceNumber] ASC
 )
 INCLUDE([FocusAreaName],[IsSoutheast]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]

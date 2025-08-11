@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.Organization
             Add("Short Name", a => a.OrganizationShortName, 100);
             Add(Models.FieldDefinition.OrganizationType.ToGridHeaderString(), a => a.OrganizationType?.OrganizationTypeName, 130, AgGridColumnFilterType.SelectFilterStrict);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetAllActiveProjects(currentPerson).Count, 180);
-            Add($"# of {Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()} in this system associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.Grants.Count, 250);
+            Add($"# of {Models.FieldDefinition.FundSource.GetFieldDefinitionLabelPluralized()} in this system associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.FundSources.Count, 250);
             Add($"# of Forest Health Tracker User Accounts associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.People.Count, 270);
             Add("Is Active", a => a.IsActive.ToYesNo(), 80, AgGridColumnFilterType.SelectFilterStrict);
         }

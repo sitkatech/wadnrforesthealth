@@ -1191,14 +1191,14 @@ td.stage {
 .systemText {
   font-style: italic;
 }
-#EditGrantAllocationExpendituresApp table {
+#EditFundSourceAllocationExpendituresApp table {
   table-layout: fixed;
 }
-#EditGrantAllocationExpendituresApp td,
-#EditGrantAllocationExpendituresApp th {
-  min-width: 128px;
-  width: 128px;
-  overflow: hidden;
+#EditFundSourceAllocationExpendituresApp td,
+#EditFundSourceAllocationExpendituresApp th {
+    min-width: 128px;
+    width: 128px;
+    overflow: hidden;
 }
 #accomplishmentsDashboard .bootstrap-select .dropdown-toggle {
   font-size: 20px;

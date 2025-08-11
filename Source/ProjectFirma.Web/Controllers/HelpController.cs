@@ -104,16 +104,16 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         [CrossAreaRoute]
         [HttpGet]
-        public PartialViewResult MissingGrantAllocation()
+        public PartialViewResult MissingFundSourceAllocation()
         {
-            return ViewSupport(SupportRequestTypeEnum.NewOrganizationOrGrantAllocation, string.Empty);
+            return ViewSupport(SupportRequestTypeEnum.NewOrganizationOrFundSourceAllocation, string.Empty);
         }
 
         [AnonymousUnclassifiedFeature]
         [CrossAreaRoute]
         [HttpPost]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult MissingGrantAllocation(SupportFormViewModel viewModel)
+        public ActionResult MissingFundSourceAllocation(SupportFormViewModel viewModel)
         {
             return Support(viewModel);
         }
@@ -123,7 +123,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpGet]
         public PartialViewResult MissingOrganization()
         {
-            return ViewSupport(SupportRequestTypeEnum.NewOrganizationOrGrantAllocation, string.Empty);
+            return ViewSupport(SupportRequestTypeEnum.NewOrganizationOrFundSourceAllocation, string.Empty);
         }
 
         [AnonymousUnclassifiedFeature]

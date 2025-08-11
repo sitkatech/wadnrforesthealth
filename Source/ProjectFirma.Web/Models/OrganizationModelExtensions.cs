@@ -116,8 +116,8 @@ namespace ProjectFirma.Web.Models
 
         public static List<Project> GetAllAssociatedProjectsForOrgVisibleToUser(this Organization organization, Person currentPerson)
         {
-            var allAssociatedProjects = organization.GrantAllocations
-                .SelectMany(x => x.ProjectGrantAllocationRequests.Select(r => r.Project))
+            var allAssociatedProjects = organization.FundSourceAllocations
+                .SelectMany(x => x.ProjectFundSourceAllocationRequests.Select(r => r.Project))
                 .Union(organization.ProjectOrganizations.Select(x => x.Project))
                 .ToList();
 

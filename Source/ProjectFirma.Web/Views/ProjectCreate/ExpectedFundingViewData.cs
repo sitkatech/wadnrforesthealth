@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ExpectedFundingViewData : ProjectCreateViewData
     {
-        public string RequestGrantAllocationUrl { get; }
+        public string RequestFundSourceAllocationUrl { get; }
         public ViewDataForAngularClass ViewDataForAngular { get; }
         public List<SelectListItem> FundingSources { get; }
 
@@ -40,23 +40,23 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ViewDataForAngularClass viewDataForAngularClass) : base(currentPerson, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ViewDataForAngular = viewDataForAngularClass;
-            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
+            RequestFundSourceAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundSourceAllocation());
             FundingSources = FundingSource.All.ToSelectList(x => x.FundingSourceID.ToString(), y => y.FundingSourceDisplayName).ToList();
         }
 
         public class ViewDataForAngularClass
         {
-            public readonly List<GrantAllocationSimple> AllGrantAllocations;
+            public readonly List<FundSourceAllocationSimple> AllFundSourceAllocations;
             // Actually a ProjectID
             public readonly int ProjectID;
             public readonly decimal EstimatedTotalCost;
 
 
             public ViewDataForAngularClass(Models.Project projectProposedBatch,
-                                           List<GrantAllocationSimple> allGrantAllocations,
+                                           List<FundSourceAllocationSimple> allFundSourceAllocations,
                                            decimal estimatedTotalCost)
             {
-                AllGrantAllocations = allGrantAllocations;
+                AllFundSourceAllocations = allFundSourceAllocations;
                 ProjectID = projectProposedBatch.ProjectID;
                 EstimatedTotalCost = estimatedTotalCost;
             }

@@ -121,7 +121,7 @@ namespace ProjectFirma.Web.Service
                     "ProjectID,ProjectName,KeyPhotoUrl"),
                 new CsvColumnTestCase("GetOrganizations",
                     () => (CsvDownloadResult) testSubject.GetOrganizations(WebServicesController.WebServiceReturnTypeEnum.CSV, WebServiceToken.WebServiceTokenForUnitTests),
-"OrganizationID,Organization,OrganizationShortName,OrganizationType,PrimaryContact,NumberOfProjects,NumberOfGrantAllocations,NumberOfUsers,OrganizationSummaryUrl"),
+"OrganizationID,Organization,OrganizationShortName,OrganizationType,PrimaryContact,NumberOfProjects,NumberOfFundSourceAllocations,NumberOfUsers,OrganizationSummaryUrl"),
             };
 
             foreach (var testCase in testCases)

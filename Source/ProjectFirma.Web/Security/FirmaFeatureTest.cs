@@ -109,14 +109,14 @@ namespace ProjectFirma.Web.Security
             foreach (var type in types)
             {
                 var obj = FirmaBaseFeature.InstantiateFeature(type);
-                if (!obj.GrantedRoles.Contains(Role.Admin) && obj.GrantedRoles.Count != 0)
+                if (!obj.FundSourceedRoles.Contains(Role.Admin) && obj.FundSourceedRoles.Count != 0)
                 {
                     var errorMessage = $"Feature {type.FullName} is not available to Administrators";
                     listOfErrors.Add(errorMessage);
                 }
 
                 //Validate Unassigned does NOT have access
-                if (obj.GrantedRoles.Contains(Role.Unassigned))
+                if (obj.FundSourceedRoles.Contains(Role.Unassigned))
                 {
                     string errorMessage = $"Feature {type.FullName} is available to the Unassigned role";
                     listOfErrors.Add(errorMessage);
@@ -142,14 +142,14 @@ namespace ProjectFirma.Web.Security
             foreach (var type in types)
             {
                 var obj = FirmaBaseFeature.InstantiateFeature(type);
-                if (!obj.GrantedRoles.Contains(Role.EsaAdmin) && obj.GrantedRoles.Count != 0)
+                if (!obj.FundSourceedRoles.Contains(Role.EsaAdmin) && obj.FundSourceedRoles.Count != 0)
                 {
                     var errorMessage = $"Feature {type.FullName} is not available to Administrators";
                     listOfErrors.Add(errorMessage);
                 }
 
                 //Validate Unassigned does NOT have access
-                if (obj.GrantedRoles.Contains(Role.Unassigned))
+                if (obj.FundSourceedRoles.Contains(Role.Unassigned))
                 {
                     string errorMessage = $"Feature {type.FullName} is available to the Unassigned role";
                     listOfErrors.Add(errorMessage);

@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public ProjectFundingDetailViewData ProjectFundingDetailViewData { get; set; }
         public List<SelectListItem> FundingSources { get; }
 
-        public string RequestGrantAllocationUrl { get; }
+        public string RequestFundSourceAllocationUrl { get; }
         public ViewDataForAngularClass ViewDataForAngular { get; }
         public SectionCommentsViewData SectionCommentsViewData { get; }
 
@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpectedFunding(projectUpdateBatch.Project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffExpectedFunding(projectUpdateBatch.Project));
-            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
+            RequestFundSourceAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundSourceAllocation());
             ProjectFundingDetailViewData = projectFundingDetailViewData;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.ExpectedFundingComment, projectUpdateBatch.IsReturned);
             ValidationWarnings = expectedFundingValidationResult.GetWarningMessages();
@@ -56,16 +56,16 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public class ViewDataForAngularClass
         {
-            public readonly List<GrantAllocationSimple> AllGrantAllocationSimples;
+            public readonly List<FundSourceAllocationSimple> AllFundSourceAllocationSimples;
             // Actually a ProjectUpdateBatchID
             public readonly int ProjectID;
             public readonly decimal EstimatedTotalCost;
 
             public ViewDataForAngularClass(ProjectUpdateBatch projectUpdateBatch,
-                List<GrantAllocationSimple> allGrantAllocationSimples,
+                List<FundSourceAllocationSimple> allFundSourceAllocationSimples,
                 decimal estimatedTotalCost)
             {
-                AllGrantAllocationSimples = allGrantAllocationSimples;
+                AllFundSourceAllocationSimples = allFundSourceAllocationSimples;
                 ProjectID = projectUpdateBatch.ProjectUpdateBatchID;
                 EstimatedTotalCost = estimatedTotalCost;
             }

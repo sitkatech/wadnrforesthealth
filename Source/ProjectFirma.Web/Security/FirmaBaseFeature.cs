@@ -35,19 +35,19 @@ namespace ProjectFirma.Web.Security
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public abstract class FirmaBaseFeature : RelyingPartyAuthorizeAttribute
     {
-        private readonly IList<IRole> _grantedRoles;
+        private readonly IList<IRole> _fundSourceedRoles;
 
-        public IList<IRole> GrantedRoles => _grantedRoles;
+        public IList<IRole> FundSourceedRoles => _fundSourceedRoles;
 
-        protected FirmaBaseFeature(IList<IRole> grantedRoles) // params
+        protected FirmaBaseFeature(IList<IRole> fundSourceedRoles) // params
         {
             // Force user to pass us empty lists to make life simpler
-            Check.RequireNotNull(grantedRoles, "Can\'t pass null for Granted Roles.");
+            Check.RequireNotNull(fundSourceedRoles, "Can\'t pass null for FundSourceed Roles.");
 
             // At least one of these must be set
-            //Check.Ensure(grantedRoles.Any(), "Must set at least one Role");
+            //Check.Ensure(fundSourceedRoles.Any(), "Must set at least one Role");
 
-            _grantedRoles = grantedRoles;
+            _fundSourceedRoles = fundSourceedRoles;
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Security
 
         internal string CalculateRoleNameStringFromFeature()
         {
-            return String.Join(", ", GrantedRoles.Select(r => r.RoleName).ToList());
+            return String.Join(", ", FundSourceedRoles.Select(r => r.RoleName).ToList());
         }
 
         public string FeatureName => GetType().Name;
@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Security
         public virtual bool HasPermissionByPerson(Person person)
         {
             //AnonymousUnclassifiedFeature case; no roles on feature
-            if (!_grantedRoles.Any()) 
+            if (!_fundSourceedRoles.Any()) 
             {
                 return true;
             }
@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Security
             //Anonymous/Unassigned user + Unassigned role on feature
             if (person != null
                 && person.IsAnonymousOrUnassigned 
-                && _grantedRoles.Contains(Role.Unassigned)) 
+                && _fundSourceedRoles.Contains(Role.Unassigned)) 
             {
                 return true;
             }
@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Security
             //Otherwise check if non-anonymous user with any matching role
             return person != null
                    && !person.IsAnonymousUser
-                   && _grantedRoles.Any(x => person.HasRoleID(x.RoleID));
+                   && _fundSourceedRoles.Any(x => person.HasRoleID(x.RoleID));
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)

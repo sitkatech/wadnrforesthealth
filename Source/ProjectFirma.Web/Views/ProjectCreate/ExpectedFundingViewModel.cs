@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ExpectedFundingViewModel : FormViewModel, IValidatableObject
     {
-        public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequestSimples { get; set; }
+        public List<ProjectFundSourceAllocationRequestSimple> ProjectFundSourceAllocationRequestSimples { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         [JsonIgnore]
@@ -54,51 +54,51 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
         }
 
-        public ExpectedFundingViewModel(List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, Money? projectEstimatedTotalCost, string projectFundingSourceNotes, List<ProjectFundingSource> projectFundingSources)
+        public ExpectedFundingViewModel(List<Models.ProjectFundSourceAllocationRequest> projectFundSourceAllocationRequests, Money? projectEstimatedTotalCost, string projectFundingSourceNotes, List<ProjectFundingSource> projectFundingSources)
         {
-            ProjectGrantAllocationRequestSimples = projectGrantAllocationRequests.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
+            ProjectFundSourceAllocationRequestSimples = projectFundSourceAllocationRequests.Select(x => new ProjectFundSourceAllocationRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ProjectFundingSourceNotes = projectFundingSourceNotes;
             FundingSourceIDs = projectFundingSources.Select(x => x.FundingSourceID).ToList();
         }
 
         public void UpdateModel(Models.Project project,
-                                List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
-                                IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests,
+                                List<Models.ProjectFundSourceAllocationRequest> currentProjectFundSourceAllocationRequests,
+                                IList<Models.ProjectFundSourceAllocationRequest> allProjectFundSourceAllocationRequests,
                                 List<ProjectFundingSource> currentProjectFundingSources,
                                 IList<ProjectFundingSource> allProjectFundingSources)
         {
-            //Update the ProjectGrantAllocationRequests
+            //Update the ProjectFundSourceAllocationRequests
             var dateNow = DateTime.Now;
-            var projectGrantAllocationRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
-            if (ProjectGrantAllocationRequestSimples != null)
+            var projectFundSourceAllocationRequestsUpdated = new List<Models.ProjectFundSourceAllocationRequest>();
+            if (ProjectFundSourceAllocationRequestSimples != null)
             {
 
-                foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequestSimples)
+                foreach (var projectFundSourceAllocationRequestSimple in ProjectFundSourceAllocationRequestSimples)
                 {
-                    var existingCurrentOne = currentProjectGrantAllocationRequests.SingleOrDefault(x =>
-                        x.ProjectID == projectGrantAllocationRequestSimple.ProjectID &&
-                        x.GrantAllocationID == projectGrantAllocationRequestSimple.GrantAllocationID);
+                    var existingCurrentOne = currentProjectFundSourceAllocationRequests.SingleOrDefault(x =>
+                        x.ProjectID == projectFundSourceAllocationRequestSimple.ProjectID &&
+                        x.FundSourceAllocationID == projectFundSourceAllocationRequestSimple.FundSourceAllocationID);
                     if (existingCurrentOne != null)
                     {
-                        var projectGrantAllocationRequestToAdd =
-                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                        var projectFundSourceAllocationRequestToAdd =
+                            projectFundSourceAllocationRequestSimple.ToProjectFundSourceAllocationRequest(
                                 existingCurrentOne.CreateDate, dateNow, existingCurrentOne.ImportedFromTabularData);
-                        projectGrantAllocationRequestsUpdated.Add(projectGrantAllocationRequestToAdd);
+                        projectFundSourceAllocationRequestsUpdated.Add(projectFundSourceAllocationRequestToAdd);
                     }
                     else
                     {
-                        var projectGrantAllocationRequestToAdd =
-                            projectGrantAllocationRequestSimple.ToProjectGrantAllocationRequest(
+                        var projectFundSourceAllocationRequestToAdd =
+                            projectFundSourceAllocationRequestSimple.ToProjectFundSourceAllocationRequest(
                                 dateNow, null, false);
-                        projectGrantAllocationRequestsUpdated.Add(projectGrantAllocationRequestToAdd);
+                        projectFundSourceAllocationRequestsUpdated.Add(projectFundSourceAllocationRequestToAdd);
                     }
                 }
             }
 
-            currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsUpdated,
-                allProjectGrantAllocationRequests,
-                (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
+            currentProjectFundSourceAllocationRequests.Merge(projectFundSourceAllocationRequestsUpdated,
+                allProjectFundSourceAllocationRequests,
+                (x, y) => x.ProjectID == y.ProjectID && x.FundSourceAllocationID == y.FundSourceAllocationID,
                 (x, y) =>
                 {
                     x.TotalAmount = y.TotalAmount;
@@ -133,25 +133,25 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public IEnumerable<ValidationResult> GetValidationResults()
         {
-            if (ProjectGrantAllocationRequestSimples == null)
+            if (ProjectFundSourceAllocationRequestSimples == null)
             {
                 yield break;
             }
 
-            if (ProjectGrantAllocationRequestSimples.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
+            if (ProjectFundSourceAllocationRequestSimples.GroupBy(x => x.FundSourceAllocationID).Any(x => x.Count() > 1))
             {
-                yield return new ValidationResult("Each grant allocation can only be used once.");
+                yield return new ValidationResult("Each fundSource allocation can only be used once.");
             }
 
-            //foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequestSimples)
+            //foreach (var projectFundSourceAllocationRequestSimple in ProjectFundSourceAllocationRequestSimples)
             //{
-            //    if (projectGrantAllocationRequestSimple.AreBothValuesZero())
+            //    if (projectFundSourceAllocationRequestSimple.AreBothValuesZero())
             //    {
-            //        var grantAllocation =
-            //            HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x =>
-            //                x.GrantAllocationID == projectGrantAllocationRequestSimple.GrantAllocationID);
+            //        var fundSourceAllocation =
+            //            HttpRequestStorage.DatabaseEntities.FundSourceAllocations.Single(x =>
+            //                x.FundSourceAllocationID == projectFundSourceAllocationRequestSimple.FundSourceAllocationID);
             //        yield return new ValidationResult(
-            //            $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
+            //            $"Secured Funding and Unsecured Funding cannot both be zero for FundSource Allocation: {fundSourceAllocation.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
             //    }
             //}
         }

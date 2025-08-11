@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="GrantExcelSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
+<copyright file="FundSourceExcelSpec.cs" company="Tahoe Regional Planning Agency and Environmental Science Associates">
 Copyright (c) Tahoe Regional Planning Agency and Environmental Science Associates. All rights reserved.
 <author>Environmental Science Associates</author>
 </copyright>
@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             AddColumn("Type", x => x.AgreementType?.AgreementTypeAbbrev);
             AddColumn("Number", x => x.AgreementNumber);
-            AddColumn(Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel(), x => x.AgreementGrantAllocations.ToDistinctOrderedCsvListOfGrantNumber());
+            AddColumn(Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel(), x => x.AgreementFundSourceAllocations.ToDistinctOrderedCsvListOfFundSourceNumber());
             AddColumn(Models.FieldDefinition.Organization.GetFieldDefinitionLabel(), x => x.Organization.DisplayName);
             AddColumn("Title", x => x.AgreementTitle);
             AddColumn("Start Date", x => x.StartDateDisplay);

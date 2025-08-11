@@ -39,8 +39,8 @@ namespace ProjectFirma.Web.Models
 
         public decimal GetTotalAmount()
         {
-            return ProjectUpdateBatch.ProjectGrantAllocationRequestUpdates.Any()
-                ? ProjectUpdateBatch.ProjectGrantAllocationRequestUpdates.Sum(x => x.TotalAmount.GetValueOrDefault())
+            return ProjectUpdateBatch.ProjectFundSourceAllocationRequestUpdates.Any()
+                ? ProjectUpdateBatch.ProjectFundSourceAllocationRequestUpdates.Sum(x => x.TotalAmount.GetValueOrDefault())
                 : 0;
         }
 

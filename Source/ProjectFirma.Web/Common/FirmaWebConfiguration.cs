@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Common
         public static readonly string ProjectCodeJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProjectCodeJsonApiBaseUrl");
         public static readonly string ProgramIndexJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProgramIndexJsonApiBaseUrl");
         public static readonly string VendorJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("VendorJsonApiBaseUrl");
-        public static readonly string GrantExpendituresJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("GrantExpendituresJsonApiBaseUrl");
+        public static readonly string FundSourceExpendituresJsonApiBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("FundSourceExpendituresJsonApiBaseUrl");
         public static readonly string DataImportAuthUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthUrl");
         public static readonly string DataImportAuthUsername = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthUsername");
         public static readonly string DataImportAuthPassword = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("DataImportAuthPassword");

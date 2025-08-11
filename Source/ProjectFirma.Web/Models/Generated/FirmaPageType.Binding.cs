@@ -43,8 +43,8 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeCustomFooter CustomFooter = FirmaPageTypeCustomFooter.Instance;
         public static readonly FirmaPageTypeFactSheetCustomText FactSheetCustomText = FirmaPageTypeFactSheetCustomText.Instance;
         public static readonly FirmaPageTypeFocusAreasList FocusAreasList = FirmaPageTypeFocusAreasList.Instance;
-        public static readonly FirmaPageTypeFullGrantList FullGrantList = FirmaPageTypeFullGrantList.Instance;
-        public static readonly FirmaPageTypeFullGrantAllocationList FullGrantAllocationList = FirmaPageTypeFullGrantAllocationList.Instance;
+        public static readonly FirmaPageTypeFullFundSourceList FullFundSourceList = FirmaPageTypeFullFundSourceList.Instance;
+        public static readonly FirmaPageTypeFullFundSourceAllocationList FullFundSourceAllocationList = FirmaPageTypeFullFundSourceAllocationList.Instance;
         public static readonly FirmaPageTypeRegionsList RegionsList = FirmaPageTypeRegionsList.Instance;
         public static readonly FirmaPageTypePriorityLandscapesList PriorityLandscapesList = FirmaPageTypePriorityLandscapesList.Instance;
         public static readonly FirmaPageTypeFullAgreementList FullAgreementList = FirmaPageTypeFullAgreementList.Instance;
@@ -71,7 +71,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, ManageUpdateNotifications, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor, ProjectCreateInstructions, ProjectUpdateInstructions };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, ManageUpdateNotifications, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, FactSheetCustomText, FocusAreasList, FullFundSourceList, FullFundSourceAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, InteractionEventList, GisUploadAttemptInstructions, ProgramsList, UploadLoaTabularDataExcel, ManageFindYourForester, FindYourForester, ExternalMapLayers, County, Reports, ReportProjects, ReportAddReport, Vendor, ProjectCreateInstructions, ProjectUpdateInstructions };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -163,10 +163,10 @@ namespace ProjectFirma.Web.Models
                     return FocusAreasList;
                 case FirmaPageTypeEnum.FullAgreementList:
                     return FullAgreementList;
-                case FirmaPageTypeEnum.FullGrantAllocationList:
-                    return FullGrantAllocationList;
-                case FirmaPageTypeEnum.FullGrantList:
-                    return FullGrantList;
+                case FirmaPageTypeEnum.FullFundSourceAllocationList:
+                    return FullFundSourceAllocationList;
+                case FirmaPageTypeEnum.FullFundSourceList:
+                    return FullFundSourceList;
                 case FirmaPageTypeEnum.FullProjectList:
                     return FullProjectList;
                 case FirmaPageTypeEnum.FullProjectListSimple:
@@ -261,8 +261,8 @@ namespace ProjectFirma.Web.Models
         CustomFooter = 51,
         FactSheetCustomText = 54,
         FocusAreasList = 55,
-        FullGrantList = 56,
-        FullGrantAllocationList = 57,
+        FullFundSourceList = 56,
+        FullFundSourceAllocationList = 57,
         RegionsList = 58,
         PriorityLandscapesList = 59,
         FullAgreementList = 60,
@@ -426,16 +426,16 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFocusAreasList Instance = new FirmaPageTypeFocusAreasList(55, @"FocusAreasList", @"Focus Areas List", 1);
     }
 
-    public partial class FirmaPageTypeFullGrantList : FirmaPageType
+    public partial class FirmaPageTypeFullFundSourceList : FirmaPageType
     {
-        private FirmaPageTypeFullGrantList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeFullGrantList Instance = new FirmaPageTypeFullGrantList(56, @"FullGrantList", @"Full Grant List", 1);
+        private FirmaPageTypeFullFundSourceList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeFullFundSourceList Instance = new FirmaPageTypeFullFundSourceList(56, @"FullFundSourceList", @"Full Fund Source List", 1);
     }
 
-    public partial class FirmaPageTypeFullGrantAllocationList : FirmaPageType
+    public partial class FirmaPageTypeFullFundSourceAllocationList : FirmaPageType
     {
-        private FirmaPageTypeFullGrantAllocationList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeFullGrantAllocationList Instance = new FirmaPageTypeFullGrantAllocationList(57, @"FullGrantAllocationList", @"Full Grant Allocation List", 1);
+        private FirmaPageTypeFullFundSourceAllocationList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeFullFundSourceAllocationList Instance = new FirmaPageTypeFullFundSourceAllocationList(57, @"FullFundSourceAllocationList", @"Full Fund Source Allocation List", 1);
     }
 
     public partial class FirmaPageTypeRegionsList : FirmaPageType

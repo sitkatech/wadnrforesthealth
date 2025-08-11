@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public string AgreementPersonGridDataUrl { get; }
         public bool UserHasEditAgreementPermissions { get; set; }
         public bool ShowDownload { get; }
-        public string EditAgreementGrantAllocationRelationshipsUrl { get; }
+        public string EditAgreementFundSourceAllocationRelationshipsUrl { get; }
         [NotNull]
         public List<Models.ProjectCode> ProjectCodes { get; }
         [NotNull]
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public string EditAgreementUrl { get; set; }
         public string BackToAgreementsText { get; set; }
         public string AgreementsListUrl { get; set; }
-        public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
+        public List<AgreementFundSourceAllocation> CurrentAgreementFundSourceAllocationsInSortedOrder { get; }
         public List<AgreementProject> AgreementProjects { get; }
         public string EditAgreementProjectsUrl { get; }
 
@@ -76,14 +76,14 @@ namespace ProjectFirma.Web.Views.Agreement
             {
                 var contentUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.NewAgreementPerson(agreement.AgreementID));
                 AgreementPersonGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Agreement Contact");
-                EditAgreementGrantAllocationRelationshipsUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.EditAgreementGrantAllocationRelationships(agreement.AgreementID));
+                EditAgreementFundSourceAllocationRelationshipsUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.EditAgreementFundSourceAllocationRelationships(agreement.AgreementID));
             }
 
             AgreementPersonGridName = "agreementPersonGrid";
             AgreementPersonGridDataUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(ac => ac.AgreementPersonGridJsonData(agreement.AgreementID));
 
-            List<AgreementGrantAllocation> agreementGrantAllocationsList = agreement.AgreementGrantAllocations.ToList();
-            CurrentAgreementGrantAllocationsInSortedOrder = AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocationsList);
+            List<AgreementFundSourceAllocation> agreementFundSourceAllocationsList = agreement.AgreementFundSourceAllocations.ToList();
+            CurrentAgreementFundSourceAllocationsInSortedOrder = AgreementFundSourceAllocation.OrderAgreementFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(agreementFundSourceAllocationsList);
 
             AgreementProjects = agreement.AgreementProjects.ToList();
             EditAgreementProjectsUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.EditAgreementProjects(agreement.AgreementID));

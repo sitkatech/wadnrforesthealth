@@ -167,7 +167,7 @@ namespace ProjectFirma.Web.Controllers
             var projectBasicsTagsViewData = new ProjectBasicsTagsViewData(project, new TagHelper(project.ProjectTags.Select(x => new BootstrapTag(x.Tag)).ToList()), userHasProjectAdminPermissions);
 
             var projectIsLoa = project.ProjectPrograms.Any(x => x.ProgramID == LoaProgramID);
-            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests), projectIsLoa);
+            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IFundSourceAllocationRequestAmount>(project.ProjectFundSourceAllocationRequests), projectIsLoa);
             var projectInvoiceDetailViewData = new ProjectInvoiceDetailViewData(CurrentPerson, project);
             var imageGalleryViewData = BuildImageGalleryViewData(project, CurrentPerson);
             var projectNotesViewData = new EntityNotesViewData(
@@ -335,13 +335,13 @@ namespace ProjectFirma.Web.Controllers
             var mapDivID = $"project_{project.ProjectID}_Map";
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
             var chartName = $"ProjectFundingRequestSheet{project.ProjectID}PieChart";
-            var grantAllocationRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
+            var fundSourceAllocationRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
             var googleChartDataTable =
-                GetProjectGrantAllocationRequestSheetGoogleChartDataTable(grantAllocationRequestAmountGooglePieChartSlices);
+                GetProjectFundSourceAllocationRequestSheetGoogleChartDataTable(fundSourceAllocationRequestAmountGooglePieChartSlices);
             var googleChartTitle = $"Funding Request by {FieldDefinition.Organization.GetFieldDefinitionLabel()} for: {project.ProjectName}";
             var googleChartType = GoogleChartType.PieChart;
             var googleChartConfiguration = new GooglePieChartConfiguration(googleChartTitle, MeasurementUnitTypeEnum.Dollars,
-                grantAllocationRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
+                fundSourceAllocationRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
             var googleChartJson = new GoogleChartJson(string.Empty, chartName, googleChartConfiguration,
                 googleChartType,
                 googleChartDataTable, null);
@@ -349,14 +349,14 @@ namespace ProjectFirma.Web.Controllers
             var firmaPageFactSheetCustomText = FirmaPage.GetFirmaPageByPageType(firmaPageTypeFactSheetCustomText);
 
             var viewData = new ForwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson,
-                googleChartJson, grantAllocationRequestAmountGooglePieChartSlices, firmaPageFactSheetCustomText);
+                googleChartJson, fundSourceAllocationRequestAmountGooglePieChartSlices, firmaPageFactSheetCustomText);
             return RazorView<ForwardLookingFactSheet, ForwardLookingFactSheetViewData>(viewData);
         }
 
-        public static GoogleChartDataTable GetProjectGrantAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditureGooglePieChartSlices)
+        public static GoogleChartDataTable GetProjectFundSourceAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> fundSourceAllocationExpenditureGooglePieChartSlices)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn( $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
-            var chartRowCs = grantAllocationExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn( $"{FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var chartRowCs = fundSourceAllocationExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
             {
                 var sectorRowV = new GoogleChartRowV(x.Label);
                 var formattedValue = GoogleChartJson.GetFormattedValue(x.Value, MeasurementUnitType.Dollars);
@@ -720,17 +720,17 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return gridJsonNetJObjectResult;
         }
 
-        public static Dictionary<int, GooglePieChartSlice> GetSlicesForGoogleChart(Dictionary<string, decimal> grantAllocationExpenditures)
+        public static Dictionary<int, GooglePieChartSlice> GetSlicesForGoogleChart(Dictionary<string, decimal> fundSourceAllocationExpenditures)
         {
-            var indexMapping = GetConsistentGrantAllocationExpendituresIndexDictionary(grantAllocationExpenditures);
-            return grantAllocationExpenditures.Select(fund => indexMapping[fund.Key]).ToDictionary(index => index, index => new GooglePieChartSlice {Color = FirmaHelpers.DefaultColorRange[index]});
+            var indexMapping = GetConsistentFundSourceAllocationExpendituresIndexDictionary(fundSourceAllocationExpenditures);
+            return fundSourceAllocationExpenditures.Select(fund => indexMapping[fund.Key]).ToDictionary(index => index, index => new GooglePieChartSlice {Color = FirmaHelpers.DefaultColorRange[index]});
         }
 
-        public static Dictionary<string, int> GetConsistentGrantAllocationExpendituresIndexDictionary(Dictionary<string,decimal> grantAllocationExpenditures)
+        public static Dictionary<string, int> GetConsistentFundSourceAllocationExpendituresIndexDictionary(Dictionary<string,decimal> fundSourceAllocationExpenditures)
         {
             var results = new Dictionary<string, int>();
             var index = 0;
-            foreach (var fund in grantAllocationExpenditures)
+            foreach (var fund in fundSourceAllocationExpenditures)
             {
                 results.Add(fund.Key, index);
                 index++;
@@ -738,10 +738,10 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return results;
         }
 
-        public static GoogleChartDataTable GetProjectFactSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditures)
+        public static GoogleChartDataTable GetProjectFactSheetGoogleChartDataTable(List<GooglePieChartSlice> fundSourceAllocationExpenditures)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
-            var chartRowCs = grantAllocationExpenditures.Select(x =>
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn($"{FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var chartRowCs = fundSourceAllocationExpenditures.Select(x =>
             {
                 var organizationTypeRowV = new GoogleChartRowV(x.Label);
                 var formattedValue = GoogleChartJson.GetFormattedValue(x.Value, MeasurementUnitType.Dollars);

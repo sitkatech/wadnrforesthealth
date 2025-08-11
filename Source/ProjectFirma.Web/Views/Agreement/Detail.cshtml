@@ -31,9 +31,9 @@
 @inherits ProjectFirma.Web.Views.Agreement.Detail
 
 @functions {
-    private string GetAgreementGrantAllocationUrl(AgreementGrantAllocation currentAgreementGrantAllocation)
+    private string GetAgreementFundSourceAllocationUrl(AgreementFundSourceAllocation currentAgreementFundSourceAllocation)
     {
-        return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.GrantAllocation)));
+        return SitkaRoute<FundSourceAllocationController>.BuildUrlFromExpression(c => c.FundSourceAllocationDetail(new FundSourceAllocationPrimaryKey(currentAgreementFundSourceAllocation.FundSourceAllocation)));
     }
 }
 
@@ -219,22 +219,22 @@
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementGrantAllocationRelationshipsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
-                    @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementFundSourceAllocationRelationshipsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
+                    @FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    @*Display grant allocations in descending order according to grant number year*@
+                    @*Display fundSource allocations in descending order according to fundSource number year*@
                     <table class="table">
                         <tr>
                             <th>
-                                @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()
+                                @FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()
                             </th>
                         </tr>
-                        @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
+                        @foreach (var currentAgreementFundSourceAllocation in ViewDataTyped.CurrentAgreementFundSourceAllocationsInSortedOrder)
                         {
                             <tr>
                                 <td>
-                                    <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</a>
+                                    <a href="@GetAgreementFundSourceAllocationUrl(currentAgreementFundSourceAllocation)">@currentAgreementFundSourceAllocation.FundSourceAllocation.FundSourceNumberAndFundSourceAllocationDisplayName</a>
                                 </td>
                             </tr>
                         }

@@ -30,8 +30,8 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public EditAgreementProjectsViewData()
         {
-            var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.Projects.ToList();
-            AllPossibleProjectJsons = ProjectJson.MakeProjectJsonsFromProjects(databaseEntitiesGrantAllocations);
+            var databaseEntitiesFundSourceAllocations = HttpRequestStorage.DatabaseEntities.Projects.ToList();
+            AllPossibleProjectJsons = ProjectJson.MakeProjectJsonsFromProjects(databaseEntitiesFundSourceAllocations);
         }
 
     }

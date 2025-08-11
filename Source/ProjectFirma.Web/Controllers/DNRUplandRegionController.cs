@@ -73,13 +73,13 @@ namespace ProjectFirma.Web.Controllers
             var layers = DNRUplandRegion.GetRegionAndAssociatedProjectLayers(region, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, MapInitJson.GetExternalMapLayersForOtherMaps(), new BoundingBox(region.DNRUplandRegionLocation));
 
-            var grantAllocationExpenditures = new List<GrantAllocationExpenditure>();
-            region.GrantAllocations.ForEach(x => grantAllocationExpenditures.AddRange(x.GrantAllocationExpenditures));
+            var fundSourceAllocationExpenditures = new List<FundSourceAllocationExpenditure>();
+            region.FundSourceAllocations.ForEach(x => fundSourceAllocationExpenditures.AddRange(x.FundSourceAllocationExpenditures));
             var costTypes = CostType.GetLineItemCostTypes();
 
-            string chartTitle = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Expenditures By Cost Type";
+            string chartTitle = $"{FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} Expenditures By Cost Type";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var googleChart = grantAllocationExpenditures.ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
+            var googleChart = fundSourceAllocationExpenditures.ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
                 costTypes.Select(ct => ct.CostTypeDisplayName).ToList(),
                 x => x.CostType?.CostTypeDisplayName,
                 chartContainerID,
@@ -136,11 +136,11 @@ namespace ProjectFirma.Web.Controllers
 
 
         [DNRUplandRegionViewFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
+        public GridJsonNetJObjectResult<FundSourceAllocation> FundSourceAllocationsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
-            var gridSpec = new AssociatedGrantAllocationsGridSpec();
-            var grantAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedGrantAllocations(CurrentPerson).Where(x=>x.Grant.GrantStatus.GrantStatusID == GrantStatus.Active.GrantStatusID).OrderByDescending(x=>x.GrantAllocationPriority?.GrantAllocationPriorityNumber).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            var gridSpec = new AssociatedFundSourceAllocationsGridSpec();
+            var fundSourceAllocations = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedFundSourceAllocations(CurrentPerson).Where(x=>x.FundSource.FundSourceStatus.FundSourceStatusID == FundSourceStatus.Active.FundSourceStatusID).OrderByDescending(x=>x.FundSourceAllocationPriority?.FundSourceAllocationPriorityNumber).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<FundSourceAllocation>(fundSourceAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

@@ -178,7 +178,7 @@ else
         <div class="col-md-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    <h2>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by @FieldDefinition.CostType.GetFieldDefinitionLabel()</h2>
+                    <h2>@FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel() Expenditures by @FieldDefinition.CostType.GetFieldDefinitionLabel()</h2>
                 </div>
                 <div class="panel-body">
                     @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
@@ -190,7 +190,7 @@ else
                     }
                     else
                     {
-                        <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
+                        <p class="systemText">No @FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
                     }
                 </div>
             </div>
@@ -214,10 +214,10 @@ else
     <div class="col-md-12">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                <h2>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</h2>
+                <h2>@FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()</h2>
             </div>
             <div class="panel-body">
-                @Html.AgGrid(ViewDataTyped.AssociatedGrantAllocationsGridSpec, ViewDataTyped.AssociatedGrantAllocationsGridName, ViewDataTyped.AssociatedGrantAllocationsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
+                @Html.AgGrid(ViewDataTyped.AssociatedFundSourceAllocationsGridSpec, ViewDataTyped.AssociatedFundSourceAllocationsGridName, ViewDataTyped.AssociatedFundSourceAllocationsGridDataUrl, "height:300px", AgGridResizeType.VerticalResizableHorizontalAutoFit)
             </div>
         </div>
     </div>

@@ -46,11 +46,11 @@ namespace ProjectFirma.Web.Controllers
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes.OrderBy(x => x.AgreementTypeName);
             var agreementStatuses = HttpRequestStorage.DatabaseEntities.AgreementStatuses;
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.GrantName);
+            var fundSources = HttpRequestStorage.DatabaseEntities.FundSources.OrderBy(x => x.FundSourceName);
 
             var viewData = new EditAgreementViewData(editAgreementType,
                 organizations,
-                grants,
+                fundSources,
                 agreementTypes,
                 agreementStatuses
             );
@@ -251,36 +251,36 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult EditAgreementGrantAllocations(AgreementPrimaryKey agreementPrimaryKey)
+        public PartialViewResult EditAgreementFundSourceAllocations(AgreementPrimaryKey agreementPrimaryKey)
         {
             var agreement = agreementPrimaryKey.EntityObject;
-            var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
-            return ViewEditAgreementGrantAllocations(viewModel);
+            var viewModel = new EditAgreementFundSourceAllocationsViewModel(agreement);
+            return ViewEditAgreementFundSourceAllocations(viewModel);
         }
 
-        private PartialViewResult ViewEditAgreementGrantAllocations(EditAgreementGrantAllocationsViewModel viewModel)
+        private PartialViewResult ViewEditAgreementFundSourceAllocations(EditAgreementFundSourceAllocationsViewModel viewModel)
         {
 
-            var viewData = new EditAgreementGrantAllocationsViewData();
-            return RazorPartialView<EditAgreementGrantAllocations, EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>(viewData, viewModel);
+            var viewData = new EditAgreementFundSourceAllocationsViewData();
+            return RazorPartialView<EditAgreementFundSourceAllocations, EditAgreementFundSourceAllocationsViewData, EditAgreementFundSourceAllocationsViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult EditAgreementGrantAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey)
+        public PartialViewResult EditAgreementFundSourceAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey)
         {
             var agreementId = agreementPrimaryKey.EntityObject.AgreementID;
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
             Check.EnsureNotNull(agreement);
 
-            var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
-            return ViewEditAgreementGrantAllocations(viewModel);
+            var viewModel = new EditAgreementFundSourceAllocationsViewModel(agreement);
+            return ViewEditAgreementFundSourceAllocations(viewModel);
         }
 
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditAgreementGrantAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
+        public ActionResult EditAgreementFundSourceAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey, EditAgreementFundSourceAllocationsViewModel viewModel)
         {
             // Find relevant agreement
             var agreement = agreementPrimaryKey.EntityObject;
@@ -288,17 +288,17 @@ namespace ProjectFirma.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return ViewEditAgreementGrantAllocations(viewModel);
+                return ViewEditAgreementFundSourceAllocations(viewModel);
             }
-            var grantAllocationsCurrentlyOnAgreement = agreement.AgreementGrantAllocations.Select(x => x.GrantAllocationID).ToList();
-            var grantAllocationsFromPost = viewModel.GrantAllocationJsons.Select(x => x.GrantAllocationID).ToList();
-            var countAdded = grantAllocationsFromPost.Except(grantAllocationsCurrentlyOnAgreement).Count();
-            var countDeleted = grantAllocationsCurrentlyOnAgreement.Except(grantAllocationsFromPost).Count();
+            var fundSourceAllocationsCurrentlyOnAgreement = agreement.AgreementFundSourceAllocations.Select(x => x.FundSourceAllocationID).ToList();
+            var fundSourceAllocationsFromPost = viewModel.FundSourceAllocationJsons.Select(x => x.FundSourceAllocationID).ToList();
+            var countAdded = fundSourceAllocationsFromPost.Except(fundSourceAllocationsCurrentlyOnAgreement).Count();
+            var countDeleted = fundSourceAllocationsCurrentlyOnAgreement.Except(fundSourceAllocationsFromPost).Count();
              
             viewModel.UpdateModel(agreement);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            var finalMessage = MakeAddDeleteSuccessMessage(countAdded, countDeleted, agreement, FieldDefinition.GrantAllocation.FieldDefinitionDisplayName, FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized());
+            var finalMessage = MakeAddDeleteSuccessMessage(countAdded, countDeleted, agreement, FieldDefinition.FundSourceAllocation.FieldDefinitionDisplayName, FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized());
             SetMessageForDisplay(finalMessage);
             return new ModalDialogFormJsonResult();
         }
@@ -354,7 +354,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        #region WADNR Grant JSON API
+        #region WADNR FundSource JSON API
 
         [AgreementsViewJsonApiFeature]
         public JsonNetJArrayResult AgreementJsonApi()

@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionExpirationDate ExpirationDate = FieldDefinitionExpirationDate.Instance;
         public static readonly FieldDefinitionReportedValue ReportedValue = FieldDefinitionReportedValue.Instance;
         public static readonly FieldDefinitionOrganizationType OrganizationType = FieldDefinitionOrganizationType.Instance;
-        public static readonly FieldDefinitionProjectGrantAllocationRequestTotalAmount ProjectGrantAllocationRequestTotalAmount = FieldDefinitionProjectGrantAllocationRequestTotalAmount.Instance;
+        public static readonly FieldDefinitionProjectFundSourceAllocationRequestTotalAmount ProjectFundSourceAllocationRequestTotalAmount = FieldDefinitionProjectFundSourceAllocationRequestTotalAmount.Instance;
         public static readonly FieldDefinitionProjectStage ProjectStage = FieldDefinitionProjectStage.Instance;
         public static readonly FieldDefinitionClassificationName ClassificationName = FieldDefinitionClassificationName.Instance;
         public static readonly FieldDefinitionEstimatedTotalCost EstimatedTotalCost = FieldDefinitionEstimatedTotalCost.Instance;
@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectUpdateKickOffDate ProjectUpdateKickOffDate = FieldDefinitionProjectUpdateKickOffDate.Instance;
         public static readonly FieldDefinitionProjectUpdateReminderInterval ProjectUpdateReminderInterval = FieldDefinitionProjectUpdateReminderInterval.Instance;
         public static readonly FieldDefinitionProjectUpdateCloseOutDate ProjectUpdateCloseOutDate = FieldDefinitionProjectUpdateCloseOutDate.Instance;
-        public static readonly FieldDefinitionGrantAllocationAmount GrantAllocationAmount = FieldDefinitionGrantAllocationAmount.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationAmount FundSourceAllocationAmount = FieldDefinitionFundSourceAllocationAmount.Instance;
         public static readonly FieldDefinitionNormalUser NormalUser = FieldDefinitionNormalUser.Instance;
         public static readonly FieldDefinitionProjectStewardshipArea ProjectStewardshipArea = FieldDefinitionProjectStewardshipArea.Instance;
         public static readonly FieldDefinitionProjectInternalNote ProjectInternalNote = FieldDefinitionProjectInternalNote.Instance;
@@ -100,22 +100,22 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionPartner Partner = FieldDefinitionPartner.Instance;
         public static readonly FieldDefinitionPrimaryContact PrimaryContact = FieldDefinitionPrimaryContact.Instance;
         public static readonly FieldDefinitionFocusArea FocusArea = FieldDefinitionFocusArea.Instance;
-        public static readonly FieldDefinitionGrant Grant = FieldDefinitionGrant.Instance;
-        public static readonly FieldDefinitionGrantAllocation GrantAllocation = FieldDefinitionGrantAllocation.Instance;
+        public static readonly FieldDefinitionFundSource FundSource = FieldDefinitionFundSource.Instance;
+        public static readonly FieldDefinitionFundSourceAllocation FundSourceAllocation = FieldDefinitionFundSourceAllocation.Instance;
         public static readonly FieldDefinitionCostType CostType = FieldDefinitionCostType.Instance;
         public static readonly FieldDefinitionProjectCode ProjectCode = FieldDefinitionProjectCode.Instance;
-        public static readonly FieldDefinitionGrantAllocationProjectCode GrantAllocationProjectCode = FieldDefinitionGrantAllocationProjectCode.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationProjectCode FundSourceAllocationProjectCode = FieldDefinitionFundSourceAllocationProjectCode.Instance;
         public static readonly FieldDefinitionProgramIndex ProgramIndex = FieldDefinitionProgramIndex.Instance;
-        public static readonly FieldDefinitionGrantName GrantName = FieldDefinitionGrantName.Instance;
-        public static readonly FieldDefinitionGrantShortName GrantShortName = FieldDefinitionGrantShortName.Instance;
-        public static readonly FieldDefinitionGrantStatus GrantStatus = FieldDefinitionGrantStatus.Instance;
-        public static readonly FieldDefinitionGrantType GrantType = FieldDefinitionGrantType.Instance;
-        public static readonly FieldDefinitionGrantNumber GrantNumber = FieldDefinitionGrantNumber.Instance;
+        public static readonly FieldDefinitionFundSourceName FundSourceName = FieldDefinitionFundSourceName.Instance;
+        public static readonly FieldDefinitionFundSourceShortName FundSourceShortName = FieldDefinitionFundSourceShortName.Instance;
+        public static readonly FieldDefinitionFundSourceStatus FundSourceStatus = FieldDefinitionFundSourceStatus.Instance;
+        public static readonly FieldDefinitionFundSourceType FundSourceType = FieldDefinitionFundSourceType.Instance;
+        public static readonly FieldDefinitionFundSourceNumber FundSourceNumber = FieldDefinitionFundSourceNumber.Instance;
         public static readonly FieldDefinitionCFDA CFDA = FieldDefinitionCFDA.Instance;
         public static readonly FieldDefinitionTotalAwardAmount TotalAwardAmount = FieldDefinitionTotalAwardAmount.Instance;
-        public static readonly FieldDefinitionGrantStartDate GrantStartDate = FieldDefinitionGrantStartDate.Instance;
-        public static readonly FieldDefinitionGrantEndDate GrantEndDate = FieldDefinitionGrantEndDate.Instance;
-        public static readonly FieldDefinitionGrantNote GrantNote = FieldDefinitionGrantNote.Instance;
+        public static readonly FieldDefinitionFundSourceStartDate FundSourceStartDate = FieldDefinitionFundSourceStartDate.Instance;
+        public static readonly FieldDefinitionFundSourceEndDate FundSourceEndDate = FieldDefinitionFundSourceEndDate.Instance;
+        public static readonly FieldDefinitionFundSourceNote FundSourceNote = FieldDefinitionFundSourceNote.Instance;
         public static readonly FieldDefinitionPriorityLandscape PriorityLandscape = FieldDefinitionPriorityLandscape.Instance;
         public static readonly FieldDefinitionInvoice Invoice = FieldDefinitionInvoice.Instance;
         public static readonly FieldDefinitionAgreement Agreement = FieldDefinitionAgreement.Instance;
@@ -130,7 +130,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProgramManager ProgramManager = FieldDefinitionProgramManager.Instance;
         public static readonly FieldDefinitionAgreementNotes AgreementNotes = FieldDefinitionAgreementNotes.Instance;
         public static readonly FieldDefinitionAgreementStatus AgreementStatus = FieldDefinitionAgreementStatus.Instance;
-        public static readonly FieldDefinitionGrantAllocationNote GrantAllocationNote = FieldDefinitionGrantAllocationNote.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationNote FundSourceAllocationNote = FieldDefinitionFundSourceAllocationNote.Instance;
         public static readonly FieldDefinitionFileResource FileResource = FieldDefinitionFileResource.Instance;
         public static readonly FieldDefinitionProjectTotalCompletedFootprintAcres ProjectTotalCompletedFootprintAcres = FieldDefinitionProjectTotalCompletedFootprintAcres.Instance;
         public static readonly FieldDefinitionFocusAreaTotalProjectReportedExpendiures FocusAreaTotalProjectReportedExpendiures = FieldDefinitionFocusAreaTotalProjectReportedExpendiures.Instance;
@@ -144,8 +144,8 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionPaymentAmount PaymentAmount = FieldDefinitionPaymentAmount.Instance;
         public static readonly FieldDefinitionPreparedByPerson PreparedByPerson = FieldDefinitionPreparedByPerson.Instance;
         public static readonly FieldDefinitionInvoiceIdentifyingName InvoiceIdentifyingName = FieldDefinitionInvoiceIdentifyingName.Instance;
-        public static readonly FieldDefinitionGrantNoteInternal GrantNoteInternal = FieldDefinitionGrantNoteInternal.Instance;
-        public static readonly FieldDefinitionGrantAllocationNoteInternal GrantAllocationNoteInternal = FieldDefinitionGrantAllocationNoteInternal.Instance;
+        public static readonly FieldDefinitionFundSourceNoteInternal FundSourceNoteInternal = FieldDefinitionFundSourceNoteInternal.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationNoteInternal FundSourceAllocationNoteInternal = FieldDefinitionFundSourceAllocationNoteInternal.Instance;
         public static readonly FieldDefinitionInvoiceStatus InvoiceStatus = FieldDefinitionInvoiceStatus.Instance;
         public static readonly FieldDefinitionInvoiceApprovalStatus InvoiceApprovalStatus = FieldDefinitionInvoiceApprovalStatus.Instance;
         public static readonly FieldDefinitionInvoiceApprovalComment InvoiceApprovalComment = FieldDefinitionInvoiceApprovalComment.Instance;
@@ -163,17 +163,17 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionInteractionEventContact InteractionEventContact = FieldDefinitionInteractionEventContact.Instance;
         public static readonly FieldDefinitionInteractionEventProject InteractionEventProject = FieldDefinitionInteractionEventProject.Instance;
         public static readonly FieldDefinitionInteractionEventLocation InteractionEventLocation = FieldDefinitionInteractionEventLocation.Instance;
-        public static readonly FieldDefinitionGrantAllocationName GrantAllocationName = FieldDefinitionGrantAllocationName.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationName FundSourceAllocationName = FieldDefinitionFundSourceAllocationName.Instance;
         public static readonly FieldDefinitionDivision Division = FieldDefinitionDivision.Instance;
-        public static readonly FieldDefinitionGrantManager GrantManager = FieldDefinitionGrantManager.Instance;
+        public static readonly FieldDefinitionFundSourceManager FundSourceManager = FieldDefinitionFundSourceManager.Instance;
         public static readonly FieldDefinitionJob Job = FieldDefinitionJob.Instance;
         public static readonly FieldDefinitionJobImportTableType JobImportTableType = FieldDefinitionJobImportTableType.Instance;
-        public static readonly FieldDefinitionGrantAllocationBudgetLineItem GrantAllocationBudgetLineItem = FieldDefinitionGrantAllocationBudgetLineItem.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationBudgetLineItem FundSourceAllocationBudgetLineItem = FieldDefinitionFundSourceAllocationBudgetLineItem.Instance;
         public static readonly FieldDefinitionProgramIndexProjectCode ProgramIndexProjectCode = FieldDefinitionProgramIndexProjectCode.Instance;
         public static readonly FieldDefinitionFhtProjectNumber FhtProjectNumber = FieldDefinitionFhtProjectNumber.Instance;
-        public static readonly FieldDefinitionGrantCurrentBalance GrantCurrentBalance = FieldDefinitionGrantCurrentBalance.Instance;
-        public static readonly FieldDefinitionGrantAllocationCurrentBalance GrantAllocationCurrentBalance = FieldDefinitionGrantAllocationCurrentBalance.Instance;
-        public static readonly FieldDefinitionGrantAllocationChangeLogNote GrantAllocationChangeLogNote = FieldDefinitionGrantAllocationChangeLogNote.Instance;
+        public static readonly FieldDefinitionFundSourceCurrentBalance FundSourceCurrentBalance = FieldDefinitionFundSourceCurrentBalance.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationCurrentBalance FundSourceAllocationCurrentBalance = FieldDefinitionFundSourceAllocationCurrentBalance.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationChangeLogNote FundSourceAllocationChangeLogNote = FieldDefinitionFundSourceAllocationChangeLogNote.Instance;
         public static readonly FieldDefinitionTreatmentStartDate TreatmentStartDate = FieldDefinitionTreatmentStartDate.Instance;
         public static readonly FieldDefinitionTreatmentEndDate TreatmentEndDate = FieldDefinitionTreatmentEndDate.Instance;
         public static readonly FieldDefinitionChippingAcres ChippingAcres = FieldDefinitionChippingAcres.Instance;
@@ -200,8 +200,8 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectTotalCompletedTreatmentAcres ProjectTotalCompletedTreatmentAcres = FieldDefinitionProjectTotalCompletedTreatmentAcres.Instance;
         public static readonly FieldDefinitionLimitVisibilityToAdmin LimitVisibilityToAdmin = FieldDefinitionLimitVisibilityToAdmin.Instance;
         public static readonly FieldDefinitionProgram Program = FieldDefinitionProgram.Instance;
-        public static readonly FieldDefinitionProjectGrantAllocationRequestMatchAmount ProjectGrantAllocationRequestMatchAmount = FieldDefinitionProjectGrantAllocationRequestMatchAmount.Instance;
-        public static readonly FieldDefinitionProjectGrantAllocationRequestPayAmount ProjectGrantAllocationRequestPayAmount = FieldDefinitionProjectGrantAllocationRequestPayAmount.Instance;
+        public static readonly FieldDefinitionProjectFundSourceAllocationRequestMatchAmount ProjectFundSourceAllocationRequestMatchAmount = FieldDefinitionProjectFundSourceAllocationRequestMatchAmount.Instance;
+        public static readonly FieldDefinitionProjectFundSourceAllocationRequestPayAmount ProjectFundSourceAllocationRequestPayAmount = FieldDefinitionProjectFundSourceAllocationRequestPayAmount.Instance;
         public static readonly FieldDefinitionProjectApplicationDate ProjectApplicationDate = FieldDefinitionProjectApplicationDate.Instance;
         public static readonly FieldDefinitionProjectDecisionDate ProjectDecisionDate = FieldDefinitionProjectDecisionDate.Instance;
         public static readonly FieldDefinitionServiceForester ServiceForester = FieldDefinitionServiceForester.Instance;
@@ -248,17 +248,17 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionSubObject SubObject = FieldDefinitionSubObject.Instance;
         public static readonly FieldDefinitionServiceForestryProgramManager ServiceForestryProgramManager = FieldDefinitionServiceForestryProgramManager.Instance;
         public static readonly FieldDefinitionForestRegulationFishAndWildlifeBiologist ForestRegulationFishAndWildlifeBiologist = FieldDefinitionForestRegulationFishAndWildlifeBiologist.Instance;
-        public static readonly FieldDefinitionGrantAllocationFundFSPs GrantAllocationFundFSPs = FieldDefinitionGrantAllocationFundFSPs.Instance;
-        public static readonly FieldDefinitionGrantAllocationSource GrantAllocationSource = FieldDefinitionGrantAllocationSource.Instance;
-        public static readonly FieldDefinitionGrantAllocationAllocation GrantAllocationAllocation = FieldDefinitionGrantAllocationAllocation.Instance;
-        public static readonly FieldDefinitionGrantAllocationTotalGrantFunds GrantAllocationTotalGrantFunds = FieldDefinitionGrantAllocationTotalGrantFunds.Instance;
-        public static readonly FieldDefinitionGrantAllocationOverallBalance GrantAllocationOverallBalance = FieldDefinitionGrantAllocationOverallBalance.Instance;
-        public static readonly FieldDefinitionGrantAllocationContractualBalance GrantAllocationContractualBalance = FieldDefinitionGrantAllocationContractualBalance.Instance;
-        public static readonly FieldDefinitionGrantAllocationTravelBalance GrantAllocationTravelBalance = FieldDefinitionGrantAllocationTravelBalance.Instance;
-        public static readonly FieldDefinitionGrantAllocationStaffBalance GrantAllocationStaffBalance = FieldDefinitionGrantAllocationStaffBalance.Instance;
-        public static readonly FieldDefinitionGrantAllocationLikelyToUse GrantAllocationLikelyToUse = FieldDefinitionGrantAllocationLikelyToUse.Instance;
-        public static readonly FieldDefinitionGrantAllocationCompleted GrantAllocationCompleted = FieldDefinitionGrantAllocationCompleted.Instance;
-        public static readonly FieldDefinitionGrantAllocationPriority GrantAllocationPriority = FieldDefinitionGrantAllocationPriority.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationFundFSPs FundSourceAllocationFundFSPs = FieldDefinitionFundSourceAllocationFundFSPs.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationSource FundSourceAllocationSource = FieldDefinitionFundSourceAllocationSource.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationAllocation FundSourceAllocationAllocation = FieldDefinitionFundSourceAllocationAllocation.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationTotalFundSourceFunds FundSourceAllocationTotalFundSourceFunds = FieldDefinitionFundSourceAllocationTotalFundSourceFunds.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationOverallBalance FundSourceAllocationOverallBalance = FieldDefinitionFundSourceAllocationOverallBalance.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationContractualBalance FundSourceAllocationContractualBalance = FieldDefinitionFundSourceAllocationContractualBalance.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationTravelBalance FundSourceAllocationTravelBalance = FieldDefinitionFundSourceAllocationTravelBalance.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationStaffBalance FundSourceAllocationStaffBalance = FieldDefinitionFundSourceAllocationStaffBalance.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationLikelyToUse FundSourceAllocationLikelyToUse = FieldDefinitionFundSourceAllocationLikelyToUse.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationCompleted FundSourceAllocationCompleted = FieldDefinitionFundSourceAllocationCompleted.Instance;
+        public static readonly FieldDefinitionFundSourceAllocationPriority FundSourceAllocationPriority = FieldDefinitionFundSourceAllocationPriority.Instance;
         public static readonly FieldDefinitionLeadImplementerOrganization LeadImplementerOrganization = FieldDefinitionLeadImplementerOrganization.Instance;
 
         public static readonly List<FieldDefinition> All;
@@ -269,7 +269,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, RoleName, DNRUplandRegion, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, PaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, TreatmentStartDate, TreatmentEndDate, ChippingAcres, PruningAcres, ThinningAcres, MasticationAcres, GrazingAcres, LopAndScatterAcres, BiomassRemovalAcres, HandPileAcres, BroadcastBurnAcres, HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectGrantAllocationRequestMatchAmount, ProjectGrantAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipFishAndWildlifeBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityResilienceCoordinator, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist, ExternalMapLayer, ExternalMapLayerDisplayName, ExternalMapLayerUrl, ExternalMapLayerDescription, ExternalMapLayerFeatureNameField, ExternalMapLayerDisplayOnPriorityLandscape, ExternalMapLayerDisplayOnProjectMap, ExternalMapLayerDisplayOnAllOthers, ExternalMapLayerIsATiledMapService, ExternalMapLayerIsActive, UpdatesFromImport, TreatmentCode, TreatmentCostPerAcre, TreatmentTotalCost, ServiceForestryRegionalCoordinator, County, PercentageMatch, ReportTitle, ReportDescription, ReportFile, ReportModel, SelectedReportTemplate, InvoicePaymentRequest, DUNS, OrganizationCode, InvoiceNumber, Fund, Appn, SubObject, ServiceForestryProgramManager, ForestRegulationFishAndWildlifeBiologist, GrantAllocationFundFSPs, GrantAllocationSource, GrantAllocationAllocation, GrantAllocationTotalGrantFunds, GrantAllocationOverallBalance, GrantAllocationContractualBalance, GrantAllocationTravelBalance, GrantAllocationStaffBalance, GrantAllocationLikelyToUse, GrantAllocationCompleted, GrantAllocationPriority, LeadImplementerOrganization };
+            All = new List<FieldDefinition> { ProjectType, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectFundSourceAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, ProjectInitiationDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, RoleName, DNRUplandRegion, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, FundSourceAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, FundSource, FundSourceAllocation, CostType, ProjectCode, FundSourceAllocationProjectCode, ProgramIndex, FundSourceName, FundSourceShortName, FundSourceStatus, FundSourceType, FundSourceNumber, CFDA, TotalAwardAmount, FundSourceStartDate, FundSourceEndDate, FundSourceNote, PriorityLandscape, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, FundSourceAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, PaymentAmount, PreparedByPerson, InvoiceIdentifyingName, FundSourceNoteInternal, FundSourceAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, FundSourceAllocationName, Division, FundSourceManager, Job, JobImportTableType, FundSourceAllocationBudgetLineItem, ProgramIndexProjectCode, FhtProjectNumber, FundSourceCurrentBalance, FundSourceAllocationCurrentBalance, FundSourceAllocationChangeLogNote, TreatmentStartDate, TreatmentEndDate, ChippingAcres, PruningAcres, ThinningAcres, MasticationAcres, GrazingAcres, LopAndScatterAcres, BiomassRemovalAcres, HandPileAcres, BroadcastBurnAcres, HandPileBurnAcres, MachinePileBurnAcres, OtherTreatmentAcres, SlashAcres, ProjectIdentifier, PlannedDate, TreatedAcres, TreatmentType, TreatmentDetailedActivityType, FootprintAcres, FundingSource, FundingSourceNote, ProjectTotalCompletedTreatmentAcres, LimitVisibilityToAdmin, Program, ProjectFundSourceAllocationRequestMatchAmount, ProjectFundSourceAllocationRequestPayAmount, ProjectApplicationDate, ProjectDecisionDate, ServiceForester, StewardshipFishAndWildlifeBiologist, RegulationAssistanceForester, FamilyForestFishPassageProgram, ForestryRiparianEasementProgram, RiversAndHabitatOpenSpaceProgramManager, CommunityResilienceCoordinator, UrbanForestryTechnician, ForestPracticesForester, SmallForestLandownerOfficeProgramManager, SmallForestLandownerProgramManager, UcfStatewideSpecialist, ServiceForestrySpecialist, ExternalMapLayer, ExternalMapLayerDisplayName, ExternalMapLayerUrl, ExternalMapLayerDescription, ExternalMapLayerFeatureNameField, ExternalMapLayerDisplayOnPriorityLandscape, ExternalMapLayerDisplayOnProjectMap, ExternalMapLayerDisplayOnAllOthers, ExternalMapLayerIsATiledMapService, ExternalMapLayerIsActive, UpdatesFromImport, TreatmentCode, TreatmentCostPerAcre, TreatmentTotalCost, ServiceForestryRegionalCoordinator, County, PercentageMatch, ReportTitle, ReportDescription, ReportFile, ReportModel, SelectedReportTemplate, InvoicePaymentRequest, DUNS, OrganizationCode, InvoiceNumber, Fund, Appn, SubObject, ServiceForestryProgramManager, ForestRegulationFishAndWildlifeBiologist, FundSourceAllocationFundFSPs, FundSourceAllocationSource, FundSourceAllocationAllocation, FundSourceAllocationTotalFundSourceFunds, FundSourceAllocationOverallBalance, FundSourceAllocationContractualBalance, FundSourceAllocationTravelBalance, FundSourceAllocationStaffBalance, FundSourceAllocationLikelyToUse, FundSourceAllocationCompleted, FundSourceAllocationPriority, LeadImplementerOrganization };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -493,72 +493,72 @@ namespace ProjectFirma.Web.Models
                     return FundingSource;
                 case FieldDefinitionEnum.FundingSourceNote:
                     return FundingSourceNote;
+                case FieldDefinitionEnum.FundSource:
+                    return FundSource;
+                case FieldDefinitionEnum.FundSourceAllocation:
+                    return FundSourceAllocation;
+                case FieldDefinitionEnum.FundSourceAllocationAllocation:
+                    return FundSourceAllocationAllocation;
+                case FieldDefinitionEnum.FundSourceAllocationAmount:
+                    return FundSourceAllocationAmount;
+                case FieldDefinitionEnum.FundSourceAllocationBudgetLineItem:
+                    return FundSourceAllocationBudgetLineItem;
+                case FieldDefinitionEnum.FundSourceAllocationChangeLogNote:
+                    return FundSourceAllocationChangeLogNote;
+                case FieldDefinitionEnum.FundSourceAllocationCompleted:
+                    return FundSourceAllocationCompleted;
+                case FieldDefinitionEnum.FundSourceAllocationContractualBalance:
+                    return FundSourceAllocationContractualBalance;
+                case FieldDefinitionEnum.FundSourceAllocationCurrentBalance:
+                    return FundSourceAllocationCurrentBalance;
+                case FieldDefinitionEnum.FundSourceAllocationFundFSPs:
+                    return FundSourceAllocationFundFSPs;
+                case FieldDefinitionEnum.FundSourceAllocationLikelyToUse:
+                    return FundSourceAllocationLikelyToUse;
+                case FieldDefinitionEnum.FundSourceAllocationName:
+                    return FundSourceAllocationName;
+                case FieldDefinitionEnum.FundSourceAllocationNote:
+                    return FundSourceAllocationNote;
+                case FieldDefinitionEnum.FundSourceAllocationNoteInternal:
+                    return FundSourceAllocationNoteInternal;
+                case FieldDefinitionEnum.FundSourceAllocationOverallBalance:
+                    return FundSourceAllocationOverallBalance;
+                case FieldDefinitionEnum.FundSourceAllocationPriority:
+                    return FundSourceAllocationPriority;
+                case FieldDefinitionEnum.FundSourceAllocationProjectCode:
+                    return FundSourceAllocationProjectCode;
+                case FieldDefinitionEnum.FundSourceAllocationSource:
+                    return FundSourceAllocationSource;
+                case FieldDefinitionEnum.FundSourceAllocationStaffBalance:
+                    return FundSourceAllocationStaffBalance;
+                case FieldDefinitionEnum.FundSourceAllocationTotalFundSourceFunds:
+                    return FundSourceAllocationTotalFundSourceFunds;
+                case FieldDefinitionEnum.FundSourceAllocationTravelBalance:
+                    return FundSourceAllocationTravelBalance;
+                case FieldDefinitionEnum.FundSourceCurrentBalance:
+                    return FundSourceCurrentBalance;
+                case FieldDefinitionEnum.FundSourceEndDate:
+                    return FundSourceEndDate;
+                case FieldDefinitionEnum.FundSourceManager:
+                    return FundSourceManager;
+                case FieldDefinitionEnum.FundSourceName:
+                    return FundSourceName;
+                case FieldDefinitionEnum.FundSourceNote:
+                    return FundSourceNote;
+                case FieldDefinitionEnum.FundSourceNoteInternal:
+                    return FundSourceNoteInternal;
+                case FieldDefinitionEnum.FundSourceNumber:
+                    return FundSourceNumber;
+                case FieldDefinitionEnum.FundSourceShortName:
+                    return FundSourceShortName;
+                case FieldDefinitionEnum.FundSourceStartDate:
+                    return FundSourceStartDate;
+                case FieldDefinitionEnum.FundSourceStatus:
+                    return FundSourceStatus;
+                case FieldDefinitionEnum.FundSourceType:
+                    return FundSourceType;
                 case FieldDefinitionEnum.GlobalInflationRate:
                     return GlobalInflationRate;
-                case FieldDefinitionEnum.Grant:
-                    return Grant;
-                case FieldDefinitionEnum.GrantAllocation:
-                    return GrantAllocation;
-                case FieldDefinitionEnum.GrantAllocationAllocation:
-                    return GrantAllocationAllocation;
-                case FieldDefinitionEnum.GrantAllocationAmount:
-                    return GrantAllocationAmount;
-                case FieldDefinitionEnum.GrantAllocationBudgetLineItem:
-                    return GrantAllocationBudgetLineItem;
-                case FieldDefinitionEnum.GrantAllocationChangeLogNote:
-                    return GrantAllocationChangeLogNote;
-                case FieldDefinitionEnum.GrantAllocationCompleted:
-                    return GrantAllocationCompleted;
-                case FieldDefinitionEnum.GrantAllocationContractualBalance:
-                    return GrantAllocationContractualBalance;
-                case FieldDefinitionEnum.GrantAllocationCurrentBalance:
-                    return GrantAllocationCurrentBalance;
-                case FieldDefinitionEnum.GrantAllocationFundFSPs:
-                    return GrantAllocationFundFSPs;
-                case FieldDefinitionEnum.GrantAllocationLikelyToUse:
-                    return GrantAllocationLikelyToUse;
-                case FieldDefinitionEnum.GrantAllocationName:
-                    return GrantAllocationName;
-                case FieldDefinitionEnum.GrantAllocationNote:
-                    return GrantAllocationNote;
-                case FieldDefinitionEnum.GrantAllocationNoteInternal:
-                    return GrantAllocationNoteInternal;
-                case FieldDefinitionEnum.GrantAllocationOverallBalance:
-                    return GrantAllocationOverallBalance;
-                case FieldDefinitionEnum.GrantAllocationPriority:
-                    return GrantAllocationPriority;
-                case FieldDefinitionEnum.GrantAllocationProjectCode:
-                    return GrantAllocationProjectCode;
-                case FieldDefinitionEnum.GrantAllocationSource:
-                    return GrantAllocationSource;
-                case FieldDefinitionEnum.GrantAllocationStaffBalance:
-                    return GrantAllocationStaffBalance;
-                case FieldDefinitionEnum.GrantAllocationTotalGrantFunds:
-                    return GrantAllocationTotalGrantFunds;
-                case FieldDefinitionEnum.GrantAllocationTravelBalance:
-                    return GrantAllocationTravelBalance;
-                case FieldDefinitionEnum.GrantCurrentBalance:
-                    return GrantCurrentBalance;
-                case FieldDefinitionEnum.GrantEndDate:
-                    return GrantEndDate;
-                case FieldDefinitionEnum.GrantManager:
-                    return GrantManager;
-                case FieldDefinitionEnum.GrantName:
-                    return GrantName;
-                case FieldDefinitionEnum.GrantNote:
-                    return GrantNote;
-                case FieldDefinitionEnum.GrantNoteInternal:
-                    return GrantNoteInternal;
-                case FieldDefinitionEnum.GrantNumber:
-                    return GrantNumber;
-                case FieldDefinitionEnum.GrantShortName:
-                    return GrantShortName;
-                case FieldDefinitionEnum.GrantStartDate:
-                    return GrantStartDate;
-                case FieldDefinitionEnum.GrantStatus:
-                    return GrantStatus;
-                case FieldDefinitionEnum.GrantType:
-                    return GrantType;
                 case FieldDefinitionEnum.GrazingAcres:
                     return GrazingAcres;
                 case FieldDefinitionEnum.HandPileAcres:
@@ -681,12 +681,12 @@ namespace ProjectFirma.Web.Models
                     return ProjectDecisionDate;
                 case FieldDefinitionEnum.ProjectDescription:
                     return ProjectDescription;
-                case FieldDefinitionEnum.ProjectGrantAllocationRequestMatchAmount:
-                    return ProjectGrantAllocationRequestMatchAmount;
-                case FieldDefinitionEnum.ProjectGrantAllocationRequestPayAmount:
-                    return ProjectGrantAllocationRequestPayAmount;
-                case FieldDefinitionEnum.ProjectGrantAllocationRequestTotalAmount:
-                    return ProjectGrantAllocationRequestTotalAmount;
+                case FieldDefinitionEnum.ProjectFundSourceAllocationRequestMatchAmount:
+                    return ProjectFundSourceAllocationRequestMatchAmount;
+                case FieldDefinitionEnum.ProjectFundSourceAllocationRequestPayAmount:
+                    return ProjectFundSourceAllocationRequestPayAmount;
+                case FieldDefinitionEnum.ProjectFundSourceAllocationRequestTotalAmount:
+                    return ProjectFundSourceAllocationRequestTotalAmount;
                 case FieldDefinitionEnum.ProjectIdentifier:
                     return ProjectIdentifier;
                 case FieldDefinitionEnum.ProjectInitiationDate:
@@ -856,7 +856,7 @@ namespace ProjectFirma.Web.Models
         ExpirationDate = 32,
         ReportedValue = 33,
         OrganizationType = 34,
-        ProjectGrantAllocationRequestTotalAmount = 35,
+        ProjectFundSourceAllocationRequestTotalAmount = 35,
         ProjectStage = 36,
         ClassificationName = 39,
         EstimatedTotalCost = 40,
@@ -906,7 +906,7 @@ namespace ProjectFirma.Web.Models
         ProjectUpdateKickOffDate = 261,
         ProjectUpdateReminderInterval = 262,
         ProjectUpdateCloseOutDate = 263,
-        GrantAllocationAmount = 265,
+        FundSourceAllocationAmount = 265,
         NormalUser = 266,
         ProjectStewardshipArea = 267,
         ProjectInternalNote = 268,
@@ -918,22 +918,22 @@ namespace ProjectFirma.Web.Models
         Partner = 274,
         PrimaryContact = 275,
         FocusArea = 276,
-        Grant = 277,
-        GrantAllocation = 278,
+        FundSource = 277,
+        FundSourceAllocation = 278,
         CostType = 279,
         ProjectCode = 280,
-        GrantAllocationProjectCode = 281,
+        FundSourceAllocationProjectCode = 281,
         ProgramIndex = 282,
-        GrantName = 283,
-        GrantShortName = 284,
-        GrantStatus = 285,
-        GrantType = 286,
-        GrantNumber = 287,
+        FundSourceName = 283,
+        FundSourceShortName = 284,
+        FundSourceStatus = 285,
+        FundSourceType = 286,
+        FundSourceNumber = 287,
         CFDA = 288,
         TotalAwardAmount = 289,
-        GrantStartDate = 290,
-        GrantEndDate = 291,
-        GrantNote = 292,
+        FundSourceStartDate = 290,
+        FundSourceEndDate = 291,
+        FundSourceNote = 292,
         PriorityLandscape = 293,
         Invoice = 294,
         Agreement = 295,
@@ -948,7 +948,7 @@ namespace ProjectFirma.Web.Models
         ProgramManager = 304,
         AgreementNotes = 305,
         AgreementStatus = 306,
-        GrantAllocationNote = 307,
+        FundSourceAllocationNote = 307,
         FileResource = 308,
         ProjectTotalCompletedFootprintAcres = 309,
         FocusAreaTotalProjectReportedExpendiures = 310,
@@ -962,8 +962,8 @@ namespace ProjectFirma.Web.Models
         PaymentAmount = 318,
         PreparedByPerson = 319,
         InvoiceIdentifyingName = 320,
-        GrantNoteInternal = 321,
-        GrantAllocationNoteInternal = 322,
+        FundSourceNoteInternal = 321,
+        FundSourceAllocationNoteInternal = 322,
         InvoiceStatus = 323,
         InvoiceApprovalStatus = 324,
         InvoiceApprovalComment = 325,
@@ -981,17 +981,17 @@ namespace ProjectFirma.Web.Models
         InteractionEventContact = 337,
         InteractionEventProject = 338,
         InteractionEventLocation = 339,
-        GrantAllocationName = 340,
+        FundSourceAllocationName = 340,
         Division = 341,
-        GrantManager = 342,
+        FundSourceManager = 342,
         Job = 343,
         JobImportTableType = 344,
-        GrantAllocationBudgetLineItem = 345,
+        FundSourceAllocationBudgetLineItem = 345,
         ProgramIndexProjectCode = 356,
         FhtProjectNumber = 357,
-        GrantCurrentBalance = 358,
-        GrantAllocationCurrentBalance = 359,
-        GrantAllocationChangeLogNote = 360,
+        FundSourceCurrentBalance = 358,
+        FundSourceAllocationCurrentBalance = 359,
+        FundSourceAllocationChangeLogNote = 360,
         TreatmentStartDate = 416,
         TreatmentEndDate = 417,
         ChippingAcres = 419,
@@ -1018,8 +1018,8 @@ namespace ProjectFirma.Web.Models
         ProjectTotalCompletedTreatmentAcres = 473,
         LimitVisibilityToAdmin = 474,
         Program = 475,
-        ProjectGrantAllocationRequestMatchAmount = 476,
-        ProjectGrantAllocationRequestPayAmount = 477,
+        ProjectFundSourceAllocationRequestMatchAmount = 476,
+        ProjectFundSourceAllocationRequestPayAmount = 477,
         ProjectApplicationDate = 478,
         ProjectDecisionDate = 479,
         ServiceForester = 480,
@@ -1066,17 +1066,17 @@ namespace ProjectFirma.Web.Models
         SubObject = 521,
         ServiceForestryProgramManager = 522,
         ForestRegulationFishAndWildlifeBiologist = 523,
-        GrantAllocationFundFSPs = 524,
-        GrantAllocationSource = 525,
-        GrantAllocationAllocation = 526,
-        GrantAllocationTotalGrantFunds = 527,
-        GrantAllocationOverallBalance = 528,
-        GrantAllocationContractualBalance = 529,
-        GrantAllocationTravelBalance = 530,
-        GrantAllocationStaffBalance = 531,
-        GrantAllocationLikelyToUse = 532,
-        GrantAllocationCompleted = 533,
-        GrantAllocationPriority = 534,
+        FundSourceAllocationFundFSPs = 524,
+        FundSourceAllocationSource = 525,
+        FundSourceAllocationAllocation = 526,
+        FundSourceAllocationTotalFundSourceFunds = 527,
+        FundSourceAllocationOverallBalance = 528,
+        FundSourceAllocationContractualBalance = 529,
+        FundSourceAllocationTravelBalance = 530,
+        FundSourceAllocationStaffBalance = 531,
+        FundSourceAllocationLikelyToUse = 532,
+        FundSourceAllocationCompleted = 533,
+        FundSourceAllocationPriority = 534,
         LeadImplementerOrganization = 535
     }
 
@@ -1194,10 +1194,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionOrganizationType Instance = new FieldDefinitionOrganizationType(34, @"OrganizationType", @"Organization Type", @"<p>A categorization of an organization, e.g. Local, State, Federal or Private.</p>");
     }
 
-    public partial class FieldDefinitionProjectGrantAllocationRequestTotalAmount : FieldDefinition
+    public partial class FieldDefinitionProjectFundSourceAllocationRequestTotalAmount : FieldDefinition
     {
-        private FieldDefinitionProjectGrantAllocationRequestTotalAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectGrantAllocationRequestTotalAmount Instance = new FieldDefinitionProjectGrantAllocationRequestTotalAmount(35, @"ProjectGrantAllocationRequestTotalAmount", @"Total Amount", @"<p>Funding that has been acquired for a project.</p>");
+        private FieldDefinitionProjectFundSourceAllocationRequestTotalAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionProjectFundSourceAllocationRequestTotalAmount Instance = new FieldDefinitionProjectFundSourceAllocationRequestTotalAmount(35, @"ProjectFundSourceAllocationRequestTotalAmount", @"Total Amount", @"<p>Funding that has been acquired for a project.</p>");
     }
 
     public partial class FieldDefinitionProjectStage : FieldDefinition
@@ -1245,7 +1245,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionFundedAmount : FieldDefinition
     {
         private FieldDefinitionFundedAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundedAmount Instance = new FieldDefinitionFundedAmount(56, @"FundedAmount", @"Funded Amount", @"<p>The amount of funding, by grant allocation, expended on a project for a specific year. To see the total amount of funding expended on a project, click on the specific project.</p>");
+        public static readonly FieldDefinitionFundedAmount Instance = new FieldDefinitionFundedAmount(56, @"FundedAmount", @"Funded Amount", @"<p>The amount of funding, by fund source allocation, expended on a project for a specific year. To see the total amount of funding expended on a project, click on the specific project.</p>");
     }
 
     public partial class FieldDefinitionProjectLocation : FieldDefinition
@@ -1293,7 +1293,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionReportedExpenditure : FieldDefinition
     {
         private FieldDefinitionReportedExpenditure(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionReportedExpenditure Instance = new FieldDefinitionReportedExpenditure(80, @"ReportedExpenditure", @"Reported Expenditure", @"<p>An expenditure, tied to a Grant Allocation, as reported by the project implementer.</p>");
+        public static readonly FieldDefinitionReportedExpenditure Instance = new FieldDefinitionReportedExpenditure(80, @"ReportedExpenditure", @"Reported Expenditure", @"<p>An expenditure, tied to a Fund Source Allocation, as reported by the project implementer.</p>");
     }
 
     public partial class FieldDefinitionProjectInitiationDate : FieldDefinition
@@ -1401,7 +1401,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionProjectSteward : FieldDefinition
     {
         private FieldDefinitionProjectSteward(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectSteward Instance = new FieldDefinitionProjectSteward(246, @"ProjectSteward", @"Project Steward", @"<p>A person who can approve Project Applications, create new Projects, approve Project Updates, and create Grant Allocations for their Organization.</p>");
+        public static readonly FieldDefinitionProjectSteward Instance = new FieldDefinitionProjectSteward(246, @"ProjectSteward", @"Project Steward", @"<p>A person who can approve Project Applications, create new Projects, approve Project Updates, and create Fund Source Allocations for their Organization.</p>");
     }
 
     public partial class FieldDefinitionChartLastUpdatedDate : FieldDefinition
@@ -1413,7 +1413,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionUnsecuredFunding : FieldDefinition
     {
         private FieldDefinitionUnsecuredFunding(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionUnsecuredFunding Instance = new FieldDefinitionUnsecuredFunding(248, @"UnsecuredFunding", @"Unsecured Funding", @"<p>Funding that has been identified for a project but has not been acquired such as planned grant applications.</p>");
+        public static readonly FieldDefinitionUnsecuredFunding Instance = new FieldDefinitionUnsecuredFunding(248, @"UnsecuredFunding", @"Unsecured Funding", @"<p>Funding that has been identified for a project but has not been acquired such as planned fund source applications.</p>");
     }
 
     public partial class FieldDefinitionProjectStewardOrganizationDisplayName : FieldDefinition
@@ -1494,10 +1494,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectUpdateCloseOutDate Instance = new FieldDefinitionProjectUpdateCloseOutDate(263, @"ProjectUpdateCloseOutDate", @"Close-out Date", @"The date on which to send the final Project Update Reminder");
     }
 
-    public partial class FieldDefinitionGrantAllocationAmount : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationAmount : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAmount Instance = new FieldDefinitionGrantAllocationAmount(265, @"GrantAllocationAmount", @"Amount", @"<p>Grant Allocation Amount</p>");
+        private FieldDefinitionFundSourceAllocationAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationAmount Instance = new FieldDefinitionFundSourceAllocationAmount(265, @"FundSourceAllocationAmount", @"Amount", @"<p>Fund Source Allocation Amount</p>");
     }
 
     public partial class FieldDefinitionNormalUser : FieldDefinition
@@ -1566,16 +1566,16 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionFocusArea Instance = new FieldDefinitionFocusArea(276, @"FocusArea", @"Focus Area", @"Placeholder definition for Focus Area");
     }
 
-    public partial class FieldDefinitionGrant : FieldDefinition
+    public partial class FieldDefinitionFundSource : FieldDefinition
     {
-        private FieldDefinitionGrant(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrant Instance = new FieldDefinitionGrant(277, @"Grant", @"Grant", @"Placeholder definition for Grant");
+        private FieldDefinitionFundSource(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSource Instance = new FieldDefinitionFundSource(277, @"FundSource", @"Fund Source", @"Placeholder definition for Fund Source");
     }
 
-    public partial class FieldDefinitionGrantAllocation : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocation : FieldDefinition
     {
-        private FieldDefinitionGrantAllocation(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocation Instance = new FieldDefinitionGrantAllocation(278, @"GrantAllocation", @"Grant Allocation", @"Placeholder definition for Grant Allocation.");
+        private FieldDefinitionFundSourceAllocation(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocation Instance = new FieldDefinitionFundSourceAllocation(278, @"FundSourceAllocation", @"Fund Source Allocation", @"Placeholder definition for Fund Source Allocation.");
     }
 
     public partial class FieldDefinitionCostType : FieldDefinition
@@ -1590,10 +1590,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectCode Instance = new FieldDefinitionProjectCode(280, @"ProjectCode", @"Project Code", @"Placeholder definition for Project Code.");
     }
 
-    public partial class FieldDefinitionGrantAllocationProjectCode : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationProjectCode : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationProjectCode(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationProjectCode Instance = new FieldDefinitionGrantAllocationProjectCode(281, @"GrantAllocationProjectCode", @"Grant Allocation Project Code", @"Placeholder definition for Grant Allocation Project Code.");
+        private FieldDefinitionFundSourceAllocationProjectCode(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationProjectCode Instance = new FieldDefinitionFundSourceAllocationProjectCode(281, @"FundSourceAllocationProjectCode", @"Fund Source Allocation Project Code", @"Placeholder definition for Fund Source Allocation Project Code.");
     }
 
     public partial class FieldDefinitionProgramIndex : FieldDefinition
@@ -1602,64 +1602,64 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProgramIndex Instance = new FieldDefinitionProgramIndex(282, @"ProgramIndex", @"Program Index", @"Placeholder definition for Program Index.");
     }
 
-    public partial class FieldDefinitionGrantName : FieldDefinition
+    public partial class FieldDefinitionFundSourceName : FieldDefinition
     {
-        private FieldDefinitionGrantName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantName Instance = new FieldDefinitionGrantName(283, @"GrantName", @"Grant Name", @"<p>The name of a grant. Grant names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>");
+        private FieldDefinitionFundSourceName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceName Instance = new FieldDefinitionFundSourceName(283, @"FundSourceName", @"Fund Source Name", @"<p>The name of a fund source. Fund Source names should generally include a reference to 1) the location of the fund source, 2) the primary implementation activity, and 3) the fund source year</p>");
     }
 
-    public partial class FieldDefinitionGrantShortName : FieldDefinition
+    public partial class FieldDefinitionFundSourceShortName : FieldDefinition
     {
-        private FieldDefinitionGrantShortName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantShortName Instance = new FieldDefinitionGrantShortName(284, @"GrantShortName", @"Short Name", @"<p>The short hand name to reference a grant</p>");
+        private FieldDefinitionFundSourceShortName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceShortName Instance = new FieldDefinitionFundSourceShortName(284, @"FundSourceShortName", @"Short Name", @"<p>The short hand name to reference a fund source</p>");
     }
 
-    public partial class FieldDefinitionGrantStatus : FieldDefinition
+    public partial class FieldDefinitionFundSourceStatus : FieldDefinition
     {
-        private FieldDefinitionGrantStatus(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantStatus Instance = new FieldDefinitionGrantStatus(285, @"GrantStatus", @"Status", @"<p>The status of a grant. This can be Active, Pending, Planned, or Closeout</p>");
+        private FieldDefinitionFundSourceStatus(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceStatus Instance = new FieldDefinitionFundSourceStatus(285, @"FundSourceStatus", @"Status", @"<p>The status of a fund source. This can be Active, Pending, Planned, or Closeout</p>");
     }
 
-    public partial class FieldDefinitionGrantType : FieldDefinition
+    public partial class FieldDefinitionFundSourceType : FieldDefinition
     {
-        private FieldDefinitionGrantType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantType Instance = new FieldDefinitionGrantType(286, @"GrantType", @"Type", @"<p>The type of grant. This can either be Stand Alone, or CPG. </p>");
+        private FieldDefinitionFundSourceType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceType Instance = new FieldDefinitionFundSourceType(286, @"FundSourceType", @"Type", @"<p>The type of fund source. This can either be Stand Alone, or CPG. </p>");
     }
 
-    public partial class FieldDefinitionGrantNumber : FieldDefinition
+    public partial class FieldDefinitionFundSourceNumber : FieldDefinition
     {
-        private FieldDefinitionGrantNumber(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantNumber Instance = new FieldDefinitionGrantNumber(287, @"GrantNumber", @"Grant Number", @"<p>The grant number. </p>");
+        private FieldDefinitionFundSourceNumber(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceNumber Instance = new FieldDefinitionFundSourceNumber(287, @"FundSourceNumber", @"Fund Source Number", @"<p>The fund source number. </p>");
     }
 
     public partial class FieldDefinitionCFDA : FieldDefinition
     {
         private FieldDefinitionCFDA(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionCFDA Instance = new FieldDefinitionCFDA(288, @"CFDA", @"CFDA", @"<p>The CFDA code for a grant. </p>");
+        public static readonly FieldDefinitionCFDA Instance = new FieldDefinitionCFDA(288, @"CFDA", @"CFDA", @"<p>The CFDA code for a fund source. </p>");
     }
 
     public partial class FieldDefinitionTotalAwardAmount : FieldDefinition
     {
         private FieldDefinitionTotalAwardAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionTotalAwardAmount Instance = new FieldDefinitionTotalAwardAmount(289, @"TotalAwardAmount", @"Total Award Amount", @"<p>The total amount of money awarded by the grant. This may include the sum of all associated grant allocations. </p>");
+        public static readonly FieldDefinitionTotalAwardAmount Instance = new FieldDefinitionTotalAwardAmount(289, @"TotalAwardAmount", @"Total Award Amount", @"<p>The total amount of money awarded by the fund source. This may include the sum of all associated fund source allocations. </p>");
     }
 
-    public partial class FieldDefinitionGrantStartDate : FieldDefinition
+    public partial class FieldDefinitionFundSourceStartDate : FieldDefinition
     {
-        private FieldDefinitionGrantStartDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantStartDate Instance = new FieldDefinitionGrantStartDate(290, @"GrantStartDate", @"Start Date", @"<p>The start date of the grant. </p>");
+        private FieldDefinitionFundSourceStartDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceStartDate Instance = new FieldDefinitionFundSourceStartDate(290, @"FundSourceStartDate", @"Start Date", @"<p>The start date of the fund source. </p>");
     }
 
-    public partial class FieldDefinitionGrantEndDate : FieldDefinition
+    public partial class FieldDefinitionFundSourceEndDate : FieldDefinition
     {
-        private FieldDefinitionGrantEndDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantEndDate Instance = new FieldDefinitionGrantEndDate(291, @"GrantEndDate", @"End Date", @"<p>The end date of the grant. </p>");
+        private FieldDefinitionFundSourceEndDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceEndDate Instance = new FieldDefinitionFundSourceEndDate(291, @"FundSourceEndDate", @"End Date", @"<p>The end date of the fund source. </p>");
     }
 
-    public partial class FieldDefinitionGrantNote : FieldDefinition
+    public partial class FieldDefinitionFundSourceNote : FieldDefinition
     {
-        private FieldDefinitionGrantNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantNote Instance = new FieldDefinitionGrantNote(292, @"GrantNote", @"Grant Note", @"<p>Any additional important information about the grant. </p>");
+        private FieldDefinitionFundSourceNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceNote Instance = new FieldDefinitionFundSourceNote(292, @"FundSourceNote", @"Fund Source Note", @"<p>Any additional important information about the fund source. </p>");
     }
 
     public partial class FieldDefinitionPriorityLandscape : FieldDefinition
@@ -1689,7 +1689,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionAllocationAmount : FieldDefinition
     {
         private FieldDefinitionAllocationAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionAllocationAmount Instance = new FieldDefinitionAllocationAmount(297, @"AllocationAmount", @"Allocation Amount", @"Placeholder for GrantAllocation Allocation Amount.");
+        public static readonly FieldDefinitionAllocationAmount Instance = new FieldDefinitionAllocationAmount(297, @"AllocationAmount", @"Allocation Amount", @"Placeholder for Fund SourceAllocation Allocation Amount.");
     }
 
     public partial class FieldDefinitionAgreementType : FieldDefinition
@@ -1746,10 +1746,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionAgreementStatus Instance = new FieldDefinitionAgreementStatus(306, @"AgreementStatus", @"Agreement Status", @"Placeholder for Agreement Status.");
     }
 
-    public partial class FieldDefinitionGrantAllocationNote : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationNote : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationNote Instance = new FieldDefinitionGrantAllocationNote(307, @"GrantAllocationNote", @"Grant Allocation Note", @"<p>Any additional important information about the grant allocation.</p>");
+        private FieldDefinitionFundSourceAllocationNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationNote Instance = new FieldDefinitionFundSourceAllocationNote(307, @"FundSourceAllocationNote", @"Fund Source Allocation Note", @"<p>Any additional important information about the fund source allocation.</p>");
     }
 
     public partial class FieldDefinitionFileResource : FieldDefinition
@@ -1830,16 +1830,16 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionInvoiceIdentifyingName Instance = new FieldDefinitionInvoiceIdentifyingName(320, @"InvoiceIdentifyingName", @"Invoice Nickname", @"This name is a nickname to make identification of particular invoices easier.");
     }
 
-    public partial class FieldDefinitionGrantNoteInternal : FieldDefinition
+    public partial class FieldDefinitionFundSourceNoteInternal : FieldDefinition
     {
-        private FieldDefinitionGrantNoteInternal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantNoteInternal Instance = new FieldDefinitionGrantNoteInternal(321, @"GrantNoteInternal", @"Internal Grant Note", @"<p>Any additional important information about the grant. These notes are only visible to internal users </p>");
+        private FieldDefinitionFundSourceNoteInternal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceNoteInternal Instance = new FieldDefinitionFundSourceNoteInternal(321, @"FundSourceNoteInternal", @"Internal Fund Source Note", @"<p>Any additional important information about the fund source. These notes are only visible to internal users </p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationNoteInternal : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationNoteInternal : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationNoteInternal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationNoteInternal Instance = new FieldDefinitionGrantAllocationNoteInternal(322, @"GrantAllocationNoteInternal", @"Internal Grant Allocation Note", @"<p>Any additional important information about the grant allocation. These notes are only visible to internal users </p>");
+        private FieldDefinitionFundSourceAllocationNoteInternal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationNoteInternal Instance = new FieldDefinitionFundSourceAllocationNoteInternal(322, @"FundSourceAllocationNoteInternal", @"Internal Fund Source Allocation Note", @"<p>Any additional important information about the fund source allocation. These notes are only visible to internal users </p>");
     }
 
     public partial class FieldDefinitionInvoiceStatus : FieldDefinition
@@ -1905,7 +1905,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionInvoiceLineItem : FieldDefinition
     {
         private FieldDefinitionInvoiceLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionInvoiceLineItem Instance = new FieldDefinitionInvoiceLineItem(333, @"InvoiceLineItem", @"Invoice Line Item", @"<p>A line item on an invoice which includes an amount and the associated grant allocation/grant.</p>");
+        public static readonly FieldDefinitionInvoiceLineItem Instance = new FieldDefinitionInvoiceLineItem(333, @"InvoiceLineItem", @"Invoice Line Item", @"<p>A line item on an invoice which includes an amount and the associated fund source allocation/fund source.</p>");
     }
 
     public partial class FieldDefinitionInteractionEvent : FieldDefinition
@@ -1944,10 +1944,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionInteractionEventLocation Instance = new FieldDefinitionInteractionEventLocation(339, @"InteractionEventLocation", @"Interaction/Event Location", @"<p>Placeholder definition for Interaction/Event Location description.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationName : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationName : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationName Instance = new FieldDefinitionGrantAllocationName(340, @"GrantAllocationName", @"Grant Allocation Name", @"<p>Placeholder definition for Grant Allocation Name description.</p>");
+        private FieldDefinitionFundSourceAllocationName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationName Instance = new FieldDefinitionFundSourceAllocationName(340, @"FundSourceAllocationName", @"Fund Source Allocation Name", @"<p>Placeholder definition for Fund Source Allocation Name description.</p>");
     }
 
     public partial class FieldDefinitionDivision : FieldDefinition
@@ -1956,10 +1956,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionDivision Instance = new FieldDefinitionDivision(341, @"Division", @"Division", @"<p>Placeholder definition for Division description.</p>");
     }
 
-    public partial class FieldDefinitionGrantManager : FieldDefinition
+    public partial class FieldDefinitionFundSourceManager : FieldDefinition
     {
-        private FieldDefinitionGrantManager(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantManager Instance = new FieldDefinitionGrantManager(342, @"GrantManager", @"Grant Manager", @"<p>Placeholder definition for Grant Manager description.</p>");
+        private FieldDefinitionFundSourceManager(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceManager Instance = new FieldDefinitionFundSourceManager(342, @"FundSourceManager", @"Fund Source Manager", @"<p>Placeholder definition for Fund Source Manager description.</p>");
     }
 
     public partial class FieldDefinitionJob : FieldDefinition
@@ -1974,10 +1974,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionJobImportTableType Instance = new FieldDefinitionJobImportTableType(344, @"JobImportTableType", @"Job Import Table Type", @"<p>Type of the Job Import table imported.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationBudgetLineItem : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationBudgetLineItem : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationBudgetLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationBudgetLineItem Instance = new FieldDefinitionGrantAllocationBudgetLineItem(345, @"GrantAllocationBudgetLineItem", @"Grant Allocation Budget Line Item", @"<p>Grant Allocation budget broken across line items</p>");
+        private FieldDefinitionFundSourceAllocationBudgetLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationBudgetLineItem Instance = new FieldDefinitionFundSourceAllocationBudgetLineItem(345, @"FundSourceAllocationBudgetLineItem", @"Fund Source Allocation Budget Line Item", @"<p>Fund Source Allocation budget broken across line items</p>");
     }
 
     public partial class FieldDefinitionProgramIndexProjectCode : FieldDefinition
@@ -1992,22 +1992,22 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionFhtProjectNumber Instance = new FieldDefinitionFhtProjectNumber(357, @"FhtProjectNumber", @"FHT Project Number", @"<p>Placeholder definition for FHT Project Number description.</p>");
     }
 
-    public partial class FieldDefinitionGrantCurrentBalance : FieldDefinition
+    public partial class FieldDefinitionFundSourceCurrentBalance : FieldDefinition
     {
-        private FieldDefinitionGrantCurrentBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantCurrentBalance Instance = new FieldDefinitionGrantCurrentBalance(358, @"GrantCurrentBalance", @"Grant Current Balance", @"<p>Placeholder definition for Grant Current Balance description.</p>");
+        private FieldDefinitionFundSourceCurrentBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceCurrentBalance Instance = new FieldDefinitionFundSourceCurrentBalance(358, @"FundSourceCurrentBalance", @"Fund Source Current Balance", @"<p>Placeholder definition for Fund Source Current Balance description.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationCurrentBalance : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationCurrentBalance : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationCurrentBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationCurrentBalance Instance = new FieldDefinitionGrantAllocationCurrentBalance(359, @"GrantAllocationCurrentBalance", @"Grant Allocation Current Balance", @"<p>Placeholder definition for Grant Allocation Current Balance description.</p>");
+        private FieldDefinitionFundSourceAllocationCurrentBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationCurrentBalance Instance = new FieldDefinitionFundSourceAllocationCurrentBalance(359, @"FundSourceAllocationCurrentBalance", @"Fund Source Allocation Current Balance", @"<p>Placeholder definition for Fund Source Allocation Current Balance description.</p>");
     }
 
-    public partial class FieldDefinitionGrantAllocationChangeLogNote : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationChangeLogNote : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationChangeLogNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationChangeLogNote Instance = new FieldDefinitionGrantAllocationChangeLogNote(360, @"GrantAllocationChangeLogNote", @"Allocation Amount Change Log Note", @"<p>Placeholder definition for Allocation Amount Change Log Note description.</p>");
+        private FieldDefinitionFundSourceAllocationChangeLogNote(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationChangeLogNote Instance = new FieldDefinitionFundSourceAllocationChangeLogNote(360, @"FundSourceAllocationChangeLogNote", @"Allocation Amount Change Log Note", @"<p>Placeholder definition for Allocation Amount Change Log Note description.</p>");
     }
 
     public partial class FieldDefinitionTreatmentStartDate : FieldDefinition
@@ -2166,16 +2166,16 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProgram Instance = new FieldDefinitionProgram(475, @"Program", @"Program", @"Program");
     }
 
-    public partial class FieldDefinitionProjectGrantAllocationRequestMatchAmount : FieldDefinition
+    public partial class FieldDefinitionProjectFundSourceAllocationRequestMatchAmount : FieldDefinition
     {
-        private FieldDefinitionProjectGrantAllocationRequestMatchAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectGrantAllocationRequestMatchAmount Instance = new FieldDefinitionProjectGrantAllocationRequestMatchAmount(476, @"ProjectGrantAllocationRequestMatchAmount", @"MatchAmount", @"<p>Funding that has been acquired for a project.</p>");
+        private FieldDefinitionProjectFundSourceAllocationRequestMatchAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionProjectFundSourceAllocationRequestMatchAmount Instance = new FieldDefinitionProjectFundSourceAllocationRequestMatchAmount(476, @"ProjectFundSourceAllocationRequestMatchAmount", @"MatchAmount", @"<p>Funding that has been acquired for a project.</p>");
     }
 
-    public partial class FieldDefinitionProjectGrantAllocationRequestPayAmount : FieldDefinition
+    public partial class FieldDefinitionProjectFundSourceAllocationRequestPayAmount : FieldDefinition
     {
-        private FieldDefinitionProjectGrantAllocationRequestPayAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectGrantAllocationRequestPayAmount Instance = new FieldDefinitionProjectGrantAllocationRequestPayAmount(477, @"ProjectGrantAllocationRequestPayAmount", @"PayAmount", @"<p>Funding that has been acquired for a project.</p>");
+        private FieldDefinitionProjectFundSourceAllocationRequestPayAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionProjectFundSourceAllocationRequestPayAmount Instance = new FieldDefinitionProjectFundSourceAllocationRequestPayAmount(477, @"ProjectFundSourceAllocationRequestPayAmount", @"PayAmount", @"<p>Funding that has been acquired for a project.</p>");
     }
 
     public partial class FieldDefinitionProjectApplicationDate : FieldDefinition
@@ -2454,70 +2454,70 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionForestRegulationFishAndWildlifeBiologist Instance = new FieldDefinitionForestRegulationFishAndWildlifeBiologist(523, @"ForestRegulationFishAndWildlifeBiologist", @"Forest Regulation Fish & Wildlife Biologist", @"Placeholder definition for forester role, Forest Regulation Fish & Wildlife Biologist");
     }
 
-    public partial class FieldDefinitionGrantAllocationFundFSPs : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationFundFSPs : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationFundFSPs(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationFundFSPs Instance = new FieldDefinitionGrantAllocationFundFSPs(524, @"GrantAllocationFundFSPs", @"Fund FSPs?", @"Placeholder definition for Grant Allocation Fund FSPs");
+        private FieldDefinitionFundSourceAllocationFundFSPs(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationFundFSPs Instance = new FieldDefinitionFundSourceAllocationFundFSPs(524, @"FundSourceAllocationFundFSPs", @"Fund FSPs?", @"Placeholder definition for Fund Source Allocation Fund FSPs");
     }
 
-    public partial class FieldDefinitionGrantAllocationSource : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationSource : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationSource(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationSource Instance = new FieldDefinitionGrantAllocationSource(525, @"GrantAllocationSource", @"Source", @"Placeholder definition for Grant Allocation Source");
+        private FieldDefinitionFundSourceAllocationSource(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationSource Instance = new FieldDefinitionFundSourceAllocationSource(525, @"FundSourceAllocationSource", @"Source", @"Placeholder definition for Fund Source Allocation Source");
     }
 
-    public partial class FieldDefinitionGrantAllocationAllocation : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationAllocation : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationAllocation(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationAllocation Instance = new FieldDefinitionGrantAllocationAllocation(526, @"GrantAllocationAllocation", @"Allocation", @"Placeholder definition for Grant Allocation Allocation");
+        private FieldDefinitionFundSourceAllocationAllocation(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationAllocation Instance = new FieldDefinitionFundSourceAllocationAllocation(526, @"FundSourceAllocationAllocation", @"Allocation", @"Placeholder definition for Fund Source Allocation Allocation");
     }
 
-    public partial class FieldDefinitionGrantAllocationTotalGrantFunds : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationTotalFundSourceFunds : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationTotalGrantFunds(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationTotalGrantFunds Instance = new FieldDefinitionGrantAllocationTotalGrantFunds(527, @"GrantAllocationTotalGrantFunds", @"Total Grant Funds", @"Placeholder definition for Grant Allocation Total Grant Funds");
+        private FieldDefinitionFundSourceAllocationTotalFundSourceFunds(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationTotalFundSourceFunds Instance = new FieldDefinitionFundSourceAllocationTotalFundSourceFunds(527, @"FundSourceAllocationTotalFundSourceFunds", @"Total Fund Source Funds", @"Placeholder definition for Fund Source Allocation Total Fund Source Funds");
     }
 
-    public partial class FieldDefinitionGrantAllocationOverallBalance : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationOverallBalance : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationOverallBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationOverallBalance Instance = new FieldDefinitionGrantAllocationOverallBalance(528, @"GrantAllocationOverallBalance", @"Overall Balance", @"Placeholder definition for Grant Allocation Overall Balance");
+        private FieldDefinitionFundSourceAllocationOverallBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationOverallBalance Instance = new FieldDefinitionFundSourceAllocationOverallBalance(528, @"FundSourceAllocationOverallBalance", @"Overall Balance", @"Placeholder definition for Fund Source Allocation Overall Balance");
     }
 
-    public partial class FieldDefinitionGrantAllocationContractualBalance : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationContractualBalance : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationContractualBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationContractualBalance Instance = new FieldDefinitionGrantAllocationContractualBalance(529, @"GrantAllocationContractualBalance", @"Contractual Balance", @"Placeholder definition for Grant Allocation Contractual Balance");
+        private FieldDefinitionFundSourceAllocationContractualBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationContractualBalance Instance = new FieldDefinitionFundSourceAllocationContractualBalance(529, @"FundSourceAllocationContractualBalance", @"Contractual Balance", @"Placeholder definition for Fund Source Allocation Contractual Balance");
     }
 
-    public partial class FieldDefinitionGrantAllocationTravelBalance : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationTravelBalance : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationTravelBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationTravelBalance Instance = new FieldDefinitionGrantAllocationTravelBalance(530, @"GrantAllocationTravel Balance", @"Travel Balance", @"Placeholder definition for Grant Allocation Travel Balance");
+        private FieldDefinitionFundSourceAllocationTravelBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationTravelBalance Instance = new FieldDefinitionFundSourceAllocationTravelBalance(530, @"FundSourceAllocationTravel Balance", @"Travel Balance", @"Placeholder definition for Fund Source Allocation Travel Balance");
     }
 
-    public partial class FieldDefinitionGrantAllocationStaffBalance : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationStaffBalance : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationStaffBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationStaffBalance Instance = new FieldDefinitionGrantAllocationStaffBalance(531, @"GrantAllocationStaffBalance", @"Staff Balance", @"Placeholder definition for Grant Allocation Staff Balance");
+        private FieldDefinitionFundSourceAllocationStaffBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationStaffBalance Instance = new FieldDefinitionFundSourceAllocationStaffBalance(531, @"FundSourceAllocationStaffBalance", @"Staff Balance", @"Placeholder definition for Fund Source Allocation Staff Balance");
     }
 
-    public partial class FieldDefinitionGrantAllocationLikelyToUse : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationLikelyToUse : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationLikelyToUse(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationLikelyToUse Instance = new FieldDefinitionGrantAllocationLikelyToUse(532, @"GrantAllocationLikelyToUse", @"Likely To Use", @"Placeholder definition for Grant Allocation Likely To Use");
+        private FieldDefinitionFundSourceAllocationLikelyToUse(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationLikelyToUse Instance = new FieldDefinitionFundSourceAllocationLikelyToUse(532, @"FundSourceAllocationLikelyToUse", @"Likely To Use", @"Placeholder definition for Fund Source Allocation Likely To Use");
     }
 
-    public partial class FieldDefinitionGrantAllocationCompleted : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationCompleted : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationCompleted(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationCompleted Instance = new FieldDefinitionGrantAllocationCompleted(533, @"GrantAllocationCompleted", @"Completed", @"Placeholder definition for Grant Allocation Completed");
+        private FieldDefinitionFundSourceAllocationCompleted(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationCompleted Instance = new FieldDefinitionFundSourceAllocationCompleted(533, @"FundSourceAllocationCompleted", @"Completed", @"Placeholder definition for Fund Source Allocation Completed");
     }
 
-    public partial class FieldDefinitionGrantAllocationPriority : FieldDefinition
+    public partial class FieldDefinitionFundSourceAllocationPriority : FieldDefinition
     {
-        private FieldDefinitionGrantAllocationPriority(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantAllocationPriority Instance = new FieldDefinitionGrantAllocationPriority(534, @"GrantAllocationPriority", @"Priority", @"Placeholder definition for Grant Allocation Priority");
+        private FieldDefinitionFundSourceAllocationPriority(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionFundSourceAllocationPriority Instance = new FieldDefinitionFundSourceAllocationPriority(534, @"FundSourceAllocationPriority", @"Priority", @"Placeholder definition for Fund Source Allocation Priority");
     }
 
     public partial class FieldDefinitionLeadImplementerOrganization : FieldDefinition

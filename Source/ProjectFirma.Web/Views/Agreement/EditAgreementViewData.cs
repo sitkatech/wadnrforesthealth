@@ -33,16 +33,16 @@ namespace ProjectFirma.Web.Views.Agreement
         public IEnumerable<SelectListItem> OrganizationList { get; }
         public IEnumerable<SelectListItem> AgreementTypeList { get; }
         public IEnumerable<SelectListItem> AgreementStatusList { get; }
-        public IEnumerable<SelectListItem> GrantList { get; }
+        public IEnumerable<SelectListItem> FundSourceList { get; }
         public EditAgreementType EditAgreementType { get; set; }
 
         public int? MOUAgreementTypeID { get; set; }
         public int? NDAAgreementTypeID { get; set; }
 
-        public EditAgreementViewData(EditAgreementType editAgreementType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.Grant> grants, IEnumerable<Models.AgreementType> agreementTypes, IEnumerable<Models.AgreementStatus> agreementStatuses)
+        public EditAgreementViewData(EditAgreementType editAgreementType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.FundSource> fundSources, IEnumerable<Models.AgreementType> agreementTypes, IEnumerable<Models.AgreementStatus> agreementStatuses)
         {
             OrganizationList = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            GrantList = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantTitle);
+            FundSourceList = fundSources.ToSelectListWithEmptyFirstRow(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => y.FundSourceTitle);
             var agreementTypesAsList = agreementTypes.ToList();
             AgreementTypeList = agreementTypesAsList.ToSelectListWithEmptyFirstRow(x => x.AgreementTypeID.ToString(CultureInfo.InvariantCulture), y => y.AgreementTypeName);
             AgreementStatusList = agreementStatuses.ToSelectListWithEmptyFirstRow(x => x.AgreementStatusID.ToString(CultureInfo.InvariantCulture), y => y.AgreementStatusName);

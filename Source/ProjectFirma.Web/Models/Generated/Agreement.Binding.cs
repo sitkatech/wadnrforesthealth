@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Agreement()
         {
-            this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
+            this.AgreementFundSourceAllocations = new HashSet<AgreementFundSourceAllocation>();
             this.AgreementPeople = new HashSet<AgreementPerson>();
             this.AgreementProjects = new HashSet<AgreementProject>();
         }
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || AgreementPeople.Any() || AgreementProjects.Any();
+            return AgreementFundSourceAllocations.Any() || AgreementPeople.Any() || AgreementProjects.Any();
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(AgreementGrantAllocations.Any())
+            if(AgreementFundSourceAllocations.Any())
             {
-                dependentObjects.Add(typeof(AgreementGrantAllocation).Name);
+                dependentObjects.Add(typeof(AgreementFundSourceAllocation).Name);
             }
 
             if(AgreementPeople.Any())
@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name, typeof(AgreementProject).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementFundSourceAllocation).Name, typeof(AgreementPerson).Name, typeof(AgreementProject).Name};
 
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in AgreementGrantAllocations.ToList())
+            foreach(var x in AgreementFundSourceAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -187,7 +187,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
-        public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
+        public virtual ICollection<AgreementFundSourceAllocation> AgreementFundSourceAllocations { get; set; }
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual ICollection<AgreementProject> AgreementProjects { get; set; }
         public virtual AgreementType AgreementType { get; set; }

@@ -5,7 +5,7 @@ insert dbo.SupportRequestType (SupportRequestTypeID, SupportRequestTypeName, Sup
 (1, 'ReportBug', 'Ran into a bug or problem with this system', 7),
 (2, 'HelpWithProjectUpdate', 'Can''t figure out how to update my project', 1),
 (3, 'ForgotLoginInfo', 'Can''t log in (forgot my username or password, account is locked, etc.)', 2),
-(4, 'NewOrganizationOrGrantAllocation', 'Need an Organization or Grant Allocation added to the list', 4),
+(4, 'NewOrganizationOrFundSourceAllocation', 'Need an Organization or Fund Source Allocation added to the list', 4),
 (5, 'ProvideFeedback', 'Provide Feedback on the site', 6),
 (6, 'RequestOrganizationNameChange', 'Request a change to an Organization''s name', 9),
 (7, 'Other', 'Other', 100),
