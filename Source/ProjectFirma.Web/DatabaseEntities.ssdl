@@ -5948,6 +5948,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
   </Function>
   <Function Name="pClearArcOnlineFinanceApiRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearAuditLogTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pClearFundSourceAllocationExpenditureTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="bienniumFiscalYear" Type="int" Mode="In" />
+  </Function>
   <Function Name="pClearGisImportTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="pClearOutdatedArcOnlineFinanceApiRawJsonImports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
@@ -5956,6 +5959,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vTotalTreatedAcresByProjec
     <Parameter Name="daysOldToRemove" Type="int" Mode="In" />
   </Function>
   <Function Name="pClearSocrataDataMartRawJsonImportsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="pFundSourceExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
+    <Parameter Name="BienniumToImport" Type="int" Mode="In" />
+  </Function>
   <Function Name="pGeospatial_SpatialIndexCreate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="applyChanges" Type="bit" Mode="In" />
     <Parameter Name="databaseNameOptional" Type="nvarchar" Mode="In" />
